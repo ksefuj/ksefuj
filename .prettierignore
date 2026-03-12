@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+dist/
+.next/
+out/
+build/
+
+# Cache
+.cache/
+*.tsbuildinfo
+
+# Lock files
+pnpm-lock.yaml
+
+# Generated files
+*.generated.*
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Schemas
+*.xsd
