@@ -2,13 +2,13 @@
 name: ksef-fa3
 description: >
   Generowanie i walidacja faktur elektronicznych w formacie KSeF FA(3) — polskim standardzie
-  e-faktur obowiązującym od 2026-02-01 (duże firmy) i 2026-04-01 (wszyscy). Użyj tego
-  skill'a zawsze gdy użytkownik pyta o: wystawienie faktury do KSeF, strukturę XML FA(3),
-  mapowanie danych faktury na schemat FA(3), walidację e-faktury, błędy walidatora KSeF,
-  pola P_12/P_13/GTU/Adnotacje, faktury dla zagranicznych nabywców (UE, spoza UE),
-  faktury walutowe, reverse charge, WDT, eksport, zwolnienie z VAT, lub jakiekolwiek
-  pytanie o strukturę logiczną FA(3). Skill zawiera pełną specyfikację pól, zasady
-  uzupełniania zależnie od scenariusza transakcji oraz gotchas wynikające z weryfikacji XSD.
+  e-faktur obowiązującym od 2026-02-01 (duże firmy) i 2026-04-01 (wszyscy). Użyj tego skill'a zawsze
+  gdy użytkownik pyta o: wystawienie faktury do KSeF, strukturę XML FA(3), mapowanie danych faktury
+  na schemat FA(3), walidację e-faktury, błędy walidatora KSeF, pola P_12/P_13/GTU/Adnotacje,
+  faktury dla zagranicznych nabywców (UE, spoza UE), faktury walutowe, reverse charge, WDT, eksport,
+  zwolnienie z VAT, lub jakiekolwiek pytanie o strukturę logiczną FA(3). Skill zawiera pełną
+  specyfikację pól, zasady uzupełniania zależnie od scenariusza transakcji oraz gotchas wynikające z
+  weryfikacji XSD.
 ---
 
 # KSeF FA(3) — Skill generowania e-faktur
@@ -17,13 +17,16 @@ description: >
 
 - Namespace: `http://crd.gov.pl/wzor/2025/06/25/13775/`
 - XSD: `https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd`
-- Broszura informacyjna: `/mnt/user-data/uploads/Broszura_informacyjna_dotycza_ca_struktury_logicznej_FA_3_.pdf`
+- Broszura informacyjna:
+  `/mnt/user-data/uploads/Broszura_informacyjna_dotycza_ca_struktury_logicznej_FA_3_.pdf`
   - Przeczytaj ją przez `view` lub `bash_tool` gdy potrzebujesz szczegółów nieujętych poniżej
-- Walidacja: w KSeF 2.0 **nie ma osobnego walidatora online** — walidacja odbywa się przy wysyłce faktury do systemu
+- Walidacja: w KSeF 2.0 **nie ma osobnego walidatora online** — walidacja odbywa się przy wysyłce
+  faktury do systemu
   - Aplikacja Podatnika KSeF 2.0 (produkcja): https://ap.ksef.mf.gov.pl/
   - Środowisko testowe (fikcyjne dane, bez skutków prawnych): https://web2te-ksef.mf.gov.pl/
   - Portal KSeF 2.0 z dokumentacją i plikami do pobrania: https://ksef.podatki.gov.pl/
-  - ⚠️ Stary walidator https://ksef.mf.gov.pl/web/login **nie działa** od 01.02.2026 (KSeF 1.0 wyłączony)
+  - ⚠️ Stary walidator https://ksef.mf.gov.pl/web/login **nie działa** od 01.02.2026 (KSeF 1.0
+    wyłączony)
 
 ## Kolejność głównych elementów w pliku XML
 
@@ -56,8 +59,8 @@ Faktura
         └── WarunkiTransakcji*
 ```
 
-> ⚠️ `KursWalutyZ` na poziomie `Fa` — **wyłącznie** faktury zaliczkowe (art. 106b ust. 1 pkt 4).
-> Dla zwykłych faktur walutowych kurs idzie do `FaWiersz/KursWaluty`.
+> ⚠️ `KursWalutyZ` na poziomie `Fa` — **wyłącznie** faktury zaliczkowe (art. 106b ust. 1 pkt 4). Dla
+> zwykłych faktur walutowych kurs idzie do `FaWiersz/KursWaluty`.
 
 ---
 
@@ -161,8 +164,8 @@ Używa `KodKraju` + `NrID` jako **rodzeństwa** w `DaneIdentyfikacyjne` (nie zag
 </DaneIdentyfikacyjne>
 ```
 
-> ⚠️ **JST i GV są obowiązkowe** w FA(3) dla Podmiot2. Brak tych pól powoduje błąd
-> „Wskazany plik nie jest prawidłowym plikiem XML e-Faktury" w walidatorze KSeF.
+> ⚠️ **JST i GV są obowiązkowe** w FA(3) dla Podmiot2. Brak tych pól powoduje błąd „Wskazany plik
+> nie jest prawidłowym plikiem XML e-Faktury" w walidatorze KSeF.
 
 ---
 
@@ -170,24 +173,25 @@ Używa `KodKraju` + `NrID` jako **rodzeństwa** w `DaneIdentyfikacyjne` (nie zag
 
 Wypełniaj **tylko** te pola P_13, które dotyczą faktury. Nie podawaj pól z wartością 0.
 
-| Pole | Opis | Kiedy używać |
-|------|------|-------------|
-| `P_13_1` | Netto przy stawce 23% (lub 22%) | Sprzedaż krajowa 23% |
-| `P_13_2` | Netto przy stawce 8% (lub 7%) | Sprzedaż krajowa 8% |
-| `P_13_3` | Netto przy stawce 5% | Sprzedaż krajowa 5% |
-| `P_13_4` | Netto — ryczałt taksówki | Taksówki |
-| `P_13_5` | Netto — procedura OSS | Sprzedaż w procedurze OSS |
-| `P_13_6_1` | Netto 0% krajowa (nie WDT, nie eksport) | Stawka 0% np. art. 83 |
-| `P_13_6_2` | Netto 0% WDT | Wewnątrzwspólnotowa dostawa towarów |
-| `P_13_6_3` | Netto 0% eksport | Eksport towarów |
-| `P_13_7` | Netto — sprzedaż zwolniona | Zwolnienie z VAT |
-| `P_13_8` | Netto — dostawa/usługi poza PL (nie P_13_5, nie P_13_9) | Reverse charge do krajów spoza UE i usługi art. 28b/28e poza PL |
-| `P_13_9` | Netto — usługi art. 100 ust. 1 pkt 4 (świadczenia do innych krajów UE) | Intrastat usługowy UE |
-| `P_13_10` | Netto — odwrotne obciążenie krajowe | Krajowe reverse charge art. 145e |
-| `P_13_11` | Netto — procedura marży | Marża art. 119/120 |
-| `P_15` | **Kwota należności ogółem** | **Zawsze obowiązkowe** |
+| Pole       | Opis                                                                   | Kiedy używać                                                    |
+| ---------- | ---------------------------------------------------------------------- | --------------------------------------------------------------- |
+| `P_13_1`   | Netto przy stawce 23% (lub 22%)                                        | Sprzedaż krajowa 23%                                            |
+| `P_13_2`   | Netto przy stawce 8% (lub 7%)                                          | Sprzedaż krajowa 8%                                             |
+| `P_13_3`   | Netto przy stawce 5%                                                   | Sprzedaż krajowa 5%                                             |
+| `P_13_4`   | Netto — ryczałt taksówki                                               | Taksówki                                                        |
+| `P_13_5`   | Netto — procedura OSS                                                  | Sprzedaż w procedurze OSS                                       |
+| `P_13_6_1` | Netto 0% krajowa (nie WDT, nie eksport)                                | Stawka 0% np. art. 83                                           |
+| `P_13_6_2` | Netto 0% WDT                                                           | Wewnątrzwspólnotowa dostawa towarów                             |
+| `P_13_6_3` | Netto 0% eksport                                                       | Eksport towarów                                                 |
+| `P_13_7`   | Netto — sprzedaż zwolniona                                             | Zwolnienie z VAT                                                |
+| `P_13_8`   | Netto — dostawa/usługi poza PL (nie P_13_5, nie P_13_9)                | Reverse charge do krajów spoza UE i usługi art. 28b/28e poza PL |
+| `P_13_9`   | Netto — usługi art. 100 ust. 1 pkt 4 (świadczenia do innych krajów UE) | Intrastat usługowy UE                                           |
+| `P_13_10`  | Netto — odwrotne obciążenie krajowe                                    | Krajowe reverse charge art. 145e                                |
+| `P_13_11`  | Netto — procedura marży                                                | Marża art. 119/120                                              |
+| `P_15`     | **Kwota należności ogółem**                                            | **Zawsze obowiązkowe**                                          |
 
-> `P_13_8` vs `P_13_9`: usługi do podmiotów spoza UE → `P_13_8`. Usługi do podmiotów UE objęte art. 100 ust. 1 pkt 4 (informacja podsumowująca VAT-UE) → `P_13_9`.
+> `P_13_8` vs `P_13_9`: usługi do podmiotów spoza UE → `P_13_8`. Usługi do podmiotów UE objęte art.
+> 100 ust. 1 pkt 4 (informacja podsumowująca VAT-UE) → `P_13_9`.
 
 ---
 
@@ -225,22 +229,22 @@ Wszystkie pola w `Adnotacje` są **obowiązkowe** (schemat wymaga kompletnej str
 </Adnotacje>
 ```
 
-> ⚠️ `P_18=1` stosuje się zarówno dla odwrotnego obciążenia krajowego (art. 145e), jak i
-> dla usług/towarów poza PL gdzie VAT rozlicza nabywca (reverse charge zagraniczne/UE).
+> ⚠️ `P_18=1` stosuje się zarówno dla odwrotnego obciążenia krajowego (art. 145e), jak i dla
+> usług/towarów poza PL gdzie VAT rozlicza nabywca (reverse charge zagraniczne/UE).
 
 ---
 
 ## RodzajFaktury
 
-| Wartość | Opis |
-|---------|------|
-| `VAT` | Faktura podstawowa |
-| `KOR` | Faktura korygująca |
-| `ZAL` | Faktura zaliczkowa |
-| `ROZ` | Faktura rozliczeniowa (po zaliczkach) |
-| `UPR` | Faktura uproszczona (do 450 zł / 100 EUR) |
-| `KOR_ZAL` | Korekta faktury zaliczkowej |
-| `KOR_ROZ` | Korekta faktury rozliczeniowej |
+| Wartość   | Opis                                      |
+| --------- | ----------------------------------------- |
+| `VAT`     | Faktura podstawowa                        |
+| `KOR`     | Faktura korygująca                        |
+| `ZAL`     | Faktura zaliczkowa                        |
+| `ROZ`     | Faktura rozliczeniowa (po zaliczkach)     |
+| `UPR`     | Faktura uproszczona (do 450 zł / 100 EUR) |
+| `KOR_ZAL` | Korekta faktury zaliczkowej               |
+| `KOR_ROZ` | Korekta faktury rozliczeniowej            |
 
 ---
 
@@ -255,18 +259,18 @@ NrWierszaFa → UU_ID* → P_6A* → P_7* → Indeks* → GTIN* → PKWIU* → C
 
 **Kluczowe pola FaWiersz:**
 
-| Pole | Opis | Uwagi |
-|------|------|-------|
-| `NrWierszaFa` | Numer wiersza (1, 2, 3…) | Obowiązkowe |
-| `P_7` | Nazwa towaru/usługi (max 512 znaków) | Prawie zawsze |
-| `P_8A` | Jednostka miary (np. `szt.`, `h`, `kg`) | Opcjonalne |
-| `P_8B` | Ilość (max 8 miejsc po przecinku) | Opcjonalne |
-| `P_9A` | Cena jednostkowa netto (max 8 miejsc po przecinku) | Opcjonalne |
-| `P_11` | Wartość netto pozycji | Opcjonalne |
-| `P_12` | Stawka podatku — patrz enumeracja poniżej | Opcjonalne |
-| `GTU` | `GTU_01`…`GTU_13` — jako wartość pola, nie nazwa tagu | Opcjonalne |
-| `KursWaluty` | Kurs NBP dla wiersza (waluta obca) | Tylko faktury walutowe, nie zaliczkowe |
-| `StanPrzed` | `1` — wiersz stanu przed korektą | Tylko faktury korygujące |
+| Pole          | Opis                                                  | Uwagi                                  |
+| ------------- | ----------------------------------------------------- | -------------------------------------- |
+| `NrWierszaFa` | Numer wiersza (1, 2, 3…)                              | Obowiązkowe                            |
+| `P_7`         | Nazwa towaru/usługi (max 512 znaków)                  | Prawie zawsze                          |
+| `P_8A`        | Jednostka miary (np. `szt.`, `h`, `kg`)               | Opcjonalne                             |
+| `P_8B`        | Ilość (max 8 miejsc po przecinku)                     | Opcjonalne                             |
+| `P_9A`        | Cena jednostkowa netto (max 8 miejsc po przecinku)    | Opcjonalne                             |
+| `P_11`        | Wartość netto pozycji                                 | Opcjonalne                             |
+| `P_12`        | Stawka podatku — patrz enumeracja poniżej             | Opcjonalne                             |
+| `GTU`         | `GTU_01`…`GTU_13` — jako wartość pola, nie nazwa tagu | Opcjonalne                             |
+| `KursWaluty`  | Kurs NBP dla wiersza (waluta obca)                    | Tylko faktury walutowe, nie zaliczkowe |
+| `StanPrzed`   | `1` — wiersz stanu przed korektą                      | Tylko faktury korygujące               |
 
 ### P_12 — enumeracja stawek podatku
 
@@ -287,8 +291,8 @@ NrWierszaFa → UU_ID* → P_6A* → P_7* → Indeks* → GTIN* → PKWIU* → C
 "np II"  usługi art. 100 ust. 1 pkt 4 — intrastat usługowy UE
 ```
 
-> ⚠️ Enumeracja jest ściśle walidowana. `"NP"`, `"np"`, `"np1"` itp. są **błędne**.
-> Dla odwrotnego obciążenia zagranicznego (spoza UE i usługi art. 28b): `"np I"`.
+> ⚠️ Enumeracja jest ściśle walidowana. `"NP"`, `"np"`, `"np1"` itp. są **błędne**. Dla odwrotnego
+> obciążenia zagranicznego (spoza UE i usługi art. 28b): `"np I"`.
 
 ### GTU — zasady
 
@@ -302,11 +306,11 @@ NrWierszaFa → UU_ID* → P_6A* → P_7* → Indeks* → GTIN* → PKWIU* → C
 
 ## P_6 vs OkresFa vs P_6A
 
-| Element | Kiedy | Gdzie |
-|---------|-------|-------|
-| `P_6` | Jedna data wykonania usługi/dostawy, wspólna dla wszystkich pozycji, **różna od P_1** | `Fa/P_6` |
-| `OkresFa` | Faktura za okres (np. abonament miesięczny) — art. 19a ust. 3/4/5 pkt 4 | `Fa/OkresFa/P_6_Od` + `Fa/OkresFa/P_6_Do` |
-| `P_6A` | Różne daty dla różnych pozycji faktury | `FaWiersz/P_6A` |
+| Element   | Kiedy                                                                                 | Gdzie                                     |
+| --------- | ------------------------------------------------------------------------------------- | ----------------------------------------- |
+| `P_6`     | Jedna data wykonania usługi/dostawy, wspólna dla wszystkich pozycji, **różna od P_1** | `Fa/P_6`                                  |
+| `OkresFa` | Faktura za okres (np. abonament miesięczny) — art. 19a ust. 3/4/5 pkt 4               | `Fa/OkresFa/P_6_Od` + `Fa/OkresFa/P_6_Do` |
+| `P_6A`    | Różne daty dla różnych pozycji faktury                                                | `FaWiersz/P_6A`                           |
 
 > Gdy data sprzedaży = data wystawienia (P_1), **nie wypełniaj P_6**.
 
@@ -324,7 +328,8 @@ NrWierszaFa → UU_ID* → P_6A* → P_7* → Indeks* → GTIN* → PKWIU* → C
 
 ## Formatowanie liczb dziesiętnych
 
-**Nie dodawaj niepotrzebnych zer końcowych.** Używaj minimalnej liczby miejsc po przecinku wymaganej do oddania wartości:
+**Nie dodawaj niepotrzebnych zer końcowych.** Używaj minimalnej liczby miejsc po przecinku wymaganej
+do oddania wartości:
 
 - Kwoty (P_11, P_13_x, P_15 itd.): 2 miejsca po przecinku, np. `6000.00`, `1230.00`
 - Cena jednostkowa (P_9A): tyle miejsc ile potrzeba, np. `75.00` (nie `75.00000000`)
@@ -359,7 +364,8 @@ NrWierszaFa → UU_ID* → P_6A* → P_7* → Indeks* → GTIN* → PKWIU* → C
    - Zawsze dodaj `<JST>2</JST><GV>2</GV>` do Podmiot2 (chyba że JST/GV = 1)
 
 2. **`KursWalutyZ` na poziomie `Fa`** → błąd „nie oczekiwano KursWalutyZ"
-   - To pole tylko dla faktur zaliczkowych; dla zwykłych usuń z `Fa`, kurs daj do `FaWiersz/KursWaluty`
+   - To pole tylko dla faktur zaliczkowych; dla zwykłych usuń z `Fa`, kurs daj do
+     `FaWiersz/KursWaluty`
 
 3. **`P_12` = `"NP"` zamiast `"np I"` lub `"np II"`** → błąd „NP not in enumeration"
    - Używaj dokładnie `"np I"` lub `"np II"` (ze spacją)
@@ -468,5 +474,5 @@ Więcej szczegółów w plikach referencyjnych:
 - `references/korekty.md` — faktury korygujące (KOR, KOR_ZAL, KOR_ROZ)
 - `references/zaliczki.md` — faktury zaliczkowe (ZAL, ROZ)
 
-Jeśli potrzebujesz obsłużyć scenariusz nieopisany powyżej, przeczytaj broszurę informacyjną
-przez `bash_tool` z pdfplumber lub `view` konkretnych stron.
+Jeśli potrzebujesz obsłużyć scenariusz nieopisany powyżej, przeczytaj broszurę informacyjną przez
+`bash_tool` z pdfplumber lub `view` konkretnych stron.

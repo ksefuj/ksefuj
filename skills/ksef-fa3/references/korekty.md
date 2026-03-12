@@ -24,6 +24,7 @@ Po `RodzajFaktury` dodaj elementy korygujące (w tej kolejności w xs:sequence):
 Pola P_13_x, P_14_x, P_15 wypełnia się jako **różnicę** (delta), nie wartości po korekcie.
 
 Przykład — korekta in minus 100 PLN netto (23%):
+
 ```xml
 <P_13_1>-100.00</P_13_1>
 <P_14_1>-23.00</P_14_1>
@@ -33,6 +34,7 @@ Przykład — korekta in minus 100 PLN netto (23%):
 ## Korekta pozycji FaWiersz — dwie metody
 
 ### Metoda 1: Różnica (delta)
+
 ```xml
 <FaWiersz>
   <NrWierszaFa>1</NrWierszaFa>
@@ -45,6 +47,7 @@ Przykład — korekta in minus 100 PLN netto (23%):
 ```
 
 ### Metoda 2: Stan przed + stan po (z użyciem StanPrzed)
+
 ```xml
 <!-- Wiersz stanu PRZED korektą -->
 <FaWiersz>
@@ -69,8 +72,8 @@ Przykład — korekta in minus 100 PLN netto (23%):
 
 ## Korekta danych nabywcy (Podmiot2K)
 
-Gdy korekta dotyczy danych nabywcy, dodaj element `Podmiot2K` z **błędnymi** danymi
-(z faktury korygowanej), aby zachować ślad:
+Gdy korekta dotyczy danych nabywcy, dodaj element `Podmiot2K` z **błędnymi** danymi (z faktury
+korygowanej), aby zachować ślad:
 
 ```xml
 <Podmiot2K>
@@ -85,11 +88,12 @@ Gdy korekta dotyczy danych nabywcy, dodaj element `Podmiot2K` z **błędnymi** d
 </Podmiot2K>
 ```
 
-> ⚠️ NIP nabywcy **nie podlega korekcie** — błędny NIP wymaga wystawienia faktury
-> korygującej do zera i nowej faktury.
+> ⚠️ NIP nabywcy **nie podlega korekcie** — błędny NIP wymaga wystawienia faktury korygującej do
+> zera i nowej faktury.
 
 ## KOR_ZAL i KOR_ROZ
 
 Analogiczna struktura jak KOR, ale:
+
 - `RodzajFaktury = "KOR_ZAL"` — korekta faktury zaliczkowej
 - `RodzajFaktury = "KOR_ROZ"` — korekta faktury rozliczeniowej

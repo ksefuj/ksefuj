@@ -1,6 +1,7 @@
 # Contributing to ksefuj
 
-Thank you for your interest in contributing to ksefuj! This document provides guidelines and standards for contributing to the project.
+Thank you for your interest in contributing to ksefuj! This document provides guidelines and
+standards for contributing to the project.
 
 ## 🤖 For AI Coding Assistants
 
@@ -46,7 +47,8 @@ pnpm build
 
 ## 💬 Commit Message Convention
 
-We follow [Conventional Commits](https://www.conventionalcommits.org/) specification. This is **enforced** by commitlint.
+We follow [Conventional Commits](https://www.conventionalcommits.org/) specification. This is
+**enforced** by commitlint.
 
 ### Format
 
@@ -108,6 +110,7 @@ chore(deps): bump next.js to 15.0.1
 ### PR Title
 
 Must follow the same convention as commits:
+
 ```
 feat(validator): add currency validation rules
 ```
@@ -169,46 +172,46 @@ pnpm --filter @ksefuj/validator test
 
 ```typescript
 // Files: kebab-case
-semantic-rules.ts
-validate-xml.ts
+semantic - rules.ts;
+validate - xml.ts;
 
 // Interfaces/Types: PascalCase
-interface ValidationResult { }
-type Locale = 'pl' | 'en' | 'ua';
+interface ValidationResult {}
+type Locale = "pl" | "en" | "ua";
 
 // Functions/Variables: camelCase
-function validateInvoice() { }
-const errorMessage = '';
+function validateInvoice() {}
+const errorMessage = "";
 
 // Constants: SCREAMING_SNAKE_CASE
 const MAX_FILE_SIZE = 10_000_000;
 
 // React Components: PascalCase
-function InvoiceValidator() { }
+function InvoiceValidator() {}
 
 // Hooks: camelCase with 'use' prefix
-function useValidation() { }
+function useValidation() {}
 ```
 
 ### File Structure
 
 ```typescript
 // 1. Imports (sorted)
-import { type Foo } from 'external';
-import { bar } from '@/internal';
-import { baz } from './local';
+import { type Foo } from "external";
+import { bar } from "@/internal";
+import { baz } from "./local";
 
 // 2. Type definitions
-interface Props { }
+interface Props {}
 
 // 3. Constants
-const DEFAULT_LOCALE = 'pl';
+const DEFAULT_LOCALE = "pl";
 
 // 4. Main export
-export function validate() { }
+export function validate() {}
 
 // 5. Helper functions
-function helper() { }
+function helper() {}
 ```
 
 ### React/Next.js Conventions
@@ -253,7 +256,7 @@ All user-facing strings must support i18n:
 const error = "Brak elementu JST";
 
 // ✅ Good
-const error = getMessage(locale, 'PODMIOT2_JST_MISSING');
+const error = getMessage(locale, "PODMIOT2_JST_MISSING");
 ```
 
 ### Adding Translations
@@ -303,6 +306,7 @@ Use GitHub Issues with these templates:
 - **Question**: For asking questions
 
 Include:
+
 - Clear title
 - Reproduction steps (for bugs)
 - Expected vs actual behavior
@@ -328,6 +332,7 @@ When using AI coding assistants:
 5. **Verify builds**: "Ensure pnpm build passes"
 
 Example prompt:
+
 ```
 Read CLAUDE.md for context.
 Add feature X using conventional commits.

@@ -24,11 +24,13 @@
 ## 4. Usługi poza terytorium PL — reverse charge zagraniczny
 
 **Nabywca spoza UE** (miejsce opodatkowania poza PL, art. 28b):
+
 - `P_13_8`
 - `FaWiersz/P_12 = "np I"`
 - `Adnotacje/P_18 = 1` (nabywca rozlicza VAT w swoim kraju)
 
 **Nabywca z UE, usługi art. 100 ust. 1 pkt 4** (intrastat usługowy):
+
 - `P_13_9`
 - `FaWiersz/P_12 = "np II"`
 - `Adnotacje/P_18 = 1`
@@ -74,10 +76,10 @@
 
 ## 10. Faktura z kilkoma stawkami
 
-Wypełnij odpowiednie pary P_13_x + P_14_x dla każdej stawki.
-P_15 = suma wszystkich wartości brutto.
+Wypełnij odpowiednie pary P_13_x + P_14_x dla każdej stawki. P_15 = suma wszystkich wartości brutto.
 
 Przykład: faktura z 23% i 8%:
+
 ```xml
 <P_13_1>500.00</P_13_1>
 <P_14_1>115.00</P_14_1>

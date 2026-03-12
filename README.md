@@ -6,12 +6,14 @@ Open source toolkit for Polish KSeF FA(3) e-invoicing.
 - **Privacy-first** — everything runs locally in your browser
 - **Multilingual** — Polish, English, Ukrainian
 
-🌐 **[ksefuj.to](https://ksefuj.to)** — free online validator
-📦 **[@ksefuj/validator](https://www.npmjs.com/package/@ksefuj/validator)** — npm package + CLI
+🌐 **[ksefuj.to](https://ksefuj.to)** — free online validator 📦
+**[@ksefuj/validator](https://www.npmjs.com/package/@ksefuj/validator)** — npm package + CLI
 
 ## What is KSeF?
 
-KSeF (Krajowy System e-Faktur) is Poland's mandatory e-invoicing system. Starting April 1, 2026 (February 1, 2026 for large companies), all VAT taxpayers must issue structured XML invoices through KSeF using the FA(3) schema.
+KSeF (Krajowy System e-Faktur) is Poland's mandatory e-invoicing system. Starting April 1, 2026
+(February 1, 2026 for large companies), all VAT taxpayers must issue structured XML invoices through
+KSeF using the FA(3) schema.
 
 ## Features
 
@@ -48,7 +50,7 @@ import { validate } from "@ksefuj/validator";
 const result = validate(xmlString);
 
 // or with locale selection
-const result = validate(xmlString, { locale: 'en' }); // 'pl' | 'en' | 'ua'
+const result = validate(xmlString, { locale: "en" }); // 'pl' | 'en' | 'ua'
 
 if (!result.valid) {
   for (const error of result.errors) {
@@ -92,7 +94,8 @@ The `skills/` directory contains skills for Claude Projects:
 
 - **ksef-fa3** — generates FA(3) XML invoices from input data (PDF, text, form)
 
-Installation: download the `.skill` file from [Releases](https://github.com/ksefuj/ksefuj/releases) and add to your Claude Project.
+Installation: download the `.skill` file from [Releases](https://github.com/ksefuj/ksefuj/releases)
+and add to your Claude Project.
 
 ## Development
 
@@ -109,17 +112,20 @@ pnpm build            # builds all packages
 ## Roadmap
 
 ### Phase 1: Validator ✅
+
 - Semantic rules engine
 - CLI tool
 - Web app with drag & drop
 - npm package
 
 ### Phase 2: Preview (upcoming)
+
 - XML → HTML invoice visualization
 - PDF export
 - QR code generation
 
 ### Phase 3: Generator
+
 - Form-based XML generation
 - Auto NBP exchange rates
 - Auto NIP lookup (GUS/VIES)
@@ -129,4 +135,5 @@ pnpm build            # builds all packages
 
 Apache 2.0
 
-A permissive open source license that allows commercial use, modification, and distribution. Requires preservation of copyright and license notices.
+A permissive open source license that allows commercial use, modification, and distribution.
+Requires preservation of copyright and license notices.

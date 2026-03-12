@@ -12,10 +12,10 @@ Dodatkowe elementy po `RodzajFaktury`:
 <KursWalutyZ>4.2500</KursWalutyZ>  <!-- kurs NBP dla daty zaliczki -->
 ```
 
-Element `FaWiersz` jest **opcjonalny** dla faktur zaliczkowych.
-Jeśli jest, traktowany jak w VAT.
+Element `FaWiersz` jest **opcjonalny** dla faktur zaliczkowych. Jeśli jest, traktowany jak w VAT.
 
 Element `Zamowienie` zamiast lub obok `FaWiersz` — zawiera pozycje zamówienia:
+
 ```xml
 <Zamowienie>
   <ZamowienieWiersz>
@@ -63,5 +63,5 @@ Wymagane: wskazanie faktur zaliczkowych przez `FakturaZaliczkowa`:
 </FakturaZaliczkowa>
 ```
 
-W `FaWiersz` wykazuje się **pełne wartości** zamówienia.
-`P_15` = kwota pozostała do zapłaty (całość minus suma zaliczek).
+W `FaWiersz` wykazuje się **pełne wartości** zamówienia. `P_15` = kwota pozostała do zapłaty (całość
+minus suma zaliczek).
