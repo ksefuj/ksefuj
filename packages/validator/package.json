@@ -36,7 +36,7 @@
     "poland",
     "invoice"
   ],
-  "license": "BSL-1.1",
+  "license": "Apache-2.0",
   "devDependencies": {
     "typescript": "^5.7.0"
   }
