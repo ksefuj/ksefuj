@@ -2,6 +2,7 @@
 
 import { type ChangeEvent, type DragEvent, useCallback, useRef, useState } from "react";
 import { validate, type ValidationResult } from "@ksefuj/validator";
+import { track } from "@vercel/analytics";
 
 export function Validator() {
   const [result, setResult] = useState<ValidationResult | null>(null);
@@ -19,11 +20,32 @@ export function Validator() {
       try {
         const res = await validate(xml);
         setResult(res);
+
+        // Track validation event with anonymized stats
+        track("invoice_validated", {
+          valid: res.valid,
+          error_count: res.errors.length,
+          warning_count: res.warnings.length,
+          has_xsd_errors: res.errors.some((e) => e.source === "xsd"),
+          has_semantic_errors: res.errors.some((e) => e.source === "semantic"),
+        });
       } catch {
-        setResult({
+        const errorResult: ValidationResult = {
           valid: false,
-          errors: [{ level: "error", source: "xsd", message: "Błąd podczas walidacji pliku" }],
+          errors: [
+            {
+              level: "error" as const,
+              source: "xsd" as const,
+              message: "Błąd podczas walidacji pliku",
+            },
+          ],
           warnings: [],
+        };
+        setResult(errorResult);
+
+        // Track validation failure
+        track("invoice_validation_failed", {
+          error_type: "processing_error",
         });
       } finally {
         setValidating(false);
