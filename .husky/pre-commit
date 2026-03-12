@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Run format check
+pnpm format:check || (
+  echo "❌ Formatting issues found. Run 'pnpm format' to fix them."
+  exit 1
+)
+
+# Run lint
+pnpm lint || (
+  echo "❌ Linting issues found. Fix them before committing."
+  exit 1
+)
+
+# Run typecheck
+pnpm typecheck || (
+  echo "❌ TypeScript errors found. Fix them before committing."
+  exit 1
+)

@@ -1,0 +1,21 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Validate commit message format
+npx --no -- commitlint --edit ${1} || (
+  echo ""
+  echo "❌ Invalid commit message format!"
+  echo ""
+  echo "📝 Your commit message must follow the Conventional Commits format:"
+  echo "   <type>[optional scope]: <description>"
+  echo ""
+  echo "Examples:"
+  echo "   feat(validator): add support for KSeF 2.0 schema"
+  echo "   fix(web): prevent file upload race condition"
+  echo "   docs: update README with pnpm commands"
+  echo ""
+  echo "Allowed types: feat, fix, docs, style, refactor, perf, test, build, ci, chore"
+  echo "See CONTRIBUTING.md for more details."
+  echo ""
+  exit 1
+)
