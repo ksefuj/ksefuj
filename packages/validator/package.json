@@ -1,0 +1,43 @@
+{
+  "name": "@ksefuj/validator",
+  "version": "0.1.0",
+  "description": "KSeF FA(3) XML validator — XSD + semantic rules, works in Node and browser",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "bin": {
+    "ksef-validate": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "validate": "node dist/cli.js",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest",
+    "test:watch": "vitest watch",
+    "test:coverage": "vitest --coverage"
+  },
+  "files": [
+    "dist",
+    "src/schemas"
+  ],
+  "keywords": [
+    "ksef",
+    "fa3",
+    "e-faktura",
+    "xml",
+    "validator",
+    "poland",
+    "invoice"
+  ],
+  "license": "BSL-1.1",
+  "devDependencies": {
+    "typescript": "^5.7.0"
+  }
+}
