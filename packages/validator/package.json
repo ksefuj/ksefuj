@@ -40,5 +40,8 @@
   "devDependencies": {
     "@types/node": "^25.4.0",
     "typescript": "^5.7.0"
+  },
+  "dependencies": {
+    "libxml2-wasm": "^0.7.1"
   }
 }
