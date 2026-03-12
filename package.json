@@ -1,11 +1,12 @@
 {
   "name": "ksefuj",
   "private": true,
+  "type": "module",
   "license": "Apache-2.0",
   "packageManager": "pnpm@9.15.0",
   "scripts": {
-    "dev": "pnpm --filter apps/web dev",
-    "build": "pnpm --filter @ksefuj/validator build && pnpm --filter apps/web build",
+    "dev": "pnpm --filter @ksefuj/web dev",
+    "build": "pnpm --filter @ksefuj/validator build && pnpm --filter @ksefuj/web build",
     "test": "pnpm -r test",
     "test:watch": "pnpm -r test:watch",
     "test:coverage": "pnpm -r test:coverage",
@@ -20,23 +21,24 @@
     "commit": "cz"
   },
   "devDependencies": {
-    "typescript": "^5.7.0",
-    "eslint": "^9.0.0",
-    "@eslint/js": "^9.0.0",
-    "@typescript-eslint/eslint-plugin": "^8.0.0",
-    "@typescript-eslint/parser": "^8.0.0",
-    "eslint-plugin-react": "^7.0.0",
-    "eslint-plugin-react-hooks": "^5.0.0",
-    "@next/eslint-plugin-next": "^15.0.0",
-    "prettier": "^3.4.0",
-    "husky": "^9.0.0",
     "@commitlint/cli": "^19.0.0",
     "@commitlint/config-conventional": "^19.0.0",
+    "@eslint/js": "^9.0.0",
+    "@next/eslint-plugin-next": "^15.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "@vitest/coverage-v8": "^2.0.0",
+    "@vitest/ui": "^2.0.0",
     "commitizen": "^4.3.0",
     "cz-conventional-changelog": "^3.3.0",
-    "vitest": "^2.0.0",
-    "@vitest/ui": "^2.0.0",
-    "@vitest/coverage-v8": "^2.0.0"
+    "eslint": "^9.0.0",
+    "eslint-plugin-react": "^7.0.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "globals": "^17.4.0",
+    "husky": "^9.0.0",
+    "prettier": "^3.4.0",
+    "typescript": "^5.7.0",
+    "vitest": "^2.0.0"
   },
   "config": {
     "commitizen": {

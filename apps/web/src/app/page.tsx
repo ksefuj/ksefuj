@@ -15,12 +15,10 @@ export default function Home() {
       <div className="flex-1 flex flex-col items-center justify-center px-6 py-16">
         <div className="max-w-3xl w-full space-y-8">
           <div className="text-center space-y-3">
-            <h2 className="text-3xl font-bold tracking-tight">
-              Sprawdź swoją e-fakturę
-            </h2>
+            <h2 className="text-3xl font-bold tracking-tight">Sprawdź swoją e-fakturę</h2>
             <p className="text-stone-400 text-lg">
-              Wrzuć XML, zobacz błędy. Walidacja odbywa się w Twojej
-              przeglądarce&nbsp;— dane nie opuszczają Twojego komputera.
+              Wrzuć XML, zobacz błędy. Walidacja odbywa się w Twojej przeglądarce&nbsp;— dane nie
+              opuszczają Twojego komputera.
             </p>
           </div>
 

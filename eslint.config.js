@@ -4,8 +4,23 @@ import tsParser from "@typescript-eslint/parser";
 import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import next from "@next/eslint-plugin-next";
+import globals from "globals";
 
 export default [
+  {
+    ignores: [
+      "**/node_modules/**",
+      "**/.next/**",
+      "**/dist/**",
+      "**/build/**",
+      "**/coverage/**",
+      "**/skills/**",
+      "*.config.js",
+      "*.config.mjs",
+      ".husky/**",
+      "pnpm-lock.yaml",
+    ],
+  },
   js.configs.recommended,
   {
     files: ["**/*.{ts,tsx,js,jsx}"],
@@ -19,12 +34,9 @@ export default [
         },
       },
       globals: {
-        console: "readonly",
-        process: "readonly",
-        Buffer: "readonly",
-        __dirname: "readonly",
-        __filename: "readonly",
-        global: "readonly",
+        ...globals.browser,
+        ...globals.node,
+        ...globals.es2021,
       },
     },
     plugins: {
@@ -90,8 +102,8 @@ export default [
       "no-alert": "error",
       "prefer-const": "error",
       "no-var": "error",
-      "eqeqeq": ["error", "always"],
-      "curly": ["error", "all"],
+      eqeqeq: ["error", "always"],
+      curly: ["error", "all"],
       "no-throw-literal": "error",
       "no-unneeded-ternary": "error",
       "prefer-template": "error",
@@ -112,16 +124,5 @@ export default [
     rules: {
       "@typescript-eslint/no-var-requires": "off",
     },
-  },
-  {
-    ignores: [
-      "node_modules/**",
-      ".next/**",
-      "dist/**",
-      "build/**",
-      "coverage/**",
-      "*.config.js",
-      "*.config.mjs",
-    ],
   },
 ];

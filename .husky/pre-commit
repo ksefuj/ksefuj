@@ -1,6 +1,3 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
 # Run format check
 pnpm format:check || (
   echo "❌ Formatting issues found. Run 'pnpm format' to fix them."

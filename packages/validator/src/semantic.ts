@@ -40,7 +40,9 @@ const rules: SemanticRule[] = [
     description: "Podmiot2 must contain JST and GV",
     check(doc, locale) {
       const podmiot2 = el(doc, "Podmiot2");
-      if (!podmiot2) return [];
+      if (!podmiot2) {
+        return [];
+      }
       const errors: ValidationError[] = [];
       const msg = getMessages(locale);
 
@@ -69,9 +71,20 @@ const rules: SemanticRule[] = [
     description: "P_12 must have valid enumeration value",
     check(doc, locale) {
       const valid = [
-        "23", "22", "8", "7", "5", "4", "3",
-        "0 KR", "0 WDT", "0 EX",
-        "zw", "oo", "np I", "np II",
+        "23",
+        "22",
+        "8",
+        "7",
+        "5",
+        "4",
+        "3",
+        "0 KR",
+        "0 WDT",
+        "0 EX",
+        "zw",
+        "oo",
+        "np I",
+        "np II",
       ];
       const errors: ValidationError[] = [];
       const msg = getMessages(locale);
@@ -96,9 +109,13 @@ const rules: SemanticRule[] = [
     description: "P_13_8 > 0 requires P_18 = 1 and P_12 = 'np I' in rows",
     check(doc, locale) {
       const fa = el(doc, "Fa");
-      if (!fa) return [];
+      if (!fa) {
+        return [];
+      }
       const p13_8 = text(fa, "P_13_8");
-      if (!p13_8 || parseFloat(p13_8) === 0) return [];
+      if (!p13_8 || parseFloat(p13_8) === 0) {
+        return [];
+      }
 
       const errors: ValidationError[] = [];
       const msg = getMessages(locale);
@@ -134,11 +151,17 @@ const rules: SemanticRule[] = [
     description: "Regular currency invoices: rate in FaWiersz, not in Fa",
     check(doc, locale) {
       const fa = el(doc, "Fa");
-      if (!fa) return [];
+      if (!fa) {
+        return [];
+      }
       const waluta = text(fa, "KodWaluty");
-      if (!waluta || waluta === "PLN") return [];
+      if (!waluta || waluta === "PLN") {
+        return [];
+      }
       const rodzaj = text(fa, "RodzajFaktury");
-      if (rodzaj === "ZAL") return []; // advance invoice — KursWalutyZ in Fa OK
+      if (rodzaj === "ZAL") {
+        return [];
+      } // advance invoice — KursWalutyZ in Fa OK
 
       const errors: ValidationError[] = [];
       const msg = getMessages(locale);
@@ -201,7 +224,9 @@ const rules: SemanticRule[] = [
         const nr = text(wiersz, "NrWierszaFa");
         for (const field of fieldsToCheck) {
           const val = text(wiersz, field);
-          if (!val || !val.includes(".")) continue;
+          if (!val || !val.includes(".")) {
+            continue;
+          }
           const clean = val.replace(/\.?0+$/, "");
           if (clean !== val) {
             warnings.push({
@@ -222,7 +247,9 @@ const rules: SemanticRule[] = [
     description: "P_15 (total amount due) is mandatory",
     check(doc, locale) {
       const fa = el(doc, "Fa");
-      if (!fa) return [];
+      if (!fa) {
+        return [];
+      }
       const msg = getMessages(locale);
 
       if (!text(fa, "P_15")) {
@@ -244,7 +271,9 @@ const rules: SemanticRule[] = [
     description: "Adnotacje must contain complete structure",
     check(doc, locale) {
       const adnotacje = el(doc, "Adnotacje");
-      if (!adnotacje) return [];
+      if (!adnotacje) {
+        return [];
+      }
       const errors: ValidationError[] = [];
       const msg = getMessages(locale);
       const required = ["P_16", "P_17", "P_18", "P_18A", "P_23"];
@@ -297,6 +326,6 @@ const rules: SemanticRule[] = [
 /**
  * Run all semantic checks on a parsed XML document.
  */
-export function checkSemantics(doc: Document, locale: Locale = 'pl'): ValidationError[] {
+export function checkSemantics(doc: Document, locale: Locale = "pl"): ValidationError[] {
   return rules.flatMap((rule) => rule.check(doc, locale));
 }

@@ -4,33 +4,12 @@
     "type-enum": [
       2,
       "always",
-      [
-        "feat",
-        "fix",
-        "docs",
-        "style",
-        "refactor",
-        "perf",
-        "test",
-        "build",
-        "ci",
-        "chore",
-        "revert"
-      ]
+      ["feat", "fix", "docs", "style", "refactor", "perf", "test", "build", "ci", "chore", "revert"]
     ],
     "scope-enum": [
       1,
       "always",
-      [
-        "validator",
-        "web",
-        "i18n",
-        "semantic",
-        "xsd",
-        "deps",
-        "ci",
-        "config"
-      ]
+      ["validator", "web", "i18n", "semantic", "xsd", "deps", "ci", "config"]
     ],
     "subject-case": [2, "never", ["sentence-case", "start-case", "pascal-case", "upper-case"]],
     "header-max-length": [2, "always", 72],

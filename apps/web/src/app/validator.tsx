@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState, useRef } from "react";
+import { type ChangeEvent, type DragEvent, useCallback, useRef, useState } from "react";
 import { validate, type ValidationResult } from "@ksefuj/validator";
 
 export function Validator() {
@@ -21,16 +21,18 @@ export function Validator() {
   }, []);
 
   const onDrop = useCallback(
-    (e: React.DragEvent) => {
+    (e: DragEvent) => {
       e.preventDefault();
       setDragging(false);
       const file = e.dataTransfer.files[0];
-      if (file) handleFile(file);
+      if (file) {
+        handleFile(file);
+      }
     },
     [handleFile],
   );
 
-  const onDragOver = useCallback((e: React.DragEvent) => {
+  const onDragOver = useCallback((e: DragEvent) => {
     e.preventDefault();
     setDragging(true);
   }, []);
@@ -40,9 +42,11 @@ export function Validator() {
   const onClickUpload = useCallback(() => inputRef.current?.click(), []);
 
   const onFileChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
-      if (file) handleFile(file);
+      if (file) {
+        handleFile(file);
+      }
     },
     [handleFile],
   );
@@ -50,7 +54,9 @@ export function Validator() {
   const reset = useCallback(() => {
     setResult(null);
     setFileName(null);
-    if (inputRef.current) inputRef.current.value = "";
+    if (inputRef.current) {
+      inputRef.current.value = "";
+    }
   }, []);
 
   return (
@@ -82,9 +88,7 @@ export function Validator() {
           <p className="text-lg text-stone-300">
             {dragging ? "Upuść plik XML" : "Przeciągnij plik XML lub kliknij"}
           </p>
-          <p className="text-sm text-stone-600">
-            Akceptowane: .xml (faktura KSeF FA3)
-          </p>
+          <p className="text-sm text-stone-600">Akceptowane: .xml (faktura KSeF FA3)</p>
         </div>
       </div>
 
@@ -93,17 +97,14 @@ export function Validator() {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <span
-                className={`text-2xl ${result.valid ? "text-emerald-400" : "text-red-400"}`}
-              >
+              <span className={`text-2xl ${result.valid ? "text-emerald-400" : "text-red-400"}`}>
                 {result.valid ? "✅" : "❌"}
               </span>
               <div>
                 <p className="font-medium">{fileName}</p>
                 <p className="text-sm text-stone-500">
                   {result.valid ? "Faktura prawidłowa" : "Znaleziono błędy"}
-                  {result.warnings.length > 0 &&
-                    ` · ${result.warnings.length} ostrzeżeń`}
+                  {result.warnings.length > 0 && ` · ${result.warnings.length} ostrzeżeń`}
                 </p>
               </div>
             </div>
@@ -124,11 +125,7 @@ export function Validator() {
                   className="bg-red-500/10 border border-red-500/20 rounded-lg px-4 py-3"
                 >
                   <p className="text-red-300 text-sm">{err.message}</p>
-                  {err.path && (
-                    <p className="text-red-500/60 text-xs mt-1 font-mono">
-                      {err.path}
-                    </p>
-                  )}
+                  {err.path && <p className="text-red-500/60 text-xs mt-1 font-mono">{err.path}</p>}
                 </div>
               ))}
             </div>
@@ -144,9 +141,7 @@ export function Validator() {
                 >
                   <p className="text-amber-300 text-sm">{warn.message}</p>
                   {warn.path && (
-                    <p className="text-amber-500/60 text-xs mt-1 font-mono">
-                      {warn.path}
-                    </p>
+                    <p className="text-amber-500/60 text-xs mt-1 font-mono">{warn.path}</p>
                   )}
                 </div>
               ))}

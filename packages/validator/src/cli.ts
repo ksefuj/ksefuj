@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+/* eslint-disable no-console */
+
 /**
  * CLI for @ksefuj/validator
  *
@@ -8,8 +10,8 @@
  *   npx @ksefuj/validator --batch ./faktury/
  */
 
-import { readFileSync, readdirSync, statSync } from "node:fs";
-import { resolve, extname } from "node:path";
+import { readdirSync, readFileSync } from "node:fs";
+import { extname, resolve } from "node:path";
 import { validate } from "./validate.js";
 
 const args = process.argv.slice(2);
@@ -73,7 +75,9 @@ if (batchIndex !== -1) {
   console.log(`Walidacja ${files.length} plików w ${dir}\n`);
 
   for (const file of files) {
-    if (!validateFile(file)) allValid = false;
+    if (!validateFile(file)) {
+      allValid = false;
+    }
   }
 
   console.log(`\n${allValid ? "✅ Wszystkie pliki prawidłowe" : "❌ Znaleziono błędy"}`);

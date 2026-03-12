@@ -43,7 +43,7 @@ export interface ValidateOptions {
  * In Node this can optionally shell out to xmllint for full XSD validation.
  */
 export function validate(xml: string, options: ValidateOptions = {}): ValidationResult {
-  const locale = options.locale ?? 'pl';
+  const locale = options.locale ?? "pl";
   const errors: ValidationError[] = [];
   const warnings: ValidationError[] = [];
 

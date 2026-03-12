@@ -24,3 +24,6 @@ coverage/
 
 # Schemas
 *.xsd
+
+# Skills directory (external content)
+skills/
