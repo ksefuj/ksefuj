@@ -267,7 +267,34 @@ marketplace.
 pnpm install
 pnpm dev              # Next.js dev server on localhost:3000
 pnpm build            # Build validator + web app
+pnpm update-schemas   # Update XSD schemas from government sources (manual)
 ```
+
+## Schema Maintenance
+
+The validator uses bundled XSD schemas from the Polish Ministry of Finance to ensure offline
+functionality and avoid CORS issues.
+
+### Updating Schemas
+
+```bash
+pnpm update-schemas   # Downloads latest schemas from crd.gov.pl
+```
+
+**When to run:**
+
+- Monthly schema checks
+- Before releases
+- After official KSeF specification updates
+
+**The script will:**
+
+- Download all 4 XSD schemas from government servers
+- Compare with existing schemas and show differences
+- Update bundled `schemas-data.ts` file if changes detected
+- Provide summary and next steps
+
+**Always review changes before committing** - schema updates can affect validation behavior.
 
 ## Code Style
 

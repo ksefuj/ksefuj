@@ -67,6 +67,8 @@ async function validateFile(path: string) {
 async function main() {
   let allValid = true;
 
+  const positionalArgs = args.filter((a) => !a.startsWith("--"));
+
   if (batchIndex !== -1) {
     const dir = resolve(args[batchIndex + 1] || ".");
     const files = readdirSync(dir)
@@ -83,7 +85,13 @@ async function main() {
 
     console.log(`\n${allValid ? "✅ All files valid" : "❌ Errors found"}`);
   } else {
-    const file = resolve(args.filter((a) => !a.startsWith("--"))[0]);
+    if (positionalArgs.length === 0) {
+      console.error("Error: missing <file.xml> argument.");
+      console.error("Usage: ksef-validate <file.xml>  or  ksef-validate --batch <directory>");
+      process.exit(1);
+    }
+
+    const file = resolve(positionalArgs[0]);
     allValid = await validateFile(file);
   }
 
