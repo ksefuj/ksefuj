@@ -51,7 +51,7 @@ The script will:
 ==========================
 
 📥 Downloading main schema...
-   http://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd
+   https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd
    ✅ Downloaded 178KB
    📊 Modified (+1024 bytes, +15 lines)
    💾 Updated schemat.xsd
@@ -86,7 +86,7 @@ The script will:
 - **No automatic commits** - Always requires manual review
 - **Preserves existing files** - Falls back on download failures
 - **Validates content** - Ensures downloaded files are valid XML
-- **Shows diffs** - Reports exactly what changed
+- **Reports changes** - Shows size and line count differences
 
 ### Schema Storage Architecture
 

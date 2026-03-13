@@ -13,7 +13,7 @@
  * This script should be run manually when we want to ensure we have the latest
  * official schemas. It will:
  * 1. Fetch all schemas from crd.gov.pl
- * 2. Compare with existing schemas (show diff if changed)
+ * 2. Compare with existing schemas and show change summary
  * 3. Update the bundled schema files
  * 4. Regenerate the schemas-data.ts file
  */
