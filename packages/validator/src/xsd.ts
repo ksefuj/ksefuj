@@ -61,44 +61,27 @@ class XsdValidatorManager {
   }
 
   private async initializeBrowserValidatorFromUrls(): Promise<XsdValidator> {
-    // Official schema URLs from Polish Ministry of Finance
-    const SCHEMA_URLS = {
-      main: "http://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd",
-      struktury:
-        "http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2022/01/05/eD/DefinicjeTypy/StrukturyDanych_v10-0E.xsd",
-      elementarne:
-        "http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2022/01/05/eD/DefinicjeTypy/ElementarneTypyDanych_v10-0E.xsd",
-      kody: "http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2022/01/05/eD/DefinicjeTypy/KodyKrajow_v10-0E.xsd",
-    };
-
     let doc: XmlDocument | null = null;
     let validator: XsdValidator | null = null;
     let bufferProvider: XmlBufferInputProvider | null = null;
 
     try {
-      // Fetch all schemas in parallel
-      const urls = Object.values(SCHEMA_URLS);
-      const responses = await Promise.all(
-        urls.map(async (url) => {
-          const response = await fetch(url);
-          if (!response.ok) {
-            throw new Error(`Failed to fetch ${url}: HTTP ${response.status}`);
-          }
-          return response.text();
-        }),
-      );
+      // Use bundled schemas to avoid CORS issues
+      const { getBundledSchemas, SCHEMA_URLS } = await import("./schemas/bundle.js");
+      const schemas = await getBundledSchemas();
 
-      // Map URLs to content
-      const schemas: Record<string, string> = {};
-      urls.forEach((url, index) => {
-        schemas[url] = responses[index];
+      // Map URLs to content for compatibility with existing code
+      const schemasByUrl: Record<string, string> = {};
+      Object.keys(schemas).forEach((key) => {
+        const url = SCHEMA_URLS[key as keyof typeof SCHEMA_URLS];
+        schemasByUrl[url] = schemas[key];
       });
 
       // Prepare schema buffers for import resolution
       const encoder = new TextEncoder();
       const schemaBuffers: Record<string, Uint8Array> = {};
 
-      for (const [url, content] of Object.entries(schemas)) {
+      for (const [url, content] of Object.entries(schemasByUrl)) {
         // Register by URL (for absolute imports)
         schemaBuffers[url] = encoder.encode(content);
         // Register by filename (for relative imports)
@@ -111,7 +94,7 @@ class XsdValidatorManager {
       xmlRegisterInputProvider(bufferProvider);
 
       // Parse main schema and create validator
-      doc = XmlDocument.fromString(schemas[SCHEMA_URLS.main]);
+      doc = XmlDocument.fromString(schemas.main);
       validator = XsdValidator.fromDoc(doc);
 
       // Transfer ownership - don't dispose if successful

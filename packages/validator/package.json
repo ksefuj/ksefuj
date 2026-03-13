@@ -15,7 +15,7 @@
     "ksef-validate": "./dist/cli.js"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && cp -r src/schemas dist/",
     "dev": "tsc --watch",
     "validate": "node dist/cli.js",
     "typecheck": "tsc --noEmit",
@@ -24,7 +24,8 @@
     "test:coverage": "vitest --coverage"
   },
   "files": [
-    "dist"
+    "dist",
+    "src/schemas/*.xsd"
   ],
   "keywords": [
     "ksef",
