@@ -56,11 +56,11 @@ class XsdValidatorManager {
   }
 
   private async initializeValidator(): Promise<XsdValidator> {
-    // Use URL-based approach for better performance and always-fresh schemas
-    return this.initializeBrowserValidatorFromUrls();
+    // Use bundled schemas for offline validation and to avoid CORS issues
+    return this.initializeBrowserValidatorFromBundledSchemas();
   }
 
-  private async initializeBrowserValidatorFromUrls(): Promise<XsdValidator> {
+  private async initializeBrowserValidatorFromBundledSchemas(): Promise<XsdValidator> {
     let doc: XmlDocument | null = null;
     let validator: XsdValidator | null = null;
     let bufferProvider: XmlBufferInputProvider | null = null;

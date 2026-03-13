@@ -26,16 +26,16 @@ export interface SemanticRule {
 // --- Helpers ---
 
 function el(doc: LibxmlDocument, tag: string): LibxmlDocument | null {
-  const elements = doc.find(`//ksef:${tag}`, { ksef: NS });
+  const elements = doc.find(`.//ksef:${tag}`, { ksef: NS });
   return elements.length > 0 ? (elements[0] as LibxmlDocument) : null;
 }
 
 function els(doc: LibxmlDocument, tag: string): LibxmlDocument[] {
-  return doc.find(`//ksef:${tag}`, { ksef: NS }) as LibxmlDocument[];
+  return doc.find(`.//ksef:${tag}`, { ksef: NS }) as LibxmlDocument[];
 }
 
 function text(doc: LibxmlDocument, tag: string): string | null {
-  const result = doc.eval(`string(//ksef:${tag})`, { ksef: NS });
+  const result = doc.eval(`string(.//ksef:${tag}[1])`, { ksef: NS });
   return typeof result === "string" && result.trim() ? result.trim() : null;
 }
 

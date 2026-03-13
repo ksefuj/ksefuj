@@ -14,9 +14,9 @@ describe("XSD Validation", () => {
   });
 
   describe("validateXsd", () => {
-    it("should return empty array for valid XML", async () => {
-      // This is a minimal valid FA(3) invoice
-      // In practice this might not be 100% valid, but we're testing the function works
+    it("should return structured validation result", async () => {
+      // This is a sample FA(3) invoice for testing the validation function
+      // The focus is on testing that the function returns the correct structure
       const validXml = `<?xml version="1.0" encoding="UTF-8"?>
         <Faktura xmlns="http://crd.gov.pl/wzor/2025/06/25/13775/"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
