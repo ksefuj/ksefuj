@@ -33,14 +33,16 @@ export function Validator() {
           has_xsd_errors: res.errors.some((e) => e.source === "xsd"),
           has_semantic_errors: res.errors.some((e) => e.source === "semantic"),
         });
-      } catch {
+      } catch (error) {
+        const errorMessage =
+          error instanceof Error ? error.message : "Błąd podczas walidacji pliku";
         const errorResult: ValidationResult = {
           valid: false,
           errors: [
             {
               level: "error" as const,
-              source: "xsd" as const,
-              message: "Błąd podczas walidacji pliku",
+              source: "parse" as const,
+              message: errorMessage,
             },
           ],
           warnings: [],

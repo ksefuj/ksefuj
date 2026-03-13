@@ -24,7 +24,7 @@ tsx scripts/update-schemas.ts
 ### What it does
 
 1. **Downloads** all 4 XSD schemas from `crd.gov.pl`
-2. **Compares** with existing schemas and shows differences
+2. **Compares** with existing schemas and shows change summary (size/line count)
 3. **Updates** schema files if changes are detected
 4. **Regenerates** `schemas-data.ts` with embedded schemas
 5. **Reports** summary of changes and bundle size

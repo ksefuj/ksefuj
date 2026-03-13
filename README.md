@@ -35,7 +35,7 @@ KSeF using the FA(3) schema.
 - **npm package** — `@ksefuj/validator` with TypeScript support
 - **CLI tool** — `npx @ksefuj/validator invoice.xml`
 - **Claude Skills** — ready-made skills for generating e-invoices in Claude Projects
-- **Zero runtime dependencies** — pure TypeScript, ESM modules
+- **Minimal dependencies** — only libxml2-wasm for XSD validation, TypeScript, ESM modules
 
 ## Quick Start
 

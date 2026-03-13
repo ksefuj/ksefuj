@@ -112,7 +112,7 @@ describe("XSD Validation", () => {
 
       expect(errors.length).toBeGreaterThan(0);
       expect(errors[0].level).toBe("error");
-      expect(errors[0].source).toBe("xsd");
+      expect(errors[0].source).toBe("parse");
     });
 
     it("should extract line numbers from error messages when available", async () => {
@@ -191,10 +191,10 @@ describe("XSD Validation", () => {
   });
 
   describe("Error Handling", () => {
-    it("should handle XML with special characters", async () => {
+    it("should handle XML with properly escaped special characters", async () => {
       const xmlWithSpecialChars = `<?xml version="1.0" encoding="UTF-8"?>
         <Faktura xmlns="http://crd.gov.pl/wzor/2025/06/25/13775/">
-          <Test>Special chars: < > & " '</Test>
+          <Test>Special chars: &lt; &gt; &amp; &quot; &apos;</Test>
         </Faktura>`;
 
       const errors = await validateXsd(xmlWithSpecialChars);

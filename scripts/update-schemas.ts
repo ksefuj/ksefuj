@@ -57,12 +57,12 @@ interface Schemas {
 
 // Official schema URLs from Polish Ministry of Finance
 const SCHEMA_URLS: SchemaUrls = {
-  main: "http://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd",
+  main: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd",
   struktury:
-    "http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2022/01/05/eD/DefinicjeTypy/StrukturyDanych_v10-0E.xsd",
+    "https://crd.gov.pl/xml/schematy/dziedzinowe/mf/2022/01/05/eD/DefinicjeTypy/StrukturyDanych_v10-0E.xsd",
   elementarne:
-    "http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2022/01/05/eD/DefinicjeTypy/ElementarneTypyDanych_v10-0E.xsd",
-  kody: "http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2022/01/05/eD/DefinicjeTypy/KodyKrajow_v10-0E.xsd",
+    "https://crd.gov.pl/xml/schematy/dziedzinowe/mf/2022/01/05/eD/DefinicjeTypy/ElementarneTypyDanych_v10-0E.xsd",
+  kody: "https://crd.gov.pl/xml/schematy/dziedzinowe/mf/2022/01/05/eD/DefinicjeTypy/KodyKrajow_v10-0E.xsd",
 } as const;
 
 // Schema filenames
@@ -149,17 +149,11 @@ function generateSchemasDataFile(schemas: Schemas): void {
  * - XSD files are excluded from npm package to avoid duplication
  *
  * Generated from official Polish Ministry of Finance schemas.
- * Last updated: ${new Date().toISOString()}
  */
 
 export const BUNDLED_SCHEMAS = ${JSON.stringify(schemas, null, 2)} as const;
 
-export const SCHEMA_URLS = {
-  main: 'http://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd',
-  struktury: 'http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2022/01/05/eD/DefinicjeTypy/StrukturyDanych_v10-0E.xsd',
-  elementarne: 'http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2022/01/05/eD/DefinicjeTypy/ElementarneTypyDanych_v10-0E.xsd',
-  kody: 'http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2022/01/05/eD/DefinicjeTypy/KodyKrajow_v10-0E.xsd'
-} as const;
+export const SCHEMA_URLS = ${JSON.stringify(SCHEMA_URLS, null, 2)} as const;
 `;
 
   const dataFilePath = join(schemasDir, "schemas-data.ts");
@@ -241,8 +235,10 @@ async function updateSchemas(): Promise<void> {
     process.exit(1);
   }
 
-  // Generate schemas-data.ts file
-  generateSchemasDataFile(completeSchemas);
+  // Generate schemas-data.ts file only if there are changes
+  if (hasChanges) {
+    generateSchemasDataFile(completeSchemas);
+  }
 
   // Summary
   console.log("\n📋 Update Summary");

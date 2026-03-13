@@ -133,7 +133,7 @@ class ValidationOrchestrator {
     const warnings: ValidationError[] = [];
 
     // Step 1: Well-formed XML check
-    const { doc, error: parseError } = XmlParser.parse(xml);
+    const { error: parseError } = XmlParser.parse(xml);
     if (parseError) {
       errors.push(parseError);
       return { valid: false, errors, warnings };
@@ -155,35 +155,35 @@ class ValidationOrchestrator {
     }
 
     // Step 3: Semantic validation
-    // Only run in browser with parsed document, or if explicitly requested in Node.js
     if (this.enableSemantic) {
-      if (doc) {
-        // Browser with parsed document
-        const semanticResults = checkSemantics(doc, this.locale);
-        for (const result of semanticResults) {
-          if (result.level === "error") {
-            errors.push(result);
-          } else {
-            warnings.push(result);
-          }
-        }
-      } else if (EnvironmentDetector.isNode()) {
-        // Node.js - re-parse for semantic validation if needed
+      try {
+        const { XmlDocument } = await import("libxml2-wasm");
+        const xmlDoc = XmlDocument.fromString(xml);
+
         try {
-          // For Node.js semantic validation, we need a different approach
-          // This would require either a DOM implementation or XML parsing library
-          warnings.push({
-            level: "warning",
-            source: "semantic",
-            message: "Semantic validation not available in Node.js without DOM implementation",
-          });
-        } catch (error) {
-          warnings.push({
-            level: "warning",
-            source: "semantic",
-            message: `Semantic validation failed: ${error instanceof Error ? error.message : String(error)}`,
-          });
+          const semanticResults = checkSemantics(
+            xmlDoc as unknown as {
+              find: (xpath: string, ns?: Record<string, string>) => unknown[];
+              eval: (xpath: string, ns?: Record<string, string>) => unknown;
+            },
+            this.locale,
+          );
+          for (const result of semanticResults) {
+            if (result.level === "error") {
+              errors.push(result);
+            } else {
+              warnings.push(result);
+            }
+          }
+        } finally {
+          xmlDoc.dispose();
         }
+      } catch (error) {
+        warnings.push({
+          level: "warning",
+          source: "semantic",
+          message: `Semantic validation failed: ${error instanceof Error ? error.message : String(error)}`,
+        });
       }
     }
 

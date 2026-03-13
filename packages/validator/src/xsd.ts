@@ -2,7 +2,7 @@
  * XSD Schema validation using libxml2-wasm
  *
  * Provides lazy-loaded XSD validation with proper resource management.
- * Uses URL-based schema fetching for always-fresh schemas from official government sources.
+ * Uses bundled schemas for offline validation and to avoid CORS issues.
  */
 
 import {
@@ -131,6 +131,13 @@ class XsdValidatorManager {
   isDisposed(): boolean {
     return this.disposed;
   }
+
+  static isInstanceDisposed(): boolean {
+    return (
+      XsdValidatorManager.instance === null ||
+      (XsdValidatorManager.instance !== null && XsdValidatorManager.instance.disposed)
+    );
+  }
 }
 
 // Singleton instance getter
@@ -176,11 +183,11 @@ export async function validateXsd(xml: string): Promise<ValidationError[]> {
         line,
       });
     } else {
-      // Handle other errors
+      // Handle other errors (likely parse errors from XmlDocument.fromString)
       const message = error instanceof Error ? error.message : String(error);
       errors.push({
         level: "error",
-        source: "xsd",
+        source: "parse",
         message,
         line: undefined,
       });
@@ -208,7 +215,5 @@ export function disposeValidator(): void {
  * Check if the validator has been disposed
  */
 export function isValidatorDisposed(): boolean {
-  // Check if singleton instance exists and is disposed
-  const instance = XsdValidatorManager["instance"];
-  return !instance || instance.isDisposed();
+  return XsdValidatorManager.isInstanceDisposed();
 }
