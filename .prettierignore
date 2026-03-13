@@ -27,3 +27,6 @@ coverage/
 
 # Skills directory (external content)
 skills/
+
+# Claude Code settings (user-specific)
+.claude/settings.local.json

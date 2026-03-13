@@ -19,9 +19,9 @@
     "dev": "tsc --watch",
     "validate": "node dist/cli.js",
     "typecheck": "tsc --noEmit",
-    "test": "vitest",
+    "test": "vitest --run",
     "test:watch": "vitest watch",
-    "test:coverage": "vitest --coverage"
+    "test:coverage": "vitest --coverage --run"
   },
   "files": [
     "dist",

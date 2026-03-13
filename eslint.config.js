@@ -19,6 +19,7 @@ export default [
       "*.config.mjs",
       ".husky/**",
       "pnpm-lock.yaml",
+      ".claude/settings.local.json",
     ],
   },
   js.configs.recommended,

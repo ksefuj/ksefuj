@@ -9,10 +9,7 @@
     "build": "cd ../.. && pnpm --filter @ksefuj/validator build && cd apps/web && next build",
     "start": "next start",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit",
-    "test": "vitest",
-    "test:watch": "vitest watch",
-    "test:coverage": "vitest --coverage"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@ksefuj/validator": "workspace:*",
