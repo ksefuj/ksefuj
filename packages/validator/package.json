@@ -19,13 +19,15 @@
     "dev": "tsc --watch",
     "validate": "node dist/cli.js",
     "typecheck": "tsc --noEmit",
-    "test": "vitest",
+    "test": "vitest --run",
     "test:watch": "vitest watch",
-    "test:coverage": "vitest --coverage"
+    "test:coverage": "vitest --coverage --run"
   },
   "files": [
     "dist",
-    "src/schemas"
+    "!dist/**/*.xsd",
+    "!dist/**/*.ts",
+    "dist/**/*.d.ts"
   ],
   "keywords": [
     "ksef",
@@ -40,5 +42,8 @@
   "devDependencies": {
     "@types/node": "^25.4.0",
     "typescript": "^5.7.0"
+  },
+  "dependencies": {
+    "libxml2-wasm": "^0.7.1"
   }
 }

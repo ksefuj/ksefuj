@@ -12,24 +12,31 @@ import { getMessages, type Locale } from "./messages.js";
 
 const NS = "http://crd.gov.pl/wzor/2025/06/25/13775/";
 
+type LibxmlDocument = {
+  find: (xpath: string, ns?: Record<string, string>) => unknown[];
+  eval: (xpath: string, ns?: Record<string, string>) => unknown;
+};
+
 export interface SemanticRule {
   id: string;
   description: string;
-  check: (doc: Document, locale: Locale) => ValidationError[];
+  check: (doc: LibxmlDocument, locale: Locale) => ValidationError[];
 }
 
 // --- Helpers ---
 
-function el(parent: Document | Element, tag: string): Element | null {
-  return parent.getElementsByTagNameNS(NS, tag)[0] ?? null;
+function el(doc: LibxmlDocument, tag: string): LibxmlDocument | null {
+  const elements = doc.find(`.//ksef:${tag}`, { ksef: NS });
+  return elements.length > 0 ? (elements[0] as LibxmlDocument) : null;
 }
 
-function els(parent: Document | Element, tag: string): Element[] {
-  return Array.from(parent.getElementsByTagNameNS(NS, tag));
+function els(doc: LibxmlDocument, tag: string): LibxmlDocument[] {
+  return doc.find(`.//ksef:${tag}`, { ksef: NS }) as LibxmlDocument[];
 }
 
-function text(parent: Document | Element, tag: string): string | null {
-  return el(parent, tag)?.textContent?.trim() ?? null;
+function text(doc: LibxmlDocument, tag: string): string | null {
+  const result = doc.eval(`string(.//ksef:${tag}[1])`, { ksef: NS });
+  return typeof result === "string" && result.trim() ? result.trim() : null;
 }
 
 // --- Rules ---
@@ -326,6 +333,6 @@ const rules: SemanticRule[] = [
 /**
  * Run all semantic checks on a parsed XML document.
  */
-export function checkSemantics(doc: Document, locale: Locale = "pl"): ValidationError[] {
+export function checkSemantics(doc: LibxmlDocument, locale: Locale = "pl"): ValidationError[] {
   return rules.flatMap((rule) => rule.check(doc, locale));
 }

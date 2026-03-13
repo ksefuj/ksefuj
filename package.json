@@ -16,6 +16,7 @@
     "format:check": "prettier --check .",
     "typecheck": "pnpm -r typecheck",
     "validate": "pnpm --filter @ksefuj/validator validate",
+    "update-schemas": "tsx scripts/update-schemas.ts",
     "prepare": "husky install",
     "pre-commit": "pnpm format:check && pnpm lint && pnpm typecheck",
     "commit": "cz"
@@ -37,6 +38,7 @@
     "globals": "^17.4.0",
     "husky": "^9.0.0",
     "prettier": "^3.4.0",
+    "tsx": "^4.21.0",
     "typescript": "^5.7.0",
     "vitest": "^2.0.0"
   },

@@ -21,12 +21,12 @@ if (args.length === 0 || args.includes("--help")) {
   @ksefuj/validator — KSeF FA(3) XML validator
 
   Usage:
-    ksef-validate <file.xml>           Waliduj pojedynczy plik
-    ksef-validate --batch <directory>  Waliduj wszystkie XML w katalogu
+    ksef-validate <file.xml>           Validate single file
+    ksef-validate --batch <directory>  Validate all XML files in directory
 
   Options:
-    --help    Pokaż pomoc
-    --json    Wynik w formacie JSON
+    --help    Show help
+    --json    Output in JSON format
   `);
   process.exit(0);
 }
@@ -34,9 +34,9 @@ if (args.length === 0 || args.includes("--help")) {
 const jsonOutput = args.includes("--json");
 const batchIndex = args.indexOf("--batch");
 
-function validateFile(path: string) {
+async function validateFile(path: string) {
   const xml = readFileSync(path, "utf-8");
-  const result = validate(xml);
+  const result = await validate(xml);
 
   if (jsonOutput) {
     console.log(JSON.stringify({ file: path, ...result }, null, 2));
@@ -48,7 +48,7 @@ function validateFile(path: string) {
 
   for (const err of result.errors) {
     const loc = err.path ? ` (${err.path})` : "";
-    const line = err.line ? ` linia ${err.line}` : "";
+    const line = err.line ? ` line ${err.line}` : "";
     console.log(`  ❌ ${err.message}${loc}${line}`);
   }
 
@@ -58,32 +58,47 @@ function validateFile(path: string) {
   }
 
   if (result.valid && result.warnings.length === 0) {
-    console.log("  Brak błędów i ostrzeżeń");
+    console.log("  No errors or warnings");
   }
 
   return result.valid;
 }
 
-let allValid = true;
+async function main() {
+  let allValid = true;
 
-if (batchIndex !== -1) {
-  const dir = resolve(args[batchIndex + 1] || ".");
-  const files = readdirSync(dir)
-    .filter((f) => extname(f).toLowerCase() === ".xml")
-    .map((f) => resolve(dir, f));
+  const positionalArgs = args.filter((a) => !a.startsWith("--"));
 
-  console.log(`Walidacja ${files.length} plików w ${dir}\n`);
+  if (batchIndex !== -1) {
+    const dir = resolve(args[batchIndex + 1] || ".");
+    const files = readdirSync(dir)
+      .filter((f) => extname(f).toLowerCase() === ".xml")
+      .map((f) => resolve(dir, f));
 
-  for (const file of files) {
-    if (!validateFile(file)) {
-      allValid = false;
+    console.log(`Validating ${files.length} files in ${dir}\n`);
+
+    for (const file of files) {
+      if (!(await validateFile(file))) {
+        allValid = false;
+      }
     }
+
+    console.log(`\n${allValid ? "✅ All files valid" : "❌ Errors found"}`);
+  } else {
+    if (positionalArgs.length === 0) {
+      console.error("Error: missing <file.xml> argument.");
+      console.error("Usage: ksef-validate <file.xml>  or  ksef-validate --batch <directory>");
+      process.exit(1);
+    }
+
+    const file = resolve(positionalArgs[0]);
+    allValid = await validateFile(file);
   }
 
-  console.log(`\n${allValid ? "✅ Wszystkie pliki prawidłowe" : "❌ Znaleziono błędy"}`);
-} else {
-  const file = resolve(args.filter((a) => !a.startsWith("--"))[0]);
-  allValid = validateFile(file);
+  process.exit(allValid ? 0 : 1);
 }
 
-process.exit(allValid ? 0 : 1);
+main().catch((error) => {
+  console.error("Error:", error.message);
+  process.exit(1);
+});

@@ -1,21 +1,61 @@
 "use client";
 
 import { type ChangeEvent, type DragEvent, useCallback, useRef, useState } from "react";
-import { validate, type ValidationResult } from "@ksefuj/validator";
+import { track } from "@vercel/analytics";
+
+// Type imports only - no runtime imports
+import type { ValidationResult } from "@ksefuj/validator";
 
 export function Validator() {
   const [result, setResult] = useState<ValidationResult | null>(null);
   const [fileName, setFileName] = useState<string | null>(null);
   const [dragging, setDragging] = useState(false);
+  const [validating, setValidating] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleFile = useCallback((file: File) => {
     setFileName(file.name);
+    setValidating(true);
     const reader = new FileReader();
-    reader.onload = (e) => {
+    reader.onload = async (e) => {
       const xml = e.target?.result as string;
-      const res = validate(xml);
-      setResult(res);
+      try {
+        // Dynamic import to avoid SSR issues
+        const { validate } = await import("@ksefuj/validator");
+        const res = await validate(xml);
+        setResult(res);
+
+        // Track validation event with anonymized stats
+        track("invoice_validated", {
+          valid: res.valid,
+          error_count: res.errors.length,
+          warning_count: res.warnings.length,
+          has_xsd_errors: res.errors.some((e) => e.source === "xsd"),
+          has_semantic_errors: res.errors.some((e) => e.source === "semantic"),
+        });
+      } catch (error) {
+        const errorMessage =
+          error instanceof Error ? error.message : "Błąd podczas walidacji pliku";
+        const errorResult: ValidationResult = {
+          valid: false,
+          errors: [
+            {
+              level: "error" as const,
+              source: "parse" as const,
+              message: errorMessage,
+            },
+          ],
+          warnings: [],
+        };
+        setResult(errorResult);
+
+        // Track validation failure
+        track("invoice_validation_failed", {
+          error_type: "processing_error",
+        });
+      } finally {
+        setValidating(false);
+      }
     };
     reader.readAsText(file);
   }, []);
@@ -24,32 +64,67 @@ export function Validator() {
     (e: DragEvent) => {
       e.preventDefault();
       setDragging(false);
+      if (validating) {
+        return;
+      }
       const file = e.dataTransfer.files[0];
       if (file) {
         handleFile(file);
       }
     },
-    [handleFile],
+    [handleFile, validating],
   );
 
-  const onDragOver = useCallback((e: DragEvent) => {
-    e.preventDefault();
-    setDragging(true);
-  }, []);
+  const onDragOver = useCallback(
+    (e: DragEvent) => {
+      e.preventDefault();
+      if (!validating) {
+        setDragging(true);
+      }
+    },
+    [validating],
+  );
 
   const onDragLeave = useCallback(() => setDragging(false), []);
 
-  const onClickUpload = useCallback(() => inputRef.current?.click(), []);
+  const onClickUpload = useCallback(() => {
+    if (!validating) {
+      inputRef.current?.click();
+    }
+  }, [validating]);
 
   const onFileChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
+      if (validating) {
+        return;
+      }
       const file = e.target.files?.[0];
       if (file) {
         handleFile(file);
       }
     },
-    [handleFile],
+    [handleFile, validating],
   );
+
+  const getBorderClass = (dragging: boolean, validating: boolean) => {
+    if (dragging && !validating) {
+      return "border-emerald-500 bg-emerald-500/5";
+    }
+    if (validating) {
+      return "border-stone-700";
+    }
+    return "border-stone-700 hover:border-stone-500 hover:bg-stone-900/50";
+  };
+
+  const getMainText = (validating: boolean, dragging: boolean) => {
+    if (validating) {
+      return "Walidacja...";
+    }
+    if (dragging) {
+      return "Upuść plik XML";
+    }
+    return "Przeciągnij plik XML lub kliknij";
+  };
 
   const reset = useCallback(() => {
     setResult(null);
@@ -68,13 +143,9 @@ export function Validator() {
         onDragLeave={onDragLeave}
         onClick={onClickUpload}
         className={`
-          relative border-2 border-dashed rounded-xl p-12 text-center cursor-pointer
-          transition-all duration-200
-          ${
-            dragging
-              ? "border-emerald-500 bg-emerald-500/5"
-              : "border-stone-700 hover:border-stone-500 hover:bg-stone-900/50"
-          }
+          relative border-2 border-dashed rounded-xl p-12 text-center transition-all duration-200
+          ${validating ? "cursor-not-allowed opacity-50" : "cursor-pointer"}
+          ${getBorderClass(dragging, validating)}
         `}
       >
         <input
@@ -85,10 +156,12 @@ export function Validator() {
           className="hidden"
         />
         <div className="space-y-2">
-          <p className="text-lg text-stone-300">
-            {dragging ? "Upuść plik XML" : "Przeciągnij plik XML lub kliknij"}
+          <p className="text-lg text-stone-300">{getMainText(validating, dragging)}</p>
+          <p className="text-sm text-stone-600">
+            {validating
+              ? "Sprawdzanie XSD i reguł semantycznych..."
+              : "Akceptowane: .xml (faktura KSeF FA3)"}
           </p>
-          <p className="text-sm text-stone-600">Akceptowane: .xml (faktura KSeF FA3)</p>
         </div>
       </div>
 
@@ -106,6 +179,74 @@ export function Validator() {
                   {result.valid ? "Faktura prawidłowa" : "Znaleziono błędy"}
                   {result.warnings.length > 0 && ` · ${result.warnings.length} ostrzeżeń`}
                 </p>
+                {/* Validation badges */}
+                <div className="flex gap-2 mt-2">
+                  {(() => {
+                    const hasXsdErrors = result.errors.some((e) => e.source === "xsd");
+                    const hasSemanticErrors = result.errors.some((e) => e.source === "semantic");
+                    const hasXsdWarnings = result.warnings.some((w) => w.source === "xsd");
+                    const hasSemanticWarnings = result.warnings.some(
+                      (w) => w.source === "semantic",
+                    );
+
+                    let xsdBadgeClass = "";
+                    if (hasXsdErrors) {
+                      xsdBadgeClass = "bg-red-500/20 text-red-300 border border-red-500/30";
+                    } else if (hasXsdWarnings) {
+                      xsdBadgeClass = "bg-amber-500/20 text-amber-300 border border-amber-500/30";
+                    } else {
+                      xsdBadgeClass =
+                        "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";
+                    }
+
+                    let xsdBadgeLabel = "";
+                    if (hasXsdErrors) {
+                      xsdBadgeLabel = "Błąd XSD";
+                    } else if (hasXsdWarnings) {
+                      xsdBadgeLabel = "Ostrzeżenie XSD";
+                    } else {
+                      xsdBadgeLabel = "XSD ✓";
+                    }
+
+                    let semanticBadgeClass = "";
+                    if (hasSemanticErrors) {
+                      semanticBadgeClass = "bg-red-500/20 text-red-300 border border-red-500/30";
+                    } else if (hasSemanticWarnings) {
+                      semanticBadgeClass =
+                        "bg-amber-500/20 text-amber-300 border border-amber-500/30";
+                    } else {
+                      semanticBadgeClass =
+                        "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";
+                    }
+
+                    let semanticBadgeLabel = "";
+                    if (hasSemanticErrors) {
+                      semanticBadgeLabel = "Błąd biznesowy";
+                    } else if (hasSemanticWarnings) {
+                      semanticBadgeLabel = "Ostrzeżenie biznesowe";
+                    } else {
+                      semanticBadgeLabel = "Reguły ✓";
+                    }
+
+                    return (
+                      <>
+                        {/* XSD Schema Badge */}
+                        <span
+                          className={`inline-flex items-center px-2 py-1 text-xs font-medium rounded-full ${xsdBadgeClass}`}
+                        >
+                          📋 {xsdBadgeLabel}
+                        </span>
+
+                        {/* Semantic Rules Badge */}
+                        <span
+                          className={`inline-flex items-center px-2 py-1 text-xs font-medium rounded-full ${semanticBadgeClass}`}
+                        >
+                          🧠 {semanticBadgeLabel}
+                        </span>
+                      </>
+                    );
+                  })()}
+                </div>
               </div>
             </div>
             <button

@@ -103,10 +103,11 @@ Two layers:
 
 Full XML validation against the official FA(3) XSD schema from Ministry of Finance.
 
-- **TODO**: Integrate `libxml2-wasm` for client-side XSD validation in the browser
-- The XSD (`packages/validator/src/schemas/fa3.xsd`) imports an external schema
-  `StrukturyDanych_v10-0E.xsd` from `crd.gov.pl` — this dependency needs to be bundled locally
-- In Node/CLI context, can shell out to `xmllint` as fallback
+- **✅ IMPLEMENTED**: `libxml2-wasm` for client-side XSD validation in the browser
+- **✅ BUNDLED SCHEMAS**: All schemas downloaded and bundled locally to avoid CORS issues
+- **✅ OFFLINE CAPABLE**: No network requests needed - schemas embedded in package
+- **✅ OFFICIAL COMPLIANCE**: Uses exact schemas from `crd.gov.pl` (downloaded at build time)
+- **✅ PERFORMANCE**: Singleton validator pattern with efficient resource reuse
 
 ### 2. Semantic Rules
 
@@ -197,7 +198,10 @@ client-side processing, and near-zero server costs that make "free forever" sust
 - [x] Semantic rules engine
 - [x] CLI scaffold
 - [x] Next.js web app with drag & drop
-- [ ] libxml2-wasm integration for full XSD validation in browser
+- [x] libxml2-wasm integration for full XSD validation in browser
+- [x] Bundled schema solution (CORS-free, offline-capable)
+- [x] Two-layer validation UI badges (XSD + semantic)
+- [x] Singleton validator lifecycle (efficient resource reuse)
 - [ ] i18n setup (PL + EN + UA)
 - [ ] pnpm publish @ksefuj/validator
 - [ ] Deploy to Vercel on ksefuj.to
@@ -263,7 +267,34 @@ marketplace.
 pnpm install
 pnpm dev              # Next.js dev server on localhost:3000
 pnpm build            # Build validator + web app
+pnpm update-schemas   # Update XSD schemas from government sources (manual)
 ```
+
+## Schema Maintenance
+
+The validator uses bundled XSD schemas from the Polish Ministry of Finance to ensure offline
+functionality and avoid CORS issues.
+
+### Updating Schemas
+
+```bash
+pnpm update-schemas   # Downloads latest schemas from crd.gov.pl
+```
+
+**When to run:**
+
+- Monthly schema checks
+- Before releases
+- After official KSeF specification updates
+
+**The script will:**
+
+- Download all 4 XSD schemas from government servers
+- Compare with existing schemas and show differences
+- Update bundled `schemas-data.ts` file if changes detected
+- Provide summary and next steps
+
+**Always review changes before committing** - schema updates can affect validation behavior.
 
 ## Code Style
 
