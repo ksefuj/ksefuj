@@ -1,8 +1,10 @@
 "use client";
 
 import { type ChangeEvent, type DragEvent, useCallback, useRef, useState } from "react";
-import { validate, type ValidationResult } from "@ksefuj/validator";
 import { track } from "@vercel/analytics";
+
+// Type imports only - no runtime imports
+import type { ValidationResult } from "@ksefuj/validator";
 
 export function Validator() {
   const [result, setResult] = useState<ValidationResult | null>(null);
@@ -18,6 +20,8 @@ export function Validator() {
     reader.onload = async (e) => {
       const xml = e.target?.result as string;
       try {
+        // Dynamic import to avoid SSR issues
+        const { validate } = await import("@ksefuj/validator");
         const res = await validate(xml);
         setResult(res);
 
@@ -173,6 +177,74 @@ export function Validator() {
                   {result.valid ? "Faktura prawidłowa" : "Znaleziono błędy"}
                   {result.warnings.length > 0 && ` · ${result.warnings.length} ostrzeżeń`}
                 </p>
+                {/* Validation badges */}
+                <div className="flex gap-2 mt-2">
+                  {(() => {
+                    const hasXsdErrors = result.errors.some((e) => e.source === "xsd");
+                    const hasSemanticErrors = result.errors.some((e) => e.source === "semantic");
+                    const hasXsdWarnings = result.warnings.some((w) => w.source === "xsd");
+                    const hasSemanticWarnings = result.warnings.some(
+                      (w) => w.source === "semantic",
+                    );
+
+                    let xsdBadgeClass = "";
+                    if (hasXsdErrors) {
+                      xsdBadgeClass = "bg-red-500/20 text-red-300 border border-red-500/30";
+                    } else if (hasXsdWarnings) {
+                      xsdBadgeClass = "bg-amber-500/20 text-amber-300 border border-amber-500/30";
+                    } else {
+                      xsdBadgeClass =
+                        "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";
+                    }
+
+                    let xsdBadgeLabel = "";
+                    if (hasXsdErrors) {
+                      xsdBadgeLabel = "Błąd XSD";
+                    } else if (hasXsdWarnings) {
+                      xsdBadgeLabel = "Ostrzeżenie XSD";
+                    } else {
+                      xsdBadgeLabel = "XSD ✓";
+                    }
+
+                    let semanticBadgeClass = "";
+                    if (hasSemanticErrors) {
+                      semanticBadgeClass = "bg-red-500/20 text-red-300 border border-red-500/30";
+                    } else if (hasSemanticWarnings) {
+                      semanticBadgeClass =
+                        "bg-amber-500/20 text-amber-300 border border-amber-500/30";
+                    } else {
+                      semanticBadgeClass =
+                        "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";
+                    }
+
+                    let semanticBadgeLabel = "";
+                    if (hasSemanticErrors) {
+                      semanticBadgeLabel = "Błąd biznesowy";
+                    } else if (hasSemanticWarnings) {
+                      semanticBadgeLabel = "Ostrzeżenie biznesowe";
+                    } else {
+                      semanticBadgeLabel = "Reguły ✓";
+                    }
+
+                    return (
+                      <>
+                        {/* XSD Schema Badge */}
+                        <span
+                          className={`inline-flex items-center px-2 py-1 text-xs font-medium rounded-full ${xsdBadgeClass}`}
+                        >
+                          📋 {xsdBadgeLabel}
+                        </span>
+
+                        {/* Semantic Rules Badge */}
+                        <span
+                          className={`inline-flex items-center px-2 py-1 text-xs font-medium rounded-full ${semanticBadgeClass}`}
+                        >
+                          🧠 {semanticBadgeLabel}
+                        </span>
+                      </>
+                    );
+                  })()}
+                </div>
               </div>
             </div>
             <button

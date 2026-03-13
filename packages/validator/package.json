@@ -24,8 +24,7 @@
     "test:coverage": "vitest --coverage"
   },
   "files": [
-    "dist",
-    "src/schemas"
+    "dist"
   ],
   "keywords": [
     "ksef",
