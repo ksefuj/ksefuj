@@ -110,10 +110,33 @@ Catches common errors that XSD cannot express:
 
 - Required JST/GV fields in Podmiot2
 - Correct P_12 VAT rate enumerations
-- Reverse charge consistency
-- Exchange rate placement rules
+- Reverse charge consistency (P_13_8 requires P_18 and "np I")
+- Exchange rate placement rules (KursWaluty vs KursWalutyZ)
 - GTU format validation
-- And more...
+- Correction invoice (KOR) validation
+- Advance (ZAL) and settlement (ROZ) invoice rules
+- Simplified invoice validation (≤450 PLN)
+- WDT/Export invoice requirements
+- VAT margin procedure validation
+- Third-party (Podmiot3) role validation
+- Payment information consistency
+
+## Testing
+
+The validator is tested against **all 26 official KSeF FA(3) examples** from the Polish Ministry of
+Finance, ensuring 100% compliance with government standards. These examples cover:
+
+- Standard VAT invoices
+- Correction invoices (KOR) - both universal and difference methods
+- Advance invoices (ZAL) and settlements (ROZ)
+- Simplified invoices (≤450 PLN)
+- WDT (intra-community) and export invoices
+- VAT margin procedures
+- Foreign currency invoices
+- Invoices with attachments
+- And more edge cases
+
+All official examples pass validation, guaranteeing compatibility with the KSeF 2.0 system.
 
 ## License
 

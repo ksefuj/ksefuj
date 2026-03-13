@@ -1,0 +1,39 @@
+# Source files (TypeScript)
+src/
+*.ts
+!dist/**/*.d.ts
+
+# Test files and fixtures
+test/
+*.test.ts
+*.test.js
+coverage/
+.nyc_output/
+
+# Development files
+tsconfig.json
+vitest.config.ts
+.eslintrc*
+.prettierrc*
+
+# XSD schema files (bundled in code)
+*.xsd
+
+# Git and IDE
+.git/
+.gitignore
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+*.tsbuildinfo
+
+# Documentation files that are not needed in package
+README.md.backup
+*.log

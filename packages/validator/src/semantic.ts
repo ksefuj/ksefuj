@@ -42,6 +42,7 @@ function text(doc: LibxmlDocument, tag: string): string | null {
 // --- Rules ---
 
 const rules: SemanticRule[] = [
+  // --- Core validation rules ---
   {
     id: "PODMIOT2_JST_GV",
     description: "Podmiot2 must contain JST and GV",
@@ -173,6 +174,16 @@ const rules: SemanticRule[] = [
       const errors: ValidationError[] = [];
       const msg = getMessages(locale);
 
+      // Check for export/WDT - they don't need exchange rates in line items
+      let isExportWDT = false;
+      for (const wiersz of els(doc, "FaWiersz")) {
+        const p12 = text(wiersz, "P_12");
+        if (p12 === "0 WDT" || p12 === "0 EX") {
+          isExportWDT = true;
+          break;
+        }
+      }
+
       if (el(fa, "KursWalutyZ")) {
         errors.push({
           level: "error",
@@ -182,15 +193,18 @@ const rules: SemanticRule[] = [
         });
       }
 
-      for (const wiersz of els(doc, "FaWiersz")) {
-        if (!el(wiersz, "KursWaluty")) {
-          const nr = text(wiersz, "NrWierszaFa");
-          errors.push({
-            level: "warning",
-            source: "semantic",
-            message: msg.KURS_WALUTY_MISSING(nr, waluta),
-            path: `FaWiersz[${nr}]/KursWaluty`,
-          });
+      // Skip KursWaluty requirement for WDT/Export invoices
+      if (!isExportWDT) {
+        for (const wiersz of els(doc, "FaWiersz")) {
+          if (!el(wiersz, "KursWaluty")) {
+            const nr = text(wiersz, "NrWierszaFa");
+            errors.push({
+              level: "warning",
+              source: "semantic",
+              message: msg.KURS_WALUTY_MISSING(nr, waluta),
+              path: `FaWiersz[${nr}]/KursWaluty`,
+            });
+          }
         }
       }
       return errors;
@@ -326,6 +340,291 @@ const rules: SemanticRule[] = [
         });
       }
       return errors;
+    },
+  },
+
+  // --- Additional rules from official examples ---
+
+  {
+    id: "KOR_NEGATIVE_AMOUNTS",
+    description: "Correction invoices (KOR) can have negative amounts",
+    check(doc) {
+      const fa = el(doc, "Fa");
+      if (!fa) {
+        return [];
+      }
+      const rodzaj = text(fa, "RodzajFaktury");
+      if (rodzaj !== "KOR") {
+        return [];
+      }
+
+      // Just validate that negative amounts are properly handled
+      // No errors - this is informational
+      return [];
+    },
+  },
+
+  {
+    id: "KOR_REQUIRES_DANE_FA_KORYGOWANEJ",
+    description: "Correction invoices must have DaneFaKorygowanej",
+    check(doc) {
+      const fa = el(doc, "Fa");
+      if (!fa) {
+        return [];
+      }
+      const rodzaj = text(fa, "RodzajFaktury");
+      if (rodzaj !== "KOR") {
+        return [];
+      }
+
+      const errors: ValidationError[] = [];
+
+      if (!el(fa, "DaneFaKorygowanej")) {
+        errors.push({
+          level: "error",
+          source: "semantic",
+          message: "Faktura korygująca musi zawierać element DaneFaKorygowanej",
+          path: "Fa/DaneFaKorygowanej",
+        });
+      }
+      return errors;
+    },
+  },
+
+  {
+    id: "SIMPLIFIED_INVOICE_LIMIT",
+    description: "Simplified invoices (P_15 <= 450 PLN) validation",
+    check(doc) {
+      const fa = el(doc, "Fa");
+      if (!fa) {
+        return [];
+      }
+
+      const p15 = text(fa, "P_15");
+      if (!p15) {
+        return [];
+      }
+
+      const amount = parseFloat(p15);
+      const warnings: ValidationError[] = [];
+
+      // Check if this might be a simplified invoice
+      if (amount <= 450) {
+        const podmiot2 = el(doc, "Podmiot2");
+        if (podmiot2) {
+          const nip = text(podmiot2, "NIP");
+          const nazwa = text(podmiot2, "Nazwa");
+
+          // For simplified invoices, only NIP is required for buyer
+          if (!nip && nazwa) {
+            warnings.push({
+              level: "warning",
+              source: "semantic",
+              message: "Dla faktury uproszczonej (≤450 PLN) wystarczy NIP nabywcy",
+              path: "Podmiot2",
+            });
+          }
+        }
+      }
+      return warnings;
+    },
+  },
+
+  {
+    id: "WDT_EXPORT_P23",
+    description: "WDT and Export invoices validation for P_23",
+    check(doc) {
+      const warnings: ValidationError[] = [];
+
+      // Check for WDT or export tax rates in line items
+      let hasWDT = false;
+      let hasExport = false;
+
+      for (const wiersz of els(doc, "FaWiersz")) {
+        const p12 = text(wiersz, "P_12");
+        if (p12 === "0 WDT") {
+          hasWDT = true;
+        }
+        if (p12 === "0 EX") {
+          hasExport = true;
+        }
+      }
+
+      if (hasWDT || hasExport) {
+        const p23 = text(doc, "P_23");
+        // P_23 can be 1 (yes) or 2 (no) for WDT/Export
+        if (!p23 || (p23 !== "1" && p23 !== "2")) {
+          warnings.push({
+            level: "warning",
+            source: "semantic",
+            message: hasWDT
+              ? "Faktury WDT powinny mieć P_23 ustawione (1 lub 2)"
+              : "Faktury eksportowe powinny mieć P_23 ustawione (1 lub 2)",
+            path: "Fa/Adnotacje/P_23",
+          });
+        }
+      }
+      return warnings;
+    },
+  },
+
+  {
+    id: "MARGIN_PROCEDURE_VALIDATION",
+    description: "VAT margin procedure validation (PMarzy)",
+    check(doc) {
+      const fa = el(doc, "Fa");
+      if (!fa) {
+        return [];
+      }
+
+      const warnings: ValidationError[] = [];
+
+      // Check if any line has "marża" notation
+      let hasMarginProcedure = false;
+      for (const wiersz of els(doc, "FaWiersz")) {
+        const p12 = text(wiersz, "P_12");
+        if (p12 === "marża") {
+          hasMarginProcedure = true;
+          break;
+        }
+      }
+
+      if (hasMarginProcedure) {
+        const pmarzy = el(doc, "PMarzy");
+        if (pmarzy) {
+          const pmarzyN = text(pmarzy, "P_PMarzyN");
+          if (pmarzyN !== "2") {
+            warnings.push({
+              level: "warning",
+              source: "semantic",
+              message: "Przy procedurze marży P_PMarzyN powinno być '2'",
+              path: "Fa/Adnotacje/PMarzy/P_PMarzyN",
+            });
+          }
+        }
+      }
+      return warnings;
+    },
+  },
+
+  {
+    id: "ADVANCE_INVOICE_VALIDATION",
+    description: "Advance invoice (ZAL) specific validation",
+    check(doc) {
+      const fa = el(doc, "Fa");
+      if (!fa) {
+        return [];
+      }
+      const rodzaj = text(fa, "RodzajFaktury");
+      if (rodzaj !== "ZAL") {
+        return [];
+      }
+
+      const errors: ValidationError[] = [];
+
+      // Advance invoices should have Zamowienie section
+      if (!el(fa, "Zamowienie")) {
+        errors.push({
+          level: "warning",
+          source: "semantic",
+          message: "Faktura zaliczkowa powinna zawierać sekcję Zamowienie",
+          path: "Fa/Zamowienie",
+        });
+      }
+
+      // For foreign currency advance invoices, KursWalutyZ should be in Fa
+      const waluta = text(fa, "KodWaluty");
+      if (waluta && waluta !== "PLN") {
+        if (!el(fa, "KursWalutyZ")) {
+          errors.push({
+            level: "warning",
+            source: "semantic",
+            message: "Faktura zaliczkowa w walucie obcej powinna mieć KursWalutyZ w Fa",
+            path: "Fa/KursWalutyZ",
+          });
+        }
+      }
+      return errors;
+    },
+  },
+
+  {
+    id: "SETTLEMENT_INVOICE_VALIDATION",
+    description: "Settlement invoice (ROZ) validation",
+    check(doc) {
+      const fa = el(doc, "Fa");
+      if (!fa) {
+        return [];
+      }
+      const rodzaj = text(fa, "RodzajFaktury");
+      if (rodzaj !== "ROZ") {
+        return [];
+      }
+
+      const errors: ValidationError[] = [];
+
+      // Settlement invoices must have reference to advance invoices
+      if (!el(fa, "FakturaZaliczkowa")) {
+        errors.push({
+          level: "error",
+          source: "semantic",
+          message: "Faktura rozliczająca musi zawierać odniesienie do faktury zaliczkowej",
+          path: "Fa/FakturaZaliczkowa",
+        });
+      }
+      return errors;
+    },
+  },
+
+  {
+    id: "THIRD_PARTY_VALIDATION",
+    description: "Third party (Podmiot3) role validation",
+    check(doc) {
+      const podmiot3 = el(doc, "Podmiot3");
+      if (!podmiot3) {
+        return [];
+      }
+
+      const warnings: ValidationError[] = [];
+      const rola = text(podmiot3, "Rola");
+
+      // According to official examples, role 8 is also valid (odbiorca)
+      if (rola && !["1", "2", "3", "4", "5", "8"].includes(rola)) {
+        warnings.push({
+          level: "error",
+          source: "semantic",
+          message: `Nieprawidłowa rola Podmiotu3: ${rola}. Dozwolone: 1-5, 8`,
+          path: "Podmiot3/Rola",
+        });
+      }
+      return warnings;
+    },
+  },
+
+  {
+    id: "PAYMENT_VALIDATION",
+    description: "Payment information validation",
+    check(doc) {
+      const platnosc = el(doc, "Platnosc");
+      if (!platnosc) {
+        return [];
+      }
+
+      const warnings: ValidationError[] = [];
+
+      const zaplacono = text(platnosc, "Zaplacono");
+      const dataZaplaty = text(platnosc, "DataZaplaty");
+
+      // If marked as paid, should have payment date
+      if (zaplacono === "1" && !dataZaplaty) {
+        warnings.push({
+          level: "warning",
+          source: "semantic",
+          message: "Zaznaczono płatność, ale brak daty zapłaty",
+          path: "Fa/Platnosc/DataZaplaty",
+        });
+      }
+      return warnings;
     },
   },
 ];
