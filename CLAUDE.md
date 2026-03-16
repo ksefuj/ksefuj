@@ -28,8 +28,10 @@ ksefuj/
 │   └── src/schemas/fa3.xsd ← official MF schema
 ├── apps/web/               ← Next.js app (ksefuj.to)
 │   └── src/app/
-│       ├── page.tsx        ← landing page
-│       └── validator.tsx   ← drag & drop validator component
+│       ├── [locale]/       ← i18n routing (PL/EN/UA)
+│       │   ├── page.tsx    ← localized landing page
+│       │   └── validator.tsx ← drag & drop validator
+│       └── i18n/           ← translations and config
 └── skills/ksef-fa3/        ← Claude skill for invoice generation
 ```
 
@@ -202,7 +204,7 @@ client-side processing, and near-zero server costs that make "free forever" sust
 - [x] Bundled schema solution (CORS-free, offline-capable)
 - [x] Two-layer validation UI badges (XSD + semantic)
 - [x] Singleton validator lifecycle (efficient resource reuse)
-- [ ] i18n setup (PL + EN + UA)
+- [x] i18n setup (PL + EN + UA) ✅
 - [ ] pnpm publish @ksefuj/validator
 - [ ] Deploy to Vercel on ksefuj.to
 - [ ] First blog posts (SEO)
