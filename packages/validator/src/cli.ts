@@ -25,18 +25,24 @@ if (args.length === 0 || args.includes("--help")) {
     ksef-validate --batch <directory>  Validate all XML files in directory
 
   Options:
-    --help    Show help
-    --json    Output in JSON format
+    --help         Show help
+    --json         Output in JSON format
+    --assertions   Include successful validations
+    --verbose      Show detailed issue information
   `);
   process.exit(0);
 }
 
 const jsonOutput = args.includes("--json");
+const showAssertions = args.includes("--assertions");
+const verbose = args.includes("--verbose");
 const batchIndex = args.indexOf("--batch");
 
 async function validateFile(path: string) {
   const xml = readFileSync(path, "utf-8");
-  const result = await validate(xml);
+  const result = await validate(xml, {
+    collectAssertions: showAssertions,
+  });
 
   if (jsonOutput) {
     console.log(JSON.stringify({ file: path, ...result }, null, 2));
@@ -46,19 +52,47 @@ async function validateFile(path: string) {
   const icon = result.valid ? "✅" : "❌";
   console.log(`\n${icon} ${path}`);
 
-  for (const err of result.errors) {
-    const loc = err.path ? ` (${err.path})` : "";
-    const line = err.line ? ` line ${err.line}` : "";
-    console.log(`  ❌ ${err.message}${loc}${line}`);
+  // Show errors
+  const errors = result.issues.filter((i) => i.code.severity === "error");
+  for (const issue of errors) {
+    const loc = issue.context.location.xpath ? ` (${issue.context.location.xpath})` : "";
+    const line = issue.context.location.lineNumber
+      ? ` line ${issue.context.location.lineNumber}`
+      : "";
+    console.log(`  ❌ ${issue.message}${loc}${line}`);
+
+    if (verbose) {
+      console.log(`     Code: ${issue.code.code}`);
+      if (issue.fixSuggestions.length > 0) {
+        console.log(`     Fixes: ${issue.fixSuggestions.map((f) => f.description).join(", ")}`);
+      }
+    }
   }
 
-  for (const warn of result.warnings) {
-    const loc = warn.path ? ` (${warn.path})` : "";
-    console.log(`  ⚠️  ${warn.message}${loc}`);
+  // Show warnings
+  const warnings = result.issues.filter((i) => i.code.severity === "warning");
+  for (const issue of warnings) {
+    const loc = issue.context.location.xpath ? ` (${issue.context.location.xpath})` : "";
+    console.log(`  ⚠️  ${issue.message}${loc}`);
   }
 
-  if (result.valid && result.warnings.length === 0) {
+  // Show assertions if requested
+  if (showAssertions && result.assertions.length > 0) {
+    console.log(`  ✓ ${result.assertions.length} validations passed`);
+    if (verbose) {
+      for (const assertion of result.assertions) {
+        console.log(`    • ${assertion.description}`);
+      }
+    }
+  }
+
+  if (result.valid && result.issues.length === 0) {
     console.log("  No errors or warnings");
+  }
+
+  // Show metadata in verbose mode
+  if (verbose) {
+    console.log(`  ⏱  Validation time: ${result.metadata.validationTimeMs}ms`);
   }
 
   return result.valid;

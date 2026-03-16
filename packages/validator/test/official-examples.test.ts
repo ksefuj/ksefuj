@@ -139,7 +139,9 @@ describe("Official KSeF FA(3) Examples", () => {
 
       // Basic validation - should be valid according to XSD
       if (expectation.expectValid) {
-        const xsdErrors = result.errors.filter((e) => e.source === "xsd");
+        const xsdErrors = result.issues.filter(
+          (i) => i.code.domain === "xsd" && i.code.severity === "error",
+        );
         if (xsdErrors.length > 0) {
           console.error(`XSD errors in ${filename}:`, xsdErrors);
         }
@@ -147,10 +149,7 @@ describe("Official KSeF FA(3) Examples", () => {
       }
 
       // Log any semantic warnings/errors for review
-      const semanticIssues = [
-        ...result.errors.filter((e) => e.source === "semantic"),
-        ...result.warnings.filter((w) => w.source === "semantic"),
-      ];
+      const semanticIssues = result.issues.filter((i) => i.code.domain === "semantic");
 
       if (semanticIssues.length > 0 && !expectation.knownIssues) {
         console.warn(`Semantic issues in ${filename}:`, semanticIssues);
@@ -264,7 +263,11 @@ describe("Official KSeF FA(3) Examples", () => {
           const xmlPath = join(FIXTURES_DIR, filename);
           const xml = readFileSync(xmlPath, "utf-8");
           const result = await validate(xml);
-          return { filename, valid: result.valid, errors: result.errors.length };
+          return {
+            filename,
+            valid: result.valid,
+            errors: result.issues.filter((i) => i.code.severity === "error").length,
+          };
         }),
       );
 
