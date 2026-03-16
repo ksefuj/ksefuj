@@ -1,0 +1,47 @@
+{
+  "meta": {
+    "title": "ksefuj.to — KSeF FA(3) validator",
+    "description": "Free KSeF FA(3) invoice validator. Drop XML, check errors. Everything client-side — your data never leaves your browser.",
+    "ogTitle": "ksefuj.to — KSeF FA(3) validator",
+    "ogDescription": "Free KSeF invoice validator. Client-side, no registration."
+  },
+  "header": {
+    "title": "ksefuj",
+    "subtitle": "KSeF FA(3) validator"
+  },
+  "homepage": {
+    "heroTitle": "Validate your e-invoice",
+    "heroDescription": "Drop XML, see errors. Validation happens in your browser — data never leaves your computer."
+  },
+  "validator": {
+    "dropzone": {
+      "dragHere": "Drag XML file or click",
+      "dropFile": "Drop XML file",
+      "validating": "Validating...",
+      "validatingDetails": "Checking XSD and semantic rules...",
+      "acceptedFiles": "Accepted: .xml (KSeF FA3 invoice)"
+    },
+    "results": {
+      "valid": "Invoice valid",
+      "invalid": "Errors found",
+      "warnings": "warnings",
+      "clear": "Clear"
+    },
+    "badges": {
+      "xsdError": "XSD Error",
+      "xsdWarning": "XSD Warning",
+      "xsdValid": "XSD ✓",
+      "semanticError": "Business Error",
+      "semanticWarning": "Business Warning",
+      "semanticValid": "Rules ✓"
+    },
+    "errors": {
+      "processingError": "Error validating file"
+    }
+  },
+  "footer": {
+    "copyright": "© 2026 ksefuj",
+    "github": "GitHub",
+    "npm": "npm"
+  }
+}

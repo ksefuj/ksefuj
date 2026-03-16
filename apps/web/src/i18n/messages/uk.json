@@ -1,0 +1,47 @@
+{
+  "meta": {
+    "title": "ksefuj.to — валідатор KSeF FA(3)",
+    "description": "Безкоштовний валідатор рахунків KSeF FA(3). Завантажте XML, перевірте помилки. Все працює у браузері — ваші дані не залишають комп'ютер.",
+    "ogTitle": "ksefuj.to — валідатор KSeF FA(3)",
+    "ogDescription": "Безкоштовний валідатор рахунків KSeF. Клієнтський додаток, без реєстрації."
+  },
+  "header": {
+    "title": "ksefuj",
+    "subtitle": "валідатор KSeF FA(3)"
+  },
+  "homepage": {
+    "heroTitle": "Перевірте свій електронний рахунок",
+    "heroDescription": "Завантажте XML, побачте помилки. Валідація відбувається у вашому браузері — дані не залишають ваш комп'ютер."
+  },
+  "validator": {
+    "dropzone": {
+      "dragHere": "Перетягніть XML файл або натисніть",
+      "dropFile": "Відпустіть XML файл",
+      "validating": "Перевірка...",
+      "validatingDetails": "Перевірка XSD і семантичних правил...",
+      "acceptedFiles": "Приймаються: .xml (рахунок KSeF FA3)"
+    },
+    "results": {
+      "valid": "Рахунок дійсний",
+      "invalid": "Знайдено помилки",
+      "warnings": "попереджень",
+      "clear": "Очистити"
+    },
+    "badges": {
+      "xsdError": "Помилка XSD",
+      "xsdWarning": "Попередження XSD",
+      "xsdValid": "XSD ✓",
+      "semanticError": "Бізнес помилка",
+      "semanticWarning": "Бізнес попередження",
+      "semanticValid": "Правила ✓"
+    },
+    "errors": {
+      "processingError": "Помилка під час перевірки файлу"
+    }
+  },
+  "footer": {
+    "copyright": "© 2026 ksefuj",
+    "github": "GitHub",
+    "npm": "npm"
+  }
+}

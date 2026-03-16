@@ -2,63 +2,75 @@
 
 import { type ChangeEvent, type DragEvent, useCallback, useRef, useState } from "react";
 import { track } from "@vercel/analytics";
+import { useTranslations } from "next-intl";
 
 // Type imports only - no runtime imports
 import type { ValidationResult } from "@ksefuj/validator";
 
-export function Validator() {
+interface ValidatorProps {
+  locale?: string;
+}
+
+export function Validator({ locale }: ValidatorProps) {
+  const t = useTranslations("validator");
   const [result, setResult] = useState<ValidationResult | null>(null);
   const [fileName, setFileName] = useState<string | null>(null);
   const [dragging, setDragging] = useState(false);
   const [validating, setValidating] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleFile = useCallback((file: File) => {
-    setFileName(file.name);
-    setValidating(true);
-    const reader = new FileReader();
-    reader.onload = async (e) => {
-      const xml = e.target?.result as string;
-      try {
-        // Dynamic import to avoid SSR issues
-        const { validate } = await import("@ksefuj/validator");
-        const res = await validate(xml);
-        setResult(res);
+  const handleFile = useCallback(
+    (file: File) => {
+      setFileName(file.name);
+      setValidating(true);
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        const xml = e.target?.result as string;
+        try {
+          // Dynamic import to avoid SSR issues
+          const { validate } = await import("@ksefuj/validator");
+          const res = await validate(xml, {
+            locale: locale as "pl" | "en" | "ua",
+          });
+          setResult(res);
 
-        // Track validation event with anonymized stats
-        track("invoice_validated", {
-          valid: res.valid,
-          error_count: res.errors.length,
-          warning_count: res.warnings.length,
-          has_xsd_errors: res.errors.some((e) => e.source === "xsd"),
-          has_semantic_errors: res.errors.some((e) => e.source === "semantic"),
-        });
-      } catch (error) {
-        const errorMessage =
-          error instanceof Error ? error.message : "Błąd podczas walidacji pliku";
-        const errorResult: ValidationResult = {
-          valid: false,
-          errors: [
-            {
-              level: "error" as const,
-              source: "parse" as const,
-              message: errorMessage,
-            },
-          ],
-          warnings: [],
-        };
-        setResult(errorResult);
+          // Track validation event with anonymized stats
+          track("invoice_validated", {
+            valid: res.valid,
+            error_count: res.errors.length,
+            warning_count: res.warnings.length,
+            has_xsd_errors: res.errors.some((e) => e.source === "xsd"),
+            has_semantic_errors: res.errors.some((e) => e.source === "semantic"),
+            locale: locale || "unknown",
+          });
+        } catch (error) {
+          const errorMessage = error instanceof Error ? error.message : t("errors.processingError");
+          const errorResult: ValidationResult = {
+            valid: false,
+            errors: [
+              {
+                level: "error" as const,
+                source: "parse" as const,
+                message: errorMessage,
+              },
+            ],
+            warnings: [],
+          };
+          setResult(errorResult);
 
-        // Track validation failure
-        track("invoice_validation_failed", {
-          error_type: "processing_error",
-        });
-      } finally {
-        setValidating(false);
-      }
-    };
-    reader.readAsText(file);
-  }, []);
+          // Track validation failure
+          track("invoice_validation_failed", {
+            error_type: "processing_error",
+            locale: locale || "unknown",
+          });
+        } finally {
+          setValidating(false);
+        }
+      };
+      reader.readAsText(file);
+    },
+    [t, locale],
+  );
 
   const onDrop = useCallback(
     (e: DragEvent) => {
@@ -116,15 +128,18 @@ export function Validator() {
     return "border-stone-700 hover:border-stone-500 hover:bg-stone-900/50";
   };
 
-  const getMainText = (validating: boolean, dragging: boolean) => {
-    if (validating) {
-      return "Walidacja...";
-    }
-    if (dragging) {
-      return "Upuść plik XML";
-    }
-    return "Przeciągnij plik XML lub kliknij";
-  };
+  const getMainText = useCallback(
+    (validating: boolean, dragging: boolean) => {
+      if (validating) {
+        return t("dropzone.validating");
+      }
+      if (dragging) {
+        return t("dropzone.dropFile");
+      }
+      return t("dropzone.dragHere");
+    },
+    [t],
+  );
 
   const reset = useCallback(() => {
     setResult(null);
@@ -158,9 +173,7 @@ export function Validator() {
         <div className="space-y-2">
           <p className="text-lg text-stone-300">{getMainText(validating, dragging)}</p>
           <p className="text-sm text-stone-600">
-            {validating
-              ? "Sprawdzanie XSD i reguł semantycznych..."
-              : "Akceptowane: .xml (faktura KSeF FA3)"}
+            {validating ? t("dropzone.validatingDetails") : t("dropzone.acceptedFiles")}
           </p>
         </div>
       </div>
@@ -176,8 +189,9 @@ export function Validator() {
               <div>
                 <p className="font-medium">{fileName}</p>
                 <p className="text-sm text-stone-500">
-                  {result.valid ? "Faktura prawidłowa" : "Znaleziono błędy"}
-                  {result.warnings.length > 0 && ` · ${result.warnings.length} ostrzeżeń`}
+                  {result.valid ? t("results.valid") : t("results.invalid")}
+                  {result.warnings.length > 0 &&
+                    ` · ${result.warnings.length} ${t("results.warnings")}`}
                 </p>
                 {/* Validation badges */}
                 <div className="flex gap-2 mt-2">
@@ -201,11 +215,11 @@ export function Validator() {
 
                     let xsdBadgeLabel = "";
                     if (hasXsdErrors) {
-                      xsdBadgeLabel = "Błąd XSD";
+                      xsdBadgeLabel = t("badges.xsdError");
                     } else if (hasXsdWarnings) {
-                      xsdBadgeLabel = "Ostrzeżenie XSD";
+                      xsdBadgeLabel = t("badges.xsdWarning");
                     } else {
-                      xsdBadgeLabel = "XSD ✓";
+                      xsdBadgeLabel = t("badges.xsdValid");
                     }
 
                     let semanticBadgeClass = "";
@@ -221,11 +235,11 @@ export function Validator() {
 
                     let semanticBadgeLabel = "";
                     if (hasSemanticErrors) {
-                      semanticBadgeLabel = "Błąd biznesowy";
+                      semanticBadgeLabel = t("badges.semanticError");
                     } else if (hasSemanticWarnings) {
-                      semanticBadgeLabel = "Ostrzeżenie biznesowe";
+                      semanticBadgeLabel = t("badges.semanticWarning");
                     } else {
-                      semanticBadgeLabel = "Reguły ✓";
+                      semanticBadgeLabel = t("badges.semanticValid");
                     }
 
                     return (
@@ -253,7 +267,7 @@ export function Validator() {
               onClick={reset}
               className="text-sm text-stone-500 hover:text-stone-300 transition-colors"
             >
-              Wyczyść
+              {t("results.clear")}
             </button>
           </div>
 
