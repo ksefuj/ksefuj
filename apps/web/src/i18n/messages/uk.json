@@ -37,6 +37,24 @@
     },
     "errors": {
       "processingError": "Помилка під час перевірки файлу"
+    },
+    "issues": {
+      "PODMIOT2_JST_MISSING": "Відсутній обов'язковий елемент JST у Podmiot2",
+      "PODMIOT2_GV_MISSING": "Відсутній обов'язковий елемент GV у Podmiot2",
+      "P12_INVALID_VALUE": "Неправильне значення P_12. Дозволені: {allowedValues}",
+      "REVERSE_CHARGE_MISSING_P18": "Зворотне нарахування (P_13_8) вимагає P_18=1",
+      "REVERSE_CHARGE_INVALID_P12": "Зворотне нарахування (P_13_8) вимагає P_12=\"np I\"",
+      "KURS_WALUTY_WRONG_LOCATION": "KursWalutyZ має йти до FaWiersz/KursWaluty (крім авансових рахунків)",
+      "GTU_INVALID_FORMAT": "Неправильний формат GTU. Використовуйте <GTU>GTU_XX</GTU>",
+      "TRAILING_ZEROS": "{element} має зайві нулі: \"{actual}\" має бути \"{expected}\"",
+      "P15_REQUIRED": "Елемент P_15 (загальна сума) є обов'язковим",
+      "ADNOTACJE_INCOMPLETE": "Неповна структура Adnotacje",
+      "ELEMENT_NOT_ALLOWED": "Елемент {element} не дозволений тут",
+      "REQUIRED_ELEMENT_MISSING": "Відсутній обов'язковий елемент {element}",
+      "INVALID_ELEMENT_VALUE": "Неправильне значення елемента {element}",
+      "SCHEMA_VALIDATION_FAILED": "Валідація схеми XSD не вдалася",
+      "MALFORMED_XML": "XML неправильно сформований",
+      "VALIDATOR_INITIALIZATION_FAILED": "Помилка ініціалізації валідатора"
     }
   },
   "footer": {

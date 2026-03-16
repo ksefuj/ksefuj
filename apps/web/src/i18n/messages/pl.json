@@ -37,6 +37,24 @@
     },
     "errors": {
       "processingError": "Błąd podczas walidacji pliku"
+    },
+    "issues": {
+      "PODMIOT2_JST_MISSING": "Brak wymaganego elementu JST w Podmiot2",
+      "PODMIOT2_GV_MISSING": "Brak wymaganego elementu GV w Podmiot2",
+      "P12_INVALID_VALUE": "Nieprawidłowa wartość P_12. Dozwolone: {allowedValues}",
+      "REVERSE_CHARGE_MISSING_P18": "Odwrotne obciążenie (P_13_8) wymaga P_18=1",
+      "REVERSE_CHARGE_INVALID_P12": "Odwrotne obciążenie (P_13_8) wymaga P_12=\"np I\"",
+      "KURS_WALUTY_WRONG_LOCATION": "KursWalutyZ należy do FaWiersz/KursWaluty (z wyjątkiem faktur zaliczkowych)",
+      "GTU_INVALID_FORMAT": "Nieprawidłowy format GTU. Użyj <GTU>GTU_XX</GTU>",
+      "TRAILING_ZEROS": "{element} ma niepotrzebne zera: \"{actual}\" powinno być \"{expected}\"",
+      "P15_REQUIRED": "Element P_15 (suma do zapłaty) jest obowiązkowy",
+      "ADNOTACJE_INCOMPLETE": "Niekompletna struktura Adnotacje",
+      "ELEMENT_NOT_ALLOWED": "Element {element} nie jest dozwolony w tym miejscu",
+      "REQUIRED_ELEMENT_MISSING": "Brak wymaganego elementu {element}",
+      "INVALID_ELEMENT_VALUE": "Nieprawidłowa wartość elementu {element}",
+      "SCHEMA_VALIDATION_FAILED": "Walidacja względem schematu XSD nie powiodła się",
+      "MALFORMED_XML": "XML nie jest poprawnie sformatowany",
+      "VALIDATOR_INITIALIZATION_FAILED": "Błąd inicjalizacji walidatora"
     }
   },
   "footer": {

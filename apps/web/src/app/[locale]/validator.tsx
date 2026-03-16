@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 
 // Type imports only - no runtime imports
 import type { ValidationResult } from "@ksefuj/validator";
+import { translateValidationIssue } from "./validation-utils";
 
 interface ValidatorProps {
   locale?: string;
@@ -302,7 +303,7 @@ export function Validator({ locale }: ValidatorProps) {
                     key={i}
                     className="bg-red-500/10 border border-red-500/20 rounded-lg px-4 py-3"
                   >
-                    <p className="text-red-300 text-sm">{issue.message}</p>
+                    <p className="text-red-300 text-sm">{translateValidationIssue(issue, t)}</p>
                     {issue.context.location.xpath && (
                       <p className="text-red-500/60 text-xs mt-1 font-mono">
                         {issue.context.location.xpath}
@@ -323,7 +324,7 @@ export function Validator({ locale }: ValidatorProps) {
                     key={i}
                     className="bg-amber-500/10 border border-amber-500/20 rounded-lg px-4 py-3"
                   >
-                    <p className="text-amber-300 text-sm">{issue.message}</p>
+                    <p className="text-amber-300 text-sm">{translateValidationIssue(issue, t)}</p>
                     {issue.context.location.xpath && (
                       <p className="text-amber-500/60 text-xs mt-1 font-mono">
                         {issue.context.location.xpath}
