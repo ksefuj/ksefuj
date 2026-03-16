@@ -19,7 +19,7 @@ import type {
   ValidationResult,
 } from "./types.js";
 
-const VALIDATOR_VERSION = "2.0.0";
+const VALIDATOR_VERSION = "0.2.0";
 const SCHEMA_VERSION = "FA(3) 2025-06-25";
 
 // Environment detection utility
@@ -250,6 +250,7 @@ class ValidationOrchestrator {
 /**
  * Validate a KSeF FA(3) XML string.
  * Returns structured validation result with issues and assertions.
+ * NEVER throws - all errors are returned as ValidationResult.
  *
  * @param xml - The XML string to validate
  * @param options - Validation options
@@ -259,21 +260,53 @@ export async function validate(
   xml: string,
   options: ValidateOptions = {},
 ): Promise<ValidationResult> {
-  const {
-    enableXsdValidation = true,
-    enableSemanticValidation = true,
-    collectAssertions = false,
-    maxIssues = undefined,
-  } = options;
+  try {
+    const {
+      enableXsdValidation = true,
+      enableSemanticValidation = true,
+      collectAssertions = false,
+      maxIssues = undefined,
+    } = options;
 
-  const orchestrator = new ValidationOrchestrator(
-    enableXsdValidation,
-    enableSemanticValidation,
-    collectAssertions,
-    maxIssues ?? Number.MAX_SAFE_INTEGER,
-  );
+    const orchestrator = new ValidationOrchestrator(
+      enableXsdValidation,
+      enableSemanticValidation,
+      collectAssertions,
+      maxIssues ?? Number.MAX_SAFE_INTEGER,
+    );
 
-  return orchestrator.validate(xml);
+    return await orchestrator.validate(xml);
+  } catch (error) {
+    // Catch any unexpected errors and return structured result
+    const errorDef = ERROR_CODES.EXECUTION_ERROR;
+    const metadata: ValidationMetadata = {
+      validationTimeMs: 0,
+      rulesExecuted: 0,
+      elementsValidated: 0,
+      schemaVersion: SCHEMA_VERSION,
+      validatorVersion: VALIDATOR_VERSION,
+    };
+
+    return {
+      valid: false,
+      issues: [
+        {
+          code: errorDef.code,
+          context: {
+            location: {},
+            metadata: {
+              originalError: error instanceof Error ? error.message : String(error),
+              stackTrace: error instanceof Error ? error.stack : undefined,
+            },
+          },
+          message: `Validation failed: ${error instanceof Error ? error.message : String(error)}`,
+          fixSuggestions: [],
+        },
+      ],
+      assertions: [],
+      metadata,
+    };
+  }
 }
 
 /**

@@ -1,6 +1,6 @@
 {
   "name": "@ksefuj/validator",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "KSeF FA(3) XML validator — XSD + semantic rules, works in Node and browser",
   "type": "module",
   "main": "./dist/index.js",

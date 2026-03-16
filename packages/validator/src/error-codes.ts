@@ -524,6 +524,22 @@ export const INFRASTRUCTURE_ERRORS = {
     commonCauses: ["Very large document", "Complex validation rules", "System overload"],
     fixTemplates: [],
   },
+
+  EXECUTION_ERROR: {
+    code: {
+      domain: "infrastructure",
+      category: "system",
+      code: "EXECUTION_ERROR",
+      severity: "error",
+    },
+    description: "Unexpected error during validation execution",
+    commonCauses: [
+      "Runtime environment issue",
+      "Unhandled exception in validation logic",
+      "System resource exhaustion",
+    ],
+    fixTemplates: [],
+  },
 } as const satisfies Record<string, ErrorCodeDefinition>;
 
 // --- Combined Registry ---

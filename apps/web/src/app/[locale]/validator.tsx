@@ -27,65 +27,30 @@ export function Validator({ locale }: ValidatorProps) {
       const reader = new FileReader();
       reader.onload = async (e) => {
         const xml = e.target?.result as string;
-        try {
-          // Dynamic import to avoid SSR issues
-          const { validate } = await import("@ksefuj/validator");
-          const res = await validate(xml, {
-            collectAssertions: true,
-          });
-          setResult(res);
 
-          // Track validation event with anonymized stats
-          track("invoice_validated", {
-            valid: res.valid,
-            error_count: res.issues.filter((i) => i.code.severity === "error").length,
-            warning_count: res.issues.filter((i) => i.code.severity === "warning").length,
-            has_xsd_errors: res.issues.some((i) => i.code.domain === "xsd"),
-            has_semantic_errors: res.issues.some((i) => i.code.domain === "semantic"),
-            locale: locale || "unknown",
-          });
-        } catch (error) {
-          const errorMessage = error instanceof Error ? error.message : t("errors.processingError");
-          const errorResult: ValidationResult = {
-            valid: false,
-            issues: [
-              {
-                code: {
-                  domain: "parse" as const,
-                  category: "syntax",
-                  code: "PARSE_ERROR",
-                  severity: "error" as const,
-                },
-                context: {
-                  location: {},
-                },
-                message: errorMessage,
-                fixSuggestions: [],
-              },
-            ],
-            assertions: [],
-            metadata: {
-              validationTimeMs: 0,
-              rulesExecuted: 0,
-              elementsValidated: 0,
-              schemaVersion: "FA(3) 2025-06-25",
-              validatorVersion: "2.0.0",
-            },
-          };
-          setResult(errorResult);
+        // Dynamic import to avoid SSR issues
+        const { validate } = await import("@ksefuj/validator");
+        const result = await validate(xml, {
+          collectAssertions: true,
+        });
+        setResult(result);
 
-          // Track validation failure
-          track("invoice_validation_failed", {
-            error_type: "processing_error",
-            locale: locale || "unknown",
-          });
-        } finally {
-          setValidating(false);
-        }
+        // Track validation event with anonymized stats
+        track("invoice_validated", {
+          valid: result.valid,
+          error_count: result.issues.filter((i) => i.code.severity === "error").length,
+          warning_count: result.issues.filter((i) => i.code.severity === "warning").length,
+          has_xsd_errors: result.issues.some((i) => i.code.domain === "xsd"),
+          has_semantic_errors: result.issues.some((i) => i.code.domain === "semantic"),
+          has_infrastructure_errors: result.issues.some((i) => i.code.domain === "infrastructure"),
+          locale: locale || "unknown",
+        });
+
+        setValidating(false);
       };
       reader.readAsText(file);
     },
-    [t, locale],
+    [locale],
   );
 
   const onDrop = useCallback(
