@@ -65,7 +65,7 @@ const result = await validate(xmlString);
 
 // With options
 const result = await validate(xmlString, {
-  locale: "en", // 'pl' (default) | 'en' | 'ua'
+  locale: "en", // 'pl' (default) | 'en' | 'uk'
   enableXsdValidation: true, // default: true
   enableSemanticValidation: true, // default: true
 });

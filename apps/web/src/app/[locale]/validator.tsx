@@ -30,7 +30,7 @@ export function Validator({ locale }: ValidatorProps) {
           // Dynamic import to avoid SSR issues
           const { validate } = await import("@ksefuj/validator");
           const res = await validate(xml, {
-            locale: locale as "pl" | "en" | "ua",
+            locale: locale as "pl" | "en" | "uk",
           });
           setResult(res);
 

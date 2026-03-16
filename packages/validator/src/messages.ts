@@ -1,4 +1,4 @@
-export type Locale = "pl" | "en" | "ua";
+export type Locale = "pl" | "en" | "uk";
 
 export interface Messages {
   PODMIOT2_JST_MISSING: string;
@@ -66,7 +66,7 @@ const messages: Record<Locale, Messages> = {
     ADNOTACJE_NST_MISSING: "Missing NoweSrodkiTransportu element in Adnotacje",
     ADNOTACJE_PMARZY_MISSING: "Missing PMarzy element in Adnotacje",
   },
-  ua: {
+  uk: {
     PODMIOT2_JST_MISSING:
       "Відсутній елемент JST в Podmiot2 — обов'язковий в FA(3). Додайте <JST>2</JST>.",
     PODMIOT2_GV_MISSING:
