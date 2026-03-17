@@ -36,7 +36,8 @@
       "semanticValid": "Reguły ✓"
     },
     "errors": {
-      "processingError": "Błąd podczas walidacji pliku"
+      "processingError": "Błąd podczas walidacji pliku",
+      "validatorInitializationFailed": "Nie udało się zainicjować walidatora"
     },
     "issues": {
       "PODMIOT2_JST_MISSING": "Brak wymaganego elementu JST w Podmiot2",
@@ -48,7 +49,6 @@
       "GTU_WRONG_FORMAT": "Nieprawidłowy format GTU. Użyj <GTU>GTU_XX</GTU>",
       "TRAILING_ZEROS": "{element} ma niepotrzebne zera: \"{actual}\" powinno być \"{expected}\"",
       "P15_MISSING": "Element P_15 (suma do zapłaty) jest obowiązkowy",
-      "ADNOTACJE_INCOMPLETE": "Niekompletna struktura Adnotacje",
       "ELEMENT_NOT_ALLOWED": "Element {element} nie jest dozwolony w tym miejscu",
       "REQUIRED_ELEMENT_MISSING": "Brak wymaganego elementu {element}",
       "INVALID_ELEMENT_VALUE": "Nieprawidłowa wartość elementu {element}",

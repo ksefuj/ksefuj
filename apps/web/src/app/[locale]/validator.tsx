@@ -12,9 +12,16 @@ interface ValidatorProps {
   locale?: string;
 }
 
+// Web app's own error type - separate from validator domain
+type AppError = {
+  type: "initialization_failed";
+  message: string;
+};
+
 export function Validator({ locale }: ValidatorProps) {
   const t = useTranslations("validator");
   const [result, setResult] = useState<ValidationResult | null>(null);
+  const [error, setError] = useState<AppError | null>(null);
   const [fileName, setFileName] = useState<string | null>(null);
   const [dragging, setDragging] = useState(false);
   const [validating, setValidating] = useState(false);
@@ -24,29 +31,50 @@ export function Validator({ locale }: ValidatorProps) {
     (file: File) => {
       setFileName(file.name);
       setValidating(true);
+      setError(null);
+      setResult(null);
       const reader = new FileReader();
       reader.onload = async (e) => {
         const xml = e.target?.result as string;
 
-        // Dynamic import to avoid SSR issues
-        const { validate } = await import("@ksefuj/validator");
-        const result = await validate(xml, {
-          collectAssertions: true,
-        });
-        setResult(result);
+        try {
+          // Dynamic import to avoid SSR issues
+          const { validate } = await import("@ksefuj/validator");
+          const result = await validate(xml, {
+            collectAssertions: true,
+          });
 
-        // Track validation event with anonymized stats
-        track("invoice_validated", {
-          valid: result.valid,
-          error_count: result.issues.filter((i) => i.code.severity === "error").length,
-          warning_count: result.issues.filter((i) => i.code.severity === "warning").length,
-          has_xsd_errors: result.issues.some((i) => i.code.domain === "xsd"),
-          has_semantic_errors: result.issues.some((i) => i.code.domain === "semantic"),
-          has_infrastructure_errors: result.issues.some((i) => i.code.domain === "infrastructure"),
-          locale: locale || "unknown",
-        });
+          setResult(result);
+          setError(null);
 
-        setValidating(false);
+          // Track validation event with anonymized stats
+          track("invoice_validated", {
+            valid: result.valid,
+            error_count: result.issues.filter((i) => i.code.severity === "error").length,
+            warning_count: result.issues.filter((i) => i.code.severity === "warning").length,
+            has_xsd_errors: result.issues.some((i) => i.code.domain === "xsd"),
+            has_semantic_errors: result.issues.some((i) => i.code.domain === "semantic"),
+            has_infrastructure_errors: result.issues.some(
+              (i) => i.code.domain === "infrastructure",
+            ),
+            locale: locale || "unknown",
+          });
+        } catch (err) {
+          // Track validation failure
+          track("invoice_validation_failed", {
+            error_type: "processing_error",
+            locale: locale || "unknown",
+          });
+
+          // Set web app error state - not a validator domain object
+          setError({
+            type: "initialization_failed",
+            message: err instanceof Error ? err.message : "Failed to initialize validator",
+          });
+          setResult(null);
+        } finally {
+          setValidating(false);
+        }
       };
       reader.readAsText(file);
     },
@@ -158,6 +186,21 @@ export function Validator({ locale }: ValidatorProps) {
           </p>
         </div>
       </div>
+
+      {/* Error state */}
+      {error && (
+        <div className="mt-4 p-4 bg-red-500/10 border border-red-500/30 rounded-lg">
+          <div className="flex items-start gap-3">
+            <span className="text-red-400 text-xl">❌</span>
+            <div>
+              <p className="font-medium text-red-300">
+                {t("errors.validatorInitializationFailed")}
+              </p>
+              <p className="text-sm text-stone-500 mt-1">{error.message}</p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Results */}
       {result && (
