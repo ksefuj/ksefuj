@@ -36,7 +36,25 @@
       "semanticValid": "Rules ✓"
     },
     "errors": {
-      "processingError": "Error validating file"
+      "processingError": "Error validating file",
+      "validatorInitializationFailed": "Failed to initialize validator"
+    },
+    "issues": {
+      "PODMIOT2_JST_MISSING": "Required JST element missing in Podmiot2",
+      "PODMIOT2_GV_MISSING": "Required GV element missing in Podmiot2",
+      "P12_INVALID": "Invalid P_12 value. Allowed: {allowedValues}",
+      "P13_8_REQUIRES_P18": "Reverse charge (P_13_8) requires P_18=1",
+      "P13_8_REQUIRES_NP_I": "Reverse charge (P_13_8) requires P_12=\"np I\"",
+      "KURS_WALUTY_WRONG_LEVEL": "KursWalutyZ should go to FaWiersz/KursWaluty (except advance invoices)",
+      "GTU_WRONG_FORMAT": "Invalid GTU format. Use <GTU>GTU_XX</GTU>",
+      "TRAILING_ZEROS": "{element} has trailing zeros: \"{actual}\" should be \"{expected}\"",
+      "P15_MISSING": "P_15 element (total amount) is required",
+      "ELEMENT_NOT_ALLOWED": "Element {element} not allowed here",
+      "REQUIRED_ELEMENT_MISSING": "Required element {element} missing",
+      "INVALID_ELEMENT_VALUE": "Invalid value for element {element}",
+      "SCHEMA_VALIDATION_FAILED": "XSD schema validation failed",
+      "MALFORMED_XML": "XML is not well-formed",
+      "VALIDATOR_INITIALIZATION_FAILED": "Validator initialization failed"
     }
   },
   "languagePicker": {

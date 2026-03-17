@@ -6,14 +6,22 @@ import { useTranslations } from "next-intl";
 
 // Type imports only - no runtime imports
 import type { ValidationResult } from "@ksefuj/validator";
+import { translateValidationIssue } from "./validation-utils";
 
 interface ValidatorProps {
   locale?: string;
 }
 
+// Web app's own error type - separate from validator domain
+type AppError = {
+  type: "initialization_failed";
+  message: string;
+};
+
 export function Validator({ locale }: ValidatorProps) {
   const t = useTranslations("validator");
   const [result, setResult] = useState<ValidationResult | null>(null);
+  const [error, setError] = useState<AppError | null>(null);
   const [fileName, setFileName] = useState<string | null>(null);
   const [dragging, setDragging] = useState(false);
   const [validating, setValidating] = useState(false);
@@ -23,53 +31,54 @@ export function Validator({ locale }: ValidatorProps) {
     (file: File) => {
       setFileName(file.name);
       setValidating(true);
+      setError(null);
+      setResult(null);
       const reader = new FileReader();
       reader.onload = async (e) => {
         const xml = e.target?.result as string;
+
         try {
           // Dynamic import to avoid SSR issues
           const { validate } = await import("@ksefuj/validator");
-          const res = await validate(xml, {
-            locale: locale as "pl" | "en" | "uk",
+          const result = await validate(xml, {
+            collectAssertions: true,
           });
-          setResult(res);
+
+          setResult(result);
+          setError(null);
 
           // Track validation event with anonymized stats
           track("invoice_validated", {
-            valid: res.valid,
-            error_count: res.errors.length,
-            warning_count: res.warnings.length,
-            has_xsd_errors: res.errors.some((e) => e.source === "xsd"),
-            has_semantic_errors: res.errors.some((e) => e.source === "semantic"),
+            valid: result.valid,
+            error_count: result.issues.filter((i) => i.code.severity === "error").length,
+            warning_count: result.issues.filter((i) => i.code.severity === "warning").length,
+            has_xsd_errors: result.issues.some((i) => i.code.domain === "xsd"),
+            has_semantic_errors: result.issues.some((i) => i.code.domain === "semantic"),
+            has_infrastructure_errors: result.issues.some(
+              (i) => i.code.domain === "infrastructure",
+            ),
             locale: locale || "unknown",
           });
-        } catch (error) {
-          const errorMessage = error instanceof Error ? error.message : t("errors.processingError");
-          const errorResult: ValidationResult = {
-            valid: false,
-            errors: [
-              {
-                level: "error" as const,
-                source: "parse" as const,
-                message: errorMessage,
-              },
-            ],
-            warnings: [],
-          };
-          setResult(errorResult);
-
+        } catch (err) {
           // Track validation failure
           track("invoice_validation_failed", {
             error_type: "processing_error",
             locale: locale || "unknown",
           });
+
+          // Set web app error state - not a validator domain object
+          setError({
+            type: "initialization_failed",
+            message: err instanceof Error ? err.message : "Failed to initialize validator",
+          });
+          setResult(null);
         } finally {
           setValidating(false);
         }
       };
       reader.readAsText(file);
     },
-    [t, locale],
+    [locale],
   );
 
   const onDrop = useCallback(
@@ -178,6 +187,21 @@ export function Validator({ locale }: ValidatorProps) {
         </div>
       </div>
 
+      {/* Error state */}
+      {error && (
+        <div className="mt-4 p-4 bg-red-500/10 border border-red-500/30 rounded-lg">
+          <div className="flex items-start gap-3">
+            <span className="text-red-400 text-xl">❌</span>
+            <div>
+              <p className="font-medium text-red-300">
+                {t("errors.validatorInitializationFailed")}
+              </p>
+              <p className="text-sm text-stone-500 mt-1">{error.message}</p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Results */}
       {result && (
         <div className="space-y-4">
@@ -190,17 +214,23 @@ export function Validator({ locale }: ValidatorProps) {
                 <p className="font-medium">{fileName}</p>
                 <p className="text-sm text-stone-500">
                   {result.valid ? t("results.valid") : t("results.invalid")}
-                  {result.warnings.length > 0 &&
-                    ` · ${result.warnings.length} ${t("results.warnings")}`}
+                  {result.issues.filter((i) => i.code.severity === "warning").length > 0 &&
+                    ` · ${result.issues.filter((i) => i.code.severity === "warning").length} ${t("results.warnings")}`}
                 </p>
                 {/* Validation badges */}
                 <div className="flex gap-2 mt-2">
                   {(() => {
-                    const hasXsdErrors = result.errors.some((e) => e.source === "xsd");
-                    const hasSemanticErrors = result.errors.some((e) => e.source === "semantic");
-                    const hasXsdWarnings = result.warnings.some((w) => w.source === "xsd");
-                    const hasSemanticWarnings = result.warnings.some(
-                      (w) => w.source === "semantic",
+                    const hasXsdErrors = result.issues.some(
+                      (i) => i.code.domain === "xsd" && i.code.severity === "error",
+                    );
+                    const hasSemanticErrors = result.issues.some(
+                      (i) => i.code.domain === "semantic" && i.code.severity === "error",
+                    );
+                    const hasXsdWarnings = result.issues.some(
+                      (i) => i.code.domain === "xsd" && i.code.severity === "warning",
+                    );
+                    const hasSemanticWarnings = result.issues.some(
+                      (i) => i.code.domain === "semantic" && i.code.severity === "warning",
                     );
 
                     let xsdBadgeClass = "";
@@ -272,34 +302,44 @@ export function Validator({ locale }: ValidatorProps) {
           </div>
 
           {/* Errors */}
-          {result.errors.length > 0 && (
+          {result.issues.filter((i) => i.code.severity === "error").length > 0 && (
             <div className="space-y-2">
-              {result.errors.map((err, i) => (
-                <div
-                  key={i}
-                  className="bg-red-500/10 border border-red-500/20 rounded-lg px-4 py-3"
-                >
-                  <p className="text-red-300 text-sm">{err.message}</p>
-                  {err.path && <p className="text-red-500/60 text-xs mt-1 font-mono">{err.path}</p>}
-                </div>
-              ))}
+              {result.issues
+                .filter((i) => i.code.severity === "error")
+                .map((issue, i) => (
+                  <div
+                    key={i}
+                    className="bg-red-500/10 border border-red-500/20 rounded-lg px-4 py-3"
+                  >
+                    <p className="text-red-300 text-sm">{translateValidationIssue(issue, t)}</p>
+                    {issue.context.location.xpath && (
+                      <p className="text-red-500/60 text-xs mt-1 font-mono">
+                        {issue.context.location.xpath}
+                      </p>
+                    )}
+                  </div>
+                ))}
             </div>
           )}
 
           {/* Warnings */}
-          {result.warnings.length > 0 && (
+          {result.issues.filter((i) => i.code.severity === "warning").length > 0 && (
             <div className="space-y-2">
-              {result.warnings.map((warn, i) => (
-                <div
-                  key={i}
-                  className="bg-amber-500/10 border border-amber-500/20 rounded-lg px-4 py-3"
-                >
-                  <p className="text-amber-300 text-sm">{warn.message}</p>
-                  {warn.path && (
-                    <p className="text-amber-500/60 text-xs mt-1 font-mono">{warn.path}</p>
-                  )}
-                </div>
-              ))}
+              {result.issues
+                .filter((i) => i.code.severity === "warning")
+                .map((issue, i) => (
+                  <div
+                    key={i}
+                    className="bg-amber-500/10 border border-amber-500/20 rounded-lg px-4 py-3"
+                  >
+                    <p className="text-amber-300 text-sm">{translateValidationIssue(issue, t)}</p>
+                    {issue.context.location.xpath && (
+                      <p className="text-amber-500/60 text-xs mt-1 font-mono">
+                        {issue.context.location.xpath}
+                      </p>
+                    )}
+                  </div>
+                ))}
             </div>
           )}
         </div>

@@ -1,5 +1,5 @@
 /**
- * XSD Schema validation using libxml2-wasm
+ * @ksefuj/validator - XSD Schema validation
  *
  * Provides lazy-loaded XSD validation with proper resource management.
  * Uses bundled schemas for offline validation and to avoid CORS issues.
@@ -12,7 +12,8 @@ import {
   XmlValidateError,
   XsdValidator,
 } from "libxml2-wasm";
-import type { ValidationError } from "./validate.js";
+import type { ValidationAssertion, ValidationIssue } from "./types.js";
+import { ERROR_CODES } from "./error-codes.js";
 
 // Validator management with proper lazy loading and cleanup
 class XsdValidatorManager {
@@ -108,7 +109,7 @@ class XsdValidatorManager {
       }
 
       throw new Error(
-        `Failed to fetch schemas from URLs: ${error instanceof Error ? error.message : String(error)}`,
+        `Failed to initialize XSD validator: ${error instanceof Error ? error.message : String(error)}`,
       );
     } finally {
       // Always clean up resources
@@ -144,13 +145,101 @@ class XsdValidatorManager {
 const getValidatorManager = () => XsdValidatorManager.getInstance();
 
 /**
- * Validate XML against FA(3) XSD schema
- *
- * @param xml - The XML string to validate
- * @returns Array of validation errors (empty if valid)
+ * Parse XSD validation error message to extract details
  */
-export async function validateXsd(xml: string): Promise<ValidationError[]> {
-  const errors: ValidationError[] = [];
+function parseXsdError(errorMessage: string): {
+  elementName?: string;
+  lineNumber?: number;
+  columnNumber?: number;
+  expectedElements?: string[];
+} {
+  const result: {
+    elementName?: string;
+    lineNumber?: number;
+    columnNumber?: number;
+    expectedElements?: string[];
+  } = {};
+
+  // Extract line number
+  const lineMatch = errorMessage.match(/line (\d+)/i);
+  if (lineMatch) {
+    result.lineNumber = parseInt(lineMatch[1], 10);
+  }
+
+  // Extract column number if available
+  const colMatch = errorMessage.match(/column (\d+)/i);
+  if (colMatch) {
+    result.columnNumber = parseInt(colMatch[1], 10);
+  }
+
+  // Extract element name
+  const elementMatch = errorMessage.match(/element ['"]?(\w+)['"]?/i);
+  if (elementMatch) {
+    result.elementName = elementMatch[1];
+  }
+
+  // Extract expected elements for "Element not allowed" errors
+  const expectedMatch = errorMessage.match(/Expected is \((.*?)\)/);
+  if (expectedMatch) {
+    result.expectedElements = expectedMatch[1]
+      .split(/[,|]/)
+      .map((s) => s.trim())
+      .filter((s) => s && s !== "#PCDATA");
+  }
+
+  return result;
+}
+
+/**
+ * Map XSD error message to structured issue
+ */
+function mapXsdErrorToIssue(errorMessage: string): ValidationIssue {
+  const parsed = parseXsdError(errorMessage);
+
+  // Determine error type from message patterns
+  let errorDef;
+
+  if (errorMessage.includes("not allowed")) {
+    errorDef = ERROR_CODES.ELEMENT_NOT_ALLOWED;
+  } else if (errorMessage.includes("missing") || errorMessage.includes("expected")) {
+    errorDef = ERROR_CODES.REQUIRED_ELEMENT_MISSING;
+  } else if (errorMessage.includes("invalid") || errorMessage.includes("does not match")) {
+    errorDef = ERROR_CODES.INVALID_ELEMENT_VALUE;
+  } else {
+    errorDef = ERROR_CODES.SCHEMA_VALIDATION_FAILED;
+  }
+
+  return {
+    code: errorDef.code,
+    context: {
+      location: {
+        element: parsed.elementName,
+        lineNumber: parsed.lineNumber,
+        columnNumber: parsed.columnNumber,
+      },
+      expectedValues: parsed.expectedElements,
+      metadata: {
+        originalMessage: errorMessage,
+      },
+    },
+    message: errorMessage,
+    fixSuggestions: errorDef.fixTemplates,
+  };
+}
+
+/**
+ * Validate XML against FA(3) XSD schema
+ * Returns structured validation issues
+ */
+export async function validateXsd(
+  xml: string,
+  collectAssertions: boolean = false,
+): Promise<{
+  issues: ValidationIssue[];
+  assertions: ValidationAssertion[];
+}> {
+  const issues: ValidationIssue[] = [];
+  const assertions: ValidationAssertion[] = [];
   const manager = getValidatorManager();
 
   let doc: XmlDocument | null = null;
@@ -166,30 +255,37 @@ export async function validateXsd(xml: string): Promise<ValidationError[]> {
     validator.validate(doc);
 
     // If we get here, validation passed
-    return [];
+    if (collectAssertions) {
+      assertions.push({
+        domain: "xsd",
+        aspect: "schema_conformance",
+        description: "Document conforms to FA(3) XSD schema",
+        elements: ["Full document validated successfully"],
+        confidence: 1.0,
+      });
+    }
+
+    return { issues: [], assertions };
   } catch (error) {
     if (error instanceof XmlValidateError) {
       // Parse structured validation error
       const errorMessage = error.message || "XSD validation failed";
-
-      // Extract line number from error message if available
-      const lineMatch = errorMessage.match(/line (\d+)/i);
-      const line = lineMatch ? parseInt(lineMatch[1], 10) : undefined;
-
-      errors.push({
-        level: "error",
-        source: "xsd",
-        message: errorMessage,
-        line,
-      });
+      issues.push(mapXsdErrorToIssue(errorMessage));
     } else {
-      // Handle other errors (likely parse errors from XmlDocument.fromString)
+      // Handle parse errors
       const message = error instanceof Error ? error.message : String(error);
-      errors.push({
-        level: "error",
-        source: "parse",
-        message,
-        line: undefined,
+      const errorDef = ERROR_CODES.MALFORMED_XML;
+
+      issues.push({
+        code: errorDef.code,
+        context: {
+          location: {},
+          metadata: {
+            originalMessage: message,
+          },
+        },
+        message: `XML parsing failed: ${message}`,
+        fixSuggestions: [],
       });
     }
   } finally {
@@ -199,7 +295,7 @@ export async function validateXsd(xml: string): Promise<ValidationError[]> {
     }
   }
 
-  return errors;
+  return { issues, assertions };
 }
 
 /**

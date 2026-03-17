@@ -3,33 +3,24 @@
  *
  * Two-layer validation architecture:
  * 1. XSD schema validation (via libxml2-wasm)
- * 2. Semantic rules that XSD can't express (see semantic.ts)
+ * 2. Semantic rules that XSD can't express
  */
 
 import { checkSemantics } from "./semantic.js";
 import { validateXsd } from "./xsd.js";
 import { XmlDocument } from "libxml2-wasm";
-import type { Locale } from "./messages.js";
+import { ERROR_CODES } from "./error-codes.js";
+import type {
+  XmlDocument as IXmlDocument,
+  ValidateOptions,
+  ValidationAssertion,
+  ValidationIssue,
+  ValidationMetadata,
+  ValidationResult,
+} from "./types.js";
 
-export interface ValidationError {
-  level: "error" | "warning";
-  source: "xsd" | "semantic" | "parse";
-  message: string;
-  line?: number;
-  path?: string;
-}
-
-export interface ValidationResult {
-  valid: boolean;
-  errors: ValidationError[];
-  warnings: ValidationError[];
-}
-
-export interface ValidateOptions {
-  locale?: Locale;
-  enableXsdValidation?: boolean;
-  enableSemanticValidation?: boolean;
-}
+const VALIDATOR_VERSION = "0.2.0";
+const SCHEMA_VERSION = "FA(3) 2025-06-25";
 
 // Environment detection utility
 class EnvironmentDetector {
@@ -54,21 +45,18 @@ class EnvironmentDetector {
 // XML Parser abstraction
 class XmlParser {
   /**
-   * Parse XML string into a Document.
+   * Parse XML string for well-formedness check.
    * Uses DOMParser in browser, libxml2-wasm in Node.js.
    */
-  static parse(xml: string): { doc: Document | null; error: ValidationError | null } {
+  static checkWellFormed(xml: string): ValidationIssue | null {
     if (EnvironmentDetector.isBrowser()) {
-      return XmlParser.parseBrowser(xml);
+      return XmlParser.checkBrowser(xml);
     } else {
-      return XmlParser.parseNode(xml);
+      return XmlParser.checkNode(xml);
     }
   }
 
-  private static parseBrowser(xml: string): {
-    doc: Document | null;
-    error: ValidationError | null;
-  } {
+  private static checkBrowser(xml: string): ValidationIssue | null {
     try {
       const parser = new DOMParser();
       const doc = parser.parseFromString(xml, "application/xml");
@@ -77,44 +65,56 @@ class XmlParser {
       const parseError = doc.querySelector("parsererror");
       if (parseError) {
         const errorText = parseError.textContent || "XML parsing failed";
+        const errorDef = ERROR_CODES.MALFORMED_XML;
+
         return {
-          doc: null,
-          error: {
-            level: "error",
-            source: "parse",
-            message: errorText.slice(0, 200),
+          code: errorDef.code,
+          context: {
+            location: {},
+            metadata: {
+              originalMessage: errorText.slice(0, 200),
+            },
           },
+          message: `XML is not well-formed: ${errorText.slice(0, 200)}`,
+          fixSuggestions: [],
         };
       }
 
-      return { doc, error: null };
+      return null;
     } catch (error) {
+      const errorDef = ERROR_CODES.MALFORMED_XML;
       return {
-        doc: null,
-        error: {
-          level: "error",
-          source: "parse",
-          message: error instanceof Error ? error.message : "Failed to parse XML",
+        code: errorDef.code,
+        context: {
+          location: {},
+          metadata: {
+            originalMessage: error instanceof Error ? error.message : String(error),
+          },
         },
+        message: `Failed to parse XML: ${error instanceof Error ? error.message : String(error)}`,
+        fixSuggestions: [],
       };
     }
   }
 
-  private static parseNode(xml: string): { doc: Document | null; error: ValidationError | null } {
-    // In Node.js, we validate well-formedness using libxml2-wasm
-    // but don't return a Document (since it's not compatible with browser Document)
+  private static checkNode(xml: string): ValidationIssue | null {
+    // In Node.js, validate well-formedness using libxml2-wasm
     try {
       const xmlDoc = XmlDocument.fromString(xml);
       xmlDoc.dispose();
-      return { doc: null, error: null };
+      return null;
     } catch (error) {
+      const errorDef = ERROR_CODES.MALFORMED_XML;
       return {
-        doc: null,
-        error: {
-          level: "error",
-          source: "parse",
-          message: error instanceof Error ? error.message : "Failed to parse XML",
+        code: errorDef.code,
+        context: {
+          location: {},
+          metadata: {
+            originalMessage: error instanceof Error ? error.message : String(error),
+          },
         },
+        message: `XML is not well-formed: ${error instanceof Error ? error.message : String(error)}`,
+        fixSuggestions: [],
       };
     }
   }
@@ -122,98 +122,211 @@ class XmlParser {
 
 // Main validation orchestrator
 class ValidationOrchestrator {
+  private readonly startTime: number;
+  private rulesExecuted = 0;
+  private elementsValidated = 0;
+
   constructor(
-    private readonly locale: Locale,
     private readonly enableXsd: boolean,
     private readonly enableSemantic: boolean,
-  ) {}
+    private readonly collectAssertions: boolean,
+    private readonly maxIssues: number,
+  ) {
+    this.startTime = Date.now();
+  }
 
   async validate(xml: string): Promise<ValidationResult> {
-    const errors: ValidationError[] = [];
-    const warnings: ValidationError[] = [];
+    const issues: ValidationIssue[] = [];
+    const assertions: ValidationAssertion[] = [];
 
     // Step 1: Well-formed XML check
-    const { error: parseError } = XmlParser.parse(xml);
+    const parseError = XmlParser.checkWellFormed(xml);
     if (parseError) {
-      errors.push(parseError);
-      return { valid: false, errors, warnings };
+      issues.push(parseError);
+      return this.buildResult(issues, assertions, false);
+    }
+
+    // Add assertion for well-formed XML
+    if (this.collectAssertions) {
+      assertions.push({
+        domain: "xsd",
+        aspect: "well_formed",
+        description: "XML document is well-formed",
+        elements: ["Document structure"],
+        confidence: 1.0,
+      });
     }
 
     // Step 2: XSD validation (if enabled)
     if (this.enableXsd) {
       try {
-        const xsdErrors = await validateXsd(xml);
-        errors.push(...xsdErrors);
+        const xsdResult = await validateXsd(xml, this.collectAssertions);
+        issues.push(...xsdResult.issues);
+        assertions.push(...xsdResult.assertions);
+        this.rulesExecuted++;
       } catch (error) {
-        // XSD validation infrastructure failure - add as warning
-        warnings.push({
-          level: "warning",
-          source: "xsd",
+        // XSD validation infrastructure failure
+        const errorDef = ERROR_CODES.VALIDATOR_INITIALIZATION_FAILED;
+        issues.push({
+          code: errorDef.code,
+          context: {
+            location: {},
+            metadata: {
+              reason: error instanceof Error ? error.message : String(error),
+            },
+          },
           message: `XSD validation unavailable: ${error instanceof Error ? error.message : String(error)}`,
+          fixSuggestions: [],
         });
       }
     }
 
-    // Step 3: Semantic validation
-    if (this.enableSemantic) {
+    // Step 3: Semantic validation (if enabled)
+    if (this.enableSemantic && (!this.maxIssues || issues.length < this.maxIssues)) {
       try {
-        const { XmlDocument } = await import("libxml2-wasm");
         const xmlDoc = XmlDocument.fromString(xml);
 
         try {
-          const semanticResults = checkSemantics(
-            xmlDoc as unknown as {
-              find: (xpath: string, ns?: Record<string, string>) => unknown[];
-              eval: (xpath: string, ns?: Record<string, string>) => unknown;
-            },
-            this.locale,
+          const semanticResult = checkSemantics(
+            xmlDoc as unknown as IXmlDocument,
+            this.collectAssertions,
           );
-          for (const result of semanticResults) {
-            if (result.level === "error") {
-              errors.push(result);
-            } else {
-              warnings.push(result);
-            }
-          }
+          issues.push(...semanticResult.issues);
+          assertions.push(...semanticResult.assertions);
+          this.rulesExecuted += semanticResult.issues.length + semanticResult.assertions.length;
         } finally {
           xmlDoc.dispose();
         }
       } catch (error) {
-        warnings.push({
-          level: "warning",
-          source: "semantic",
+        // Semantic validation failure
+        const errorDef = ERROR_CODES.VALIDATOR_INITIALIZATION_FAILED;
+        issues.push({
+          code: errorDef.code,
+          context: {
+            location: {},
+            metadata: {
+              reason: error instanceof Error ? error.message : String(error),
+              phase: "semantic",
+            },
+          },
           message: `Semantic validation failed: ${error instanceof Error ? error.message : String(error)}`,
+          fixSuggestions: [],
         });
       }
     }
 
+    // Limit issues if maxIssues is set
+    const limitedIssues =
+      this.maxIssues && issues.length > this.maxIssues ? issues.slice(0, this.maxIssues) : issues;
+
+    // Determine if valid (no errors, warnings are ok)
+    const hasErrors = limitedIssues.some((issue) => issue.code.severity === "error");
+
+    return this.buildResult(limitedIssues, assertions, !hasErrors);
+  }
+
+  private buildResult(
+    issues: ValidationIssue[],
+    assertions: ValidationAssertion[],
+    valid: boolean,
+  ): ValidationResult {
+    const metadata: ValidationMetadata = {
+      validationTimeMs: Date.now() - this.startTime,
+      rulesExecuted: this.rulesExecuted,
+      elementsValidated: this.elementsValidated,
+      schemaVersion: SCHEMA_VERSION,
+      validatorVersion: VALIDATOR_VERSION,
+    };
+
     return {
-      valid: errors.length === 0,
-      errors,
-      warnings,
+      valid,
+      issues,
+      assertions,
+      metadata,
     };
   }
 }
 
 /**
  * Validate a KSeF FA(3) XML string.
- * Includes both XSD schema validation and semantic rules checking.
+ * Returns structured validation result with issues and assertions.
+ * NEVER throws - all errors are returned as ValidationResult.
  *
  * @param xml - The XML string to validate
  * @param options - Validation options
- * @returns Validation result with errors and warnings
+ * @returns Comprehensive validation result
  */
 export async function validate(
   xml: string,
   options: ValidateOptions = {},
 ): Promise<ValidationResult> {
-  const { locale = "pl", enableXsdValidation = true, enableSemanticValidation = true } = options;
+  try {
+    const {
+      enableXsdValidation = true,
+      enableSemanticValidation = true,
+      collectAssertions = false,
+      maxIssues = undefined,
+    } = options;
 
-  const orchestrator = new ValidationOrchestrator(
-    locale,
-    enableXsdValidation,
-    enableSemanticValidation,
-  );
+    const orchestrator = new ValidationOrchestrator(
+      enableXsdValidation,
+      enableSemanticValidation,
+      collectAssertions,
+      maxIssues ?? Number.MAX_SAFE_INTEGER,
+    );
 
-  return orchestrator.validate(xml);
+    return await orchestrator.validate(xml);
+  } catch (error) {
+    // Catch any unexpected errors and return structured result
+    const errorDef = ERROR_CODES.EXECUTION_ERROR;
+    const metadata: ValidationMetadata = {
+      validationTimeMs: 0,
+      rulesExecuted: 0,
+      elementsValidated: 0,
+      schemaVersion: SCHEMA_VERSION,
+      validatorVersion: VALIDATOR_VERSION,
+    };
+
+    return {
+      valid: false,
+      issues: [
+        {
+          code: errorDef.code,
+          context: {
+            location: {},
+            metadata: {
+              originalError: error instanceof Error ? error.message : String(error),
+              stackTrace: error instanceof Error ? error.stack : undefined,
+            },
+          },
+          message: `Validation failed: ${error instanceof Error ? error.message : String(error)}`,
+          fixSuggestions: [],
+        },
+      ],
+      assertions: [],
+      metadata,
+    };
+  }
 }
+
+/**
+ * Backward compatibility exports (deprecated)
+ */
+export type { ValidationResult, ValidationIssue, ValidateOptions };
+
+// Re-export new types for convenience
+export type {
+  ValidationAssertion,
+  ValidationMetadata,
+  IssueCode,
+  IssueDomain,
+  IssueSeverity,
+  IssueContext,
+  IssueLocation,
+  FixSuggestion,
+  FixType,
+} from "./types.js";
+
+// Re-export utility functions
+export { hasErrors, hasWarnings } from "./types.js";
+export { getErrorDefinition, getFixSuggestions, isKnownErrorCode } from "./error-codes.js";
