@@ -39,6 +39,9 @@
       "processingError": "Error validating file"
     }
   },
+  "languagePicker": {
+    "ariaLabel": "Change language"
+  },
   "footer": {
     "copyright": "© 2026 ksefuj",
     "github": "GitHub",

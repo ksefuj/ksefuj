@@ -28,7 +28,7 @@ ksefuj/
 │   └── src/schemas/fa3.xsd ← official MF schema
 ├── apps/web/               ← Next.js app (ksefuj.to)
 │   ├── src/app/
-│   │   └── [locale]/       ← i18n routing (PL/EN/UA)
+│   │   └── [locale]/       ← i18n routing (PL/EN/UK)
 │   │       ├── page.tsx    ← localized landing page
 │   │       └── validator.tsx ← drag & drop validator
 │   └── src/i18n/           ← translations and config
@@ -76,13 +76,13 @@ issue 1-5 invoices/month and don't want to buy Symfonia or Comarch. The tool sho
 approachable for a non-technical freelancer, while also offering CLI, npm package, and API for
 developers who want programmatic access.
 
-### Multilingual (PL + EN + UA)
+### Multilingual (PL + EN + UK)
 
 - **UI**: Polish is the default language. English and Ukrainian must be fully supported. Use i18n
   from the start — do not hardcode Polish strings in components. Ukrainian support reflects the
   large Ukrainian community in Poland, many of whom run sole proprietorships (JDG) and need KSeF
   tools.
-- **Error messages from validator**: Available in PL, EN, UA. Polish is default.
+- **Error messages from validator**: Available in PL, EN, UK. Polish is default.
 - **Blog/SEO content**: Polish-first (this is the SEO target), English and Ukrainian versions are
   nice-to-have.
 - **Code**: Always in English. Variable names, function names, comments, commit messages — all
@@ -204,7 +204,7 @@ client-side processing, and near-zero server costs that make "free forever" sust
 - [x] Bundled schema solution (CORS-free, offline-capable)
 - [x] Two-layer validation UI badges (XSD + semantic)
 - [x] Singleton validator lifecycle (efficient resource reuse)
-- [x] i18n setup (PL + EN + UA) ✅
+- [x] i18n setup (PL + EN + UK) ✅
 - [ ] pnpm publish @ksefuj/validator
 - [ ] Deploy to Vercel on ksefuj.to
 - [ ] First blog posts (SEO)
