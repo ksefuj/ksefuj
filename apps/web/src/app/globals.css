@@ -1,1 +1,9 @@
 @import "tailwindcss";
+
+@theme {
+  --color-stone-950: #0c0a09;
+}
+
+html {
+  @apply bg-stone-950 text-stone-300;
+}

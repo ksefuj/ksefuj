@@ -1,0 +1,50 @@
+{
+  "meta": {
+    "title": "ksefuj.to — walidator KSeF FA(3)",
+    "description": "Darmowy walidator faktur KSeF FA(3). Wrzuć XML, sprawdź błędy. Wszystko client-side — Twoje dane nie opuszczają przeglądarki.",
+    "ogTitle": "ksefuj.to — walidator KSeF FA(3)",
+    "ogDescription": "Darmowy walidator faktur KSeF. Client-side, bez logowania."
+  },
+  "header": {
+    "title": "ksefuj",
+    "subtitle": "walidator KSeF FA(3)"
+  },
+  "homepage": {
+    "heroTitle": "Sprawdź swoją e-fakturę",
+    "heroDescription": "Wrzuć XML, zobacz błędy. Walidacja odbywa się w Twojej przeglądarce — dane nie opuszczają Twojego komputera."
+  },
+  "validator": {
+    "dropzone": {
+      "dragHere": "Przeciągnij plik XML lub kliknij",
+      "dropFile": "Upuść plik XML",
+      "validating": "Walidacja...",
+      "validatingDetails": "Sprawdzanie XSD i reguł semantycznych...",
+      "acceptedFiles": "Akceptowane: .xml (faktura KSeF FA3)"
+    },
+    "results": {
+      "valid": "Faktura prawidłowa",
+      "invalid": "Znaleziono błędy",
+      "warnings": "ostrzeżeń",
+      "clear": "Wyczyść"
+    },
+    "badges": {
+      "xsdError": "Błąd XSD",
+      "xsdWarning": "Ostrzeżenie XSD",
+      "xsdValid": "XSD ✓",
+      "semanticError": "Błąd biznesowy",
+      "semanticWarning": "Ostrzeżenie biznesowe",
+      "semanticValid": "Reguły ✓"
+    },
+    "errors": {
+      "processingError": "Błąd podczas walidacji pliku"
+    }
+  },
+  "languagePicker": {
+    "ariaLabel": "Zmień język"
+  },
+  "footer": {
+    "copyright": "© 2026 ksefuj",
+    "github": "GitHub",
+    "npm": "npm"
+  }
+}

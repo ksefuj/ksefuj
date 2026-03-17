@@ -1,23 +1,20 @@
-import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
-export const metadata: Metadata = {
-  title: "ksefuj.to — walidator KSeF FA(3)",
-  description:
-    "Darmowy walidator faktur KSeF FA(3). Wrzuć XML, sprawdź błędy. Wszystko client-side — Twoje dane nie opuszczają przeglądarki.",
-  openGraph: {
-    title: "ksefuj.to — walidator KSeF FA(3)",
-    description: "Darmowy walidator faktur KSeF. Client-side, bez logowania.",
-    url: "https://ksefuj.to",
-  },
-};
+interface Props {
+  children: ReactNode;
+  params?: Promise<{ locale?: string }>;
+}
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({ children, params }: Props) {
+  // Get locale from params if available (passed from [locale] segment)
+  const resolvedParams = params ? await params : {};
+  const locale = resolvedParams.locale || "pl";
+
   return (
-    <html lang="pl">
+    <html lang={locale}>
       <body className="bg-stone-950 text-stone-100 antialiased">
         {children}
         <Analytics />

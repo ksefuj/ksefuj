@@ -26,7 +26,7 @@ yarn add @ksefuj/validator
 import { validate } from "@ksefuj/validator";
 
 const result = await validate(xmlString, {
-  locale: "en", // 'pl' | 'en' | 'ua'
+  locale: "en", // 'pl' (default) | 'en' | 'uk'
   enableXsdValidation: true, // default: true
   enableSemanticValidation: true, // default: true
 });
