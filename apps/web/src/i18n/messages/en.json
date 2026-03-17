@@ -57,6 +57,9 @@
       "VALIDATOR_INITIALIZATION_FAILED": "Validator initialization failed"
     }
   },
+  "languagePicker": {
+    "ariaLabel": "Change language"
+  },
   "footer": {
     "copyright": "© 2026 ksefuj",
     "github": "GitHub",

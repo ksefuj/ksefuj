@@ -172,7 +172,7 @@ bundle if changes are detected. Run this:
 - [x] Web app with drag & drop
 - [x] npm package
 - [x] Schema update tool
-- [x] i18n setup (PL + EN + UA)
+- [x] i18n setup (PL + EN + UK)
 - [ ] Deploy to production
 
 ### Phase 2: Preview (upcoming)

@@ -57,6 +57,9 @@
       "VALIDATOR_INITIALIZATION_FAILED": "Помилка ініціалізації валідатора"
     }
   },
+  "languagePicker": {
+    "ariaLabel": "Змінити мову"
+  },
   "footer": {
     "copyright": "© 2026 ksefuj",
     "github": "GitHub",

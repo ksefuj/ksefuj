@@ -3,6 +3,7 @@
 import { usePathname, useRouter } from "../../i18n/routing";
 import { useEffect, useRef, useState, useTransition } from "react";
 import { track } from "@vercel/analytics";
+import { useTranslations } from "next-intl";
 
 interface Props {
   currentLocale: string;
@@ -11,7 +12,7 @@ interface Props {
 const languages = [
   { code: "pl", label: "PL", name: "Polski", flag: "🇵🇱" },
   { code: "en", label: "EN", name: "English", flag: "🇬🇧" },
-  { code: "uk", label: "UA", name: "Українська", flag: "🇺🇦" },
+  { code: "uk", label: "UK", name: "Українська", flag: "🇺🇦" },
 ] as const;
 
 export function LanguagePicker({ currentLocale }: Props) {
@@ -20,6 +21,7 @@ export function LanguagePicker({ currentLocale }: Props) {
   const [isPending, startTransition] = useTransition();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const t = useTranslations("languagePicker");
 
   const currentLanguage = languages.find((lang) => lang.code === currentLocale) || languages[0];
 
@@ -64,7 +66,7 @@ export function LanguagePicker({ currentLocale }: Props) {
           border border-stone-700/50 hover:border-stone-600
           ${isPending ? "opacity-50 cursor-wait" : ""}
         `}
-        aria-label="Change language"
+        aria-label={t("ariaLabel")}
         aria-expanded={isOpen}
       >
         <span className="text-xs opacity-70">{currentLanguage.flag}</span>

@@ -3,8 +3,6 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { SpeedInsights } from "@vercel/speed-insights/next";
-import "../globals.css";
 
 import { routing } from "../../i18n/routing";
 
@@ -36,7 +34,7 @@ interface Props {
   params: Promise<{ locale: string }>;
 }
 
-export default async function RootLayout({ children, params }: Props) {
+export default async function LocaleLayout({ children, params }: Props) {
   const { locale } = await params;
 
   // Ensure that the incoming locale is valid
@@ -48,13 +46,8 @@ export default async function RootLayout({ children, params }: Props) {
   const messages = await getMessages({ locale });
 
   return (
-    <html lang={locale}>
-      <body>
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          {children}
-        </NextIntlClientProvider>
-        <SpeedInsights />
-      </body>
-    </html>
+    <NextIntlClientProvider locale={locale} messages={messages}>
+      {children}
+    </NextIntlClientProvider>
   );
 }
