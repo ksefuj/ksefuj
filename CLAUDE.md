@@ -27,11 +27,11 @@ ksefuj/
 │   ├── src/cli.ts          ← CLI entry point
 │   └── src/schemas/fa3.xsd ← official MF schema
 ├── apps/web/               ← Next.js app (ksefuj.to)
-│   └── src/app/
-│       ├── [locale]/       ← i18n routing (PL/EN/UA)
-│       │   ├── page.tsx    ← localized landing page
-│       │   └── validator.tsx ← drag & drop validator
-│       └── i18n/           ← translations and config
+│   ├── src/app/
+│   │   └── [locale]/       ← i18n routing (PL/EN/UA)
+│   │       ├── page.tsx    ← localized landing page
+│   │       └── validator.tsx ← drag & drop validator
+│   └── src/i18n/           ← translations and config
 └── skills/ksef-fa3/        ← Claude skill for invoice generation
 ```
 
