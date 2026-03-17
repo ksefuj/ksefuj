@@ -195,36 +195,7 @@ client-side processing, and near-zero server costs that make "free forever" sust
 
 ## Roadmap
 
-### Phase 1: Validator (current)
-
-- [x] Semantic rules engine
-- [x] CLI scaffold
-- [x] Next.js web app with drag & drop
-- [x] libxml2-wasm integration for full XSD validation in browser
-- [x] Bundled schema solution (CORS-free, offline-capable)
-- [x] Two-layer validation UI badges (XSD + semantic)
-- [x] Singleton validator lifecycle (efficient resource reuse)
-- [x] i18n setup (PL + EN + UK) ✅
-- [ ] pnpm publish @ksefuj/validator
-- [ ] Deploy to Vercel on ksefuj.to
-- [ ] First blog posts (SEO)
-
-### Phase 2: Preview
-
-- [ ] XML → HTML invoice visualization
-- [ ] MF-official template
-- [ ] Minimal template
-- [ ] PDF export (client-side via browser print / jsPDF)
-- [ ] QR code generation (required for invoices sent outside KSeF)
-- [ ] Custom branding templates
-
-### Phase 3: Generator
-
-- [ ] XML generator from form input
-- [ ] Auto NBP exchange rate lookup
-- [ ] Auto NIP lookup (GUS/VIES API)
-- [ ] REST API endpoints (/api/v1/validate, /api/v1/preview, /api/v1/generate)
-- [ ] Saved contractors / invoice templates (localStorage or optional account)
+See [README.md](./README.md#roadmap) for the current project roadmap.
 
 ### Cost Minimization Strategy
 

@@ -172,21 +172,31 @@ bundle if changes are detected. Run this:
 - [x] Web app with drag & drop
 - [x] npm package
 - [x] Schema update tool
-- [x] i18n setup (PL + EN + UK)
-- [ ] Deploy to production
+- [x] i18n setup (PL + EN + UA)
+- [x] Deploy to production
 
-### Phase 2: Preview (upcoming)
+### Phase 1.5: Launch Sprint (in progress)
 
-- XML → HTML invoice visualization
-- PDF export
-- QR code generation
+- [ ] Validator UI improvements (multi-file upload, better error output)
+- [ ] Landing page with trust signals and feature sections
+- [ ] MDX content pipeline (docs, guides, blog)
+- [ ] Global validation counter (Vercel KV)
+- [ ] Sitemap, RSS, OG images
+- [ ] Human-readable error messages with fix instructions
+- [ ] Publish @ksefuj/validator to npm registry
+
+### Phase 2: Preview
+
+- [ ] XML → HTML invoice visualization
+- [ ] Autofix suggestions (one-click error fixes)
+- [ ] PDF export (client-side via browser print / jsPDF)
+- [ ] QR code generation (required for invoices sent outside KSeF)
 
 ### Phase 3: Generator
 
-- Form-based XML generation
-- Auto NBP exchange rates
-- Auto NIP lookup (GUS/VIES)
-- REST API
+- [ ] Form-based XML generation
+- [ ] Auto NBP exchange rates
+- [ ] Auto NIP lookup (GUS/VIES)
 
 ## License
 
