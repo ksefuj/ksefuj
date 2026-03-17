@@ -122,7 +122,7 @@ Business logic checks that XSD cannot express. Already implemented in `semantic.
   for advance invoices)
 - `GTU_FORMAT` — must be `<GTU>GTU_12</GTU>`, not `<GTU_12>1</GTU_12>`
 - `TRAILING_ZEROS` — warn about unnecessary trailing zeros in amounts
-- `P15_REQUIRED` — P_15 (total amount) is mandatory
+- `P15_MISSING` — P_15 (total amount) is mandatory
 - `ADNOTACJE_COMPLETENESS` — all Adnotacje sub-elements required
 
 ## KSeF FA(3) Key Gotchas

@@ -432,7 +432,7 @@ export const semanticRules: SemanticRule[] = [
   },
 
   {
-    id: "P15_REQUIRED",
+    id: "P15_MISSING",
     description: "P_15 (total amount due) is mandatory",
     category: "required_field",
     severity: "error",

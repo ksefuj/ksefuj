@@ -28,7 +28,7 @@ export function translateValidationIssue(
     }
 
     if (issue.context.expectedValues && issue.context.expectedValues.length > 0) {
-      if (issue.code.code === "P12_INVALID_VALUE") {
+      if (issue.code.code === "P12_INVALID") {
         context.allowedValues = issue.context.expectedValues.join(", ");
       } else {
         context.expected = String(issue.context.expectedValues[0]);
