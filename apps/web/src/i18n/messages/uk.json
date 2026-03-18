@@ -19,7 +19,8 @@
       "dropFiles": "Відпустіть {count} XML {count, plural, =1 {файл} other {файлів}}",
       "validating": "Перевірка...",
       "validatingDetails": "Перевірка XSD і семантичних правил...",
-      "acceptedFiles": "Приймаються: .xml (рахунки KSeF FA3)"
+      "acceptedFiles": "Приймаються: .xml (рахунки KSeF FA3)",
+      "callToAction": "ksef it!"
     },
     "summary": {
       "allValid": "Перевірка завершена успішно",

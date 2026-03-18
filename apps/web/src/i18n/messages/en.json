@@ -19,7 +19,8 @@
       "dropFiles": "Drop {count} XML {count, plural, =1 {file} other {files}}",
       "validating": "Validating...",
       "validatingDetails": "Checking XSD and semantic rules...",
-      "acceptedFiles": "Accepted: .xml (KSeF FA3 invoices)"
+      "acceptedFiles": "Accepted: .xml (KSeF FA3 invoices)",
+      "callToAction": "ksef it!"
     },
     "summary": {
       "allValid": "Validation completed successfully",

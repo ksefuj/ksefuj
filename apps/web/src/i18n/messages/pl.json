@@ -19,7 +19,8 @@
       "dropFiles": "Upuść {count, plural, =1 {plik} other {# pliki}} XML",
       "validating": "Walidacja...",
       "validatingDetails": "Sprawdzanie XSD i reguł semantycznych...",
-      "acceptedFiles": "Akceptowane: .xml (faktury KSeF FA3)"
+      "acceptedFiles": "Akceptowane: .xml (faktury KSeF FA3)",
+      "callToAction": "ksefuj to!"
     },
     "summary": {
       "allValid": "Walidacja zakończona pomyślnie",

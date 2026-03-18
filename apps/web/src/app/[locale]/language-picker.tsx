@@ -10,9 +10,9 @@ interface Props {
 }
 
 const languages = [
-  { code: "pl", label: "PL", name: "Polski", flag: "🇵🇱" },
-  { code: "en", label: "EN", name: "English", flag: "🇬🇧" },
-  { code: "uk", label: "UK", name: "Українська", flag: "🇺🇦" },
+  { code: "pl", label: "PL", name: "Polski" },
+  { code: "en", label: "EN", name: "English" },
+  { code: "uk", label: "UK", name: "Українська" },
 ] as const;
 
 export function LanguagePicker({ currentLocale }: Props) {
@@ -61,50 +61,56 @@ export function LanguagePicker({ currentLocale }: Props) {
         onClick={() => setIsOpen(!isOpen)}
         disabled={isPending}
         className={`
-          flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-xl transition-all
-          bg-white/70 hover:bg-white backdrop-blur-sm text-slate-700 hover:text-slate-900
-          border border-slate-200 hover:border-violet-200 shadow-sm hover:shadow-md
+          inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg transition-all
+          text-slate-700 hover:text-violet-600 hover:bg-violet-50
           ${isPending ? "opacity-50 cursor-wait" : ""}
         `}
         aria-label={t("ariaLabel")}
         aria-expanded={isOpen}
       >
-        <span className="text-base">{currentLanguage.flag}</span>
-        <span className="font-bold">{currentLanguage.label}</span>
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M3 5h12M3 12h12m-9 7h6"
+          />
+        </svg>
+        <span className="font-semibold">{currentLanguage.label}</span>
         <svg
-          className={`w-4 h-4 transition-transform text-violet-400 ${isOpen ? "rotate-180" : ""}`}
+          className={`w-3 h-3 transition-transform ${isOpen ? "rotate-180" : ""}`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
-          strokeWidth={2.5}
+          strokeWidth={3}
         >
           <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
         </svg>
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-52 rounded-xl bg-white/95 backdrop-blur-sm border border-slate-200 shadow-2xl overflow-hidden z-50">
+        <div className="absolute right-0 mt-2 py-1 w-32 rounded-xl bg-white border border-slate-200 shadow-lg overflow-hidden z-50">
           {languages.map((lang) => (
             <button
               key={lang.code}
               onClick={() => handleChange(lang.code)}
               disabled={isPending || lang.code === currentLocale}
               className={`
-                w-full px-4 py-3 text-left text-sm transition-all flex items-center gap-3
+                w-full px-3 py-2 text-left text-sm transition-colors flex items-center justify-between
                 ${
                   lang.code === currentLocale
-                    ? "bg-violet-50 text-violet-700 font-semibold cursor-default"
-                    : "text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium"
+                    ? "bg-violet-50 text-violet-700 font-semibold"
+                    : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
                 }
               `}
             >
-              <span className="text-lg">{lang.flag}</span>
-              <div className="flex-1">
-                <div className="font-semibold">{lang.name}</div>
-                <div className="text-xs text-slate-400">{lang.label}</div>
-              </div>
+              <span>{lang.label}</span>
               {lang.code === currentLocale && (
-                <svg className="w-4 h-4 text-violet-500" fill="currentColor" viewBox="0 0 20 20">
+                <svg
+                  className="w-3.5 h-3.5 text-violet-500"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
                   <path
                     fillRule="evenodd"
                     d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
