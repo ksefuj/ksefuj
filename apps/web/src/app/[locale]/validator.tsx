@@ -118,7 +118,7 @@ export function Validator({ locale }: ValidatorProps) {
       // Process files
       try {
         // Dynamic import to avoid SSR issues
-        const { validate } = await import("@ksefuj/validator");
+        const { validate } = await import("@ksefuj/validator/validate");
 
         const results = await Promise.all(
           xmlFiles.map(async (file, index) => {

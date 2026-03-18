@@ -7,6 +7,10 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
+      "import": "./dist/types-export.js",
+      "types": "./dist/types-export.d.ts"
+    },
+    "./validate": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
     }

@@ -8,7 +8,6 @@
 
 import { checkSemantics } from "./semantic.js";
 import { validateXsd } from "./xsd.js";
-import { XmlDocument } from "libxml2-wasm";
 import { ERROR_CODES } from "./error-codes.js";
 import type {
   XmlDocument as IXmlDocument,
@@ -18,6 +17,17 @@ import type {
   ValidationMetadata,
   ValidationResult,
 } from "./types.js";
+
+// Lazy-loaded libxml2-wasm module for Node.js validation
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let libxml2Module: any = null;
+
+async function getLibxml2Module() {
+  if (!libxml2Module) {
+    libxml2Module = await import("libxml2-wasm");
+  }
+  return libxml2Module;
+}
 
 const VALIDATOR_VERSION = "0.2.0";
 const SCHEMA_VERSION = "FA(3) 2025-06-25";
@@ -48,11 +58,11 @@ class XmlParser {
    * Parse XML string for well-formedness check.
    * Uses DOMParser in browser, libxml2-wasm in Node.js.
    */
-  static checkWellFormed(xml: string): ValidationIssue | null {
+  static async checkWellFormed(xml: string): Promise<ValidationIssue | null> {
     if (EnvironmentDetector.isBrowser()) {
       return XmlParser.checkBrowser(xml);
     } else {
-      return XmlParser.checkNode(xml);
+      return await XmlParser.checkNode(xml);
     }
   }
 
@@ -97,9 +107,11 @@ class XmlParser {
     }
   }
 
-  private static checkNode(xml: string): ValidationIssue | null {
+  private static async checkNode(xml: string): Promise<ValidationIssue | null> {
     // In Node.js, validate well-formedness using libxml2-wasm
     try {
+      const libxml2 = await getLibxml2Module();
+      const { XmlDocument } = libxml2;
       const xmlDoc = XmlDocument.fromString(xml);
       xmlDoc.dispose();
       return null;
@@ -140,7 +152,7 @@ class ValidationOrchestrator {
     const assertions: ValidationAssertion[] = [];
 
     // Step 1: Well-formed XML check
-    const parseError = XmlParser.checkWellFormed(xml);
+    const parseError = await XmlParser.checkWellFormed(xml);
     if (parseError) {
       issues.push(parseError);
       return this.buildResult(issues, assertions, false);
@@ -184,6 +196,9 @@ class ValidationOrchestrator {
     // Step 3: Semantic validation (if enabled)
     if (this.enableSemantic && (!this.maxIssues || issues.length < this.maxIssues)) {
       try {
+        // Lazy load libxml2-wasm for semantic validation
+        const libxml2 = await getLibxml2Module();
+        const { XmlDocument } = libxml2;
         const xmlDoc = XmlDocument.fromString(xml);
 
         try {
