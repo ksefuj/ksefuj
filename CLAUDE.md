@@ -90,6 +90,25 @@ developers who want programmatic access.
   Polish (e.g., `Podmiot1`, `FaWiersz`, `Adnotacje`, `NrWierszaFa`). These should be used as-is
   since they match the XML schema.
 
+## Design System
+
+**Read `DESIGN_SYSTEM.md` before writing ANY UI code.** No exceptions — every component, page, style
+change, or new feature must follow the design system.
+
+Quick reference (the full doc has all tokens, classes, and component specs):
+
+- **Theme**: Light, airy, Notion-inspired. Warm white backgrounds, pastel accents.
+- **Colors**: Primary violet-500, success emerald-500, warning amber-500, error rose-500. Page bg is
+  warm white (#FAFAF8), not pure white. Text is slate-900, not pure black.
+- **Fonts**: Display font (Plus Jakarta Sans or chosen alternative) for headings. Inter/Geist for
+  body. JetBrains Mono for logo + code ONLY. Never monospace on headings.
+- **Logo**: `ksefuj●to` — unified word, violet dot, light ".to". Use `logo.tsx`, never recreate.
+- **Components**: Use shared components from `src/components/` (logo, header, footer, section
+  container, badge). Never re-implement these.
+- **Copy**: Write for Ania (non-technical freelancer). No jargon above the fold. See the translation
+  table in DESIGN_SYSTEM.md for exact rewrites.
+- **No dark theme** except footer and code blocks.
+
 ## Tech Stack
 
 - **Package manager**: pnpm (workspaces)
