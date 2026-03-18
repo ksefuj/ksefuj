@@ -20,7 +20,7 @@
       "validating": "Перевірка...",
       "validatingDetails": "Перевірка XSD і семантичних правил...",
       "acceptedFiles": "Приймаються: .xml (рахунки KSeF FA3)",
-      "callToAction": "ksef it!"
+      "callToAction": "ксефуй!"
     },
     "summary": {
       "allValid": "Перевірка завершена успішно",
