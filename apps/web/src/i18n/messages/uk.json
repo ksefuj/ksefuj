@@ -46,6 +46,16 @@
   "languagePicker": {
     "ariaLabel": "Змінити мову"
   },
+  "footer": {
+    "description": "Безкоштовний валідатор рахунків KSeF. Ваш файл не залишає браузер.",
+    "resources": "Ресурси",
+    "information": "Інформація",
+    "npmPackage": "npm Package",
+    "ksefPortal": "Портал KSeF",
+    "privacyPolicy": "Політика приватності",
+    "termsOfUse": "Умови використання",
+    "copyright": "© 2026 ksefuj. Весь код є публічним на GitHub."
+  },
   "landing": {
     "hero": {
       "title": "Перевірте свою е-фактуру",

@@ -46,6 +46,16 @@
   "languagePicker": {
     "ariaLabel": "Change language"
   },
+  "footer": {
+    "description": "Free KSeF invoice validator. Your file never leaves the browser.",
+    "resources": "Resources",
+    "information": "Information",
+    "npmPackage": "npm Package",
+    "ksefPortal": "KSeF Portal",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfUse": "Terms of Use",
+    "copyright": "© 2026 ksefuj. All code is public on GitHub."
+  },
   "landing": {
     "hero": {
       "title": "Validate your e-invoice",

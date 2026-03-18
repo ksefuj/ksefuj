@@ -46,6 +46,16 @@
   "languagePicker": {
     "ariaLabel": "Zmień język"
   },
+  "footer": {
+    "description": "Darmowy walidator faktur KSeF. Twój plik nie opuszcza przeglądarki.",
+    "resources": "Zasoby",
+    "information": "Informacje",
+    "npmPackage": "npm Package",
+    "ksefPortal": "Portal KSeF",
+    "privacyPolicy": "Polityka prywatności",
+    "termsOfUse": "Warunki użytkowania",
+    "copyright": "© 2026 ksefuj. Cały kod jest publiczny na GitHub."
+  },
   "landing": {
     "hero": {
       "title": "Sprawdź swoją e-fakturę",

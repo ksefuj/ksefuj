@@ -1,7 +1,11 @@
+"use client";
+
 import { Logo } from "./logo";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 export function SiteFooter() {
+  const t = useTranslations("footer");
   return (
     <footer className="bg-slate-900 text-slate-400 border-t border-slate-800">
       <div className="max-w-4xl mx-auto px-4 md:px-6 py-16">
@@ -10,13 +14,13 @@ export function SiteFooter() {
           <div className="space-y-4">
             <Logo size="sm" className="brightness-0 invert opacity-80" />
             <p className="text-sm">
-              Darmowy walidator faktur KSeF. Twój plik nie opuszcza przeglądarki.
+              {t("description")}
             </p>
           </div>
 
           {/* Resources */}
           <div className="space-y-4">
-            <h3 className="text-slate-300 font-semibold text-sm uppercase tracking-wide">Zasoby</h3>
+            <h3 className="text-slate-300 font-semibold text-sm uppercase tracking-wide">{t("resources")}</h3>
             <ul className="space-y-2 text-sm">
               <li>
                 <a
@@ -31,7 +35,7 @@ export function SiteFooter() {
                   href="https://www.npmjs.com/package/@ksefuj/validator"
                   className="hover:text-slate-300 transition-colors"
                 >
-                  npm Package
+                  {t("npmPackage")}
                 </a>
               </li>
               <li>
@@ -39,7 +43,7 @@ export function SiteFooter() {
                   href="https://ksef.podatki.gov.pl/"
                   className="hover:text-slate-300 transition-colors"
                 >
-                  Portal KSeF
+                  {t("ksefPortal")}
                 </a>
               </li>
             </ul>
@@ -48,17 +52,17 @@ export function SiteFooter() {
           {/* Legal */}
           <div className="space-y-4">
             <h3 className="text-slate-300 font-semibold text-sm uppercase tracking-wide">
-              Informacje
+              {t("information")}
             </h3>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link href="/privacy" className="hover:text-slate-300 transition-colors">
-                  Polityka prywatności
+                  {t("privacyPolicy")}
                 </Link>
               </li>
               <li>
                 <Link href="/terms" className="hover:text-slate-300 transition-colors">
-                  Warunki użytkowania
+                  {t("termsOfUse")}
                 </Link>
               </li>
               <li>
@@ -69,7 +73,7 @@ export function SiteFooter() {
         </div>
 
         <div className="mt-12 pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-sm">© 2026 ksefuj. Cały kod jest publiczny na GitHub.</p>
+          <p className="text-sm">{t("copyright")}</p>
           <div className="flex items-center gap-4">
             <a
               href="https://github.com/ksefuj/ksefuj"
