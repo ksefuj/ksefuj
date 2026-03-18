@@ -8,7 +8,7 @@ import { ValidationLayersSection } from "./sections/validation-layers-section";
 import { GettingStartedSection } from "./sections/getting-started-section";
 import { OpenSourceSection } from "./sections/open-source-section";
 import { DeveloperSection } from "./sections/developer-section";
-import { getPageContent } from "./page-content";
+import { getTranslations } from "next-intl/server";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -16,7 +16,7 @@ interface Props {
 
 export default async function Home({ params }: Props) {
   const { locale } = await params;
-  const content = getPageContent(locale);
+  const t = await getTranslations({ locale });
 
   // Feature icons
   const shieldIcon = (
@@ -101,86 +101,163 @@ export default async function Home({ params }: Props) {
       <main className="min-h-screen">
         {/* Hero Section */}
         <HeroSection
-          title={content.hero.title}
-          description={content.hero.description}
-          trustLine={content.hero.trustLine}
+          title={t("landing.hero.title")}
+          description={t("landing.hero.description")}
+          trustLine={t("landing.hero.trustLine")}
         >
           <Validator locale={locale} />
         </HeroSection>
 
         {/* Features Section */}
         <FeaturesSection
-          title={content.features.title}
-          subtitle={content.features.subtitle}
+          title={t("landing.features.title")}
+          subtitle={t("landing.features.subtitle")}
           features={[
             {
               icon: icons.shield,
-              title: content.features.items[0].title,
-              description: content.features.items[0].description,
-              accent: content.features.items[0].accent,
+              title: t("landing.features.items.0.title"),
+              description: t("landing.features.items.0.description"),
+              accent: "violet" as const,
             },
             {
               icon: icons.lock,
-              title: content.features.items[1].title,
-              description: content.features.items[1].description,
-              accent: content.features.items[1].accent,
+              title: t("landing.features.items.1.title"),
+              description: t("landing.features.items.1.description"),
+              accent: "emerald" as const,
             },
             {
               icon: icons.sparkles,
-              title: content.features.items[2].title,
-              description: content.features.items[2].description,
-              accent: content.features.items[2].accent,
+              title: t("landing.features.items.2.title"),
+              description: t("landing.features.items.2.description"),
+              accent: "amber" as const,
             },
           ]}
         />
 
         {/* Validation Layers Section */}
         <ValidationLayersSection
-          title={content.validation.title}
-          subtitle={content.validation.subtitle}
-          layers={content.validation.layers}
+          title={t("landing.validation.title")}
+          subtitle={t("landing.validation.subtitle")}
+          layers={[
+            {
+              badge: t("landing.validation.layers.0.badge"),
+              title: t("landing.validation.layers.0.title"),
+              description: t("landing.validation.layers.0.description"),
+              checks: [
+                t("landing.validation.layers.0.checks.0"),
+                t("landing.validation.layers.0.checks.1"),
+                t("landing.validation.layers.0.checks.2"),
+                t("landing.validation.layers.0.checks.3"),
+              ],
+            },
+            {
+              badge: t("landing.validation.layers.1.badge"),
+              title: t("landing.validation.layers.1.title"),
+              description: t("landing.validation.layers.1.description"),
+              checks: [
+                t("landing.validation.layers.1.checks.0"),
+                t("landing.validation.layers.1.checks.1"),
+                t("landing.validation.layers.1.checks.2"),
+                t("landing.validation.layers.1.checks.3"),
+              ],
+            },
+          ]}
         />
 
         {/* Getting Started Section */}
         <GettingStartedSection
-          title={content.gettingStarted.title}
-          subtitle={content.gettingStarted.subtitle}
-          steps={content.gettingStarted.steps}
+          title={t("landing.gettingStarted.title")}
+          subtitle={t("landing.gettingStarted.subtitle")}
+          steps={[
+            {
+              number: "1",
+              title: t("landing.gettingStarted.steps.0.title"),
+              description: t("landing.gettingStarted.steps.0.description"),
+              code: t("landing.gettingStarted.steps.0.code"),
+            },
+            {
+              number: "2",
+              title: t("landing.gettingStarted.steps.1.title"),
+              description: t("landing.gettingStarted.steps.1.description"),
+              code: t("landing.gettingStarted.steps.1.code"),
+            },
+            {
+              number: "3",
+              title: t("landing.gettingStarted.steps.2.title"),
+              description: t("landing.gettingStarted.steps.2.description"),
+              code: t("landing.gettingStarted.steps.2.code"),
+            },
+          ]}
         />
 
         {/* Open Source Section */}
         <OpenSourceSection
-          title={content.openSource.title}
-          description={content.openSource.description}
+          title={t("landing.openSource.title")}
+          description={t("landing.openSource.description")}
           features={[
             {
               icon: icons.code,
-              title: content.openSource.features[0].title,
-              description: content.openSource.features[0].description,
+              title: t("landing.openSource.features.0.title"),
+              description: t("landing.openSource.features.0.description"),
             },
             {
               icon: icons.heart,
-              title: content.openSource.features[1].title,
-              description: content.openSource.features[1].description,
+              title: t("landing.openSource.features.1.title"),
+              description: t("landing.openSource.features.1.description"),
             },
             {
               icon: icons.globe,
-              title: content.openSource.features[2].title,
-              description: content.openSource.features[2].description,
+              title: t("landing.openSource.features.2.title"),
+              description: t("landing.openSource.features.2.description"),
             },
           ]}
           githubUrl="https://github.com/ksefuj/ksefuj"
           npmUrl="https://www.npmjs.com/package/@ksefuj/validator"
-          ctaText={content.openSource.ctaText}
+          ctaText={t("landing.openSource.ctaText")}
         />
 
         {/* Developer Section */}
         <DeveloperSection
-          title={content.developer.title}
-          subtitle={content.developer.subtitle}
-          expandText={content.developer.expandText}
-          collapseText={content.developer.collapseText}
-          content={content.developer.content}
+          title={t("landing.developer.title")}
+          subtitle={t("landing.developer.subtitle")}
+          expandText={t("landing.developer.expandText")}
+          collapseText={t("landing.developer.collapseText")}
+          content={{
+            cli: {
+              title: t("landing.developer.content.cli.title"),
+              description: t("landing.developer.content.cli.description"),
+              commands: [
+                {
+                  label: t("landing.developer.content.cli.commands.0.label"),
+                  command: "npx @ksefuj/validator invoice.xml",
+                },
+                {
+                  label: t("landing.developer.content.cli.commands.1.label"),
+                  command: "npm i -g @ksefuj/validator",
+                },
+              ],
+            },
+            npm: {
+              title: t("landing.developer.content.npm.title"),
+              description: t("landing.developer.content.npm.description"),
+              install: "npm install @ksefuj/validator",
+              usage: `import { validate } from '@ksefuj/validator';
+
+const result = await validate(xmlContent);
+if (result.valid) {
+  console.log('✓ Valid');
+}`,
+            },
+            api: {
+              title: t("landing.developer.content.api.title"),
+              description: t("landing.developer.content.api.description"),
+              example: `POST /api/validate
+Content-Type: application/xml
+
+<?xml version="1.0"?>
+<Faktura>...</Faktura>`,
+            },
+          }}
         />
       </main>
 

@@ -5,14 +5,6 @@
     "ogTitle": "ksefuj.to — валідатор KSeF FA(3)",
     "ogDescription": "Безкоштовний валідатор рахунків KSeF. Клієнтський додаток, без реєстрації."
   },
-  "header": {
-    "title": "ksefuj",
-    "subtitle": "валідатор KSeF FA(3)"
-  },
-  "homepage": {
-    "heroTitle": "Перевірте свій електронний рахунок",
-    "heroDescription": "Завантажте XML, побачте помилки. Валідація відбувається у вашому браузері — дані не залишають ваш комп'ютер."
-  },
   "validator": {
     "dropzone": {
       "dragHere": "Перетягніть XML файли сюди",
@@ -30,40 +22,8 @@
       "errors": "{count} з помилками",
       "warnings": "{count} попереджень"
     },
-    "badges": {
-      "officialXsd": "Офіційний XSD",
-      "semanticRules": "Семантичні правила",
-      "filesValidated": "{count} файлів перевірено",
-      "semantic": "Семантика",
-      "xsdError": "Помилка XSD",
-      "xsdWarning": "Попередження XSD",
-      "xsdValid": "XSD ✓",
-      "semanticError": "Бізнес помилка",
-      "semanticWarning": "Бізнес попередження",
-      "semanticValid": "Правила ✓"
-    },
-    "fileList": {
-      "title": "Файли"
-    },
-    "validation": {
-      "officialXsd": "Офіційна валідація XSD (Міністерство Фінансів)",
-      "xsdValid": "Структура документа правильна",
-      "semanticRules": "Бізнес-правила",
-      "semanticValid": "Всі бізнес-правила виконані"
-    },
     "actions": {
-      "reset": "Очистити",
       "newValidation": "Нова перевірка"
-    },
-    "results": {
-      "valid": "Рахунок дійсний",
-      "invalid": "Знайдено помилки",
-      "warnings": "попереджень",
-      "clear": "Очистити"
-    },
-    "errors": {
-      "processingError": "Помилка під час перевірки файлу",
-      "validatorInitializationFailed": "Не вдалося ініціалізувати валідатор"
     },
     "issues": {
       "PODMIOT2_JST_MISSING": "Відсутній обов'язковий елемент JST у Podmiot2",
@@ -86,9 +46,131 @@
   "languagePicker": {
     "ariaLabel": "Змінити мову"
   },
-  "footer": {
-    "copyright": "© 2026 ksefuj",
-    "github": "GitHub",
-    "npm": "npm"
+  "landing": {
+    "hero": {
+      "title": "Перевірте свою е-фактуру",
+      "description": "Завантажте XML, побачте помилки. Дані не залишають ваш комп’ютер.",
+      "trustLine": "100% безкоштовний • Open Source • Apache 2.0"
+    },
+    "features": {
+      "title": "Чому ksefuj?",
+      "subtitle": "Інструмент, створений для польських підприємців",
+      "items": [
+        {
+          "title": "Офіційна валідація",
+          "description": "Використовуємо офіційну схему XSD з Міністерства фінансів та перевіряємо бізнес-правила",
+          "accent": "violet"
+        },
+        {
+          "title": "100% приватності",
+          "description": "Ваш файл не залишає браузер. Жодні дані не надсилаються на сервер",
+          "accent": "emerald"
+        },
+        {
+          "title": "Завжди безкоштовний",
+          "description": "Без лімітів, без реєстрації, без прихованих платежів. Ліцензія Apache 2.0",
+          "accent": "amber"
+        }
+      ]
+    },
+    "validation": {
+      "title": "Що перевіряємо?",
+      "subtitle": "Дворівнева валідація забезпечує відповідність вимогам KSeF",
+      "layers": [
+        {
+          "badge": "Рівень 1",
+          "title": "Структура XML (XSD)",
+          "description": "Офіційна схема з Міністерства фінансів",
+          "checks": [
+            "Правильність структури документа",
+            "Обов’язкові поля та елементи",
+            "Типи даних і формати",
+            "Порядок елементів"
+          ]
+        },
+        {
+          "badge": "Рівень 2",
+          "title": "Бізнес-правила",
+          "description": "Бізнес-логіка, яку неможливо виразити в XSD",
+          "checks": [
+            "Podmiot2 вимагає JST та GV",
+            "Ставки ПДВ відповідно до правил",
+            "Узгодженість зворотного навантаження",
+            "Правильний формат GTU та SW"
+          ]
+        }
+      ]
+    },
+    "gettingStarted": {
+      "title": "Немає файлу XML?",
+      "subtitle": "Почніть з одного з цих кроків",
+      "steps": [
+        {
+          "number": "1",
+          "title": "Експорт з програми",
+          "description": "Більшість бухгалтерських програм має можливість експорту рахунку в XML у форматі FA(3)",
+          "code": "Файл → Експорт → KSeF FA(3)"
+        },
+        {
+          "number": "2",
+          "title": "Завантажте з KSeF",
+          "description": "Увійдіть на портал KSeF та завантажте XML будь-якого рахунку",
+          "code": "ap.ksef.mf.gov.pl"
+        },
+        {
+          "number": "3",
+          "title": "Використовуйте CLI",
+          "description": "Розробники можуть використовувати наш інструмент CLI для валідації файлів локально",
+          "code": "npx @ksefuj/validator file.xml"
+        }
+      ]
+    },
+    "openSource": {
+      "title": "100% Open Source",
+      "description": "Весь код є публічним на GitHub. Перевірте, як це працює, повідомте про помилку або допоможіть у розробці",
+      "features": [
+        {
+          "title": "Прозорий код",
+          "description": "Кожен рядок коду доступний для перегляду"
+        },
+        {
+          "title": "Спільнота",
+          "description": "Розроблено спільнотою для спільноти"
+        },
+        {
+          "title": "Apache 2.0",
+          "description": "Використовуйте комерційно без обмежень"
+        }
+      ],
+      "ctaText": "Дивіться на GitHub"
+    },
+    "developer": {
+      "title": "Для розробників",
+      "subtitle": "CLI, npm пакет, API — інтегруйте з вашими інструментами",
+      "expandText": "Показати опції",
+      "collapseText": "Приховати опції",
+      "content": {
+        "cli": {
+          "title": "CLI",
+          "description": "Валідуйте файли з терміналу",
+          "commands": [
+            {
+              "label": "Швидка валідація"
+            },
+            {
+              "label": "Встановіть глобально"
+            }
+          ]
+        },
+        "npm": {
+          "title": "npm Package",
+          "description": "Інтегруйте валідатор з вашим додатком"
+        },
+        "api": {
+          "title": "API",
+          "description": "REST API для інтеграції"
+        }
+      }
+    }
   }
 }

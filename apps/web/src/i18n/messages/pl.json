@@ -5,14 +5,6 @@
     "ogTitle": "ksefuj.to — walidator KSeF FA(3)",
     "ogDescription": "Darmowy walidator faktur KSeF. Client-side, bez logowania."
   },
-  "header": {
-    "title": "ksefuj",
-    "subtitle": "walidator KSeF FA(3)"
-  },
-  "homepage": {
-    "heroTitle": "Sprawdź swoją e-fakturę",
-    "heroDescription": "Wrzuć XML, zobacz błędy. Walidacja odbywa się w Twojej przeglądarce — dane nie opuszczają Twojego komputera."
-  },
   "validator": {
     "dropzone": {
       "dragHere": "Przeciągnij pliki XML tutaj",
@@ -30,40 +22,8 @@
       "errors": "{count} z błędami",
       "warnings": "{count} ostrzeżenia"
     },
-    "badges": {
-      "officialXsd": "Oficjalny XSD",
-      "semanticRules": "Reguły biznesowe",
-      "filesValidated": "{count} plików sprawdzonych",
-      "semantic": "Reguły",
-      "xsdError": "Błąd XSD",
-      "xsdWarning": "Ostrzeżenie XSD",
-      "xsdValid": "XSD ✓",
-      "semanticError": "Błąd biznesowy",
-      "semanticWarning": "Ostrzeżenie biznesowe",
-      "semanticValid": "Reguły ✓"
-    },
-    "fileList": {
-      "title": "Pliki"
-    },
-    "validation": {
-      "officialXsd": "Oficjalna walidacja XSD (Ministerstwo Finansów)",
-      "xsdValid": "Schemat struktury dokumentu poprawny",
-      "semanticRules": "Reguły biznesowe",
-      "semanticValid": "Wszystkie reguły biznesowe spełnione"
-    },
     "actions": {
-      "reset": "Wyczyść",
       "newValidation": "Nowa walidacja"
-    },
-    "results": {
-      "valid": "Faktura prawidłowa",
-      "invalid": "Znaleziono błędy",
-      "warnings": "ostrzeżeń",
-      "clear": "Wyczyść"
-    },
-    "errors": {
-      "processingError": "Błąd podczas walidacji pliku",
-      "validatorInitializationFailed": "Nie udało się zainicjować walidatora"
     },
     "issues": {
       "PODMIOT2_JST_MISSING": "Brak wymaganego elementu JST w Podmiot2",
@@ -86,9 +46,131 @@
   "languagePicker": {
     "ariaLabel": "Zmień język"
   },
-  "footer": {
-    "copyright": "© 2026 ksefuj",
-    "github": "GitHub",
-    "npm": "npm"
+  "landing": {
+    "hero": {
+      "title": "Sprawdź swoją e-fakturę",
+      "description": "Wrzuć XML, zobacz błędy. Dane nie opuszczają Twojego komputera.",
+      "trustLine": "100% darmowy • Open Source • Apache 2.0"
+    },
+    "features": {
+      "title": "Dlaczego ksefuj?",
+      "subtitle": "Narzędzie stworzone z myślą o polskich przedsiębiorcach",
+      "items": [
+        {
+          "title": "Oficjalna walidacja",
+          "description": "Używamy oficjalnego schematu XSD z Ministerstwa Finansów oraz sprawdzamy reguły biznesowe",
+          "accent": "violet"
+        },
+        {
+          "title": "100% prywatności",
+          "description": "Twój plik nie opuszcza przeglądarki. Żadne dane nie są wysyłane na serwer",
+          "accent": "emerald"
+        },
+        {
+          "title": "Zawsze darmowy",
+          "description": "Bez limitów, bez rejestracji, bez ukrytych opłat. Licencja Apache 2.0",
+          "accent": "amber"
+        }
+      ]
+    },
+    "validation": {
+      "title": "Co sprawdzamy?",
+      "subtitle": "Dwupoziomowa walidacja zapewnia zgodność z wymogami KSeF",
+      "layers": [
+        {
+          "badge": "Poziom 1",
+          "title": "Struktura XML (XSD)",
+          "description": "Oficjalny schemat z Ministerstwa Finansów",
+          "checks": [
+            "Poprawność struktury dokumentu",
+            "Wymagane pola i elementy",
+            "Typy danych i formaty",
+            "Kolejność elementów"
+          ]
+        },
+        {
+          "badge": "Poziom 2",
+          "title": "Reguły biznesowe",
+          "description": "Logika biznesowa niemożliwa do wyrażenia w XSD",
+          "checks": [
+            "Podmiot2 wymaga JST i GV",
+            "Stawki VAT zgodne z przepisami",
+            "Spójność odwrotnego obciążenia",
+            "Poprawny format GTU i SW"
+          ]
+        }
+      ]
+    },
+    "gettingStarted": {
+      "title": "Nie masz pliku XML?",
+      "subtitle": "Zacznij od jednego z tych kroków",
+      "steps": [
+        {
+          "number": "1",
+          "title": "Eksport z programu",
+          "description": "Większość programów księgowych ma opcję eksportu faktury do XML w formacie FA(3)",
+          "code": "Plik → Eksport → KSeF FA(3)"
+        },
+        {
+          "number": "2",
+          "title": "Pobierz z KSeF",
+          "description": "Zaloguj się do portalu KSeF i pobierz XML dowolnej faktury",
+          "code": "ap.ksef.mf.gov.pl"
+        },
+        {
+          "number": "3",
+          "title": "Użyj CLI",
+          "description": "Programiści mogą użyć naszego narzędzia CLI do walidacji plików lokalnie",
+          "code": "npx @ksefuj/validator file.xml"
+        }
+      ]
+    },
+    "openSource": {
+      "title": "100% Open Source",
+      "description": "Cały kod jest publiczny na GitHub. Sprawdź, jak działa, zgłoś błąd lub pomóż w rozwoju",
+      "features": [
+        {
+          "title": "Przejrzysty kod",
+          "description": "Każda linia kodu dostępna do wglądu"
+        },
+        {
+          "title": "Społeczność",
+          "description": "Rozwijane przez społeczność dla społeczności"
+        },
+        {
+          "title": "Apache 2.0",
+          "description": "Używaj komercyjnie bez ograniczeń"
+        }
+      ],
+      "ctaText": "Zobacz na GitHub"
+    },
+    "developer": {
+      "title": "Dla programistów",
+      "subtitle": "CLI, npm package, API — integruj z Twoimi narzędziami",
+      "expandText": "Pokaż opcje",
+      "collapseText": "Ukryj opcje",
+      "content": {
+        "cli": {
+          "title": "CLI",
+          "description": "Waliduj pliki z terminala",
+          "commands": [
+            {
+              "label": "Szybka walidacja"
+            },
+            {
+              "label": "Zainstaluj globalnie"
+            }
+          ]
+        },
+        "npm": {
+          "title": "npm Package",
+          "description": "Integruj walidator z Twoją aplikacją"
+        },
+        "api": {
+          "title": "API",
+          "description": "REST API dla integracji"
+        }
+      }
+    }
   }
 }

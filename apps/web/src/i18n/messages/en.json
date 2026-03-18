@@ -5,14 +5,6 @@
     "ogTitle": "ksefuj.to — KSeF FA(3) validator",
     "ogDescription": "Free KSeF invoice validator. Client-side, no registration."
   },
-  "header": {
-    "title": "ksefuj",
-    "subtitle": "KSeF FA(3) validator"
-  },
-  "homepage": {
-    "heroTitle": "Validate your e-invoice",
-    "heroDescription": "Drop XML, see errors. Validation happens in your browser — data never leaves your computer."
-  },
   "validator": {
     "dropzone": {
       "dragHere": "Drop XML files here",
@@ -30,40 +22,8 @@
       "errors": "{count} with errors",
       "warnings": "{count} warnings"
     },
-    "badges": {
-      "officialXsd": "Official XSD",
-      "semanticRules": "Semantic Rules",
-      "filesValidated": "{count} files validated",
-      "semantic": "Semantic",
-      "xsdError": "XSD Error",
-      "xsdWarning": "XSD Warning",
-      "xsdValid": "XSD ✓",
-      "semanticError": "Business Error",
-      "semanticWarning": "Business Warning",
-      "semanticValid": "Rules ✓"
-    },
-    "fileList": {
-      "title": "Files"
-    },
-    "validation": {
-      "officialXsd": "Official XSD Validation (Ministry of Finance)",
-      "xsdValid": "Document structure schema correct",
-      "semanticRules": "Business Rules",
-      "semanticValid": "All business rules satisfied"
-    },
     "actions": {
-      "reset": "Clear",
       "newValidation": "New Validation"
-    },
-    "results": {
-      "valid": "Invoice valid",
-      "invalid": "Errors found",
-      "warnings": "warnings",
-      "clear": "Clear"
-    },
-    "errors": {
-      "processingError": "Error validating file",
-      "validatorInitializationFailed": "Failed to initialize validator"
     },
     "issues": {
       "PODMIOT2_JST_MISSING": "Required JST element missing in Podmiot2",
@@ -86,9 +46,131 @@
   "languagePicker": {
     "ariaLabel": "Change language"
   },
-  "footer": {
-    "copyright": "© 2026 ksefuj",
-    "github": "GitHub",
-    "npm": "npm"
+  "landing": {
+    "hero": {
+      "title": "Validate your e-invoice",
+      "description": "Drop XML, see errors. Data stays in your browser.",
+      "trustLine": "100% Free • Open Source • Apache 2.0"
+    },
+    "features": {
+      "title": "Why ksefuj?",
+      "subtitle": "Built for Polish entrepreneurs",
+      "items": [
+        {
+          "title": "Official validation",
+          "description": "Using official XSD schema from Ministry of Finance plus business rules",
+          "accent": "violet"
+        },
+        {
+          "title": "100% privacy",
+          "description": "Your file never leaves the browser. No data sent to any server",
+          "accent": "emerald"
+        },
+        {
+          "title": "Forever free",
+          "description": "No limits, no signup, no hidden fees. Apache 2.0 license",
+          "accent": "amber"
+        }
+      ]
+    },
+    "validation": {
+      "title": "What we check",
+      "subtitle": "Two-layer validation ensures KSeF compliance",
+      "layers": [
+        {
+          "badge": "Layer 1",
+          "title": "XML Structure (XSD)",
+          "description": "Official schema from Ministry of Finance",
+          "checks": [
+            "Document structure validity",
+            "Required fields and elements",
+            "Data types and formats",
+            "Element order"
+          ]
+        },
+        {
+          "badge": "Layer 2",
+          "title": "Business Rules",
+          "description": "Business logic not expressible in XSD",
+          "checks": [
+            "Podmiot2 requires JST and GV",
+            "VAT rates according to rules",
+            "Reverse charge consistency",
+            "Correct GTU and SW format"
+          ]
+        }
+      ]
+    },
+    "gettingStarted": {
+      "title": "Don't have an XML file?",
+      "subtitle": "Start with one of these steps",
+      "steps": [
+        {
+          "number": "1",
+          "title": "Export from software",
+          "description": "Most accounting software has an option to export invoices to FA(3) XML format",
+          "code": "File → Export → KSeF FA(3)"
+        },
+        {
+          "number": "2",
+          "title": "Download from KSeF",
+          "description": "Login to KSeF portal and download XML of any invoice",
+          "code": "ap.ksef.mf.gov.pl"
+        },
+        {
+          "number": "3",
+          "title": "Use CLI",
+          "description": "Developers can use our CLI tool to validate files locally",
+          "code": "npx @ksefuj/validator file.xml"
+        }
+      ]
+    },
+    "openSource": {
+      "title": "100% Open Source",
+      "description": "All code is public on GitHub. Check how it works, report bugs, or help with development",
+      "features": [
+        {
+          "title": "Transparent code",
+          "description": "Every line of code available for review"
+        },
+        {
+          "title": "Community",
+          "description": "Developed by community for community"
+        },
+        {
+          "title": "Apache 2.0",
+          "description": "Use commercially without restrictions"
+        }
+      ],
+      "ctaText": "View on GitHub"
+    },
+    "developer": {
+      "title": "For developers",
+      "subtitle": "CLI, npm package, API — integrate with your tools",
+      "expandText": "Show options",
+      "collapseText": "Hide options",
+      "content": {
+        "cli": {
+          "title": "CLI",
+          "description": "Validate files from terminal",
+          "commands": [
+            {
+              "label": "Quick validation"
+            },
+            {
+              "label": "Install globally"
+            }
+          ]
+        },
+        "npm": {
+          "title": "npm Package",
+          "description": "Integrate validator with your app"
+        },
+        "api": {
+          "title": "API",
+          "description": "REST API for integrations"
+        }
+      }
+    }
   }
 }
