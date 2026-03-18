@@ -13,14 +13,14 @@ export function SiteFooter() {
           {/* Logo & Description */}
           <div className="space-y-4">
             <Logo size="sm" className="brightness-0 invert opacity-80" />
-            <p className="text-sm">
-              {t("description")}
-            </p>
+            <p className="text-sm">{t("description")}</p>
           </div>
 
           {/* Resources */}
           <div className="space-y-4">
-            <h3 className="text-slate-300 font-semibold text-sm uppercase tracking-wide">{t("resources")}</h3>
+            <h3 className="text-slate-300 font-semibold text-sm uppercase tracking-wide">
+              {t("resources")}
+            </h3>
             <ul className="space-y-2 text-sm">
               <li>
                 <a
