@@ -61,49 +61,50 @@ export function LanguagePicker({ currentLocale }: Props) {
         onClick={() => setIsOpen(!isOpen)}
         disabled={isPending}
         className={`
-          flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-lg transition-all
-          bg-stone-800/50 hover:bg-stone-800 text-stone-300 hover:text-stone-100
-          border border-stone-700/50 hover:border-stone-600
+          flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-xl transition-all
+          bg-white/70 hover:bg-white backdrop-blur-sm text-slate-700 hover:text-slate-900
+          border border-slate-200 hover:border-violet-200 shadow-sm hover:shadow-md
           ${isPending ? "opacity-50 cursor-wait" : ""}
         `}
         aria-label={t("ariaLabel")}
         aria-expanded={isOpen}
       >
-        <span className="text-xs opacity-70">{currentLanguage.flag}</span>
-        <span>{currentLanguage.label}</span>
+        <span className="text-base">{currentLanguage.flag}</span>
+        <span className="font-bold">{currentLanguage.label}</span>
         <svg
-          className={`w-3 h-3 transition-transform ${isOpen ? "rotate-180" : ""}`}
+          className={`w-4 h-4 transition-transform text-violet-400 ${isOpen ? "rotate-180" : ""}`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
+          strokeWidth={2.5}
         >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
         </svg>
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-48 rounded-lg bg-stone-900 border border-stone-700 shadow-xl overflow-hidden z-50">
+        <div className="absolute right-0 mt-2 w-52 rounded-xl bg-white/95 backdrop-blur-sm border border-slate-200 shadow-2xl overflow-hidden z-50">
           {languages.map((lang) => (
             <button
               key={lang.code}
               onClick={() => handleChange(lang.code)}
               disabled={isPending || lang.code === currentLocale}
               className={`
-                w-full px-4 py-2.5 text-left text-sm transition-all flex items-center gap-3
+                w-full px-4 py-3 text-left text-sm transition-all flex items-center gap-3
                 ${
                   lang.code === currentLocale
-                    ? "bg-stone-700/50 text-stone-100 cursor-default"
-                    : "text-stone-300 hover:bg-stone-800 hover:text-stone-100"
+                    ? "bg-violet-50 text-violet-700 font-semibold cursor-default"
+                    : "text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium"
                 }
               `}
             >
-              <span className="text-base">{lang.flag}</span>
+              <span className="text-lg">{lang.flag}</span>
               <div className="flex-1">
-                <div className="font-medium">{lang.name}</div>
-                <div className="text-xs opacity-60">{lang.label}</div>
+                <div className="font-semibold">{lang.name}</div>
+                <div className="text-xs text-slate-400">{lang.label}</div>
               </div>
               {lang.code === currentLocale && (
-                <svg className="w-4 h-4 text-stone-400" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-4 h-4 text-violet-500" fill="currentColor" viewBox="0 0 20 20">
                   <path
                     fillRule="evenodd"
                     d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"

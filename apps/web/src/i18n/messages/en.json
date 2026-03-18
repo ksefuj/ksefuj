@@ -15,25 +15,50 @@
   },
   "validator": {
     "dropzone": {
-      "dragHere": "Drag XML file or click",
-      "dropFile": "Drop XML file",
+      "dragHere": "Drop XML files here",
+      "dropFiles": "Drop {count} XML {count, plural, =1 {file} other {files}}",
       "validating": "Validating...",
       "validatingDetails": "Checking XSD and semantic rules...",
-      "acceptedFiles": "Accepted: .xml (KSeF FA3 invoice)"
+      "acceptedFiles": "Accepted: .xml (KSeF FA3 invoices)"
     },
-    "results": {
-      "valid": "Invoice valid",
-      "invalid": "Errors found",
-      "warnings": "warnings",
-      "clear": "Clear"
+    "summary": {
+      "allValid": "Validation completed successfully",
+      "hasErrors": "Found issues in {errorCount} of {totalCount} files",
+      "hasWarnings": "Found warnings in {warningCount} of {totalCount} files",
+      "valid": "{count} valid",
+      "errors": "{count} with errors",
+      "warnings": "{count} warnings"
     },
     "badges": {
+      "officialXsd": "Official XSD",
+      "semanticRules": "Semantic Rules",
+      "filesValidated": "{count} files validated",
+      "semantic": "Semantic",
       "xsdError": "XSD Error",
       "xsdWarning": "XSD Warning",
       "xsdValid": "XSD ✓",
       "semanticError": "Business Error",
       "semanticWarning": "Business Warning",
       "semanticValid": "Rules ✓"
+    },
+    "fileList": {
+      "title": "Files"
+    },
+    "validation": {
+      "officialXsd": "Official XSD Validation (Ministry of Finance)",
+      "xsdValid": "Document structure schema correct",
+      "semanticRules": "Business Rules",
+      "semanticValid": "All business rules satisfied"
+    },
+    "actions": {
+      "reset": "Clear",
+      "newValidation": "New Validation"
+    },
+    "results": {
+      "valid": "Invoice valid",
+      "invalid": "Errors found",
+      "warnings": "warnings",
+      "clear": "Clear"
     },
     "errors": {
       "processingError": "Error validating file",

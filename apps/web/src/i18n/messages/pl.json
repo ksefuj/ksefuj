@@ -15,25 +15,50 @@
   },
   "validator": {
     "dropzone": {
-      "dragHere": "Przeciągnij plik XML lub kliknij",
-      "dropFile": "Upuść plik XML",
+      "dragHere": "Przeciągnij pliki XML tutaj",
+      "dropFiles": "Upuść {count, plural, =1 {plik} other {# pliki}} XML",
       "validating": "Walidacja...",
       "validatingDetails": "Sprawdzanie XSD i reguł semantycznych...",
-      "acceptedFiles": "Akceptowane: .xml (faktura KSeF FA3)"
+      "acceptedFiles": "Akceptowane: .xml (faktury KSeF FA3)"
     },
-    "results": {
-      "valid": "Faktura prawidłowa",
-      "invalid": "Znaleziono błędy",
-      "warnings": "ostrzeżeń",
-      "clear": "Wyczyść"
+    "summary": {
+      "allValid": "Walidacja zakończona pomyślnie",
+      "hasErrors": "Znaleziono problemy w {errorCount} z {totalCount} plików",
+      "hasWarnings": "Znaleziono ostrzeżenia w {warningCount} z {totalCount} plików",
+      "valid": "{count} poprawne",
+      "errors": "{count} z błędami",
+      "warnings": "{count} ostrzeżenia"
     },
     "badges": {
+      "officialXsd": "Oficjalny XSD",
+      "semanticRules": "Reguły biznesowe",
+      "filesValidated": "{count} plików sprawdzonych",
+      "semantic": "Reguły",
       "xsdError": "Błąd XSD",
       "xsdWarning": "Ostrzeżenie XSD",
       "xsdValid": "XSD ✓",
       "semanticError": "Błąd biznesowy",
       "semanticWarning": "Ostrzeżenie biznesowe",
       "semanticValid": "Reguły ✓"
+    },
+    "fileList": {
+      "title": "Pliki"
+    },
+    "validation": {
+      "officialXsd": "Oficjalna walidacja XSD (Ministerstwo Finansów)",
+      "xsdValid": "Schemat struktury dokumentu poprawny",
+      "semanticRules": "Reguły biznesowe",
+      "semanticValid": "Wszystkie reguły biznesowe spełnione"
+    },
+    "actions": {
+      "reset": "Wyczyść",
+      "newValidation": "Nowa walidacja"
+    },
+    "results": {
+      "valid": "Faktura prawidłowa",
+      "invalid": "Znaleziono błędy",
+      "warnings": "ostrzeżeń",
+      "clear": "Wyczyść"
     },
     "errors": {
       "processingError": "Błąd podczas walidacji pliku",

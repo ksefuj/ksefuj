@@ -1,9 +1,74 @@
 @import "tailwindcss";
 
 @theme {
-  --color-stone-950: #0c0a09;
+  --color-violet-50: #f5f3ff;
+  --color-violet-100: #ede9fe;
+  --color-violet-200: #ddd6fe;
+  --color-violet-300: #c4b5fd;
+  --color-violet-400: #a78bfa;
+  --color-violet-500: #8b5cf6;
+  --color-rose-50: #fef2f2;
+  --color-rose-100: #fee2e2;
+  --color-amber-50: #fffbeb;
+  --color-amber-100: #fef3c7;
+  --color-emerald-50: #ecfdf5;
+  --color-emerald-100: #d1fae5;
 }
 
 html {
-  @apply bg-stone-950 text-stone-300;
+  @apply text-slate-800;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-feature-settings: "ss01" on;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-slate-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 rounded-full;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-400;
+}
+
+/* Glass effect utilities */
+.glass {
+  @apply backdrop-blur-sm bg-white/70 border border-slate-200;
+}
+
+.glass-hover:hover {
+  @apply bg-white/80 shadow-lg;
+}
+
+/* Spring animations */
+@keyframes spring-in {
+  0% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.02);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-spring-in {
+  animation: spring-in 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }

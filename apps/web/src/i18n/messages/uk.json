@@ -15,25 +15,50 @@
   },
   "validator": {
     "dropzone": {
-      "dragHere": "Перетягніть XML файл або натисніть",
-      "dropFile": "Відпустіть XML файл",
+      "dragHere": "Перетягніть XML файли сюди",
+      "dropFiles": "Відпустіть {count} XML {count, plural, =1 {файл} other {файлів}}",
       "validating": "Перевірка...",
       "validatingDetails": "Перевірка XSD і семантичних правил...",
-      "acceptedFiles": "Приймаються: .xml (рахунок KSeF FA3)"
+      "acceptedFiles": "Приймаються: .xml (рахунки KSeF FA3)"
     },
-    "results": {
-      "valid": "Рахунок дійсний",
-      "invalid": "Знайдено помилки",
-      "warnings": "попереджень",
-      "clear": "Очистити"
+    "summary": {
+      "allValid": "Перевірка завершена успішно",
+      "hasErrors": "Знайдено проблеми у {errorCount} з {totalCount} файлів",
+      "hasWarnings": "Знайдено попередження у {warningCount} з {totalCount} файлів",
+      "valid": "{count} правильні",
+      "errors": "{count} з помилками",
+      "warnings": "{count} попереджень"
     },
     "badges": {
+      "officialXsd": "Офіційний XSD",
+      "semanticRules": "Семантичні правила",
+      "filesValidated": "{count} файлів перевірено",
+      "semantic": "Семантика",
       "xsdError": "Помилка XSD",
       "xsdWarning": "Попередження XSD",
       "xsdValid": "XSD ✓",
       "semanticError": "Бізнес помилка",
       "semanticWarning": "Бізнес попередження",
       "semanticValid": "Правила ✓"
+    },
+    "fileList": {
+      "title": "Файли"
+    },
+    "validation": {
+      "officialXsd": "Офіційна валідація XSD (Міністерство Фінансів)",
+      "xsdValid": "Структура документа правильна",
+      "semanticRules": "Бізнес-правила",
+      "semanticValid": "Всі бізнес-правила виконані"
+    },
+    "actions": {
+      "reset": "Очистити",
+      "newValidation": "Нова перевірка"
+    },
+    "results": {
+      "valid": "Рахунок дійсний",
+      "invalid": "Знайдено помилки",
+      "warnings": "попереджень",
+      "clear": "Очистити"
     },
     "errors": {
       "processingError": "Помилка під час перевірки файлу",

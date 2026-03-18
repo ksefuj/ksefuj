@@ -15,7 +15,7 @@ export default async function RootLayout({ children, params }: Props) {
 
   return (
     <html lang={locale}>
-      <body className="bg-stone-950 text-stone-100 antialiased">
+      <body className="bg-gradient-to-br from-slate-50 via-white to-violet-50 text-slate-800 antialiased min-h-screen">
         {children}
         <Analytics />
         <SpeedInsights />
