@@ -28,8 +28,8 @@ export type {
   FixType,
 } from "./types.js";
 
-// --- Semantic validation (placeholder exports) ---
-// Note: Semantic validation has been gutted and is being reimplemented
+// --- Semantic validation ---
+// Complete semantic validation with 38 rules based on FA(3) information sheet
 export { checkSemantics, semanticRules } from "./semantic.js";
 export type { SemanticRule, XmlDocument } from "./types.js";
 

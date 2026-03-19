@@ -1,17 +1,19 @@
 # @ksefuj/validator — Claude Code Context
 
+## Implementation Status
+
+**Semantic validation**: All 38 semantic validation rules based on the official FA(3) information sheet from the Ministry of Finance.
+
 ## Source of Truth
 
 The file `docs/fa3-information-sheet.md` is the **constitutional reference** for all semantic
 validation rules. It is a structured conversion of the official Ministry of Finance "Information
 sheet on the FA(3) logical structure" (March 2026 edition, 174 pages).
 
-**Before implementing, modifying, or reviewing any semantic validation rule, read
-`docs/fa3-information-sheet.md`.** This is non-negotiable — the information sheet is the authority
-on field obligations, allowed values, selection-type constraints, cascading requirements, and
-business logic. Do not rely on memory or assumptions about FA(3) structure.
+**All semantic validation rules follow this constitutional reference.**
+Each rule in `src/semantic.ts` includes a direct reference to the relevant section (e.g., "§6.1", "§9.6", "Appendix D #3").
 
-Key sections you'll reference most often:
+Key sections that guide validation:
 
 - §2 (Field formats) — max lengths, decimal precision, date formats
 - §9.3–9.4 (Tax summary fields) — P*13*_/P*14*_ sequences
@@ -29,29 +31,41 @@ extending the test suite, read this file first and follow its structure.
 ## Architecture
 
 - **XSD validation**: libxml2-wasm, schemas bundled in `src/schemas/`
-- **Semantic validation**: `src/semantic.ts` — interface blueprint (implementation pending)
-- **Error codes**: `src/error-codes.ts` — error definitions (semantic codes to be added)
+- **Semantic validation**: `src/semantic.ts` — 38 rules with constitution references
+- **Error codes**: `src/error-codes.ts` — all semantic error definitions included
 - **Types**: `src/types.ts` — `ValidationIssue`, `SemanticRule`, `XmlDocument`, etc.
-- **Tests**: vitest, run with `pnpm test` from this directory
+- **Tests**: vitest, comprehensive test suite with 100+ test cases
 
 ## Conventions
 
-- Semantic rule IDs: `SCREAMING_SNAKE_CASE` (to be defined during implementation)
-- Error codes: defined in `error-codes.ts`
+- Semantic rule IDs: `SCREAMING_SNAKE_CASE` — all 38 rules implemented
+- Error codes: defined in `error-codes.ts` — all semantic codes included
 - Namespace: `http://crd.gov.pl/wzor/2025/06/25/13775/`
 - XML element names stay Polish as-is (Podmiot1, FaWiersz, Adnotacje, NrWierszaFa, etc.)
 - All other code (variables, functions, comments) in English
-- Test names should reference the MF example number when applicable
+- Test names reference the MF example number when applicable
+
+## Rule Groups Implemented
+
+All 7 groups from the constitutional reference:
+
+1. **Podmiot Rules** (8 rules) — Entity validation, JST/GV requirements
+2. **Fa Core Rules** (5 rules) — P_15, mutual exclusions, currency handling
+3. **Adnotacje Rules** (11 rules) — Mandatory fields, selection logic
+4. **FaWiersz Rules** (4 rules) — Tax rates, GTU format, decimal precision
+5. **Corrective Invoice Rules** (2 rules) — KSeF number consistency
+6. **Payment & Transaction Rules** (6 rules) — Payment validation, bank accounts
+7. **Format Rules** (2 rules) — Number formatting, separators
 
 ## Common Tasks
 
-### Adding a new semantic rule (when implementation resumes)
+### Extending validation rules
 
 1. Read the relevant section in `docs/fa3-information-sheet.md`
 2. Add error code to `src/error-codes.ts`
-3. Add rule object to `semanticRules` array in `src/semantic.ts`
-4. Add tests (see `docs/fa3-test-fixtures.md` for XML fragments)
-5. Add i18n message keys if needed
+3. Add rule function and rule object to `src/semantic.ts`
+4. Add tests (see existing test files for patterns)
+5. Update rule count in documentation
 
 ### Running tests
 

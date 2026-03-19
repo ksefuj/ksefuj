@@ -131,31 +131,54 @@ Two layers:
 
 Full XML validation against the official FA(3) XSD schema from Ministry of Finance.
 
-- **✅ IMPLEMENTED**: `libxml2-wasm` for client-side XSD validation in the browser
-- **✅ BUNDLED SCHEMAS**: All schemas downloaded and bundled locally to avoid CORS issues
-- **✅ OFFLINE CAPABLE**: No network requests needed - schemas embedded in package
-- **✅ OFFICIAL COMPLIANCE**: Uses exact schemas from `crd.gov.pl` (downloaded at build time)
-- **✅ PERFORMANCE**: Singleton validator pattern with efficient resource reuse
+- **Client-side validation**: `libxml2-wasm` for XSD validation in the browser
+- **Bundled schemas**: All schemas downloaded and bundled locally to avoid CORS issues
+- **Offline capable**: No network requests needed - schemas embedded in package
+- **Official compliance**: Uses exact schemas from `crd.gov.pl` (downloaded at build time)
+- **High performance**: Singleton validator pattern with efficient resource reuse
 
 ### 2. Semantic Rules
 
 Business logic checks that XSD cannot express.
 
-**IMPORTANT: Semantic validation is being reimplemented from scratch based on the official FA(3)
-information sheet. The previous implementation has been removed. See
-`packages/validator/docs/fa3-information-sheet.md` for the canonical reference that will guide the
-new implementation.**
+**38 comprehensive validation rules** based on the official FA(3) information sheet from the Ministry of Finance.
+
+**Key features:**
+- **Constitution-based**: Rules trace directly to specific sections in the official FA(3) information sheet
+- **Comprehensive coverage**: All 7 rule groups (Podmiot, Fa Core, Adnotacje, FaWiersz, Corrective, Payment & Transaction, Format)
+- **Precise error reporting**: Each issue includes exact XPath location, error context, and fix suggestions
+- **Test coverage**: 100+ test cases based on official MF examples
+
+**Rule categories:**
+1. **Podmiot Rules** (8 rules) - Entity validation, JST/GV requirements, NIP placement
+2. **Fa Core Rules** (5 rules) - P_15 requirement, mutual exclusions, currency handling
+3. **Adnotacje Rules** (11 rules) - All mandatory fields, selection logic for exemptions/margin procedures
+4. **FaWiersz Rules** (4 rules) - Tax rate validation, GTU format, decimal precision
+5. **Corrective Invoice Rules** (2 rules) - KSeF number consistency, reverse charge validation
+6. **Payment & Transaction Rules** (6 rules) - Payment dates, bank accounts, currency pairs
+7. **Format Rules** (2 rules) - Number formatting, separator validation
 
 ## KSeF FA(3) Key Gotchas
 
-Common validation errors to be aware of:
+Common validation errors now automatically detected by our validator:
 
-1. Wrong field order in elements (XSD is xs:sequence — order is strict)
-2. `NazwaBank` instead of `NazwaBanku`
-3. Fields with value 0 — often should be omitted entirely instead
+### XSD Schema Issues (detected by libxml2-wasm)
+1. **Wrong field order** - XSD uses xs:sequence, order is strict
+2. **Typos in element names** - `NazwaBank` instead of `NazwaBanku`
+3. **Missing required elements** - Each element has specific mandatory children
 
-**Note: A comprehensive list of semantic validation rules will be documented once the new
-implementation is complete based on the official FA(3) information sheet.**
+### Semantic Issues (detected by our 38 rules)
+1. **Missing mandatory Adnotacje fields** - P_16, P_17, P_18, P_18A, Zwolnienie, NoweSrodkiTransportu, P_23, PMarzy
+2. **Incorrect JST/GV setup** - JST=1 requires Podmiot3 with Rola=8, GV=1 requires Podmiot3 with Rola=10
+3. **Polish NIP in wrong field** - Should be in NIP field, not NrVatUE for proper KSeF access
+4. **Wrong tax rates for foreign buyers** - Use 'np I'/'np II' for foreign entities, not 'oo'
+5. **GTU format errors** - Should be `<GTU>GTU_12</GTU>`, not `<GTU_12>1</GTU_12>`
+6. **Decimal precision violations** - Amounts >2 decimals, prices >8 decimals, quantities >6 decimals
+7. **Selection logic violations** - Zwolnienie, NoweSrodkiTransportu, PMarzy require exactly one selection
+8. **Currency inconsistencies** - Foreign currency needs PLN tax conversions, WalutaUmowna cannot be PLN
+9. **Number formatting** - No thousand separators, only dot as decimal separator
+
+All these issues are now caught automatically with precise error locations and fix suggestions.
 
 ## Decimal Precision Requirements
 

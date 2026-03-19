@@ -100,7 +100,7 @@ ksefuj/
 
 ## What the Validator Checks
 
-### XSD Schema Validation ✅
+### XSD Schema Validation
 
 Full validation against official Ministry of Finance FA(3) XSD schemas:
 
@@ -109,13 +109,29 @@ Full validation against official Ministry of Finance FA(3) XSD schemas:
 - **Official compliance** — uses exact schemas from crd.gov.pl
 - **Detailed error reporting** — line numbers, element paths, specific violations
 
-### Semantic Business Rules ✅
+### Semantic Business Rules
 
-Catches common errors that XSD can't express:
+**38 comprehensive validation rules** based on the official FA(3) information sheet from the Ministry of Finance:
 
-**Note: Semantic validation is currently being reimplemented from scratch based on the official
-FA(3) information sheet. The comprehensive list of rules will be documented once the new
-implementation is complete.**
+#### Rule Categories
+1. **Podmiot Rules** (8 rules) — Entity validation, JST/GV requirements, NIP placement
+2. **Fa Core Rules** (5 rules) — P_15 requirement, mutual exclusions, currency handling
+3. **Adnotacje Rules** (11 rules) — All mandatory fields, selection logic for exemptions/margin procedures
+4. **FaWiersz Rules** (4 rules) — Tax rate validation, GTU format, decimal precision
+5. **Corrective Invoice Rules** (2 rules) — KSeF number consistency, reverse charge validation
+6. **Payment & Transaction Rules** (6 rules) — Payment dates, bank accounts, currency pairs
+7. **Format Rules** (2 rules) — Number formatting, separator validation
+
+#### Common Issues Caught
+- Missing mandatory Adnotacje fields (P_16, P_17, P_18, P_18A, Zwolnienie, etc.)
+- Incorrect JST/GV setup requiring specific Podmiot3 roles
+- Polish NIP in wrong field (should be in NIP field, not NrVatUE)
+- Wrong tax rates for foreign buyers ('np I'/'np II' vs 'oo')
+- GTU format errors (`<GTU>GTU_12</GTU>` not `<GTU_12>1</GTU_12>`)
+- Decimal precision violations (amounts >2, prices >8, quantities >6 decimals)
+- Selection logic violations in Zwolnienie, NoweSrodkiTransportu, PMarzy
+- Currency inconsistencies (foreign currency needs PLN conversions)
+- Number formatting issues (thousand separators, wrong decimal separator)
 
 ## Claude Skills
 

@@ -4,9 +4,9 @@
  * Comprehensive catalog of all validation errors, warnings, and issues
  * that can be detected in KSeF FA(3) XML documents.
  *
- * IMPORTANT: Semantic validation error codes have been removed.
- * They will be reimplemented from scratch based on the official
- * FA(3) information sheet documentation.
+ * All 38 semantic validation error codes are included, each with detailed
+ * descriptions, common causes, and fix suggestions based on the official
+ * FA(3) information sheet from the Ministry of Finance.
  */
 
 import type { ErrorCodeDefinition, FixSuggestion } from "./types.js";

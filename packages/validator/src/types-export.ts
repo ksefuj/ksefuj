@@ -28,8 +28,8 @@ export type {
   FixType,
 } from "./types.js";
 
-// --- Semantic validation types (placeholders) ---
-// Note: Semantic validation has been gutted and is being reimplemented
+// --- Semantic validation types ---
+// Complete semantic validation types for 38 constitution-based rules
 export type { SemanticRule, XmlDocument } from "./types.js";
 
 // --- Error code types ---
