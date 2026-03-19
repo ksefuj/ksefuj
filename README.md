@@ -111,18 +111,22 @@ Full validation against official Ministry of Finance FA(3) XSD schemas:
 
 ### Semantic Business Rules
 
-**38 comprehensive validation rules** based on the official FA(3) information sheet from the Ministry of Finance:
+**38 comprehensive validation rules** based on the official FA(3) information sheet from the
+Ministry of Finance:
 
 #### Rule Categories
+
 1. **Podmiot Rules** (8 rules) — Entity validation, JST/GV requirements, NIP placement
 2. **Fa Core Rules** (5 rules) — P_15 requirement, mutual exclusions, currency handling
-3. **Adnotacje Rules** (11 rules) — All mandatory fields, selection logic for exemptions/margin procedures
+3. **Adnotacje Rules** (11 rules) — All mandatory fields, selection logic for exemptions/margin
+   procedures
 4. **FaWiersz Rules** (4 rules) — Tax rate validation, GTU format, decimal precision
 5. **Corrective Invoice Rules** (2 rules) — KSeF number consistency, reverse charge validation
 6. **Payment & Transaction Rules** (6 rules) — Payment dates, bank accounts, currency pairs
 7. **Format Rules** (2 rules) — Number formatting, separator validation
 
 #### Common Issues Caught
+
 - Missing mandatory Adnotacje fields (P_16, P_17, P_18, P_18A, Zwolnienie, etc.)
 - Incorrect JST/GV setup requiring specific Podmiot3 roles
 - Polish NIP in wrong field (should be in NIP field, not NrVatUE)

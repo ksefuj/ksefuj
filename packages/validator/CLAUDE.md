@@ -2,7 +2,8 @@
 
 ## Implementation Status
 
-**Semantic validation**: All 38 semantic validation rules based on the official FA(3) information sheet from the Ministry of Finance.
+**Semantic validation**: All 38 semantic validation rules based on the official FA(3) information
+sheet from the Ministry of Finance.
 
 ## Source of Truth
 
@@ -10,8 +11,9 @@ The file `docs/fa3-information-sheet.md` is the **constitutional reference** for
 validation rules. It is a structured conversion of the official Ministry of Finance "Information
 sheet on the FA(3) logical structure" (March 2026 edition, 174 pages).
 
-**All semantic validation rules follow this constitutional reference.**
-Each rule in `src/semantic.ts` includes a direct reference to the relevant section (e.g., "§6.1", "§9.6", "Appendix D #3").
+**All semantic validation rules follow this constitutional reference.** Each rule in
+`src/semantic.ts` includes a direct reference to the relevant section (e.g., "§6.1", "§9.6",
+"Appendix D #3").
 
 Key sections that guide validation:
 
