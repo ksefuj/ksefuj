@@ -427,8 +427,10 @@ describe("Semantic Validation", () => {
       const result = validateXml(xml);
       expect(result.issues.some((i) => i.code.code === "GTU_FORMAT")).toBe(true);
     });
+  });
 
-    it("should detect trailing zeros in amounts", () => {
+  describe("Decimal Precision Validation", () => {
+    it("should detect excessive decimal places in general amounts (2 max)", () => {
       const xml = wrapInFaktura(`
         <Podmiot1>
           <DaneIdentyfikacyjne><NIP>1234567890</NIP><Nazwa>Test</Nazwa></DaneIdentyfikacyjne>
@@ -437,14 +439,13 @@ describe("Semantic Validation", () => {
         <Podmiot2>
           <DaneIdentyfikacyjne><NIP>9876543210</NIP><Nazwa>Test</Nazwa></DaneIdentyfikacyjne>
           <Adres><KodKraju>PL</KodKraju><AdresL1>Test</AdresL1></Adres>
-          <JST>2</JST>
-          <GV>2</GV>
+          <JST>2</JST><GV>2</GV>
         </Podmiot2>
         <Fa>
           <KodWaluty>PLN</KodWaluty>
           <P_1>2026-09-15</P_1>
           <P_2>FV/001/09/2026</P_2>
-          <P_15>123.10000</P_15> <!-- Trailing zeros -->
+          <P_15>123.123</P_15> <!-- 3 decimal places, max is 2 -->
           <Adnotacje>
             <P_16>2</P_16><P_17>2</P_17><P_18>2</P_18><P_18A>2</P_18A>
             <Zwolnienie><P_19N>1</P_19N></Zwolnienie>
@@ -457,7 +458,166 @@ describe("Semantic Validation", () => {
       `);
 
       const result = validateXml(xml);
-      expect(result.issues.some((i) => i.code.code === "TRAILING_ZEROS")).toBe(true);
+      expect(result.issues.some((i) => i.code.code === "DECIMAL_PRECISION")).toBe(true);
+      const precisionIssues = result.issues.filter((i) => i.code.code === "DECIMAL_PRECISION");
+      expect(precisionIssues[0].message).toContain(
+        "P_15 has 3 decimal places, maximum allowed is 2",
+      );
+    });
+
+    it("should detect excessive decimal places in unit prices (8 max)", () => {
+      const xml = wrapInFaktura(`
+        <Podmiot1>
+          <DaneIdentyfikacyjne><NIP>1234567890</NIP><Nazwa>Test</Nazwa></DaneIdentyfikacyjne>
+          <Adres><KodKraju>PL</KodKraju><AdresL1>Test</AdresL1></Adres>
+        </Podmiot1>
+        <Podmiot2>
+          <DaneIdentyfikacyjne><NIP>9876543210</NIP><Nazwa>Test</Nazwa></DaneIdentyfikacyjne>
+          <Adres><KodKraju>PL</KodKraju><AdresL1>Test</AdresL1></Adres>
+          <JST>2</JST><GV>2</GV>
+        </Podmiot2>
+        <Fa>
+          <KodWaluty>PLN</KodWaluty>
+          <P_1>2026-09-15</P_1>
+          <P_2>FV/001/09/2026</P_2>
+          <Adnotacje>
+            <P_16>2</P_16><P_17>2</P_17><P_18>2</P_18><P_18A>2</P_18A>
+            <Zwolnienie><P_19N>1</P_19N></Zwolnienie>
+            <NoweSrodkiTransportu><P_22N>1</P_22N></NoweSrodkiTransportu>
+            <P_23>2</P_23>
+            <PMarzy><P_PMarzyN>1</P_PMarzyN></PMarzy>
+          </Adnotacje>
+          <RodzajFaktury>VAT</RodzajFaktury>
+        </Fa>
+        <FaWiersz>
+          <NrWierszaFa>1</NrWierszaFa>
+          <P_7>Test item</P_7>
+          <P_9A>123.123456789</P_9A> <!-- 9 decimal places, max is 8 -->
+          <P_8B>1.0</P_8B>
+          <P_11>123.00</P_11>
+          <P_12>23</P_12>
+        </FaWiersz>
+      `);
+
+      const result = validateXml(xml);
+      expect(result.issues.some((i) => i.code.code === "DECIMAL_PRECISION")).toBe(true);
+      const precisionIssues = result.issues.filter((i) => i.code.code === "DECIMAL_PRECISION");
+      expect(precisionIssues[0].message).toContain(
+        "P_9A has 9 decimal places, maximum allowed is 8",
+      );
+    });
+
+    it("should detect excessive decimal places in quantities (6 max)", () => {
+      const xml = wrapInFaktura(`
+        <Podmiot1>
+          <DaneIdentyfikacyjne><NIP>1234567890</NIP><Nazwa>Test</Nazwa></DaneIdentyfikacyjne>
+          <Adres><KodKraju>PL</KodKraju><AdresL1>Test</AdresL1></Adres>
+        </Podmiot1>
+        <Podmiot2>
+          <DaneIdentyfikacyjne><NIP>9876543210</NIP><Nazwa>Test</Nazwa></DaneIdentyfikacyjne>
+          <Adres><KodKraju>PL</KodKraju><AdresL1>Test</AdresL1></Adres>
+          <JST>2</JST><GV>2</GV>
+        </Podmiot2>
+        <Fa>
+          <KodWaluty>PLN</KodWaluty>
+          <P_1>2026-09-15</P_1>
+          <P_2>FV/001/09/2026</P_2>
+          <Adnotacje>
+            <P_16>2</P_16><P_17>2</P_17><P_18>2</P_18><P_18A>2</P_18A>
+            <Zwolnienie><P_19N>1</P_19N></Zwolnienie>
+            <NoweSrodkiTransportu><P_22N>1</P_22N></NoweSrodkiTransportu>
+            <P_23>2</P_23>
+            <PMarzy><P_PMarzyN>1</P_PMarzyN></PMarzy>
+          </Adnotacje>
+          <RodzajFaktury>VAT</RodzajFaktury>
+        </Fa>
+        <FaWiersz>
+          <NrWierszaFa>1</NrWierszaFa>
+          <P_7>Test item</P_7>
+          <P_9A>123.00</P_9A>
+          <P_8B>1.1234567</P_8B> <!-- 7 decimal places, max is 6 -->
+          <P_11>123.00</P_11>
+          <P_12>23</P_12>
+        </FaWiersz>
+      `);
+
+      const result = validateXml(xml);
+      expect(result.issues.some((i) => i.code.code === "DECIMAL_PRECISION")).toBe(true);
+      const precisionIssues = result.issues.filter((i) => i.code.code === "DECIMAL_PRECISION");
+      expect(precisionIssues[0].message).toContain(
+        "P_8B has 7 decimal places, maximum allowed is 6",
+      );
+    });
+
+    it("should accept valid decimal precision", () => {
+      const xml = wrapInFaktura(`
+        <Podmiot1>
+          <DaneIdentyfikacyjne><NIP>1234567890</NIP><Nazwa>Test</Nazwa></DaneIdentyfikacyjne>
+          <Adres><KodKraju>PL</KodKraju><AdresL1>Test</AdresL1></Adres>
+        </Podmiot1>
+        <Podmiot2>
+          <DaneIdentyfikacyjne><NIP>9876543210</NIP><Nazwa>Test</Nazwa></DaneIdentyfikacyjne>
+          <Adres><KodKraju>PL</KodKraju><AdresL1>Test</AdresL1></Adres>
+          <JST>2</JST><GV>2</GV>
+        </Podmiot2>
+        <Fa>
+          <KodWaluty>PLN</KodWaluty>
+          <P_1>2026-09-15</P_1>
+          <P_2>FV/001/09/2026</P_2>
+          <P_15>123.12</P_15> <!-- 2 decimal places, max is 2 -->
+          <KursWalutyZ>4.123456</KursWalutyZ> <!-- 6 decimal places, max is 6 -->
+          <Adnotacje>
+            <P_16>2</P_16><P_17>2</P_17><P_18>2</P_18><P_18A>2</P_18A>
+            <Zwolnienie><P_19N>1</P_19N></Zwolnienie>
+            <NoweSrodkiTransportu><P_22N>1</P_22N></NoweSrodkiTransportu>
+            <P_23>2</P_23>
+            <PMarzy><P_PMarzyN>1</P_PMarzyN></PMarzy>
+          </Adnotacje>
+          <RodzajFaktury>VAT</RodzajFaktury>
+        </Fa>
+        <FaWiersz>
+          <NrWierszaFa>1</NrWierszaFa>
+          <P_7>Test item</P_7>
+          <P_9A>123.12345678</P_9A> <!-- 8 decimal places, max is 8 -->
+          <P_8B>1.123456</P_8B> <!-- 6 decimal places, max is 6 -->
+          <P_11>123.12</P_11> <!-- 2 decimal places, max is 2 -->
+          <P_12>23</P_12>
+        </FaWiersz>
+      `);
+
+      const result = validateXml(xml);
+      expect(result.issues.filter((i) => i.code.code === "DECIMAL_PRECISION")).toHaveLength(0);
+    });
+
+    it("should ignore non-numeric values", () => {
+      const xml = wrapInFaktura(`
+        <Podmiot1>
+          <DaneIdentyfikacyjne><NIP>1234567890</NIP><Nazwa>Test</Nazwa></DaneIdentyfikacyjne>
+          <Adres><KodKraju>PL</KodKraju><AdresL1>Test</AdresL1></Adres>
+        </Podmiot1>
+        <Podmiot2>
+          <DaneIdentyfikacyjne><NIP>9876543210</NIP><Nazwa>Test</Nazwa></DaneIdentyfikacyjne>
+          <Adres><KodKraju>PL</KodKraju><AdresL1>Test</AdresL1></Adres>
+          <JST>2</JST><GV>2</GV>
+        </Podmiot2>
+        <Fa>
+          <KodWaluty>PLN</KodWaluty>
+          <P_1>2026-09-15</P_1>
+          <P_2>FV/001/09/2026</P_2>
+          <P_15>invalid.value</P_15> <!-- Non-numeric, should be ignored -->
+          <Adnotacje>
+            <P_16>2</P_16><P_17>2</P_17><P_18>2</P_18><P_18A>2</P_18A>
+            <Zwolnienie><P_19N>1</P_19N></Zwolnienie>
+            <NoweSrodkiTransportu><P_22N>1</P_22N></NoweSrodkiTransportu>
+            <P_23>2</P_23>
+            <PMarzy><P_PMarzyN>1</P_PMarzyN></PMarzy>
+          </Adnotacje>
+          <RodzajFaktury>VAT</RodzajFaktury>
+        </Fa>
+      `);
+
+      const result = validateXml(xml);
+      expect(result.issues.filter((i) => i.code.code === "DECIMAL_PRECISION")).toHaveLength(0);
     });
   });
 
@@ -779,7 +939,7 @@ describe("Semantic Validation", () => {
         "P12_ENUMERATION",
         "OO_RATE_FOREIGN_BUYER",
         "GTU_FORMAT",
-        "TRAILING_ZEROS",
+        "DECIMAL_PRECISION",
         "KOR_NRKSEF_CONSISTENCY",
         "REVERSE_CHARGE_CONSISTENCY",
         "PAYMENT_ZAPLACONO_DATE",

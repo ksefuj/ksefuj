@@ -1160,13 +1160,6 @@ FaWiersz, `P_6` should not be set in Fa.
 | ZAL                   | Zamowienie (with order items)                      |
 | ROZ                   | FakturaZaliczkowa (references to advance invoices) |
 
-### Trailing decimal zeros
-
-**From known KSeF gotcha (not in the info sheet but in project knowledge):** Values like `80.000000`
-should trigger a warning — KSeF rejects trailing decimal zeros. Test: `<P_11>80.000000</P_11>` →
-warning Test: `<P_11>80</P_11>` → clean Test: `<P_9A>3.7075</P_9A>` → clean Test:
-`<P_9A>3.707500</P_9A>` → warning
-
 ### Amount field: no thousand separators
 
 Test: `<P_11>1 000.00</P_11>` → error (space in amount) Test: `<P_11>1,000.00</P_11>` → error (comma
@@ -1199,8 +1192,7 @@ If time is limited, implement tests in this order:
 3. **P_12 rate validation** — existing rule, extend with "oo" vs "np I"/"np II" check
 4. **Adnotacje completeness** — existing rules, extend Zwolnienie/PMarzy selection logic
 5. **P_6 vs P_6A mutual exclusion** — new semantic rule
-6. **Trailing zeros warning** — existing rule, ensure test coverage
-7. **Self-billing rule** (P_17 + Podmiot3 role 5 conflict)
-8. **WalutaUmowna ≠ PLN** and KursUmowny/WalutaUmowna paired requirement
-9. **RodzajFaktury-driven required sections** (ZAL→Zamowienie, ROZ→FakturaZaliczkowa)
-10. **Polish NIP in NrVatUE warning**
+6. **Self-billing rule** (P_17 + Podmiot3 role 5 conflict)
+7. **WalutaUmowna ≠ PLN** and KursUmowny/WalutaUmowna paired requirement
+8. **RodzajFaktury-driven required sections** (ZAL→Zamowienie, ROZ→FakturaZaliczkowa)
+9. **Polish NIP in NrVatUE warning**

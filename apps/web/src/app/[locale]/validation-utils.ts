@@ -35,17 +35,6 @@ export function translateValidationIssue(
       }
     }
 
-    // Special handling for TRAILING_ZEROS which has expected value in metadata
-    if (issue.code.code === "TRAILING_ZEROS" && issue.context.metadata) {
-      const metadata = issue.context.metadata as Record<string, unknown>;
-      if (metadata.cleanValue) {
-        context.expected = String(metadata.cleanValue);
-      }
-      if (metadata.element) {
-        context.element = String(metadata.element);
-      }
-    }
-
     // Try to get translated message
     const translatedMessage = t(translationKey, context);
 

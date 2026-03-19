@@ -639,18 +639,20 @@ export const SEMANTIC_ERRORS = {
     fixTemplates: [],
   },
 
-  TRAILING_ZEROS: {
+  DECIMAL_PRECISION: {
     code: {
       domain: "semantic",
       category: "format",
-      code: "TRAILING_ZEROS",
-      severity: "warning",
+      code: "DECIMAL_PRECISION",
+      severity: "error",
     },
     description:
-      "Amount fields should not have unnecessary trailing zeros (§2.5–2.6, Appendix D #13)",
+      "Amount field exceeds maximum decimal precision defined in §2.6 of FA(3) specification",
     commonCauses: [
-      "Unnecessary decimal precision in amount fields",
-      "System generating fixed decimal places",
+      "Unit price has more than 8 decimal places",
+      "General amount has more than 2 decimal places",
+      "Quantity or exchange rate has more than 6 decimal places",
+      "System generating excessive decimal precision",
     ],
     fixTemplates: [],
   },

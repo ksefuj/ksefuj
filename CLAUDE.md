@@ -157,14 +157,14 @@ Common validation errors to be aware of:
 **Note: A comprehensive list of semantic validation rules will be documented once the new
 implementation is complete based on the official FA(3) information sheet.**
 
-## Number Formatting Convention
+## Decimal Precision Requirements
 
-Never add unnecessary trailing zeros:
+Follow official FA(3) specification (§2.6) decimal precision limits:
 
-- Amounts (P_11, P_13_x, P_15): 2 decimal places → `6000.00`
-- Unit price (P_9A): as many as needed → `75.00` not `75.00000000`
-- Quantity (P_8B): as many as needed → `80` not `80.000000`
-- Exchange rate (KursWaluty): as many as NBP provides → `3.7075` not `3.707500`
+- **General amounts** (P_11, P_13_x, P_15): up to 2 decimal places → `6000.00`, `1230.50`
+- **Unit prices** (P_9A, P_9B): up to 8 decimal places → `75.12345678`
+- **Quantities** (P_8B): up to 6 decimal places → `80.123456`
+- **Exchange rates** (KursWaluty): up to 6 decimal places → `3.707500` (NBP precision)
 
 ## KSeF 2.0 Resources
 

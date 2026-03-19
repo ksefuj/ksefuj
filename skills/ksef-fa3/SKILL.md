@@ -328,13 +328,12 @@ NrWierszaFa → UU_ID* → P_6A* → P_7* → Indeks* → GTIN* → PKWIU* → C
 
 ## Formatowanie liczb dziesiętnych
 
-**Nie dodawaj niepotrzebnych zer końcowych.** Używaj minimalnej liczby miejsc po przecinku wymaganej
-do oddania wartości:
+**Używaj odpowiedniej precyzji miejsc dziesiętnych** zgodnie z §2.6 specyfikacji FA(3):
 
-- Kwoty (P_11, P_13_x, P_15 itd.): 2 miejsca po przecinku, np. `6000.00`, `1230.00`
-- Cena jednostkowa (P_9A): tyle miejsc ile potrzeba, np. `75.00` (nie `75.00000000`)
-- Ilość (P_8B): tyle miejsc ile potrzeba, np. `80` (nie `80.000000`)
-- Kurs waluty (KursWaluty): tyle miejsc ile podaje NBP, np. `3.7075` (nie `3.707500`)
+- **Kwoty ogólne** (P_11, P_13_x, P_15 itd.): maksymalnie 2 miejsca po przecinku, np. `6000.00`, `1230.50`
+- **Ceny jednostkowe** (P_9A, P_9B): maksymalnie 8 miejsc po przecinku, np. `75.12345678`
+- **Ilości** (P_8B): maksymalnie 6 miejsc po przecinku, np. `80.123456`
+- **Kursy walut** (KursWaluty): maksymalnie 6 miejsc po przecinku, zgodnie z danymi NBP, np. `3.7075`
 
 ---
 

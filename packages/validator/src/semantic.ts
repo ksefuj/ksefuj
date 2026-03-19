@@ -875,72 +875,101 @@ function checkGTUFormat(doc: XmlDocument): ValidationIssue[] {
   return issues;
 }
 
-function checkTrailingZeros(doc: XmlDocument): ValidationIssue[] {
-  // Rule 28: TRAILING_ZEROS - No unnecessary trailing zeros (§2.5–2.6, Appendix D #13)
+function checkDecimalPrecision(doc: XmlDocument): ValidationIssue[] {
+  // Rule 28: DECIMAL_PRECISION - Check decimal precision limits (§2.6)
   const issues: ValidationIssue[] = [];
 
-  // Define numeric fields to check
-  const numericFields = [
-    // Fa level amounts
-    "P_13_1",
-    "P_13_2",
-    "P_13_3",
-    "P_13_4",
-    "P_13_5",
-    "P_13_6",
-    "P_13_7",
-    "P_13_8",
-    "P_13_9",
-    "P_13_10",
-    "P_13_11",
-    "P_14_1",
-    "P_14_2",
-    "P_14_3",
-    "P_14_4",
-    "P_14_5",
-    "P_14_1W",
-    "P_14_2W",
-    "P_14_3W",
-    "P_14_4W",
-    "P_14_5W",
-    "P_15",
-    "KursWalutyZ",
-    // FaWiersz amounts
-    "P_8B",
-    "P_9A",
-    "P_9B",
-    "P_10",
-    "P_11",
-    "P_11A",
-    "P_11Vat",
-    "KursWaluty",
-    // Zamowienie
-    "WartoscZamowienia",
-  ];
+  // Define field precision limits based on §2.6 of FA(3) specification
+  const precisionRules = {
+    // Up to 2 decimal places - General amounts
+    2: [
+      "P_11",
+      "P_11A",
+      "P_11Vat",
+      "P_13_1",
+      "P_13_2",
+      "P_13_3",
+      "P_13_4",
+      "P_13_5",
+      "P_13_6",
+      "P_13_7",
+      "P_13_8",
+      "P_13_9",
+      "P_13_10",
+      "P_13_11",
+      "P_14_1",
+      "P_14_2",
+      "P_14_3",
+      "P_14_4",
+      "P_14_5",
+      "P_14_1W",
+      "P_14_2W",
+      "P_14_3W",
+      "P_14_4W",
+      "P_14_5W",
+      "P_15",
+      "WartoscZamowienia",
+    ],
+    // Up to 6 decimal places - Quantities, rates, exchange rates
+    6: [
+      "P_8B",
+      "P_8BZ",
+      "P_12_XII",
+      "P_12Z_XII",
+      "KursWaluty",
+      "KursWalutyZK",
+      "KursWalutyZW",
+      "KursWalutyZ",
+      "KursUmowny",
+      "Udzial",
+    ],
+    // Up to 8 decimal places - Unit prices, discounts
+    8: ["P_9A", "P_9B", "P_9AZ", "P_10"],
+  };
 
-  // Check Fa level
-  for (const field of numericFields) {
-    const value = text(doc, `string(//ns:Fa/ns:${field})`);
-    if (value && /\.\d*[1-9]0+$/.test(value)) {
-      // Has unnecessary trailing zeros after non-zero digit
-      const errorDef = ERROR_CODES.TRAILING_ZEROS;
+  // Helper function to count decimal places
+  function getDecimalPlaces(value: string): number {
+    const decimalIndex = value.indexOf(".");
+    return decimalIndex === -1 ? 0 : value.length - decimalIndex - 1;
+  }
+
+  // Helper function to validate field precision
+  function validateFieldPrecision(
+    field: string,
+    value: string,
+    maxPrecision: number,
+    xpath: string,
+  ): void {
+    if (!value || !/^-?\d*\.?\d*$/.test(value)) {
+      return; // Skip non-numeric values
+    }
+
+    const decimalPlaces = getDecimalPlaces(value);
+    if (decimalPlaces > maxPrecision) {
+      const errorDef = ERROR_CODES.DECIMAL_PRECISION;
       issues.push({
         code: errorDef.code,
         context: {
           location: {
-            xpath: `/Faktura/Fa/${field}`,
+            xpath,
             element: field,
           },
           actualValue: value,
+          expectedValues: [`Max ${maxPrecision} decimal places`],
+          metadata: {
+            actualPrecision: decimalPlaces,
+            maxPrecision,
+            field,
+          },
         },
-        message: `${errorDef.description}: ${value} in ${field}`,
+        message: `${errorDef.description}: ${field} has ${decimalPlaces} decimal places, maximum allowed is ${maxPrecision}`,
         fixSuggestions: [
           {
             type: "replace",
-            targetXPath: `/Faktura/Fa/${field}`,
-            content: value.replace(/(\.\d*?)0+$/, "$1").replace(/\.$/, ""),
-            description: `Remove trailing zeros from ${field}`,
-            confidence: 0.9,
+            targetXPath: xpath,
+            content: parseFloat(value).toFixed(maxPrecision),
+            description: `Round ${field} to ${maxPrecision} decimal places`,
+            confidence: 0.8,
             dependencies: [],
           },
         ],
@@ -948,45 +977,45 @@ function checkTrailingZeros(doc: XmlDocument): ValidationIssue[] {
     }
   }
 
-  // Check FaWiersz level
-  const faWiersze = els(doc, "//ns:FaWiersz");
-  for (const wiersz of faWiersze) {
-    const nrWiersza = text(wiersz, "string(ns:NrWierszaFa)");
-    for (const field of [
-      "P_8B",
-      "P_9A",
-      "P_9B",
-      "P_10",
-      "P_11",
-      "P_11A",
-      "P_11Vat",
-      "KursWaluty",
-    ]) {
-      const value = text(wiersz, `string(ns:${field})`);
-      if (value && /\.\d*[1-9]0+$/.test(value)) {
-        const errorDef = ERROR_CODES.TRAILING_ZEROS;
-        issues.push({
-          code: errorDef.code,
-          context: {
-            location: {
-              xpath: `/Faktura/FaWiersz[NrWierszaFa='${nrWiersza}']/${field}`,
-              element: field,
-              lineNumber: nrWiersza ? parseInt(nrWiersza) : undefined,
-            },
-            actualValue: value,
-          },
-          message: `${errorDef.description}: ${value} in ${field}`,
-          fixSuggestions: [
-            {
-              type: "replace",
-              targetXPath: `/Faktura/FaWiersz[NrWierszaFa='${nrWiersza}']/${field}`,
-              content: value.replace(/(\.\d*?)0+$/, "$1").replace(/\.$/, ""),
-              description: `Remove trailing zeros from ${field}`,
-              confidence: 0.9,
-              dependencies: [],
-            },
-          ],
-        });
+  // Check all precision rules
+  for (const [maxPrecision, fields] of Object.entries(precisionRules)) {
+    const precision = parseInt(maxPrecision);
+
+    for (const field of fields) {
+      // Check Fa level
+      const faValue = text(doc, `string(//ns:Fa/ns:${field})`);
+      if (faValue) {
+        validateFieldPrecision(field, faValue, precision, `/Faktura/Fa/${field}`);
+      }
+
+      // Check FaWiersz level (only for fields that can appear there)
+      if (
+        [
+          "P_8B",
+          "P_8BZ",
+          "P_9A",
+          "P_9B",
+          "P_9AZ",
+          "P_10",
+          "P_11",
+          "P_11A",
+          "P_11Vat",
+          "KursWaluty",
+        ].includes(field)
+      ) {
+        const faWiersze = els(doc, "//ns:FaWiersz");
+        for (const wiersz of faWiersze) {
+          const nrWiersza = text(wiersz, "string(ns:NrWierszaFa)");
+          const value = text(wiersz, `string(ns:${field})`);
+          if (value) {
+            validateFieldPrecision(
+              field,
+              value,
+              precision,
+              `/Faktura/FaWiersz[NrWierszaFa='${nrWiersza}']/${field}`,
+            );
+          }
+        }
       }
     }
   }
@@ -1576,11 +1605,11 @@ export const semanticRules: SemanticRule[] = [
     check: checkGTUFormat,
   },
   {
-    id: "TRAILING_ZEROS",
-    description: "Check trailing zeros in amounts",
+    id: "DECIMAL_PRECISION",
+    description: "Check decimal precision limits",
     category: "format",
-    severity: "warning",
-    check: checkTrailingZeros,
+    severity: "error",
+    check: checkDecimalPrecision,
   },
 
   // Group 5: Corrective Invoice Rules
