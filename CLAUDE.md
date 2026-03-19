@@ -116,6 +116,13 @@ Quick reference (the full doc has all tokens, classes, and component specs):
 - **Validator**: Pure TypeScript, zero runtime dependencies for browser use
 - **Deployment**: Vercel (free tier)
 
+### Validator Reference Documents
+
+The `packages/validator/CLAUDE.md` contains package-specific instructions. The canonical reference
+for all FA(3) semantic rules is `packages/validator/docs/fa3-information-sheet.md` — a structured
+conversion of the official 174-page MF information sheet. Always consult it before touching semantic
+validation logic.
+
 ## Validation Architecture
 
 Two layers:
