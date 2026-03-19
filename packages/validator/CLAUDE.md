@@ -29,17 +29,15 @@ extending the test suite, read this file first and follow its structure.
 ## Architecture
 
 - **XSD validation**: libxml2-wasm, schemas bundled in `src/schemas/`
-- **Semantic validation**: `src/semantic.ts` — array of `SemanticRule` objects
-- **Error codes**: `src/error-codes.ts` — structured error definitions with fix suggestions
+- **Semantic validation**: `src/semantic.ts` — interface blueprint (implementation pending)
+- **Error codes**: `src/error-codes.ts` — error definitions (semantic codes to be added)
 - **Types**: `src/types.ts` — `ValidationIssue`, `SemanticRule`, `XmlDocument`, etc.
 - **Tests**: vitest, run with `pnpm test` from this directory
 
 ## Conventions
 
-- Semantic rule IDs: `SCREAMING_SNAKE_CASE` (e.g., `PODMIOT2_JST_GV`,
-  `KOR_REQUIRES_DANE_FA_KORYGOWANEJ`)
-- Error codes: defined in `error-codes.ts`, referenced in `semantic.ts`
-- XPath helpers: use `el()`, `els()`, `text()` from the top of `semantic.ts`
+- Semantic rule IDs: `SCREAMING_SNAKE_CASE` (to be defined during implementation)
+- Error codes: defined in `error-codes.ts`
 - Namespace: `http://crd.gov.pl/wzor/2025/06/25/13775/`
 - XML element names stay Polish as-is (Podmiot1, FaWiersz, Adnotacje, NrWierszaFa, etc.)
 - All other code (variables, functions, comments) in English
@@ -47,13 +45,13 @@ extending the test suite, read this file first and follow its structure.
 
 ## Common Tasks
 
-### Adding a new semantic rule
+### Adding a new semantic rule (when implementation resumes)
 
 1. Read the relevant section in `docs/fa3-information-sheet.md`
 2. Add error code to `src/error-codes.ts`
 3. Add rule object to `semanticRules` array in `src/semantic.ts`
 4. Add tests (see `docs/fa3-test-fixtures.md` for XML fragments)
-5. Add i18n message keys if needed (`src/messages.ts`)
+5. Add i18n message keys if needed
 
 ### Running tests
 

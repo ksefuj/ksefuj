@@ -139,31 +139,23 @@ Full XML validation against the official FA(3) XSD schema from Ministry of Finan
 
 ### 2. Semantic Rules
 
-Business logic checks that XSD cannot express. Already implemented in `semantic.ts`:
+Business logic checks that XSD cannot express.
 
-- `PODMIOT2_JST_GV` — JST and GV elements required in Podmiot2
-- `P12_ENUMERATION` — P_12 must be valid tax rate ("23", "np I", etc.)
-- `REVERSE_CHARGE_CONSISTENCY` — P_13_8 requires P_18=1 and P_12="np I"
-- `KURS_WALUTY_PLACEMENT` — exchange rate goes in FaWiersz/KursWaluty, not Fa/KursWalutyZ (except
-  for advance invoices)
-- `GTU_FORMAT` — must be `<GTU>GTU_12</GTU>`, not `<GTU_12>1</GTU_12>`
-- `TRAILING_ZEROS` — warn about unnecessary trailing zeros in amounts
-- `P15_MISSING` — P_15 (total amount) is mandatory
-- `ADNOTACJE_COMPLETENESS` — all Adnotacje sub-elements required
+**IMPORTANT: Semantic validation is being reimplemented from scratch based on the official FA(3)
+information sheet. The previous implementation has been removed. See
+`packages/validator/docs/fa3-information-sheet.md` for the canonical reference that will guide the
+new implementation.**
 
 ## KSeF FA(3) Key Gotchas
 
-These are the most common validation errors. The semantic validator catches them, and error messages
-should explain how to fix them:
+Common validation errors to be aware of:
 
-1. Missing JST/GV in Podmiot2 → add `<JST>2</JST><GV>2</GV>`
-2. `KursWalutyZ` in Fa for non-advance invoices → move to FaWiersz/KursWaluty
-3. `P_12 = "NP"` instead of `"np I"` or `"np II"` (with space!)
-4. `<GTU_12>1</GTU_12>` instead of `<GTU>GTU_12</GTU>`
-5. Wrong field order in FaWiersz (XSD is xs:sequence — order is strict)
-6. `NazwaBank` instead of `NazwaBanku`
-7. P_13_x fields with value 0 — omit entirely instead
-8. Incomplete Adnotacje structure
+1. Wrong field order in elements (XSD is xs:sequence — order is strict)
+2. `NazwaBank` instead of `NazwaBanku`
+3. Fields with value 0 — often should be omitted entirely instead
+
+**Note: A comprehensive list of semantic validation rules will be documented once the new
+implementation is complete based on the official FA(3) information sheet.**
 
 ## Number Formatting Convention
 

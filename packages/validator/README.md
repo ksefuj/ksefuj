@@ -106,20 +106,11 @@ Full compliance with official Ministry of Finance FA(3) schemas using libxml2-wa
 
 ### 2. Semantic Business Rules
 
-Catches common errors that XSD cannot express:
+Validates business logic that XSD cannot express.
 
-- Required JST/GV fields in Podmiot2
-- Correct P_12 VAT rate enumerations
-- Reverse charge consistency (P_13_8 requires P_18 and "np I")
-- Exchange rate placement rules (KursWaluty vs KursWalutyZ)
-- GTU format validation
-- Correction invoice (KOR) validation
-- Advance (ZAL) and settlement (ROZ) invoice rules
-- Simplified invoice validation (≤450 PLN)
-- WDT/Export invoice requirements
-- VAT margin procedure validation
-- Third-party (Podmiot3) role validation
-- Payment information consistency
+**Note: Semantic validation is currently being reimplemented from scratch based on the official
+FA(3) information sheet. The comprehensive list of rules will be documented once the new
+implementation is complete.**
 
 ## Testing
 

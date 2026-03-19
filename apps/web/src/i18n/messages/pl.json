@@ -26,15 +26,6 @@
       "newValidation": "Nowa walidacja"
     },
     "issues": {
-      "PODMIOT2_JST_MISSING": "Brak wymaganego elementu JST w Podmiot2",
-      "PODMIOT2_GV_MISSING": "Brak wymaganego elementu GV w Podmiot2",
-      "P12_INVALID": "Nieprawidłowa wartość P_12. Dozwolone: {allowedValues}",
-      "P13_8_REQUIRES_P18": "Odwrotne obciążenie (P_13_8) wymaga P_18=1",
-      "P13_8_REQUIRES_NP_I": "Odwrotne obciążenie (P_13_8) wymaga P_12=\"np I\"",
-      "KURS_WALUTY_WRONG_LEVEL": "KursWalutyZ należy do FaWiersz/KursWaluty (z wyjątkiem faktur zaliczkowych)",
-      "GTU_WRONG_FORMAT": "Nieprawidłowy format GTU. Użyj <GTU>GTU_XX</GTU>",
-      "TRAILING_ZEROS": "{element} ma niepotrzebne zera: \"{actual}\" powinno być \"{expected}\"",
-      "P15_MISSING": "Element P_15 (suma do zapłaty) jest obowiązkowy",
       "ELEMENT_NOT_ALLOWED": "Element {element} nie jest dozwolony w tym miejscu",
       "REQUIRED_ELEMENT_MISSING": "Brak wymaganego elementu {element}",
       "INVALID_ELEMENT_VALUE": "Nieprawidłowa wartość elementu {element}",

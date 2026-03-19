@@ -6,7 +6,7 @@ You are enhancing the test suite for `@ksefuj/validator` in the monorepo at `pac
 The validator validates KSeF FA(3) XML invoices using:
 
 1. **XSD validation** via libxml2-wasm (already working)
-2. **Semantic validation** via `src/semantic.ts` (rules being expanded)
+2. **Semantic validation** via `src/semantic.ts` (to be reimplemented)
 
 Test runner: **vitest** (`pnpm test` from `packages/validator/`).
 
