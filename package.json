@@ -18,6 +18,7 @@
     "validate": "pnpm --filter @ksefuj/validator validate",
     "update-schemas": "tsx scripts/update-schemas.ts",
     "prepare": "husky install",
+    "postinstall": "pnpm --filter @ksefuj/validator build",
     "pre-commit": "pnpm format:check && pnpm lint && pnpm typecheck",
     "commit": "cz"
   },
