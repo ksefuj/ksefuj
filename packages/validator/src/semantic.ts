@@ -742,6 +742,688 @@ function checkPMarzyLogic(doc: XmlDocument): ValidationIssue[] {
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// Group 4: FaWiersz Rules (Constitution §10)
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+function checkP12Enumeration(doc: XmlDocument): ValidationIssue[] {
+  // Rule 25: P12_ENUMERATION - P_12 must be valid tax rate code (§10.3)
+  const issues: ValidationIssue[] = [];
+  const validRates = [
+    "23",
+    "22",
+    "8",
+    "7",
+    "5",
+    "4",
+    "3",
+    "0 KR",
+    "0 WDT",
+    "0 EX",
+    "zw",
+    "oo",
+    "np I",
+    "np II",
+  ];
+  const faWiersze = els(doc, "//ns:FaWiersz");
+
+  for (const wiersz of faWiersze) {
+    const p12 = text(wiersz, "string(ns:P_12)");
+    const nrWiersza = text(wiersz, "string(ns:NrWierszaFa)");
+
+    if (p12 && !validRates.includes(p12)) {
+      const errorDef = ERROR_CODES.P12_ENUMERATION;
+      issues.push({
+        code: errorDef.code,
+        context: {
+          location: {
+            xpath: `/Faktura/FaWiersz[NrWierszaFa='${nrWiersza}']/P_12`,
+            element: "P_12",
+            lineNumber: nrWiersza ? parseInt(nrWiersza) : undefined,
+          },
+          actualValue: p12,
+          expectedValues: validRates,
+        },
+        message: errorDef.description,
+        fixSuggestions: [],
+      });
+    }
+  }
+
+  return issues;
+}
+
+function checkOORateForeignBuyer(doc: XmlDocument): ValidationIssue[] {
+  // Rule 26: OO_RATE_FOREIGN_BUYER - 'oo' is for domestic reverse charge only (§10.3, Appendix D #18)
+  const issues: ValidationIssue[] = [];
+
+  // Check if buyer is foreign
+  const kodKraju = text(doc, "string(//ns:Podmiot2/ns:Adres/ns:KodKraju)");
+  const hasKodUE = exists(doc, "//ns:Podmiot2/ns:DaneIdentyfikacyjne/ns:KodUE");
+  const hasNrVatUE = exists(doc, "//ns:Podmiot2/ns:DaneIdentyfikacyjne/ns:NrVatUE");
+
+  const isForeignBuyer = (kodKraju && kodKraju !== "PL") || hasKodUE || hasNrVatUE;
+
+  if (isForeignBuyer) {
+    const faWiersze = els(doc, "//ns:FaWiersz[ns:P_12='oo']");
+
+    for (const wiersz of faWiersze) {
+      const nrWiersza = text(wiersz, "string(ns:NrWierszaFa)");
+      const errorDef = ERROR_CODES.OO_RATE_FOREIGN_BUYER;
+      issues.push({
+        code: errorDef.code,
+        context: {
+          location: {
+            xpath: `/Faktura/FaWiersz[NrWierszaFa='${nrWiersza}']/P_12`,
+            element: "P_12",
+            lineNumber: nrWiersza ? parseInt(nrWiersza) : undefined,
+          },
+          actualValue: "oo",
+        },
+        message: errorDef.description,
+        fixSuggestions: [],
+      });
+    }
+  }
+
+  return issues;
+}
+
+function checkGTUFormat(doc: XmlDocument): ValidationIssue[] {
+  // Rule 27: GTU_FORMAT - GTU must match pattern GTU_XX (§10.4)
+  const issues: ValidationIssue[] = [];
+  const validGTUPattern = /^GTU_(0[1-9]|1[0-3])$/;
+  const faWiersze = els(doc, "//ns:FaWiersz[ns:GTU]");
+
+  for (const wiersz of faWiersze) {
+    const gtu = text(wiersz, "string(ns:GTU)");
+    const nrWiersza = text(wiersz, "string(ns:NrWierszaFa)");
+
+    if (gtu && !validGTUPattern.test(gtu)) {
+      const errorDef = ERROR_CODES.GTU_FORMAT;
+      issues.push({
+        code: errorDef.code,
+        context: {
+          location: {
+            xpath: `/Faktura/FaWiersz[NrWierszaFa='${nrWiersza}']/GTU`,
+            element: "GTU",
+            lineNumber: nrWiersza ? parseInt(nrWiersza) : undefined,
+          },
+          actualValue: gtu,
+        },
+        message: errorDef.description,
+        fixSuggestions: [],
+      });
+    }
+  }
+
+  // Also check for common mistake: GTU as element name instead of value
+  const wrongGTUs = els(doc, "//*[starts-with(local-name(), 'GTU_')]");
+  for (const wrongGTU of wrongGTUs) {
+    const errorDef = ERROR_CODES.GTU_FORMAT;
+    issues.push({
+      code: errorDef.code,
+      context: {
+        location: {
+          element: wrongGTU.eval("local-name()", {}) as string,
+        },
+      },
+      message: "Wrong GTU format: GTU code should be element value, not element name",
+      fixSuggestions: [],
+    });
+  }
+
+  return issues;
+}
+
+function checkTrailingZeros(doc: XmlDocument): ValidationIssue[] {
+  // Rule 28: TRAILING_ZEROS - No unnecessary trailing zeros (§2.5–2.6, Appendix D #13)
+  const issues: ValidationIssue[] = [];
+
+  // Define numeric fields to check
+  const numericFields = [
+    // Fa level amounts
+    "P_13_1",
+    "P_13_2",
+    "P_13_3",
+    "P_13_4",
+    "P_13_5",
+    "P_13_6",
+    "P_13_7",
+    "P_13_8",
+    "P_13_9",
+    "P_13_10",
+    "P_13_11",
+    "P_14_1",
+    "P_14_2",
+    "P_14_3",
+    "P_14_4",
+    "P_14_5",
+    "P_14_1W",
+    "P_14_2W",
+    "P_14_3W",
+    "P_14_4W",
+    "P_14_5W",
+    "P_15",
+    "KursWalutyZ",
+    // FaWiersz amounts
+    "P_8B",
+    "P_9A",
+    "P_9B",
+    "P_10",
+    "P_11",
+    "P_11A",
+    "P_11Vat",
+    "KursWaluty",
+    // Zamowienie
+    "WartoscZamowienia",
+  ];
+
+  // Check Fa level
+  for (const field of numericFields) {
+    const value = text(doc, `string(//ns:Fa/ns:${field})`);
+    if (value && /\.\d*[1-9]0+$/.test(value)) {
+      // Has unnecessary trailing zeros after non-zero digit
+      const errorDef = ERROR_CODES.TRAILING_ZEROS;
+      issues.push({
+        code: errorDef.code,
+        context: {
+          location: {
+            xpath: `/Faktura/Fa/${field}`,
+            element: field,
+          },
+          actualValue: value,
+        },
+        message: `${errorDef.description}: ${value} in ${field}`,
+        fixSuggestions: [
+          {
+            type: "replace",
+            targetXPath: `/Faktura/Fa/${field}`,
+            content: value.replace(/(\.\d*?)0+$/, "$1").replace(/\.$/, ""),
+            description: `Remove trailing zeros from ${field}`,
+            confidence: 0.9,
+            dependencies: [],
+          },
+        ],
+      });
+    }
+  }
+
+  // Check FaWiersz level
+  const faWiersze = els(doc, "//ns:FaWiersz");
+  for (const wiersz of faWiersze) {
+    const nrWiersza = text(wiersz, "string(ns:NrWierszaFa)");
+    for (const field of [
+      "P_8B",
+      "P_9A",
+      "P_9B",
+      "P_10",
+      "P_11",
+      "P_11A",
+      "P_11Vat",
+      "KursWaluty",
+    ]) {
+      const value = text(wiersz, `string(ns:${field})`);
+      if (value && /\.\d*[1-9]0+$/.test(value)) {
+        const errorDef = ERROR_CODES.TRAILING_ZEROS;
+        issues.push({
+          code: errorDef.code,
+          context: {
+            location: {
+              xpath: `/Faktura/FaWiersz[NrWierszaFa='${nrWiersza}']/${field}`,
+              element: field,
+              lineNumber: nrWiersza ? parseInt(nrWiersza) : undefined,
+            },
+            actualValue: value,
+          },
+          message: `${errorDef.description}: ${value} in ${field}`,
+          fixSuggestions: [
+            {
+              type: "replace",
+              targetXPath: `/Faktura/FaWiersz[NrWierszaFa='${nrWiersza}']/${field}`,
+              content: value.replace(/(\.\d*?)0+$/, "$1").replace(/\.$/, ""),
+              description: `Remove trailing zeros from ${field}`,
+              confidence: 0.9,
+              dependencies: [],
+            },
+          ],
+        });
+      }
+    }
+  }
+
+  return issues;
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// Group 5: Corrective Invoice Rules (Constitution §9.7)
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+function checkKorNrKSeFConsistency(doc: XmlDocument): ValidationIssue[] {
+  // Rule 29: KOR_NRKSEF_CONSISTENCY - NrKSeF/NrKSeFN logic (§9.7)
+  const issues: ValidationIssue[] = [];
+  const daneFaKorygowanej = el(doc, "//ns:Fa/ns:DaneFaKorygowanej");
+
+  if (!daneFaKorygowanej) {
+    return issues;
+  }
+
+  const nrKSeF = text(daneFaKorygowanej, "string(ns:NrKSeF)");
+  const nrKSeFN = text(daneFaKorygowanej, "string(ns:NrKSeFN)");
+  const nrKSeFFaKorygowanej = text(daneFaKorygowanej, "string(ns:NrKSeFFaKorygowanej)");
+
+  // Exactly one of NrKSeF or NrKSeFN must be "1"
+  if ((nrKSeF === "1" && nrKSeFN === "1") || (nrKSeF !== "1" && nrKSeFN !== "1")) {
+    const errorDef = ERROR_CODES.KOR_NRKSEF_CONSISTENCY;
+    issues.push({
+      code: errorDef.code,
+      context: {
+        location: {
+          xpath: "/Faktura/Fa/DaneFaKorygowanej",
+          element: "DaneFaKorygowanej",
+        },
+        actualValue: `NrKSeF=${nrKSeF}, NrKSeFN=${nrKSeFN}`,
+      },
+      message: errorDef.description,
+      fixSuggestions: [],
+    });
+  }
+
+  // When NrKSeF = "1", NrKSeFFaKorygowanej is required
+  if (nrKSeF === "1" && !nrKSeFFaKorygowanej) {
+    const errorDef = ERROR_CODES.KOR_NRKSEF_CONSISTENCY;
+    issues.push({
+      code: errorDef.code,
+      context: {
+        location: {
+          xpath: "/Faktura/Fa/DaneFaKorygowanej",
+          element: "DaneFaKorygowanej",
+        },
+        actualValue: "NrKSeF=1 but NrKSeFFaKorygowanej missing",
+      },
+      message: errorDef.description,
+      fixSuggestions: [],
+    });
+  }
+
+  // When NrKSeFN = "1", NrKSeFFaKorygowanej must be absent
+  if (nrKSeFN === "1" && nrKSeFFaKorygowanej) {
+    const errorDef = ERROR_CODES.KOR_NRKSEF_CONSISTENCY;
+    issues.push({
+      code: errorDef.code,
+      context: {
+        location: {
+          xpath: "/Faktura/Fa/DaneFaKorygowanej",
+          element: "DaneFaKorygowanej",
+        },
+        actualValue: "NrKSeFN=1 but NrKSeFFaKorygowanej present",
+      },
+      message: errorDef.description,
+      fixSuggestions: [],
+    });
+  }
+
+  return issues;
+}
+
+function checkReverseChargeConsistency(doc: XmlDocument): ValidationIssue[] {
+  // Rule 30: REVERSE_CHARGE_CONSISTENCY - Reverse charge field consistency (§9.4, §9.6)
+  const issues: ValidationIssue[] = [];
+
+  const p13_8 = text(doc, "string(//ns:Fa/ns:P_13_8)");
+  const p13_10 = text(doc, "string(//ns:Fa/ns:P_13_10)");
+  const p18 = text(doc, "string(//ns:Fa/ns:Adnotacje/ns:P_18)");
+
+  // If P_13_8 or P_13_10 present, P_18 should be "1"
+  if ((p13_8 || p13_10) && p18 !== "1") {
+    const errorDef = ERROR_CODES.REVERSE_CHARGE_CONSISTENCY;
+    issues.push({
+      code: errorDef.code,
+      context: {
+        location: {
+          xpath: "/Faktura/Fa/Adnotacje/P_18",
+          element: "P_18",
+        },
+        actualValue: p18 || undefined,
+      },
+      message: "Reverse charge amounts (P_13_8/P_13_10) present but P_18 not set to 1",
+      fixSuggestions: [],
+    });
+  }
+
+  // If P_18 = "1", at least one FaWiersz should have reverse charge rate
+  if (p18 === "1") {
+    const hasReverseChargeRate = exists(
+      doc,
+      "//ns:FaWiersz[ns:P_12='np I' or ns:P_12='np II' or ns:P_12='oo']",
+    );
+    if (!hasReverseChargeRate) {
+      const errorDef = ERROR_CODES.REVERSE_CHARGE_CONSISTENCY;
+      issues.push({
+        code: errorDef.code,
+        context: {
+          location: {
+            xpath: "/Faktura/Fa/Adnotacje/P_18",
+            element: "P_18",
+          },
+          actualValue: "1",
+        },
+        message: "P_18 = 1 but no line items with reverse charge tax rates (np I, np II, oo)",
+        fixSuggestions: [],
+      });
+    }
+  }
+
+  return issues;
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// Group 6: Payment & Transaction Rules (Constitution §12–§13)
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+function checkPaymentZaplaconoDate(doc: XmlDocument): ValidationIssue[] {
+  // Rule 31: PAYMENT_ZAPLACONO_DATE - Zaplacono=1 requires DataZaplaty (§12.1)
+  const issues: ValidationIssue[] = [];
+  const platnosc = el(doc, "//ns:Fa/ns:Platnosc");
+
+  if (!platnosc) {
+    return issues;
+  }
+
+  const zaplacono = text(platnosc, "string(ns:Zaplacono)");
+  const dataZaplaty = text(platnosc, "string(ns:DataZaplaty)");
+
+  if (zaplacono === "1" && !dataZaplaty) {
+    const errorDef = ERROR_CODES.PAYMENT_ZAPLACONO_DATE;
+    issues.push({
+      code: errorDef.code,
+      context: {
+        location: {
+          xpath: "/Faktura/Fa/Platnosc",
+          element: "Platnosc",
+        },
+        actualValue: "Zaplacono=1",
+      },
+      message: errorDef.description,
+      fixSuggestions: [],
+    });
+  }
+
+  return issues;
+}
+
+function checkRachunekBankowyNrRB(doc: XmlDocument): ValidationIssue[] {
+  // Rule 32: RACHUNEKBANKOWY_NRRB - Nested obligation for NrRB (§2.2, §12.1, Appendix D #4)
+  const issues: ValidationIssue[] = [];
+  const rachunekBankowy = el(doc, "//ns:Fa/ns:Platnosc/ns:RachunekBankowy");
+
+  if (!rachunekBankowy) {
+    return issues;
+  }
+
+  // Check if RachunekBankowy has any content at all
+  const hasAnyContent = els(rachunekBankowy, "ns:*").length > 0;
+  const nrRB = text(rachunekBankowy, "string(ns:NrRB)");
+
+  if (hasAnyContent && !nrRB) {
+    const errorDef = ERROR_CODES.RACHUNEKBANKOWY_NRRB;
+    issues.push({
+      code: errorDef.code,
+      context: {
+        location: {
+          xpath: "/Faktura/Fa/Platnosc/RachunekBankowy",
+          element: "RachunekBankowy",
+        },
+      },
+      message: errorDef.description,
+      fixSuggestions: [],
+    });
+  }
+
+  return issues;
+}
+
+function checkNrRBLength(doc: XmlDocument): ValidationIssue[] {
+  // Rule 33: NRRB_LENGTH - NrRB must be 10-34 characters (§12.1)
+  const issues: ValidationIssue[] = [];
+  const nrRB = text(doc, "string(//ns:Fa/ns:Platnosc/ns:RachunekBankowy/ns:NrRB)");
+
+  if (nrRB && (nrRB.length < 10 || nrRB.length > 34)) {
+    const errorDef = ERROR_CODES.NRRB_LENGTH;
+    issues.push({
+      code: errorDef.code,
+      context: {
+        location: {
+          xpath: "/Faktura/Fa/Platnosc/RachunekBankowy/NrRB",
+          element: "NrRB",
+        },
+        actualValue: `${nrRB} (length: ${nrRB.length})`,
+      },
+      message: errorDef.description,
+      fixSuggestions: [],
+    });
+  }
+
+  return issues;
+}
+
+function checkIPKSeFFormat(doc: XmlDocument): ValidationIssue[] {
+  // Rule 34: IPKSEF_FORMAT - IPKSeF must be 13 alphanumeric chars (§12.1)
+  const issues: ValidationIssue[] = [];
+  const ipksef = text(doc, "string(//ns:Fa/ns:Platnosc/ns:IPKSeF)");
+  const alphanumericPattern = /^[0-9a-zA-Z]{13}$/;
+
+  if (ipksef && !alphanumericPattern.test(ipksef)) {
+    const errorDef = ERROR_CODES.IPKSEF_FORMAT;
+    issues.push({
+      code: errorDef.code,
+      context: {
+        location: {
+          xpath: "/Faktura/Fa/Platnosc/IPKSeF",
+          element: "IPKSeF",
+        },
+        actualValue: ipksef,
+      },
+      message: errorDef.description,
+      fixSuggestions: [],
+    });
+  }
+
+  return issues;
+}
+
+function checkWalutaUmownaPLN(doc: XmlDocument): ValidationIssue[] {
+  // Rule 35: WALUTA_UMOWNA_PLN - WalutaUmowna must never be PLN (§13.1, Appendix D #10)
+  const issues: ValidationIssue[] = [];
+  const walutaUmowna = text(doc, "string(//ns:Fa/ns:WarunkiTransakcji/ns:WalutaUmowna)");
+
+  if (walutaUmowna === "PLN") {
+    const errorDef = ERROR_CODES.WALUTA_UMOWNA_PLN;
+    issues.push({
+      code: errorDef.code,
+      context: {
+        location: {
+          xpath: "/Faktura/Fa/WarunkiTransakcji/WalutaUmowna",
+          element: "WalutaUmowna",
+        },
+        actualValue: "PLN",
+      },
+      message: errorDef.description,
+      fixSuggestions: [],
+    });
+  }
+
+  return issues;
+}
+
+function checkKursWalutaPair(doc: XmlDocument): ValidationIssue[] {
+  // Rule 36: KURS_WALUTA_PAIR - KursUmowny and WalutaUmowna must both be present or absent (§13.1, Appendix D #11)
+  const issues: ValidationIssue[] = [];
+  const warunkiTransakcji = el(doc, "//ns:Fa/ns:WarunkiTransakcji");
+
+  if (!warunkiTransakcji) {
+    return issues;
+  }
+
+  const kursUmowny = text(warunkiTransakcji, "string(ns:KursUmowny)");
+  const walutaUmowna = text(warunkiTransakcji, "string(ns:WalutaUmowna)");
+
+  if ((kursUmowny && !walutaUmowna) || (!kursUmowny && walutaUmowna)) {
+    const errorDef = ERROR_CODES.KURS_WALUTA_PAIR;
+    issues.push({
+      code: errorDef.code,
+      context: {
+        location: {
+          xpath: "/Faktura/Fa/WarunkiTransakcji",
+          element: "WarunkiTransakcji",
+        },
+        actualValue: `KursUmowny=${kursUmowny ? "present" : "absent"}, WalutaUmowna=${walutaUmowna ? "present" : "absent"}`,
+      },
+      message: errorDef.description,
+      fixSuggestions: [],
+    });
+  }
+
+  return issues;
+}
+
+function checkTransportMinimumData(doc: XmlDocument): ValidationIssue[] {
+  // Rule 37: TRANSPORT_MINIMUM_DATA - Transport requires minimum fields (§13.2, Appendix D #17)
+  const issues: ValidationIssue[] = [];
+  const transport = el(doc, "//ns:Fa/ns:WarunkiTransakcji/ns:Transport");
+
+  if (!transport) {
+    return issues;
+  }
+
+  const rodzajTransportu = text(transport, "string(ns:RodzajTransportu)");
+  const transportInny = text(transport, "string(ns:TransportInny)");
+  const opisInnegoTransportu = text(transport, "string(ns:OpisInnegoTransportu)");
+  const opisLadunku = text(transport, "string(ns:OpisLadunku)");
+  const ladunekInny = text(transport, "string(ns:LadunekInny)");
+  const opisInnegoLadunku = text(transport, "string(ns:OpisInnegoLadunku)");
+
+  // Check transport type: RodzajTransportu OR (TransportInny + OpisInnegoTransportu)
+  const hasTransportType = rodzajTransportu || (transportInny && opisInnegoTransportu);
+
+  // Check cargo: OpisLadunku OR (LadunekInny + OpisInnegoLadunku)
+  const hasCargo = opisLadunku || (ladunekInny && opisInnegoLadunku);
+
+  if (!hasTransportType || !hasCargo) {
+    const errorDef = ERROR_CODES.TRANSPORT_MINIMUM_DATA;
+    issues.push({
+      code: errorDef.code,
+      context: {
+        location: {
+          xpath: "/Faktura/Fa/WarunkiTransakcji/Transport",
+          element: "Transport",
+        },
+        actualValue: `TransportType=${hasTransportType ? "present" : "missing"}, Cargo=${hasCargo ? "present" : "missing"}`,
+      },
+      message: errorDef.description,
+      fixSuggestions: [],
+    });
+  }
+
+  return issues;
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// Group 7: Format Rules (Constitution §2)
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+function checkAmountNoSeparators(doc: XmlDocument): ValidationIssue[] {
+  // Rule 38: AMOUNT_NO_SEPARATORS - No thousand separators in amounts (§2.5, Appendix D #13)
+  const issues: ValidationIssue[] = [];
+
+  // Define numeric fields to check
+  const numericFields = [
+    // Fa level amounts
+    "P_13_1",
+    "P_13_2",
+    "P_13_3",
+    "P_13_4",
+    "P_13_5",
+    "P_13_6",
+    "P_13_7",
+    "P_13_8",
+    "P_13_9",
+    "P_13_10",
+    "P_13_11",
+    "P_14_1",
+    "P_14_2",
+    "P_14_3",
+    "P_14_4",
+    "P_14_5",
+    "P_14_1W",
+    "P_14_2W",
+    "P_14_3W",
+    "P_14_4W",
+    "P_14_5W",
+    "P_15",
+    "KursWalutyZ",
+  ];
+
+  // Pattern to check for invalid characters (anything other than digits, minus, and decimal point)
+  const invalidPattern = /[^0-9.-]|.*\..*\./;
+
+  // Check Fa level
+  for (const field of numericFields) {
+    const value = text(doc, `string(//ns:Fa/ns:${field})`);
+    if (value && invalidPattern.test(value)) {
+      const errorDef = ERROR_CODES.AMOUNT_NO_SEPARATORS;
+      issues.push({
+        code: errorDef.code,
+        context: {
+          location: {
+            xpath: `/Faktura/Fa/${field}`,
+            element: field,
+          },
+          actualValue: value,
+        },
+        message: errorDef.description,
+        fixSuggestions: [],
+      });
+    }
+  }
+
+  // Check FaWiersz level
+  const faWiersze = els(doc, "//ns:FaWiersz");
+  for (const wiersz of faWiersze) {
+    const nrWiersza = text(wiersz, "string(ns:NrWierszaFa)");
+    for (const field of [
+      "P_8B",
+      "P_9A",
+      "P_9B",
+      "P_10",
+      "P_11",
+      "P_11A",
+      "P_11Vat",
+      "KursWaluty",
+    ]) {
+      const value = text(wiersz, `string(ns:${field})`);
+      if (value && invalidPattern.test(value)) {
+        const errorDef = ERROR_CODES.AMOUNT_NO_SEPARATORS;
+        issues.push({
+          code: errorDef.code,
+          context: {
+            location: {
+              xpath: `/Faktura/FaWiersz[NrWierszaFa='${nrWiersza}']/${field}`,
+              element: field,
+              lineNumber: nrWiersza ? parseInt(nrWiersza) : undefined,
+            },
+            actualValue: value,
+          },
+          message: errorDef.description,
+          fixSuggestions: [],
+        });
+      }
+    }
+  }
+
+  return issues;
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // Semantic Rules Array
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -869,6 +1551,112 @@ export const semanticRules: SemanticRule[] = [
     category: "consistency",
     severity: "error",
     check: checkPMarzyLogic,
+  },
+
+  // Group 4: FaWiersz Rules
+  {
+    id: "P12_ENUMERATION",
+    description: "Check P_12 valid tax rate codes",
+    category: "business_logic",
+    severity: "error",
+    check: checkP12Enumeration,
+  },
+  {
+    id: "OO_RATE_FOREIGN_BUYER",
+    description: "Check 'oo' rate for foreign buyers",
+    category: "business_logic",
+    severity: "warning",
+    check: checkOORateForeignBuyer,
+  },
+  {
+    id: "GTU_FORMAT",
+    description: "Check GTU format",
+    category: "format",
+    severity: "error",
+    check: checkGTUFormat,
+  },
+  {
+    id: "TRAILING_ZEROS",
+    description: "Check trailing zeros in amounts",
+    category: "format",
+    severity: "warning",
+    check: checkTrailingZeros,
+  },
+
+  // Group 5: Corrective Invoice Rules
+  {
+    id: "KOR_NRKSEF_CONSISTENCY",
+    description: "Check corrective invoice KSeF number consistency",
+    category: "consistency",
+    severity: "error",
+    check: checkKorNrKSeFConsistency,
+  },
+  {
+    id: "REVERSE_CHARGE_CONSISTENCY",
+    description: "Check reverse charge consistency",
+    category: "consistency",
+    severity: "warning",
+    check: checkReverseChargeConsistency,
+  },
+
+  // Group 6: Payment & Transaction Rules
+  {
+    id: "PAYMENT_ZAPLACONO_DATE",
+    description: "Check payment date when marked as paid",
+    category: "consistency",
+    severity: "warning",
+    check: checkPaymentZaplaconoDate,
+  },
+  {
+    id: "RACHUNEKBANKOWY_NRRB",
+    description: "Check bank account number requirement",
+    category: "required_field",
+    severity: "error",
+    check: checkRachunekBankowyNrRB,
+  },
+  {
+    id: "NRRB_LENGTH",
+    description: "Check bank account number length",
+    category: "format",
+    severity: "warning",
+    check: checkNrRBLength,
+  },
+  {
+    id: "IPKSEF_FORMAT",
+    description: "Check IPKSeF format",
+    category: "format",
+    severity: "warning",
+    check: checkIPKSeFFormat,
+  },
+  {
+    id: "WALUTA_UMOWNA_PLN",
+    description: "Check WalutaUmowna not PLN",
+    category: "business_logic",
+    severity: "error",
+    check: checkWalutaUmownaPLN,
+  },
+  {
+    id: "KURS_WALUTA_PAIR",
+    description: "Check KursUmowny and WalutaUmowna pairing",
+    category: "consistency",
+    severity: "error",
+    check: checkKursWalutaPair,
+  },
+  {
+    id: "TRANSPORT_MINIMUM_DATA",
+    description: "Check transport minimum data",
+    category: "consistency",
+    severity: "warning",
+    check: checkTransportMinimumData,
+  },
+
+  // Group 7: Format Rules
+  {
+    id: "AMOUNT_NO_SEPARATORS",
+    description: "Check no separators in amount fields",
+    category: "format",
+    severity: "error",
+    check: checkAmountNoSeparators,
   },
 ];
 
