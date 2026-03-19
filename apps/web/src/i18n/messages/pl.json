@@ -10,7 +10,7 @@
       "dragHere": "Przeciągnij pliki XML tutaj",
       "dropFiles": "Upuść {count, plural, =1 {plik} other {# pliki}} XML",
       "validating": "Walidacja...",
-      "validatingDetails": "Sprawdzanie XSD i reguł semantycznych...",
+      "validatingDetails": "Sprawdzanie walidacji schematu XSD...",
       "acceptedFiles": "Akceptowane: .xml (faktury KSeF FA3)",
       "callToAction": "ksefuj to!"
     },

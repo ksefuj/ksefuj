@@ -10,7 +10,7 @@
       "dragHere": "Drop XML files here",
       "dropFiles": "Drop {count} XML {count, plural, =1 {file} other {files}}",
       "validating": "Validating...",
-      "validatingDetails": "Checking XSD and semantic rules...",
+      "validatingDetails": "Checking XSD schema validation...",
       "acceptedFiles": "Accepted: .xml (KSeF FA3 invoices)",
       "callToAction": "ksef it!"
     },

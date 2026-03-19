@@ -10,7 +10,7 @@
       "dragHere": "Перетягніть XML файли сюди",
       "dropFiles": "Відпустіть {count} XML {count, plural, =1 {файл} other {файлів}}",
       "validating": "Перевірка...",
-      "validatingDetails": "Перевірка XSD і семантичних правил...",
+      "validatingDetails": "Перевірка XSD схеми валідації...",
       "acceptedFiles": "Приймаються: .xml (рахунки KSeF FA3)",
       "callToAction": "ксефуй!"
     },

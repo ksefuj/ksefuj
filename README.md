@@ -113,14 +113,9 @@ Full validation against official Ministry of Finance FA(3) XSD schemas:
 
 Catches common errors that XSD can't express:
 
-- **Required JST and GV fields** in Podmiot2
-- **Correct P_12 enumeration** — VAT rates: "23", "8", "5", "0", "np I", "np II"
-- **Reverse charge consistency** — P_13_8 ↔ P_18 ↔ P_12
-- **Exchange rate placement** — FaWiersz/KursWaluty vs Fa/KursWalutyZ
-- **Correct GTU format** — `<GTU>GTU_12</GTU>`, not `<GTU_12>1</GTU_12>`
-- **Adnotacje completeness** — all required sub-elements
-- **Trailing zeros warning** — unnecessary decimal places
-- **Required P_15** — total amount field
+**Note: Semantic validation is currently being reimplemented from scratch based on the official
+FA(3) information sheet. The comprehensive list of rules will be documented once the new
+implementation is complete.**
 
 ## Claude Skills
 
