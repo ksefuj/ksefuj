@@ -26,9 +26,9 @@ Key sections that guide validation:
 
 ## Test Fixtures
 
-The file `docs/fa3-test-fixtures.md` contains all 32 official examples from the MF information
+The test fixtures in this repository are based on the 32 official examples from the MF information
 sheet, converted into XML fragments with positive and negative test cases. When building or
-extending the test suite, read this file first and follow its structure.
+extending the test suite, mirror the structure of the existing fixtures and tests.
 
 ## Architecture
 

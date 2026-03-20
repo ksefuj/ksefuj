@@ -1,12 +1,16 @@
 {
   "name": "@ksefuj/validator",
   "version": "0.2.0",
-  "description": "KSeF FA(3) XML validator — XSD schema validation, works in Node and browser (semantic rules TBD)",
+  "description": "KSeF FA(3) XML validator — XSD schema and semantic rules validation, works in Node and browser",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./types": {
       "import": "./dist/types-export.js",
       "types": "./dist/types-export.d.ts"
     },

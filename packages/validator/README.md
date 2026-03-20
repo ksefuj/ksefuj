@@ -132,9 +132,9 @@ Ministry of Finance.
 
 Comprehensive test suite ensuring 100% compliance with government standards:
 
-### Official MF Examples
+### Test Coverage
 
-**All 26 official KSeF FA(3) examples** from the Polish Ministry of Finance pass validation:
+The validator is tested against official MF examples and common invoice patterns:
 
 - Standard VAT invoices
 - Correction invoices (KOR) - both universal and difference methods
