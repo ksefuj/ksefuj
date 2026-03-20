@@ -58,7 +58,8 @@ All 8 groups from the constitutional reference:
 5. **Corrective Invoice Rules** (2 rules) — KSeF number consistency
 6. **Payment & Transaction Rules** (6 rules) — Payment validation, bank accounts
 7. **Format Rules** (2 rules) — Number formatting, separators
-8. **Additional Business Logic Rules** (4 rules) — Tax calculations, bank account format, line number uniqueness, negative quantities
+8. **Additional Business Logic Rules** (4 rules) — Tax calculations, bank account format, line
+   number uniqueness, negative quantities
 
 ## Common Tasks
 

@@ -1462,43 +1462,37 @@ function checkTaxCalculations(doc: XmlDocument): ValidationIssue[] {
 
   // Skip tax calculation validation for corrective invoices
   const rodzajFaktury = text(doc, "string(//ns:Fa/ns:RodzajFaktury)");
-  if (rodzajFaktury && (rodzajFaktury === "KOR" || rodzajFaktury === "KOR_ZAL" || rodzajFaktury === "KOR_ROZ")) {
+  if (
+    rodzajFaktury &&
+    (rodzajFaktury === "KOR" || rodzajFaktury === "KOR_ZAL" || rodzajFaktury === "KOR_ROZ")
+  ) {
     return issues; // Corrective invoices have different calculation structure
   }
 
-  // Tax rate mapping
-  const taxRates: Record<string, number> = {
-    "23": 23,
-    "22": 22,
-    "8": 8,
-    "7": 7,
-    "5": 5,
-    "4": 4,
-    "3": 3,
-    "0 KR": 0,
-    "0 WDT": 0,
-    "0 EX": 0,
-    "zw": 0,
-    "oo": 0,
-    "np I": 0,
-    "np II": 0,
-  };
-
-  // Check line-level tax calculations
+  // Validate that line items use valid tax rates
   const faWiersze = els(doc, "//ns:FaWiersz");
+  const validTaxRates = new Set([
+    "23", "22", "8", "7", "5", "4", "3", "0 KR", "0 WDT", "0 EX", "zw", "oo", "np I", "np II"
+  ]);
+
   for (const wiersz of faWiersze) {
-    const nrWiersza = text(wiersz, "string(ns:NrWierszaFa)");
-    const p11 = text(wiersz, "string(ns:P_11)");
     const p12 = text(wiersz, "string(ns:P_12)");
-
-    if (p11 && p12 && taxRates[p12] !== undefined && taxRates[p12] > 0) {
-      // Line has taxable amount and a numeric tax rate
-      const baseAmount = parseFloat(p11);
-      const rate = taxRates[p12];
-      const expectedTax = Math.round(baseAmount * rate) / 100; // Round to 2 decimals
-
-      // This is a simplified check - full implementation would map to P_13_x/P_14_x fields
-      // based on the tax rate category
+    if (p12 && !validTaxRates.has(p12)) {
+      const nrWiersza = text(wiersz, "string(ns:NrWierszaFa)") || "unknown";
+      const errorDef = ERROR_CODES.TAX_CALCULATION_MISMATCH;
+      issues.push({
+        code: errorDef.code,
+        context: {
+          location: {
+            xpath: `//ns:FaWiersz[ns:NrWierszaFa='${nrWiersza}']/ns:P_12`,
+            element: "P_12",
+          },
+          actualValue: p12,
+          expectedValues: Array.from(validTaxRates),
+        },
+        message: `Invalid tax rate '${p12}' in line ${nrWiersza}. Must be one of: ${Array.from(validTaxRates).join(", ")}`,
+        fixSuggestions: [],
+      });
     }
   }
 
@@ -1521,7 +1515,8 @@ function checkTaxCalculations(doc: XmlDocument): ValidationIssue[] {
     const tax = parseFloat(p14_1);
     const expectedTax = Math.round(base * 23) / 100;
 
-    if (Math.abs(tax - expectedTax) > 0.01) { // Allow 1 cent tolerance
+    if (Math.abs(tax - expectedTax) > 0.01) {
+      // Allow 1 cent tolerance
       const errorDef = ERROR_CODES.TAX_CALCULATION_MISMATCH;
       issues.push({
         code: errorDef.code,
@@ -1609,29 +1604,62 @@ function checkTaxCalculations(doc: XmlDocument): ValidationIssue[] {
       let expectedTotal = 0;
 
       // Add all base amounts
-      if (p13_1) expectedTotal += parseFloat(p13_1);
-      if (p13_2) expectedTotal += parseFloat(p13_2);
-      if (p13_3) expectedTotal += parseFloat(p13_3);
-      if (p13_4) expectedTotal += parseFloat(p13_4);
-      if (p13_5) expectedTotal += parseFloat(p13_5);
+      if (p13_1) {
+        expectedTotal += parseFloat(p13_1);
+      }
+      if (p13_2) {
+        expectedTotal += parseFloat(p13_2);
+      }
+      if (p13_3) {
+        expectedTotal += parseFloat(p13_3);
+      }
+      if (p13_4) {
+        expectedTotal += parseFloat(p13_4);
+      }
+      if (p13_5) {
+        expectedTotal += parseFloat(p13_5);
+      }
 
-      if (p13_6) expectedTotal += parseFloat(p13_6);
-      if (p13_7) expectedTotal += parseFloat(p13_7);
-      if (p13_8) expectedTotal += parseFloat(p13_8);
-      if (p13_9) expectedTotal += parseFloat(p13_9);
-      if (p13_10) expectedTotal += parseFloat(p13_10);
-      if (p13_11) expectedTotal += parseFloat(p13_11);
+      if (p13_6) {
+        expectedTotal += parseFloat(p13_6);
+      }
+      if (p13_7) {
+        expectedTotal += parseFloat(p13_7);
+      }
+      if (p13_8) {
+        expectedTotal += parseFloat(p13_8);
+      }
+      if (p13_9) {
+        expectedTotal += parseFloat(p13_9);
+      }
+      if (p13_10) {
+        expectedTotal += parseFloat(p13_10);
+      }
+      if (p13_11) {
+        expectedTotal += parseFloat(p13_11);
+      }
 
       // Add all tax amounts
-      if (p14_1) expectedTotal += parseFloat(p14_1);
-      if (p14_2) expectedTotal += parseFloat(p14_2);
-      if (p14_3) expectedTotal += parseFloat(p14_3);
-      if (p14_4) expectedTotal += parseFloat(p14_4);
-      if (p14_5) expectedTotal += parseFloat(p14_5);
+      if (p14_1) {
+        expectedTotal += parseFloat(p14_1);
+      }
+      if (p14_2) {
+        expectedTotal += parseFloat(p14_2);
+      }
+      if (p14_3) {
+        expectedTotal += parseFloat(p14_3);
+      }
+      if (p14_4) {
+        expectedTotal += parseFloat(p14_4);
+      }
+      if (p14_5) {
+        expectedTotal += parseFloat(p14_5);
+      }
 
       const actualTotal = parseFloat(p15);
 
-      if (Math.abs(actualTotal - expectedTotal) > 0.01) { // Allow 1 cent tolerance
+      if (Math.abs(actualTotal - expectedTotal) > 0.01) {
+        // Allow 1 cent tolerance
         const errorDef = ERROR_CODES.TAX_CALCULATION_MISMATCH;
         issues.push({
           code: errorDef.code,

@@ -124,7 +124,8 @@ Ministry of Finance:
 5. **Corrective Invoice Rules** (2 rules) — KSeF number consistency, reverse charge validation
 6. **Payment & Transaction Rules** (6 rules) — Payment dates, bank accounts, currency pairs
 7. **Format Rules** (2 rules) — Number formatting, separator validation
-8. **Additional Business Logic Rules** (4 rules) — Tax calculations, bank account format, line number uniqueness, negative quantities
+8. **Additional Business Logic Rules** (4 rules) — Tax calculations, bank account format, line
+   number uniqueness, negative quantities
 
 #### Common Issues Caught
 

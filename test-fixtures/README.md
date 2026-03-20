@@ -1,6 +1,7 @@
 # Test Fixtures
 
-Comprehensive test suite for KSeF FA(3) invoice validation, containing official Ministry of Finance examples and synthetic error cases.
+Comprehensive test suite for KSeF FA(3) invoice validation, containing official Ministry of Finance
+examples and synthetic error cases.
 
 ## Structure
 
@@ -19,12 +20,14 @@ test-fixtures/
 
 ## Official Examples
 
-The `official-examples/` directory contains the complete set of 26 official FA(3) invoice examples from the Polish Ministry of Finance, demonstrating various invoice types and scenarios.
+The `official-examples/` directory contains the complete set of 26 official FA(3) invoice examples
+from the Polish Ministry of Finance, demonstrating various invoice types and scenarios.
 
 ### Invoice Types Covered
 
 - **Standard invoices** - Basic sales transactions (Examples 1, 4)
-- **Corrective invoices** - Universal method (Example 2), difference method (Example 3), bulk corrections (Examples 6-7)
+- **Corrective invoices** - Universal method (Example 2), difference method (Example 3), bulk
+  corrections (Examples 6-7)
 - **Advance invoices** - Down payments and settlements (Examples 10-14)
 - **Simplified invoices** - Transactions ≤450 PLN (Examples 15-16)
 - **VAT margin procedures** - Used goods, tourism services (Examples 8, 19)
@@ -33,14 +36,16 @@ The `official-examples/` directory contains the complete set of 26 official FA(3
 
 ### Notable Validation Cases
 
-- **Example 2** - Corrective invoice with duplicate line numbers (valid pattern for before/after states)
+- **Example 2** - Corrective invoice with duplicate line numbers (valid pattern for before/after
+  states)
 - **Example 8** - VAT margin invoice using P_13_11 field without corresponding tax amounts
 - **Example 16** - Simplified invoice with only P_15, no P_13_x/P_14_x breakdown
 - **Example 18** - Complex corrective invoice with proportional adjustments
 
 ## Error Cases
 
-The `error-cases/` directory contains synthetic test fixtures designed to trigger specific validation rules.
+The `error-cases/` directory contains synthetic test fixtures designed to trigger specific
+validation rules.
 
 ### Validation Rules Tested
 
@@ -63,9 +68,11 @@ pnpm test:integration
 
 ### Validator Testing
 
-These fixtures are used by the integration test suite to verify that the @ksefuj/validator package correctly:
+These fixtures are used by the integration test suite to verify that the @ksefuj/validator package
+correctly:
 
-- **Validates official examples** - All 26 MF examples should pass validation (with warnings allowed)
+- **Validates official examples** - All 26 MF examples should pass validation (with warnings
+  allowed)
 - **Detects errors** - Synthetic error cases should be rejected with specific error codes
 - **Covers edge cases** - Special invoice types and validation scenarios
 
@@ -94,4 +101,5 @@ These fixtures test all 42 semantic validation rules across 8 categories:
 - **Error cases** - Apache 2.0 (part of ksefuj project)
 - **Test suite** - Apache 2.0
 
-The official Ministry of Finance examples are used in accordance with Polish law regarding public sector information reuse.
+The official Ministry of Finance examples are used in accordance with Polish law regarding public
+sector information reuse.
