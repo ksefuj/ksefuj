@@ -18,6 +18,9 @@
       "allValid": "Validation completed successfully",
       "hasErrors": "Found issues in {errorCount} of {totalCount} files",
       "hasWarnings": "Found warnings in {warningCount} of {totalCount} files",
+      "validating": "Validating {count} files...",
+      "processing": "Processing",
+      "noFiles": "No files",
       "valid": "{count} valid",
       "errors": "{count} with errors",
       "warnings": "{count} warnings"

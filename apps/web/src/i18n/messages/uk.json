@@ -18,6 +18,9 @@
       "allValid": "Перевірка завершена успішно",
       "hasErrors": "Знайдено проблеми у {errorCount} з {totalCount} файлів",
       "hasWarnings": "Знайдено попередження у {warningCount} з {totalCount} файлів",
+      "validating": "Перевірка {count} файлів...",
+      "processing": "Обробка",
+      "noFiles": "Немає файлів",
       "valid": "{count} правильні",
       "errors": "{count} з помилками",
       "warnings": "{count} попереджень"

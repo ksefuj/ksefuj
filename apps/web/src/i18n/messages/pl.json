@@ -18,6 +18,9 @@
       "allValid": "Walidacja zakończona pomyślnie",
       "hasErrors": "Znaleziono problemy w {errorCount} z {totalCount} plików",
       "hasWarnings": "Znaleziono ostrzeżenia w {warningCount} z {totalCount} plików",
+      "validating": "Walidowanie {count} plików...",
+      "processing": "Przetwarzanie",
+      "noFiles": "Brak plików",
       "valid": "{count} poprawne",
       "errors": "{count} z błędami",
       "warnings": "{count} ostrzeżenia"
