@@ -100,6 +100,9 @@
       "invalidDate": "Поле {field}: неправильна дата {value}. Використовуйте формат **РРРР-ММ-ДД**",
       "invalidDateValue": "Неправильна дата {value}. Використовуйте формат **РРРР-ММ-ДД**",
       "invalidRootElement": "Поле {field}: неправильний кореневий елемент документа. Перевірте, чи це правильний файл **XML** для **KSeF**"
+    },
+    "expectedValues": {
+      "maxDecimalPlaces": "Макс. {count, plural, one {# місце} few {# місця} many {# місць} other {# місць}} після коми"
     }
   },
   "languagePicker": {

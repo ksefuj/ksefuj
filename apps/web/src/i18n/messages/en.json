@@ -100,6 +100,9 @@
       "invalidDate": "Field {field}: invalid date {value}. Use format **YYYY-MM-DD**",
       "invalidDateValue": "Invalid date {value}. Use format **YYYY-MM-DD**",
       "invalidRootElement": "Field {field}: invalid root document element. Check if this is the correct **XML** file for **KSeF**"
+    },
+    "expectedValues": {
+      "maxDecimalPlaces": "Max {count, plural, one {# decimal place} other {# decimal places}}"
     }
   },
   "languagePicker": {

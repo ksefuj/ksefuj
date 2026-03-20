@@ -100,6 +100,9 @@
       "invalidDate": "Pole {field}: nieprawidłowa data {value}. Użyj formatu **RRRR-MM-DD**",
       "invalidDateValue": "Nieprawidłowa data {value}. Użyj formatu **RRRR-MM-DD**",
       "invalidRootElement": "Pole {field}: nieprawidłowy element główny dokumentu. Sprawdź czy to właściwy plik **XML** dla **KSeF**"
+    },
+    "expectedValues": {
+      "maxDecimalPlaces": "Maks. {count, plural, one {# miejsce} few {# miejsca} many {# miejsc} other {# miejsc}} po przecinku"
     }
   },
   "languagePicker": {

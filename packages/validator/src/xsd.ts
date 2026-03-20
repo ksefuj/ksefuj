@@ -218,9 +218,26 @@ function parseXsdError(errorMessage: string): {
 }
 
 /**
- * Map XSD error message to structured issue
+ * Map XSD error message to structured issue(s)
+ * Can return multiple issues if the error message contains multiple errors
  */
-function mapXsdErrorToIssue(errorMessage: string): ValidationIssue {
+function mapXsdErrorToIssues(errorMessage: string): ValidationIssue[] {
+  // Split by patterns that indicate separate error messages
+  const errorSentences = errorMessage.split(/\.(?=\s*[A-Z_])/).filter((s) => s.trim());
+
+  // If we have multiple error sentences, create separate issues
+  if (errorSentences.length > 1) {
+    return errorSentences.map((sentence) => mapSingleXsdErrorToIssue(`${sentence.trim()}.`));
+  }
+
+  // Single error
+  return [mapSingleXsdErrorToIssue(errorMessage)];
+}
+
+/**
+ * Map a single XSD error message to a structured issue
+ */
+function mapSingleXsdErrorToIssue(errorMessage: string): ValidationIssue {
   const parsed = parseXsdError(errorMessage);
 
   // Determine error type from message patterns
@@ -305,7 +322,8 @@ export async function validateXsd(
       // Parse structured validation error
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const errorMessage = (error as any).message || "XSD validation failed";
-      issues.push(mapXsdErrorToIssue(errorMessage));
+      const xsdIssues = mapXsdErrorToIssues(errorMessage);
+      issues.push(...xsdIssues);
     } else {
       // Handle parse errors
       const message = error instanceof Error ? error.message : String(error);
