@@ -1,9 +1,172 @@
 @import "tailwindcss";
 
 @theme {
-  --color-stone-950: #0c0a09;
+  /* Primary Colors */
+  --color-violet-50: #f5f3ff;
+  --color-violet-100: #ede9fe;
+  --color-violet-200: #ddd6fe;
+  --color-violet-300: #c4b5fd;
+  --color-violet-400: #a78bfa;
+  --color-violet-500: #8b5cf6;
+  --color-violet-600: #7c3aed;
+  --color-violet-700: #6d28d9;
+
+  /* Accent Colors */
+  --color-rose-50: #fef2f2;
+  --color-rose-100: #fee2e2;
+  --color-rose-200: #fecaca;
+  --color-rose-500: #f43f5e;
+  --color-rose-700: #e11d48;
+
+  --color-amber-50: #fffbeb;
+  --color-amber-100: #fef3c7;
+  --color-amber-200: #fed7aa;
+  --color-amber-500: #f59e0b;
+  --color-amber-700: #d97706;
+
+  --color-emerald-50: #ecfdf5;
+  --color-emerald-100: #d1fae5;
+  --color-emerald-200: #a7f3d0;
+  --color-emerald-500: #10b981;
+  --color-emerald-700: #047857;
+
+  /* Page Background */
+  --color-page-bg: #fafaf8;
+}
+
+:root {
+  /* CSS Variables for fonts (will be set by next/font) */
+  --font-display: system-ui, -apple-system, sans-serif;
+  --font-body: system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
 }
 
 html {
-  @apply bg-stone-950 text-stone-300;
+  @apply text-slate-900;
+  scroll-behavior: smooth;
+  background-color: var(--color-page-bg);
+}
+
+body {
+  font-family: var(--font-body);
+  font-feature-settings: "ss01" on;
+  background-color: var(--color-page-bg);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-slate-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 rounded-full;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-400;
+}
+
+/* Glass effect utilities */
+.glass {
+  @apply backdrop-blur-sm bg-white/70 border border-slate-200;
+}
+
+.glass-hover:hover {
+  @apply bg-white/80 shadow-lg;
+}
+
+/* Animations - subtle and purposeful */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes spring-in {
+  0% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.02);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 400ms ease-out;
+}
+
+.animate-fade-in {
+  animation: fade-in 300ms ease-out;
+}
+
+.animate-spring-in {
+  animation: spring-in 200ms ease-out;
+}
+
+/* Component Utilities */
+.card {
+  @apply bg-white rounded-2xl border border-slate-200 p-6 md:p-8;
+}
+
+.card-hover {
+  @apply hover:shadow-md transition-shadow duration-200;
+}
+
+.badge {
+  @apply rounded-full px-3 py-1 text-xs font-semibold;
+}
+
+.badge-success {
+  @apply bg-emerald-50 text-emerald-700 border border-emerald-200;
+}
+
+.badge-warning {
+  @apply bg-amber-50 text-amber-700 border border-amber-200;
+}
+
+.badge-error {
+  @apply bg-rose-50 text-rose-700 border border-rose-200;
+}
+
+.badge-info {
+  @apply bg-violet-50 text-violet-700 border border-violet-200;
+}
+
+.btn-primary {
+  @apply bg-violet-600 hover:bg-violet-700 text-white rounded-xl px-6 py-3 font-semibold transition-colors;
+}
+
+.btn-secondary {
+  @apply bg-white border border-slate-200 hover:border-violet-300 text-slate-700 rounded-xl px-6 py-3 font-semibold transition-colors;
+}
+
+.btn-ghost {
+  @apply text-violet-600 hover:bg-violet-50 rounded-xl px-4 py-2 font-medium transition-colors;
 }
