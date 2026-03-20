@@ -22,6 +22,15 @@
       "errors": "{count} з помилками",
       "warnings": "{count} попереджень"
     },
+    "fileList": {
+      "title": "Файли",
+      "issueCount": "{count, plural, one {# проблема} few {# проблеми} many {# проблем} other {# проблем}}"
+    },
+    "pagination": {
+      "showing": "Показано {start}-{end} з {total}",
+      "previous": "Попередня",
+      "next": "Наступна"
+    },
     "actions": {
       "newValidation": "Нова перевірка"
     },

@@ -516,7 +516,7 @@ export function Validator({ locale }: ValidatorProps) {
                         {/* Issue Count */}
                         {issueCount > 0 && (
                           <span className="text-xs text-slate-500">
-                            ({issueCount} {issueCount === 1 ? "issue" : "issues"})
+                            ({t("fileList.issueCount", { count: issueCount })})
                           </span>
                         )}
                       </div>
@@ -590,8 +590,11 @@ export function Validator({ locale }: ValidatorProps) {
             {totalPages > 1 && (
               <div className="px-4 py-3 bg-slate-50 border-t border-slate-100 flex items-center justify-between">
                 <p className="text-sm text-slate-600">
-                  Showing {(currentPage - 1) * ITEMS_PER_PAGE + 1} to{" "}
-                  {Math.min(currentPage * ITEMS_PER_PAGE, files.length)} of {files.length} files
+                  {t("pagination.showing", {
+                    start: (currentPage - 1) * ITEMS_PER_PAGE + 1,
+                    end: Math.min(currentPage * ITEMS_PER_PAGE, files.length),
+                    total: files.length,
+                  })}
                 </p>
                 <div className="flex gap-1">
                   <button
@@ -604,7 +607,7 @@ export function Validator({ locale }: ValidatorProps) {
                         : "text-slate-700 hover:bg-white hover:shadow-sm",
                     )}
                   >
-                    Previous
+                    {t("pagination.previous")}
                   </button>
 
                   {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
@@ -632,7 +635,7 @@ export function Validator({ locale }: ValidatorProps) {
                         : "text-slate-700 hover:bg-white hover:shadow-sm",
                     )}
                   >
-                    Next
+                    {t("pagination.next")}
                   </button>
                 </div>
               </div>

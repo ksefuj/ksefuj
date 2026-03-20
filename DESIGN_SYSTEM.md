@@ -128,7 +128,7 @@ consistent rendering across all platforms.
 
 ### Favicon
 
-SVG favicon at `apps/web/public/favicon.svg`:
+SVG favicon (violet dot on white background):
 
 ```svg
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
@@ -323,7 +323,6 @@ These live in `apps/web/src/components/` and are used across ALL pages:
 | Site footer       | `site-footer.tsx`       | Dark bg, links, copyright                       |
 | Section container | `section-container.tsx` | Consistent padding + max-width wrapper          |
 | Badge             | `badge.tsx`             | Pill-shaped status indicators                   |
-| Code block        | `code-block.tsx`        | Syntax-highlighted code display                 |
 
 When building a new page or feature, ALWAYS use these shared components. Never re-implement the
 header, footer, or logo.

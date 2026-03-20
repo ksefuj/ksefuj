@@ -22,6 +22,15 @@
       "errors": "{count} with errors",
       "warnings": "{count} warnings"
     },
+    "fileList": {
+      "title": "Files",
+      "issueCount": "{count, plural, one {# issue} other {# issues}}"
+    },
+    "pagination": {
+      "showing": "Showing {start}-{end} of {total}",
+      "previous": "Previous",
+      "next": "Next"
+    },
     "actions": {
       "newValidation": "New Validation"
     },

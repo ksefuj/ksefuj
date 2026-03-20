@@ -8,7 +8,7 @@
   "validator": {
     "dropzone": {
       "dragHere": "Przeciągnij pliki XML tutaj",
-      "dropFiles": "Upuść {count, plural, =1 {plik} other {# pliki}} XML",
+      "dropFiles": "Upuść {count, plural, one {plik} few {# pliki} many {# plików} other {# plików}} XML",
       "validating": "Walidacja...",
       "validatingDetails": "Sprawdzanie walidacji schematu XSD...",
       "acceptedFiles": "Akceptowane: .xml (faktury KSeF FA3)",
@@ -21,6 +21,15 @@
       "valid": "{count} poprawne",
       "errors": "{count} z błędami",
       "warnings": "{count} ostrzeżenia"
+    },
+    "fileList": {
+      "title": "Pliki",
+      "issueCount": "{count, plural, one {# problem} few {# problemy} many {# problemów} other {# problemów}}"
+    },
+    "pagination": {
+      "showing": "Pokazane {start}-{end} z {total}",
+      "previous": "Poprzednia",
+      "next": "Następna"
     },
     "actions": {
       "newValidation": "Nowa walidacja"
