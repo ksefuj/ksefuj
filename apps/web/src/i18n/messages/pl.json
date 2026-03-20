@@ -16,7 +16,7 @@
   "validator": {
     "dropzone": {
       "dragHere": "Przeciągnij pliki XML tutaj",
-      "dropFiles": "Upuść {count, plural, =1 {plik} other {# pliki}} XML",
+      "dropFiles": "Upuść {count, plural, one {plik} few {# pliki} many {# plików} other {# plików}} XML",
       "validating": "Walidacja...",
       "validatingDetails": "Sprawdzanie XSD i reguł semantycznych...",
       "acceptedFiles": "Akceptowane: .xml (faktury KSeF FA3)",
@@ -43,7 +43,13 @@
       "semanticValid": "Reguły ✓"
     },
     "fileList": {
-      "title": "Pliki"
+      "title": "Pliki",
+      "issueCount": "{count, plural, one {# problem} few {# problemy} many {# problemów} other {# problemów}}"
+    },
+    "pagination": {
+      "showing": "Pokazane {start}-{end} z {total}",
+      "previous": "Poprzednia",
+      "next": "Następna"
     },
     "validation": {
       "officialXsd": "Oficjalna walidacja XSD (Ministerstwo Finansów)",

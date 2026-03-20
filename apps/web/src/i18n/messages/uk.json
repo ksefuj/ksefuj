@@ -43,7 +43,13 @@
       "semanticValid": "Правила ✓"
     },
     "fileList": {
-      "title": "Файли"
+      "title": "Файли",
+      "issueCount": "{count, plural, one {# проблема} few {# проблеми} many {# проблем} other {# проблем}}"
+    },
+    "pagination": {
+      "showing": "Показано {start}-{end} з {total}",
+      "previous": "Попередня",
+      "next": "Наступна"
     },
     "validation": {
       "officialXsd": "Офіційна валідація XSD (Міністерство Фінансів)",

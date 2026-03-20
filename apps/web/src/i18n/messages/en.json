@@ -43,7 +43,13 @@
       "semanticValid": "Rules ✓"
     },
     "fileList": {
-      "title": "Files"
+      "title": "Files",
+      "issueCount": "{count, plural, one {# issue} other {# issues}}"
+    },
+    "pagination": {
+      "showing": "Showing {start}-{end} of {total}",
+      "previous": "Previous",
+      "next": "Next"
     },
     "validation": {
       "officialXsd": "Official XSD Validation (Ministry of Finance)",
