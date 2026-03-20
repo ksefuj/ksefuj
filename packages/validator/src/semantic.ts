@@ -1472,7 +1472,20 @@ function checkTaxCalculations(doc: XmlDocument): ValidationIssue[] {
   // Validate that line items use valid tax rates
   const faWiersze = els(doc, "//ns:FaWiersz");
   const validTaxRates = new Set([
-    "23", "22", "8", "7", "5", "4", "3", "0 KR", "0 WDT", "0 EX", "zw", "oo", "np I", "np II"
+    "23",
+    "22",
+    "8",
+    "7",
+    "5",
+    "4",
+    "3",
+    "0 KR",
+    "0 WDT",
+    "0 EX",
+    "zw",
+    "oo",
+    "np I",
+    "np II",
   ]);
 
   for (const wiersz of faWiersze) {
