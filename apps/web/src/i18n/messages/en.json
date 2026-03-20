@@ -35,8 +35,7 @@
       "next": "Next"
     },
     "actions": {
-      "newValidation": "New Validation",
-      "copyDebugInfo": "Copy debug info to clipboard"
+      "newValidation": "New Validation"
     },
     "issues": {
       "ELEMENT_NOT_ALLOWED": "Element `{element}` not allowed here",

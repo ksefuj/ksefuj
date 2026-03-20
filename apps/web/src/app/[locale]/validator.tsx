@@ -226,78 +226,6 @@ export function Validator({ locale }: ValidatorProps) {
     }
   };
 
-  const handleDebugCopy = () => {
-    const debugInfo = {
-      timestamp: new Date().toISOString(),
-      locale,
-      summary: {
-        totalFiles: summary.totalFiles,
-        validFiles: summary.validFiles,
-        errorFiles: summary.errorFiles,
-        warningFiles: summary.warningFiles,
-      },
-      files: files.map((file) => ({
-        fileName: file.fileName,
-        status: file.status,
-        error: file.error,
-        result: file.result
-          ? {
-              valid: file.result.valid,
-              issueCount: file.result.issues.length,
-              issues: file.result.issues.map((issue) => ({
-                // Core issue data
-                code: issue.code,
-                message: issue.message,
-                context: issue.context,
-                // UI metadata
-                severity: issue.code.severity,
-                domain: issue.code.domain,
-                domainLabel: getDomainLabel(issue.code.domain),
-                // Location info
-                element: issue.context.location.element,
-                xpath: issue.context.location.xpath,
-                lineNumber: issue.context.location.lineNumber,
-                columnNumber: issue.context.location.columnNumber,
-              })),
-            }
-          : null,
-      })),
-      // Add UI state
-      uiState: {
-        currentPage,
-        expandedFile,
-        validating,
-        dragging,
-      },
-    };
-
-    const debugText = JSON.stringify(debugInfo, null, 2);
-    navigator.clipboard.writeText(debugText).then(
-      () => {
-        // Success feedback could be added here
-      },
-      (err) => {
-        console.error("Failed to copy debug info:", err);
-      },
-    );
-  };
-
-  // Helper functions for debug info
-  const getDomainLabel = (domain: string) => {
-    switch (domain) {
-      case "parse":
-        return "STRUKTURA XML";
-      case "xsd":
-        return "SCHEMA XSD";
-      case "semantic":
-        return "REGUŁY BIZNESOWE";
-      case "infrastructure":
-        return "SYSTEM";
-      default:
-        return domain.toUpperCase();
-    }
-  };
-
   const toggleFileExpanded = (fileName: string) => {
     setExpandedFile(expandedFile === fileName ? null : fileName);
   };
@@ -583,37 +511,10 @@ export function Validator({ locale }: ValidatorProps) {
                 </div>
               </div>
 
-              <div className="flex items-center gap-2">
-                {/* Debug Button - only shown when there are results */}
-                {files.length > 0 && (
-                  <button
-                    onClick={handleDebugCopy}
-                    className="btn-ghost text-xs px-3 py-1.5"
-                    disabled={validating}
-                    title={t("actions.copyDebugInfo")}
-                  >
-                    <svg
-                      className="w-4 h-4 inline-block mr-1"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
-                      />
-                    </svg>
-                    Debug
-                  </button>
-                )}
-
-                {/* Reset Button */}
-                <button onClick={handleReset} className="btn-ghost" disabled={validating}>
-                  {t("actions.newValidation")}
-                </button>
-              </div>
+              {/* Reset Button */}
+              <button onClick={handleReset} className="btn-ghost" disabled={validating}>
+                {t("actions.newValidation")}
+              </button>
             </div>
           </div>
 

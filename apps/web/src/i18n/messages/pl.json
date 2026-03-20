@@ -35,8 +35,7 @@
       "next": "Następna"
     },
     "actions": {
-      "newValidation": "Nowa walidacja",
-      "copyDebugInfo": "Kopiuj informacje debugowania"
+      "newValidation": "Nowa walidacja"
     },
     "issues": {
       "ELEMENT_NOT_ALLOWED": "Element `{element}` nie jest dozwolony w tym miejscu",
