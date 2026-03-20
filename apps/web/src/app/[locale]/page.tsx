@@ -248,14 +248,15 @@ if (result.valid) {
   console.log('✓ Valid');
 }`,
             },
-            api: {
-              title: t("landing.developer.content.api.title"),
-              description: t("landing.developer.content.api.description"),
-              example: `POST /api/validate
-Content-Type: application/xml
-
-<?xml version="1.0"?>
-<Faktura>...</Faktura>`,
+            docs: {
+              title: t("landing.developer.content.docs.title"),
+              description: t("landing.developer.content.docs.description"),
+              example: `// Full TypeScript support
+const result = await validate(xml, {
+  locale: 'pl',
+  enableXsdValidation: true,
+  enableSemanticValidation: true
+});`,
             },
           }}
         />

@@ -129,27 +129,27 @@
   },
   "landing": {
     "hero": {
-      "title": "Sprawdź swoją e-fakturę",
-      "description": "Wrzuć XML, zobacz błędy. Dane nie opuszczają Twojego komputera.",
-      "trustLine": "100% darmowy • Open Source • Apache 2.0"
+      "title": "Sprawdź swoją e-fakturę FA(3)",
+      "description": "Obowiązkowy KSeF od 1 kwietnia 2026 (1 lutego dla dużych firm). Wrzuć XML, zobacz błędy. Dane nie opuszczają przeglądarki.",
+      "trustLine": "100% darmowy • 42 reguły biznesowe • Open Source"
     },
     "features": {
       "title": "Dlaczego ksefuj?",
-      "subtitle": "Narzędzie stworzone z myślą o polskich przedsiębiorcach",
+      "subtitle": "Stworzone dla freelancerów i małych firm, którzy nie chcą płacić za Symfonie czy Comarcha",
       "items": [
         {
-          "title": "Oficjalna walidacja",
-          "description": "Używamy oficjalnego schematu XSD z Ministerstwa Finansów oraz sprawdzamy reguły biznesowe",
+          "title": "Pełna walidacja MF",
+          "description": "Oficjalny schemat XSD (06/2025) + 42 reguły biznesowe z arkusza informacyjnego MF",
           "accent": "violet"
         },
         {
           "title": "100% prywatności",
-          "description": "Twój plik nie opuszcza przeglądarki. Żadne dane nie są wysyłane na serwer",
+          "description": "Wszystko działa lokalnie w przeglądarce. Twoje faktury nie trafiają na żaden serwer",
           "accent": "emerald"
         },
         {
-          "title": "Zawsze darmowy",
-          "description": "Bez limitów, bez rejestracji, bez ukrytych opłat. Licencja Apache 2.0",
+          "title": "Naprawdę darmowy",
+          "description": "Bez limitów, kont, reklam czy paywallu. KSeF to wystarczający ciężar — narzędzia powinny być za darmo",
           "accent": "amber"
         }
       ]
@@ -161,7 +161,7 @@
         {
           "badge": "Poziom 1",
           "title": "Struktura XML (XSD)",
-          "description": "Oficjalny schemat z Ministerstwa Finansów",
+          "description": "Oficjalny schemat FA(3) z czerwca 2025 od Ministerstwa Finansów",
           "checks": [
             "Poprawność struktury dokumentu",
             "Wymagane pola i elementy",
@@ -171,13 +171,13 @@
         },
         {
           "badge": "Poziom 2",
-          "title": "Reguły biznesowe",
-          "description": "Logika biznesowa niemożliwa do wyrażenia w XSD",
+          "title": "42 reguły biznesowe",
+          "description": "Kompleksowa walidacja semantyczna na podstawie oficjalnego arkusza informacyjnego",
           "checks": [
-            "Podmiot2 wymaga JST i GV",
-            "Stawki VAT zgodne z przepisami",
-            "Spójność odwrotnego obciążenia",
-            "Poprawny format GTU i SW"
+            "Weryfikacja podmiotów (JST/GV, NIP, role)",
+            "Poprawność stawek VAT i GTU",
+            "Precyzja dziesiętna kwot i ilości",
+            "Logika adnotacji (zwolnienia, marża, NST)"
           ]
         }
       ]
@@ -196,7 +196,7 @@
           "number": "2",
           "title": "Pobierz z KSeF",
           "description": "Zaloguj się do portalu KSeF i pobierz XML dowolnej faktury",
-          "code": "ap.ksef.mf.gov.pl"
+          "code": "ap.ksef.mf.gov.pl (KSeF 2.0)"
         },
         {
           "number": "3",
@@ -247,9 +247,9 @@
           "title": "npm Package",
           "description": "Integruj walidator z Twoją aplikacją"
         },
-        "api": {
-          "title": "API",
-          "description": "REST API dla integracji"
+        "docs": {
+          "title": "Dokumentacja",
+          "description": "Pełna dokumentacja pakietu i przykłady użycia"
         }
       }
     }

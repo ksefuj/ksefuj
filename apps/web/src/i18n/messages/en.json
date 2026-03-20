@@ -129,27 +129,27 @@
   },
   "landing": {
     "hero": {
-      "title": "Validate your e-invoice",
-      "description": "Drop XML, see errors. Data stays in your browser.",
-      "trustLine": "100% Free • Open Source • Apache 2.0"
+      "title": "Validate your KSeF FA(3) e-invoice",
+      "description": "Mandatory KSeF from April 1, 2026 (Feb 1 for large companies). Drop XML, see errors. Data stays in your browser.",
+      "trustLine": "100% Free • 42 business rules • Open Source"
     },
     "features": {
       "title": "Why ksefuj?",
-      "subtitle": "Built for Polish entrepreneurs",
+      "subtitle": "Built for freelancers and small businesses who don't want to pay for Symfonia or Comarch",
       "items": [
         {
-          "title": "Official validation",
-          "description": "Using official XSD schema from Ministry of Finance plus business rules",
+          "title": "Full MF validation",
+          "description": "Official XSD schema (06/2025) + 42 business rules from MF information sheet",
           "accent": "violet"
         },
         {
           "title": "100% privacy",
-          "description": "Your file never leaves the browser. No data sent to any server",
+          "description": "Everything runs locally in your browser. Your invoices never reach any server",
           "accent": "emerald"
         },
         {
-          "title": "Forever free",
-          "description": "No limits, no signup, no hidden fees. Apache 2.0 license",
+          "title": "Actually free",
+          "description": "No limits, accounts, ads or paywalls. KSeF is burden enough — tools should be free",
           "accent": "amber"
         }
       ]
@@ -161,7 +161,7 @@
         {
           "badge": "Layer 1",
           "title": "XML Structure (XSD)",
-          "description": "Official schema from Ministry of Finance",
+          "description": "Official FA(3) schema from June 2025 by Ministry of Finance",
           "checks": [
             "Document structure validity",
             "Required fields and elements",
@@ -171,13 +171,13 @@
         },
         {
           "badge": "Layer 2",
-          "title": "Business Rules",
-          "description": "Business logic not expressible in XSD",
+          "title": "42 Business Rules",
+          "description": "Comprehensive semantic validation based on official information sheet",
           "checks": [
-            "Podmiot2 requires JST and GV",
-            "VAT rates according to rules",
-            "Reverse charge consistency",
-            "Correct GTU and SW format"
+            "Entity verification (JST/GV, NIP, roles)",
+            "VAT rates and GTU compliance",
+            "Decimal precision for amounts and quantities",
+            "Annotation logic (exemptions, margin, NST)"
           ]
         }
       ]
@@ -196,7 +196,7 @@
           "number": "2",
           "title": "Download from KSeF",
           "description": "Login to KSeF portal and download XML of any invoice",
-          "code": "ap.ksef.mf.gov.pl"
+          "code": "ap.ksef.mf.gov.pl (KSeF 2.0)"
         },
         {
           "number": "3",
@@ -247,9 +247,9 @@
           "title": "npm Package",
           "description": "Integrate validator with your app"
         },
-        "api": {
-          "title": "API",
-          "description": "REST API for integrations"
+        "docs": {
+          "title": "Documentation",
+          "description": "Full package documentation and usage examples"
         }
       }
     }

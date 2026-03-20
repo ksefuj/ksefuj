@@ -14,7 +14,7 @@ interface DeveloperSectionProps {
       description: string;
       commands: { label: string; command: string }[];
     };
-    api: {
+    docs: {
       title: string;
       description: string;
       example: string;
@@ -95,14 +95,14 @@ export function DeveloperSection({
               </div>
             </div>
 
-            {/* API */}
+            {/* Documentation */}
             <div className="bg-white rounded-2xl border border-slate-200 p-6">
               <h3 className="text-xl font-bold text-slate-900 mb-2 font-display">
-                {content.api.title}
+                {content.docs.title}
               </h3>
-              <p className="text-slate-600 text-sm mb-4">{content.api.description}</p>
+              <p className="text-slate-600 text-sm mb-4">{content.docs.description}</p>
               <div className="bg-slate-900 text-slate-100 rounded-lg p-2 font-mono text-xs overflow-x-auto">
-                <pre>{content.api.example}</pre>
+                <pre>{content.docs.example}</pre>
               </div>
             </div>
           </div>
