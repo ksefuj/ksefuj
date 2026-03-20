@@ -8,11 +8,11 @@
   "validator": {
     "dropzone": {
       "dragHere": "Перетягніть XML файли сюди",
-      "dropFiles": "Відпустіть {count} XML {count, plural, =1 {файл} other {файлів}}",
+      "dropFiles": "Відпустіть {count} XML {count, plural, one {файл} few {файли} many {файлів} other {файлів}}",
       "validating": "Перевірка...",
       "validatingDetails": "Перевірка XSD схеми валідації...",
       "acceptedFiles": "Приймаються: .xml (рахунки KSeF FA3)",
-      "callToAction": "ксефуй!"
+      "callToAction": "ксефуй це!"
     },
     "summary": {
       "allValid": "Перевірка завершена успішно",
@@ -56,8 +56,8 @@
       "P15_MISSING": "Відсутнє обов'язкове поле `P_15` (загальна сума)",
       "P6_P6A_MUTUAL_EXCLUSION": "Поля `P_6` і `P_6A` взаємовиключні",
       "RODZAJ_FAKTURY_SECTIONS": "Відсутній обов'язковий розділ для типу фактури",
-      "KURS_WALUTY_Z_PLACEMENT": "`KursWalutyZ` дійсний лише для авансових рахунків",
-      "FOREIGN_CURRENCY_TAX_PLN": "Відсутнє перерахунок податку на **PLN** для іноземної валюти",
+      "KURS_WALUTY_Z_PLACEMENT": "`KursWalutyZ` дійсний лише для авансових фактур",
+      "FOREIGN_CURRENCY_TAX_PLN": "Відсутній перерахунок податку на **PLN** для іноземної валюти",
       "ADNOTACJE_P16_MISSING": "Відсутнє обов'язкове поле `P_16` в `Adnotacje`",
       "ADNOTACJE_P17_MISSING": "Відсутнє обов'язкове поле `P_17` в `Adnotacje`",
       "ADNOTACJE_P18_MISSING": "Відсутнє обов'язкове поле `P_18` в `Adnotacje`",
@@ -70,23 +70,23 @@
       "NST_LOGIC": "Помилка логіки транспорту: потрібен рівно один з `P_22` або `P_22N`",
       "PMARZY_LOGIC": "Помилка логіки маржі: потрібен рівно один з `P_PMarzy` або `P_PMarzyN`",
       "P12_ENUMERATION": "Недійсна ставка **ПДВ**: `{actual}`",
-      "OO_RATE_FOREIGN_BUYER": "Використовуйте `np I` або `np II` для іноземного покупця, не `oo`",
+      "OO_RATE_FOREIGN_BUYER": "Використовуйте `np I` або `np II` для іноземних покупців, не `oo`",
       "GTU_FORMAT": "Недійсний формат **GTU** (має бути наприклад `GTU_12`)",
       "DECIMAL_PRECISION": "Перевищено максимальну десяткову точність",
       "KOR_NRKSEF_CONSISTENCY": "Невідповідність номера **KSeF** у коригувальній фактурі",
-      "REVERSE_CHARGE_CONSISTENCY": "Невідповідність зворотного нарахування",
+      "REVERSE_CHARGE_CONSISTENCY": "Неузгодженість зворотного нарахування",
       "PAYMENT_ZAPLACONO_DATE": "Відсутня дата оплати при позначці про оплату",
       "RACHUNEKBANKOWY_NRRB": "Відсутній номер банківського рахунку",
       "NRRB_LENGTH": "Номер рахунку має бути `10-34` символів",
       "IPKSEF_FORMAT": "`IPKSeF` має бути рівно **13** алфавітно-цифрових символів",
       "WALUTA_UMOWNA_PLN": "`WalutaUmowna` не може бути `PLN`",
       "KURS_WALUTA_PAIR": "`KursUmowny` і `WalutaUmowna` мають бути присутні разом",
-      "TRANSPORT_MINIMUM_DATA": "Відсутні мінімальні дані транспорту",
+      "TRANSPORT_MINIMUM_DATA": "Відсутні обов'язкові дані транспорту",
       "AMOUNT_NO_SEPARATORS": "Суми не можуть містити розділювачі тисяч",
-      "TAX_CALCULATION_MISMATCH": "Помилка розрахунку податку - перевірте обчислення **ПДВ**",
-      "INVALID_BANK_ACCOUNT_FORMAT": "Польський банківський рахунок (`NrRB`) має бути **26** символів у форматі **IBAN** (`PL` + 24 цифри)",
+      "TAX_CALCULATION_MISMATCH": "Помилка розрахунку податку — перевірте обчислення **ПДВ**",
+      "INVALID_BANK_ACCOUNT_FORMAT": "Польський банківський рахунок (`NrRB`) має бути **26** символів у форматі **IBAN** (`PL` + **24** цифри)",
       "DUPLICATE_LINE_NUMBERS": "Дублювання номерів рядків рахунку",
-      "NEGATIVE_QUANTITY_NOT_ALLOWED": "Від'ємні кількості дозволені лише в коригувальних рахунках",
+      "NEGATIVE_QUANTITY_NOT_ALLOWED": "Від'ємні кількості дозволені лише в коригувальних фактурах",
       "ENCODING_ERROR": "Помилка кодування символів",
       "VALIDATION_TIMEOUT": "Перевищено час очікування валідації",
       "EXECUTION_ERROR": "Несподівана помилка валідації",
@@ -164,7 +164,7 @@
           "title": "Структура XML (XSD)",
           "description": "Офіційна схема з Міністерства фінансів",
           "checks": [
-            "Правильність структури документа",
+            "Правильність структури документу",
             "Обов’язкові поля та елементи",
             "Типи даних і формати",
             "Порядок елементів"
@@ -177,7 +177,7 @@
           "checks": [
             "Podmiot2 вимагає JST та GV",
             "Ставки ПДВ відповідно до правил",
-            "Узгодженість зворотного навантаження",
+            "Узгодженість зворотного нарахування",
             "Правильний формат GTU та SW"
           ]
         }
@@ -224,7 +224,7 @@
           "description": "Використовуйте комерційно без обмежень"
         }
       ],
-      "ctaText": "Дивіться на GitHub"
+      "ctaText": "Переглянути на GitHub"
     },
     "developer": {
       "title": "Для розробників",
