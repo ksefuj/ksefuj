@@ -97,10 +97,19 @@
       "fieldPrefix": "Pole {field}",
       "invalidValue": "Pole {field}: nieprawidłowa wartość {value}",
       "invalidValues": "Pole {field}: nieprawidłowe wartości {values}",
-      "invalidEnumValue": "nieprawidłowa wartość {value}",
-      "invalidDate": "Pole {field}: nieprawidłowa data {value}. Użyj formatu **RRRR-MM-DD**",
+      "invalidEnumValue": "Nieprawidłowa wartość {value} dla pola {field}",
+      "invalidDate": "Nieprawidłowa data {value}. Użyj formatu **RRRR-MM-DD**",
       "invalidDateValue": "Nieprawidłowa data {value}. Użyj formatu **RRRR-MM-DD**",
-      "invalidRootElement": "Pole {field}: nieprawidłowy element główny dokumentu. Sprawdź czy to właściwy plik **XML** dla **KSeF**"
+      "invalidRootElement": "Brak deklaracji {field} w schemacie **XSD**. Sprawdź przestrzeń nazw **XML**",
+      "unexpectedElement": "Element {element} nie jest dozwolony w tym miejscu",
+      "thisElement": "ten element",
+      "expectedElement": "Oczekiwany element: {element}",
+      "expectedOneOf": "Oczekiwany jeden z: {elements}",
+      "invalidPattern": "Wartość {value} nie pasuje do wymaganego wzorca dla {field}",
+      "minLength": "Za krótka wartość dla {field}: **{actual}** znaków (minimum **{limit}**)",
+      "maxLength": "Za długa wartość dla {field}: **{actual}** znaków (maksimum **{limit}**)",
+      "tooManyDecimals": "Za dużo miejsc po przecinku dla {field} (maksimum **{max}**)",
+      "validationError": "Błąd walidacji pola {field}"
     },
     "expectedValues": {
       "maxDecimalPlaces": "Maks. {count, plural, one {# miejsce} few {# miejsca} many {# miejsc} other {# miejsc}} po przecinku"

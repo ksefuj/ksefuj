@@ -6,7 +6,6 @@ import { useTranslations } from "next-intl";
 import type { ValidationResult } from "@ksefuj/validator";
 import { Badge } from "@/components/badge";
 import { ValidationIssuesList } from "@/components/validation-issues-list";
-import { translateValidationIssue } from "./validation-utils";
 import { cn } from "@/lib/utils";
 
 interface ValidatorProps {
@@ -250,17 +249,10 @@ export function Validator({ locale }: ValidatorProps) {
                 code: issue.code,
                 message: issue.message,
                 context: issue.context,
-                // Display strings (what user sees)
-                displayMessage:
-                  issue.code.domain === "xsd"
-                    ? simplifyErrorMessage(issue.message)
-                    : translateValidationIssue(issue, t),
                 // UI metadata
                 severity: issue.code.severity,
                 domain: issue.code.domain,
                 domainLabel: getDomainLabel(issue.code.domain),
-                // Enumeration analysis
-                enumerationError: parseEnumerationError(issue.message),
                 // Location info
                 element: issue.context.location.element,
                 xpath: issue.context.location.xpath,
@@ -304,46 +296,6 @@ export function Validator({ locale }: ValidatorProps) {
       default:
         return domain.toUpperCase();
     }
-  };
-
-  const parseEnumerationError = (message: string) => {
-    const enumerationMatches = [
-      ...message.matchAll(/The value '([^']+)' is not an element of the set \{([^}]+)\}/g),
-    ];
-
-    if (enumerationMatches.length === 0) {
-      return null;
-    }
-
-    const lastMatch = enumerationMatches[enumerationMatches.length - 1];
-    const [, actualValue, allowedValuesStr] = lastMatch;
-
-    const allowedValues = allowedValuesStr
-      .split(", ")
-      .map((v) => v.replace(/'/g, ""))
-      .filter((v) => v.length > 0);
-
-    return {
-      actualValue,
-      allowedValues,
-      isLargeSet: allowedValues.length > 10,
-    };
-  };
-
-  const simplifyErrorMessage = (message: string): string => {
-    // Simplified version for debug - just extract key info
-    const invalidValues = [
-      ...message.matchAll(/The value '([^']+)' is not an element of the set/g),
-    ].map((match) => match[1]);
-
-    const fieldMatch = message.match(/^([^:]+):/);
-    const fieldName = fieldMatch ? fieldMatch[1] : "field";
-
-    if (invalidValues.length > 0) {
-      return `Invalid value(s) in ${fieldName}: ${invalidValues.join(", ")}`;
-    }
-
-    return message;
   };
 
   const toggleFileExpanded = (fileName: string) => {

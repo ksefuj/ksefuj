@@ -97,10 +97,19 @@
       "fieldPrefix": "Поле {field}",
       "invalidValue": "Поле {field}: неправильне значення {value}",
       "invalidValues": "Поле {field}: неправильні значення {values}",
-      "invalidEnumValue": "неправильне значення {value}",
-      "invalidDate": "Поле {field}: неправильна дата {value}. Використовуйте формат **РРРР-ММ-ДД**",
+      "invalidEnumValue": "Неправильне значення {value} для поля {field}",
+      "invalidDate": "Неправильна дата {value}. Використовуйте формат **РРРР-ММ-ДД**",
       "invalidDateValue": "Неправильна дата {value}. Використовуйте формат **РРРР-ММ-ДД**",
-      "invalidRootElement": "Поле {field}: неправильний кореневий елемент документа. Перевірте, чи це правильний файл **XML** для **KSeF**"
+      "invalidRootElement": "Відсутня декларація {field} у схемі **XSD**. Перевірте простір імен **XML**",
+      "unexpectedElement": "Елемент {element} не дозволено в цьому місці",
+      "thisElement": "цей елемент",
+      "expectedElement": "Очікуваний елемент: {element}",
+      "expectedOneOf": "Очікуваний один з: {elements}",
+      "invalidPattern": "Значення {value} не відповідає вимаганому шаблону для {field}",
+      "minLength": "Занадто коротке значення для {field}: **{actual}** символів (мінімум **{limit}**)",
+      "maxLength": "Занадто довге значення для {field}: **{actual}** символів (максимум **{limit}**)",
+      "tooManyDecimals": "Забагато місць після коми для {field} (максимум **{max}**)",
+      "validationError": "Помилка перевірки поля {field}"
     },
     "expectedValues": {
       "maxDecimalPlaces": "Макс. {count, plural, one {# місце} few {# місця} many {# місць} other {# місць}} після коми"

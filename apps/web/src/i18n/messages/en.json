@@ -97,10 +97,19 @@
       "fieldPrefix": "Field {field}",
       "invalidValue": "Field {field}: invalid value {value}",
       "invalidValues": "Field {field}: invalid values {values}",
-      "invalidEnumValue": "invalid value {value}",
-      "invalidDate": "Field {field}: invalid date {value}. Use format **YYYY-MM-DD**",
+      "invalidEnumValue": "Invalid value {value} for field {field}",
+      "invalidDate": "Invalid date {value}. Use format **YYYY-MM-DD**",
       "invalidDateValue": "Invalid date {value}. Use format **YYYY-MM-DD**",
-      "invalidRootElement": "Field {field}: invalid root document element. Check if this is the correct **XML** file for **KSeF**"
+      "invalidRootElement": "No declaration for {field} in **XSD** schema. Check **XML** namespace",
+      "unexpectedElement": "Element {element} is not allowed here",
+      "thisElement": "this element",
+      "expectedElement": "Expected element: {element}",
+      "expectedOneOf": "Expected one of: {elements}",
+      "invalidPattern": "Value {value} doesn't match required pattern for {field}",
+      "minLength": "Value too short for {field}: **{actual}** characters (minimum **{limit}**)",
+      "maxLength": "Value too long for {field}: **{actual}** characters (maximum **{limit}**)",
+      "tooManyDecimals": "Too many decimal places for {field} (maximum **{max}**)",
+      "validationError": "Validation error for field {field}"
     },
     "expectedValues": {
       "maxDecimalPlaces": "Max {count, plural, one {# decimal place} other {# decimal places}}"

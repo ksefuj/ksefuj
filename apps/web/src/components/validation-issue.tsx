@@ -11,7 +11,7 @@ interface ValidationIssueProps {
 }
 
 // Utility function to extract and format enumeration errors
-function parseEnumerationError(message: string) {
+export function parseEnumerationError(message: string) {
   // Match XSD enumeration error pattern - look for the LAST occurrence to get the complete set
   const enumerationMatches = [
     ...message.matchAll(/The value '([^']+)' is not an element of the set \{([^}]+)\}/g),
@@ -38,113 +38,151 @@ function parseEnumerationError(message: string) {
 }
 
 // Utility function to clean and simplify error messages
-function simplifyErrorMessage(
+export function simplifyErrorMessage(
   message: string,
   t: (key: string, params?: Record<string, string | number | Date>) => string,
 ): string {
+  // First, clean up namespace references globally (including the full namespace URL)
+  const cleaned = message
+    .replace(/\{http:\/\/crd\.gov\.pl\/wzor\/[^}]+\}/g, "") // Remove full namespace
+    .replace(/\{[^}]+\}/g, ""); // Remove any other namespaces
+
   // Handle multiple XSD errors in one message by splitting them
-  const errorSentences = message.split(/\.(?=\s*[A-Z_])/).filter((s) => s.trim());
+  const errorSentences = cleaned.split(/\.(?=\s*[A-Z_'"[])/).filter((s) => s.trim());
 
   if (errorSentences.length > 1) {
     // Process each error separately and combine them
     const processedErrors = errorSentences.map((sentence) =>
       simplifyErrorMessage(`${sentence.trim()}.`, t),
     );
-    return processedErrors.join(" ");
+    return processedErrors.filter(Boolean).join(". ");
   }
 
-  // Extract enumeration errors first
-  const invalidValues = [
-    ...message.matchAll(/The value '([^']+)' is not an element of the set/g),
-  ].map((match) => match[1]);
+  // Extract the element name more reliably
+  const elementMatch = cleaned.match(/Element '([^']+)'/);
+  const elementName = elementMatch ? elementMatch[1] : null;
 
   // Handle "No matching global declaration" errors
-  const globalDeclarationMatch = message.match(
-    /([A-Za-z_]+):\s*No matching global declaration available for the validation root/,
-  );
-  if (globalDeclarationMatch) {
-    const [, fieldName] = globalDeclarationMatch;
+  if (cleaned.includes("No matching global declaration")) {
     return t("errors.invalidRootElement", {
-      field: `\`${fieldName}\``,
+      field: elementName ? `\`${elementName}\`` : "XML",
     });
   }
 
-  // Handle date validation errors
-  const dateErrorMatch = message.match(
-    /([A-Za-z_]+):\s*'([^']+)'\s*is not a valid value of the (?:local )?atomic type(?:\s*'\{[^}]+\}([^']+)')?/,
-  );
-  if (dateErrorMatch) {
-    const [, fieldName, invalidValue, atomicType] = dateErrorMatch;
+  // Handle "This element is not expected" errors
+  if (cleaned.includes("This element is not expected")) {
+    return t("errors.unexpectedElement", {
+      element: elementName ? `\`${elementName}\`` : t("errors.thisElement"),
+    });
+  }
+
+  // Handle "Expected is" errors (missing required elements)
+  const expectedMatch = cleaned.match(/Expected is (?:one of )?\(([^)]+)\)/i);
+  if (expectedMatch) {
+    const expectedElements = expectedMatch[1]
+      .split(",")
+      .map((e) => {
+        // Remove namespace and quotes from each element
+        return e
+          .trim()
+          .replace(/\{[^}]+\}/g, "") // Remove namespace
+          .replace(/'/g, "") // Remove quotes
+          .trim();
+      })
+      .filter(Boolean)
+      .map((e) => `\`${e}\``);
+
+    if (expectedElements.length === 1) {
+      return t("errors.expectedElement", { element: expectedElements[0] });
+    } else {
+      return t("errors.expectedOneOf", { elements: expectedElements.join(", ") });
+    }
+  }
+
+  // Handle facet errors (pattern, enumeration, length, etc.)
+  const facetMatch = cleaned.match(/\[facet '([^']+)'\]/);
+  if (facetMatch) {
+    const facetType = facetMatch[1];
+
+    // Handle enumeration errors
+    if (facetType === "enumeration") {
+      const valueMatch = cleaned.match(/The value '([^']+)'/);
+      if (valueMatch && elementName) {
+        return t("errors.invalidEnumValue", {
+          field: `\`${elementName}\``,
+          value: `\`${valueMatch[1]}\``,
+        });
+      }
+    }
+
+    // Handle pattern errors
+    if (facetType === "pattern") {
+      const valueMatch = cleaned.match(/The value '([^']+)'/);
+      if (valueMatch && elementName) {
+        return t("errors.invalidPattern", {
+          field: `\`${elementName}\``,
+          value: `\`${valueMatch[1]}\``,
+        });
+      }
+    }
+
+    // Handle length constraints
+    if (facetType === "minLength" || facetType === "maxLength") {
+      const lengthMatch = cleaned.match(/has a length of '(\d+)'.* allowed .* '(\d+)'/);
+      if (lengthMatch && elementName) {
+        const [, actual, limit] = lengthMatch;
+        return t(`errors.${facetType}`, {
+          field: `\`${elementName}\``,
+          actual,
+          limit,
+        });
+      }
+    }
+
+    // Handle decimal precision
+    if (facetType === "fractionDigits") {
+      const digitsMatch = cleaned.match(/has more fractional digits than are allowed \('(\d+)'\)/);
+      if (digitsMatch && elementName) {
+        return t("errors.tooManyDecimals", {
+          field: `\`${elementName}\``,
+          max: digitsMatch[1],
+        });
+      }
+    }
+  }
+
+  // Handle atomic type validation errors
+  const atomicMatch = cleaned.match(/Element '([^']+)'.*'([^']+)'.*is not a valid value/);
+  if (atomicMatch) {
+    const [, field, value] = atomicMatch;
 
     // Check if it's a date field
-    if (atomicType === "TDataT" || fieldName.includes("Data") || fieldName.includes("Date")) {
+    if (cleaned.includes("TDataT") || field.includes("Data") || field.includes("Date")) {
       return t("errors.invalidDate", {
-        field: `\`${fieldName}\``,
-        value: `\`${invalidValue}\``,
+        field: `\`${field}\``,
+        value: `\`${value}\``,
       });
     }
 
-    // Generic invalid value error
     return t("errors.invalidValue", {
-      field: `\`${fieldName}\``,
-      value: `\`${invalidValue}\``,
+      field: `\`${field}\``,
+      value: `\`${value}\``,
     });
   }
 
-  // Remove namespace prefixes from element names
-  const withoutNamespace = message.replace(/Element '\{[^}]+\}([^']+)'/g, "$1");
+  // Handle other common XSD error patterns - removed as they're now handled above
 
-  // Extract the field name for enumeration errors
-  const fieldMatch = withoutNamespace.match(/^([^:]+):/);
-  const fieldName = fieldMatch ? fieldMatch[1] : t("errors.field");
-
-  // Create a clean summary message with localization and proper formatting
-  if (invalidValues.length === 1) {
-    return t("errors.invalidValue", {
-      field: `\`${fieldName}\``,
-      value: `\`${invalidValues[0]}\``,
-    });
-  } else if (invalidValues.length > 1) {
-    const valuesList = invalidValues.map((v) => `\`${v}\``).join(", ");
-    return t("errors.invalidValues", {
-      field: `\`${fieldName}\``,
-      values: valuesList,
-    });
+  // If we couldn't parse the message, return a generic error with the element name if available
+  if (elementName) {
+    return t("errors.validationError", { field: `\`${elementName}\`` });
   }
 
-  // Handle other common XSD error patterns
-  let simplified = message;
-
-  // Clean up enumeration errors
-  simplified = simplified.replace(
-    /\[facet 'enumeration'\] The value '([^']+)' is not an element of the set \{[^}]+\}\.?/g,
-    (_, value) => t("errors.invalidEnumValue", { value: `\`${value}\`` }),
-  );
-
-  // Clean up atomic type errors
-  simplified = simplified.replace(
-    /'([^']+)'\s*is not a valid value of the (?:local )?atomic type(?:\s*'\{[^}]+\}([^']+)')?\.?/g,
-    (match, value, type) => {
-      if (type === "TDataT" || match.includes("Data")) {
-        return t("errors.invalidDateValue", { value: `\`${value}\`` });
-      }
-      return t("errors.invalidEnumValue", { value: `\`${value}\`` });
-    },
-  );
-
-  // Clean up remaining namespace references
-  simplified = simplified.replace(/\{[^}]+\}/g, "");
-
-  // Clean up element references
-  simplified = simplified
-    .replace(
-      /Element '([^']+)':\s*/g,
-      (_, field) => `${t("errors.fieldPrefix", { field: `\`${field}\`` })}: `,
-    )
+  // Last resort - clean up and return the original message, ensuring no namespace remnants
+  return cleaned
+    .replace(/Element '([^']+)':\s*/g, "$1: ")
+    .replace(/\{http:\/\/[^}]+\}/g, "") // One more namespace cleanup just in case
     .replace(/\s+/g, " ")
     .trim();
-
-  return simplified || message;
 }
 
 export function ValidationIssueComponent({ issue }: ValidationIssueProps) {
@@ -156,15 +194,21 @@ export function ValidationIssueComponent({ issue }: ValidationIssueProps) {
 
   // Function to translate expected values
   const translateExpectedValue = (value: string): string => {
+    // First, clean up any namespace references
+    const cleanedValue = value
+      .replace(/\{http:\/\/crd\.gov\.pl\/wzor\/[^}]+\}/g, "") // Remove KSeF namespace
+      .replace(/\{[^}]+\}/g, "") // Remove any other namespaces
+      .trim();
+
     // Match "Max X decimal places" pattern
-    const decimalPlacesMatch = value.match(/^Max (\d+) decimal places?$/);
+    const decimalPlacesMatch = cleanedValue.match(/^Max (\d+) decimal places?$/);
     if (decimalPlacesMatch) {
       const count = parseInt(decimalPlacesMatch[1], 10);
       return t("expectedValues.maxDecimalPlaces", { count });
     }
 
-    // Return original value if no translation pattern matches
-    return value;
+    // Return cleaned value if no translation pattern matches
+    return cleanedValue;
   };
 
   // Use appropriate translation method based on error domain
