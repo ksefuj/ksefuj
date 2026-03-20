@@ -35,7 +35,8 @@
       "next": "Наступна"
     },
     "actions": {
-      "newValidation": "Нова перевірка"
+      "newValidation": "Нова перевірка",
+      "copyDebugInfo": "Копіювати інформацію налагодження"
     },
     "issues": {
       "ELEMENT_NOT_ALLOWED": "Елемент `{element}` не дозволений тут",
