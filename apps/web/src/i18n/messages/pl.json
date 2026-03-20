@@ -78,7 +78,11 @@
       "WALUTA_UMOWNA_PLN": "`WalutaUmowna` nie może być \"PLN\"",
       "KURS_WALUTA_PAIR": "`KursUmowny` i `WalutaUmowna` muszą występować razem",
       "TRANSPORT_MINIMUM_DATA": "Brak minimalnych danych transportu",
-      "AMOUNT_NO_SEPARATORS": "Kwoty nie mogą zawierać separatorów tysięcy"
+      "AMOUNT_NO_SEPARATORS": "Kwoty nie mogą zawierać separatorów tysięcy",
+      "TAX_CALCULATION_MISMATCH": "Błąd kalkulacji podatku - sprawdź obliczenia VAT",
+      "INVALID_BANK_ACCOUNT_FORMAT": "Nieprawidłowy format polskiego numeru konta (powinno być 26 znaków)",
+      "DUPLICATE_LINE_NUMBERS": "Zduplikowane numery wierszy faktury",
+      "NEGATIVE_QUANTITY_NOT_ALLOWED": "Ujemne ilości dozwolone tylko w fakturach korygujących"
     }
   },
   "languagePicker": {

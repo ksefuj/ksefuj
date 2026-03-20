@@ -78,7 +78,11 @@
       "WALUTA_UMOWNA_PLN": "`WalutaUmowna` не може бути \"PLN\"",
       "KURS_WALUTA_PAIR": "`KursUmowny` і `WalutaUmowna` мають бути присутні разом",
       "TRANSPORT_MINIMUM_DATA": "Відсутні мінімальні дані транспорту",
-      "AMOUNT_NO_SEPARATORS": "Суми не можуть містити розділювачі тисяч"
+      "AMOUNT_NO_SEPARATORS": "Суми не можуть містити розділювачі тисяч",
+      "TAX_CALCULATION_MISMATCH": "Помилка розрахунку податку - перевірте обчислення ПДВ",
+      "INVALID_BANK_ACCOUNT_FORMAT": "Неправильний формат польського банківського рахунку (має бути 26 символів)",
+      "DUPLICATE_LINE_NUMBERS": "Дублювання номерів рядків рахунку",
+      "NEGATIVE_QUANTITY_NOT_ALLOWED": "Від'ємні кількості дозволені лише в коригувальних рахунках"
     }
   },
   "languagePicker": {

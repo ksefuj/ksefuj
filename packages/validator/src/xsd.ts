@@ -193,10 +193,16 @@ function parseXsdError(errorMessage: string): {
     result.columnNumber = parseInt(colMatch[1], 10);
   }
 
-  // Extract element name
-  const elementMatch = errorMessage.match(/element ['"]?(\w+)['"]?/i);
+  // Extract element name (handle namespaced elements)
+  const elementMatch = errorMessage.match(/Element ['"]?\{[^}]+\}(\w+)['"]?/i);
   if (elementMatch) {
     result.elementName = elementMatch[1];
+  } else {
+    // Fallback for non-namespaced elements
+    const simpleElementMatch = errorMessage.match(/Element ['"]?(\w+)['"]?/i);
+    if (simpleElementMatch) {
+      result.elementName = simpleElementMatch[1];
+    }
   }
 
   // Extract expected elements for "Element not allowed" errors

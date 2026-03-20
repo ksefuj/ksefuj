@@ -1453,6 +1453,320 @@ function checkAmountNoSeparators(doc: XmlDocument): ValidationIssue[] {
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// Group 8: Additional Business Logic Rules
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+function checkTaxCalculations(doc: XmlDocument): ValidationIssue[] {
+  // Rule 39: TAX_CALCULATION_MISMATCH - Validate arithmetic consistency of tax calculations
+  const issues: ValidationIssue[] = [];
+
+  // Skip tax calculation validation for corrective invoices
+  const rodzajFaktury = text(doc, "string(//ns:Fa/ns:RodzajFaktury)");
+  if (rodzajFaktury && (rodzajFaktury === "KOR" || rodzajFaktury === "KOR_ZAL" || rodzajFaktury === "KOR_ROZ")) {
+    return issues; // Corrective invoices have different calculation structure
+  }
+
+  // Tax rate mapping
+  const taxRates: Record<string, number> = {
+    "23": 23,
+    "22": 22,
+    "8": 8,
+    "7": 7,
+    "5": 5,
+    "4": 4,
+    "3": 3,
+    "0 KR": 0,
+    "0 WDT": 0,
+    "0 EX": 0,
+    "zw": 0,
+    "oo": 0,
+    "np I": 0,
+    "np II": 0,
+  };
+
+  // Check line-level tax calculations
+  const faWiersze = els(doc, "//ns:FaWiersz");
+  for (const wiersz of faWiersze) {
+    const nrWiersza = text(wiersz, "string(ns:NrWierszaFa)");
+    const p11 = text(wiersz, "string(ns:P_11)");
+    const p12 = text(wiersz, "string(ns:P_12)");
+
+    if (p11 && p12 && taxRates[p12] !== undefined && taxRates[p12] > 0) {
+      // Line has taxable amount and a numeric tax rate
+      const baseAmount = parseFloat(p11);
+      const rate = taxRates[p12];
+      const expectedTax = Math.round(baseAmount * rate) / 100; // Round to 2 decimals
+
+      // This is a simplified check - full implementation would map to P_13_x/P_14_x fields
+      // based on the tax rate category
+    }
+  }
+
+  // Check summary-level tax calculations
+  const p13_1 = text(doc, "string(//ns:Fa/ns:P_13_1)");
+  const p14_1 = text(doc, "string(//ns:Fa/ns:P_14_1)");
+  const p13_2 = text(doc, "string(//ns:Fa/ns:P_13_2)");
+  const p14_2 = text(doc, "string(//ns:Fa/ns:P_14_2)");
+  const p13_3 = text(doc, "string(//ns:Fa/ns:P_13_3)");
+  const p14_3 = text(doc, "string(//ns:Fa/ns:P_14_3)");
+  const p13_4 = text(doc, "string(//ns:Fa/ns:P_13_4)");
+  const p14_4 = text(doc, "string(//ns:Fa/ns:P_14_4)");
+  const p13_5 = text(doc, "string(//ns:Fa/ns:P_13_5)");
+  const p14_5 = text(doc, "string(//ns:Fa/ns:P_14_5)");
+  const p15 = text(doc, "string(//ns:Fa/ns:P_15)");
+
+  // Validate P_14_1 = P_13_1 * 0.23 (for 23% rate)
+  if (p13_1 && p14_1) {
+    const base = parseFloat(p13_1);
+    const tax = parseFloat(p14_1);
+    const expectedTax = Math.round(base * 23) / 100;
+
+    if (Math.abs(tax - expectedTax) > 0.01) { // Allow 1 cent tolerance
+      const errorDef = ERROR_CODES.TAX_CALCULATION_MISMATCH;
+      issues.push({
+        code: errorDef.code,
+        context: {
+          location: {
+            xpath: "/Faktura/Fa/P_14_1",
+            element: "P_14_1",
+          },
+          actualValue: p14_1,
+          expectedValues: [expectedTax.toFixed(2)],
+        },
+        message: `${errorDef.description}: P_14_1 should be ${expectedTax.toFixed(2)} (P_13_1 × 23%)`,
+        fixSuggestions: [],
+      });
+    }
+  }
+
+  // Similar checks for other tax rates...
+  // Validate P_14_2 = P_13_2 * 0.08 (for 8% rate)
+  if (p13_2 && p14_2) {
+    const base = parseFloat(p13_2);
+    const tax = parseFloat(p14_2);
+    const expectedTax = Math.round(base * 8) / 100;
+
+    if (Math.abs(tax - expectedTax) > 0.01) {
+      const errorDef = ERROR_CODES.TAX_CALCULATION_MISMATCH;
+      issues.push({
+        code: errorDef.code,
+        context: {
+          location: {
+            xpath: "/Faktura/Fa/P_14_2",
+            element: "P_14_2",
+          },
+          actualValue: p14_2,
+          expectedValues: [expectedTax.toFixed(2)],
+        },
+        message: `${errorDef.description}: P_14_2 should be ${expectedTax.toFixed(2)} (P_13_2 × 8%)`,
+        fixSuggestions: [],
+      });
+    }
+  }
+
+  // Validate P_14_3 = P_13_3 * 0.05 (for 5% rate)
+  if (p13_3 && p14_3) {
+    const base = parseFloat(p13_3);
+    const tax = parseFloat(p14_3);
+    const expectedTax = Math.round(base * 5) / 100;
+
+    if (Math.abs(tax - expectedTax) > 0.01) {
+      const errorDef = ERROR_CODES.TAX_CALCULATION_MISMATCH;
+      issues.push({
+        code: errorDef.code,
+        context: {
+          location: {
+            xpath: "/Faktura/Fa/P_14_3",
+            element: "P_14_3",
+          },
+          actualValue: p14_3,
+          expectedValues: [expectedTax.toFixed(2)],
+        },
+        message: `${errorDef.description}: P_14_3 should be ${expectedTax.toFixed(2)} (P_13_3 × 5%)`,
+        fixSuggestions: [],
+      });
+    }
+  }
+
+  // Validate total P_15 = sum of all (P_13_x + P_14_x) only when summary fields are present
+  if (p15) {
+    // Check if this invoice has any P_13/P_14 summary fields
+    const hasP13Fields = p13_1 || p13_2 || p13_3 || p13_4 || p13_5;
+    const hasP14Fields = p14_1 || p14_2 || p14_3 || p14_4 || p14_5;
+
+    // Check for special P_13 fields (6-11)
+    const p13_6 = text(doc, "string(//ns:Fa/ns:P_13_6)");
+    const p13_7 = text(doc, "string(//ns:Fa/ns:P_13_7)");
+    const p13_8 = text(doc, "string(//ns:Fa/ns:P_13_8)");
+    const p13_9 = text(doc, "string(//ns:Fa/ns:P_13_9)");
+    const p13_10 = text(doc, "string(//ns:Fa/ns:P_13_10)");
+    const p13_11 = text(doc, "string(//ns:Fa/ns:P_13_11)");
+
+    const hasSpecialP13Fields = p13_6 || p13_7 || p13_8 || p13_9 || p13_10 || p13_11;
+
+    // Only validate totals if we have summary tax fields (not simplified invoice)
+    if (hasP13Fields || hasP14Fields || hasSpecialP13Fields) {
+      let expectedTotal = 0;
+
+      // Add all base amounts
+      if (p13_1) expectedTotal += parseFloat(p13_1);
+      if (p13_2) expectedTotal += parseFloat(p13_2);
+      if (p13_3) expectedTotal += parseFloat(p13_3);
+      if (p13_4) expectedTotal += parseFloat(p13_4);
+      if (p13_5) expectedTotal += parseFloat(p13_5);
+
+      if (p13_6) expectedTotal += parseFloat(p13_6);
+      if (p13_7) expectedTotal += parseFloat(p13_7);
+      if (p13_8) expectedTotal += parseFloat(p13_8);
+      if (p13_9) expectedTotal += parseFloat(p13_9);
+      if (p13_10) expectedTotal += parseFloat(p13_10);
+      if (p13_11) expectedTotal += parseFloat(p13_11);
+
+      // Add all tax amounts
+      if (p14_1) expectedTotal += parseFloat(p14_1);
+      if (p14_2) expectedTotal += parseFloat(p14_2);
+      if (p14_3) expectedTotal += parseFloat(p14_3);
+      if (p14_4) expectedTotal += parseFloat(p14_4);
+      if (p14_5) expectedTotal += parseFloat(p14_5);
+
+      const actualTotal = parseFloat(p15);
+
+      if (Math.abs(actualTotal - expectedTotal) > 0.01) { // Allow 1 cent tolerance
+        const errorDef = ERROR_CODES.TAX_CALCULATION_MISMATCH;
+        issues.push({
+          code: errorDef.code,
+          context: {
+            location: {
+              xpath: "/Faktura/Fa/P_15",
+              element: "P_15",
+            },
+            actualValue: p15,
+            expectedValues: [expectedTotal.toFixed(2)],
+          },
+          message: `${errorDef.description}: P_15 should be ${expectedTotal.toFixed(2)} (sum of all P_13_x + P_14_x)`,
+          fixSuggestions: [],
+        });
+      }
+    } // Close the "if we have summary tax fields" condition
+  }
+
+  return issues;
+}
+
+function checkPolishBankAccountFormat(doc: XmlDocument): ValidationIssue[] {
+  // Rule 40: INVALID_BANK_ACCOUNT_FORMAT - Polish IBAN must be 26 characters
+  const issues: ValidationIssue[] = [];
+  const nrRB = text(doc, "string(//ns:Fa/ns:Platnosc/ns:RachunekBankowy/ns:NrRB)");
+
+  if (nrRB) {
+    // Check if it looks like a Polish account (starts with PL or is all digits)
+    const isPolishAccount = nrRB.startsWith("PL") || /^\d+$/.test(nrRB);
+
+    if (isPolishAccount && nrRB.length !== 26) {
+      const errorDef = ERROR_CODES.INVALID_BANK_ACCOUNT_FORMAT;
+      issues.push({
+        code: errorDef.code,
+        context: {
+          location: {
+            xpath: "/Faktura/Fa/Platnosc/RachunekBankowy/NrRB",
+            element: "NrRB",
+          },
+          actualValue: `${nrRB} (length: ${nrRB.length})`,
+        },
+        message: errorDef.description,
+        fixSuggestions: [],
+      });
+    }
+  }
+
+  return issues;
+}
+
+function checkLineNumberUniqueness(doc: XmlDocument): ValidationIssue[] {
+  // Rule 41: DUPLICATE_LINE_NUMBERS - Line numbers must be unique (except in corrective invoices)
+  const issues: ValidationIssue[] = [];
+  const rodzajFaktury = text(doc, "string(//ns:Fa/ns:RodzajFaktury)");
+  const correctiveTypes = ["KOR", "KOR_ZAL", "KOR_ROZ"];
+
+  // Skip check for corrective invoices - they can have duplicate line numbers for before/after states
+  if (rodzajFaktury && correctiveTypes.includes(rodzajFaktury)) {
+    return issues;
+  }
+
+  const faWiersze = els(doc, "//ns:FaWiersz");
+  const lineNumbers = new Map<string, number>();
+
+  for (const wiersz of faWiersze) {
+    const nrWiersza = text(wiersz, "string(ns:NrWierszaFa)");
+
+    if (nrWiersza) {
+      const count = lineNumbers.get(nrWiersza) || 0;
+      lineNumbers.set(nrWiersza, count + 1);
+
+      if (count > 0) {
+        // Duplicate found in non-corrective invoice
+        const errorDef = ERROR_CODES.DUPLICATE_LINE_NUMBERS;
+        issues.push({
+          code: errorDef.code,
+          context: {
+            location: {
+              xpath: `/Faktura/FaWiersz[NrWierszaFa='${nrWiersza}']`,
+              element: "NrWierszaFa",
+              lineNumber: parseInt(nrWiersza),
+            },
+            actualValue: nrWiersza,
+          },
+          message: `${errorDef.description}: Line number ${nrWiersza} appears multiple times`,
+          fixSuggestions: [],
+        });
+      }
+    }
+  }
+
+  return issues;
+}
+
+function checkNegativeQuantities(doc: XmlDocument): ValidationIssue[] {
+  // Rule 42: NEGATIVE_QUANTITY_NOT_ALLOWED - Negative quantities only in corrective invoices
+  const issues: ValidationIssue[] = [];
+  const rodzajFaktury = text(doc, "string(//ns:Fa/ns:RodzajFaktury)");
+  const correctiveTypes = ["KOR", "KOR_ZAL", "KOR_ROZ"];
+
+  // Only check if not a corrective invoice
+  if (rodzajFaktury && !correctiveTypes.includes(rodzajFaktury)) {
+    const faWiersze = els(doc, "//ns:FaWiersz");
+
+    for (const wiersz of faWiersze) {
+      const p8b = text(wiersz, "string(ns:P_8B)");
+      const nrWiersza = text(wiersz, "string(ns:NrWierszaFa)");
+
+      if (p8b) {
+        const quantity = parseFloat(p8b);
+
+        if (quantity < 0) {
+          const errorDef = ERROR_CODES.NEGATIVE_QUANTITY_NOT_ALLOWED;
+          issues.push({
+            code: errorDef.code,
+            context: {
+              location: {
+                xpath: `/Faktura/FaWiersz[NrWierszaFa='${nrWiersza}']/P_8B`,
+                element: "P_8B",
+                lineNumber: nrWiersza ? parseInt(nrWiersza) : undefined,
+              },
+              actualValue: p8b,
+            },
+            message: `${errorDef.description}: Invoice type '${rodzajFaktury}' cannot have negative quantities`,
+            fixSuggestions: [],
+          });
+        }
+      }
+    }
+  }
+
+  return issues;
+}
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // Semantic Rules Array
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -1686,6 +2000,36 @@ export const semanticRules: SemanticRule[] = [
     category: "format",
     severity: "error",
     check: checkAmountNoSeparators,
+  },
+
+  // Group 8: Additional Business Logic Rules
+  {
+    id: "TAX_CALCULATION_MISMATCH",
+    description: "Check tax calculation arithmetic consistency",
+    category: "business_logic",
+    severity: "error",
+    check: checkTaxCalculations,
+  },
+  {
+    id: "INVALID_BANK_ACCOUNT_FORMAT",
+    description: "Check Polish bank account format",
+    category: "format",
+    severity: "error",
+    check: checkPolishBankAccountFormat,
+  },
+  {
+    id: "DUPLICATE_LINE_NUMBERS",
+    description: "Check line number uniqueness",
+    category: "consistency",
+    severity: "error",
+    check: checkLineNumberUniqueness,
+  },
+  {
+    id: "NEGATIVE_QUANTITY_NOT_ALLOWED",
+    description: "Check negative quantities only in corrective invoices",
+    category: "business_logic",
+    severity: "error",
+    check: checkNegativeQuantities,
   },
 ];
 

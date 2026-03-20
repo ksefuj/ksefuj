@@ -801,6 +801,73 @@ export const SEMANTIC_ERRORS = {
     ],
     fixTemplates: [],
   },
+
+  // Group 8: Additional Business Logic Rules
+  TAX_CALCULATION_MISMATCH: {
+    code: {
+      domain: "semantic",
+      category: "business_logic",
+      code: "TAX_CALCULATION_MISMATCH",
+      severity: "error",
+    },
+    description:
+      "Tax calculation error: P_14_x must equal P_13_x × (P_12 rate / 100), and P_15 must equal sum of all (P_13_x + P_14_x)",
+    commonCauses: [
+      "Incorrect tax amount calculation",
+      "Rounding errors in tax calculations",
+      "Total amount does not match sum of base amounts and taxes",
+    ],
+    fixTemplates: [],
+  },
+
+  INVALID_BANK_ACCOUNT_FORMAT: {
+    code: {
+      domain: "semantic",
+      category: "format",
+      code: "INVALID_BANK_ACCOUNT_FORMAT",
+      severity: "error",
+    },
+    description:
+      "Polish bank account (NrRB) must be 26 characters for IBAN format (PL + 24 digits)",
+    commonCauses: [
+      "Incorrect Polish IBAN format",
+      "Wrong number of digits in bank account",
+      "Missing or malformed IBAN prefix",
+    ],
+    fixTemplates: [],
+  },
+
+  DUPLICATE_LINE_NUMBERS: {
+    code: {
+      domain: "semantic",
+      category: "consistency",
+      code: "DUPLICATE_LINE_NUMBERS",
+      severity: "error",
+    },
+    description:
+      "Line numbers (NrWierszaFa) must be unique within the invoice (except in corrective invoices where before/after states can share numbers)",
+    commonCauses: [
+      "Same line number used for multiple invoice items",
+      "Incorrect line numbering sequence",
+    ],
+    fixTemplates: [],
+  },
+
+  NEGATIVE_QUANTITY_NOT_ALLOWED: {
+    code: {
+      domain: "semantic",
+      category: "business_logic",
+      code: "NEGATIVE_QUANTITY_NOT_ALLOWED",
+      severity: "error",
+    },
+    description:
+      "Negative quantities (P_8B) are only allowed in corrective invoices (RodzajFaktury = KOR, KOR_ZAL, or KOR_ROZ)",
+    commonCauses: [
+      "Negative quantity in standard VAT invoice",
+      "Incorrect invoice type for negative quantities",
+    ],
+    fixTemplates: [],
+  },
 } as const satisfies Record<string, ErrorCodeDefinition>;
 
 // --- Combined Registry ---

@@ -106,7 +106,7 @@ Full compliance with official Ministry of Finance FA(3) schemas using libxml2-wa
 
 ### 2. Semantic Business Rules
 
-**38 comprehensive validation rules** based on the official FA(3) information sheet from the
+**42 comprehensive validation rules** based on the official FA(3) information sheet from the
 Ministry of Finance.
 
 #### Rule Categories
@@ -119,6 +119,7 @@ Ministry of Finance.
 5. **Corrective Invoice Rules** (2 rules) — KSeF number consistency, reverse charge validation
 6. **Payment & Transaction Rules** (6 rules) — Payment dates, bank accounts, currency pairs
 7. **Format Rules** (2 rules) — Number formatting, separator validation
+8. **Additional Business Logic Rules** (4 rules) — Tax calculations, bank account format, line number uniqueness, negative quantities
 
 #### Key Validations
 

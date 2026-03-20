@@ -141,15 +141,15 @@ Full XML validation against the official FA(3) XSD schema from Ministry of Finan
 
 Business logic checks that XSD cannot express.
 
-**38 comprehensive validation rules** based on the official FA(3) information sheet from the
+**42 comprehensive validation rules** based on the official FA(3) information sheet from the
 Ministry of Finance.
 
 **Key features:**
 
 - **Constitution-based**: Rules trace directly to specific sections in the official FA(3)
   information sheet
-- **Comprehensive coverage**: All 7 rule groups (Podmiot, Fa Core, Adnotacje, FaWiersz, Corrective,
-  Payment & Transaction, Format)
+- **Comprehensive coverage**: All 8 rule groups (Podmiot, Fa Core, Adnotacje, FaWiersz, Corrective,
+  Payment & Transaction, Format, Additional Business Logic)
 - **Precise error reporting**: Each issue includes exact XPath location, error context, and fix
   suggestions
 - **Test coverage**: 100+ test cases based on official MF examples
@@ -164,6 +164,7 @@ Ministry of Finance.
 5. **Corrective Invoice Rules** (2 rules) - KSeF number consistency, reverse charge validation
 6. **Payment & Transaction Rules** (6 rules) - Payment dates, bank accounts, currency pairs
 7. **Format Rules** (2 rules) - Number formatting, separator validation
+8. **Additional Business Logic Rules** (4 rules) - Tax calculations, bank account format, line number uniqueness, negative quantities
 
 ## KSeF FA(3) Key Gotchas
 

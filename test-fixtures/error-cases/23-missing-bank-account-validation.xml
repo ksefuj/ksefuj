@@ -74,7 +74,7 @@ xmlns="http://crd.gov.pl/wzor/2025/06/25/13775/">
 			<FormaPlatnosci>6</FormaPlatnosci>
 			<RachunekBankowy>
 				<!-- Invalid Polish bank account number (wrong length) -->
-				<NrRB>12345678901234567890123456</NrRB>
+				<NrRB>1234567890123456789012345</NrRB>
 				<RachunekWlasnyBanku>2</RachunekWlasnyBanku>
 				<NazwaBanku>Test Bank</NazwaBanku>
 				<OpisRachunku>PLN</OpisRachunku>

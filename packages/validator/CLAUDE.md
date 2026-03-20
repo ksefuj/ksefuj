@@ -2,7 +2,7 @@
 
 ## Implementation Status
 
-**Semantic validation**: All 38 semantic validation rules based on the official FA(3) information
+**Semantic validation**: All 42 semantic validation rules based on the official FA(3) information
 sheet from the Ministry of Finance.
 
 ## Source of Truth
@@ -49,7 +49,7 @@ extending the test suite, mirror the structure of the existing fixtures and test
 
 ## Rule Groups Implemented
 
-All 7 groups from the constitutional reference:
+All 8 groups from the constitutional reference:
 
 1. **Podmiot Rules** (8 rules) — Entity validation, JST/GV requirements
 2. **Fa Core Rules** (5 rules) — P_15, mutual exclusions, currency handling
@@ -58,6 +58,7 @@ All 7 groups from the constitutional reference:
 5. **Corrective Invoice Rules** (2 rules) — KSeF number consistency
 6. **Payment & Transaction Rules** (6 rules) — Payment validation, bank accounts
 7. **Format Rules** (2 rules) — Number formatting, separators
+8. **Additional Business Logic Rules** (4 rules) — Tax calculations, bank account format, line number uniqueness, negative quantities
 
 ## Common Tasks
 
