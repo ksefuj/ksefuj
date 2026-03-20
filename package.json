@@ -8,6 +8,8 @@
     "dev": "pnpm --filter @ksefuj/web dev",
     "build": "pnpm --filter @ksefuj/validator build && pnpm --filter @ksefuj/web build",
     "test": "pnpm -r test",
+    "test:integration": "vitest --run --project integration",
+    "test:fixtures": "vitest --run --project integration",
     "test:watch": "pnpm -r test:watch",
     "test:coverage": "pnpm -r test:coverage",
     "lint": "eslint .",
