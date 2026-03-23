@@ -27,7 +27,8 @@
     },
     "fileList": {
       "title": "Pliki",
-      "issueCount": "{count, plural, one {# problem} few {# problemy} many {# problemów} other {# problemów}}"
+      "issueCount": "{count, plural, one {# problem} few {# problemy} many {# problemów} other {# problemów}}",
+      "processingError": "Błąd przetwarzania"
     },
     "pagination": {
       "showing": "Pokazane {start}-{end} z {total}",
