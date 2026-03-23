@@ -271,13 +271,13 @@ export function ValidationIssueComponent({ issue }: ValidationIssueProps) {
   const getDomainLabel = (domain: string) => {
     switch (domain) {
       case "parse":
-        return "STRUKTURA XML";
+        return t("domain.parse");
       case "xsd":
-        return "SCHEMA XSD";
+        return t("domain.xsd");
       case "semantic":
-        return "REGUŁY BIZNESOWE";
+        return t("domain.semantic");
       case "infrastructure":
-        return "SYSTEM";
+        return t("domain.infrastructure");
       default:
         return domain.toUpperCase();
     }
@@ -374,8 +374,8 @@ export function ValidationIssueComponent({ issue }: ValidationIssueProps) {
                     </code>
                     <span className="text-slate-400">
                       {enumerationError.isLargeSet
-                        ? `(${enumerationError.allowedValues.length} opcji)`
-                        : `spośród ${enumerationError.allowedValues.length}`}
+                        ? `(${enumerationError.allowedValues.length} ${t("details.options")})`
+                        : `${t("details.among")} ${enumerationError.allowedValues.length}`}
                     </span>
                   </div>
                 )}
@@ -391,7 +391,7 @@ export function ValidationIssueComponent({ issue }: ValidationIssueProps) {
                     {issue.context.expectedValues && issue.context.expectedValues.length > 0 && (
                       <>
                         {issue.context.actualValue && <span className="text-slate-400">→</span>}
-                        <span className="text-slate-500 text-xs">oczekiwane:</span>
+                        <span className="text-slate-500 text-xs">{t("details.expected")}</span>
                         <code className="bg-white/60 px-1 py-0.5 rounded text-xs">
                           {issue.context.expectedValues
                             .slice(0, 2)
@@ -413,12 +413,12 @@ export function ValidationIssueComponent({ issue }: ValidationIssueProps) {
               {(issue.context.location.xpath || issue.context.location.lineNumber) && (
                 <div>
                   <h4 className="text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1">
-                    Lokalizacja w pliku
+                    {t("details.location")}
                   </h4>
                   <div className="space-y-1 text-xs text-slate-600">
                     {issue.context.location.xpath && (
                       <div>
-                        <span className="font-medium">XPath:</span>{" "}
+                        <span className="font-medium">{t("details.xpath")}</span>{" "}
                         <code className="font-mono bg-white/60 px-1.5 py-0.5 rounded text-xs">
                           {issue.context.location.xpath}
                         </code>
@@ -426,10 +426,10 @@ export function ValidationIssueComponent({ issue }: ValidationIssueProps) {
                     )}
                     {issue.context.location.lineNumber && (
                       <div>
-                        <span className="font-medium">Linia:</span>{" "}
+                        <span className="font-medium">{t("details.line")}</span>{" "}
                         {issue.context.location.lineNumber}
                         {issue.context.location.columnNumber &&
-                          `, kolumna ${issue.context.location.columnNumber}`}
+                          `${t("details.column")} ${issue.context.location.columnNumber}`}
                       </div>
                     )}
                   </div>
@@ -442,21 +442,21 @@ export function ValidationIssueComponent({ issue }: ValidationIssueProps) {
                 enumerationError) && (
                 <div>
                   <h4 className="text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1">
-                    Szczegóły wartości
+                    {t("details.valueDetails")}
                   </h4>
                   <div className="space-y-2 text-xs text-slate-600">
                     {/* Show enumeration values if available */}
                     {enumerationError ? (
                       <>
                         <div className="flex flex-wrap items-center gap-2">
-                          <span className="font-medium">Wartość:</span>
+                          <span className="font-medium">{t("details.actualValue")}</span>
                           <code className="font-mono bg-white/60 px-1.5 py-0.5 rounded text-xs">
                             {enumerationError.actualValue}
                           </code>
                         </div>
                         <div>
                           <div className="flex items-center gap-2 mb-1">
-                            <span className="font-medium">Dozwolone opcje:</span>
+                            <span className="font-medium">{t("details.allowedOptions")}</span>
                             <span className="text-slate-500">
                               ({enumerationError.allowedValues.length})
                             </span>
@@ -475,10 +475,10 @@ export function ValidationIssueComponent({ issue }: ValidationIssueProps) {
                           </div>
                           {enumerationError.actualValue === "POL" && (
                             <div className="mt-2 p-2 bg-blue-50/80 rounded text-xs">
-                              <span className="font-medium text-blue-700">💡 Wskazówka:</span>{" "}
-                              <span className="text-blue-600">
-                                Użyj kodu kraju "PL" zamiast "POL" dla Polski.
-                              </span>
+                              <span className="font-medium text-blue-700">
+                                💡 {t("details.hint")}
+                              </span>{" "}
+                              <span className="text-blue-600">{t("details.useCountryCode")}</span>
                             </div>
                           )}
                         </div>
@@ -488,7 +488,7 @@ export function ValidationIssueComponent({ issue }: ValidationIssueProps) {
                       <>
                         {issue.context.actualValue && (
                           <div className="flex flex-wrap items-center gap-2">
-                            <span className="font-medium">Wartość:</span>
+                            <span className="font-medium">{t("details.actualValue")}</span>
                             <code className="font-mono bg-white/60 px-1.5 py-0.5 rounded text-xs">
                               {String(issue.context.actualValue)}
                             </code>
@@ -497,7 +497,7 @@ export function ValidationIssueComponent({ issue }: ValidationIssueProps) {
                         {issue.context.expectedValues &&
                           issue.context.expectedValues.length > 0 && (
                             <div className="flex flex-wrap items-center gap-2">
-                              <span className="font-medium">Oczekiwane:</span>
+                              <span className="font-medium">{t("details.expectedValues")}</span>
                               {issue.context.expectedValues.map((value, i) => (
                                 <code
                                   key={i}

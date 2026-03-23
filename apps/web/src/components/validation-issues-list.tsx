@@ -1,5 +1,6 @@
 import type { ValidationIssue } from "@ksefuj/validator";
 import { ValidationIssue as ValidationIssueComponent } from "./validation-issue";
+import { useTranslations } from "next-intl";
 
 interface ValidationIssuesListProps {
   issues: readonly ValidationIssue[];
@@ -7,6 +8,7 @@ interface ValidationIssuesListProps {
 }
 
 export function ValidationIssuesList({ issues, maxDisplayed = 10 }: ValidationIssuesListProps) {
+  const t = useTranslations("validator");
   // Sort issues by severity (errors first, then warnings, then info)
   const sortedIssues = [...issues].sort((a, b) => {
     const severityOrder = { error: 0, warning: 1, info: 2 };
@@ -29,8 +31,10 @@ export function ValidationIssuesList({ issues, maxDisplayed = 10 }: ValidationIs
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h3 className="text-lg font-semibold text-slate-900 mb-1">Wszystko w porządku!</h3>
-        <p className="text-sm text-slate-500">Nie znaleziono żadnych problemów z walidacją.</p>
+        <h3 className="text-lg font-semibold text-slate-900 mb-1">
+          {t("issuesList.noIssuesTitle")}
+        </h3>
+        <p className="text-sm text-slate-500">{t("issuesList.noIssuesDescription")}</p>
       </div>
     );
   }
@@ -48,8 +52,10 @@ export function ValidationIssuesList({ issues, maxDisplayed = 10 }: ValidationIs
       {hasMore && (
         <div className="text-center py-3 mt-4 border-t border-slate-100">
           <p className="text-sm text-slate-500">
-            Pokazano {issuesToShow.length} z {issues.length} problemów.{" "}
-            <span className="font-medium">{issues.length - issuesToShow.length} pozostało.</span>
+            {t("issuesList.showingCount", { shown: issuesToShow.length, total: issues.length })}{" "}
+            <span className="font-medium">
+              {t("issuesList.remaining", { count: issues.length - issuesToShow.length })}
+            </span>
           </p>
         </div>
       )}

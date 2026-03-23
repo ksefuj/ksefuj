@@ -37,6 +37,33 @@
     "actions": {
       "newValidation": "Нова перевірка"
     },
+    "issuesList": {
+      "noIssuesTitle": "Все добре!",
+      "noIssuesDescription": "Не знайдено жодних проблем з валідацією.",
+      "showingCount": "Показано {shown} з {total} проблем.",
+      "remaining": "{count} залишилось."
+    },
+    "domain": {
+      "parse": "СТРУКТУРА XML",
+      "xsd": "СХЕМА XSD",
+      "semantic": "БІЗНЕС-ПРАВИЛА",
+      "infrastructure": "СИСТЕМА"
+    },
+    "details": {
+      "location": "Розташування у файлі",
+      "xpath": "XPath:",
+      "line": "Рядок:",
+      "column": ", стовпець",
+      "valueDetails": "Деталі значення",
+      "actualValue": "Значення:",
+      "expectedValues": "Очікується:",
+      "allowedOptions": "Дозволені опції:",
+      "hint": "Підказка:",
+      "useCountryCode": "Використовуйте код країни \"PL\" замість \"POL\" для Польщі.",
+      "among": "серед",
+      "options": "опцій",
+      "expected": "очікується:"
+    },
     "issues": {
       "ELEMENT_NOT_ALLOWED": "Елемент `{element}` не дозволений тут",
       "REQUIRED_ELEMENT_MISSING": "Відсутній обов'язковий елемент `{element}`",

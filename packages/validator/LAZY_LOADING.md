@@ -31,18 +31,23 @@ async function getLibxml2Module() {
 
 ### 2. Separate Export Paths (✅ Implemented)
 
-The package provides two export paths:
+The package provides three export paths:
 
 ```json
 // packages/validator/package.json
 "exports": {
   ".": {
+    // Main export - validation function (backward compatible)
+    "import": "./dist/index.js",
+    "types": "./dist/index.d.ts"
+  },
+  "./types": {
     // Types-only export - no runtime code
     "import": "./dist/types-export.js",
     "types": "./dist/types-export.d.ts"
   },
   "./validate": {
-    // Validation function export
+    // Explicit validation function export
     "import": "./dist/index.js",
     "types": "./dist/index.d.ts"
   }
@@ -53,10 +58,15 @@ The package provides two export paths:
 
 ```typescript
 // Import types - no WASM loading
+import type { ValidationResult } from "@ksefuj/validator/types";
+
+// Or for backward compatibility
 import type { ValidationResult } from "@ksefuj/validator";
 
 // Lazy load validation function when needed
 const { validate } = await import("@ksefuj/validator/validate");
+// Or from main export
+const { validate } = await import("@ksefuj/validator");
 ```
 
 ## Benefits

@@ -37,6 +37,33 @@
     "actions": {
       "newValidation": "New Validation"
     },
+    "issuesList": {
+      "noIssuesTitle": "All good!",
+      "noIssuesDescription": "No validation issues found.",
+      "showingCount": "Showing {shown} of {total} issues.",
+      "remaining": "{count} remaining."
+    },
+    "domain": {
+      "parse": "XML STRUCTURE",
+      "xsd": "XSD SCHEMA",
+      "semantic": "BUSINESS RULES",
+      "infrastructure": "SYSTEM"
+    },
+    "details": {
+      "location": "File location",
+      "xpath": "XPath:",
+      "line": "Line:",
+      "column": ", column",
+      "valueDetails": "Value details",
+      "actualValue": "Value:",
+      "expectedValues": "Expected:",
+      "allowedOptions": "Allowed options:",
+      "hint": "Hint:",
+      "useCountryCode": "Use country code \"PL\" instead of \"POL\" for Poland.",
+      "among": "among",
+      "options": "options",
+      "expected": "expected:"
+    },
     "issues": {
       "ELEMENT_NOT_ALLOWED": "Element `{element}` not allowed here",
       "REQUIRED_ELEMENT_MISSING": "Required element `{element}` missing",

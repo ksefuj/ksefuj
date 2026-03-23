@@ -37,6 +37,33 @@
     "actions": {
       "newValidation": "Nowa walidacja"
     },
+    "issuesList": {
+      "noIssuesTitle": "Wszystko w porządku!",
+      "noIssuesDescription": "Nie znaleziono żadnych problemów z walidacją.",
+      "showingCount": "Pokazano {shown} z {total} problemów.",
+      "remaining": "{count} pozostało."
+    },
+    "domain": {
+      "parse": "STRUKTURA XML",
+      "xsd": "SCHEMA XSD",
+      "semantic": "REGUŁY BIZNESOWE",
+      "infrastructure": "SYSTEM"
+    },
+    "details": {
+      "location": "Lokalizacja w pliku",
+      "xpath": "XPath:",
+      "line": "Linia:",
+      "column": ", kolumna",
+      "valueDetails": "Szczegóły wartości",
+      "actualValue": "Wartość:",
+      "expectedValues": "Oczekiwane:",
+      "allowedOptions": "Dozwolone opcje:",
+      "hint": "Wskazówka:",
+      "useCountryCode": "Użyj kodu kraju \"PL\" zamiast \"POL\" dla Polski.",
+      "among": "spośród",
+      "options": "opcji",
+      "expected": "oczekiwane:"
+    },
     "issues": {
       "ELEMENT_NOT_ALLOWED": "Element `{element}` nie jest dozwolony w tym miejscu",
       "REQUIRED_ELEMENT_MISSING": "Brak wymaganego elementu `{element}`",
