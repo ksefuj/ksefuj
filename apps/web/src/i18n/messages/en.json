@@ -282,5 +282,44 @@
         }
       }
     }
+  },
+  "privacy": {
+    "metaTitle": "Privacy Policy — ksefuj",
+    "metaDescription": "Privacy policy for ksefuj.to — your invoice data never leaves the browser.",
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated: March 2026",
+    "intro": "Your privacy matters. ksefuj is designed so that your invoice data never leaves your browser. Here's exactly what that means.",
+    "noCollection": {
+      "title": "No Data Collection",
+      "description": "ksefuj does not collect, store, or process any personal data. All XML invoice validation happens entirely in your browser using client-side JavaScript. Your files are never uploaded to any server."
+    },
+    "noStorage": {
+      "title": "No Server Storage",
+      "description": "Your XML invoice files never leave your device. There is no backend, no database, and no server-side processing. Once you close the browser tab, the data is gone — we never had access to it in the first place."
+    },
+    "cookies": {
+      "title": "Cookies",
+      "description": "ksefuj does not use any tracking cookies or analytics. The only cookie that may be set is for remembering your language preference. No third-party cookies are used."
+    },
+    "thirdParty": {
+      "title": "Third-Party Services",
+      "description": "The site is hosted on Vercel. Vercel may collect basic access logs (IP address, browser type) as part of standard web hosting. No other third-party analytics, tracking, or advertising services are used."
+    },
+    "noAccounts": {
+      "title": "No User Accounts",
+      "description": "ksefuj does not require registration, login, or any form of user account. You can use all features without providing any personal information."
+    },
+    "openSource": {
+      "title": "Open Source & Auditable",
+      "description": "ksefuj is fully open source under the Apache 2.0 license. You can inspect, audit, and verify the entire codebase on GitHub at github.com/ksefuj/ksefuj. What you see is what runs in your browser."
+    },
+    "changes": {
+      "title": "Changes to This Policy",
+      "description": "If we ever change this privacy policy, the update will be reflected on this page with a new date. Since our core principle is that no data leaves your browser, significant changes are unlikely."
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "If you have questions about this privacy policy, contact us at hej@ksefuj.to."
+    }
   }
 }
