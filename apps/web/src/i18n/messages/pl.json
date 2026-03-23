@@ -28,7 +28,11 @@
     "fileList": {
       "title": "Pliki",
       "issueCount": "{count, plural, one {# problem} few {# problemy} many {# problemów} other {# problemów}}",
-      "processingError": "Błąd przetwarzania"
+      "processingError": "Błąd przetwarzania",
+      "errors": {
+        "unknownError": "Nieznany błąd",
+        "failedToInitializeValidator": "Nie udało się zainicjować walidatora"
+      }
     },
     "pagination": {
       "showing": "Pokazane {start}-{end} z {total}",

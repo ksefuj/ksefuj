@@ -28,7 +28,11 @@
     "fileList": {
       "title": "Файли",
       "issueCount": "{count, plural, one {# проблема} few {# проблеми} many {# проблем} other {# проблем}}",
-      "processingError": "Помилка обробки"
+      "processingError": "Помилка обробки",
+      "errors": {
+        "unknownError": "Невідома помилка",
+        "failedToInitializeValidator": "Не вдалося ініціалізувати валідатор"
+      }
     },
     "pagination": {
       "showing": "Показано {start}-{end} з {total}",

@@ -139,7 +139,8 @@ export function Validator({ locale }: ValidatorProps) {
                 ...newFiles[index],
                 error: {
                   type: "processing_error" as const,
-                  message: error instanceof Error ? error.message : "Unknown error",
+                  message:
+                    error instanceof Error ? error.message : t("fileList.errors.unknownError"),
                 },
                 status: "error" as const,
               };
@@ -163,7 +164,7 @@ export function Validator({ locale }: ValidatorProps) {
             ...f,
             error: {
               type: "initialization_failed",
-              message: "Failed to initialize validator",
+              message: t("fileList.errors.failedToInitializeValidator"),
             },
             status: "error",
           })),
@@ -172,7 +173,7 @@ export function Validator({ locale }: ValidatorProps) {
         setValidating(false);
       }
     },
-    [locale],
+    [locale, t],
   );
 
   // Drag and drop handlers
@@ -531,6 +532,7 @@ export function Validator({ locale }: ValidatorProps) {
                   <div key={file.fileName} className="transition-all">
                     <button
                       onClick={() => isExpandable && toggleFileExpanded(file.fileName)}
+                      aria-expanded={isExpandable ? isExpanded : undefined}
                       className={cn(
                         "w-full px-4 py-3 flex items-center justify-between hover:bg-slate-50 transition-colors",
                         isExpandable && "cursor-pointer",
@@ -606,7 +608,15 @@ export function Validator({ locale }: ValidatorProps) {
                               {t("fileList.processingError")}
                             </p>
                             <p className="text-xs text-rose-600 font-mono break-all">
-                              {file.error.message}
+                              {(() => {
+                                if (file.error.message === "Unknown error") {
+                                  return t("fileList.errors.unknownError");
+                                }
+                                if (file.error.message === "Failed to initialize validator") {
+                                  return t("fileList.errors.failedToInitializeValidator");
+                                }
+                                return file.error.message;
+                              })()}
                             </p>
                           </div>
                         </div>
