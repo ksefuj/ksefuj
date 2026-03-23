@@ -19,6 +19,7 @@
       "hasErrors": "Znaleziono problemy w {errorCount} z {totalCount} plików",
       "hasWarnings": "Znaleziono ostrzeżenia w {warningCount} z {totalCount} plików",
       "validating": "Walidowanie {count} plików...",
+      "validatingProgress": "Walidowanie... ({completed}/{total})",
       "processing": "Przetwarzanie",
       "noFiles": "Brak plików",
       "valid": "{count} poprawne",

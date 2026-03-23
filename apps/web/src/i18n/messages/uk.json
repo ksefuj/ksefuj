@@ -19,6 +19,7 @@
       "hasErrors": "Знайдено проблеми у {errorCount} з {totalCount} файлів",
       "hasWarnings": "Знайдено попередження у {warningCount} з {totalCount} файлів",
       "validating": "Перевірка {count} файлів...",
+      "validatingProgress": "Перевірка... ({completed}/{total})",
       "processing": "Обробка",
       "noFiles": "Немає файлів",
       "valid": "{count} правильні",
