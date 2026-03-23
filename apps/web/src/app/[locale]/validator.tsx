@@ -139,7 +139,8 @@ export function Validator({ locale }: ValidatorProps) {
                 ...newFiles[index],
                 error: {
                   type: "processing_error" as const,
-                  message: error instanceof Error ? error.message : "Unknown error",
+                  message:
+                    error instanceof Error ? error.message : t("fileList.errors.unknownError"),
                 },
                 status: "error" as const,
               };
@@ -163,7 +164,7 @@ export function Validator({ locale }: ValidatorProps) {
             ...f,
             error: {
               type: "initialization_failed",
-              message: "Failed to initialize validator",
+              message: t("fileList.errors.failedToInitializeValidator"),
             },
             status: "error",
           })),
@@ -172,7 +173,7 @@ export function Validator({ locale }: ValidatorProps) {
         setValidating(false);
       }
     },
-    [locale],
+    [locale, t],
   );
 
   // Drag and drop handlers
@@ -525,15 +526,17 @@ export function Validator({ locale }: ValidatorProps) {
                 const status = getFileStatus(file);
                 const isExpanded = expandedFile === file.fileName;
                 const issueCount = file.result?.issues.length || 0;
+                const isExpandable = issueCount > 0 || file.status === "error";
 
                 return (
                   <div key={file.fileName} className="transition-all">
                     <button
-                      onClick={() => issueCount > 0 && toggleFileExpanded(file.fileName)}
+                      onClick={() => isExpandable && toggleFileExpanded(file.fileName)}
+                      aria-expanded={isExpandable ? isExpanded : undefined}
                       className={cn(
                         "w-full px-4 py-3 flex items-center justify-between hover:bg-slate-50 transition-colors",
-                        issueCount > 0 && "cursor-pointer",
-                        issueCount === 0 && "cursor-default",
+                        isExpandable && "cursor-pointer",
+                        !isExpandable && "cursor-default",
                       )}
                     >
                       <div className="flex items-center gap-3 min-w-0">
@@ -554,7 +557,7 @@ export function Validator({ locale }: ValidatorProps) {
                       </div>
 
                       {/* Expand Icon */}
-                      {issueCount > 0 && (
+                      {isExpandable && (
                         <svg
                           className={cn(
                             "w-4 h-4 text-slate-400 transition-transform flex-shrink-0",
@@ -579,6 +582,43 @@ export function Validator({ locale }: ValidatorProps) {
                       <div className="px-4 pb-4 bg-slate-50/50 border-t border-slate-100">
                         <div className="mt-4">
                           <ValidationIssuesList issues={file.result.issues} maxDisplayed={20} />
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Expanded Error Message */}
+                    {isExpanded && file.status === "error" && file.error && (
+                      <div className="px-4 pb-4 bg-rose-50/50 border-t border-rose-100">
+                        <div className="mt-3 flex items-start gap-2">
+                          <svg
+                            className="w-4 h-4 text-rose-500 mt-0.5 flex-shrink-0"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth={2}
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"
+                            />
+                          </svg>
+                          <div>
+                            <p className="text-xs font-medium text-rose-700 mb-0.5">
+                              {t("fileList.processingError")}
+                            </p>
+                            <p className="text-xs text-rose-600 font-mono break-all">
+                              {(() => {
+                                if (file.error.message === "Unknown error") {
+                                  return t("fileList.errors.unknownError");
+                                }
+                                if (file.error.message === "Failed to initialize validator") {
+                                  return t("fileList.errors.failedToInitializeValidator");
+                                }
+                                return file.error.message;
+                              })()}
+                            </p>
+                          </div>
                         </div>
                       </div>
                     )}

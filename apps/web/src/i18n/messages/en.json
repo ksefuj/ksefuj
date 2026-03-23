@@ -27,7 +27,12 @@
     },
     "fileList": {
       "title": "Files",
-      "issueCount": "{count, plural, one {# issue} other {# issues}}"
+      "issueCount": "{count, plural, one {# issue} other {# issues}}",
+      "processingError": "Processing error",
+      "errors": {
+        "unknownError": "Unknown error",
+        "failedToInitializeValidator": "Failed to initialize validator"
+      }
     },
     "pagination": {
       "showing": "Showing {start}-{end} of {total}",
