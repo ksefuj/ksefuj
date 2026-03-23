@@ -282,5 +282,44 @@
         }
       }
     }
+  },
+  "privacy": {
+    "metaTitle": "Polityka prywatności — ksefuj",
+    "metaDescription": "Polityka prywatności ksefuj.to — Twoje dane fakturowe nie opuszczają przeglądarki.",
+    "title": "Polityka prywatności",
+    "lastUpdated": "Ostatnia aktualizacja: marzec 2026",
+    "intro": "Twoja prywatność jest dla nas ważna. ksefuj jest zaprojektowany tak, aby dane Twoich faktur nigdy nie opuszczały Twojej przeglądarki. Oto co to dokładnie oznacza.",
+    "noCollection": {
+      "title": "Brak zbierania danych",
+      "description": "ksefuj nie zbiera, nie przechowuje ani nie przetwarza żadnych danych osobowych. Cała walidacja faktur XML odbywa się wyłącznie w Twojej przeglądarce za pomocą JavaScript po stronie klienta. Twoje pliki nigdy nie są wysyłane na żaden serwer."
+    },
+    "noStorage": {
+      "title": "Brak przechowywania na serwerze",
+      "description": "Twoje pliki XML z fakturami nigdy nie opuszczają Twojego urządzenia. Nie ma backendu, bazy danych ani przetwarzania po stronie serwera. Po zamknięciu karty przeglądarki dane znikają — nigdy nie mieliśmy do nich dostępu."
+    },
+    "cookies": {
+      "title": "Pliki cookie",
+      "description": "ksefuj nie używa śledzących plików cookie do celów reklamowych. Jedyny plik cookie, który może zostać ustawiony, służy do zapamiętania preferencji językowych. Korzystamy z Vercel Analytics, która działa bez plików cookie, używając zamiast tego zanonimizowanych danych."
+    },
+    "thirdParty": {
+      "title": "Usługi zewnętrzne",
+      "description": "Strona jest hostowana na platformie Vercel. Używamy Vercel Analytics i Speed Insights do zbierania zagregowanych, zanonimizowanych metryk użytkowania (wyświetlenia stron, podstawowe informacje o urządzeniu, dane wydajnościowe oraz interakcje użytkownika jak kliknięcia przycisków). Te dane pomagają nam zrozumieć jak narzędzie jest używane i poprawić jego wydajność. Żadne dane osobowe ani treść faktur nigdy nie są śledzone ani przesyłane."
+    },
+    "noAccounts": {
+      "title": "Brak kont użytkowników",
+      "description": "ksefuj nie wymaga rejestracji, logowania ani żadnej formy konta użytkownika. Możesz korzystać ze wszystkich funkcji bez podawania jakichkolwiek danych osobowych."
+    },
+    "openSource": {
+      "title": "Otwarte źródło i możliwość audytu",
+      "description": "ksefuj jest w pełni open source na licencji Apache 2.0. Możesz przeglądać, audytować i weryfikować cały kod źródłowy na GitHubie pod adresem github.com/ksefuj/ksefuj. To, co widzisz, jest tym, co działa w Twojej przeglądarce."
+    },
+    "changes": {
+      "title": "Zmiany w polityce",
+      "description": "Jeśli kiedykolwiek zmienimy tę politykę prywatności, aktualizacja zostanie odzwierciedlona na tej stronie z nową datą. Ponieważ naszą podstawową zasadą jest to, że żadne dane nie opuszczają Twojej przeglądarki, istotne zmiany są mało prawdopodobne."
+    },
+    "contact": {
+      "title": "Kontakt",
+      "description": "Jeśli masz pytania dotyczące tej polityki prywatności, skontaktuj się z nami pod adresem hej@ksefuj.to."
+    }
   }
 }
