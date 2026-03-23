@@ -5,6 +5,9 @@ import { SiteFooter } from "@/components/site-footer";
 import { HeroSection } from "./sections/hero-section";
 import { FeaturesSection } from "./sections/features-section";
 import { ValidationLayersSection } from "./sections/validation-layers-section";
+import { ComparisonSection } from "./sections/comparison-section";
+import { ComingSoonSection } from "./sections/coming-soon-section";
+import { NewsletterSection } from "./sections/newsletter-section";
 import { GettingStartedSection } from "./sections/getting-started-section";
 import { OpenSourceSection } from "./sections/open-source-section";
 import { DeveloperSection } from "./sections/developer-section";
@@ -162,6 +165,41 @@ export default async function Home({ params }: Props) {
               ],
             },
           ]}
+        />
+
+        {/* Comparison Section */}
+        <ComparisonSection
+          title={t("landing.comparison.title")}
+          subtitle={t("landing.comparison.subtitle")}
+          ourProduct={t("landing.comparison.ourProduct")}
+          recommended={t("landing.comparison.recommended")}
+          features={t.raw("landing.comparison.features")}
+          competitors={t.raw("landing.comparison.competitors")}
+          checkmark={t("landing.comparison.checkmark")}
+          cross={t("landing.comparison.cross")}
+          partial={t("landing.comparison.partial")}
+          ctaSubtitle={t("landing.comparison.ctaSubtitle")}
+          ctaButton={t("landing.comparison.ctaButton")}
+          disclaimer={t("landing.comparison.disclaimer")}
+        />
+
+        {/* Coming Soon Section */}
+        <ComingSoonSection
+          title={t("landing.comingSoon.title")}
+          subtitle={t("landing.comingSoon.subtitle")}
+          features={t.raw("landing.comingSoon.features")}
+        />
+
+        {/* Newsletter Section */}
+        <NewsletterSection
+          title={t("landing.newsletter.title")}
+          subtitle={t("landing.newsletter.subtitle")}
+          placeholder={t("landing.newsletter.placeholder")}
+          buttonText={t("landing.newsletter.buttonText")}
+          successMessage={t("landing.newsletter.successMessage")}
+          errorMessage={t("landing.newsletter.errorMessage")}
+          disclaimer={t("landing.newsletter.disclaimer")}
+          poweredBy={t("landing.newsletter.poweredBy")}
         />
 
         {/* Getting Started Section */}

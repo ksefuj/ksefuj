@@ -207,27 +207,27 @@
   },
   "landing": {
     "hero": {
-      "title": "Sprawdź swoją e-fakturę FA(3)",
-      "description": "Obowiązkowy KSeF od 1 kwietnia 2026 (1 lutego dla dużych firm). Wrzuć XML, zobacz błędy. Dane nie opuszczają przeglądarki.",
-      "trustLine": "100% darmowy • 42 reguły biznesowe • Open Source"
+      "title": "Walidacja KSeF. Prosta jak nigdy.",
+      "description": "Przyciągnij XML, dowiedz się wszystkiego w sekundach. Pełna walidacja ministerialnych reguł biznesowych, zero kompromisów w prywatności.",
+      "trustLine": "Darmowe na zawsze • 42 reguły MF • 100% lokalne"
     },
     "features": {
-      "title": "Dlaczego ksefuj?",
-      "subtitle": "Stworzone dla freelancerów i małych firm, którzy nie chcą płacić za Symfonie czy Comarcha",
+      "title": "Stworzone z myślą o Tobie",
+      "subtitle": "Każdy freelancer zasługuje na profesjonalne narzędzia bez ukrytych kosztów",
       "items": [
         {
-          "title": "Pełna walidacja MF",
-          "description": "Oficjalny schemat XSD (06/2025) + 42 reguły biznesowe z arkusza informacyjnego MF",
+          "title": "Ministerialnie precyzyjne",
+          "description": "Oficjalny schemat XSD z czerwca 2025 plus wszystkie 42 reguły z arkusza informacyjnego Ministerstwa Finansów",
           "accent": "violet"
         },
         {
-          "title": "100% prywatności",
-          "description": "Wszystko działa lokalnie w przeglądarce. Twoje faktury nie trafiają na żaden serwer",
+          "title": "Twoje dane, Twoja kontrola",
+          "description": "Cała walidacja w Twojej przeglądarce. Zero przesyłania danych, zero ryzyka przecieku",
           "accent": "emerald"
         },
         {
-          "title": "Naprawdę darmowy",
-          "description": "Bez limitów, kont, reklam czy paywallu. KSeF to wystarczający ciężar — narzędzia powinny być za darmo",
+          "title": "Darmowe. Zawsze.",
+          "description": "Bez limitów, bez subskrypcji, bez ukrytych kosztów. Podstawowe narzędzia powinny być dostępne dla każdego",
           "accent": "amber"
         }
       ]
@@ -303,9 +303,113 @@
       ],
       "ctaText": "Zobacz na GitHub"
     },
+    "comparison": {
+      "title": "Porównaj i wybierz najlepsze",
+      "subtitle": "Dlaczego ksefuj.to wyróżnia się na tle konkurencji",
+      "ourProduct": "ksefuj.to",
+      "recommended": "WYBÓR EKSPERTÓW",
+      "features": {
+        "pricing": {
+          "title": "Koszt",
+          "ksefuj": "Zawsze darmowe",
+          "freemium": "Z limitami",
+          "enterprise": "€25-50/1k faktur"
+        },
+        "validation": {
+          "title": "Walidacja",
+          "ksefuj": "XSD + 42 reguły",
+          "freemium": "Tylko XSD",
+          "enterprise": "XSD + częściowa"
+        },
+        "localXsd": {
+          "title": "Lokalna walidacja XSD",
+          "ksefuj": "Wbudowane schematy",
+          "freemium": "Nie",
+          "enterprise": "Nie"
+        },
+        "privacy": {
+          "title": "Prywatność danych",
+          "ksefuj": "W przeglądarce",
+          "freemium": "Na serwerze",
+          "enterprise": "Na serwerze"
+        },
+        "errorDetails": {
+          "title": "Błędy",
+          "ksefuj": "Szczegółowe + pomocne",
+          "freemium": "Podstawowe",
+          "enterprise": "AI (płatne)"
+        },
+        "cli": {
+          "title": "Developer tools",
+          "ksefuj": "CLI + npm",
+          "freemium": "Nie",
+          "enterprise": "Płatne"
+        },
+        "openSource": {
+          "title": "Open source",
+          "ksefuj": "Apache 2.0",
+          "freemium": "Nie",
+          "enterprise": "Nie"
+        }
+      },
+      "competitors": [
+        {
+          "name": "ksefuj.to",
+          "tagline": "Open source • Darmowy"
+        },
+        {
+          "name": "Freemium",
+          "tagline": "Darmowe z limitami"
+        },
+        {
+          "name": "Enterprise",
+          "tagline": "Płatne rozwiązania"
+        }
+      ],
+      "checkmark": "✓",
+      "cross": "✗",
+      "partial": "◐",
+      "ctaSubtitle": "Wybierz narzędzie stworzone z myślą o freelancerach i małych firmach",
+      "ctaButton": "Wypróbuj ksefuj — to darmowe",
+      "disclaimer": "* Porównanie na podstawie publicznie dostępnych informacji z marca 2026"
+    },
+    "comingSoon": {
+      "title": "Nadchodzi jeszcze więcej",
+      "subtitle": "Budujemy kompletny ekosystem narzędzi KSeF",
+      "features": [
+        {
+          "title": "Podgląd faktury",
+          "description": "Automatyczny podgląd XML jako czytelna faktura PDF",
+          "icon": "preview",
+          "badge": "Wkrótce"
+        },
+        {
+          "title": "Autonaprawa błędów",
+          "description": "Inteligentne sugestie poprawek z jednym kliknięciem",
+          "icon": "autofix",
+          "badge": "Wkrótce"
+        },
+        {
+          "title": "Generator faktur",
+          "description": "Tworzenie zgodnych XML-i z prostego formularza",
+          "icon": "generate",
+          "badge": "W planach"
+        }
+      ]
+    },
+    "newsletter": {
+      "title": "Newsletter o KSeF",
+      "subtitle": "Praktyczna wiedza o e-fakturach, walidator, pułapki i wszystko co musisz wiedzieć — bez urzędniczego żargonu",
+      "placeholder": "Twój adres email",
+      "buttonText": "Zapisz mnie",
+      "successMessage": "Dziękujemy! Wkrótce się odezwiemy.",
+      "errorMessage": "Ups, coś poszło nie tak. Spróbuj ponownie.",
+      "disclaimer": "Tylko wartościowa treść. Zero spamu.",
+      "poweredBy": "Obsługiwane przez"
+    },
     "developer": {
       "title": "Dla programistów",
-      "subtitle": "CLI, npm package, API — integruj z Twoimi narzędziami",
+      "subtitle": "CLI, npm package — integruj z Twoimi narzędziami",
       "expandText": "Pokaż opcje",
       "collapseText": "Ukryj opcje",
       "content": {

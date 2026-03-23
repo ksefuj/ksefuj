@@ -207,27 +207,27 @@
   },
   "landing": {
     "hero": {
-      "title": "Validate your KSeF FA(3) e-invoice",
-      "description": "Mandatory KSeF from April 1, 2026 (Feb 1 for large companies). Drop XML, see errors. Data stays in your browser.",
-      "trustLine": "100% Free • 42 business rules • Open Source"
+      "title": "KSeF validation. Simple like never before.",
+      "description": "Drag XML, learn everything in seconds. Complete validation of ministerial business rules, zero privacy compromises.",
+      "trustLine": "Free forever • 42 MF rules • 100% local"
     },
     "features": {
-      "title": "Why ksefuj?",
-      "subtitle": "Built for freelancers and small businesses who don't want to pay for Symfonia or Comarch",
+      "title": "Made with you in mind",
+      "subtitle": "Every freelancer deserves professional tools without hidden costs",
       "items": [
         {
-          "title": "Full MF validation",
-          "description": "Official XSD schema (06/2025) + 42 business rules from MF information sheet",
+          "title": "Ministerially precise",
+          "description": "Official XSD schema from June 2025 plus all 42 rules from the Ministry of Finance information sheet",
           "accent": "violet"
         },
         {
-          "title": "100% privacy",
-          "description": "Everything runs locally in your browser. Your invoices never reach any server",
+          "title": "Your data, your control",
+          "description": "Complete validation in your browser. Zero data transmission, zero leak risk",
           "accent": "emerald"
         },
         {
-          "title": "Actually free",
-          "description": "No limits, accounts, ads or paywalls. KSeF is burden enough — tools should be free",
+          "title": "Free. Always.",
+          "description": "No limits, no subscriptions, no hidden costs. Essential tools should be accessible to everyone",
           "accent": "amber"
         }
       ]
@@ -303,9 +303,113 @@
       ],
       "ctaText": "View on GitHub"
     },
+    "comparison": {
+      "title": "Compare and choose the best",
+      "subtitle": "Detailed comparison with popular KSeF validators",
+      "ourProduct": "ksefuj.to",
+      "recommended": "RECOMMENDED",
+      "features": {
+        "pricing": {
+          "title": "Cost",
+          "ksefuj": "Always free",
+          "freemium": "Free with limits",
+          "enterprise": "$25-50 per 1k"
+        },
+        "validation": {
+          "title": "Validation",
+          "ksefuj": "XSD + 42 rules",
+          "freemium": "XSD only",
+          "enterprise": "XSD + partial"
+        },
+        "localXsd": {
+          "title": "Local XSD validation",
+          "ksefuj": "Built-in schemas",
+          "freemium": "No",
+          "enterprise": "No"
+        },
+        "privacy": {
+          "title": "Data privacy",
+          "ksefuj": "In browser",
+          "freemium": "On servers",
+          "enterprise": "On servers"
+        },
+        "errorDetails": {
+          "title": "Errors",
+          "ksefuj": "Detailed + helpful",
+          "freemium": "Basic",
+          "enterprise": "AI (paid)"
+        },
+        "cli": {
+          "title": "Developer tools",
+          "ksefuj": "CLI + npm",
+          "freemium": "No",
+          "enterprise": "Paid"
+        },
+        "openSource": {
+          "title": "Open source",
+          "ksefuj": "Apache 2.0",
+          "freemium": "No",
+          "enterprise": "No"
+        }
+      },
+      "competitors": [
+        {
+          "name": "ksefuj.to",
+          "tagline": "Open source • Free"
+        },
+        {
+          "name": "Freemium",
+          "tagline": "Free with limits"
+        },
+        {
+          "name": "Enterprise",
+          "tagline": "Paid solutions"
+        }
+      ],
+      "checkmark": "✓",
+      "cross": "✗",
+      "partial": "◐",
+      "ctaSubtitle": "Choose the tool built for freelancers and small businesses",
+      "ctaButton": "Try ksefuj now — it's free",
+      "disclaimer": "* Comparison based on publicly available information as of March 2026"
+    },
+    "comingSoon": {
+      "title": "More coming soon",
+      "subtitle": "Building a complete KSeF tools ecosystem",
+      "features": [
+        {
+          "title": "Invoice preview",
+          "description": "Automatic XML preview as readable PDF invoice",
+          "icon": "preview",
+          "badge": "Coming Soon"
+        },
+        {
+          "title": "Auto-fix errors",
+          "description": "Smart correction suggestions with one-click fixes",
+          "icon": "autofix",
+          "badge": "Coming Soon"
+        },
+        {
+          "title": "Invoice generator",
+          "description": "Create compliant XMLs from simple forms",
+          "icon": "generate",
+          "badge": "Planned"
+        }
+      ]
+    },
+    "newsletter": {
+      "title": "KSeF Newsletter",
+      "subtitle": "Practical insights about e-invoices, validator tips, common pitfalls and everything you need to know — no bureaucratic jargon",
+      "placeholder": "Your email address",
+      "buttonText": "Subscribe",
+      "successMessage": "Thanks! We'll be in touch soon.",
+      "errorMessage": "Oops, something went wrong. Please try again.",
+      "disclaimer": "Only valuable content. No spam.",
+      "poweredBy": "Powered by"
+    },
     "developer": {
       "title": "For developers",
-      "subtitle": "CLI, npm package, API — integrate with your tools",
+      "subtitle": "CLI, npm package — integrate with your tools",
       "expandText": "Show options",
       "collapseText": "Hide options",
       "content": {
