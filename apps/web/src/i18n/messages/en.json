@@ -156,6 +156,49 @@
     "termsOfUse": "Terms of Use",
     "copyright": "© 2026 ksefuj. All code is public on GitHub."
   },
+  "terms": {
+    "meta": {
+      "title": "Terms of Use — ksefuj.to",
+      "description": "Terms of use for ksefuj.to — a free, open-source KSeF FA(3) invoice validator."
+    },
+    "title": "Terms of Use",
+    "lastUpdated": "Last updated: March 2026",
+    "intro": "ksefuj.to is a free, open-source tool for validating KSeF FA(3) invoices. By using this tool, you accept the following terms.",
+    "sections": {
+      "license": {
+        "title": "1. Open Source License (Apache 2.0)",
+        "content": "The source code of ksefuj.to is released under the Apache 2.0 license. You may freely use, modify, and distribute it — including commercially — provided you retain copyright and license notices and indicate any changes made. The license is available on GitHub."
+      },
+      "noWarranties": {
+        "title": "2. No Warranties",
+        "content": "The tool is provided \"as-is\", without any warranties — express or implied. We do not guarantee that the validator will catch every error, or that validation results will be complete or free of mistakes."
+      },
+      "liability": {
+        "title": "3. Limitation of Liability",
+        "content": "ksefuj.to is not tax or legal advice. The authors are not responsible for errors in invoices, KSeF submission problems, tax penalties, or any other losses resulting from use of the tool. Final responsibility for invoice correctness rests with the user."
+      },
+      "userResponsibility": {
+        "title": "4. User Responsibility",
+        "content": "You are responsible for verifying the correctness of your invoices before submitting them to the KSeF system. The tool helps detect common errors, but does not replace verification by an accountant or your own knowledge of applicable regulations."
+      },
+      "freeForever": {
+        "title": "5. Free Forever",
+        "content": "ksefuj.to is and will remain free — no limits, no hidden costs, no user accounts, no paywall. KSeF is already enough of a burden for small businesses — the tools to deal with it should be available to everyone."
+      },
+      "privacy": {
+        "title": "6. Privacy",
+        "content": "Your XML files never leave your browser. All processing happens locally — no invoice data is sent to any server. See the Privacy Policy for details."
+      },
+      "governingLaw": {
+        "title": "7. Governing Law",
+        "content": "These terms are governed by Polish law. Any disputes will be resolved by the competent Polish courts."
+      },
+      "contact": {
+        "title": "8. Contact",
+        "content": "Questions about these terms? Contact us at: "
+      }
+    }
+  },
   "landing": {
     "hero": {
       "title": "Validate your KSeF FA(3) e-invoice",

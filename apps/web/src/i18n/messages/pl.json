@@ -156,6 +156,49 @@
     "termsOfUse": "Warunki użytkowania",
     "copyright": "© 2026 ksefuj. Cały kod jest publiczny na GitHub."
   },
+  "terms": {
+    "meta": {
+      "title": "Warunki użytkowania — ksefuj.to",
+      "description": "Warunki użytkowania narzędzia ksefuj.to — darmowego, open source walidatora faktur KSeF FA(3)."
+    },
+    "title": "Warunki użytkowania",
+    "lastUpdated": "Ostatnia aktualizacja: marzec 2026",
+    "intro": "ksefuj.to to bezpłatne, open source narzędzie do walidacji faktur KSeF FA(3). Korzystając z narzędzia, akceptujesz poniższe warunki.",
+    "sections": {
+      "license": {
+        "title": "1. Licencja open source (Apache 2.0)",
+        "content": "Kod źródłowy narzędzia ksefuj.to jest udostępniony na licencji Apache 2.0. Możesz go swobodnie używać, modyfikować i dystrybuować — również komercyjnie — pod warunkiem zachowania informacji o prawach autorskich i licencji oraz wskazania wprowadzonych zmian. Licencja dostępna jest na GitHub."
+      },
+      "noWarranties": {
+        "title": "2. Brak gwarancji",
+        "content": "Narzędzie jest udostępniane w stanie „takim, jaki jest\u201d (ang. as-is), bez żadnych gwarancji — jawnych ani dorozumianych. Nie gwarantujemy, że walidator wykryje wszystkie błędy, ani że wyniki walidacji będą kompletne lub wolne od pomyłek."
+      },
+      "liability": {
+        "title": "3. Ograniczenie odpowiedzialności",
+        "content": "ksefuj.to nie jest poradą podatkową ani prawną. Autorzy narzędzia nie ponoszą odpowiedzialności za błędy w fakturach, problemy z KSeF, kary podatkowe ani żadne inne straty wynikłe z korzystania z narzędzia. Ostateczna odpowiedzialność za poprawność faktur spoczywa na użytkowniku."
+      },
+      "userResponsibility": {
+        "title": "4. Odpowiedzialność użytkownika",
+        "content": "Jesteś odpowiedzialny za weryfikację poprawności swoich faktur przed przesłaniem ich do systemu KSeF. Narzędzie pomaga wykryć typowe błędy, ale nie zastępuje weryfikacji przez księgowego ani własnej wiedzy o obowiązujących przepisach."
+      },
+      "freeForever": {
+        "title": "5. Bezpłatne na zawsze",
+        "content": "ksefuj.to jest i pozostanie bezpłatne — bez limitów, ukrytych kosztów, kont użytkownika ani paywallu. KSeF to wystarczający ciężar dla małych firm — narzędzia do radzenia sobie z nim powinny być dostępne dla każdego."
+      },
+      "privacy": {
+        "title": "6. Prywatność",
+        "content": "Twoje pliki XML nie opuszczają przeglądarki. Całe przetwarzanie odbywa się lokalnie — żadne dane faktur nie są przesyłane na serwery. Szczegóły znajdziesz w Polityce prywatności."
+      },
+      "governingLaw": {
+        "title": "7. Prawo właściwe",
+        "content": "Niniejsze warunki podlegają prawu polskiemu. Wszelkie spory rozstrzygane będą przez polskie sądy właściwe miejscowo."
+      },
+      "contact": {
+        "title": "8. Kontakt",
+        "content": "Pytania dotyczące warunków użytkowania kieruj na adres: "
+      }
+    }
+  },
   "landing": {
     "hero": {
       "title": "Sprawdź swoją e-fakturę FA(3)",
