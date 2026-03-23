@@ -299,11 +299,11 @@
     },
     "cookies": {
       "title": "Pliki cookie",
-      "description": "ksefuj nie używa żadnych śledzących plików cookie ani analityki. Jedyny plik cookie, który może zostać ustawiony, służy do zapamiętania preferencji językowych. Nie są używane żadne pliki cookie stron trzecich."
+      "description": "ksefuj nie używa śledzących plików cookie do celów reklamowych. Jedyny plik cookie, który może zostać ustawiony, służy do zapamiętania preferencji językowych. Korzystamy z Vercel Analytics, która działa bez plików cookie, używając zamiast tego zanonimizowanych danych."
     },
     "thirdParty": {
       "title": "Usługi zewnętrzne",
-      "description": "Strona jest hostowana na platformie Vercel. Vercel może zbierać podstawowe logi dostępu (adres IP, typ przeglądarki) w ramach standardowego hostingu. Nie są używane żadne inne zewnętrzne usługi analityczne, śledzące ani reklamowe."
+      "description": "Strona jest hostowana na platformie Vercel. Używamy Vercel Analytics i Speed Insights do zbierania zagregowanych, zanonimizowanych metryk użytkowania (wyświetlenia stron, podstawowe informacje o urządzeniu, dane wydajnościowe oraz interakcje użytkownika jak kliknięcia przycisków). Te dane pomagają nam zrozumieć jak narzędzie jest używane i poprawić jego wydajność. Żadne dane osobowe ani treść faktur nigdy nie są śledzone ani przesyłane."
     },
     "noAccounts": {
       "title": "Brak kont użytkowników",
