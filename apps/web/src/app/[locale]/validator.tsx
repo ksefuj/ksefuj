@@ -45,9 +45,23 @@ export function Validator({ locale }: ValidatorProps) {
   const [expandedFile, setExpandedFile] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const inputRef = useRef<HTMLInputElement>(null);
+  const processedCountRef = useRef(0);
 
-  // Calculate summary
+  // Calculate summary (optimized to avoid heavy computation during validation)
   const summary: ValidationSummary = useMemo(() => {
+    // During validation, only provide basic info to avoid O(N²) recalculation
+    if (validating) {
+      return {
+        totalFiles: files.length,
+        validFiles: 0,
+        errorFiles: 0,
+        warningFiles: 0,
+        totalErrors: 0,
+        totalWarnings: 0,
+      };
+    }
+
+    // Full calculation only when validation is complete
     const completedFiles = files.filter((f) => f.status === "completed");
     const validFiles = completedFiles.filter(
       (f) => f.result?.valid && !f.result.issues.some((i) => i.code.severity === "error"),
@@ -74,13 +88,10 @@ export function Validator({ locale }: ValidatorProps) {
       totalErrors: errorIssues.length,
       totalWarnings: warningIssues.length,
     };
-  }, [files]);
+  }, [files, validating]);
 
-  // Count files that have finished processing (for progress display during validation)
-  const processedCount = useMemo(
-    () => files.filter((f) => f.status === "completed" || f.status === "error").length,
-    [files],
-  );
+  // Track processed count incrementally to avoid filtering on every update
+  const processedCount = processedCountRef.current;
 
   // Pagination
   const totalPages = Math.ceil(files.length / ITEMS_PER_PAGE);
@@ -116,6 +127,7 @@ export function Validator({ locale }: ValidatorProps) {
       setValidating(true);
       setCurrentPage(1);
       setExpandedFile(null);
+      processedCountRef.current = 0;
 
       // Process files
       try {
@@ -154,6 +166,7 @@ export function Validator({ locale }: ValidatorProps) {
 
             results[index] = fileResult;
             // Update this file's result immediately so the UI reflects progress
+            processedCountRef.current++;
             setFiles((current) => current.map((f, i) => (i === index ? fileResult : f)));
           }
         };
@@ -235,6 +248,7 @@ export function Validator({ locale }: ValidatorProps) {
     setValidating(false);
     setExpandedFile(null);
     setCurrentPage(1);
+    processedCountRef.current = 0;
     if (inputRef.current) {
       inputRef.current.value = "";
     }
