@@ -34,6 +34,7 @@ type ValidationSummary = {
 };
 
 const ITEMS_PER_PAGE = 10;
+const CONCURRENCY_LIMIT = 4;
 
 export function Validator({ locale }: ValidatorProps) {
   const t = useTranslations("validator");
@@ -44,9 +45,23 @@ export function Validator({ locale }: ValidatorProps) {
   const [expandedFile, setExpandedFile] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const inputRef = useRef<HTMLInputElement>(null);
+  const processedCountRef = useRef(0);
 
-  // Calculate summary
+  // Calculate summary (optimized to avoid heavy computation during validation)
   const summary: ValidationSummary = useMemo(() => {
+    // During validation, only provide basic info to avoid O(N²) recalculation
+    if (validating) {
+      return {
+        totalFiles: files.length,
+        validFiles: 0,
+        errorFiles: 0,
+        warningFiles: 0,
+        totalErrors: 0,
+        totalWarnings: 0,
+      };
+    }
+
+    // Full calculation only when validation is complete
     const completedFiles = files.filter((f) => f.status === "completed");
     const validFiles = completedFiles.filter(
       (f) => f.result?.valid && !f.result.issues.some((i) => i.code.severity === "error"),
@@ -73,7 +88,10 @@ export function Validator({ locale }: ValidatorProps) {
       totalErrors: errorIssues.length,
       totalWarnings: warningIssues.length,
     };
-  }, [files]);
+  }, [files, validating]);
+
+  // Track processed count incrementally to avoid filtering on every update
+  const processedCount = processedCountRef.current;
 
   // Pagination
   const totalPages = Math.ceil(files.length / ITEMS_PER_PAGE);
@@ -109,33 +127,34 @@ export function Validator({ locale }: ValidatorProps) {
       setValidating(true);
       setCurrentPage(1);
       setExpandedFile(null);
+      processedCountRef.current = 0;
 
       // Process files
       try {
         // Dynamic import to avoid SSR issues
         const { validate } = await import("@ksefuj/validator/validate");
 
-        const results = await Promise.all(
-          xmlFiles.map(async (file, index) => {
-            // Update this file to validating status
+        const results: FileValidationResult[] = Array(xmlFiles.length).fill(undefined);
+        let nextIndex = 0;
+
+        const worker = async (): Promise<void> => {
+          while (nextIndex < xmlFiles.length) {
+            const index = nextIndex++;
+            const file = xmlFiles[index];
+
+            // Mark this file as validating
             setFiles((current) =>
               current.map((f, i) => (i === index ? { ...f, status: "validating" as const } : f)),
             );
 
+            let fileResult: FileValidationResult;
             try {
               const content = await file.text();
-              const result = await validate(content, {
-                maxIssues: 100,
-              });
-
-              return {
-                ...newFiles[index],
-                result,
-                status: "completed" as const,
-              };
+              const result = await validate(content, { maxIssues: 100 });
+              fileResult = { ...newFiles[index], result, status: "completed" as const };
             } catch (error) {
               console.error(`Validation error for ${file.name}:`, error);
-              return {
+              fileResult = {
                 ...newFiles[index],
                 error: {
                   type: "processing_error" as const,
@@ -145,10 +164,18 @@ export function Validator({ locale }: ValidatorProps) {
                 status: "error" as const,
               };
             }
-          }),
-        );
 
-        setFiles(results);
+            results[index] = fileResult;
+            // Update this file's result immediately so the UI reflects progress
+            processedCountRef.current++;
+            setFiles((current) => current.map((f, i) => (i === index ? fileResult : f)));
+          }
+        };
+
+        // Run up to CONCURRENCY_LIMIT workers in parallel
+        await Promise.all(
+          Array.from({ length: Math.min(CONCURRENCY_LIMIT, xmlFiles.length) }, () => worker()),
+        );
 
         // Track validation completed
         const errorCount = results.filter((r) => !r.result?.valid || r.status === "error").length;
@@ -222,6 +249,7 @@ export function Validator({ locale }: ValidatorProps) {
     setValidating(false);
     setExpandedFile(null);
     setCurrentPage(1);
+    processedCountRef.current = 0;
     if (inputRef.current) {
       inputRef.current.value = "";
     }
@@ -470,6 +498,12 @@ export function Validator({ locale }: ValidatorProps) {
                   <h2 className="text-xl font-bold text-slate-900 font-display">
                     {(() => {
                       if (validating) {
+                        if (processedCount > 0) {
+                          return t("summary.validatingProgress", {
+                            completed: processedCount,
+                            total: summary.totalFiles,
+                          });
+                        }
                         return t("summary.validating", { count: summary.totalFiles });
                       }
                       if (summary.errorFiles > 0) {

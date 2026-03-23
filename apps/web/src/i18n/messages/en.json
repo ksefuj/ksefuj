@@ -19,6 +19,7 @@
       "hasErrors": "Found issues in {errorCount} of {totalCount} files",
       "hasWarnings": "Found warnings in {warningCount} of {totalCount} files",
       "validating": "Validating {count} files...",
+      "validatingProgress": "Validating... ({completed}/{total})",
       "processing": "Processing",
       "noFiles": "No files",
       "valid": "{count} valid",
