@@ -909,8 +909,8 @@ describe("Semantic Validation", () => {
   });
 
   describe("Rule Coverage", () => {
-    it("should have all 38 rules implemented", () => {
-      expect(semanticRules).toHaveLength(31); // Some rules are grouped (ADNOTACJE_MANDATORY_FIELDS covers 8 rules)
+    it("should have all 42 rules implemented", () => {
+      expect(semanticRules).toHaveLength(35); // Some rules are grouped (ADNOTACJE_MANDATORY_FIELDS covers 8 rules)
       const uniqueRuleCodes = new Set([
         "PODMIOT2_JST_MISSING",
         "PODMIOT2_GV_MISSING",
@@ -950,6 +950,10 @@ describe("Semantic Validation", () => {
         "KURS_WALUTA_PAIR",
         "TRANSPORT_MINIMUM_DATA",
         "AMOUNT_NO_SEPARATORS",
+        "TAX_CALCULATION_MISMATCH",
+        "INVALID_BANK_ACCOUNT_FORMAT",
+        "DUPLICATE_LINE_NUMBERS",
+        "NEGATIVE_QUANTITY_NOT_ALLOWED",
       ]);
 
       // Check that all error codes are defined
