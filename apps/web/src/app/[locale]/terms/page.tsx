@@ -54,14 +54,18 @@ export default async function TermsPage({ params }: Props) {
                   {t(`sections.${section}.title`)}
                 </h2>
                 <p className="text-slate-600 leading-relaxed">
-                  {t(`sections.${section}.content`)}
-                  {section === "contact" && (
-                    <a
-                      href="mailto:hej@ksefuj.to"
-                      className="text-violet-600 hover:text-violet-700 transition-colors"
-                    >
-                      hej@ksefuj.to
-                    </a>
+                  {section === "contact" ? (
+                    <>
+                      {t(`sections.${section}.content`)}{" "}
+                      <a
+                        href="mailto:hej@ksefuj.to"
+                        className="text-violet-600 hover:text-violet-700 transition-colors"
+                      >
+                        hej@ksefuj.to
+                      </a>
+                    </>
+                  ) : (
+                    t(`sections.${section}.content`)
                   )}
                 </p>
               </section>
