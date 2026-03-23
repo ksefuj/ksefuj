@@ -148,6 +148,8 @@
     "description": "Free KSeF invoice validator. Your file never leaves the browser.",
     "resources": "Resources",
     "information": "Information",
+    "contact": "Contact",
+    "emailLabel": "Questions? Suggestions?",
     "npmPackage": "npm Package",
     "ksefPortal": "KSeF Portal",
     "privacyPolicy": "Privacy Policy",

@@ -9,7 +9,7 @@ export function SiteFooter() {
   return (
     <footer className="bg-slate-900 text-slate-400 border-t border-slate-800">
       <div className="max-w-4xl mx-auto px-4 md:px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo & Description */}
           <div className="space-y-4">
             <Logo size="sm" className="brightness-0 invert opacity-80" />
@@ -69,6 +69,22 @@ export function SiteFooter() {
                 <span>Apache 2.0 License</span>
               </li>
             </ul>
+          </div>
+
+          {/* Contact */}
+          <div className="space-y-4">
+            <h3 className="text-slate-300 font-semibold text-sm uppercase tracking-wide">
+              {t("contact")}
+            </h3>
+            <div className="space-y-2 text-sm">
+              <p>{t("emailLabel")}</p>
+              <a
+                href="mailto:hej@ksefuj.to"
+                className="text-violet-400 hover:text-violet-300 transition-colors"
+              >
+                hej@ksefuj.to
+              </a>
+            </div>
           </div>
         </div>
 

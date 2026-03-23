@@ -148,6 +148,8 @@
     "description": "Darmowy walidator faktur KSeF. Twój plik nie opuszcza przeglądarki.",
     "resources": "Zasoby",
     "information": "Informacje",
+    "contact": "Kontakt",
+    "emailLabel": "Pytania? Sugestie?",
     "npmPackage": "npm Package",
     "ksefPortal": "Portal KSeF",
     "privacyPolicy": "Polityka prywatności",

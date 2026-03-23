@@ -148,6 +148,8 @@
     "description": "Безкоштовний валідатор рахунків KSeF. Ваш файл не залишає браузер.",
     "resources": "Ресурси",
     "information": "Інформація",
+    "contact": "Контакт",
+    "emailLabel": "Питання? Пропозиції?",
     "npmPackage": "npm Package",
     "ksefPortal": "Портал KSeF",
     "privacyPolicy": "Політика приватності",
