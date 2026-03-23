@@ -5,15 +5,31 @@
  * Uses bundled schemas for offline validation and to avoid CORS issues.
  */
 
-import {
-  XmlBufferInputProvider,
-  XmlDocument,
-  xmlRegisterInputProvider,
-  XmlValidateError,
-  XsdValidator,
-} from "libxml2-wasm";
 import type { ValidationAssertion, ValidationIssue } from "./types.js";
 import { ERROR_CODES } from "./error-codes.js";
+
+// Lazy-loaded libxml2-wasm module
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let libxml2Module: any = null;
+
+// Type imports for internal use (these don't trigger module loading)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type XmlBufferInputProvider = any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type XmlDocument = any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type XsdValidator = any;
+
+/**
+ * Lazily load libxml2-wasm module on first use
+ */
+async function getLibxml2Module() {
+  if (!libxml2Module) {
+    // Dynamic import - only executed when validation is actually needed
+    libxml2Module = await import("libxml2-wasm");
+  }
+  return libxml2Module;
+}
 
 // Validator management with proper lazy loading and cleanup
 class XsdValidatorManager {
@@ -67,6 +83,11 @@ class XsdValidatorManager {
     let bufferProvider: XmlBufferInputProvider | null = null;
 
     try {
+      // Lazy load libxml2-wasm
+      const libxml2 = await getLibxml2Module();
+      const { XmlBufferInputProvider, XmlDocument, xmlRegisterInputProvider, XsdValidator } =
+        libxml2;
+
       // Use bundled schemas to avoid CORS issues
       const { getBundledSchemas, SCHEMA_URLS } = await import("./schemas/bundle.js");
       const schemas = await getBundledSchemas();
@@ -172,10 +193,16 @@ function parseXsdError(errorMessage: string): {
     result.columnNumber = parseInt(colMatch[1], 10);
   }
 
-  // Extract element name
-  const elementMatch = errorMessage.match(/element ['"]?(\w+)['"]?/i);
+  // Extract element name (handle namespaced elements)
+  const elementMatch = errorMessage.match(/Element ['"]?\{[^}]+\}(\w+)['"]?/i);
   if (elementMatch) {
     result.elementName = elementMatch[1];
+  } else {
+    // Fallback for non-namespaced elements
+    const simpleElementMatch = errorMessage.match(/Element ['"]?(\w+)['"]?/i);
+    if (simpleElementMatch) {
+      result.elementName = simpleElementMatch[1];
+    }
   }
 
   // Extract expected elements for "Element not allowed" errors
@@ -191,9 +218,26 @@ function parseXsdError(errorMessage: string): {
 }
 
 /**
- * Map XSD error message to structured issue
+ * Map XSD error message to structured issue(s)
+ * Can return multiple issues if the error message contains multiple errors
  */
-function mapXsdErrorToIssue(errorMessage: string): ValidationIssue {
+function mapXsdErrorToIssues(errorMessage: string): ValidationIssue[] {
+  // Split by patterns that indicate separate error messages
+  const errorSentences = errorMessage.split(/\.(?=\s*[A-Z_])/).filter((s) => s.trim());
+
+  // If we have multiple error sentences, create separate issues
+  if (errorSentences.length > 1) {
+    return errorSentences.map((sentence) => mapSingleXsdErrorToIssue(`${sentence.trim()}.`));
+  }
+
+  // Single error
+  return [mapSingleXsdErrorToIssue(errorMessage)];
+}
+
+/**
+ * Map a single XSD error message to a structured issue
+ */
+function mapSingleXsdErrorToIssue(errorMessage: string): ValidationIssue {
   const parsed = parseXsdError(errorMessage);
 
   // Determine error type from message patterns
@@ -245,6 +289,10 @@ export async function validateXsd(
   let doc: XmlDocument | null = null;
 
   try {
+    // Lazy load libxml2-wasm
+    const libxml2 = await getLibxml2Module();
+    const { XmlDocument } = libxml2;
+
     // Get or create validator
     const validator = await manager.getValidator();
 
@@ -267,10 +315,15 @@ export async function validateXsd(
 
     return { issues: [], assertions };
   } catch (error) {
-    if (error instanceof XmlValidateError) {
+    // Need to check error type using the loaded module
+    const libxml2 = await getLibxml2Module();
+
+    if (error instanceof libxml2.XmlValidateError) {
       // Parse structured validation error
-      const errorMessage = error.message || "XSD validation failed";
-      issues.push(mapXsdErrorToIssue(errorMessage));
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const errorMessage = (error as any).message || "XSD validation failed";
+      const xsdIssues = mapXsdErrorToIssues(errorMessage);
+      issues.push(...xsdIssues);
     } else {
       // Handle parse errors
       const message = error instanceof Error ? error.message : String(error);

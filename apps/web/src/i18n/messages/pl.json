@@ -5,20 +5,12 @@
     "ogTitle": "ksefuj.to — walidator KSeF FA(3)",
     "ogDescription": "Darmowy walidator faktur KSeF. Client-side, bez logowania."
   },
-  "header": {
-    "title": "ksefuj",
-    "subtitle": "walidator KSeF FA(3)"
-  },
-  "homepage": {
-    "heroTitle": "Sprawdź swoją e-fakturę",
-    "heroDescription": "Wrzuć XML, zobacz błędy. Walidacja odbywa się w Twojej przeglądarce — dane nie opuszczają Twojego komputera."
-  },
   "validator": {
     "dropzone": {
       "dragHere": "Przeciągnij pliki XML tutaj",
       "dropFiles": "Upuść {count, plural, one {plik} few {# pliki} many {# plików} other {# plików}} XML",
       "validating": "Walidacja...",
-      "validatingDetails": "Sprawdzanie XSD i reguł semantycznych...",
+      "validatingDetails": "Sprawdzanie walidacji schematu XSD...",
       "acceptedFiles": "Akceptowane: .xml (faktury KSeF FA3)",
       "callToAction": "ksefuj to!"
     },
@@ -26,21 +18,12 @@
       "allValid": "Walidacja zakończona pomyślnie",
       "hasErrors": "Znaleziono problemy w {errorCount} z {totalCount} plików",
       "hasWarnings": "Znaleziono ostrzeżenia w {warningCount} z {totalCount} plików",
+      "validating": "Walidowanie {count} plików...",
+      "processing": "Przetwarzanie",
+      "noFiles": "Brak plików",
       "valid": "{count} poprawne",
       "errors": "{count} z błędami",
       "warnings": "{count} ostrzeżenia"
-    },
-    "badges": {
-      "officialXsd": "Oficjalny XSD",
-      "semanticRules": "Reguły biznesowe",
-      "filesValidated": "{count} plików sprawdzonych",
-      "semantic": "Reguły",
-      "xsdError": "Błąd XSD",
-      "xsdWarning": "Ostrzeżenie XSD",
-      "xsdValid": "XSD ✓",
-      "semanticError": "Błąd biznesowy",
-      "semanticWarning": "Ostrzeżenie biznesowe",
-      "semanticValid": "Reguły ✓"
     },
     "fileList": {
       "title": "Pliki",
@@ -51,50 +34,251 @@
       "previous": "Poprzednia",
       "next": "Następna"
     },
-    "validation": {
-      "officialXsd": "Oficjalna walidacja XSD (Ministerstwo Finansów)",
-      "xsdValid": "Schemat struktury dokumentu poprawny",
-      "semanticRules": "Reguły biznesowe",
-      "semanticValid": "Wszystkie reguły biznesowe spełnione"
-    },
     "actions": {
-      "reset": "Wyczyść",
       "newValidation": "Nowa walidacja"
     },
-    "results": {
-      "valid": "Faktura prawidłowa",
-      "invalid": "Znaleziono błędy",
-      "warnings": "ostrzeżeń",
-      "clear": "Wyczyść"
+    "issuesList": {
+      "noIssuesTitle": "Wszystko w porządku!",
+      "noIssuesDescription": "Nie znaleziono żadnych problemów z walidacją.",
+      "showingCount": "Pokazano {shown} z {total} problemów.",
+      "remaining": "{count} pozostało."
     },
-    "errors": {
-      "processingError": "Błąd podczas walidacji pliku",
-      "validatorInitializationFailed": "Nie udało się zainicjować walidatora"
+    "domain": {
+      "parse": "STRUKTURA XML",
+      "xsd": "SCHEMA XSD",
+      "semantic": "REGUŁY BIZNESOWE",
+      "infrastructure": "SYSTEM"
+    },
+    "details": {
+      "location": "Lokalizacja w pliku",
+      "xpath": "XPath:",
+      "line": "Linia:",
+      "column": ", kolumna",
+      "valueDetails": "Szczegóły wartości",
+      "actualValue": "Wartość:",
+      "expectedValues": "Oczekiwane:",
+      "allowedOptions": "Dozwolone opcje:",
+      "hint": "Wskazówka:",
+      "useCountryCode": "Użyj kodu kraju \"PL\" zamiast \"POL\" dla Polski.",
+      "among": "spośród",
+      "options": "opcji",
+      "expected": "oczekiwane:"
     },
     "issues": {
-      "PODMIOT2_JST_MISSING": "Brak wymaganego elementu JST w Podmiot2",
-      "PODMIOT2_GV_MISSING": "Brak wymaganego elementu GV w Podmiot2",
-      "P12_INVALID": "Nieprawidłowa wartość P_12. Dozwolone: {allowedValues}",
-      "P13_8_REQUIRES_P18": "Odwrotne obciążenie (P_13_8) wymaga P_18=1",
-      "P13_8_REQUIRES_NP_I": "Odwrotne obciążenie (P_13_8) wymaga P_12=\"np I\"",
-      "KURS_WALUTY_WRONG_LEVEL": "KursWalutyZ należy do FaWiersz/KursWaluty (z wyjątkiem faktur zaliczkowych)",
-      "GTU_WRONG_FORMAT": "Nieprawidłowy format GTU. Użyj <GTU>GTU_XX</GTU>",
-      "TRAILING_ZEROS": "{element} ma niepotrzebne zera: \"{actual}\" powinno być \"{expected}\"",
-      "P15_MISSING": "Element P_15 (suma do zapłaty) jest obowiązkowy",
-      "ELEMENT_NOT_ALLOWED": "Element {element} nie jest dozwolony w tym miejscu",
-      "REQUIRED_ELEMENT_MISSING": "Brak wymaganego elementu {element}",
-      "INVALID_ELEMENT_VALUE": "Nieprawidłowa wartość elementu {element}",
-      "SCHEMA_VALIDATION_FAILED": "Walidacja względem schematu XSD nie powiodła się",
-      "MALFORMED_XML": "XML nie jest poprawnie sformatowany",
-      "VALIDATOR_INITIALIZATION_FAILED": "Błąd inicjalizacji walidatora"
+      "ELEMENT_NOT_ALLOWED": "Element `{element}` nie jest dozwolony w tym miejscu",
+      "REQUIRED_ELEMENT_MISSING": "Brak wymaganego elementu `{element}`",
+      "INVALID_ELEMENT_VALUE": "Nieprawidłowa wartość elementu `{element}`",
+      "SCHEMA_VALIDATION_FAILED": "Walidacja względem schematu **XSD** nie powiodła się",
+      "MALFORMED_XML": "**XML** nie jest poprawnie sformatowany",
+      "VALIDATOR_INITIALIZATION_FAILED": "Błąd inicjalizacji walidatora",
+      "PODMIOT2_JST_MISSING": "Brak wymaganego elementu `JST` w `Podmiot2`",
+      "PODMIOT2_GV_MISSING": "Brak wymaganego elementu `GV` w `Podmiot2`",
+      "JST_REQUIRES_PODMIOT3": "`JST=1` wymaga `Podmiot3` z rolą `8` (jednostka samorządu terytorialnego)",
+      "GV_REQUIRES_PODMIOT3": "`GV=1` wymaga `Podmiot3` z rolą `10` (grupa VAT)",
+      "NIP_IN_WRONG_FIELD": "Polski **NIP** powinien być w polu `NIP`, nie `NrVatUE`",
+      "PODMIOT3_UDZIAL_REQUIRES_ROLE_4": "Udział dozwolony tylko dla roli `4` (uprawniony do majątku)",
+      "PODMIOT3_ROLE_MISSING": "Brak definicji roli dla `Podmiot3`",
+      "SELF_BILLING_PODMIOT3_CONFLICT": "Samofakturowanie: nabywca w `Podmiot2`, nie `Podmiot3`",
+      "P15_MISSING": "Brak wymaganego pola `P_15` (kwota należności ogółem)",
+      "P6_P6A_MUTUAL_EXCLUSION": "Pola `P_6` i `P_6A` się wzajemnie wykluczają",
+      "RODZAJ_FAKTURY_SECTIONS": "Brak wymaganej sekcji dla typu faktury",
+      "KURS_WALUTY_Z_PLACEMENT": "`KursWalutyZ` dozwolony tylko dla faktur zaliczkowych",
+      "FOREIGN_CURRENCY_TAX_PLN": "Brak przeliczenia podatku na **PLN** dla waluty obcej",
+      "ADNOTACJE_P16_MISSING": "Brak wymaganego pola `P_16` w `Adnotacje`",
+      "ADNOTACJE_P17_MISSING": "Brak wymaganego pola `P_17` w `Adnotacje`",
+      "ADNOTACJE_P18_MISSING": "Brak wymaganego pola `P_18` w `Adnotacje`",
+      "ADNOTACJE_P18A_MISSING": "Brak wymaganego pola `P_18A` w `Adnotacje`",
+      "ADNOTACJE_ZWOLNIENIE_MISSING": "Brak wymaganego elementu `Zwolnienie` w `Adnotacje`",
+      "ADNOTACJE_NST_MISSING": "Brak wymaganego elementu `NoweSrodkiTransportu` w `Adnotacje`",
+      "ADNOTACJE_P23_MISSING": "Brak wymaganego pola `P_23` w `Adnotacje`",
+      "ADNOTACJE_PMARZY_MISSING": "Brak wymaganego elementu `PMarzy` w `Adnotacje`",
+      "ZWOLNIENIE_LOGIC": "Błąd logiki zwolnienia: dokładnie jedno z `P_19` lub `P_19N` wymagane",
+      "NST_LOGIC": "Błąd logiki środków transportu: dokładnie jedno z `P_22` lub `P_22N` wymagane",
+      "PMARZY_LOGIC": "Błąd logiki procedury marży: dokładnie jedno z `P_PMarzy` lub `P_PMarzyN` wymagane",
+      "P12_ENUMERATION": "Nieprawidłowa stawka **VAT**: `{actual}`",
+      "OO_RATE_FOREIGN_BUYER": "Użyj `np I` lub `np II` dla nabywców zagranicznych, nie `oo`",
+      "GTU_FORMAT": "Nieprawidłowy format **GTU** (powinno być np. `GTU_12`)",
+      "DECIMAL_PRECISION": "Przekroczono maksymalną precyzję dziesiętną",
+      "KOR_NRKSEF_CONSISTENCY": "Niespójność numeru **KSeF** w fakturze korygującej",
+      "REVERSE_CHARGE_CONSISTENCY": "Niespójność odwrotnego obciążenia",
+      "PAYMENT_ZAPLACONO_DATE": "Brak daty zapłaty przy zaznaczonej opcji zapłacono",
+      "RACHUNEKBANKOWY_NRRB": "Brak numeru rachunku bankowego",
+      "NRRB_LENGTH": "Numer rachunku musi mieć `10-34` znaki",
+      "IPKSEF_FORMAT": "`IPKSeF` musi mieć dokładnie **13** znaków alfanumerycznych",
+      "WALUTA_UMOWNA_PLN": "`WalutaUmowna` nie może być `PLN`",
+      "KURS_WALUTA_PAIR": "`KursUmowny` i `WalutaUmowna` muszą występować razem",
+      "TRANSPORT_MINIMUM_DATA": "Brak wymaganych danych transportu",
+      "AMOUNT_NO_SEPARATORS": "Kwoty nie mogą zawierać separatorów tysięcy",
+      "TAX_CALCULATION_MISMATCH": "Błąd kalkulacji podatku — sprawdź obliczenia **VAT**",
+      "INVALID_BANK_ACCOUNT_FORMAT": "Polski rachunek bankowy (`NrRB`) musi mieć **26** znaków w formacie **IBAN** (`PL` + **24** cyfry)",
+      "DUPLICATE_LINE_NUMBERS": "Zduplikowane numery wierszy faktury",
+      "NEGATIVE_QUANTITY_NOT_ALLOWED": "Ujemne ilości dozwolone tylko w fakturach korygujących",
+      "ENCODING_ERROR": "Błąd kodowania znaków",
+      "VALIDATION_TIMEOUT": "Przekroczono limit czasu walidacji",
+      "EXECUTION_ERROR": "Niespodziewany błąd podczas walidacji",
+      "P12_INVALID": "Nieprawidłowa stawka **VAT**: `{actual}`. Dozwolone wartości: {allowedValues}"
+    },
+    "errors": {
+      "field": "pole",
+      "fieldPrefix": "Pole {field}",
+      "invalidValue": "Pole {field}: nieprawidłowa wartość {value}",
+      "invalidValues": "Pole {field}: nieprawidłowe wartości {values}",
+      "invalidEnumValue": "Nieprawidłowa wartość {value} dla pola {field}",
+      "invalidDate": "Nieprawidłowa data {value}. Użyj formatu **RRRR-MM-DD**",
+      "invalidDateValue": "Nieprawidłowa data {value}. Użyj formatu **RRRR-MM-DD**",
+      "invalidRootElement": "Brak deklaracji {field} w schemacie **XSD**. Sprawdź przestrzeń nazw **XML**",
+      "unexpectedElement": "Element {element} nie jest dozwolony w tym miejscu",
+      "thisElement": "ten element",
+      "expectedElement": "Oczekiwany element: {element}",
+      "expectedOneOf": "Oczekiwany jeden z: {elements}",
+      "invalidPattern": "Wartość {value} nie pasuje do wymaganego wzorca dla {field}",
+      "minLength": "Za krótka wartość dla {field}: **{actual}** znaków (minimum **{limit}**)",
+      "maxLength": "Za długa wartość dla {field}: **{actual}** znaków (maksimum **{limit}**)",
+      "tooManyDecimals": "Za dużo miejsc po przecinku dla {field} (maksimum **{max}**)",
+      "validationError": "Błąd walidacji pola {field}"
+    },
+    "expectedValues": {
+      "maxDecimalPlaces": "Maks. {count, plural, one {# miejsce} few {# miejsca} many {# miejsc} other {# miejsc}} po przecinku"
     }
   },
   "languagePicker": {
     "ariaLabel": "Zmień język"
   },
   "footer": {
-    "copyright": "© 2026 ksefuj",
-    "github": "GitHub",
-    "npm": "npm"
+    "description": "Darmowy walidator faktur KSeF. Twój plik nie opuszcza przeglądarki.",
+    "resources": "Zasoby",
+    "information": "Informacje",
+    "npmPackage": "npm Package",
+    "ksefPortal": "Portal KSeF",
+    "privacyPolicy": "Polityka prywatności",
+    "termsOfUse": "Warunki użytkowania",
+    "copyright": "© 2026 ksefuj. Cały kod jest publiczny na GitHub."
+  },
+  "landing": {
+    "hero": {
+      "title": "Sprawdź swoją e-fakturę FA(3)",
+      "description": "Obowiązkowy KSeF od 1 kwietnia 2026 (1 lutego dla dużych firm). Wrzuć XML, zobacz błędy. Dane nie opuszczają przeglądarki.",
+      "trustLine": "100% darmowy • 42 reguły biznesowe • Open Source"
+    },
+    "features": {
+      "title": "Dlaczego ksefuj?",
+      "subtitle": "Stworzone dla freelancerów i małych firm, którzy nie chcą płacić za Symfonie czy Comarcha",
+      "items": [
+        {
+          "title": "Pełna walidacja MF",
+          "description": "Oficjalny schemat XSD (06/2025) + 42 reguły biznesowe z arkusza informacyjnego MF",
+          "accent": "violet"
+        },
+        {
+          "title": "100% prywatności",
+          "description": "Wszystko działa lokalnie w przeglądarce. Twoje faktury nie trafiają na żaden serwer",
+          "accent": "emerald"
+        },
+        {
+          "title": "Naprawdę darmowy",
+          "description": "Bez limitów, kont, reklam czy paywallu. KSeF to wystarczający ciężar — narzędzia powinny być za darmo",
+          "accent": "amber"
+        }
+      ]
+    },
+    "validation": {
+      "title": "Co sprawdzamy?",
+      "subtitle": "Dwupoziomowa walidacja zapewnia zgodność z wymogami KSeF",
+      "layers": [
+        {
+          "badge": "Poziom 1",
+          "title": "Struktura XML (XSD)",
+          "description": "Oficjalny schemat FA(3) z czerwca 2025 od Ministerstwa Finansów",
+          "checks": [
+            "Poprawność struktury dokumentu",
+            "Wymagane pola i elementy",
+            "Typy danych i formaty",
+            "Kolejność elementów"
+          ]
+        },
+        {
+          "badge": "Poziom 2",
+          "title": "42 reguły biznesowe",
+          "description": "Kompleksowa walidacja semantyczna na podstawie oficjalnego arkusza informacyjnego",
+          "checks": [
+            "Weryfikacja podmiotów (JST/GV, NIP, role)",
+            "Poprawność stawek VAT i GTU",
+            "Precyzja dziesiętna kwot i ilości",
+            "Logika adnotacji (zwolnienia, marża, NST)"
+          ]
+        }
+      ]
+    },
+    "gettingStarted": {
+      "title": "Nie masz pliku XML?",
+      "subtitle": "Zacznij od jednego z tych kroków",
+      "steps": [
+        {
+          "number": "1",
+          "title": "Eksport z programu",
+          "description": "Większość programów księgowych ma opcję eksportu faktury do XML w formacie FA(3)",
+          "code": "Plik → Eksport → KSeF FA(3)"
+        },
+        {
+          "number": "2",
+          "title": "Pobierz z KSeF",
+          "description": "Zaloguj się do portalu KSeF i pobierz XML dowolnej faktury",
+          "code": "ap.ksef.mf.gov.pl (KSeF 2.0)"
+        },
+        {
+          "number": "3",
+          "title": "Użyj CLI",
+          "description": "Programiści mogą użyć naszego narzędzia CLI do walidacji plików lokalnie",
+          "code": "npx @ksefuj/validator file.xml"
+        }
+      ]
+    },
+    "openSource": {
+      "title": "100% Open Source",
+      "description": "Cały kod jest publiczny na GitHub. Sprawdź, jak działa, zgłoś błąd lub pomóż w rozwoju",
+      "features": [
+        {
+          "title": "Przejrzysty kod",
+          "description": "Każda linia kodu dostępna do wglądu"
+        },
+        {
+          "title": "Społeczność",
+          "description": "Rozwijane przez społeczność dla społeczności"
+        },
+        {
+          "title": "Apache 2.0",
+          "description": "Używaj komercyjnie bez ograniczeń"
+        }
+      ],
+      "ctaText": "Zobacz na GitHub"
+    },
+    "developer": {
+      "title": "Dla programistów",
+      "subtitle": "CLI, npm package, API — integruj z Twoimi narzędziami",
+      "expandText": "Pokaż opcje",
+      "collapseText": "Ukryj opcje",
+      "content": {
+        "cli": {
+          "title": "CLI",
+          "description": "Waliduj pliki z terminala",
+          "commands": [
+            {
+              "label": "Szybka walidacja"
+            },
+            {
+              "label": "Zainstaluj globalnie"
+            }
+          ]
+        },
+        "npm": {
+          "title": "npm Package",
+          "description": "Integruj walidator z Twoją aplikacją"
+        },
+        "docs": {
+          "title": "Dokumentacja",
+          "description": "Pełna dokumentacja pakietu i przykłady użycia"
+        }
+      }
+    }
   }
 }

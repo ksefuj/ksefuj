@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Faktura xmlns:etd="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2022/01/05/eD/DefinicjeTypy/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns="http://crd.gov.pl/wzor/2025/06/25/13775/">
+	<Naglowek>
+		<KodFormularza kodSystemowy="FA (3)" wersjaSchemy="1-0E">FA</KodFormularza>
+		<WariantFormularza>3</WariantFormularza>
+		<DataWytworzeniaFa>2026-02-01T00:00:00Z</DataWytworzeniaFa>
+		<SystemInfo>TestInvoice</SystemInfo>
+	</Naglowek>
+	<Podmiot1>
+		<DaneIdentyfikacyjne>
+			<NIP>9999999999</NIP>
+			<Nazwa>Test Company sp. z o. o.</Nazwa>
+		</DaneIdentyfikacyjne>
+		<Adres>
+			<KodKraju>PL</KodKraju>
+			<AdresL1>ul. Testowa 1</AdresL1>
+			<AdresL2>00-001 Warszawa</AdresL2>
+		</Adres>
+	</Podmiot1>
+	<Podmiot2>
+		<DaneIdentyfikacyjne>
+			<NrVatUE>DE123456789</NrVatUE>
+			<Nazwa>German Test Client GmbH</Nazwa>
+		</DaneIdentyfikacyjne>
+		<Adres>
+			<KodKraju>DE</KodKraju>
+			<AdresL1>Teststraße 1</AdresL1>
+			<AdresL2>10115 Berlin</AdresL2>
+		</Adres>
+		<JST>2</JST>
+		<GV>2</GV>
+	</Podmiot2>
+	<Fa>
+		<KodWaluty>PLN</KodWaluty>
+		<P_1>2026-02-15</P_1>
+		<P_1M>Warszawa</P_1M>
+		<P_2>FV2026/02/006</P_2>
+		<P_6>2026-01-27</P_6>
+		<P_13_1>1000.00</P_13_1>
+		<P_14_1>0.00</P_14_1>
+		<P_15>1000.00</P_15>
+		<Adnotacje>
+			<P_16>2</P_16>
+			<P_17>2</P_17>
+			<P_18>2</P_18>
+			<P_18A>2</P_18A>
+			<Zwolnienie>
+				<P_19N>1</P_19N>
+			</Zwolnienie>
+			<NoweSrodkiTransportu>
+				<P_22N>1</P_22N>
+			</NoweSrodkiTransportu>
+			<P_23>2</P_23>
+			<PMarzy>
+				<P_PMarzyN>1</P_PMarzyN>
+			</PMarzy>
+		</Adnotacje>
+		<RodzajFaktury>VAT</RodzajFaktury>
+		<FaWiersz>
+			<NrWierszaFa>1</NrWierszaFa>
+			<UU_ID>test006</UU_ID>
+			<P_7>Test service for EU client</P_7>
+			<P_8A>szt.</P_8A>
+			<P_8B>1</P_8B>
+			<P_9A>1000.00</P_9A>
+			<P_11>1000.00</P_11>
+			<!-- Wrong tax rate: should be 'np' for foreign entities, not 'oo' -->
+			<P_12>oo</P_12>
+		</FaWiersz>
+	</Fa>
+</Faktura>

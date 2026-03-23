@@ -5,20 +5,12 @@
     "ogTitle": "ksefuj.to — KSeF FA(3) validator",
     "ogDescription": "Free KSeF invoice validator. Client-side, no registration."
   },
-  "header": {
-    "title": "ksefuj",
-    "subtitle": "KSeF FA(3) validator"
-  },
-  "homepage": {
-    "heroTitle": "Validate your e-invoice",
-    "heroDescription": "Drop XML, see errors. Validation happens in your browser — data never leaves your computer."
-  },
   "validator": {
     "dropzone": {
       "dragHere": "Drop XML files here",
       "dropFiles": "Drop {count} XML {count, plural, =1 {file} other {files}}",
       "validating": "Validating...",
-      "validatingDetails": "Checking XSD and semantic rules...",
+      "validatingDetails": "Checking XSD schema validation...",
       "acceptedFiles": "Accepted: .xml (KSeF FA3 invoices)",
       "callToAction": "ksef it!"
     },
@@ -26,21 +18,12 @@
       "allValid": "Validation completed successfully",
       "hasErrors": "Found issues in {errorCount} of {totalCount} files",
       "hasWarnings": "Found warnings in {warningCount} of {totalCount} files",
+      "validating": "Validating {count} files...",
+      "processing": "Processing",
+      "noFiles": "No files",
       "valid": "{count} valid",
       "errors": "{count} with errors",
       "warnings": "{count} warnings"
-    },
-    "badges": {
-      "officialXsd": "Official XSD",
-      "semanticRules": "Semantic Rules",
-      "filesValidated": "{count} files validated",
-      "semantic": "Semantic",
-      "xsdError": "XSD Error",
-      "xsdWarning": "XSD Warning",
-      "xsdValid": "XSD ✓",
-      "semanticError": "Business Error",
-      "semanticWarning": "Business Warning",
-      "semanticValid": "Rules ✓"
     },
     "fileList": {
       "title": "Files",
@@ -51,50 +34,251 @@
       "previous": "Previous",
       "next": "Next"
     },
-    "validation": {
-      "officialXsd": "Official XSD Validation (Ministry of Finance)",
-      "xsdValid": "Document structure schema correct",
-      "semanticRules": "Business Rules",
-      "semanticValid": "All business rules satisfied"
-    },
     "actions": {
-      "reset": "Clear",
       "newValidation": "New Validation"
     },
-    "results": {
-      "valid": "Invoice valid",
-      "invalid": "Errors found",
-      "warnings": "warnings",
-      "clear": "Clear"
+    "issuesList": {
+      "noIssuesTitle": "All good!",
+      "noIssuesDescription": "No validation issues found.",
+      "showingCount": "Showing {shown} of {total} issues.",
+      "remaining": "{count} remaining."
     },
-    "errors": {
-      "processingError": "Error validating file",
-      "validatorInitializationFailed": "Failed to initialize validator"
+    "domain": {
+      "parse": "XML STRUCTURE",
+      "xsd": "XSD SCHEMA",
+      "semantic": "BUSINESS RULES",
+      "infrastructure": "SYSTEM"
+    },
+    "details": {
+      "location": "File location",
+      "xpath": "XPath:",
+      "line": "Line:",
+      "column": ", column",
+      "valueDetails": "Value details",
+      "actualValue": "Value:",
+      "expectedValues": "Expected:",
+      "allowedOptions": "Allowed options:",
+      "hint": "Hint:",
+      "useCountryCode": "Use country code \"PL\" instead of \"POL\" for Poland.",
+      "among": "among",
+      "options": "options",
+      "expected": "expected:"
     },
     "issues": {
-      "PODMIOT2_JST_MISSING": "Required JST element missing in Podmiot2",
-      "PODMIOT2_GV_MISSING": "Required GV element missing in Podmiot2",
-      "P12_INVALID": "Invalid P_12 value. Allowed: {allowedValues}",
-      "P13_8_REQUIRES_P18": "Reverse charge (P_13_8) requires P_18=1",
-      "P13_8_REQUIRES_NP_I": "Reverse charge (P_13_8) requires P_12=\"np I\"",
-      "KURS_WALUTY_WRONG_LEVEL": "KursWalutyZ should go to FaWiersz/KursWaluty (except advance invoices)",
-      "GTU_WRONG_FORMAT": "Invalid GTU format. Use <GTU>GTU_XX</GTU>",
-      "TRAILING_ZEROS": "{element} has trailing zeros: \"{actual}\" should be \"{expected}\"",
-      "P15_MISSING": "P_15 element (total amount) is required",
-      "ELEMENT_NOT_ALLOWED": "Element {element} not allowed here",
-      "REQUIRED_ELEMENT_MISSING": "Required element {element} missing",
-      "INVALID_ELEMENT_VALUE": "Invalid value for element {element}",
-      "SCHEMA_VALIDATION_FAILED": "XSD schema validation failed",
-      "MALFORMED_XML": "XML is not well-formed",
-      "VALIDATOR_INITIALIZATION_FAILED": "Validator initialization failed"
+      "ELEMENT_NOT_ALLOWED": "Element `{element}` not allowed here",
+      "REQUIRED_ELEMENT_MISSING": "Required element `{element}` missing",
+      "INVALID_ELEMENT_VALUE": "Invalid value for element `{element}`",
+      "SCHEMA_VALIDATION_FAILED": "**XSD** schema validation failed",
+      "MALFORMED_XML": "**XML** is not well-formed",
+      "VALIDATOR_INITIALIZATION_FAILED": "Validator initialization failed",
+      "PODMIOT2_JST_MISSING": "Element `JST` is mandatory in `Podmiot2`",
+      "PODMIOT2_GV_MISSING": "Element `GV` is mandatory in `Podmiot2`",
+      "JST_REQUIRES_PODMIOT3": "`JST=1` requires `Podmiot3` with role `8` (local government unit)",
+      "GV_REQUIRES_PODMIOT3": "`GV=1` requires `Podmiot3` with role `10` (**VAT** group)",
+      "NIP_IN_WRONG_FIELD": "Polish **NIP** should be in `NIP` field, not `NrVatUE`",
+      "PODMIOT3_UDZIAL_REQUIRES_ROLE_4": "Share allowed only for role `4` (property rights holder)",
+      "PODMIOT3_ROLE_MISSING": "Missing role definition for `Podmiot3`",
+      "SELF_BILLING_PODMIOT3_CONFLICT": "Self-billing: purchaser in `Podmiot2`, not `Podmiot3`",
+      "P15_MISSING": "Missing mandatory field `P_15` (total amount due)",
+      "P6_P6A_MUTUAL_EXCLUSION": "Fields `P_6` and `P_6A` are mutually exclusive",
+      "RODZAJ_FAKTURY_SECTIONS": "Missing required section for invoice type",
+      "KURS_WALUTY_Z_PLACEMENT": "`KursWalutyZ` only valid for advance invoices",
+      "FOREIGN_CURRENCY_TAX_PLN": "Missing **PLN** tax conversion for foreign currency",
+      "ADNOTACJE_P16_MISSING": "Missing mandatory field `P_16` in `Adnotacje`",
+      "ADNOTACJE_P17_MISSING": "Missing mandatory field `P_17` in `Adnotacje`",
+      "ADNOTACJE_P18_MISSING": "Missing mandatory field `P_18` in `Adnotacje`",
+      "ADNOTACJE_P18A_MISSING": "Missing mandatory field `P_18A` in `Adnotacje`",
+      "ADNOTACJE_ZWOLNIENIE_MISSING": "Missing mandatory element `Zwolnienie` in `Adnotacje`",
+      "ADNOTACJE_NST_MISSING": "Missing mandatory element `NoweSrodkiTransportu` in `Adnotacje`",
+      "ADNOTACJE_P23_MISSING": "Missing mandatory field `P_23` in `Adnotacje`",
+      "ADNOTACJE_PMARZY_MISSING": "Missing mandatory element `PMarzy` in `Adnotacje`",
+      "ZWOLNIENIE_LOGIC": "Exemption logic error: exactly one of `P_19` or `P_19N` required",
+      "NST_LOGIC": "Transport logic error: exactly one of `P_22` or `P_22N` required",
+      "PMARZY_LOGIC": "Margin procedure logic error: exactly one of `P_PMarzy` or `P_PMarzyN` required",
+      "P12_ENUMERATION": "Invalid **VAT** rate: `{actual}`",
+      "OO_RATE_FOREIGN_BUYER": "Use `np I` or `np II` for foreign buyers, not `oo`",
+      "GTU_FORMAT": "Invalid **GTU** format (should be e.g. `GTU_12`)",
+      "DECIMAL_PRECISION": "Exceeded maximum decimal precision",
+      "KOR_NRKSEF_CONSISTENCY": "**KSeF** number inconsistency in corrective invoice",
+      "REVERSE_CHARGE_CONSISTENCY": "Reverse charge inconsistency",
+      "PAYMENT_ZAPLACONO_DATE": "Missing payment date when marked as paid",
+      "RACHUNEKBANKOWY_NRRB": "Missing bank account number",
+      "NRRB_LENGTH": "Account number must be `10-34` characters",
+      "IPKSEF_FORMAT": "`IPKSeF` must be exactly **13** alphanumeric characters",
+      "WALUTA_UMOWNA_PLN": "`WalutaUmowna` cannot be `PLN`",
+      "KURS_WALUTA_PAIR": "`KursUmowny` and `WalutaUmowna` must both be present",
+      "TRANSPORT_MINIMUM_DATA": "Missing required transport data",
+      "AMOUNT_NO_SEPARATORS": "Amounts cannot contain thousand separators",
+      "TAX_CALCULATION_MISMATCH": "Tax calculation error — check **VAT** calculations",
+      "INVALID_BANK_ACCOUNT_FORMAT": "Polish bank account (`NrRB`) must be **26** characters in **IBAN** format (`PL` + **24** digits)",
+      "DUPLICATE_LINE_NUMBERS": "Duplicate invoice line numbers",
+      "NEGATIVE_QUANTITY_NOT_ALLOWED": "Negative quantities only allowed in corrective invoices",
+      "ENCODING_ERROR": "Character encoding error",
+      "VALIDATION_TIMEOUT": "Validation timeout exceeded",
+      "EXECUTION_ERROR": "Unexpected validation error",
+      "P12_INVALID": "Invalid **VAT** rate: `{actual}`. Allowed values: {allowedValues}"
+    },
+    "errors": {
+      "field": "field",
+      "fieldPrefix": "Field {field}",
+      "invalidValue": "Field {field}: invalid value {value}",
+      "invalidValues": "Field {field}: invalid values {values}",
+      "invalidEnumValue": "Invalid value {value} for field {field}",
+      "invalidDate": "Invalid date {value}. Use format **YYYY-MM-DD**",
+      "invalidDateValue": "Invalid date {value}. Use format **YYYY-MM-DD**",
+      "invalidRootElement": "No declaration for {field} in **XSD** schema. Check **XML** namespace",
+      "unexpectedElement": "Element {element} is not allowed here",
+      "thisElement": "this element",
+      "expectedElement": "Expected element: {element}",
+      "expectedOneOf": "Expected one of: {elements}",
+      "invalidPattern": "Value {value} doesn't match required pattern for {field}",
+      "minLength": "Value too short for {field}: **{actual}** characters (minimum **{limit}**)",
+      "maxLength": "Value too long for {field}: **{actual}** characters (maximum **{limit}**)",
+      "tooManyDecimals": "Too many decimal places for {field} (maximum **{max}**)",
+      "validationError": "Validation error for field {field}"
+    },
+    "expectedValues": {
+      "maxDecimalPlaces": "Max {count, plural, one {# decimal place} other {# decimal places}}"
     }
   },
   "languagePicker": {
     "ariaLabel": "Change language"
   },
   "footer": {
-    "copyright": "© 2026 ksefuj",
-    "github": "GitHub",
-    "npm": "npm"
+    "description": "Free KSeF invoice validator. Your file never leaves the browser.",
+    "resources": "Resources",
+    "information": "Information",
+    "npmPackage": "npm Package",
+    "ksefPortal": "KSeF Portal",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfUse": "Terms of Use",
+    "copyright": "© 2026 ksefuj. All code is public on GitHub."
+  },
+  "landing": {
+    "hero": {
+      "title": "Validate your KSeF FA(3) e-invoice",
+      "description": "Mandatory KSeF from April 1, 2026 (Feb 1 for large companies). Drop XML, see errors. Data stays in your browser.",
+      "trustLine": "100% Free • 42 business rules • Open Source"
+    },
+    "features": {
+      "title": "Why ksefuj?",
+      "subtitle": "Built for freelancers and small businesses who don't want to pay for Symfonia or Comarch",
+      "items": [
+        {
+          "title": "Full MF validation",
+          "description": "Official XSD schema (06/2025) + 42 business rules from MF information sheet",
+          "accent": "violet"
+        },
+        {
+          "title": "100% privacy",
+          "description": "Everything runs locally in your browser. Your invoices never reach any server",
+          "accent": "emerald"
+        },
+        {
+          "title": "Actually free",
+          "description": "No limits, accounts, ads or paywalls. KSeF is burden enough — tools should be free",
+          "accent": "amber"
+        }
+      ]
+    },
+    "validation": {
+      "title": "What we check",
+      "subtitle": "Two-layer validation ensures KSeF compliance",
+      "layers": [
+        {
+          "badge": "Layer 1",
+          "title": "XML Structure (XSD)",
+          "description": "Official FA(3) schema from June 2025 by Ministry of Finance",
+          "checks": [
+            "Document structure validity",
+            "Required fields and elements",
+            "Data types and formats",
+            "Element order"
+          ]
+        },
+        {
+          "badge": "Layer 2",
+          "title": "42 Business Rules",
+          "description": "Comprehensive semantic validation based on official information sheet",
+          "checks": [
+            "Entity verification (JST/GV, NIP, roles)",
+            "VAT rates and GTU compliance",
+            "Decimal precision for amounts and quantities",
+            "Annotation logic (exemptions, margin, NST)"
+          ]
+        }
+      ]
+    },
+    "gettingStarted": {
+      "title": "Don't have an XML file?",
+      "subtitle": "Start with one of these steps",
+      "steps": [
+        {
+          "number": "1",
+          "title": "Export from software",
+          "description": "Most accounting software has an option to export invoices to FA(3) XML format",
+          "code": "File → Export → KSeF FA(3)"
+        },
+        {
+          "number": "2",
+          "title": "Download from KSeF",
+          "description": "Login to KSeF portal and download XML of any invoice",
+          "code": "ap.ksef.mf.gov.pl (KSeF 2.0)"
+        },
+        {
+          "number": "3",
+          "title": "Use CLI",
+          "description": "Developers can use our CLI tool to validate files locally",
+          "code": "npx @ksefuj/validator file.xml"
+        }
+      ]
+    },
+    "openSource": {
+      "title": "100% Open Source",
+      "description": "All code is public on GitHub. Check how it works, report bugs, or help with development",
+      "features": [
+        {
+          "title": "Transparent code",
+          "description": "Every line of code available for review"
+        },
+        {
+          "title": "Community",
+          "description": "Developed by community for community"
+        },
+        {
+          "title": "Apache 2.0",
+          "description": "Use commercially without restrictions"
+        }
+      ],
+      "ctaText": "View on GitHub"
+    },
+    "developer": {
+      "title": "For developers",
+      "subtitle": "CLI, npm package, API — integrate with your tools",
+      "expandText": "Show options",
+      "collapseText": "Hide options",
+      "content": {
+        "cli": {
+          "title": "CLI",
+          "description": "Validate files from terminal",
+          "commands": [
+            {
+              "label": "Quick validation"
+            },
+            {
+              "label": "Install globally"
+            }
+          ]
+        },
+        "npm": {
+          "title": "npm Package",
+          "description": "Integrate validator with your app"
+        },
+        "docs": {
+          "title": "Documentation",
+          "description": "Full package documentation and usage examples"
+        }
+      }
+    }
   }
 }

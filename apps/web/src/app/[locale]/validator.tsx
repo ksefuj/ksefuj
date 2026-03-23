@@ -4,8 +4,8 @@ import { type ChangeEvent, type DragEvent, useCallback, useMemo, useRef, useStat
 import { track } from "@vercel/analytics";
 import { useTranslations } from "next-intl";
 import type { ValidationResult } from "@ksefuj/validator";
-import { translateValidationIssue } from "./validation-utils";
 import { Badge } from "@/components/badge";
+import { ValidationIssuesList } from "@/components/validation-issues-list";
 import { cn } from "@/lib/utils";
 
 interface ValidatorProps {
@@ -47,11 +47,9 @@ export function Validator({ locale }: ValidatorProps) {
 
   // Calculate summary
   const summary: ValidationSummary = useMemo(() => {
-    const validFiles = files.filter(
-      (f) =>
-        f.status === "completed" &&
-        f.result?.valid &&
-        !f.result.issues.some((i) => i.code.severity === "error"),
+    const completedFiles = files.filter((f) => f.status === "completed");
+    const validFiles = completedFiles.filter(
+      (f) => f.result?.valid && !f.result.issues.some((i) => i.code.severity === "error"),
     );
     const errorFiles = files.filter(
       (f) =>
@@ -59,14 +57,11 @@ export function Validator({ locale }: ValidatorProps) {
         (f.status === "completed" &&
           (!f.result?.valid || f.result.issues.some((i) => i.code.severity === "error"))),
     );
-    const warningFiles = files.filter(
-      (f) =>
-        f.status === "completed" &&
-        f.result?.valid &&
-        f.result.issues.some((i) => i.code.severity === "warning"),
+    const warningFiles = completedFiles.filter(
+      (f) => f.result?.valid && f.result.issues.some((i) => i.code.severity === "warning"),
     );
 
-    const allIssues = files.flatMap((f) => f.result?.issues || []);
+    const allIssues = completedFiles.flatMap((f) => f.result?.issues || []);
     const errorIssues = allIssues.filter((i) => i.code.severity === "error");
     const warningIssues = allIssues.filter((i) => i.code.severity === "warning");
 
@@ -118,10 +113,15 @@ export function Validator({ locale }: ValidatorProps) {
       // Process files
       try {
         // Dynamic import to avoid SSR issues
-        const { validate } = await import("@ksefuj/validator");
+        const { validate } = await import("@ksefuj/validator/validate");
 
         const results = await Promise.all(
           xmlFiles.map(async (file, index) => {
+            // Update this file to validating status
+            setFiles((current) =>
+              current.map((f, i) => (i === index ? { ...f, status: "validating" as const } : f)),
+            );
+
             try {
               const content = await file.text();
               const result = await validate(content, {
@@ -231,21 +231,24 @@ export function Validator({ locale }: ValidatorProps) {
   };
 
   const getFileStatus = (file: FileValidationResult) => {
+    if (file.status === "pending" || file.status === "validating") {
+      return "validating";
+    }
     if (file.status === "error") {
       return "error";
     }
-    if (file.status === "validating") {
-      return "validating";
+    if (file.status === "completed") {
+      const hasErrors = file.result?.issues.some((i) => i.code.severity === "error");
+      const hasWarnings = file.result?.issues.some((i) => i.code.severity === "warning");
+      if (hasErrors) {
+        return "error";
+      }
+      if (hasWarnings) {
+        return "warning";
+      }
+      return "success";
     }
-    const hasErrors = file.result?.issues.some((i) => i.code.severity === "error");
-    const hasWarnings = file.result?.issues.some((i) => i.code.severity === "warning");
-    if (hasErrors) {
-      return "error";
-    }
-    if (hasWarnings) {
-      return "warning";
-    }
-    return "success";
+    return "validating";
   };
 
   const getStatusIcon = (status: string) => {
@@ -370,13 +373,18 @@ export function Validator({ locale }: ValidatorProps) {
           <div
             className={cn(
               "rounded-2xl border p-6 transition-all",
-              summary.errorFiles > 0 && "bg-rose-50 border-rose-200",
-              summary.errorFiles === 0 &&
+              validating && "bg-blue-50 border-blue-200",
+              !validating && summary.errorFiles > 0 && "bg-rose-50 border-rose-200",
+              !validating &&
+                summary.errorFiles === 0 &&
                 summary.warningFiles > 0 &&
                 "bg-amber-50 border-amber-200",
-              summary.errorFiles === 0 &&
+              !validating &&
+                summary.errorFiles === 0 &&
                 summary.warningFiles === 0 &&
+                files.length > 0 &&
                 "bg-emerald-50 border-emerald-200",
+              !validating && files.length === 0 && "bg-white border-slate-200",
             )}
           >
             <div className="flex items-center justify-between">
@@ -385,12 +393,26 @@ export function Validator({ locale }: ValidatorProps) {
                 <div
                   className={cn(
                     "w-12 h-12 rounded-xl flex items-center justify-center",
-                    summary.errorFiles > 0 && "bg-rose-100",
-                    summary.errorFiles === 0 && summary.warningFiles > 0 && "bg-amber-100",
-                    summary.errorFiles === 0 && summary.warningFiles === 0 && "bg-emerald-100",
+                    validating && "bg-blue-100",
+                    !validating && summary.errorFiles > 0 && "bg-rose-100",
+                    !validating &&
+                      summary.errorFiles === 0 &&
+                      summary.warningFiles > 0 &&
+                      "bg-amber-100",
+                    !validating &&
+                      summary.errorFiles === 0 &&
+                      summary.warningFiles === 0 &&
+                      files.length > 0 &&
+                      "bg-emerald-100",
+                    !validating && files.length === 0 && "bg-slate-100",
                   )}
                 >
                   {(() => {
+                    if (validating) {
+                      return (
+                        <div className="w-6 h-6 rounded-full border-2 border-blue-600 border-t-transparent animate-spin" />
+                      );
+                    }
                     if (summary.errorFiles > 0) {
                       return (
                         <svg
@@ -425,17 +447,20 @@ export function Validator({ locale }: ValidatorProps) {
                         </svg>
                       );
                     }
-                    return (
-                      <svg
-                        className="w-6 h-6 text-emerald-600"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                      </svg>
-                    );
+                    if (files.length > 0) {
+                      return (
+                        <svg
+                          className="w-6 h-6 text-emerald-600"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={2}
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                      );
+                    }
+                    return null;
                   })()}
                 </div>
 
@@ -443,6 +468,9 @@ export function Validator({ locale }: ValidatorProps) {
                 <div>
                   <h2 className="text-xl font-bold text-slate-900 font-display">
                     {(() => {
+                      if (validating) {
+                        return t("summary.validating", { count: summary.totalFiles });
+                      }
                       if (summary.errorFiles > 0) {
                         return t("summary.hasErrors", {
                           errorCount: summary.errorFiles,
@@ -455,32 +483,36 @@ export function Validator({ locale }: ValidatorProps) {
                           totalCount: summary.totalFiles,
                         });
                       }
-                      return t("summary.allValid");
+                      if (files.length > 0) {
+                        return t("summary.allValid");
+                      }
+                      return t("summary.noFiles");
                     })()}
                   </h2>
 
                   <div className="flex gap-3 mt-1">
-                    {summary.validFiles > 0 && (
+                    {!validating && summary.validFiles > 0 && (
                       <Badge variant="success">
                         {t("summary.valid", { count: summary.validFiles })}
                       </Badge>
                     )}
-                    {summary.errorFiles > 0 && (
+                    {!validating && summary.errorFiles > 0 && (
                       <Badge variant="error">
                         {t("summary.errors", { count: summary.errorFiles })}
                       </Badge>
                     )}
-                    {summary.warningFiles > 0 && (
+                    {!validating && summary.warningFiles > 0 && (
                       <Badge variant="warning">
                         {t("summary.warnings", { count: summary.warningFiles })}
                       </Badge>
                     )}
+                    {validating && <Badge variant="info">{t("summary.processing")}</Badge>}
                   </div>
                 </div>
               </div>
 
               {/* Reset Button */}
-              <button onClick={handleReset} className="btn-ghost">
+              <button onClick={handleReset} className="btn-ghost" disabled={validating}>
                 {t("actions.newValidation")}
               </button>
             </div>
@@ -544,40 +576,9 @@ export function Validator({ locale }: ValidatorProps) {
 
                     {/* Expanded Issues */}
                     {isExpanded && file.result?.issues && (
-                      <div className="px-4 pb-3 bg-slate-50 border-t border-slate-100">
-                        <div className="space-y-1 mt-3">
-                          {file.result.issues.map((issue, index) => (
-                            <div key={index} className="flex items-start gap-2 py-1">
-                              {issue.code.severity === "error" ? (
-                                <svg
-                                  className="w-3.5 h-3.5 mt-0.5 text-rose-500 flex-shrink-0"
-                                  fill="currentColor"
-                                  viewBox="0 0 20 20"
-                                >
-                                  <path
-                                    fillRule="evenodd"
-                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                                    clipRule="evenodd"
-                                  />
-                                </svg>
-                              ) : (
-                                <svg
-                                  className="w-3.5 h-3.5 mt-0.5 text-amber-500 flex-shrink-0"
-                                  fill="currentColor"
-                                  viewBox="0 0 20 20"
-                                >
-                                  <path
-                                    fillRule="evenodd"
-                                    d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
-                                    clipRule="evenodd"
-                                  />
-                                </svg>
-                              )}
-                              <p className="text-xs text-slate-700">
-                                {translateValidationIssue(issue, t)}
-                              </p>
-                            </div>
-                          ))}
+                      <div className="px-4 pb-4 bg-slate-50/50 border-t border-slate-100">
+                        <div className="mt-4">
+                          <ValidationIssuesList issues={file.result.issues} maxDisplayed={20} />
                         </div>
                       </div>
                     )}

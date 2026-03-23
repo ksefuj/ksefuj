@@ -106,25 +106,37 @@ Full compliance with official Ministry of Finance FA(3) schemas using libxml2-wa
 
 ### 2. Semantic Business Rules
 
-Catches common errors that XSD cannot express:
+**42 comprehensive validation rules** based on the official FA(3) information sheet from the
+Ministry of Finance.
 
-- Required JST/GV fields in Podmiot2
-- Correct P_12 VAT rate enumerations
-- Reverse charge consistency (P_13_8 requires P_18 and "np I")
-- Exchange rate placement rules (KursWaluty vs KursWalutyZ)
-- GTU format validation
-- Correction invoice (KOR) validation
-- Advance (ZAL) and settlement (ROZ) invoice rules
-- Simplified invoice validation (≤450 PLN)
-- WDT/Export invoice requirements
-- VAT margin procedure validation
-- Third-party (Podmiot3) role validation
-- Payment information consistency
+#### Rule Categories
+
+1. **Podmiot Rules** (8 rules) — Entity validation, JST/GV requirements, NIP placement
+2. **Fa Core Rules** (5 rules) — P_15 requirement, mutual exclusions, currency handling
+3. **Adnotacje Rules** (11 rules) — All mandatory fields, selection logic for exemptions/margin
+   procedures
+4. **FaWiersz Rules** (4 rules) — Tax rate validation, GTU format, decimal precision
+5. **Corrective Invoice Rules** (2 rules) — KSeF number consistency, reverse charge validation
+6. **Payment & Transaction Rules** (6 rules) — Payment dates, bank accounts, currency pairs
+7. **Format Rules** (2 rules) — Number formatting, separator validation
+8. **Additional Business Logic Rules** (4 rules) — Tax calculations, bank account format, line
+   number uniqueness, negative quantities
+
+#### Key Validations
+
+- **Constitution-based**: Each rule references specific sections from the official FA(3) information
+  sheet
+- **Precise error reporting**: Exact XPath locations, error context, and fix suggestions
+- **Common gotchas**: NIP field placement, GTU format, decimal precision, selection logic
+- **Business logic**: Currency conversions, tax rate consistency, entity relationships
 
 ## Testing
 
-The validator is tested against **all 26 official KSeF FA(3) examples** from the Polish Ministry of
-Finance, ensuring 100% compliance with government standards. These examples cover:
+Comprehensive test suite ensuring 100% compliance with government standards:
+
+### Test Coverage
+
+The validator is tested against official MF examples and common invoice patterns:
 
 - Standard VAT invoices
 - Correction invoices (KOR) - both universal and difference methods
@@ -133,10 +145,26 @@ Finance, ensuring 100% compliance with government standards. These examples cove
 - WDT (intra-community) and export invoices
 - VAT margin procedures
 - Foreign currency invoices
-- Invoices with attachments
-- And more edge cases
+- Invoices with attachments and edge cases
 
-All official examples pass validation, guaranteeing compatibility with the KSeF 2.0 system.
+### Semantic Rule Testing
+
+**100+ targeted test cases** for each semantic validation rule:
+
+- Positive tests (valid cases that should pass)
+- Negative tests (invalid cases with specific error expectations)
+- Edge cases and boundary conditions
+- Constitution-based test scenarios from FA(3) information sheet
+
+### Test Framework
+
+- **Vitest** for fast, modern testing
+- **XSD + Semantic dual validation** for each test case
+- **Detailed error assertions** with exact error codes and locations
+- **CI/CD integration** ensuring all tests pass before deployment
+
+All tests guarantee compatibility with the KSeF 2.0 system and adherence to Ministry of Finance
+specifications.
 
 ## License
 

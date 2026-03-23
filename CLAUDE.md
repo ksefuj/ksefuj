@@ -116,6 +116,13 @@ Quick reference (the full doc has all tokens, classes, and component specs):
 - **Validator**: Pure TypeScript, zero runtime dependencies for browser use
 - **Deployment**: Vercel (free tier)
 
+### Validator Reference Documents
+
+The `packages/validator/CLAUDE.md` contains package-specific instructions. The canonical reference
+for all FA(3) semantic rules is `packages/validator/docs/fa3-information-sheet.md` — a structured
+conversion of the official 174-page MF information sheet. Always consult it before touching semantic
+validation logic.
+
 ## Validation Architecture
 
 Two layers:
@@ -124,48 +131,79 @@ Two layers:
 
 Full XML validation against the official FA(3) XSD schema from Ministry of Finance.
 
-- **✅ IMPLEMENTED**: `libxml2-wasm` for client-side XSD validation in the browser
-- **✅ BUNDLED SCHEMAS**: All schemas downloaded and bundled locally to avoid CORS issues
-- **✅ OFFLINE CAPABLE**: No network requests needed - schemas embedded in package
-- **✅ OFFICIAL COMPLIANCE**: Uses exact schemas from `crd.gov.pl` (downloaded at build time)
-- **✅ PERFORMANCE**: Singleton validator pattern with efficient resource reuse
+- **Client-side validation**: `libxml2-wasm` for XSD validation in the browser
+- **Bundled schemas**: All schemas downloaded and bundled locally to avoid CORS issues
+- **Offline capable**: No network requests needed - schemas embedded in package
+- **Official compliance**: Uses exact schemas from `crd.gov.pl` (downloaded at build time)
+- **High performance**: Singleton validator pattern with efficient resource reuse
 
 ### 2. Semantic Rules
 
-Business logic checks that XSD cannot express. Already implemented in `semantic.ts`:
+Business logic checks that XSD cannot express.
 
-- `PODMIOT2_JST_GV` — JST and GV elements required in Podmiot2
-- `P12_ENUMERATION` — P_12 must be valid tax rate ("23", "np I", etc.)
-- `REVERSE_CHARGE_CONSISTENCY` — P_13_8 requires P_18=1 and P_12="np I"
-- `KURS_WALUTY_PLACEMENT` — exchange rate goes in FaWiersz/KursWaluty, not Fa/KursWalutyZ (except
-  for advance invoices)
-- `GTU_FORMAT` — must be `<GTU>GTU_12</GTU>`, not `<GTU_12>1</GTU_12>`
-- `TRAILING_ZEROS` — warn about unnecessary trailing zeros in amounts
-- `P15_MISSING` — P_15 (total amount) is mandatory
-- `ADNOTACJE_COMPLETENESS` — all Adnotacje sub-elements required
+**42 comprehensive validation rules** based on the official FA(3) information sheet from the
+Ministry of Finance.
+
+**Key features:**
+
+- **Constitution-based**: Rules trace directly to specific sections in the official FA(3)
+  information sheet
+- **Comprehensive coverage**: All 8 rule groups (Podmiot, Fa Core, Adnotacje, FaWiersz, Corrective,
+  Payment & Transaction, Format, Additional Business Logic)
+- **Precise error reporting**: Each issue includes exact XPath location, error context, and fix
+  suggestions
+- **Test coverage**: 100+ test cases based on official MF examples
+
+**Rule categories:**
+
+1. **Podmiot Rules** (8 rules) - Entity validation, JST/GV requirements, NIP placement
+2. **Fa Core Rules** (5 rules) - P_15 requirement, mutual exclusions, currency handling
+3. **Adnotacje Rules** (11 rules) - All mandatory fields, selection logic for exemptions/margin
+   procedures
+4. **FaWiersz Rules** (4 rules) - Tax rate validation, GTU format, decimal precision
+5. **Corrective Invoice Rules** (2 rules) - KSeF number consistency, reverse charge validation
+6. **Payment & Transaction Rules** (6 rules) - Payment dates, bank accounts, currency pairs
+7. **Format Rules** (2 rules) - Number formatting, separator validation
+8. **Additional Business Logic Rules** (4 rules) - Tax calculations, bank account format, line
+   number uniqueness, negative quantities
 
 ## KSeF FA(3) Key Gotchas
 
-These are the most common validation errors. The semantic validator catches them, and error messages
-should explain how to fix them:
+Common validation errors now automatically detected by our validator:
 
-1. Missing JST/GV in Podmiot2 → add `<JST>2</JST><GV>2</GV>`
-2. `KursWalutyZ` in Fa for non-advance invoices → move to FaWiersz/KursWaluty
-3. `P_12 = "NP"` instead of `"np I"` or `"np II"` (with space!)
-4. `<GTU_12>1</GTU_12>` instead of `<GTU>GTU_12</GTU>`
-5. Wrong field order in FaWiersz (XSD is xs:sequence — order is strict)
-6. `NazwaBank` instead of `NazwaBanku`
-7. P_13_x fields with value 0 — omit entirely instead
-8. Incomplete Adnotacje structure
+### XSD Schema Issues (detected by libxml2-wasm)
 
-## Number Formatting Convention
+1. **Wrong field order** - XSD uses xs:sequence, order is strict
+2. **Typos in element names** - `NazwaBank` instead of `NazwaBanku`
+3. **Missing required elements** - Each element has specific mandatory children
 
-Never add unnecessary trailing zeros:
+### Semantic Issues (detected by our 38 rules)
 
-- Amounts (P_11, P_13_x, P_15): 2 decimal places → `6000.00`
-- Unit price (P_9A): as many as needed → `75.00` not `75.00000000`
-- Quantity (P_8B): as many as needed → `80` not `80.000000`
-- Exchange rate (KursWaluty): as many as NBP provides → `3.7075` not `3.707500`
+1. **Missing mandatory Adnotacje fields** - P_16, P_17, P_18, P_18A, Zwolnienie,
+   NoweSrodkiTransportu, P_23, PMarzy
+2. **Incorrect JST/GV setup** - JST=1 requires Podmiot3 with Rola=8, GV=1 requires Podmiot3 with
+   Rola=10
+3. **Polish NIP in wrong field** - Should be in NIP field, not NrVatUE for proper KSeF access
+4. **Wrong tax rates for foreign buyers** - Use 'np I'/'np II' for foreign entities, not 'oo'
+5. **GTU format errors** - Should be `<GTU>GTU_12</GTU>`, not `<GTU_12>1</GTU_12>`
+6. **Decimal precision violations** - Amounts >2 decimals, prices >8 decimals, quantities >6
+   decimals
+7. **Selection logic violations** - Zwolnienie, NoweSrodkiTransportu, PMarzy require exactly one
+   selection
+8. **Currency inconsistencies** - Foreign currency needs PLN tax conversions, WalutaUmowna cannot be
+   PLN
+9. **Number formatting** - No thousand separators, only dot as decimal separator
+
+All these issues are now caught automatically with precise error locations and fix suggestions.
+
+## Decimal Precision Requirements
+
+Follow official FA(3) specification (§2.6) decimal precision limits:
+
+- **General amounts** (P_11, P_13_x, P_15): up to 2 decimal places → `6000.00`, `1230.50`
+- **Unit prices** (P_9A, P_9B): up to 8 decimal places → `75.12345678`
+- **Quantities** (P_8B): up to 6 decimal places → `80.123456`
+- **Exchange rates** (KursWaluty): up to 6 decimal places → `3.707500` (NBP precision)
 
 ## KSeF 2.0 Resources
 
