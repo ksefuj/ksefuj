@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Badge } from "@/components/badge";
 import { TableOfContents } from "@/components/table-of-contents";
+import { ContributeFooter } from "@/components/contribute-footer";
 import type { Frontmatter } from "@/lib/content";
 
 interface BlogPostLayoutProps {
@@ -82,6 +83,13 @@ export function BlogPostLayout({
 
           {/* MDX prose content */}
           <div className="prose prose-slate max-w-none mdx-content">{children}</div>
+
+          {/* GitHub contribution footer */}
+          <ContributeFooter
+            locale={locale}
+            section={frontmatter.section}
+            slug={frontmatter.slug}
+          />
         </article>
 
         {/* Sidebar TOC (desktop only) */}
