@@ -309,12 +309,12 @@
           "title": "Вартість",
           "ksefuj": "Завжди безкоштовно",
           "freemium": "З обмеженнями",
-          "enterprise": "€25-50 за 1к"
+          "enterprise": "Платно / за використання"
         },
         "validation": {
           "title": "Валідація",
           "ksefuj": "XSD + семантичні правила МФ",
-          "freemium": "Тільки XSD",
+          "freemium": "XSD + обмежена",
           "enterprise": "XSD + часткова"
         },
         "localXsd": {
@@ -326,7 +326,7 @@
         "privacy": {
           "title": "Приватність даних",
           "ksefuj": "У браузері",
-          "freemium": "На серверах",
+          "freemium": "По-різному",
           "enterprise": "На серверах"
         },
         "errorDetails": {

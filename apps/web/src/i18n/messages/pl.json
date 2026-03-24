@@ -309,12 +309,12 @@
           "title": "Koszt",
           "ksefuj": "Zawsze darmowe",
           "freemium": "Z limitami",
-          "enterprise": "€25-50/1k faktur"
+          "enterprise": "Płatne / za użycie"
         },
         "validation": {
           "title": "Walidacja",
           "ksefuj": "XSD + reguły semantyczne MF",
-          "freemium": "Tylko XSD",
+          "freemium": "XSD + ograniczona",
           "enterprise": "XSD + częściowa"
         },
         "localXsd": {
@@ -326,7 +326,7 @@
         "privacy": {
           "title": "Prywatność danych",
           "ksefuj": "W przeglądarce",
-          "freemium": "Na serwerze",
+          "freemium": "Różnie",
           "enterprise": "Na serwerze"
         },
         "errorDetails": {

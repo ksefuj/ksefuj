@@ -309,12 +309,12 @@
           "title": "Cost",
           "ksefuj": "Always free",
           "freemium": "Free with limits",
-          "enterprise": "€25-50 per 1k"
+          "enterprise": "Paid / usage-based"
         },
         "validation": {
           "title": "Validation",
           "ksefuj": "XSD + MF semantic rules",
-          "freemium": "XSD only",
+          "freemium": "XSD + limited",
           "enterprise": "XSD + partial"
         },
         "localXsd": {
@@ -326,7 +326,7 @@
         "privacy": {
           "title": "Data privacy",
           "ksefuj": "In browser",
-          "freemium": "On servers",
+          "freemium": "Varies",
           "enterprise": "On servers"
         },
         "errorDetails": {
