@@ -1,3 +1,7 @@
+# Bootstrap content directory structure and stage any new content files
+pnpm setup-content
+git add apps/web/content/ 2>/dev/null || true
+
 # Run format check
 pnpm format:check || (
   echo "❌ Formatting issues found. Run 'pnpm format' to fix them."

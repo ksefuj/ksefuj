@@ -87,7 +87,16 @@ function Admonition({
       >
         <path strokeLinecap="round" strokeLinejoin="round" d={iconPath} />
       </svg>
-      <div className="leading-relaxed">{children}</div>
+      <div className="admonition-body leading-relaxed">{children}</div>
+    </div>
+  );
+}
+
+/** Responsive table wrapper — prevents overflow on narrow screens */
+export function MdxTable({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="overflow-x-auto my-4">
+      <table className="w-full text-sm">{children}</table>
     </div>
   );
 }

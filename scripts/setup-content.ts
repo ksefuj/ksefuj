@@ -3,15 +3,19 @@
 /**
  * Content Setup Script for ksefuj.to
  *
- * Creates the content directory structure and seeds initial MDX blog posts.
- * Run this before `next build` or `next dev` to ensure content files exist.
+ * Creates the content directory structure. Content files (MDX) are committed
+ * directly to git — this script only ensures the directories exist so that
+ * `next dev` and `next build` don't fail on a fresh checkout.
+ *
+ * On first run it also seeds initial content files so they get picked up by
+ * the pre-commit hook and become proper committed files in the repo.
  *
  * Usage:
  *   pnpm setup-content             (from monorepo root)
  *   tsx scripts/setup-content.ts   (from monorepo root)
  *
  * Also invoked automatically via package.json `predev` / `prebuild` hooks
- * in apps/web.
+ * in apps/web and by the husky pre-commit hook.
  */
 
 import { existsSync, mkdirSync, writeFileSync } from "fs";
@@ -41,7 +45,7 @@ function writeContentFile(filePath: string, content: string): void {
     return; // Never overwrite existing content files
   }
   writeFileSync(filePath, content, "utf-8");
-  console.log(`  written ${filePath}`);
+  console.log(`  seeded  ${filePath}`);
 }
 
 // ---------------------------------------------------------------------------
@@ -55,7 +59,7 @@ date: 2026-03-25
 section: blog
 locale: pl
 slug: "ksef-od-1-kwietnia-2026"
-tags: [ksef, fa3, obowiazek, jdg]
+tags: ["KSeF", "FA(3)", "obowiązek", "JDG"]
 audience: [jdg, accountant]
 sources:
   - label: "FAQ MF — KSeF 2.0"
@@ -91,7 +95,7 @@ KSeF funkcjonuje w Polsce od 2021 roku jako system dobrowolny. Od 1 lutego 2026 
 Harmonogram wdrożenia KSeF wynika z przepisów ustawy o VAT (art. 145m i nast.):
 
 | Data | Kto | Co się stało |
-|------|-----|-------------|
+| :--- | :--- | :--- |
 | **1 lutego 2026** | Podatnicy VAT o najwyższych obrotach w 2024 r. | KSeF obowiązkowy |
 | **1 kwietnia 2026** | Wszyscy pozostali czynni podatnicy VAT | KSeF obowiązkowy |
 
@@ -294,10 +298,14 @@ function main(): void {
     }
   }
 
-  // Write blog posts
+  // Seed content files that are not yet committed to git.
+  // Once seeded, the pre-commit hook stages them so they become proper
+  // committed files. The seeder is idempotent — it never overwrites.
   writeContentFile(join(contentDir, "pl", "blog", "ksef-od-1-kwietnia-2026.mdx"), ksef2026Pl);
 
   console.log("Content setup complete.");
 }
 
 main();
+
+
