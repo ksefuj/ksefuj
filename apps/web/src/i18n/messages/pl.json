@@ -310,7 +310,7 @@
             {
               "id": "faktura-korygujaca",
               "question": "Jak wygląda faktura korygująca w KSeF?",
-              "answer": "Faktura korygująca w KSeF musi zawierać numer KSeF faktury pierwotnej — bez tego pola korekta zostanie odrzucona. Wysyłasz ją tak samo jak zwykłą fakturę: jako plik XML do KSeF. Po zaakceptowaniu otrzymuje własny numer KSeF. Zasady uzgadniania korekt z nabywcą pozostają bez zmian."
+              "answer": "Faktura korygująca w KSeF musi zawierać numer KSeF faktury pierwotnej — jeśli ta faktura była wystawiona w KSeF. Wysyłasz ją tak samo jak zwykłą fakturę: jako plik XML do KSeF. Po zaakceptowaniu otrzymuje własny numer KSeF. Zasady uzgadniania korekt z nabywcą pozostają bez zmian."
             },
             {
               "id": "faktura-walutowa",
@@ -418,7 +418,7 @@
             {
               "id": "czeste-bledy",
               "question": "Jakie są najczęstsze błędy w fakturach KSeF?",
-              "answer": "Najczęstsze błędy to: brakujące pola adnotacji (P_16-P_23), zły format GTU (powinno być GTU_01, nie osobny element), brak przeliczenia walut na PLN, błędny NIP w polu dla numeru VAT UE zamiast w polu NIP, oraz zbyt duża precyzja dziesiętna kwot. Walidator ksefuj.to wykrywa wszystkie te błędy automatycznie i podpowiada, jak je naprawić."
+              "answer": "Najczęstsze błędy to: brakujące obowiązkowe pola adnotacji (P_16, P_17, P_18, P_18A, P_23 i inne pola sekcji Adnotacje), zły format GTU (powinno być GTU_01, nie osobny element), brak przeliczenia walut na PLN, błędny NIP w polu dla numeru VAT UE zamiast w polu NIP, oraz zbyt duża precyzja dziesiętna kwot. Walidator ksefuj.to wykrywa wszystkie te błędy automatycznie i podpowiada, jak je naprawić."
             },
             {
               "id": "przechowywanie-danych",

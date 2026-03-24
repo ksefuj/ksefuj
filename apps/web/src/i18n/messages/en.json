@@ -265,7 +265,7 @@
             {
               "id": "corrective-invoice",
               "question": "How does a corrective invoice work in KSeF?",
-              "answer": "A corrective invoice in KSeF must include the KSeF number of the original invoice — without this field, the correction will be rejected. You submit it the same way as a regular invoice: as an XML file to KSeF. After acceptance, it receives its own KSeF number."
+              "answer": "A corrective invoice in KSeF must include the KSeF number of the original invoice — when that invoice was issued through KSeF. You submit it the same way as a regular invoice: as an XML file to KSeF. After acceptance, it receives its own KSeF number."
             },
             {
               "id": "foreign-currency",
