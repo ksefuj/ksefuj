@@ -1,6 +1,6 @@
 import { Validator } from "./validator";
 import { LanguagePicker } from "./language-picker";
-import { StructuredData } from "./structured-data";
+import { type FaqItem, StructuredData } from "./structured-data";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { HeroSection } from "./sections/hero-section";
@@ -99,7 +99,7 @@ export default async function Home({ params }: Props) {
     globe: globeIcon,
   };
 
-  const faqItems = t.raw("structuredData.faq") as { question: string; answer: string }[];
+  const faqItems = t.raw("structuredData.faq") as FaqItem[];
 
   return (
     <>
