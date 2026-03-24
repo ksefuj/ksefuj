@@ -1,4 +1,7 @@
+"use client";
+
 import React from "react";
+import { track } from "@vercel/analytics";
 
 interface ContributeFooterProps {
   locale: string;
@@ -76,6 +79,7 @@ export function ContributeFooter({ locale, section, slug }: ContributeFooterProp
               href={editUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => track("content_edit_on_github", { locale, section, slug })}
               className="inline-flex items-center gap-1.5 bg-violet-600 hover:bg-violet-700 text-white rounded-xl px-4 py-2 text-sm font-semibold transition-colors"
             >
               <PencilIcon className="w-3.5 h-3.5" />
@@ -85,6 +89,7 @@ export function ContributeFooter({ locale, section, slug }: ContributeFooterProp
               href={issueUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => track("content_issue_opened", { locale, section, slug })}
               className="inline-flex items-center gap-1.5 bg-white border border-slate-200 hover:border-violet-300 text-slate-700 rounded-xl px-4 py-2 text-sm font-semibold transition-colors"
             >
               <ChatBubbleIcon className="w-3.5 h-3.5" />

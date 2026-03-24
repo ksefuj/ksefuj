@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { track } from "@vercel/analytics";
 
 interface CopyButtonProps {
   text: string;
@@ -14,6 +15,7 @@ export function CopyButton({ text }: CopyButtonProps) {
       await navigator.clipboard.writeText(text);
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
+      track("code_copied");
     } catch {
       // clipboard API unavailable (e.g. non-secure context) — silently ignore
     }

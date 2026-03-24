@@ -1,4 +1,7 @@
-import { getTranslations } from "next-intl/server";
+"use client";
+
+import { useTranslations } from "next-intl";
+import { track } from "@vercel/analytics";
 
 const REPO = "https://github.com/ksefuj/ksefuj";
 
@@ -9,8 +12,8 @@ interface Props {
   slug: string;
 }
 
-export async function TranslationBanner({ uiLocale, contentLocale, section, slug }: Props) {
-  const t = await getTranslations({ locale: uiLocale, namespace: "translationBanner" });
+export function TranslationBanner({ uiLocale, contentLocale, section, slug }: Props) {
+  const t = useTranslations("translationBanner");
   const contentLanguageName = t(`languageNames.${contentLocale}` as "languageNames.pl");
 
   const issueUrl = `${REPO}/issues/new?labels=translation&title=${encodeURIComponent(
@@ -40,6 +43,9 @@ export async function TranslationBanner({ uiLocale, contentLocale, section, slug
         href={issueUrl}
         target="_blank"
         rel="noopener noreferrer"
+        onClick={() =>
+          track("translation_contribution_clicked", { uiLocale, contentLocale, section, slug })
+        }
         className="shrink-0 font-medium text-amber-700 underline underline-offset-2 hover:text-amber-900 transition-colors"
       >
         {t("contribute")}

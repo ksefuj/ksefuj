@@ -1,4 +1,7 @@
+"use client";
+
 import React from "react";
+import { track } from "@vercel/analytics";
 import { CopyButton } from "./copy-button";
 
 /** Inline source citation with an external link icon */
@@ -13,6 +16,9 @@ export function Source({ href, label }: SourceProps) {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={() =>
+        track("external_link_clicked", { href, domain: new URL(href).hostname, source: true })
+      }
       className="inline-flex items-center gap-1.5 text-sm text-violet-600 hover:text-violet-700 transition-colors"
     >
       <svg
