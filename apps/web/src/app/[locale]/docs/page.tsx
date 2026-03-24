@@ -13,11 +13,14 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "meta" });
+  const [tMeta, tContent] = await Promise.all([
+    getTranslations({ locale, namespace: "meta" }),
+    getTranslations({ locale, namespace: "content.docs" }),
+  ]);
 
   return {
-    title: `Dokumentacja — ${t("title")}`,
-    description: "Dokumentacja techniczna walidatora ksefuj i schematu FA(3).",
+    title: `${tContent("metaTitle")} — ${tMeta("title")}`,
+    description: tContent("metaDescription"),
     alternates: {
       canonical: locale === "pl" ? "/docs" : `/${locale}/docs`,
     },
@@ -26,7 +29,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function DocsListPage({ params }: Props) {
   const { locale } = await params;
-  const docs = await listContentItems(locale, "docs");
+  const [docs, t] = await Promise.all([
+    listContentItems(locale, "docs"),
+    getTranslations({ locale, namespace: "content" }),
+  ]);
 
   return (
     <>
@@ -36,22 +42,18 @@ export default async function DocsListPage({ params }: Props) {
           <div className="space-y-12">
             <div className="space-y-3">
               <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900">
-                Dokumentacja
+                {t("docs.title")}
               </h1>
-              <p className="text-lg text-slate-600">
-                Dokumentacja techniczna walidatora i schematu FA(3).
-              </p>
+              <p className="text-lg text-slate-600">{t("docs.description")}</p>
             </div>
 
             {docs.length === 0 ? (
-              <p className="text-slate-500">Dokumentacja jest w przygotowaniu.</p>
+              <p className="text-slate-500">{t("docs.empty")}</p>
             ) : (
               <div className="divide-y divide-slate-100">
                 {docs.map((doc) => {
-                  const href =
-                    locale === "pl"
-                      ? `/docs/${doc.frontmatter.slug}`
-                      : `/${locale}/docs/${doc.frontmatter.slug}`;
+                  const p = locale === "pl" ? "" : `/${locale}`;
+                  const href = `${p}/docs/${doc.frontmatter.slug}`;
                   return (
                     <Link
                       key={doc.frontmatter.slug}
@@ -71,11 +73,7 @@ export default async function DocsListPage({ params }: Props) {
                         stroke="currentColor"
                         strokeWidth={2}
                       >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M9 5l7 7-7 7"
-                        />
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                       </svg>
                     </Link>
                   );

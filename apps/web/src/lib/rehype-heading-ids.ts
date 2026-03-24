@@ -14,16 +14,19 @@ interface UnistNode {
 }
 
 function getTextContent(node: UnistNode): string {
-  if (node.type === "text") {return node.value ?? "";}
-  if (Array.isArray(node.children)) {return node.children.map(getTextContent).join("");}
+  if (node.type === "text") {
+    return node.value ?? "";
+  }
+  if (Array.isArray(node.children)) {
+    return node.children.map(getTextContent).join("");
+  }
   return "";
 }
 
-function visitElements(
-  node: UnistNode,
-  callback: (node: UnistNode) => void,
-): void {
-  if (node.type === "element") {callback(node);}
+function visitElements(node: UnistNode, callback: (node: UnistNode) => void): void {
+  if (node.type === "element") {
+    callback(node);
+  }
   if (Array.isArray(node.children)) {
     for (const child of node.children) {
       visitElements(child, callback);
@@ -34,10 +37,14 @@ function visitElements(
 export function rehypeAddHeadingIds() {
   return (tree: UnistNode) => {
     visitElements(tree, (node) => {
-      if (node.tagName !== "h2" && node.tagName !== "h3") {return;}
+      if (node.tagName !== "h2" && node.tagName !== "h3") {
+        return;
+      }
 
       const text = getTextContent(node);
-      if (!text) {return;}
+      if (!text) {
+        return;
+      }
 
       const id = text
         .toLowerCase()

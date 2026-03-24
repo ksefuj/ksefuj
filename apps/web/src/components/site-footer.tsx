@@ -7,10 +7,14 @@ import { useLocale, useTranslations } from "next-intl";
 export function SiteFooter() {
   const t = useTranslations("footer");
   const locale = useLocale();
-  const blogHref = locale === "pl" ? "/blog" : `/${locale}/blog`;
+  const p = locale === "pl" ? "" : `/${locale}`;
+
   return (
     <footer className="bg-slate-900 text-slate-400 border-t border-slate-800">
-      <div className="max-w-4xl mx-auto px-4 md:px-6 py-16">
+      <div
+        className="max-w-4xl mx-auto px-4 md:px-6 py-16"
+        style={{ paddingBottom: "max(4rem, env(safe-area-inset-bottom))" }}
+      >
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo & Description */}
           <div className="space-y-4">
@@ -51,17 +55,41 @@ export function SiteFooter() {
             </ul>
           </div>
 
-          {/* Legal */}
+          {/* Content */}
           <div className="space-y-4">
             <h3 className="text-slate-300 font-semibold text-sm uppercase tracking-wide">
-              {t("information")}
+              {t("content")}
             </h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href={blogHref} className="hover:text-slate-300 transition-colors">
+                <Link href={`${p}/blog`} className="hover:text-slate-300 transition-colors">
                   {t("blog")}
                 </Link>
               </li>
+              <li>
+                <Link href={`${p}/faq`} className="hover:text-slate-300 transition-colors">
+                  {t("faq")}
+                </Link>
+              </li>
+              <li>
+                <Link href={`${p}/docs`} className="hover:text-slate-300 transition-colors">
+                  {t("docs")}
+                </Link>
+              </li>
+              <li>
+                <Link href={`${p}/guides`} className="hover:text-slate-300 transition-colors">
+                  {t("guides")}
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Legal & Contact */}
+          <div className="space-y-4">
+            <h3 className="text-slate-300 font-semibold text-sm uppercase tracking-wide">
+              {t("legal")}
+            </h3>
+            <ul className="space-y-2 text-sm">
               <li>
                 <Link href="/privacy" className="hover:text-slate-300 transition-colors">
                   {t("privacyPolicy")}
@@ -73,17 +101,10 @@ export function SiteFooter() {
                 </Link>
               </li>
               <li>
-                <span>Apache 2.0 License</span>
+                <span>Apache 2.0</span>
               </li>
             </ul>
-          </div>
-
-          {/* Contact */}
-          <div className="space-y-4">
-            <h3 className="text-slate-300 font-semibold text-sm uppercase tracking-wide">
-              {t("contact")}
-            </h3>
-            <div className="space-y-2 text-sm">
+            <div className="pt-2 space-y-1 text-sm">
               <p>{t("emailLabel")}</p>
               <a
                 href="mailto:hej@ksefuj.to"

@@ -15,8 +15,13 @@ export function HeroSection({ title, description, trustLine, children }: HeroSec
         <div className="text-center space-y-6 mb-12">
           {trustLine && (
             <div className="animate-fade-up">
-              <Badge variant="info" className="text-xs">
-                {trustLine}
+              <Badge variant="info" className="text-xs text-center">
+                {trustLine.split(" • ").map((item, i, arr) => (
+                  <React.Fragment key={i}>
+                    <span className="whitespace-nowrap">{item}</span>
+                    {i < arr.length - 1 && " • "}
+                  </React.Fragment>
+                ))}
               </Badge>
             </div>
           )}

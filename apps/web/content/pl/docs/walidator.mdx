@@ -8,6 +8,8 @@ locale: pl
 slug: "walidator"
 tags: [walidator, fa3, xml]
 audience: [developer, accountant]
+translations:
+  en: "validator"
 seo:
   canonical: "/docs/walidator"
   ogImage: "/og/docs-walidator.png"
@@ -38,21 +40,30 @@ npx @ksefuj/validator faktura.xml
 import { validate } from "@ksefuj/validator";
 
 const result = await validate(xmlString);
-console.log(result.errors);   // błędy XSD
+console.log(result.errors); // błędy XSD
 console.log(result.warnings); // ostrzeżenia semantyczne
 ```
 
 ## Interpretacja wyników
 
-<FieldTable fields={[
-  { name: "errors", type: "ValidationIssue[]", description: "Błędy blokujące — faktura nie zostanie przyjęta przez KSeF" },
-  { name: "warnings", type: "ValidationIssue[]", description: "Ostrzeżenia — faktura może być przyjęta, ale warto poprawić" },
-  { name: "isValid", type: "boolean", description: "true jeśli brak błędów (ostrzeżenia nie wpływają na isValid)" }
-]} />
+<FieldTable>
+  <Field name="errors" type="ValidationIssue[]">
+    Błędy blokujące — faktura nie zostanie przyjęta przez KSeF
+  </Field>
+  <Field name="warnings" type="ValidationIssue[]">
+    Ostrzeżenia — faktura może być przyjęta, ale warto poprawić
+  </Field>
+  <Field name="isValid" type="boolean">
+    true jeśli brak błędów (ostrzeżenia nie wpływają na isValid)
+  </Field>
+</FieldTable>
 
 <Warning>
-Brak błędów w walidatorze ksefuj **nie gwarantuje przyjęcia** faktury przez KSeF — system MF może
-stosować dodatkowe reguły biznesowe nieujęte w schemacie FA(3).
+  Brak błędów w walidatorze ksefuj **nie gwarantuje przyjęcia** faktury przez KSeF — system MF może
+  stosować dodatkowe reguły biznesowe nieujęte w schemacie FA(3).
 </Warning>
 
-<Source href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd" label="Oficjalny schemat FA(3) XSD — crd.gov.pl" />
+<Source
+  href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+  label="Oficjalny schemat FA(3) XSD — crd.gov.pl"
+/>

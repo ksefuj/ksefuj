@@ -2,10 +2,15 @@ import type { ReactNode } from "react";
 import { Inter, JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
+export const viewport: Viewport = {
+  viewportFit: "cover",
+};
+
 export const metadata: Metadata = {
+  metadataBase: new URL("https://ksefuj.to"),
   icons: {
     icon: [
       { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
@@ -55,8 +60,9 @@ export default async function RootLayout({ children, params }: Props) {
     <html
       lang={locale}
       className={`${displayFont.variable} ${bodyFont.variable} ${monoFont.variable}`}
+      style={{ backgroundColor: "#FAFAF8" }}
     >
-      <body className="antialiased min-h-screen">
+      <body className="antialiased min-h-screen bg-[#FAFAF8]">
         {children}
         <Analytics />
         <SpeedInsights />

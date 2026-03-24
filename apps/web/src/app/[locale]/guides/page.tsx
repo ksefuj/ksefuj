@@ -4,7 +4,6 @@ import { getTranslations } from "next-intl/server";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SectionContainer } from "@/components/section-container";
-import { Badge } from "@/components/badge";
 import { LanguagePicker } from "../language-picker";
 import { listContentItems } from "@/lib/content";
 
@@ -14,33 +13,26 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "meta" });
+  const [tMeta, tContent] = await Promise.all([
+    getTranslations({ locale, namespace: "meta" }),
+    getTranslations({ locale, namespace: "content.guides" }),
+  ]);
 
   return {
-    title: `Przewodniki — ${t("title")}`,
-    description: "Przewodniki krok po kroku o KSeF i fakturach elektronicznych dla JDG i firm.",
+    title: `${tContent("metaTitle")} — ${tMeta("title")}`,
+    description: tContent("metaDescription"),
     alternates: {
-      canonical: locale === "pl" ? "/przewodniki" : `/${locale}/guides`,
+      canonical: locale === "pl" ? "/guides" : `/${locale}/guides`,
     },
   };
 }
 
-const difficultyLabel: Record<string, string> = {
-  beginner: "Podstawowy",
-  intermediate: "Średniozaawansowany",
-  advanced: "Zaawansowany",
-};
-
-const difficultyVariant: Record<string, "success" | "warning" | "error"> = {
-  beginner: "success",
-  intermediate: "warning",
-  advanced: "error",
-};
-
 export default async function GuidesListPage({ params }: Props) {
   const { locale } = await params;
-  const section = locale === "pl" ? "przewodniki" : "guides";
-  const guides = await listContentItems(locale, section);
+  const [guides, t] = await Promise.all([
+    listContentItems(locale, "guides"),
+    getTranslations({ locale, namespace: "content" }),
+  ]);
 
   return (
     <>
@@ -50,22 +42,18 @@ export default async function GuidesListPage({ params }: Props) {
           <div className="space-y-12">
             <div className="space-y-3">
               <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900">
-                Przewodniki
+                {t("guides.title")}
               </h1>
-              <p className="text-lg text-slate-600">
-                Krok po kroku przez KSeF i faktury elektroniczne.
-              </p>
+              <p className="text-lg text-slate-600">{t("guides.description")}</p>
             </div>
 
             {guides.length === 0 ? (
-              <p className="text-slate-500">Przewodniki są w przygotowaniu.</p>
+              <p className="text-slate-500">{t("guides.empty")}</p>
             ) : (
               <div className="grid gap-6 sm:grid-cols-2">
                 {guides.map((guide) => {
-                  const href =
-                    locale === "pl"
-                      ? `/przewodniki/${guide.frontmatter.slug}`
-                      : `/${locale}/guides/${guide.frontmatter.slug}`;
+                  const p = locale === "pl" ? "" : `/${locale}`;
+                  const href = `${p}/guides/${guide.frontmatter.slug}`;
                   return (
                     <Link
                       key={guide.frontmatter.slug}
@@ -73,18 +61,8 @@ export default async function GuidesListPage({ params }: Props) {
                       className="group block rounded-2xl border border-slate-200 bg-white p-6 hover:border-violet-200 hover:shadow-md transition-all"
                     >
                       <div className="flex flex-wrap items-center gap-2 mb-3">
-                        {guide.frontmatter.difficulty && (
-                          <Badge
-                            variant={
-                              difficultyVariant[guide.frontmatter.difficulty] ?? "neutral"
-                            }
-                          >
-                            {difficultyLabel[guide.frontmatter.difficulty] ??
-                              guide.frontmatter.difficulty}
-                          </Badge>
-                        )}
                         <span className="text-xs text-slate-400">
-                          {guide.readingTime} min
+                          {t("blog.readingTime", { minutes: guide.readingTime })}
                         </span>
                       </div>
                       <h2 className="text-xl font-bold text-slate-900 group-hover:text-violet-700 transition-colors leading-snug mb-2">

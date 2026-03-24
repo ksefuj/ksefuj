@@ -13,11 +13,14 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "meta" });
+  const [tMeta, tContent] = await Promise.all([
+    getTranslations({ locale, namespace: "meta" }),
+    getTranslations({ locale, namespace: "content.faq" }),
+  ]);
 
   return {
-    title: `FAQ — ${t("title")}`,
-    description: "Często zadawane pytania o KSeF, schemat FA(3) i walidator ksefuj.",
+    title: `${tContent("title")} — ${tMeta("title")}`,
+    description: tContent("metaDescription"),
     alternates: {
       canonical: locale === "pl" ? "/faq" : `/${locale}/faq`,
     },
@@ -26,8 +29,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function FaqPage({ params }: Props) {
   const { locale } = await params;
-  const faqSection = locale === "pl" ? "faq" : "faq";
-  const items = await listContentItems(locale, faqSection);
+  const [items, t] = await Promise.all([
+    listContentItems(locale, "faq"),
+    getTranslations({ locale, namespace: "content.faq" }),
+  ]);
 
   return (
     <>
@@ -37,15 +42,13 @@ export default async function FaqPage({ params }: Props) {
           <div className="max-w-2xl space-y-12">
             <div className="space-y-3">
               <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900">
-                FAQ
+                {t("title")}
               </h1>
-              <p className="text-lg text-slate-600">
-                Często zadawane pytania o KSeF i ksefuj.
-              </p>
+              <p className="text-lg text-slate-600">{t("description")}</p>
             </div>
 
             {items.length === 0 ? (
-              <p className="text-slate-500">FAQ jest w przygotowaniu.</p>
+              <p className="text-slate-500">{t("empty")}</p>
             ) : (
               <div className="space-y-8">
                 {await Promise.all(

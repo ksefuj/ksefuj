@@ -17,7 +17,9 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
   const [activeId, setActiveId] = useState<string>("");
 
   useEffect(() => {
-    if (headings.length === 0) {return;}
+    if (headings.length === 0) {
+      return;
+    }
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -31,13 +33,17 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
 
     headings.forEach(({ id }) => {
       const el = document.getElementById(id);
-      if (el) {observer.observe(el);}
+      if (el) {
+        observer.observe(el);
+      }
     });
 
     return () => observer.disconnect();
   }, [headings]);
 
-  if (headings.length === 0) {return null;}
+  if (headings.length === 0) {
+    return null;
+  }
 
   return (
     <nav aria-label="Spis treści" className="space-y-1">

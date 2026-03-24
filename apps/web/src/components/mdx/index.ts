@@ -1,4 +1,4 @@
-import { FieldTable, Info, Source, Tip, Warning, XmlExample } from "./mdx-components";
+import { Field, FieldTable, Info, Source, Tip, Warning, XmlExample } from "./mdx-components";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const mdxComponents: Record<string, any> = {
@@ -8,4 +8,5 @@ export const mdxComponents: Record<string, any> = {
   Tip,
   XmlExample,
   FieldTable,
+  Field,
 };

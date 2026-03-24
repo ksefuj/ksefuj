@@ -150,11 +150,74 @@
   "languagePicker": {
     "ariaLabel": "Змінити мову"
   },
+  "nav": {
+    "blog": "Блог",
+    "faq": "FAQ",
+    "docs": "Документація",
+    "guides": "Посібники"
+  },
+  "translationBanner": {
+    "body": "Ця стаття ще не доступна вашою мовою. Ви читаєте оригінал {language} мовою.",
+    "contribute": "Допоможіть перекласти",
+    "languageNames": {
+      "pl": "польською",
+      "en": "англійською",
+      "uk": "українською"
+    }
+  },
+  "content": {
+    "blog": {
+      "title": "Блог",
+      "description": "Статті про KSeF, е-рахунки та схему FA(3).",
+      "empty": "Нові статті з'являться незабаром.",
+      "readingTime": "{minutes} хв читання",
+      "metaDescription": "Статті про KSeF, FA(3) та е-рахунки для підприємців і малого бізнесу."
+    },
+    "docs": {
+      "title": "Документація",
+      "description": "Технічна документація для валідатора та схеми FA(3).",
+      "empty": "Документація готується.",
+      "metaTitle": "Документація",
+      "metaDescription": "Технічна документація для валідатора ksefuj та схеми FA(3)."
+    },
+    "faq": {
+      "title": "FAQ",
+      "description": "Часті запитання про KSeF та ksefuj.",
+      "empty": "FAQ готується.",
+      "metaDescription": "Часті запитання про KSeF, схему FA(3) та валідатор ksefuj."
+    },
+    "guides": {
+      "title": "Посібники",
+      "description": "Крок за кроком через KSeF та е-рахунки.",
+      "empty": "Посібники готуються.",
+      "metaTitle": "Посібники",
+      "metaDescription": "Покрокові посібники про KSeF та е-рахунки для підприємців і бізнесу."
+    },
+    "audience": {
+      "jdg": "Підприємець",
+      "accountant": "Бухгалтер",
+      "developer": "Розробник"
+    },
+    "layout": {
+      "backToBlog": "Блог",
+      "backToDocs": "Документація",
+      "backToGuides": "Посібники",
+      "readingTime": "{minutes} хв читання",
+      "lastVerified": "Остання перевірка: {date}",
+      "guideAudience": "Для кого",
+      "guideTime": "Час",
+      "guideLevel": "Рівень"
+    }
+  },
   "footer": {
     "description": "Безкоштовний валідатор рахунків KSeF. Ваш файл не залишає браузер.",
     "resources": "Ресурси",
     "blog": "Блог",
-    "information": "Інформація",
+    "faq": "FAQ",
+    "docs": "Документація",
+    "guides": "Посібники",
+    "content": "Контент",
+    "legal": "Правове",
     "contact": "Контакт",
     "emailLabel": "Питання? Пропозиції?",
     "npmPackage": "npm Package",

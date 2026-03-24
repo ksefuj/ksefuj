@@ -14,11 +14,14 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "meta" });
+  const [tMeta, tContent] = await Promise.all([
+    getTranslations({ locale, namespace: "meta" }),
+    getTranslations({ locale, namespace: "content.blog" }),
+  ]);
 
   return {
-    title: `Blog — ${t("title")}`,
-    description: "Artykuły o KSeF, FA(3) i e-fakturach dla JDG i małych firm.",
+    title: `${tContent("title")} — ${tMeta("title")}`,
+    description: tContent("metaDescription"),
     alternates: {
       canonical: locale === "pl" ? "/blog" : `/${locale}/blog`,
     },
@@ -27,9 +30,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function BlogListPage({ params }: Props) {
   const { locale } = await params;
-
-  const sectionKey = locale === "pl" ? "blog" : "blog";
-  const posts = await listContentItems(locale, sectionKey);
+  const [posts, t] = await Promise.all([
+    listContentItems(locale, "blog"),
+    getTranslations({ locale, namespace: "content" }),
+  ]);
 
   const dateFormatted = (dateStr: string) =>
     new Date(dateStr).toLocaleDateString(locale, {
@@ -46,22 +50,18 @@ export default async function BlogListPage({ params }: Props) {
           <div className="space-y-12">
             <div className="space-y-3">
               <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900">
-                Blog
+                {t("blog.title")}
               </h1>
-              <p className="text-lg text-slate-600">
-                Artykuły o KSeF, e-fakturach i schemacie FA(3).
-              </p>
+              <p className="text-lg text-slate-600">{t("blog.description")}</p>
             </div>
 
             {posts.length === 0 ? (
-              <p className="text-slate-500">Wkrótce pojawią się nowe artykuły.</p>
+              <p className="text-slate-500">{t("blog.empty")}</p>
             ) : (
               <div className="grid gap-6 sm:grid-cols-2">
                 {posts.map((post) => {
-                  const href =
-                    locale === "pl"
-                      ? `/blog/${post.frontmatter.slug}`
-                      : `/${locale}/blog/${post.frontmatter.slug}`;
+                  const p = locale === "pl" ? "" : `/${locale}`;
+                  const href = `${p}/blog/${post.frontmatter.slug}`;
                   return (
                     <Link
                       key={post.frontmatter.slug}
@@ -86,7 +86,7 @@ export default async function BlogListPage({ params }: Props) {
                           {dateFormatted(post.frontmatter.date)}
                         </time>
                         <span aria-hidden>·</span>
-                        <span>{post.readingTime} min czytania</span>
+                        <span>{t("blog.readingTime", { minutes: post.readingTime })}</span>
                       </div>
                     </Link>
                   );

@@ -18,16 +18,14 @@ const contentSections: Record<string, Array<{ section: string; urlPrefix: string
   pl: [
     { section: "blog", urlPrefix: "/blog" },
     { section: "docs", urlPrefix: "/docs" },
-    { section: "przewodniki", urlPrefix: "/przewodniki" },
+    { section: "guides", urlPrefix: "/guides" },
   ],
   en: [
     { section: "blog", urlPrefix: "/en/blog" },
     { section: "docs", urlPrefix: "/en/docs" },
     { section: "guides", urlPrefix: "/en/guides" },
   ],
-  uk: [
-    { section: "guides", urlPrefix: "/uk/guides" },
-  ],
+  uk: [{ section: "guides", urlPrefix: "/uk/guides" }],
 };
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -45,11 +43,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
-  // Content listing pages (blog, docs, przewodniki, faq)
+  // Content listing pages (blog, docs, guides, faq)
   const contentListingPages = [
     { path: "/blog", priority: 0.8 },
     { path: "/docs", priority: 0.8 },
-    { path: "/przewodniki", priority: 0.8 },
+    { path: "/guides", priority: 0.8 },
     { path: "/faq", priority: 0.7 },
     { path: "/en/blog", priority: 0.7 },
     { path: "/en/docs", priority: 0.7 },

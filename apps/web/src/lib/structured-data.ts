@@ -41,10 +41,5 @@ export function buildHowToSchema(
     url: `${BASE_URL}${urlPath}`,
     datePublished: frontmatter.date,
     dateModified: frontmatter.updated ?? frontmatter.date,
-    ...(frontmatter.difficulty
-      ? {
-          educationalLevel: frontmatter.difficulty,
-        }
-      : {}),
   };
 }

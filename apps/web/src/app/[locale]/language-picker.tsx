@@ -4,6 +4,7 @@ import { usePathname, useRouter } from "../../i18n/routing";
 import { useEffect, useRef, useState, useTransition } from "react";
 import { track } from "@vercel/analytics";
 import { useTranslations } from "next-intl";
+import { cn } from "@/lib/utils";
 
 interface Props {
   currentLocale: string;
@@ -72,22 +73,14 @@ export function LanguagePicker({ currentLocale, localePaths }: Props) {
       <button
         onClick={() => setIsOpen(!isOpen)}
         disabled={isPending}
-        className={`
-          inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg transition-all
-          text-slate-700 hover:text-violet-600 hover:bg-violet-50
-          ${isPending ? "opacity-50 cursor-wait" : ""}
-        `}
+        className={cn(
+          "inline-flex items-center gap-1 px-2.5 py-1 text-sm font-semibold rounded-lg transition-all",
+          "border border-slate-200 text-slate-700 hover:border-violet-300 hover:text-violet-600 hover:bg-violet-50",
+          isPending && "opacity-50 cursor-wait",
+        )}
         aria-label={t("ariaLabel")}
         aria-expanded={isOpen}
       >
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M3 5h12M3 12h12m-9 7h6"
-          />
-        </svg>
         <span className="font-semibold">{currentLanguage.label}</span>
         <svg
           className={`w-3 h-3 transition-transform ${isOpen ? "rotate-180" : ""}`}
@@ -107,16 +100,14 @@ export function LanguagePicker({ currentLocale, localePaths }: Props) {
               key={lang.code}
               onClick={() => handleChange(lang.code)}
               disabled={isPending || lang.code === currentLocale}
-              className={`
-                w-full px-3 py-2 text-left text-sm transition-colors flex items-center justify-between
-                ${
-                  lang.code === currentLocale
-                    ? "bg-violet-50 text-violet-700 font-semibold"
-                    : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
-                }
-              `}
+              className={cn(
+                "w-full px-3 py-2 text-left text-sm transition-colors flex items-center justify-between",
+                lang.code === currentLocale
+                  ? "bg-violet-50 text-violet-700 font-semibold"
+                  : "text-slate-600 hover:bg-slate-50 hover:text-slate-900",
+              )}
             >
-              <span>{lang.label}</span>
+              <span>{lang.name}</span>
               {lang.code === currentLocale && (
                 <svg
                   className="w-3.5 h-3.5 text-violet-500"

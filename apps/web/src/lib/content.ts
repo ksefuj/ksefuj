@@ -9,17 +9,18 @@ export interface Frontmatter {
   description: string;
   date: string;
   updated?: string;
-  section: "blog" | "docs" | "przewodniki" | "faq" | "guides";
+  section: "blog" | "docs" | "guides" | "faq";
   locale: "pl" | "en" | "uk";
   slug: string;
   tags?: string[];
-  difficulty?: "beginner" | "intermediate" | "advanced";
   audience?: string[];
   sources?: Array<{ label: string; url: string }>;
   seo?: {
     canonical?: string;
     ogImage?: string;
   };
+  /** Maps locale codes to the slug of the translated version of this content. */
+  translations?: Partial<Record<"pl" | "en" | "uk", string>>;
 }
 
 export interface ContentItem {
@@ -44,7 +45,9 @@ export async function getContentItem(
   slug: string,
 ): Promise<ContentItem | null> {
   const filePath = path.join(CONTENT_DIR, locale, section, `${slug}.mdx`);
-  if (!fs.existsSync(filePath)) {return null;}
+  if (!fs.existsSync(filePath)) {
+    return null;
+  }
 
   const raw = fs.readFileSync(filePath, "utf8");
   const { data, content } = matter(raw);
@@ -60,16 +63,13 @@ export async function getContentItem(
  * List all MDX files in a given locale/section directory.
  * Returns them sorted by date descending (newest first).
  */
-export async function listContentItems(
-  locale: string,
-  section: string,
-): Promise<ContentItem[]> {
+export async function listContentItems(locale: string, section: string): Promise<ContentItem[]> {
   const dirPath = path.join(CONTENT_DIR, locale, section);
-  if (!fs.existsSync(dirPath)) {return [];}
+  if (!fs.existsSync(dirPath)) {
+    return [];
+  }
 
-  const files = fs
-    .readdirSync(dirPath)
-    .filter((f) => f.endsWith(".mdx"));
+  const files = fs.readdirSync(dirPath).filter((f) => f.endsWith(".mdx"));
 
   const items: ContentItem[] = files.map((file) => {
     const raw = fs.readFileSync(path.join(dirPath, file), "utf8");
@@ -82,9 +82,7 @@ export async function listContentItems(
   });
 
   return items.sort(
-    (a, b) =>
-      new Date(b.frontmatter.date).getTime() -
-      new Date(a.frontmatter.date).getTime(),
+    (a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime(),
   );
 }
 
@@ -93,11 +91,67 @@ export async function listContentItems(
  */
 export async function listSlugs(locale: string, section: string): Promise<string[]> {
   const dirPath = path.join(CONTENT_DIR, locale, section);
-  if (!fs.existsSync(dirPath)) {return [];}
+  if (!fs.existsSync(dirPath)) {
+    return [];
+  }
   return fs
     .readdirSync(dirPath)
     .filter((f) => f.endsWith(".mdx"))
     .map((f) => f.replace(/\.mdx$/, ""));
+}
+
+const ALL_LOCALES = ["pl", "en", "uk"] as const;
+
+/**
+ * Try to get content in the requested locale; fall back to any locale that has the slug.
+ * Returns the item and the locale it was found in.
+ */
+export async function getContentItemWithFallback(
+  locale: string,
+  section: string,
+  slug: string,
+): Promise<{ item: ContentItem; contentLocale: string } | null> {
+  const item = await getContentItem(locale, section, slug);
+  if (item) {
+    return { item, contentLocale: locale };
+  }
+
+  for (const fallback of ALL_LOCALES) {
+    if (fallback === locale) {
+      continue;
+    }
+    const fallbackItem = await getContentItem(fallback, section, slug);
+    if (fallbackItem) {
+      return { item: fallbackItem, contentLocale: fallback };
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Build a locale-prefixed content URL path, e.g. `/blog/my-slug` (PL) or `/en/blog/my-slug`.
+ */
+export function buildContentPath(locale: string, section: string, slug: string): string {
+  return locale === "pl" ? `/${section}/${slug}` : `/${locale}/${section}/${slug}`;
+}
+
+/**
+ * Build locale → path map for the language picker on a content detail page.
+ * Uses the frontmatter `translations` map to find the correct slug per locale.
+ * Falls back to the current slug (which will render with a translation banner).
+ */
+export function buildContentLocalePaths(
+  section: string,
+  slug: string,
+  translations: Frontmatter["translations"],
+): Record<string, string> {
+  return Object.fromEntries(
+    ALL_LOCALES.map((loc) => {
+      const targetSlug = translations?.[loc] ?? translations?.pl ?? slug;
+      return [loc, `/${section}/${targetSlug}`];
+    }),
+  );
 }
 
 /**

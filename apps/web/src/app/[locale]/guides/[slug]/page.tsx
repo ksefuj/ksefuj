@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { LanguagePicker } from "../../language-picker";
-import { DocsLayout } from "@/components/layouts/docs-layout";
+import { GuideLayout } from "@/components/layouts/guide-layout";
 import { TranslationBanner } from "@/components/translation-banner";
 import {
   buildContentLocalePaths,
@@ -13,6 +13,7 @@ import {
   listSlugs,
 } from "@/lib/content";
 import { compileMDXContent } from "@/lib/compile-mdx";
+import { buildHowToSchema } from "@/lib/structured-data";
 
 interface Props {
   params: Promise<{ locale: string; slug: string }>;
@@ -20,19 +21,19 @@ interface Props {
 
 export async function generateStaticParams({ params }: { params: { locale: string } }) {
   const { locale } = params;
-  const slugs = await listSlugs(locale, "docs");
+  const slugs = await listSlugs(locale, "guides");
   return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;
-  const result = await getContentItemWithFallback(locale, "docs", slug);
+  const result = await getContentItemWithFallback(locale, "guides", slug);
   if (!result) {
     return {};
   }
 
   const { item } = result;
-  const canonical = item.frontmatter.seo?.canonical ?? buildContentPath(locale, "docs", slug);
+  const canonical = item.frontmatter.seo?.canonical ?? buildContentPath(locale, "guides", slug);
 
   return {
     title: item.frontmatter.title,
@@ -46,21 +47,27 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function DocsPage({ params }: Props) {
+export default async function GuidePage({ params }: Props) {
   const { locale, slug } = await params;
-  const result = await getContentItemWithFallback(locale, "docs", slug);
+  const result = await getContentItemWithFallback(locale, "guides", slug);
   if (!result) {
     notFound();
   }
 
   const { item, contentLocale } = result;
   const headings = extractHeadings(item.content);
-  const localePaths = buildContentLocalePaths("docs", slug, item.frontmatter.translations);
+  const urlPath = buildContentPath(locale, "guides", slug);
+  const schema = buildHowToSchema(item.frontmatter, urlPath);
+  const localePaths = buildContentLocalePaths("guides", slug, item.frontmatter.translations);
 
   const { content } = await compileMDXContent({ source: item.content });
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, "\\u003c") }}
+      />
       <SiteHeader
         locale={locale}
         languagePicker={<LanguagePicker currentLocale={locale} localePaths={localePaths} />}
@@ -71,14 +78,19 @@ export default async function DocsPage({ params }: Props) {
             <TranslationBanner
               uiLocale={locale}
               contentLocale={contentLocale}
-              section="docs"
+              section="guides"
               slug={slug}
             />
           </div>
         )}
-        <DocsLayout frontmatter={item.frontmatter} headings={headings} locale={contentLocale}>
+        <GuideLayout
+          frontmatter={item.frontmatter}
+          readingTime={item.readingTime}
+          headings={headings}
+          locale={contentLocale}
+        >
           {content}
-        </DocsLayout>
+        </GuideLayout>
       </main>
       <SiteFooter />
     </>

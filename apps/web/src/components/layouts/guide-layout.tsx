@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { Badge } from "@/components/badge";
 import { TableOfContents } from "@/components/table-of-contents";
 import type { Frontmatter } from "@/lib/content";
@@ -12,26 +13,16 @@ interface GuideLayoutProps {
   locale: string;
 }
 
-const difficultyLabel: Record<string, string> = {
-  beginner: "Podstawowy",
-  intermediate: "Średniozaawansowany",
-  advanced: "Zaawansowany",
-};
-
-const audienceLabel: Record<string, string> = {
-  jdg: "JDG",
-  accountant: "Księgowy",
-  developer: "Developer",
-};
-
-export function GuideLayout({
+export async function GuideLayout({
   frontmatter,
   readingTime,
   headings,
   children,
   locale,
 }: GuideLayoutProps) {
-  const backHref = locale === "pl" ? "/przewodniki" : `/${locale}/guides`;
+  const t = await getTranslations({ locale, namespace: "content" });
+  const p = locale === "pl" ? "" : `/${locale}`;
+  const backHref = `${p}/guides`;
   const dateFormatted = new Date(frontmatter.date).toLocaleDateString(locale, {
     year: "numeric",
     month: "long",
@@ -45,36 +36,44 @@ export function GuideLayout({
         href={backHref}
         className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 transition-colors mb-8"
       >
-        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+        <svg
+          className="w-4 h-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+          />
         </svg>
-        Przewodniki
+        {t("layout.backToGuides")}
       </Link>
 
       {/* Guide header card */}
       <div className="rounded-2xl border border-violet-100 bg-violet-50/50 px-6 py-5 mb-8 flex flex-wrap gap-6">
         <div className="flex flex-col gap-1">
-          <span className="text-xs text-slate-500 uppercase tracking-wider font-semibold">Dla kogo</span>
+          <span className="text-xs text-slate-500 uppercase tracking-wider font-semibold">
+            {t("layout.guideAudience")}
+          </span>
           <div className="flex flex-wrap gap-1.5">
             {frontmatter.audience?.map((a) => (
               <Badge key={a} variant="info">
-                {audienceLabel[a] ?? a}
+                {t(`audience.${a}` as "audience.jdg")}
               </Badge>
             ))}
           </div>
         </div>
         <div className="flex flex-col gap-1">
-          <span className="text-xs text-slate-500 uppercase tracking-wider font-semibold">Czas</span>
-          <span className="text-sm font-medium text-slate-700">{readingTime} min</span>
+          <span className="text-xs text-slate-500 uppercase tracking-wider font-semibold">
+            {t("layout.guideTime")}
+          </span>
+          <span className="text-sm font-medium text-slate-700">
+            {t("layout.readingTime", { minutes: readingTime })}
+          </span>
         </div>
-        {frontmatter.difficulty && (
-          <div className="flex flex-col gap-1">
-            <span className="text-xs text-slate-500 uppercase tracking-wider font-semibold">Poziom</span>
-            <span className="text-sm font-medium text-slate-700">
-              {difficultyLabel[frontmatter.difficulty] ?? frontmatter.difficulty}
-            </span>
-          </div>
-        )}
       </div>
 
       <div className="lg:grid lg:grid-cols-[1fr_220px] lg:gap-12">

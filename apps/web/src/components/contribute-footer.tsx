@@ -2,7 +2,7 @@ import React from "react";
 
 interface ContributeFooterProps {
   locale: string;
-  /** Section name — e.g. "blog", "docs", "przewodniki" */
+  /** Section name — e.g. "blog", "docs", "guides" */
   section: string;
   /** Slug of the current content item */
   slug: string;
@@ -10,13 +10,16 @@ interface ContributeFooterProps {
 
 const REPO = "https://github.com/ksefuj/ksefuj";
 
-const copy: Record<string, {
-  heading: string;
-  body: string;
-  editLabel: string;
-  issueLabel: string;
-  translationNote?: string;
-}> = {
+const copy: Record<
+  string,
+  {
+    heading: string;
+    body: string;
+    editLabel: string;
+    issueLabel: string;
+    translationNote?: string;
+  }
+> = {
   pl: {
     heading: "Ten artykuł jest open source",
     body: "ksefuj to projekt społecznościowy na licencji Apache 2.0. Jeśli zauważysz błąd, nieścisłość lub chcesz zaproponować zmiany — możesz edytować ten artykuł bezpośrednio na GitHubie. Każdy wkład jest mile widziany.",
@@ -28,14 +31,16 @@ const copy: Record<string, {
     body: "ksefuj is a community project released under Apache 2.0. If you spot an error, an inaccuracy, or want to suggest improvements — you can edit this article directly on GitHub. All contributions are welcome.",
     editLabel: "Edit on GitHub",
     issueLabel: "Open an issue",
-    translationNote: "Translation improvements are especially welcome for English and Ukrainian content.",
+    translationNote:
+      "Translation improvements are especially welcome for English and Ukrainian content.",
   },
   uk: {
     heading: "Ця стаття — відкритий код",
     body: "ksefuj — це спільний проєкт із ліцензією Apache 2.0. Якщо ви помітили помилку або хочете запропонувати покращення — ви можете відредагувати цю статтю прямо на GitHub. Особливо вітаємо покращення перекладу.",
     editLabel: "Редагувати на GitHub",
     issueLabel: "Повідомити про проблему",
-    translationNote: "Покращення перекладу цієї статті особливо вітаються — допоможіть зробити KSeF доступнішим для україномовних користувачів.",
+    translationNote:
+      "Покращення перекладу цієї статті особливо вітаються — допоможіть зробити KSeF доступнішим для україномовних користувачів.",
   },
 };
 
