@@ -41,11 +41,15 @@ export function StructuredData({ description, faqItems }: StructuredDataProps) {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApplication) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(softwareApplication).replace(/</g, "\\u003c"),
+        }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqPage) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(faqPage).replace(/</g, "\\u003c"),
+        }}
       />
     </>
   );
