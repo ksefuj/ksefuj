@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { Badge } from "@/components/badge";
 import { TableOfContents } from "@/components/table-of-contents";
 import { ContributeFooter } from "@/components/contribute-footer";
+import { ShareButton } from "@/components/share-button";
 import type { Frontmatter } from "@/lib/content";
 
 interface BlogPostLayoutProps {
@@ -71,6 +72,8 @@ export async function BlogPostLayout({
               <time dateTime={frontmatter.date}>{dateFormatted}</time>
               <span aria-hidden>·</span>
               <span>{t("layout.readingTime", { minutes: readingTime })}</span>
+              <span aria-hidden>·</span>
+              <ShareButton title={frontmatter.title} locale={locale} />
             </div>
           </header>
 

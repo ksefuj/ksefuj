@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { Badge } from "@/components/badge";
 import { TableOfContents } from "@/components/table-of-contents";
+import { ShareButton } from "@/components/share-button";
 import type { Frontmatter } from "@/lib/content";
 
 interface GuideLayoutProps {
@@ -84,6 +85,8 @@ export async function GuideLayout({
             </h1>
             <div className="flex items-center gap-3 text-sm text-slate-500">
               <time dateTime={frontmatter.date}>{dateFormatted}</time>
+              <span aria-hidden>·</span>
+              <ShareButton title={frontmatter.title} locale={locale} />
             </div>
           </header>
 

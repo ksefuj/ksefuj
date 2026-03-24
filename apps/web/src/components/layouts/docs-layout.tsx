@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { TableOfContents } from "@/components/table-of-contents";
+import { ShareButton } from "@/components/share-button";
 import type { Frontmatter } from "@/lib/content";
 
 interface DocsLayoutProps {
@@ -48,9 +49,15 @@ export async function DocsLayout({ frontmatter, headings, children, locale }: Do
             <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900">
               {frontmatter.title}
             </h1>
-            <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 border border-emerald-200 px-3 py-1 text-xs text-emerald-700 font-medium">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" aria-hidden />
-              {t("lastVerified", { date: updatedFormatted })}
+            <div className="flex items-center gap-3">
+              <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 border border-emerald-200 px-3 py-1 text-xs text-emerald-700 font-medium">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" aria-hidden />
+                {t("lastVerified", { date: updatedFormatted })}
+              </div>
+              <span aria-hidden className="text-slate-300">
+                ·
+              </span>
+              <ShareButton title={frontmatter.title} locale={locale} />
             </div>
           </header>
 
