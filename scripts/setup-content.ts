@@ -92,7 +92,7 @@ Harmonogram wdrożenia KSeF wynika z przepisów ustawy o VAT (art. 145m i nast.)
 
 | Data | Kto | Co się stało |
 |------|-----|-------------|
-| **1 lutego 2026** | Duże firmy (przychody > 200 mln PLN w 2024 r.) | KSeF obowiązkowy |
+| **1 lutego 2026** | Podatnicy VAT o najwyższych obrotach w 2024 r. | KSeF obowiązkowy |
 | **1 kwietnia 2026** | Wszyscy pozostali czynni podatnicy VAT | KSeF obowiązkowy |
 
 **Podstawa prawna:** art. 145m ustawy z dnia 11 marca 2004 r. o podatku od towarów i usług (Dz. U. z 2025 r., poz. 775 ze zm.).
@@ -126,7 +126,7 @@ Przepisy wprowadzają też dodatkowe obostrzenia dla transakcji między przedsi�
 
 Teraz wystawiasz fakturę w programie do fakturowania albo w Excelu, wysyłasz ją mailem lub pocztą i tyle. Twój kontrahent dostaje PDF lub papier. Archiwizujesz u siebie.
 
-**Od 1 kwietnia 2026 roku ten process przestaje istnieć (przynajmniej w relacjach B2B).**
+**Od 1 kwietnia 2026 roku ten proces przestaje istnieć (przynajmniej w relacjach B2B).**
 
 Nowy flow wygląda tak:
 
@@ -172,18 +172,15 @@ Najczęstsze błędy w plikach KSeF opisaliśmy w osobnym artykule: [Najczęstsz
 
 Ustawa o VAT przewiduje sankcje za naruszenie obowiązku wystawiania faktur przez KSeF. Podstawa prawna to **art. 106gc ustawy o VAT**.
 
-Sankcja ma postać **dodatkowego zobowiązania podatkowego** — organ podatkowy może je nałożyć w wysokości:
-
-- **do 100%** kwoty VAT wykazanego na fakturze wystawionej z naruszeniem obowiązku KSeF,
-- **do 18,7%** wartości sprzedaży — jeśli sprzedaż nie została udokumentowana fakturą VAT w ogóle.
+Sankcja ma postać **dodatkowego zobowiązania podatkowego**. Przepisy przewidują różne stawki zależnie od charakteru naruszenia — m.in. za wystawienie faktury poza KSeF z naruszeniem obowiązku, za brak faktury w ogóle, czy za niedotrzymanie terminu przesłania faktury do systemu.
 
 <Warning>
-Sankcje podatkowe nie są odliczane od kosztów uzyskania przychodu. Kara za wystawienie faktury poza KSeF może być boleśniejsza finansowo niż sama kwota podatku.
+Sankcje podatkowe nie są odliczane od kosztów uzyskania przychodu. Kara za wystawienie faktury poza KSeF może być boleśniejsza finansowo niż sama kwota podatku. Dokładne stawki i warunki ich stosowania określa art. 106gc ustawy o VAT — skonsultuj się z doradcą podatkowym, jeśli masz wątpliwości.
 </Warning>
 
 Co więcej, kupujący, który przyjmie fakturę wystawioną poza KSeF (po wejściu w życie obowiązku), może stracić prawo do odliczenia VAT z takiej faktury. To oznacza podwójne ryzyko — dla sprzedawcy i dla nabywcy.
 
-**Ważne:** przepisy przewidują mechanizm sankcji warunkowej — jeśli wystawisz fakturę poza KSeF w trybie awaryjnym (więcej o tym poniżej), ale faktycznie przekażesz ją do KSeF w wymaganym terminie, sankcja nie powinna zostać nałożona. Szczegóły reguluje art. 106gc ust. 5–8 ustawy o VAT.
+**Ważne:** przepisy przewidują mechanizm sankcji warunkowej — jeśli wystawisz fakturę poza KSeF w trybie awaryjnym (więcej o tym poniżej), ale faktycznie przekażesz ją do KSeF w wymaganym terminie, sankcja nie powinna zostać nałożona. Szczegóły reguluje art. 106gc ustawy o VAT.
 
 ---
 
