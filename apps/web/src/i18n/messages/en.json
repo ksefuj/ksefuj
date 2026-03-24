@@ -307,8 +307,6 @@
       "title": "Compare and choose the best",
       "subtitle": "Detailed comparison with popular KSeF validators",
       "featuresHeader": "Features",
-      "ourProduct": "ksefuj.to",
-      "recommended": "RECOMMENDED",
       "features": {
         "pricing": {
           "title": "Cost",
@@ -430,11 +428,6 @@
           "tagline": "Paid solutions"
         }
       ],
-      "checkmark": "✓",
-      "cross": "✗",
-      "partial": "◐",
-      "ctaSubtitle": "Choose the tool built for freelancers and small businesses",
-      "ctaButton": "Try ksefuj now — it's free",
       "disclaimer": "* Comparison based on publicly available information as of March 2026"
     },
     "comingSoon": {

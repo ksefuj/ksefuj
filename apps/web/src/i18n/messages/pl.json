@@ -307,8 +307,6 @@
       "title": "Porównaj i wybierz najlepsze",
       "subtitle": "Dlaczego ksefuj.to wyróżnia się na tle konkurencji",
       "featuresHeader": "Funkcje",
-      "ourProduct": "ksefuj.to",
-      "recommended": "WYBÓR EKSPERTÓW",
       "features": {
         "pricing": {
           "title": "Koszt",
@@ -430,11 +428,6 @@
           "tagline": "Płatne rozwiązania"
         }
       ],
-      "checkmark": "✓",
-      "cross": "✗",
-      "partial": "◐",
-      "ctaSubtitle": "Wybierz narzędzie stworzone z myślą o freelancerach i małych firmach",
-      "ctaButton": "Wypróbuj ksefuj — to darmowe",
       "disclaimer": "* Porównanie na podstawie publicznie dostępnych informacji z marca 2026"
     },
     "comingSoon": {
