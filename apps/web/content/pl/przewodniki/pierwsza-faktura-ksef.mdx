@@ -1,0 +1,87 @@
+---
+title: "Jak wystawić pierwszą fakturę KSeF"
+description: "Krok po kroku: jak przygotować plik XML FA(3), zwalidować go i wysłać do KSeF. Przewodnik dla JDG i małych firm."
+date: 2026-03-24
+updated: 2026-03-24
+section: przewodniki
+locale: pl
+slug: "pierwsza-faktura-ksef"
+tags: [ksef, fa3, jdg, przewodnik]
+difficulty: beginner
+audience: [jdg]
+seo:
+  canonical: "/przewodniki/pierwsza-faktura-ksef"
+  ogImage: "/og/pierwsza-faktura-ksef.png"
+---
+
+Ten przewodnik przeprowadzi Cię przez cały proces wystawienia pierwszej faktury w KSeF — od
+przygotowania pliku XML, przez walidację, po wysyłkę.
+
+## Dla kogo jest ten przewodnik?
+
+- Prowadzisz **JDG** lub małą firmę
+- Jesteś **czynnym podatnikiem VAT**
+- Chcesz zrozumieć, jak działa KSeF od podstaw
+
+## Krok 1: Przygotuj dane faktury
+
+Zanim zaczniesz, zbierz:
+
+- NIP sprzedawcy i nabywcy
+- Adres sprzedawcy i nabywcy
+- Pozycje faktury (nazwa, ilość, cena, stawka VAT)
+- Datę wystawienia i datę sprzedaży
+
+## Krok 2: Wygeneruj XML FA(3)
+
+Minimalny przykład faktury XML dla JDG sprzedającej usługi IT:
+
+<XmlExample copyable>
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<Faktura xmlns="http://crd.gov.pl/wzor/2025/06/25/13775/">
+  <Naglowek>
+    <KodFormularza kodSystemowy="FA (3)" wersjaSchemy="1-0E">FA</KodFormularza>
+    <WariantFormularza>3</WariantFormularza>
+    <DataWytworzeniaFa>2026-03-24T10:00:00</DataWytworzeniaFa>
+    <SystemInfo>Mój system fakturowania</SystemInfo>
+  </Naglowek>
+  <Podmiot1>
+    <DaneIdentyfikacyjne>
+      <NIP>1234567890</NIP>
+      <Nazwa>Jan Kowalski JDG</Nazwa>
+    </DaneIdentyfikacyjne>
+    <Adres>
+      <KodKraju>PL</KodKraju>
+      <AdresL1>ul. Przykładowa 1</AdresL1>
+      <AdresL2>00-001 Warszawa</AdresL2>
+    </Adres>
+  </Podmiot1>
+  <!-- Podmiot2, Fa, Adnotacje ... -->
+</Faktura>
+```
+</XmlExample>
+
+## Krok 3: Zwaliduj plik
+
+Przed wysłaniem do KSeF zawsze waliduj XML:
+
+1. Wejdź na [ksefuj.to](https://ksefuj.to)
+2. Przeciągnij plik XML do walidatora
+3. Sprawdź, czy nie ma błędów
+
+<Tip>
+Najczęstsze błędy w pierwszych fakturach: brakujące pole `Adnotacje`, zła kolejność elementów XML
+(schemat FA(3) używa `xs:sequence`), oraz błędny format daty.
+</Tip>
+
+## Krok 4: Wyślij do KSeF
+
+Po uzyskaniu zielonego wyniku walidacji, wyślij XML przez:
+
+- **Aplikację Podatnika KSeF 2.0** — [ap.ksef.mf.gov.pl](https://ap.ksef.mf.gov.pl/)
+- Swój program księgowy (jeśli obsługuje KSeF)
+- API KSeF (dla programistów)
+
+<Source href="https://ap.ksef.mf.gov.pl/" label="Aplikacja Podatnika KSeF 2.0" />
+<Source href="https://ksef.podatki.gov.pl/" label="Portal KSeF — dokumentacja i aktualizacje" />

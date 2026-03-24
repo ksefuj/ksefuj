@@ -1,0 +1,126 @@
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
+
+const CONTENT_DIR = path.join(process.cwd(), "content");
+
+export interface Frontmatter {
+  title: string;
+  description: string;
+  date: string;
+  updated?: string;
+  section: "blog" | "docs" | "przewodniki" | "faq" | "guides";
+  locale: "pl" | "en" | "uk";
+  slug: string;
+  tags?: string[];
+  difficulty?: "beginner" | "intermediate" | "advanced";
+  audience?: string[];
+  sources?: Array<{ label: string; url: string }>;
+  seo?: {
+    canonical?: string;
+    ogImage?: string;
+  };
+}
+
+export interface ContentItem {
+  frontmatter: Frontmatter;
+  content: string;
+  readingTime: number;
+}
+
+/** Estimate reading time from word count (~200 wpm for Polish) */
+export function estimateReadingTime(content: string): number {
+  const wordCount = content.trim().split(/\s+/).length;
+  return Math.max(1, Math.ceil(wordCount / 200));
+}
+
+/**
+ * Read and parse a single MDX file.
+ * Returns null if the file does not exist.
+ */
+export async function getContentItem(
+  locale: string,
+  section: string,
+  slug: string,
+): Promise<ContentItem | null> {
+  const filePath = path.join(CONTENT_DIR, locale, section, `${slug}.mdx`);
+  if (!fs.existsSync(filePath)) {return null;}
+
+  const raw = fs.readFileSync(filePath, "utf8");
+  const { data, content } = matter(raw);
+
+  return {
+    frontmatter: data as Frontmatter,
+    content,
+    readingTime: estimateReadingTime(content),
+  };
+}
+
+/**
+ * List all MDX files in a given locale/section directory.
+ * Returns them sorted by date descending (newest first).
+ */
+export async function listContentItems(
+  locale: string,
+  section: string,
+): Promise<ContentItem[]> {
+  const dirPath = path.join(CONTENT_DIR, locale, section);
+  if (!fs.existsSync(dirPath)) {return [];}
+
+  const files = fs
+    .readdirSync(dirPath)
+    .filter((f) => f.endsWith(".mdx"));
+
+  const items: ContentItem[] = files.map((file) => {
+    const raw = fs.readFileSync(path.join(dirPath, file), "utf8");
+    const { data, content } = matter(raw);
+    return {
+      frontmatter: data as Frontmatter,
+      content,
+      readingTime: estimateReadingTime(content),
+    };
+  });
+
+  return items.sort(
+    (a, b) =>
+      new Date(b.frontmatter.date).getTime() -
+      new Date(a.frontmatter.date).getTime(),
+  );
+}
+
+/**
+ * Get all slugs for a given locale/section — used for generateStaticParams.
+ */
+export async function listSlugs(locale: string, section: string): Promise<string[]> {
+  const dirPath = path.join(CONTENT_DIR, locale, section);
+  if (!fs.existsSync(dirPath)) {return [];}
+  return fs
+    .readdirSync(dirPath)
+    .filter((f) => f.endsWith(".mdx"))
+    .map((f) => f.replace(/\.mdx$/, ""));
+}
+
+/**
+ * Extract headings from MDX content for table of contents.
+ * Returns h2/h3 headings with their text and id.
+ */
+export function extractHeadings(
+  content: string,
+): Array<{ level: 2 | 3; text: string; id: string }> {
+  const headingRegex = /^(#{2,3})\s+(.+)$/gm;
+  const headings: Array<{ level: 2 | 3; text: string; id: string }> = [];
+  let match: RegExpExecArray | null;
+
+  while ((match = headingRegex.exec(content)) !== null) {
+    const level = match[1].length as 2 | 3;
+    const text = match[2].trim();
+    const id = text
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-");
+    headings.push({ level, text, id });
+  }
+
+  return headings;
+}
