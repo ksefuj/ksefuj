@@ -206,6 +206,10 @@
     }
   },
   "landing": {
+    "meta": {
+      "title": "Darmowy walidator faktur KSeF FA(3) — ksefuj.to",
+      "description": "Sprawdź poprawność faktury KSeF FA(3) online. Walidacja schematu XSD i reguł biznesowych. Bezpłatnie, bez rejestracji. Twoje dane nie opuszczają przeglądarki."
+    },
     "hero": {
       "title": "Walidacja KSeF. Prosta jak nigdy.",
       "description": "Przeciągnij XML, dowiedz się wszystkiego w sekundach. Pełna walidacja MF na podstawie arkusza informacyjnego, zero kompromisów w prywatności.",
