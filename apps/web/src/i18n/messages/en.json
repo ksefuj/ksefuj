@@ -1,16 +1,16 @@
 {
   "meta": {
     "title": "ksefuj.to — KSeF FA(3) validator",
-    "description": "Free KSeF FA(3) invoice validator. Drop XML, check errors. Everything client-side — your data never leaves your browser.",
+    "description": "Free KSeF FA(3) invoice validator. Drop XML, check errors. Your data never leaves your browser.",
     "ogTitle": "ksefuj.to — KSeF FA(3) validator",
-    "ogDescription": "Free KSeF invoice validator. Client-side, no registration."
+    "ogDescription": "Free KSeF invoice validator. Your file never leaves the browser."
   },
   "validator": {
     "dropzone": {
       "dragHere": "Drop XML files here",
       "dropFiles": "Drop {count} XML {count, plural, =1 {file} other {files}}",
       "validating": "Validating...",
-      "validatingDetails": "Checking XSD schema validation...",
+      "validatingDetails": "Checking schema conformance...",
       "acceptedFiles": "Accepted: .xml (KSeF FA3 invoices)",
       "callToAction": "ksef it!"
     },
@@ -45,7 +45,7 @@
     },
     "issuesList": {
       "noIssuesTitle": "All good!",
-      "noIssuesDescription": "No validation issues found.",
+      "noIssuesDescription": "Your invoice is valid.",
       "showingCount": "Showing {shown} of {total} issues.",
       "remaining": "{count} remaining."
     },
@@ -207,17 +207,17 @@
   },
   "landing": {
     "hero": {
-      "title": "KSeF validation. Simple like never before.",
-      "description": "Drag XML, learn everything in seconds. Complete validation of ministerial business rules, zero privacy compromises.",
-      "trustLine": "Free forever • 42 MF rules • 100% local"
+      "title": "KSeF validation. Simpler than ever.",
+      "description": "Drag in your XML, see everything in seconds. Full MF validation based on the official information sheet, zero privacy compromises.",
+      "trustLine": "Free forever • Full MF validation • 100% local"
     },
     "features": {
-      "title": "Made with you in mind",
-      "subtitle": "Every freelancer deserves professional tools without hidden costs",
+      "title": "KSeF is no joke.",
+      "subtitle": "Professional validation. No paywall.",
       "items": [
         {
-          "title": "Ministerially precise",
-          "description": "Official XSD schema from June 2025 plus all 42 rules from the Ministry of Finance information sheet"
+          "title": "Built to MF spec",
+          "description": "Official FA(3) schema from June 2025 plus full semantic validation based on the Ministry of Finance information sheet"
         },
         {
           "title": "Your data, your control",
@@ -246,7 +246,7 @@
         },
         {
           "badge": "Layer 2",
-          "title": "42 Business Rules",
+          "title": "MF Semantic Rules",
           "description": "Comprehensive semantic validation based on official information sheet",
           "checks": [
             "Entity verification (JST/GV, NIP, roles)",
@@ -302,18 +302,18 @@
     },
     "comparison": {
       "title": "Compare and choose the best",
-      "subtitle": "Detailed comparison with popular KSeF validators",
+      "subtitle": "Honest comparison.",
       "featuresHeader": "Features",
       "features": {
         "pricing": {
           "title": "Cost",
           "ksefuj": "Always free",
           "freemium": "Free with limits",
-          "enterprise": "$25-50 per 1k"
+          "enterprise": "€25-50 per 1k"
         },
         "validation": {
           "title": "Validation",
-          "ksefuj": "XSD + 42 rules",
+          "ksefuj": "XSD + MF semantic rules",
           "freemium": "XSD only",
           "enterprise": "XSD + partial"
         },
@@ -366,7 +366,7 @@
     },
     "comingSoon": {
       "title": "More coming soon",
-      "subtitle": "Building a complete KSeF tools ecosystem",
+      "subtitle": "The validator is just the start.",
       "features": [
         {
           "title": "Invoice preview",
@@ -387,7 +387,7 @@
     },
     "newsletter": {
       "title": "KSeF Newsletter",
-      "subtitle": "Practical insights about e-invoices, validator tips, common pitfalls and everything you need to know — no bureaucratic jargon",
+      "subtitle": "Practical insights about e-invoices: tips, pitfalls, and everything you need to know — no bureaucratic jargon",
       "placeholder": "Your email address",
       "buttonText": "Subscribe",
       "successMessage": "Thanks! We'll be in touch soon.",
@@ -434,7 +434,7 @@
     "intro": "Your privacy matters. ksefuj is designed so that your invoice data never leaves your browser. Here's exactly what that means.",
     "noCollection": {
       "title": "No Data Collection",
-      "description": "ksefuj does not collect, store, or process any personal data. All XML invoice validation happens entirely in your browser using client-side JavaScript. Your files are never uploaded to any server."
+      "description": "ksefuj does not collect, store, or process any personal data. All XML invoice validation happens entirely in your browser using JavaScript. Your files are never uploaded to any server."
     },
     "noStorage": {
       "title": "No Server Storage",
