@@ -1,4 +1,5 @@
 import React from "react";
+import { CopyButton } from "./copy-button";
 
 /** Inline source citation with an external link icon */
 interface SourceProps {
@@ -111,9 +112,7 @@ interface XmlExampleProps {
 export function XmlExample({ children, copyable = false }: XmlExampleProps) {
   return (
     <div className="relative group my-4">
-      {copyable && (
-        <CopyButton getContent={() => extractTextContent(children)} />
-      )}
+      {copyable && <CopyButton text={extractTextContent(children)} />}
       <div className="rounded-xl overflow-hidden border border-slate-200 bg-slate-950 text-sm">
         {children}
       </div>
@@ -130,22 +129,6 @@ function extractTextContent(node: React.ReactNode): string {
     return extractTextContent((node.props as { children?: React.ReactNode }).children);
   }
   return "";
-}
-
-/** Client-side copy button (must be used inside a client boundary) */
-function CopyButton({ getContent }: { getContent: () => string }) {
-  return (
-    <button
-      type="button"
-      onClick={async () => {
-        await navigator.clipboard.writeText(getContent());
-      }}
-      className="absolute top-2 right-2 z-10 px-2 py-1 text-xs rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white transition-colors opacity-0 group-hover:opacity-100"
-      aria-label="Kopiuj"
-    >
-      Kopiuj
-    </button>
-  );
 }
 
 /** Auto-generated field reference table */
