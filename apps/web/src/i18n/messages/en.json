@@ -464,5 +464,49 @@
       "title": "Contact",
       "description": "If you have questions about this privacy policy, contact us at hej@ksefuj.to."
     }
+  },
+  "structuredData": {
+    "faq": [
+      {
+        "question": "What is KSeF and who must use it from April 1, 2026?",
+        "answer": "KSeF (Krajowy System e-Faktur / National e-Invoice System) is Poland's central system by the Ministry of Finance for issuing and receiving structured XML invoices. From February 1, 2026, large companies (2024 turnover above PLN 200 million) must use KSeF. From April 1, 2026, all VAT-registered taxpayers, including sole traders (JDG) and freelancers, are required to use it. Micro-entities (monthly sales up to PLN 10,000) are exempt until end of 2026."
+      },
+      {
+        "question": "What happens if I don't issue an invoice through KSeF?",
+        "answer": "In 2026, a transitional protection period applies — no financial penalties are imposed for KSeF violations. From January 1, 2027, penalties of up to 100% of the VAT amount on the invoice, or up to 18.7% of the gross invoice value, may be applied. Traditional paper invoices and PDFs will no longer be recognized as valid accounting documents in domestic B2B transactions."
+      },
+      {
+        "question": "What is the FA(3) XML format?",
+        "answer": "FA(3) is the official XML schema published by Poland's Ministry of Finance that defines the structure of structured invoices in KSeF. Every invoice must comply with this schema — containing required fields in strict order (the XSD uses xs:sequence). The schema covers seller and buyer data, invoice line items, VAT rates, annotations, and many other elements."
+      },
+      {
+        "question": "How do I validate my KSeF invoice before submitting?",
+        "answer": "Use the free validator at ksefuj.to — drag and drop your XML file, and the tool checks compliance with the XSD schema plus 42 semantic rules based on the official Ministry of Finance information sheet. Validation runs entirely in your browser — your data never leaves your computer. You can also use the npm package @ksefuj/validator or the CLI tool."
+      },
+      {
+        "question": "Can I use KSeF without accounting software?",
+        "answer": "Yes. The Ministry of Finance provides a free Taxpayer Application at ap.ksef.mf.gov.pl that allows you to issue and receive invoices directly in KSeF. Tools like ksefuj.to help validate XML before submission, and will soon enable invoice generation without needing accounting software."
+      },
+      {
+        "question": "What is a KSeF number (KSeF ID)?",
+        "answer": "A KSeF number is a unique identifier assigned to each invoice when it is accepted by the KSeF system. It confirms that the invoice has been properly registered and is legally binding. This number is required for corrective invoices and when referencing invoices within the system."
+      },
+      {
+        "question": "How do I handle buyers who don't have a NIP?",
+        "answer": "Invoices for individuals not running a business (B2C) do not require the buyer's NIP. Such invoices are issued normally through KSeF, but the buyer does not have access to the KSeF system — the invoice can be delivered to them by other means (e.g., printout, PDF with QR code)."
+      },
+      {
+        "question": "What about foreign buyers and B2C invoices in KSeF?",
+        "answer": "Invoices for foreign contractors must also go through KSeF. In the FA(3) schema, the NrVatUE field (not NIP) is used for foreign buyers, and VAT rates should be marked as \"np\" (not applicable) with the appropriate designation (np I or np II). A readable copy of the invoice (e.g., PDF with QR code) can be sent to the foreign buyer additionally."
+      },
+      {
+        "question": "What are the penalties for KSeF non-compliance?",
+        "answer": "In 2026, a protection period applies with no financial penalties. From January 1, 2027, penalties can reach up to 100% of the VAT amount on the invoice or up to 18.7% of the gross value (when VAT is not separately stated). Penalties apply for not issuing invoices through KSeF, delays in uploading offline-issued invoices, and data errors. The tax authority will assess each case individually."
+      },
+      {
+        "question": "Is there a free KSeF validator?",
+        "answer": "Yes — ksefuj.to is a completely free, open-source KSeF FA(3) invoice validator. It checks XML compliance with the XSD schema and verifies 42 business rules based on official Ministry of Finance documentation. It runs entirely in your browser (your data never leaves your computer), and is also available as an npm package (@ksefuj/validator) and CLI tool. No limits, no registration, no fees."
+      }
+    ]
   }
 }

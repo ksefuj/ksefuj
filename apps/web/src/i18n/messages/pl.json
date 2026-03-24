@@ -464,5 +464,49 @@
       "title": "Kontakt",
       "description": "Jeśli masz pytania dotyczące tej polityki prywatności, skontaktuj się z nami pod adresem hej@ksefuj.to."
     }
+  },
+  "structuredData": {
+    "faq": [
+      {
+        "question": "Czym jest KSeF i kto musi z niego korzystać od 1 kwietnia 2026?",
+        "answer": "KSeF (Krajowy System e-Faktur) to centralny system Ministerstwa Finansów do wystawiania i odbierania faktur ustrukturyzowanych w formacie XML. Od 1 lutego 2026 r. obowiązek dotyczy dużych firm (obrót powyżej 200 mln zł w 2024 r.), a od 1 kwietnia 2026 r. — wszystkich czynnych podatników VAT, w tym jednoosobowych działalności gospodarczych (JDG) i freelancerów. Najmniejsze firmy (sprzedaż do 10 tys. zł miesięcznie) mają zwolnienie do końca 2026 r."
+      },
+      {
+        "question": "Co się stanie, jeśli nie wystawię faktury przez KSeF?",
+        "answer": "W 2026 roku obowiązuje okres ochronny — nie są nakładane kary finansowe za naruszenia związane z KSeF. Od 1 stycznia 2027 r. grożą kary do 100% kwoty VAT na fakturze lub do 18,7% wartości brutto faktury. Tradycyjne faktury papierowe i zwykłe PDF-y nie będą uznawane za dokumenty księgowe w krajowym obrocie B2B."
+      },
+      {
+        "question": "Czym jest format XML FA(3)?",
+        "answer": "FA(3) to oficjalny schemat XML opublikowany przez Ministerstwo Finansów, definiujący strukturę faktury ustrukturyzowanej w KSeF. Każda faktura musi być zgodna z tym schematem — zawierać wymagane pola w odpowiedniej kolejności (XSD używa xs:sequence). Schemat obejmuje dane sprzedawcy, nabywcy, pozycje faktury, stawki VAT, adnotacje i wiele innych elementów."
+      },
+      {
+        "question": "Jak zwalidować fakturę KSeF przed wysłaniem?",
+        "answer": "Użyj darmowego walidatora na ksefuj.to — przeciągnij plik XML, a narzędzie sprawdzi zgodność ze schematem XSD oraz 42 reguły semantyczne oparte na oficjalnym arkuszu informacyjnym Ministerstwa Finansów. Walidacja odbywa się w całości w przeglądarce — Twoje dane nigdy nie opuszczają komputera. Możesz też użyć pakietu npm @ksefuj/validator lub CLI."
+      },
+      {
+        "question": "Czy mogę korzystać z KSeF bez programu księgowego?",
+        "answer": "Tak. Ministerstwo Finansów udostępnia bezpłatną Aplikację Podatnika na ap.ksef.mf.gov.pl, która pozwala wystawiać i odbierać faktury bezpośrednio w KSeF. Narzędzia takie jak ksefuj.to pomagają zwalidować XML przed wysłaniem, a w przyszłości umożliwią też generowanie faktur bez potrzeby instalowania oprogramowania księgowego."
+      },
+      {
+        "question": "Czym jest numer KSeF (identyfikator KSeF)?",
+        "answer": "Numer KSeF to unikalny identyfikator nadawany każdej fakturze w momencie jej przyjęcia przez system KSeF. Potwierdza on, że faktura została poprawnie zarejestrowana i jest prawnie wiążąca. Numer ten jest wymagany przy korektach faktur i przy odwoływaniu się do faktur w systemie."
+      },
+      {
+        "question": "Jak wystawić fakturę w KSeF, gdy nabywca nie ma NIP?",
+        "answer": "Faktury dla osób fizycznych nieprowadzących działalności gospodarczej (B2C) nie wymagają NIP nabywcy. W KSeF wystawia się je normalnie, ale nabywca nie ma dostępu do systemu KSeF — fakturę można mu przekazać w inny sposób (np. wydruk, PDF z kodem QR)."
+      },
+      {
+        "question": "Jak wystawiać faktury dla zagranicznych nabywców przez KSeF?",
+        "answer": "Faktury dla zagranicznych kontrahentów również muszą przejść przez KSeF. W schemacie FA(3) dla nabywców zagranicznych używa się pola NrVatUE (nie NIP), a stawki VAT powinny być oznaczone jako „np” (nie podlega) z odpowiednim oznaczeniem (np I lub np II). Fakturę w formacie czytelnym dla kontrahenta (np. PDF z kodem QR) można wysłać dodatkowo."
+      },
+      {
+        "question": "Jakie kary grożą za nieprzestrzeganie przepisów o KSeF?",
+        "answer": "W 2026 roku obowiązuje okres ochronny bez kar finansowych. Od 1 stycznia 2027 r. kary mogą wynosić do 100% kwoty VAT z faktury lub do 18,7% wartości brutto (gdy VAT nie jest wyodrębniony). Kary dotyczą m.in. niewystawienia faktury przez KSeF, opóźnień w przesłaniu faktur wystawionych offline oraz błędów w danych. Urząd skarbowy będzie oceniał każdy przypadek indywidualnie."
+      },
+      {
+        "question": "Czy istnieje darmowy walidator faktur KSeF?",
+        "answer": "Tak — ksefuj.to to w pełni darmowy, open-source’owy walidator faktur KSeF FA(3). Sprawdza zgodność XML ze schematem XSD oraz weryfikuje 42 reguły biznesowe oparte na oficjalnej dokumentacji Ministerstwa Finansów. Działa w całości w przeglądarce (dane nie opuszczają komputera), jest dostępny też jako pakiet npm (@ksefuj/validator) i narzędzie CLI. Bez limitów, bez rejestracji, bez opłat."
+      }
+    ]
   }
 }
