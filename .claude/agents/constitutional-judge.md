@@ -1,1 +1,1 @@
-../.github/agents/constitutional-judge.md
+../../.github/agents/constitutional-judge.md

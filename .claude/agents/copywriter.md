@@ -1,1 +1,1 @@
-../.github/agents/copywriter.md
+../../.github/agents/copywriter.md
