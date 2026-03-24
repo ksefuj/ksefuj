@@ -1,16 +1,16 @@
 {
   "meta": {
     "title": "ksefuj.to — KSeF FA(3) validator",
-    "description": "Free KSeF FA(3) invoice validator. Drop XML, check errors. Everything client-side — your data never leaves your browser.",
+    "description": "Free KSeF FA(3) invoice validator. Drop XML, check errors. Your data never leaves your browser.",
     "ogTitle": "ksefuj.to — KSeF FA(3) validator",
-    "ogDescription": "Free KSeF invoice validator. Client-side, no registration."
+    "ogDescription": "Free KSeF invoice validator. Your file never leaves the browser."
   },
   "validator": {
     "dropzone": {
       "dragHere": "Drop XML files here",
       "dropFiles": "Drop {count} XML {count, plural, =1 {file} other {files}}",
       "validating": "Validating...",
-      "validatingDetails": "Checking XSD schema validation...",
+      "validatingDetails": "Checking schema conformance...",
       "acceptedFiles": "Accepted: .xml (KSeF FA3 invoices)",
       "callToAction": "ksef it!"
     },
@@ -45,7 +45,7 @@
     },
     "issuesList": {
       "noIssuesTitle": "All good!",
-      "noIssuesDescription": "No validation issues found.",
+      "noIssuesDescription": "Your invoice is valid.",
       "showingCount": "Showing {shown} of {total} issues.",
       "remaining": "{count} remaining."
     },
@@ -207,28 +207,25 @@
   },
   "landing": {
     "hero": {
-      "title": "Validate your KSeF FA(3) e-invoice",
-      "description": "Mandatory KSeF from April 1, 2026 (Feb 1 for large companies). Drop XML, see errors. Data stays in your browser.",
-      "trustLine": "100% Free • 42 business rules • Open Source"
+      "title": "KSeF validation. Simpler than ever.",
+      "description": "Drag in your XML, see everything in seconds. Full MF validation based on the official information sheet, zero privacy compromises.",
+      "trustLine": "Free forever • Full MF validation • 100% local"
     },
     "features": {
-      "title": "Why ksefuj?",
-      "subtitle": "Built for freelancers and small businesses who don't want to pay for Symfonia or Comarch",
+      "title": "KSeF is no joke.",
+      "subtitle": "Professional validation. No paywall.",
       "items": [
         {
-          "title": "Full MF validation",
-          "description": "Official XSD schema (06/2025) + 42 business rules from MF information sheet",
-          "accent": "violet"
+          "title": "Built to MF spec",
+          "description": "Official FA(3) schema from June 2025 plus full semantic validation based on the Ministry of Finance information sheet"
         },
         {
-          "title": "100% privacy",
-          "description": "Everything runs locally in your browser. Your invoices never reach any server",
-          "accent": "emerald"
+          "title": "Your data, your control",
+          "description": "Complete validation in your browser. Zero data transmission, zero leak risk"
         },
         {
-          "title": "Actually free",
-          "description": "No limits, accounts, ads or paywalls. KSeF is burden enough — tools should be free",
-          "accent": "amber"
+          "title": "Free. Always.",
+          "description": "No limits, no subscriptions, no hidden costs. Essential tools should be accessible to everyone"
         }
       ]
     },
@@ -249,7 +246,7 @@
         },
         {
           "badge": "Layer 2",
-          "title": "42 Business Rules",
+          "title": "MF Semantic Rules",
           "description": "Comprehensive semantic validation based on official information sheet",
           "checks": [
             "Entity verification (JST/GV, NIP, roles)",
@@ -303,9 +300,104 @@
       ],
       "ctaText": "View on GitHub"
     },
+    "comparison": {
+      "title": "Compare and choose the best",
+      "subtitle": "Honest comparison.",
+      "featuresHeader": "Features",
+      "features": {
+        "pricing": {
+          "title": "Cost",
+          "ksefuj": "Always free",
+          "freemium": "Free with limits",
+          "enterprise": "Paid / usage-based"
+        },
+        "validation": {
+          "title": "Validation",
+          "ksefuj": "XSD + MF semantic rules",
+          "freemium": "XSD + limited",
+          "enterprise": "XSD + partial"
+        },
+        "localXsd": {
+          "title": "Local XSD validation",
+          "ksefuj": "Built-in schemas",
+          "freemium": "No",
+          "enterprise": "No"
+        },
+        "privacy": {
+          "title": "Data privacy",
+          "ksefuj": "In browser",
+          "freemium": "Varies",
+          "enterprise": "On servers"
+        },
+        "errorDetails": {
+          "title": "Errors",
+          "ksefuj": "Detailed + helpful",
+          "freemium": "Basic",
+          "enterprise": "AI (paid)"
+        },
+        "cli": {
+          "title": "Developer tools",
+          "ksefuj": "CLI + npm",
+          "freemium": "No",
+          "enterprise": "Paid"
+        },
+        "openSource": {
+          "title": "Open source",
+          "ksefuj": "Apache 2.0",
+          "freemium": "No",
+          "enterprise": "No"
+        }
+      },
+      "competitors": [
+        {
+          "name": "ksefuj.to",
+          "tagline": "Open source • Free"
+        },
+        {
+          "name": "Freemium",
+          "tagline": "Free with limits"
+        },
+        {
+          "name": "Enterprise",
+          "tagline": "Paid solutions"
+        }
+      ],
+      "disclaimer": "* Comparison based on publicly available information as of March 2026"
+    },
+    "comingSoon": {
+      "title": "More coming soon",
+      "subtitle": "The validator is just the start.",
+      "features": [
+        {
+          "title": "Invoice preview",
+          "description": "Automatic XML preview as readable PDF invoice",
+          "badge": "Coming Soon"
+        },
+        {
+          "title": "Auto-fix errors",
+          "description": "Smart correction suggestions with one-click fixes",
+          "badge": "Coming Soon"
+        },
+        {
+          "title": "Invoice generator",
+          "description": "Create compliant XMLs from simple forms",
+          "badge": "Planned"
+        }
+      ]
+    },
+    "newsletter": {
+      "title": "KSeF Newsletter",
+      "subtitle": "Practical insights about e-invoices: tips, pitfalls, and everything you need to know — no bureaucratic jargon",
+      "placeholder": "Your email address",
+      "buttonText": "Subscribe",
+      "successMessage": "Thanks! We'll be in touch soon.",
+      "errorMessage": "Oops, something went wrong. Please try again.",
+      "disclaimer": "Only valuable content. No spam.",
+      "poweredBy": "Powered by"
+    },
     "developer": {
       "title": "For developers",
-      "subtitle": "CLI, npm package, API — integrate with your tools",
+      "subtitle": "CLI, npm package — integrate with your tools",
       "expandText": "Show options",
       "collapseText": "Hide options",
       "content": {
@@ -323,7 +415,9 @@
         },
         "npm": {
           "title": "npm Package",
-          "description": "Integrate validator with your app"
+          "description": "Integrate validator with your app",
+          "installLabel": "Install",
+          "usageLabel": "Usage"
         },
         "docs": {
           "title": "Documentation",
@@ -340,7 +434,7 @@
     "intro": "Your privacy matters. ksefuj is designed so that your invoice data never leaves your browser. Here's exactly what that means.",
     "noCollection": {
       "title": "No Data Collection",
-      "description": "ksefuj does not collect, store, or process any personal data. All XML invoice validation happens entirely in your browser using client-side JavaScript. Your files are never uploaded to any server."
+      "description": "ksefuj does not collect, store, or process any personal data. All XML invoice validation happens entirely in your browser using JavaScript. Your files are never uploaded to any server."
     },
     "noStorage": {
       "title": "No Server Storage",

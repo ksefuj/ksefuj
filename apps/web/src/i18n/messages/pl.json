@@ -1,16 +1,16 @@
 {
   "meta": {
     "title": "ksefuj.to — walidator KSeF FA(3)",
-    "description": "Darmowy walidator faktur KSeF FA(3). Wrzuć XML, sprawdź błędy. Wszystko client-side — Twoje dane nie opuszczają przeglądarki.",
+    "description": "Darmowy walidator faktur KSeF FA(3). Wrzuć XML, sprawdź błędy. Twoje dane nie opuszczają przeglądarki.",
     "ogTitle": "ksefuj.to — walidator KSeF FA(3)",
-    "ogDescription": "Darmowy walidator faktur KSeF. Client-side, bez logowania."
+    "ogDescription": "Darmowy walidator faktur KSeF. Twój plik nie opuszcza przeglądarki."
   },
   "validator": {
     "dropzone": {
       "dragHere": "Przeciągnij pliki XML tutaj",
       "dropFiles": "Upuść {count, plural, one {plik} few {# pliki} many {# plików} other {# plików}} XML",
       "validating": "Walidacja...",
-      "validatingDetails": "Sprawdzanie walidacji schematu XSD...",
+      "validatingDetails": "Sprawdzanie zgodności ze schematem...",
       "acceptedFiles": "Akceptowane: .xml (faktury KSeF FA3)",
       "callToAction": "ksefuj to!"
     },
@@ -45,7 +45,7 @@
     },
     "issuesList": {
       "noIssuesTitle": "Wszystko w porządku!",
-      "noIssuesDescription": "Nie znaleziono żadnych problemów z walidacją.",
+      "noIssuesDescription": "Twoja faktura jest poprawna.",
       "showingCount": "Pokazano {shown} z {total} problemów.",
       "remaining": "{count} pozostało."
     },
@@ -177,7 +177,7 @@
       },
       "noWarranties": {
         "title": "2. Brak gwarancji",
-        "content": "Narzędzie jest udostępniane w stanie „takim, jaki jest\u201d (ang. as-is), bez żadnych gwarancji — jawnych ani dorozumianych. Nie gwarantujemy, że walidator wykryje wszystkie błędy, ani że wyniki walidacji będą kompletne lub wolne od pomyłek."
+        "content": "Narzędzie jest udostępniane w stanie „takim, jaki jest” (ang. as-is), bez żadnych gwarancji — jawnych ani dorozumianych. Nie gwarantujemy, że walidator wykryje wszystkie błędy, ani że wyniki walidacji będą kompletne lub wolne od pomyłek."
       },
       "liability": {
         "title": "3. Ograniczenie odpowiedzialności",
@@ -207,28 +207,25 @@
   },
   "landing": {
     "hero": {
-      "title": "Sprawdź swoją e-fakturę FA(3)",
-      "description": "Obowiązkowy KSeF od 1 kwietnia 2026 (1 lutego dla dużych firm). Wrzuć XML, zobacz błędy. Dane nie opuszczają przeglądarki.",
-      "trustLine": "100% darmowy • 42 reguły biznesowe • Open Source"
+      "title": "Walidacja KSeF. Prosta jak nigdy.",
+      "description": "Przeciągnij XML, dowiedz się wszystkiego w sekundach. Pełna walidacja MF na podstawie arkusza informacyjnego, zero kompromisów w prywatności.",
+      "trustLine": "Darmowe na zawsze • Pełna walidacja MF • 100% lokalne"
     },
     "features": {
-      "title": "Dlaczego ksefuj?",
-      "subtitle": "Stworzone dla freelancerów i małych firm, którzy nie chcą płacić za Symfonie czy Comarcha",
+      "title": "Bo KSeF to nie żarty.",
+      "subtitle": "Profesjonalna walidacja bez paywallu.",
       "items": [
         {
-          "title": "Pełna walidacja MF",
-          "description": "Oficjalny schemat XSD (06/2025) + 42 reguły biznesowe z arkusza informacyjnego MF",
-          "accent": "violet"
+          "title": "Ministerialnie precyzyjne",
+          "description": "Oficjalny schemat XSD z czerwca 2025 plus pełna walidacja semantyczna na podstawie arkusza informacyjnego Ministerstwa Finansów"
         },
         {
-          "title": "100% prywatności",
-          "description": "Wszystko działa lokalnie w przeglądarce. Twoje faktury nie trafiają na żaden serwer",
-          "accent": "emerald"
+          "title": "Twoje dane, Twoja kontrola",
+          "description": "Cała walidacja w Twojej przeglądarce. Zero przesyłania danych, zero ryzyka przecieku"
         },
         {
-          "title": "Naprawdę darmowy",
-          "description": "Bez limitów, kont, reklam czy paywallu. KSeF to wystarczający ciężar — narzędzia powinny być za darmo",
-          "accent": "amber"
+          "title": "Za darmo. Na zawsze.",
+          "description": "Bez limitów, bez subskrypcji, bez ukrytych kosztów. Podstawowe narzędzia powinny być dostępne dla każdego"
         }
       ]
     },
@@ -249,7 +246,7 @@
         },
         {
           "badge": "Poziom 2",
-          "title": "42 reguły biznesowe",
+          "title": "Reguły semantyczne MF",
           "description": "Kompleksowa walidacja semantyczna na podstawie oficjalnego arkusza informacyjnego",
           "checks": [
             "Weryfikacja podmiotów (JST/GV, NIP, role)",
@@ -303,9 +300,104 @@
       ],
       "ctaText": "Zobacz na GitHub"
     },
+    "comparison": {
+      "title": "Porównaj i wybierz najlepsze",
+      "subtitle": "Uczciwe porównanie.",
+      "featuresHeader": "Funkcje",
+      "features": {
+        "pricing": {
+          "title": "Koszt",
+          "ksefuj": "Zawsze darmowe",
+          "freemium": "Z limitami",
+          "enterprise": "Płatne / za użycie"
+        },
+        "validation": {
+          "title": "Walidacja",
+          "ksefuj": "XSD + reguły semantyczne MF",
+          "freemium": "XSD + ograniczona",
+          "enterprise": "XSD + częściowa"
+        },
+        "localXsd": {
+          "title": "Lokalna walidacja XSD",
+          "ksefuj": "Wbudowane schematy",
+          "freemium": "Nie",
+          "enterprise": "Nie"
+        },
+        "privacy": {
+          "title": "Prywatność danych",
+          "ksefuj": "W przeglądarce",
+          "freemium": "Różnie",
+          "enterprise": "Na serwerze"
+        },
+        "errorDetails": {
+          "title": "Błędy",
+          "ksefuj": "Szczegółowe + pomocne",
+          "freemium": "Podstawowe",
+          "enterprise": "AI (płatne)"
+        },
+        "cli": {
+          "title": "Developer tools",
+          "ksefuj": "CLI + npm",
+          "freemium": "Nie",
+          "enterprise": "Płatne"
+        },
+        "openSource": {
+          "title": "Open source",
+          "ksefuj": "Apache 2.0",
+          "freemium": "Nie",
+          "enterprise": "Nie"
+        }
+      },
+      "competitors": [
+        {
+          "name": "ksefuj.to",
+          "tagline": "Open source • Darmowy"
+        },
+        {
+          "name": "Freemium",
+          "tagline": "Darmowe z limitami"
+        },
+        {
+          "name": "Enterprise",
+          "tagline": "Płatne rozwiązania"
+        }
+      ],
+      "disclaimer": "* Porównanie na podstawie publicznie dostępnych informacji z marca 2026"
+    },
+    "comingSoon": {
+      "title": "Nadchodzi jeszcze więcej",
+      "subtitle": "Walidator to dopiero początek.",
+      "features": [
+        {
+          "title": "Podgląd faktury",
+          "description": "Automatyczny podgląd XML jako czytelna faktura PDF",
+          "badge": "Wkrótce"
+        },
+        {
+          "title": "Autonaprawa błędów",
+          "description": "Inteligentne sugestie poprawek z jednym kliknięciem",
+          "badge": "Wkrótce"
+        },
+        {
+          "title": "Generator faktur",
+          "description": "Tworzenie zgodnych XML-i z prostego formularza",
+          "badge": "W planach"
+        }
+      ]
+    },
+    "newsletter": {
+      "title": "Newsletter o KSeF",
+      "subtitle": "Praktyczna wiedza o e-fakturach: walidator, pułapki i wszystko, co musisz wiedzieć — bez urzędniczego żargonu",
+      "placeholder": "Twój adres email",
+      "buttonText": "Zapisz mnie",
+      "successMessage": "Dziękujemy! Wkrótce się odezwiemy.",
+      "errorMessage": "Ups, coś poszło nie tak. Spróbuj ponownie.",
+      "disclaimer": "Tylko wartościowa treść. Zero spamu.",
+      "poweredBy": "Obsługiwane przez"
+    },
     "developer": {
       "title": "Dla programistów",
-      "subtitle": "CLI, npm package, API — integruj z Twoimi narzędziami",
+      "subtitle": "CLI, npm package — integruj z twoimi narzędziami",
       "expandText": "Pokaż opcje",
       "collapseText": "Ukryj opcje",
       "content": {
@@ -323,7 +415,9 @@
         },
         "npm": {
           "title": "npm Package",
-          "description": "Integruj walidator z Twoją aplikacją"
+          "description": "Integruj walidator z Twoją aplikacją",
+          "installLabel": "Instalacja",
+          "usageLabel": "Użycie"
         },
         "docs": {
           "title": "Dokumentacja",
@@ -340,7 +434,7 @@
     "intro": "Twoja prywatność jest dla nas ważna. ksefuj jest zaprojektowany tak, aby dane Twoich faktur nigdy nie opuszczały Twojej przeglądarki. Oto co to dokładnie oznacza.",
     "noCollection": {
       "title": "Brak zbierania danych",
-      "description": "ksefuj nie zbiera, nie przechowuje ani nie przetwarza żadnych danych osobowych. Cała walidacja faktur XML odbywa się wyłącznie w Twojej przeglądarce za pomocą JavaScript po stronie klienta. Twoje pliki nigdy nie są wysyłane na żaden serwer."
+      "description": "ksefuj nie zbiera, nie przechowuje ani nie przetwarza żadnych danych osobowych. Cała walidacja faktur XML odbywa się wyłącznie w Twojej przeglądarce za pomocą JavaScript. Twoje pliki nigdy nie są wysyłane na żaden serwer."
     },
     "noStorage": {
       "title": "Brak przechowywania na serwerze",

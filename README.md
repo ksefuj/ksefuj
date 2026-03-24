@@ -193,17 +193,17 @@ bundle if changes are detected. Run this:
 - [x] Web app with drag & drop
 - [x] npm package
 - [x] Schema update tool
-- [x] i18n setup (PL + EN + UA)
+- [x] i18n setup (PL + EN + UK)
 - [x] Deploy to production
 
 ### Phase 1.5: Launch Sprint (in progress)
 
-- [ ] Validator UI improvements (multi-file upload, better error output)
+- [x] Validator UI improvements (multi-file upload, better error output)
+- [x] Human-readable error messages with fix instructions
 - [ ] Landing page with trust signals and feature sections
 - [ ] MDX content pipeline (docs, guides, blog)
 - [ ] Global validation counter (Vercel KV)
 - [ ] Sitemap, RSS, OG images
-- [ ] Human-readable error messages with fix instructions
 - [ ] Publish @ksefuj/validator to npm registry
 
 ### Phase 2: Preview

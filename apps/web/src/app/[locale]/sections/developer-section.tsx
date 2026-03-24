@@ -22,6 +22,8 @@ interface DeveloperSectionProps {
     npm: {
       title: string;
       description: string;
+      installLabel: string;
+      usageLabel: string;
       install: string;
       usage: string;
     };
@@ -81,13 +83,13 @@ export function DeveloperSection({
               <p className="text-slate-600 text-sm mb-4">{content.npm.description}</p>
               <div className="space-y-2">
                 <div>
-                  <p className="text-xs text-slate-500 mb-1">Install</p>
+                  <p className="text-xs text-slate-500 mb-1">{content.npm.installLabel}</p>
                   <div className="bg-slate-900 text-slate-100 rounded-lg p-2 font-mono text-xs">
                     {content.npm.install}
                   </div>
                 </div>
                 <div>
-                  <p className="text-xs text-slate-500 mb-1">Usage</p>
+                  <p className="text-xs text-slate-500 mb-1">{content.npm.usageLabel}</p>
                   <div className="bg-slate-900 text-slate-100 rounded-lg p-2 font-mono text-xs overflow-x-auto">
                     <pre>{content.npm.usage}</pre>
                   </div>
