@@ -217,18 +217,15 @@
       "items": [
         {
           "title": "Міністерськи точно",
-          "description": "Офіційна схема XSD з червня 2025 плюс всі 42 правила з інформаційного аркуша Міністерства фінансів",
-          "accent": "violet"
+          "description": "Офіційна схема XSD з червня 2025 плюс всі 42 правила з інформаційного аркуша Міністерства фінансів"
         },
         {
           "title": "Ваші дані, ваш контроль",
-          "description": "Повна валідація в браузері. Нуль передачі даних, нуль ризику витоку",
-          "accent": "emerald"
+          "description": "Повна валідація в браузері. Нуль передачі даних, нуль ризику витоку"
         },
         {
           "title": "Безкоштовно. Завжди.",
-          "description": "Без лімітів, без підписок, без прихованих витрат. Основні інструменти мають бути доступні кожному",
-          "accent": "amber"
+          "description": "Без лімітів, без підписок, без прихованих витрат. Основні інструменти мають бути доступні кожному"
         }
       ]
     },
@@ -310,108 +307,45 @@
       "features": {
         "pricing": {
           "title": "Вартість",
-          "ksefuj": {
-            "value": "Завжди безкоштовно",
-            "status": "good"
-          },
-          "freemium": {
-            "value": "З обмеженнями",
-            "status": "partial"
-          },
-          "enterprise": {
-            "value": "$25-50 за 1к",
-            "status": "bad"
-          }
+          "ksefuj": "Завжди безкоштовно",
+          "freemium": "З обмеженнями",
+          "enterprise": "$25-50 за 1к"
         },
         "validation": {
           "title": "Валідація",
-          "ksefuj": {
-            "value": "XSD + 42 правила",
-            "status": "good"
-          },
-          "freemium": {
-            "value": "Тільки XSD",
-            "status": "bad"
-          },
-          "enterprise": {
-            "value": "XSD + часткова",
-            "status": "partial"
-          }
+          "ksefuj": "XSD + 42 правила",
+          "freemium": "Тільки XSD",
+          "enterprise": "XSD + часткова"
         },
         "localXsd": {
           "title": "Локальна XSD валідація",
-          "ksefuj": {
-            "value": "Вбудовані схеми",
-            "status": "good"
-          },
-          "freemium": {
-            "value": "Ні",
-            "status": "bad"
-          },
-          "enterprise": {
-            "value": "Ні",
-            "status": "bad"
-          }
+          "ksefuj": "Вбудовані схеми",
+          "freemium": "Ні",
+          "enterprise": "Ні"
         },
         "privacy": {
           "title": "Приватність даних",
-          "ksefuj": {
-            "value": "У браузері",
-            "status": "good"
-          },
-          "freemium": {
-            "value": "На серверах",
-            "status": "bad"
-          },
-          "enterprise": {
-            "value": "На серверах",
-            "status": "bad"
-          }
+          "ksefuj": "У браузері",
+          "freemium": "На серверах",
+          "enterprise": "На серверах"
         },
         "errorDetails": {
           "title": "Помилки",
-          "ksefuj": {
-            "value": "Детальні + корисні",
-            "status": "good"
-          },
-          "freemium": {
-            "value": "Базові",
-            "status": "bad"
-          },
-          "enterprise": {
-            "value": "AI (платно)",
-            "status": "partial"
-          }
+          "ksefuj": "Детальні + корисні",
+          "freemium": "Базові",
+          "enterprise": "AI (платно)"
         },
         "cli": {
           "title": "Інструменти розробника",
-          "ksefuj": {
-            "value": "CLI + npm",
-            "status": "good"
-          },
-          "freemium": {
-            "value": "Ні",
-            "status": "bad"
-          },
-          "enterprise": {
-            "value": "Платно",
-            "status": "partial"
-          }
+          "ksefuj": "CLI + npm",
+          "freemium": "Ні",
+          "enterprise": "Платно"
         },
         "openSource": {
           "title": "Відкритий код",
-          "ksefuj": {
-            "value": "Apache 2.0",
-            "status": "good"
-          },
-          "freemium": {
-            "value": "Ні",
-            "status": "bad"
-          },
-          "enterprise": {
-            "value": "Ні",
-            "status": "bad"
-          }
+          "ksefuj": "Apache 2.0",
+          "freemium": "Ні",
+          "enterprise": "Ні"
         }
       },
       "competitors": [
@@ -437,19 +371,16 @@
         {
           "title": "Перегляд рахунків",
           "description": "Автоматичний перегляд XML як читабельний PDF рахунок",
-          "icon": "preview",
           "badge": "Незабаром"
         },
         {
           "title": "Авто-виправлення",
           "description": "Розумні пропозиції виправлень в один клік",
-          "icon": "autofix",
           "badge": "Незабаром"
         },
         {
           "title": "Генератор рахунків",
           "description": "Створення відповідних XML з простих форм",
-          "icon": "generate",
           "badge": "У планах"
         }
       ]
@@ -484,7 +415,9 @@
         },
         "npm": {
           "title": "npm Package",
-          "description": "Інтегруйте валідатор з вашим додатком"
+          "description": "Інтегруйте валідатор з вашим додатком",
+          "installLabel": "Встановлення",
+          "usageLabel": "Використання"
         },
         "docs": {
           "title": "Документація",

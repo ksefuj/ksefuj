@@ -217,18 +217,15 @@
       "items": [
         {
           "title": "Ministerially precise",
-          "description": "Official XSD schema from June 2025 plus all 42 rules from the Ministry of Finance information sheet",
-          "accent": "violet"
+          "description": "Official XSD schema from June 2025 plus all 42 rules from the Ministry of Finance information sheet"
         },
         {
           "title": "Your data, your control",
-          "description": "Complete validation in your browser. Zero data transmission, zero leak risk",
-          "accent": "emerald"
+          "description": "Complete validation in your browser. Zero data transmission, zero leak risk"
         },
         {
           "title": "Free. Always.",
-          "description": "No limits, no subscriptions, no hidden costs. Essential tools should be accessible to everyone",
-          "accent": "amber"
+          "description": "No limits, no subscriptions, no hidden costs. Essential tools should be accessible to everyone"
         }
       ]
     },
@@ -310,108 +307,45 @@
       "features": {
         "pricing": {
           "title": "Cost",
-          "ksefuj": {
-            "value": "Always free",
-            "status": "good"
-          },
-          "freemium": {
-            "value": "Free with limits",
-            "status": "partial"
-          },
-          "enterprise": {
-            "value": "$25-50 per 1k",
-            "status": "bad"
-          }
+          "ksefuj": "Always free",
+          "freemium": "Free with limits",
+          "enterprise": "$25-50 per 1k"
         },
         "validation": {
           "title": "Validation",
-          "ksefuj": {
-            "value": "XSD + 42 rules",
-            "status": "good"
-          },
-          "freemium": {
-            "value": "XSD only",
-            "status": "bad"
-          },
-          "enterprise": {
-            "value": "XSD + partial",
-            "status": "partial"
-          }
+          "ksefuj": "XSD + 42 rules",
+          "freemium": "XSD only",
+          "enterprise": "XSD + partial"
         },
         "localXsd": {
           "title": "Local XSD validation",
-          "ksefuj": {
-            "value": "Built-in schemas",
-            "status": "good"
-          },
-          "freemium": {
-            "value": "No",
-            "status": "bad"
-          },
-          "enterprise": {
-            "value": "No",
-            "status": "bad"
-          }
+          "ksefuj": "Built-in schemas",
+          "freemium": "No",
+          "enterprise": "No"
         },
         "privacy": {
           "title": "Data privacy",
-          "ksefuj": {
-            "value": "In browser",
-            "status": "good"
-          },
-          "freemium": {
-            "value": "On servers",
-            "status": "bad"
-          },
-          "enterprise": {
-            "value": "On servers",
-            "status": "bad"
-          }
+          "ksefuj": "In browser",
+          "freemium": "On servers",
+          "enterprise": "On servers"
         },
         "errorDetails": {
           "title": "Errors",
-          "ksefuj": {
-            "value": "Detailed + helpful",
-            "status": "good"
-          },
-          "freemium": {
-            "value": "Basic",
-            "status": "bad"
-          },
-          "enterprise": {
-            "value": "AI (paid)",
-            "status": "partial"
-          }
+          "ksefuj": "Detailed + helpful",
+          "freemium": "Basic",
+          "enterprise": "AI (paid)"
         },
         "cli": {
           "title": "Developer tools",
-          "ksefuj": {
-            "value": "CLI + npm",
-            "status": "good"
-          },
-          "freemium": {
-            "value": "No",
-            "status": "bad"
-          },
-          "enterprise": {
-            "value": "Paid",
-            "status": "partial"
-          }
+          "ksefuj": "CLI + npm",
+          "freemium": "No",
+          "enterprise": "Paid"
         },
         "openSource": {
           "title": "Open source",
-          "ksefuj": {
-            "value": "Apache 2.0",
-            "status": "good"
-          },
-          "freemium": {
-            "value": "No",
-            "status": "bad"
-          },
-          "enterprise": {
-            "value": "No",
-            "status": "bad"
-          }
+          "ksefuj": "Apache 2.0",
+          "freemium": "No",
+          "enterprise": "No"
         }
       },
       "competitors": [
@@ -437,19 +371,16 @@
         {
           "title": "Invoice preview",
           "description": "Automatic XML preview as readable PDF invoice",
-          "icon": "preview",
           "badge": "Coming Soon"
         },
         {
           "title": "Auto-fix errors",
           "description": "Smart correction suggestions with one-click fixes",
-          "icon": "autofix",
           "badge": "Coming Soon"
         },
         {
           "title": "Invoice generator",
           "description": "Create compliant XMLs from simple forms",
-          "icon": "generate",
           "badge": "Planned"
         }
       ]
@@ -484,7 +415,9 @@
         },
         "npm": {
           "title": "npm Package",
-          "description": "Integrate validator with your app"
+          "description": "Integrate validator with your app",
+          "installLabel": "Install",
+          "usageLabel": "Usage"
         },
         "docs": {
           "title": "Documentation",

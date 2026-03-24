@@ -217,18 +217,15 @@
       "items": [
         {
           "title": "Ministerialnie precyzyjne",
-          "description": "Oficjalny schemat XSD z czerwca 2025 plus wszystkie 42 reguły z arkusza informacyjnego Ministerstwa Finansów",
-          "accent": "violet"
+          "description": "Oficjalny schemat XSD z czerwca 2025 plus wszystkie 42 reguły z arkusza informacyjnego Ministerstwa Finansów"
         },
         {
           "title": "Twoje dane, Twoja kontrola",
-          "description": "Cała walidacja w Twojej przeglądarce. Zero przesyłania danych, zero ryzyka przecieku",
-          "accent": "emerald"
+          "description": "Cała walidacja w Twojej przeglądarce. Zero przesyłania danych, zero ryzyka przecieku"
         },
         {
           "title": "Darmowe. Zawsze.",
-          "description": "Bez limitów, bez subskrypcji, bez ukrytych kosztów. Podstawowe narzędzia powinny być dostępne dla każdego",
-          "accent": "amber"
+          "description": "Bez limitów, bez subskrypcji, bez ukrytych kosztów. Podstawowe narzędzia powinny być dostępne dla każdego"
         }
       ]
     },
@@ -310,108 +307,45 @@
       "features": {
         "pricing": {
           "title": "Koszt",
-          "ksefuj": {
-            "value": "Zawsze darmowe",
-            "status": "good"
-          },
-          "freemium": {
-            "value": "Z limitami",
-            "status": "partial"
-          },
-          "enterprise": {
-            "value": "€25-50/1k faktur",
-            "status": "bad"
-          }
+          "ksefuj": "Zawsze darmowe",
+          "freemium": "Z limitami",
+          "enterprise": "€25-50/1k faktur"
         },
         "validation": {
           "title": "Walidacja",
-          "ksefuj": {
-            "value": "XSD + 42 reguły",
-            "status": "good"
-          },
-          "freemium": {
-            "value": "Tylko XSD",
-            "status": "bad"
-          },
-          "enterprise": {
-            "value": "XSD + częściowa",
-            "status": "partial"
-          }
+          "ksefuj": "XSD + 42 reguły",
+          "freemium": "Tylko XSD",
+          "enterprise": "XSD + częściowa"
         },
         "localXsd": {
           "title": "Lokalna walidacja XSD",
-          "ksefuj": {
-            "value": "Wbudowane schematy",
-            "status": "good"
-          },
-          "freemium": {
-            "value": "Nie",
-            "status": "bad"
-          },
-          "enterprise": {
-            "value": "Nie",
-            "status": "bad"
-          }
+          "ksefuj": "Wbudowane schematy",
+          "freemium": "Nie",
+          "enterprise": "Nie"
         },
         "privacy": {
           "title": "Prywatność danych",
-          "ksefuj": {
-            "value": "W przeglądarce",
-            "status": "good"
-          },
-          "freemium": {
-            "value": "Na serwerze",
-            "status": "bad"
-          },
-          "enterprise": {
-            "value": "Na serwerze",
-            "status": "bad"
-          }
+          "ksefuj": "W przeglądarce",
+          "freemium": "Na serwerze",
+          "enterprise": "Na serwerze"
         },
         "errorDetails": {
           "title": "Błędy",
-          "ksefuj": {
-            "value": "Szczegółowe + pomocne",
-            "status": "good"
-          },
-          "freemium": {
-            "value": "Podstawowe",
-            "status": "bad"
-          },
-          "enterprise": {
-            "value": "AI (płatne)",
-            "status": "partial"
-          }
+          "ksefuj": "Szczegółowe + pomocne",
+          "freemium": "Podstawowe",
+          "enterprise": "AI (płatne)"
         },
         "cli": {
           "title": "Developer tools",
-          "ksefuj": {
-            "value": "CLI + npm",
-            "status": "good"
-          },
-          "freemium": {
-            "value": "Nie",
-            "status": "bad"
-          },
-          "enterprise": {
-            "value": "Płatne",
-            "status": "partial"
-          }
+          "ksefuj": "CLI + npm",
+          "freemium": "Nie",
+          "enterprise": "Płatne"
         },
         "openSource": {
           "title": "Open source",
-          "ksefuj": {
-            "value": "Apache 2.0",
-            "status": "good"
-          },
-          "freemium": {
-            "value": "Nie",
-            "status": "bad"
-          },
-          "enterprise": {
-            "value": "Nie",
-            "status": "bad"
-          }
+          "ksefuj": "Apache 2.0",
+          "freemium": "Nie",
+          "enterprise": "Nie"
         }
       },
       "competitors": [
@@ -437,19 +371,16 @@
         {
           "title": "Podgląd faktury",
           "description": "Automatyczny podgląd XML jako czytelna faktura PDF",
-          "icon": "preview",
           "badge": "Wkrótce"
         },
         {
           "title": "Autonaprawa błędów",
           "description": "Inteligentne sugestie poprawek z jednym kliknięciem",
-          "icon": "autofix",
           "badge": "Wkrótce"
         },
         {
           "title": "Generator faktur",
           "description": "Tworzenie zgodnych XML-i z prostego formularza",
-          "icon": "generate",
           "badge": "W planach"
         }
       ]
@@ -484,7 +415,9 @@
         },
         "npm": {
           "title": "npm Package",
-          "description": "Integruj walidator z Twoją aplikacją"
+          "description": "Integruj walidator z Twoją aplikacją",
+          "installLabel": "Instalacja",
+          "usageLabel": "Użycie"
         },
         "docs": {
           "title": "Dokumentacja",

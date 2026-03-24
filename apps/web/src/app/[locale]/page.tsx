@@ -12,6 +12,7 @@ import { GettingStartedSection } from "./sections/getting-started-section";
 import { OpenSourceSection } from "./sections/open-source-section";
 import { DeveloperSection } from "./sections/developer-section";
 import { getTranslations } from "next-intl/server";
+import { COMING_SOON_FEATURES, COMPARISON_STATUSES, FEATURES_ACCENTS } from "./page-data";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -120,19 +121,19 @@ export default async function Home({ params }: Props) {
               icon: icons.shield,
               title: t("landing.features.items.0.title"),
               description: t("landing.features.items.0.description"),
-              accent: "violet" as const,
+              accent: FEATURES_ACCENTS[0],
             },
             {
               icon: icons.lock,
               title: t("landing.features.items.1.title"),
               description: t("landing.features.items.1.description"),
-              accent: "emerald" as const,
+              accent: FEATURES_ACCENTS[1],
             },
             {
               icon: icons.sparkles,
               title: t("landing.features.items.2.title"),
               description: t("landing.features.items.2.description"),
-              accent: "amber" as const,
+              accent: FEATURES_ACCENTS[2],
             },
           ]}
         />
@@ -172,7 +173,22 @@ export default async function Home({ params }: Props) {
           title={t("landing.comparison.title")}
           subtitle={t("landing.comparison.subtitle")}
           featuresHeader={t("landing.comparison.featuresHeader")}
-          features={t.raw("landing.comparison.features")}
+          features={Object.fromEntries(
+            Object.entries(
+              t.raw("landing.comparison.features") as Record<
+                string,
+                { title: string; ksefuj: string; freemium: string; enterprise: string }
+              >,
+            ).map(([key, row]) => [
+              key,
+              {
+                title: row.title,
+                ksefuj: { value: row.ksefuj, status: COMPARISON_STATUSES[key].ksefuj },
+                freemium: { value: row.freemium, status: COMPARISON_STATUSES[key].freemium },
+                enterprise: { value: row.enterprise, status: COMPARISON_STATUSES[key].enterprise },
+              },
+            ]),
+          )}
           competitors={t.raw("landing.comparison.competitors")}
           disclaimer={t("landing.comparison.disclaimer")}
         />
@@ -181,7 +197,17 @@ export default async function Home({ params }: Props) {
         <ComingSoonSection
           title={t("landing.comingSoon.title")}
           subtitle={t("landing.comingSoon.subtitle")}
-          features={t.raw("landing.comingSoon.features")}
+          features={(
+            t.raw("landing.comingSoon.features") as {
+              title: string;
+              description: string;
+              badge: string;
+            }[]
+          ).map((f, i) => ({
+            ...f,
+            icon: COMING_SOON_FEATURES[i].icon,
+            badgeVariant: COMING_SOON_FEATURES[i].badgeVariant,
+          }))}
         />
 
         {/* Newsletter Section */}
@@ -272,6 +298,8 @@ export default async function Home({ params }: Props) {
             npm: {
               title: t("landing.developer.content.npm.title"),
               description: t("landing.developer.content.npm.description"),
+              installLabel: t("landing.developer.content.npm.installLabel"),
+              usageLabel: t("landing.developer.content.npm.usageLabel"),
               install: "npm install @ksefuj/validator",
               usage: `import { validate } from '@ksefuj/validator';
 

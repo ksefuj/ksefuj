@@ -3,8 +3,7 @@
 import { SectionContainer } from "@/components/section-container";
 import { Logo } from "@/components/logo";
 import React, { useState } from "react";
-
-type CellStatus = "good" | "bad" | "partial";
+import type { CellStatus } from "../page-data";
 
 interface Cell {
   value: string;
