@@ -1,26 +1,49 @@
 "use client";
 
-import React from "react";
+import { type ReactNode, useEffect, useState } from "react";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 import { Logo } from "./logo";
 
 interface SiteHeaderProps {
   locale: string;
-  languagePicker?: React.ReactNode;
+  languagePicker?: ReactNode;
 }
 
 export function SiteHeader({ locale, languagePicker }: SiteHeaderProps) {
-  return (
-    <header className="sticky top-0 z-40 backdrop-blur-xl bg-white/80 border-b border-white/20">
-      <div className="max-w-4xl mx-auto px-4 md:px-6 py-4">
-        <div className="flex items-center justify-between">
-          <Link href={`/${locale}`} className="hover:opacity-80 transition-opacity">
-            <Logo size="md" />
-          </Link>
+  const [scrolled, setScrolled] = useState(false);
 
-          <nav className="flex items-center gap-6">{languagePicker}</nav>
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 80);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <>
+      <div aria-hidden className="pointer-events-none">
+        <div className="max-w-4xl mx-auto px-4 md:px-6 py-4">
+          <Logo size="md" className="invisible" />
         </div>
       </div>
-    </header>
+
+      <div className="fixed top-0 left-0 right-0 z-40 pointer-events-none">
+        <div
+          className={cn(
+            "pointer-events-auto transition-all duration-200 ease-linear",
+            scrolled
+              ? "mx-4 md:mx-auto mt-3 max-w-4xl rounded-2xl shadow-sm border border-white/60 bg-white/50 backdrop-blur-2xl"
+              : "border-b border-slate-100 bg-white/80 backdrop-blur-xl",
+          )}
+        >
+          <div className="max-w-4xl mx-auto px-4 md:px-6 py-4 flex items-center justify-between">
+            <Link href={`/${locale}`} className="hover:opacity-80 transition-opacity">
+              <Logo size="md" />
+            </Link>
+            <nav className="flex items-center gap-6">{languagePicker}</nav>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
