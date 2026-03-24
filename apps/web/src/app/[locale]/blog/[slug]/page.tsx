@@ -12,6 +12,24 @@ interface Props {
   params: Promise<{ locale: string; slug: string }>;
 }
 
+const ALL_LOCALES = ["pl", "en", "uk"] as const;
+
+/**
+ * For each locale, return the best available path for the current blog post.
+ * - If the slug exists in that locale → `/blog/${slug}`
+ * - Otherwise → `/blog` (listing page as graceful fallback)
+ */
+async function buildLocalePaths(slug: string): Promise<Record<string, string>> {
+  const entries = await Promise.all(
+    ALL_LOCALES.map(async (loc) => {
+      const slugs = await listSlugs(loc, "blog");
+      const path = slugs.includes(slug) ? `/blog/${slug}` : "/blog";
+      return [loc, path] as const;
+    }),
+  );
+  return Object.fromEntries(entries);
+}
+
 export async function generateStaticParams({ params }: { params: { locale: string } }) {
   const { locale } = params;
   const slugs = await listSlugs(locale, "blog");
@@ -49,6 +67,7 @@ export default async function BlogPostPage({ params }: Props) {
   const headings = extractHeadings(item.content);
   const urlPath = locale === "pl" ? `/blog/${slug}` : `/${locale}/blog/${slug}`;
   const schema = buildArticleSchema(item.frontmatter, urlPath);
+  const localePaths = await buildLocalePaths(slug);
 
   const { content } = await compileMDXContent({ source: item.content });
 
@@ -60,7 +79,7 @@ export default async function BlogPostPage({ params }: Props) {
           __html: JSON.stringify(schema).replace(/</g, "\\u003c"),
         }}
       />
-      <SiteHeader locale={locale} languagePicker={<LanguagePicker currentLocale={locale} />} />
+      <SiteHeader locale={locale} languagePicker={<LanguagePicker currentLocale={locale} localePaths={localePaths} />} />
       <main className="min-h-screen">
         <BlogPostLayout
           frontmatter={item.frontmatter}

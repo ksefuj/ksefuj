@@ -40,7 +40,15 @@ export function SiteHeader({ locale, languagePicker }: SiteHeaderProps) {
             <Link href={`/${locale}`} className="hover:opacity-80 transition-opacity">
               <Logo size="md" />
             </Link>
-            <nav className="flex items-center gap-6">{languagePicker}</nav>
+            <nav className="flex items-center gap-6">
+              <Link
+                href={locale === "pl" ? "/blog" : `/${locale}/blog`}
+                className="text-sm font-medium text-slate-600 hover:text-violet-600 transition-colors"
+              >
+                Blog
+              </Link>
+              {languagePicker}
+            </nav>
           </div>
         </div>
       </div>

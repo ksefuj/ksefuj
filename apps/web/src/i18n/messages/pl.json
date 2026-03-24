@@ -153,6 +153,7 @@
   "footer": {
     "description": "Darmowy walidator faktur KSeF. Twój plik nie opuszcza przeglądarki.",
     "resources": "Zasoby",
+    "blog": "Blog",
     "information": "Informacje",
     "contact": "Kontakt",
     "emailLabel": "Pytania? Sugestie?",

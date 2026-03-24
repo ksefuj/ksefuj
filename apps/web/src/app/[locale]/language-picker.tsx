@@ -7,6 +7,13 @@ import { useTranslations } from "next-intl";
 
 interface Props {
   currentLocale: string;
+  /**
+   * Optional override: maps locale codes to the path to navigate to when that
+   * locale is selected (locale-prefix-free, e.g. "/blog/my-post" or "/blog").
+   * When absent the picker falls back to its default behaviour of staying on
+   * the current pathname.
+   */
+  localePaths?: Partial<Record<string, string>>;
 }
 
 const languages = [
@@ -15,7 +22,7 @@ const languages = [
   { code: "uk", label: "UK", name: "Українська" },
 ] as const;
 
-export function LanguagePicker({ currentLocale }: Props) {
+export function LanguagePicker({ currentLocale, localePaths }: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
@@ -51,7 +58,12 @@ export function LanguagePicker({ currentLocale }: Props) {
 
     setIsOpen(false);
     startTransition(() => {
-      router.replace(pathname, { locale });
+      const targetPath = localePaths?.[locale];
+      if (targetPath !== undefined) {
+        router.push(targetPath, { locale });
+      } else {
+        router.replace(pathname, { locale });
+      }
     });
   };
 

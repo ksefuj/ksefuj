@@ -153,6 +153,7 @@
   "footer": {
     "description": "Free KSeF invoice validator. Your file never leaves the browser.",
     "resources": "Resources",
+    "blog": "Blog",
     "information": "Information",
     "contact": "Contact",
     "emailLabel": "Questions? Suggestions?",

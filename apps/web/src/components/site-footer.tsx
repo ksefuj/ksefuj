@@ -2,10 +2,12 @@
 
 import { Logo } from "./logo";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 export function SiteFooter() {
   const t = useTranslations("footer");
+  const locale = useLocale();
+  const blogHref = locale === "pl" ? "/blog" : `/${locale}/blog`;
   return (
     <footer className="bg-slate-900 text-slate-400 border-t border-slate-800">
       <div className="max-w-4xl mx-auto px-4 md:px-6 py-16">
@@ -55,6 +57,11 @@ export function SiteFooter() {
               {t("information")}
             </h3>
             <ul className="space-y-2 text-sm">
+              <li>
+                <Link href={blogHref} className="hover:text-slate-300 transition-colors">
+                  {t("blog")}
+                </Link>
+              </li>
               <li>
                 <Link href="/privacy" className="hover:text-slate-300 transition-colors">
                   {t("privacyPolicy")}
