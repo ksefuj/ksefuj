@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Validator } from "./validator";
 import { LanguagePicker } from "./language-picker";
+import { type FaqItem, StructuredData } from "./structured-data";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { HeroSection } from "./sections/hero-section";
@@ -108,8 +109,12 @@ export default async function Home({ params }: Props) {
     globe: globeIcon,
   };
 
+  const faqItems = t.raw("structuredData.faq") as FaqItem[];
+
   return (
     <>
+      <StructuredData description={t("meta.description")} faqItems={faqItems} />
+
       <SiteHeader locale={locale} languagePicker={<LanguagePicker currentLocale={locale} />} />
 
       <main className="min-h-screen">
