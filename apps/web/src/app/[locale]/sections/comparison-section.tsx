@@ -87,7 +87,7 @@ export function ComparisonSection({
       </div>
 
       <div className="max-w-6xl mx-auto">
-        <div className="overflow-x-auto px-4 pt-2 pb-4">
+        <div className="overflow-x-auto px-4 pb-6">
           <div className="min-w-[768px]">
             <div className="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
               {/* Header */}
