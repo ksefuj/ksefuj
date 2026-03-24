@@ -1,12 +1,16 @@
 import type { MetadataRoute } from "next";
+import { routing } from "@/i18n/routing";
 
 const BASE_URL = "https://ksefuj.to";
 
 // Pages available in all locales
 const pages = ["/", "/privacy", "/terms"];
 
-// URL prefixes per locale (default locale 'pl' uses no prefix per as-needed config)
-const localePrefixes = ["", "/en", "/uk"];
+// Derive URL prefixes per locale from central i18n routing configuration
+const localePrefixes =
+  routing.localePrefix === "as-needed"
+    ? routing.locales.map((locale) => (locale === routing.defaultLocale ? "" : `/${locale}`))
+    : routing.locales.map((locale) => `/${locale}`);
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const entries: MetadataRoute.Sitemap = [];
