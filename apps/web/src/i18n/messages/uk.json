@@ -312,45 +312,108 @@
       "features": {
         "pricing": {
           "title": "Вартість",
-          "ksefuj": "Завжди безкоштовно",
-          "freemium": "З обмеженнями",
-          "enterprise": "$25-50 за 1к"
+          "ksefuj": {
+            "value": "Завжди безкоштовно",
+            "status": "good"
+          },
+          "freemium": {
+            "value": "З обмеженнями",
+            "status": "partial"
+          },
+          "enterprise": {
+            "value": "$25-50 за 1к",
+            "status": "bad"
+          }
         },
         "validation": {
           "title": "Валідація",
-          "ksefuj": "XSD + 42 правила",
-          "freemium": "Тільки XSD",
-          "enterprise": "XSD + часткова"
+          "ksefuj": {
+            "value": "XSD + 42 правила",
+            "status": "good"
+          },
+          "freemium": {
+            "value": "Тільки XSD",
+            "status": "bad"
+          },
+          "enterprise": {
+            "value": "XSD + часткова",
+            "status": "partial"
+          }
         },
         "localXsd": {
           "title": "Локальна XSD валідація",
-          "ksefuj": "Вбудовані схеми",
-          "freemium": "Ні",
-          "enterprise": "Ні"
+          "ksefuj": {
+            "value": "Вбудовані схеми",
+            "status": "good"
+          },
+          "freemium": {
+            "value": "Ні",
+            "status": "bad"
+          },
+          "enterprise": {
+            "value": "Ні",
+            "status": "bad"
+          }
         },
         "privacy": {
           "title": "Приватність даних",
-          "ksefuj": "У браузері",
-          "freemium": "На серверах",
-          "enterprise": "На серверах"
+          "ksefuj": {
+            "value": "У браузері",
+            "status": "good"
+          },
+          "freemium": {
+            "value": "На серверах",
+            "status": "bad"
+          },
+          "enterprise": {
+            "value": "На серверах",
+            "status": "bad"
+          }
         },
         "errorDetails": {
           "title": "Помилки",
-          "ksefuj": "Детальні + корисні",
-          "freemium": "Базові",
-          "enterprise": "AI (платно)"
+          "ksefuj": {
+            "value": "Детальні + корисні",
+            "status": "good"
+          },
+          "freemium": {
+            "value": "Базові",
+            "status": "bad"
+          },
+          "enterprise": {
+            "value": "AI (платно)",
+            "status": "partial"
+          }
         },
         "cli": {
           "title": "Інструменти розробника",
-          "ksefuj": "CLI + npm",
-          "freemium": "Ні",
-          "enterprise": "Платно"
+          "ksefuj": {
+            "value": "CLI + npm",
+            "status": "good"
+          },
+          "freemium": {
+            "value": "Ні",
+            "status": "bad"
+          },
+          "enterprise": {
+            "value": "Платно",
+            "status": "partial"
+          }
         },
         "openSource": {
           "title": "Відкритий код",
-          "ksefuj": "Apache 2.0",
-          "freemium": "Ні",
-          "enterprise": "Ні"
+          "ksefuj": {
+            "value": "Apache 2.0",
+            "status": "good"
+          },
+          "freemium": {
+            "value": "Ні",
+            "status": "bad"
+          },
+          "enterprise": {
+            "value": "Ні",
+            "status": "bad"
+          }
         }
       },
       "competitors": [

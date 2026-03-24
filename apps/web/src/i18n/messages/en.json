@@ -312,45 +312,108 @@
       "features": {
         "pricing": {
           "title": "Cost",
-          "ksefuj": "Always free",
-          "freemium": "Free with limits",
-          "enterprise": "$25-50 per 1k"
+          "ksefuj": {
+            "value": "Always free",
+            "status": "good"
+          },
+          "freemium": {
+            "value": "Free with limits",
+            "status": "partial"
+          },
+          "enterprise": {
+            "value": "$25-50 per 1k",
+            "status": "bad"
+          }
         },
         "validation": {
           "title": "Validation",
-          "ksefuj": "XSD + 42 rules",
-          "freemium": "XSD only",
-          "enterprise": "XSD + partial"
+          "ksefuj": {
+            "value": "XSD + 42 rules",
+            "status": "good"
+          },
+          "freemium": {
+            "value": "XSD only",
+            "status": "bad"
+          },
+          "enterprise": {
+            "value": "XSD + partial",
+            "status": "partial"
+          }
         },
         "localXsd": {
           "title": "Local XSD validation",
-          "ksefuj": "Built-in schemas",
-          "freemium": "No",
-          "enterprise": "No"
+          "ksefuj": {
+            "value": "Built-in schemas",
+            "status": "good"
+          },
+          "freemium": {
+            "value": "No",
+            "status": "bad"
+          },
+          "enterprise": {
+            "value": "No",
+            "status": "bad"
+          }
         },
         "privacy": {
           "title": "Data privacy",
-          "ksefuj": "In browser",
-          "freemium": "On servers",
-          "enterprise": "On servers"
+          "ksefuj": {
+            "value": "In browser",
+            "status": "good"
+          },
+          "freemium": {
+            "value": "On servers",
+            "status": "bad"
+          },
+          "enterprise": {
+            "value": "On servers",
+            "status": "bad"
+          }
         },
         "errorDetails": {
           "title": "Errors",
-          "ksefuj": "Detailed + helpful",
-          "freemium": "Basic",
-          "enterprise": "AI (paid)"
+          "ksefuj": {
+            "value": "Detailed + helpful",
+            "status": "good"
+          },
+          "freemium": {
+            "value": "Basic",
+            "status": "bad"
+          },
+          "enterprise": {
+            "value": "AI (paid)",
+            "status": "partial"
+          }
         },
         "cli": {
           "title": "Developer tools",
-          "ksefuj": "CLI + npm",
-          "freemium": "No",
-          "enterprise": "Paid"
+          "ksefuj": {
+            "value": "CLI + npm",
+            "status": "good"
+          },
+          "freemium": {
+            "value": "No",
+            "status": "bad"
+          },
+          "enterprise": {
+            "value": "Paid",
+            "status": "partial"
+          }
         },
         "openSource": {
           "title": "Open source",
-          "ksefuj": "Apache 2.0",
-          "freemium": "No",
-          "enterprise": "No"
+          "ksefuj": {
+            "value": "Apache 2.0",
+            "status": "good"
+          },
+          "freemium": {
+            "value": "No",
+            "status": "bad"
+          },
+          "enterprise": {
+            "value": "No",
+            "status": "bad"
+          }
         }
       },
       "competitors": [

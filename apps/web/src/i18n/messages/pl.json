@@ -177,7 +177,7 @@
       },
       "noWarranties": {
         "title": "2. Brak gwarancji",
-        "content": "Narzędzie jest udostępniane w stanie „takim, jaki jest\u201d (ang. as-is), bez żadnych gwarancji — jawnych ani dorozumianych. Nie gwarantujemy, że walidator wykryje wszystkie błędy, ani że wyniki walidacji będą kompletne lub wolne od pomyłek."
+        "content": "Narzędzie jest udostępniane w stanie „takim, jaki jest” (ang. as-is), bez żadnych gwarancji — jawnych ani dorozumianych. Nie gwarantujemy, że walidator wykryje wszystkie błędy, ani że wyniki walidacji będą kompletne lub wolne od pomyłek."
       },
       "liability": {
         "title": "3. Ograniczenie odpowiedzialności",
@@ -312,45 +312,108 @@
       "features": {
         "pricing": {
           "title": "Koszt",
-          "ksefuj": "Zawsze darmowe",
-          "freemium": "Z limitami",
-          "enterprise": "€25-50/1k faktur"
+          "ksefuj": {
+            "value": "Zawsze darmowe",
+            "status": "good"
+          },
+          "freemium": {
+            "value": "Z limitami",
+            "status": "partial"
+          },
+          "enterprise": {
+            "value": "€25-50/1k faktur",
+            "status": "bad"
+          }
         },
         "validation": {
           "title": "Walidacja",
-          "ksefuj": "XSD + 42 reguły",
-          "freemium": "Tylko XSD",
-          "enterprise": "XSD + częściowa"
+          "ksefuj": {
+            "value": "XSD + 42 reguły",
+            "status": "good"
+          },
+          "freemium": {
+            "value": "Tylko XSD",
+            "status": "bad"
+          },
+          "enterprise": {
+            "value": "XSD + częściowa",
+            "status": "partial"
+          }
         },
         "localXsd": {
           "title": "Lokalna walidacja XSD",
-          "ksefuj": "Wbudowane schematy",
-          "freemium": "Nie",
-          "enterprise": "Nie"
+          "ksefuj": {
+            "value": "Wbudowane schematy",
+            "status": "good"
+          },
+          "freemium": {
+            "value": "Nie",
+            "status": "bad"
+          },
+          "enterprise": {
+            "value": "Nie",
+            "status": "bad"
+          }
         },
         "privacy": {
           "title": "Prywatność danych",
-          "ksefuj": "W przeglądarce",
-          "freemium": "Na serwerze",
-          "enterprise": "Na serwerze"
+          "ksefuj": {
+            "value": "W przeglądarce",
+            "status": "good"
+          },
+          "freemium": {
+            "value": "Na serwerze",
+            "status": "bad"
+          },
+          "enterprise": {
+            "value": "Na serwerze",
+            "status": "bad"
+          }
         },
         "errorDetails": {
           "title": "Błędy",
-          "ksefuj": "Szczegółowe + pomocne",
-          "freemium": "Podstawowe",
-          "enterprise": "AI (płatne)"
+          "ksefuj": {
+            "value": "Szczegółowe + pomocne",
+            "status": "good"
+          },
+          "freemium": {
+            "value": "Podstawowe",
+            "status": "bad"
+          },
+          "enterprise": {
+            "value": "AI (płatne)",
+            "status": "partial"
+          }
         },
         "cli": {
           "title": "Developer tools",
-          "ksefuj": "CLI + npm",
-          "freemium": "Nie",
-          "enterprise": "Płatne"
+          "ksefuj": {
+            "value": "CLI + npm",
+            "status": "good"
+          },
+          "freemium": {
+            "value": "Nie",
+            "status": "bad"
+          },
+          "enterprise": {
+            "value": "Płatne",
+            "status": "partial"
+          }
         },
         "openSource": {
           "title": "Open source",
-          "ksefuj": "Apache 2.0",
-          "freemium": "Nie",
-          "enterprise": "Nie"
+          "ksefuj": {
+            "value": "Apache 2.0",
+            "status": "good"
+          },
+          "freemium": {
+            "value": "Nie",
+            "status": "bad"
+          },
+          "enterprise": {
+            "value": "Nie",
+            "status": "bad"
+          }
         }
       },
       "competitors": [
