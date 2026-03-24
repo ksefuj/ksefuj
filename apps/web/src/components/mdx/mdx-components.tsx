@@ -13,7 +13,7 @@ export function Source({ href, label }: SourceProps) {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-flex items-center gap-1.5 text-sm text-violet-600 hover:text-violet-700 transition-colors no-underline border-b border-violet-200 hover:border-violet-400 pb-px"
+      className="inline-flex items-center gap-1.5 text-sm text-violet-600 hover:text-violet-700 transition-colors"
     >
       <svg
         className="w-3.5 h-3.5 shrink-0"
