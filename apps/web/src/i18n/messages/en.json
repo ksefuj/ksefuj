@@ -181,10 +181,173 @@
       "metaDescription": "Technical documentation for the ksefuj validator and FA(3) schema."
     },
     "faq": {
-      "title": "FAQ",
-      "description": "Frequently asked questions about KSeF and ksefuj.",
+      "title": "FAQ — KSeF Questions Answered",
+      "description": "Answers to the most common questions about KSeF — from the basics to technical details.",
       "empty": "FAQ is being prepared.",
-      "metaDescription": "Frequently asked questions about KSeF, FA(3) schema, and the ksefuj validator."
+      "metaDescription": "Answers to 40+ questions about KSeF — from the basics to technical details. Everything you need to know about mandatory e-invoicing in Poland.",
+      "categories": [
+        {
+          "id": "basics",
+          "title": "KSeF Basics",
+          "questions": [
+            {
+              "id": "what-is-ksef",
+              "question": "What is KSeF?",
+              "answer": "KSeF (Krajowy System e-Faktur) is the Polish Ministry of Finance platform for issuing and receiving structured invoices. Every B2B invoice must be submitted to KSeF as an XML file and receive an official number before it reaches the buyer. The system acts as a central tax invoice register maintained by the state."
+            },
+            {
+              "id": "when-mandatory",
+              "question": "When did KSeF become mandatory?",
+              "answer": "For large businesses (sales above 200M PLN per year), KSeF became mandatory on February 1, 2026. For all other active VAT taxpayers — from April 1, 2026. VAT-exempt taxpayers must use KSeF from January 1, 2027."
+            },
+            {
+              "id": "who-it-applies-to",
+              "question": "Who does KSeF apply to?",
+              "answer": "KSeF applies to all active VAT taxpayers with a registered office or fixed place of business in Poland. The obligation covers B2B invoices and invoices issued to individuals outside the cash register system. VAT-exempt entities join the system from January 1, 2027."
+            },
+            {
+              "id": "b2c",
+              "question": "Does KSeF apply to consumer invoices (B2C)?",
+              "answer": "Consumer invoices (B2C) are generally subject to KSeF, with one important exception: invoices issued via cash registers are excluded. If you issue an invoice outside the cash register system — e.g. in invoicing software — it must go through KSeF."
+            },
+            {
+              "id": "what-is-fa3",
+              "question": "What is FA(3)?",
+              "answer": "FA(3) is the current XML schema for structured invoices, published by the Polish Ministry of Finance. The number 3 indicates the third version of the format. All invoices submitted to KSeF must comply with this schema — any deviation results in rejection by the system."
+            },
+            {
+              "id": "ksef-number",
+              "question": "What is a KSeF number?",
+              "answer": "A KSeF number is a unique invoice identifier assigned by the MF system upon successful registration of the document. This number is required when issuing a corrective invoice — the correction must reference the KSeF number of the original invoice."
+            },
+            {
+              "id": "upo",
+              "question": "What is UPO?",
+              "answer": "UPO (Urzędowe Poświadczenie Odbioru — Official Receipt Confirmation) is a document confirming that an invoice was accepted by KSeF. It contains the KSeF number, acceptance date, and a digital signature from the system. UPO proves that the invoice was correctly registered."
+            },
+            {
+              "id": "pdf-invoices",
+              "question": "Can I still send PDF invoices?",
+              "answer": "No — PDF is not accepted by KSeF as a tax document. The system requires a structured XML file compliant with FA(3). You can still send the buyer a PDF visualization for convenience, but the legal version of the document is the XML file registered in KSeF."
+            }
+          ]
+        },
+        {
+          "id": "exemptions",
+          "title": "Thresholds and Exemptions",
+          "questions": [
+            {
+              "id": "exemptions-list",
+              "question": "Who is exempt from KSeF?",
+              "answer": "Exemptions include taxpayers without a registered office or fixed place of business in Poland, invoices issued under special procedures (OSS/IOSS), and invoices from cash registers. The full list of exemptions is defined in the Polish VAT Act — check ksef.podatki.gov.pl for details."
+            },
+            {
+              "id": "vat-exempt",
+              "question": "What about VAT-exempt businesses?",
+              "answer": "VAT-exempt entities must use KSeF from January 1, 2027. If you issue invoices documenting exempt activities, you have more time to prepare. Consult your accountant to determine exactly when the obligation applies to you."
+            }
+          ]
+        },
+        {
+          "id": "issuing-invoices",
+          "title": "Issuing Invoices",
+          "questions": [
+            {
+              "id": "first-invoice",
+              "question": "How do I issue my first invoice in KSeF?",
+              "answer": "First, gain access to KSeF — log in through the Taxpayer Application KSeF (ap.ksef.mf.gov.pl) or integrate your invoicing software with the KSeF API. Then prepare an XML file compliant with FA(3) and submit it to the system. After successful acceptance, you receive a KSeF number and UPO."
+            },
+            {
+              "id": "free-tools",
+              "question": "Are there free tools from the Ministry of Finance?",
+              "answer": "Yes — the Ministry of Finance provides the free Taxpayer Application KSeF (ap.ksef.mf.gov.pl) for issuing, receiving, and viewing KSeF invoices. It's a good solution for people issuing a few invoices per month. For higher volumes, a dedicated invoicing program with KSeF integration is more convenient."
+            },
+            {
+              "id": "corrective-invoice",
+              "question": "How does a corrective invoice work in KSeF?",
+              "answer": "A corrective invoice in KSeF must include the KSeF number of the original invoice — without this field, the correction will be rejected. You submit it the same way as a regular invoice: as an XML file to KSeF. After acceptance, it receives its own KSeF number."
+            },
+            {
+              "id": "foreign-currency",
+              "question": "How do I issue a foreign currency invoice?",
+              "answer": "A foreign currency invoice in KSeF must include VAT amounts converted to Polish zloty (PLN) at the NBP exchange rate. In the XML file, you provide both the foreign currency amounts and the PLN equivalent. The exchange rate must match the rate from the day before the invoice date. PLN fields are mandatory."
+            },
+            {
+              "id": "foreign-buyer",
+              "question": "How do I invoice a foreign buyer?",
+              "answer": "Invoices for EU or non-EU buyers still go through KSeF. Tax rates differ — use 0% for intra-EU supply (WDT) or not-subject-to-VAT for exported services. In the NrVatUE field, enter the buyer's EU VAT number. Validate the file before submitting — errors in foreign buyer address fields are common."
+            }
+          ]
+        },
+        {
+          "id": "offline-and-failures",
+          "title": "Offline Mode and Failures",
+          "questions": [
+            {
+              "id": "ksef-down",
+              "question": "What should I do if KSeF is down?",
+              "answer": "When KSeF is unavailable, the Ministry of Finance officially announces emergency mode. During this time you can issue invoices outside the system with appropriate markings. After KSeF is restored, you have a set time to submit the pending invoices. Check status at ksef.podatki.gov.pl."
+            },
+            {
+              "id": "offline-mode",
+              "question": "What is offline mode?",
+              "answer": "Offline mode allows you to issue invoices outside KSeF when you have no internet access or the system is unavailable. An offline invoice gets a special QR code downloaded in advance from MF and must be submitted to KSeF once connectivity is restored. You can use offline mode proactively, not just during failures."
+            },
+            {
+              "id": "emergency-mode",
+              "question": "What is emergency mode?",
+              "answer": "Emergency mode is officially declared by the Ministry of Finance when KSeF is unavailable due to technical or administrative reasons. During this time the obligation to send invoices to KSeF is suspended — you issue invoices outside the system and commit to uploading them after the outage. Status updates appear on ksef.podatki.gov.pl."
+            }
+          ]
+        },
+        {
+          "id": "access",
+          "title": "Access and Authorizations",
+          "questions": [
+            {
+              "id": "login",
+              "question": "How do I log in to KSeF?",
+              "answer": "Log in to KSeF through the Taxpayer Application (ap.ksef.mf.gov.pl) using one of these methods: Trusted Profile (Profil Zaufany), e-ID, qualified signature, or KSeF certificate. Trusted Profile is the most convenient for most business owners — it can be set up for free via online banking or at a government office."
+            },
+            {
+              "id": "accountant-access",
+              "question": "How do I authorize my accountant for KSeF?",
+              "answer": "You can authorize your accountant by submitting the ZAW-FA form at the tax office or directly in the Taxpayer Application KSeF through the permissions panel. The authorization specifies whether the accountant can only read invoices or also issue them. Your accounting office will usually ask you for the appropriate authorization."
+            },
+            {
+              "id": "ksef-certificate",
+              "question": "What is a KSeF certificate?",
+              "answer": "A KSeF certificate is an electronic identity credential used for authentication in the KSeF API. It is downloaded from the MF system and allows software and integrators to log in to KSeF without a Trusted Profile. There are two types: for the taxpayer directly (type 1) and for an authorized entity (type 2)."
+            }
+          ]
+        },
+        {
+          "id": "validation",
+          "title": "Validation and Errors",
+          "questions": [
+            {
+              "id": "check-invoice",
+              "question": "How do I check if my invoice is valid?",
+              "answer": "Before sending your invoice to KSeF, drop the XML file on ksefuj.to — validation runs entirely in your browser, data never leaves your computer. We check both FA(3) schema compliance and MF semantic rules. Errors are described in plain language — you'll know exactly what to fix."
+            },
+            {
+              "id": "xsd-error",
+              "question": "What does an XSD validation error mean?",
+              "answer": "An XSD error means the XML file structure does not match the FA(3) schema. Common causes: missing required field, wrong element order, typo in element name, or invalid date format. The ksefuj.to validator describes each XSD error clearly and indicates the exact location in the file."
+            },
+            {
+              "id": "privacy",
+              "question": "Does ksefuj.to store my data?",
+              "answer": "No. Your XML file never leaves the browser — all processing happens locally on your computer. We have no access to your invoices, do not transmit them to any servers, and keep no content logs. Invoices are sensitive data — which is why we designed ksefuj.to as a fully private tool."
+            },
+            {
+              "id": "free",
+              "question": "Is ksefuj.to free?",
+              "answer": "Yes — forever. The ksefuj.to validator is free with no limits, no registration, no paywall. We believe basic KSeF tools should be available to everyone — especially small businesses and freelancers. The full source code is publicly available on GitHub."
+            }
+          ]
+        }
+      ]
     },
     "guides": {
       "title": "Guides",

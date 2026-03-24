@@ -181,10 +181,263 @@
       "metaDescription": "Dokumentacja techniczna walidatora ksefuj i schematu FA(3)."
     },
     "faq": {
-      "title": "FAQ",
-      "description": "Często zadawane pytania o KSeF i ksefuj.",
+      "title": "FAQ — Najczęstsze pytania o KSeF",
+      "description": "Odpowiedzi na najczęstsze pytania o KSeF — od podstaw po szczegóły techniczne.",
       "empty": "FAQ jest w przygotowaniu.",
-      "metaDescription": "Często zadawane pytania o KSeF, schemat FA(3) i walidator ksefuj."
+      "metaDescription": "Odpowiedzi na 40+ pytań o KSeF — od podstaw po szczegóły techniczne. Wszystko co potrzebujesz wiedzieć o obowiązkowym e-fakturowaniu.",
+      "categories": [
+        {
+          "id": "podstawy",
+          "title": "Podstawy KSeF",
+          "questions": [
+            {
+              "id": "co-to-jest-ksef",
+              "question": "Co to jest KSeF?",
+              "answer": "KSeF (Krajowy System e-Faktur) to platforma Ministerstwa Finansów do wystawiania i odbierania faktur ustrukturyzowanych. Każda faktura B2B musi być przesłana do KSeF w formacie XML i otrzymać urzędowy numer, zanim trafi do nabywcy. System działa jak centralny rejestr faktur podatkowych prowadzony przez państwo."
+            },
+            {
+              "id": "od-kiedy-obowiazkowy",
+              "question": "Od kiedy KSeF jest obowiązkowy?",
+              "answer": "Dla dużych przedsiębiorców (sprzedaż powyżej 200 mln zł rocznie) KSeF jest obowiązkowy od 1 lutego 2026 roku. Dla pozostałych czynnych podatników VAT — od 1 kwietnia 2026 roku. Podatnicy zwolnieni z VAT mają obowiązek korzystania z KSeF od 1 stycznia 2027 roku."
+            },
+            {
+              "id": "kogo-dotyczy",
+              "question": "Kogo dotyczy obowiązek KSeF?",
+              "answer": "KSeF dotyczy wszystkich czynnych podatników VAT mających siedzibę lub stałe miejsce prowadzenia działalności w Polsce. Obowiązek obejmuje wystawianie faktur na rzecz innych firm (B2B) oraz faktur dla osób fizycznych wystawianych poza kasą fiskalną. Podmioty zwolnione z VAT dołączają do systemu od 1 stycznia 2027 roku."
+            },
+            {
+              "id": "b2c",
+              "question": "Czy KSeF dotyczy faktur dla osób prywatnych (B2C)?",
+              "answer": "Faktury wystawiane konsumentom (B2C) co do zasady podlegają KSeF, ale z ważnym wyjątkiem: faktury wystawiane przy użyciu kasy fiskalnej są z niego wyłączone. Jeśli wystawiasz fakturę poza systemem kasowym — np. w programie fakturowym — musi ona trafić do KSeF. W praktyce większość faktur detalicznych wystawianych z kasy pozostaje poza systemem."
+            },
+            {
+              "id": "paragony-z-nip",
+              "question": "Czy KSeF dotyczy paragonów z NIP?",
+              "answer": "Paragony z NIP nabywcy wystawiane na kasie fiskalnej są traktowane jako faktury uproszczone i nie wchodzą do KSeF. Paragony te wciąż mają moc prawną jako dokument zakupu. Tylko zwykłe faktury VAT wystawiane poza kasą fiskalną podlegają obowiązkowi KSeF."
+            },
+            {
+              "id": "co-to-jest-fa3",
+              "question": "Co to jest FA(3)?",
+              "answer": "FA(3) to aktualnie obowiązujący schemat XML faktur ustrukturyzowanych, opublikowany przez Ministerstwo Finansów. Numer 3 oznacza trzecią wersję tego formatu. Wszystkie faktury przesyłane do KSeF muszą być zgodne z tym schematem — każde odchylenie skutkuje odrzuceniem faktury przez system."
+            },
+            {
+              "id": "fa2-vs-fa3",
+              "question": "Czym się różni FA(2) od FA(3)?",
+              "answer": "FA(2) to poprzednia wersja schematu, stosowana w KSeF 1.0 (do końca 2025 roku). FA(3) wprowadziła nową przestrzeń nazw XML, zaktualizowane pola i rozszerzone wymagania dotyczące adnotacji. Faktury w formacie FA(2) nie są akceptowane przez KSeF 2.0 — jeśli twój program generował FA(2), upewnij się, że dostawca wydał aktualizację do FA(3)."
+            },
+            {
+              "id": "faktury-pdf",
+              "question": "Czy mogę nadal wysyłać faktury w PDF?",
+              "answer": "Nie — PDF nie jest akceptowany przez KSeF jako dokument podatkowy. System wymaga strukturalnego pliku XML zgodnego z FA(3). Możesz co prawda wysyłać nabywcy wizualizację faktury jako PDF dla wygody, ale prawną wersją dokumentu jest plik XML zarejestrowany w KSeF. Dobry program fakturowy generuje oba: XML do KSeF i PDF dla nabywcy."
+            },
+            {
+              "id": "numer-ksef",
+              "question": "Co to jest numer KSeF?",
+              "answer": "Numer KSeF to unikalny identyfikator faktury nadawany przez system MF po pomyślnym zaewidencjonowaniu dokumentu. Numer ten jest wymagany m.in. przy wystawianiu faktury korygującej — korekta musi się odwoływać do numeru KSeF faktury pierwotnej. Bez prawidłowego numeru KSeF korekta zostanie odrzucona."
+            },
+            {
+              "id": "upo",
+              "question": "Co to jest UPO?",
+              "answer": "UPO (Urzędowe Poświadczenie Odbioru) to dokument potwierdzający przyjęcie faktury przez KSeF. Zawiera numer KSeF, datę przyjęcia i podpis cyfrowy systemu. UPO jest dowodem na to, że faktura została prawidłowo zaewidencjonowana — warto je archiwizować razem z plikiem XML faktury."
+            }
+          ]
+        },
+        {
+          "id": "limity-i-wylaczenia",
+          "title": "Limity i wyłączenia",
+          "questions": [
+            {
+              "id": "limit-10000",
+              "question": "Co to jest limit 10 000 zł?",
+              "answer": "W oryginalnych przepisach o KSeF przewidziano, że podatnicy z miesięczną sprzedażą nieprzekraczającą 10 000 zł mogli skorzystać z wydłużonego terminu na wdrożenie. Przepisy te były kilkakrotnie nowelizowane — sprawdź aktualne regulacje na stronie ksef.podatki.gov.pl lub zapytaj księgowego. Niezależnie od limitu, warto przygotować się do KSeF jak najwcześniej."
+            },
+            {
+              "id": "jak-liczyc-limit",
+              "question": "Jak liczyć limit 10 000 zł?",
+              "answer": "Limit liczony jest jako łączna wartość sprzedaży w danym miesiącu, nie suma wystawionych faktur. Wlicza się sprzedaż opodatkowaną VAT oraz zwolnioną. Jeśli zbliżasz się do limitu lub nie jesteś pewien zasad, skonsultuj się z księgowym — przepisy w tym zakresie były zmieniane."
+            },
+            {
+              "id": "ponizej-limitu",
+              "question": "Od kiedy obowiązuje mnie KSeF jeśli jestem poniżej limitu?",
+              "answer": "Jeśli twoja sprzedaż mieściła się poniżej progu uprawniającego do późniejszego terminu, obowiązek KSeF mógł objąć cię od 1 lipca 2026 roku lub od 1 stycznia 2027 roku w zależności od twojego statusu VAT. Daty te mogły ulec zmianom — zawsze weryfikuj aktualne przepisy na stronie ksef.podatki.gov.pl."
+            },
+            {
+              "id": "rolnik-ryczaltowy",
+              "question": "Czy rolnik ryczałtowy musi korzystać z KSeF?",
+              "answer": "Rolnicy ryczałtowi korzystają ze szczególnego systemu opodatkowania i co do zasady są wyłączeni z obowiązku KSeF. Faktury RR (wystawiane przez nabywcę rolnikowi ryczałtowemu) mają odrębne regulacje. Jeśli prowadzisz też inną działalność opodatkowaną VAT, skonsultuj się z księgowym."
+            },
+            {
+              "id": "wylaczenia",
+              "question": "Kto jest zwolniony z KSeF?",
+              "answer": "Z obowiązku KSeF są wyłączone m.in. faktury wystawiane przez podatników nieposiadających siedziby ani stałego miejsca prowadzenia działalności w Polsce, faktury wystawiane w procedurach szczególnych (OSS/IOSS) oraz faktury z kas fiskalnych. Pełna lista wyłączeń jest określona w ustawie o VAT i aktach wykonawczych — w razie wątpliwości sprawdź stronę ksef.podatki.gov.pl."
+            },
+            {
+              "id": "fundacja-stowarzyszenie",
+              "question": "Czy fundacja lub stowarzyszenie musi korzystać z KSeF?",
+              "answer": "To zależy od tego, czy organizacja jest zarejestrowana jako czynny podatnik VAT. Jeśli tak — od 1 kwietnia 2026 roku musi stosować KSeF dla swoich faktur VAT. Organizacje prowadzące wyłącznie działalność zwolnioną z VAT dołączają do systemu od 1 stycznia 2027 roku. Organizacje niewystawiające faktur VAT w ogóle nie są objęte obowiązkiem."
+            }
+          ]
+        },
+        {
+          "id": "wystawianie-faktur",
+          "title": "Wystawianie faktur",
+          "questions": [
+            {
+              "id": "pierwsza-faktura",
+              "question": "Jak wystawić pierwszą fakturę w KSeF?",
+              "answer": "Najpierw musisz mieć dostęp do KSeF — zaloguj się przez Aplikację Podatnika KSeF (ap.ksef.mf.gov.pl) lub zintegruj swój program fakturowy z API KSeF. Następnie przygotuj plik XML zgodny z FA(3) i prześlij go do systemu. Po pomyślnym przyjęciu otrzymasz numer KSeF i UPO — od tej chwili faktura jest prawnie skuteczna."
+            },
+            {
+              "id": "program-bez-ksef",
+              "question": "Co jeśli mój program nie obsługuje KSeF?",
+              "answer": "Skontaktuj się z dostawcą oprogramowania i zapytaj o aktualizację do KSeF 2.0 z obsługą FA(3). Większość popularnych programów fakturowych już ma lub planuje taką aktualizację. Jako alternatywa możesz tymczasowo korzystać z bezpłatnej Aplikacji Podatnika KSeF od MF — jest ona podstawowa, ale wystarczająca do ręcznego wystawiania faktur."
+            },
+            {
+              "id": "darmowe-narzedzia-mf",
+              "question": "Czy mogę korzystać z darmowych narzędzi MF?",
+              "answer": "Tak — Ministerstwo Finansów udostępnia bezpłatną Aplikację Podatnika KSeF (ap.ksef.mf.gov.pl), która pozwala wystawiać, odbierać i przeglądać faktury KSeF. To dobre rozwiązanie dla osób wystawiających kilka faktur miesięcznie. Dla większych wolumenów wygodniejszy jest dedykowany program fakturowy z integracją KSeF."
+            },
+            {
+              "id": "e-mikrofirma",
+              "question": "Co to jest e-mikrofirma?",
+              "answer": "e-mikrofirma to bezpłatna aplikacja webowa MF dla najmniejszych przedsiębiorców, umożliwiająca wystawianie faktur i rozliczanie podatków. Obsługuje KSeF w ograniczonym zakresie i jest alternatywą dla komercyjnych programów fakturowych. Sprawdza się u osób wystawiających faktury okazjonalnie."
+            },
+            {
+              "id": "aplikacja-podatnika",
+              "question": "Co to jest Aplikacja Podatnika KSeF?",
+              "answer": "To oficjalna aplikacja MF (ap.ksef.mf.gov.pl) do zarządzania fakturami w KSeF. Pozwala wystawiać faktury ręcznie przez formularz, przesyłać gotowe pliki XML, przeglądać faktury otrzymane i zarządzać uprawnieniami. Dostęp przez Profil Zaufany, e-dowód lub certyfikat kwalifikowany. Jest bezpłatna i nie wymaga instalacji."
+            },
+            {
+              "id": "faktura-korygujaca",
+              "question": "Jak wygląda faktura korygująca w KSeF?",
+              "answer": "Faktura korygująca w KSeF musi zawierać numer KSeF faktury pierwotnej — bez tego pola korekta zostanie odrzucona. Wysyłasz ją tak samo jak zwykłą fakturę: jako plik XML do KSeF. Po zaakceptowaniu otrzymuje własny numer KSeF. Zasady uzgadniania korekt z nabywcą pozostają bez zmian."
+            },
+            {
+              "id": "faktura-walutowa",
+              "question": "Jak wystawić fakturę walutową?",
+              "answer": "Faktura walutowa w KSeF musi zawierać kwoty podatku VAT przeliczone na złote według kursu NBP. W pliku XML podajesz zarówno kwoty w walucie obcej, jak i równoważnik w PLN. Kurs walutowy musi odpowiadać temu z dnia poprzedzającego datę wystawienia. Pamiętaj: pola PLN są obowiązkowe — brak przeliczenia skutkuje odrzuceniem faktury."
+            },
+            {
+              "id": "faktura-zagraniczna",
+              "question": "Jak wystawić fakturę dla zagranicznego nabywcy?",
+              "answer": "Faktura dla nabywcy z UE lub spoza UE wystawiana w KSeF różni się stawkami VAT. Przy wewnątrzwspólnotowej dostawie towarów (WDT) stosuje się stawkę 0%, przy eksporcie usług — oznaczenie np z właściwym kodem. W polu NrVatUE wpisujesz unijny numer VAT nabywcy. Warto zwalidować taki plik przed wysłaniem — błędy w polach adresowych zagranicznych nabywców są częste."
+            },
+            {
+              "id": "samofakturowanie",
+              "question": "Co to jest samofakturowanie w KSeF?",
+              "answer": "Samofakturowanie to sytuacja, gdy nabywca wystawia fakturę w imieniu sprzedawcy — na podstawie uprzedniego porozumienia między stronami. W KSeF wymaga specjalnych uprawnień: sprzedawca musi upoważnić nabywcę do wystawiania faktur w swoim imieniu. Dokument w KSeF jest oznaczany jako wystawiony w ramach samofakturowania."
+            }
+          ]
+        },
+        {
+          "id": "tryby-i-awarie",
+          "title": "Tryby pracy i awarie",
+          "questions": [
+            {
+              "id": "ksef-nie-dziala",
+              "question": "Co zrobić gdy KSeF nie działa?",
+              "answer": "Gdy KSeF jest niedostępny, MF oficjalnie ogłasza tryb awaryjny. W tym czasie możesz wystawiać faktury poza systemem z odpowiednim oznaczeniem. Po przywróceniu działania KSeF masz określony czas na przesłanie zaległych faktur. Śledź status systemu na stronie ksef.podatki.gov.pl."
+            },
+            {
+              "id": "tryb-offline",
+              "question": "Co to jest tryb offline?",
+              "answer": "Tryb offline to możliwość wystawiania faktur poza systemem KSeF, gdy nie masz dostępu do internetu lub system jest niedostępny. Faktura offline otrzymuje specjalny kod QR pobrany z wyprzedzeniem z MF i musi być przesłana do KSeF po przywróceniu łączności. Tryb offline można stosować prewencyjnie, nie tylko podczas awarii."
+            },
+            {
+              "id": "tryb-awaryjny",
+              "question": "Co to jest tryb awaryjny?",
+              "answer": "Tryb awaryjny jest ogłaszany przez Ministerstwo Finansów, gdy KSeF jest niedostępny z przyczyn technicznych lub administracyjnych. W tym czasie obowiązek wysłania faktury do KSeF jest zawieszony — wystawiasz faktury poza systemem i zobowiązujesz się je wysłać po ustaniu awarii. Informacje o trybie awaryjnym pojawiają się na stronie ksef.podatki.gov.pl."
+            },
+            {
+              "id": "czas-po-awarii",
+              "question": "Ile czasu mam na wysłanie faktury po awarii?",
+              "answer": "Po zakończeniu trybu awaryjnego masz co do zasady do następnego dnia roboczego na przesłanie faktur wystawionych w trybie offline lub awaryjnym. Dokładny termin zależy od długości awarii i może być ogłoszony przez MF wraz z komunikatem o przywróceniu systemu. Zalecamy wysyłanie zaległych faktur jak najszybciej."
+            },
+            {
+              "id": "kod-qr-offline",
+              "question": "Jak wygląda kod QR w trybie offline?",
+              "answer": "Kod QR na fakturze offline to specjalny token pobrany wcześniej z systemu KSeF — każdy przedsiębiorca może pobrać pulę kodów na wypadek braku łączności. Kod identyfikuje fakturę i umożliwia jej późniejsze powiązanie z KSeF po wgraniu dokumentu. Bez prawidłowego kodu QR faktura offline może być zakwestionowana."
+            },
+            {
+              "id": "status-ksef",
+              "question": "Skąd wiem, że KSeF jest niedostępny?",
+              "answer": "Oficjalny status systemu KSeF jest publikowany na stronie ksef.podatki.gov.pl. Twój program fakturowy powinien też wyświetlać stosowny komunikat, gdy nie może nawiązać połączenia z API MF. Awarie planowane są zazwyczaj ogłaszane z wyprzedzeniem, nieplanowane — bezzwłocznie."
+            }
+          ]
+        },
+        {
+          "id": "dostep-i-uprawnienia",
+          "title": "Dostęp i uprawnienia",
+          "questions": [
+            {
+              "id": "logowanie",
+              "question": "Jak się zalogować do KSeF?",
+              "answer": "Do KSeF logujesz się przez Aplikację Podatnika (ap.ksef.mf.gov.pl) za pomocą jednej z metod: Profil Zaufany, e-dowód, podpis kwalifikowany lub certyfikat KSeF. Profil Zaufany jest najwygodniejszy dla większości przedsiębiorców — można go założyć bezpłatnie przez bankowość elektroniczną lub w urzędzie. Dostęp przez API (dla programów) wymaga certyfikatu lub tokenu."
+            },
+            {
+              "id": "zaw-fa",
+              "question": "Co to jest ZAW-FA?",
+              "answer": "ZAW-FA to formularz upoważnienia do korzystania z KSeF w imieniu podatnika. Składa się go w urzędzie skarbowym lub elektronicznie przez e-Urząd Skarbowy i pozwala upoważnić inną osobę — np. księgowego lub biuro rachunkowe — do wystawiania i odbierania faktur w KSeF. Upoważnienie może być ograniczone zakresowo: tylko odczyt, tylko wystawianie lub pełny dostęp."
+            },
+            {
+              "id": "upowaznienie-ksiegowego",
+              "question": "Jak upoważnić księgowego do KSeF?",
+              "answer": "Możesz upoważnić księgowego przez złożenie formularza ZAW-FA w urzędzie skarbowym lub bezpośrednio w Aplikacji Podatnika KSeF przez panel uprawnień. Uprawnienie określa, czy księgowy może tylko odczytywać faktury, czy też je wystawiać. Biuro rachunkowe zazwyczaj samo prosi klientów o stosowne upoważnienie — dopytaj swojego księgowego."
+            },
+            {
+              "id": "certyfikat-ksef",
+              "question": "Co to jest certyfikat KSeF?",
+              "answer": "Certyfikat KSeF to elektroniczne poświadczenie tożsamości używane do uwierzytelniania w API KSeF. Jest pobierany z systemu MF i pozwala programom i integratorom logować się do KSeF bez Profilu Zaufanego. Wyróżniamy dwa typy certyfikatów: dla podatnika (typ 1) i dla podmiotu upoważnionego (typ 2)."
+            },
+            {
+              "id": "certyfikat-typ1-vs-typ2",
+              "question": "Czym się różni certyfikat typ 1 od typ 2?",
+              "answer": "Certyfikat typ 1 jest wydawany bezpośrednio dla podatnika (właściciela NIP) i ma najszersze uprawnienia w KSeF. Certyfikat typ 2 jest przeznaczony dla podmiotów działających w imieniu podatnika — np. biur rachunkowych czy systemów ERP obsługujących wielu klientów. Typ 2 zawsze działa w kontekście konkretnego upoważnienia, które musi istnieć w KSeF."
+            },
+            {
+              "id": "token",
+              "question": "Co to jest token uwierzytelniający?",
+              "answer": "Token uwierzytelniający to ciąg znaków generowany w Aplikacji Podatnika KSeF, używany zamiast certyfikatu do uwierzytelniania w API. Tokeny są wygodniejsze dla integratorów i mniejszych systemów — nie wymagają zarządzania certyfikatami PKI. Token ma określony czas ważności i zakres uprawnień. Można go w każdej chwili unieważnić z poziomu Aplikacji Podatnika."
+            }
+          ]
+        },
+        {
+          "id": "walidacja-i-bledy",
+          "title": "Walidacja i błędy",
+          "questions": [
+            {
+              "id": "sprawdz-fakture",
+              "question": "Jak sprawdzić czy moja faktura jest poprawna?",
+              "answer": "Zanim wyślesz fakturę do KSeF, wrzuć plik XML na ksefuj.to — walidacja działa w całości w twojej przeglądarce, dane nie opuszczają twojego komputera. Sprawdzamy zarówno zgodność ze schematem FA(3), jak i reguły semantyczne MF. Błędy opisujemy po polsku, bez żargonu — wiesz dokładnie, co poprawić."
+            },
+            {
+              "id": "blad-xsd",
+              "question": "Co oznacza błąd walidacji XSD?",
+              "answer": "Błąd XSD to niezgodność struktury pliku XML ze schematem FA(3). Najczęstsze przyczyny: brakujące obowiązkowe pole, zła kolejność elementów, literówka w nazwie elementu lub nieprawidłowy format daty. Walidator ksefuj.to opisuje każdy błąd XSD w zrozumiały sposób i wskazuje dokładne miejsce w pliku."
+            },
+            {
+              "id": "czeste-bledy",
+              "question": "Jakie są najczęstsze błędy w fakturach KSeF?",
+              "answer": "Najczęstsze błędy to: brakujące pola adnotacji (P_16-P_23), zły format GTU (powinno być GTU_01, nie osobny element), brak przeliczenia walut na PLN, błędny NIP w polu dla numeru VAT UE zamiast w polu NIP, oraz zbyt duża precyzja dziesiętna kwot. Walidator ksefuj.to wykrywa wszystkie te błędy automatycznie i podpowiada, jak je naprawić."
+            },
+            {
+              "id": "przechowywanie-danych",
+              "question": "Czy ksefuj.to przechowuje moje dane?",
+              "answer": "Nie. Twój plik XML nie opuszcza przeglądarki — całe przetwarzanie odbywa się lokalnie na twoim komputerze. Nie mamy dostępu do twoich faktur, nie przesyłamy ich na żadne serwery i nie prowadzimy logów zawartości. Faktury to dane wrażliwe — dlatego zaprojektowaliśmy ksefuj.to jako narzędzie w pełni prywatne."
+            },
+            {
+              "id": "czy-darmowy",
+              "question": "Czy ksefuj.to jest darmowy?",
+              "answer": "Tak — na zawsze. Walidator ksefuj.to jest bezpłatny bez żadnych limitów, bez rejestracji, bez paywallu. Uważamy, że podstawowe narzędzia do obsługi KSeF powinny być dostępne dla każdego — szczególnie dla małych firm i freelancerów. Cały kod źródłowy jest dostępny publicznie na GitHub."
+            },
+            {
+              "id": "vs-walidator-mf",
+              "question": "Czym ksefuj.to różni się od walidatora MF?",
+              "answer": "MF nie udostępnia standalone walidatora XML — walidacja odbywa się dopiero przy wysyłaniu faktury do KSeF, co oznacza, że dowiadujesz się o błędach za późno. ksefuj.to wypełnia tę lukę: możesz sprawdzić plik XML przed wysyłką, bez logowania i bez ryzyka odrzucenia faktury. Sprawdzamy też reguły semantyczne, których sam schemat XSD nie weryfikuje."
+            }
+          ]
+        }
+      ]
     },
     "guides": {
       "title": "Przewodniki",
