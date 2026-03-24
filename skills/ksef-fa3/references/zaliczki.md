@@ -27,6 +27,9 @@ The `Zamowienie` element contains order lines (what the advance payment covers):
 
 ```xml
 <Zamowienie>
+  <WartoscZamowienia>
+    <P_15Z>1230.00</P_15Z>
+  </WartoscZamowienia>
   <ZamowienieWiersz>
     <NrWierszaZam>1</NrWierszaZam>
     <P_7Z>Goods from the order</P_7Z>
@@ -111,6 +114,9 @@ When one advance invoice documents multiple separate advance payments:
     </Adnotacje>
     <RodzajFaktury>ZAL</RodzajFaktury>
     <Zamowienie>
+      <WartoscZamowienia>
+        <P_15Z>6150.00</P_15Z>
+      </WartoscZamowienia>
       <ZamowienieWiersz>
         <NrWierszaZam>1</NrWierszaZam>
         <P_7Z>Custom machinery order</P_7Z>

@@ -484,7 +484,7 @@ Invoice for VAT-exempt services/goods (art. 43, 113, 82 of the VAT Act).
 See `references/zaliczki.md` for full details. Summary:
 
 **ZAL (advance invoice):**
-- `RodzajFaktury = "ZAL"` | requires `Zamowienie` element (not `FaWiersz`)
+- `RodzajFaktury = "ZAL"` | requires `Zamowienie` element; `FaWiersz` is allowed but optional
 - For foreign currency: include `KursWalutyZ` at `Fa` level (only valid for ZAL/KOR_ZAL)
 - Validator rule R11 (RODZAJ_FAKTURY_SECTIONS): ZAL without Zamowienie is an error
 
