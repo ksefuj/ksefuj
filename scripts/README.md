@@ -1,6 +1,46 @@
 # Scripts
 
-This directory contains utility scripts for maintaining the KSeF validator.
+This directory contains utility scripts for maintaining the KSeF validator and web app content.
+
+## setup-content.ts
+
+Creates the `apps/web/content/` directory structure and seeds initial MDX blog posts.
+
+### Purpose
+
+The `apps/web/content/` directory holds all written content for ksefuj.to (blog posts, guides, docs,
+FAQ). This script ensures the directory structure exists and writes initial content files. It is
+idempotent — running it multiple times will never overwrite existing content.
+
+### Usage
+
+```bash
+# From project root
+pnpm setup-content
+
+# Or directly
+tsx scripts/setup-content.ts
+```
+
+This script also runs automatically via `predev` and `prebuild` hooks in `apps/web/package.json`.
+
+### What it does
+
+1. **Creates** all locale/section directories under `apps/web/content/`
+2. **Writes** initial blog posts if they do not already exist
+
+### When to run
+
+- **After cloning the repo** — run once to bootstrap content directories
+- **Automatically** — `pnpm dev` and `pnpm build` in `apps/web` trigger it via pre-hooks
+- **Adding new content** — add new `writeContentFile(...)` calls to seed additional posts
+
+### Safety
+
+- **Idempotent** — never overwrites an existing content file
+- **Creates directories** — uses `mkdirSync({ recursive: true })` safely
+
+---
 
 ## update-schemas.ts
 
