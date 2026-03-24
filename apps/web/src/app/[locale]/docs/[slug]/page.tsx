@@ -1,24 +1,18 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { compileMDX } from "next-mdx-remote/rsc";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { LanguagePicker } from "../../language-picker";
 import { DocsLayout } from "@/components/layouts/docs-layout";
-import { mdxComponents } from "@/components/mdx";
 import { extractHeadings, getContentItem, listSlugs } from "@/lib/content";
-import { rehypeAddHeadingIds } from "@/lib/rehype-heading-ids";
+import { compileMDXContent } from "@/lib/compile-mdx";
 
 interface Props {
   params: Promise<{ locale: string; slug: string }>;
 }
 
-export async function generateStaticParams({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await params;
+export async function generateStaticParams({ params }: { params: { locale: string } }) {
+  const { locale } = params;
   const slugs = await listSlugs(locale, "docs");
   return slugs.map((slug) => ({ slug }));
 }
@@ -51,15 +45,7 @@ export default async function DocsPage({ params }: Props) {
 
   const headings = extractHeadings(item.content);
 
-  const { content } = await compileMDX({
-    source: item.content,
-    components: mdxComponents,
-    options: {
-      mdxOptions: {
-        rehypePlugins: [rehypeAddHeadingIds],
-      },
-    },
-  });
+  const { content } = await compileMDXContent({ source: item.content });
 
   return (
     <>

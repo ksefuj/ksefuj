@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
-import { compileMDX } from "next-mdx-remote/rsc";
 import { getTranslations } from "next-intl/server";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SectionContainer } from "@/components/section-container";
 import { LanguagePicker } from "../language-picker";
-import { mdxComponents } from "@/components/mdx";
 import { listContentItems } from "@/lib/content";
-import { rehypeAddHeadingIds } from "@/lib/rehype-heading-ids";
+import { compileMDXContent } from "@/lib/compile-mdx";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -52,15 +50,7 @@ export default async function FaqPage({ params }: Props) {
               <div className="space-y-8">
                 {await Promise.all(
                   items.map(async (item) => {
-                    const { content } = await compileMDX({
-                      source: item.content,
-                      components: mdxComponents,
-                      options: {
-                        mdxOptions: {
-                          rehypePlugins: [rehypeAddHeadingIds],
-                        },
-                      },
-                    });
+                    const { content } = await compileMDXContent({ source: item.content });
                     return (
                       <div
                         key={item.frontmatter.slug}

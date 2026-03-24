@@ -1,24 +1,19 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { compileMDX } from "next-mdx-remote/rsc";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { LanguagePicker } from "../../language-picker";
 import { GuideLayout } from "@/components/layouts/guide-layout";
-import { mdxComponents } from "@/components/mdx";
 import { extractHeadings, getContentItem, listSlugs } from "@/lib/content";
-import { rehypeAddHeadingIds } from "@/lib/rehype-heading-ids";
+import { compileMDXContent } from "@/lib/compile-mdx";
+import { buildHowToSchema } from "@/lib/structured-data";
 
 interface Props {
   params: Promise<{ locale: string; slug: string }>;
 }
 
-export async function generateStaticParams({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await params;
+export async function generateStaticParams({ params }: { params: { locale: string } }) {
+  const { locale } = params;
   const section = locale === "pl" ? "przewodniki" : "guides";
   const slugs = await listSlugs(locale, section);
   return slugs.map((slug) => ({ slug }));
@@ -56,19 +51,20 @@ export default async function GuidePage({ params }: Props) {
   if (!item) {notFound();}
 
   const headings = extractHeadings(item.content);
+  const urlPath =
+    locale === "pl" ? `/przewodniki/${slug}` : `/${locale}/guides/${slug}`;
+  const schema = buildHowToSchema(item.frontmatter, urlPath);
 
-  const { content } = await compileMDX({
-    source: item.content,
-    components: mdxComponents,
-    options: {
-      mdxOptions: {
-        rehypePlugins: [rehypeAddHeadingIds],
-      },
-    },
-  });
+  const { content } = await compileMDXContent({ source: item.content });
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(schema).replace(/</g, "\\u003c"),
+        }}
+      />
       <SiteHeader locale={locale} languagePicker={<LanguagePicker currentLocale={locale} />} />
       <main className="min-h-screen">
         <GuideLayout
