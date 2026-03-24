@@ -212,7 +212,7 @@
     },
     "hero": {
       "title": "KSeF validation. Simpler than ever.",
-      "description": "Drag in your XML, see everything in seconds. Full MF validation based on the official information sheet, zero privacy compromises.",
+      "description": "Drag in your XML, see everything in seconds. Full validation that meets official MF requirements, zero privacy compromises.",
       "trustLine": "Free forever • Full MF validation • 100% local"
     },
     "features": {
@@ -221,7 +221,7 @@
       "items": [
         {
           "title": "Built to MF spec",
-          "description": "Official FA(3) schema from June 2025 plus full semantic validation based on the Ministry of Finance information sheet"
+          "description": "Official FA(3) schema from June 2025 plus full semantic validation meeting official Ministry of Finance requirements"
         },
         {
           "title": "Your data, your control",
@@ -251,7 +251,7 @@
         {
           "badge": "Layer 2",
           "title": "MF Semantic Rules",
-          "description": "Comprehensive semantic validation based on official information sheet",
+          "description": "Comprehensive semantic validation meeting official MF requirements",
           "checks": [
             "Entity verification (JST/GV, NIP, roles)",
             "VAT rates and GTU compliance",
@@ -485,7 +485,7 @@
       },
       {
         "question": "How do I validate my KSeF invoice before submitting?",
-        "answer": "Use the free validator at ksefuj.to — drag and drop your XML file, and the tool checks compliance with the XSD schema plus 42 semantic rules based on the official Ministry of Finance information sheet. Validation runs entirely in your browser — your data never leaves your computer. You can also use the npm package @ksefuj/validator or the CLI tool."
+        "answer": "Use the free validator at ksefuj.to — drag and drop your XML file, and the tool checks compliance with the XSD schema plus semantic rules that meet official Ministry of Finance requirements. Validation runs entirely in your browser — your data never leaves your computer. You can also use the npm package @ksefuj/validator or the CLI tool."
       },
       {
         "question": "Can I use KSeF without accounting software?",
@@ -509,7 +509,7 @@
       },
       {
         "question": "Is there a free KSeF validator?",
-        "answer": "Yes — ksefuj.to is a completely free, open-source KSeF FA(3) invoice validator. It checks XML compliance with the XSD schema and verifies 42 business rules based on official Ministry of Finance documentation. It runs entirely in your browser (your data never leaves your computer), and is also available as an npm package (@ksefuj/validator) and CLI tool. No limits, no registration, no fees."
+        "answer": "Yes — ksefuj.to is a completely free, open-source KSeF FA(3) invoice validator. It checks XML compliance with the XSD schema and verifies business rules that meet official Ministry of Finance requirements. It runs entirely in your browser (your data never leaves your computer), and is also available as an npm package (@ksefuj/validator) and CLI tool. No limits, no registration, no fees."
       }
     ]
   }

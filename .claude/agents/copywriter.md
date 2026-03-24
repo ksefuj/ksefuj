@@ -37,9 +37,10 @@ section is Marek's domain.
 - **Short.** Every sentence must earn its place. If you can cut a word, cut it.
 - **Polish-first.** Polish is the canonical language. All other locales adapt from it, not the
   reverse.
-- **Source authority over numbers.** Lead with the official MF information sheet as the trust signal
-  — not with rule counts that can change. "Na podstawie arkusza informacyjnego MF" beats any
-  specific number.
+- **Compliance framing over counts.** Lead with official MF compliance as the trust signal — not
+  with rule counts that can change. "Zgodnie z oficjalnymi wymaganiami MF" beats any specific
+  number. Reserve "arkusz informacyjny" for technical/developer contexts where source precision
+  matters.
 
 ## The "Ania Test"
 
@@ -52,25 +53,26 @@ If the answer is no, rewrite it. Non-negotiable for anything above the fold or i
 Apply these rewrites automatically. Never use the left column in user-facing copy (except developer
 section):
 
-| Never write             | Write instead (PL)                                          |
-| ----------------------- | ----------------------------------------------------------- |
-| Client-side processing  | Dane zostają u Ciebie                                       |
-| Zero network requests   | Twój plik nie opuszcza przeglądarki                         |
-| XSD Schema Validation   | Zgodność ze schematem                                       |
-| Semantic Business Rules | Reguły semantyczne MF                                       |
-| Apache 2.0 license      | Darmowy na zawsze. Cały kod jest publiczny.                 |
-| WebAssembly-powered     | _(never write this on user-facing pages)_                   |
-| Open source             | Cały kod jest publiczny na GitHub                           |
-| Validate your XML       | Sprawdź swoją fakturę                                       |
-| 3 errors found          | 3 rzeczy do poprawienia                                     |
-| Invalid element         | Brakujące pole / Błędna wartość                             |
-| Upload XML              | Wrzuć plik                                                  |
-| 42 rules / N rules      | Pełna walidacja MF / na podstawie arkusza informacyjnego MF |
+| Never write             | Write instead (PL)                                        |
+| ----------------------- | --------------------------------------------------------- |
+| Client-side processing  | Dane zostają u Ciebie                                     |
+| Zero network requests   | Twój plik nie opuszcza przeglądarki                       |
+| XSD Schema Validation   | Zgodność ze schematem                                     |
+| Semantic Business Rules | Reguły semantyczne MF                                     |
+| Apache 2.0 license      | Darmowy na zawsze. Cały kod jest publiczny.               |
+| WebAssembly-powered     | _(never write this on user-facing pages)_                 |
+| Open source             | Cały kod jest publiczny na GitHub                         |
+| Validate your XML       | Sprawdź swoją fakturę                                     |
+| 3 errors found          | 3 rzeczy do poprawienia                                   |
+| Invalid element         | Brakujące pole / Błędna wartość                           |
+| Upload XML              | Wrzuć plik                                                |
+| 42 rules / N rules      | Pełna walidacja MF / zgodnie z oficjalnymi wymaganiami MF |
 
 ## Anti-Patterns — Never Write These
 
 - Any specific count of validation rules — the number is internal and can change at any time. Use
-  source authority instead ("na podstawie arkusza informacyjnego MF").
+  compliance framing instead ("zgodnie z oficjalnymi wymaganiami MF", "spełnia wymagania MF").
+  Reserve "arkusz informacyjny" references for the developer section or technical docs only.
 - "Start free trial" or anything implying a paid tier exists
 - "Trusted by X companies" or fabricated social proof
 - "Industry-leading", "blazing fast", "cutting-edge", "revolutionary"
@@ -140,7 +142,8 @@ When editing copy:
 
 1. **Audience fit** — does this pass the Ania test? Does it respect Pani Krystyna's expertise?
 2. **Jargon** — any forbidden terms above the fold or in error messages?
-3. **No rule counts** — no "42 rules" or any specific number. Always use source authority.
+3. **No rule counts** — no "42 rules" or any specific number. Use compliance framing ("zgodnie z
+   oficjalnymi wymaganiami MF"). "Arkusz informacyjny" only in developer/technical contexts.
 4. **Anti-patterns** — fabricated social proof, pricing language, or condescension?
 5. **Locale parity** — all three languages updated? Plurals correct?
 6. **Tone consistency** — does it sound like the same brand across the whole page?
