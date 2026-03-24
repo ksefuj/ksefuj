@@ -138,6 +138,41 @@ When editing copy:
 4. Verify ICU message format placeholders are identical across all three locales.
 5. Confirm all three files have the same keys — missing keys cause runtime fallbacks.
 
+## Content System (Blog / Guides / Docs / FAQ)
+
+Long-form content lives in MDX files under `apps/web/content/`. **Read `apps/web/content/README.md`
+before writing or editing any MDX content** — it is the authoritative reference for frontmatter
+fields, MDX components, directory structure, URL mapping, and the translation workflow.
+
+### Quick reference
+
+**Directory:** `apps/web/content/{locale}/{section}/{slug}.mdx`
+
+- Locales: `pl` (default, no URL prefix), `en`, `uk`
+- Sections: `blog`, `guides`, `docs`, `faq`
+
+**Required frontmatter fields:** `title`, `description`, `date`, `section`, `locale`, `slug`
+
+**URL mapping:**
+
+- `pl/blog/my-slug.mdx` → `/blog/my-slug`
+- `en/guides/my-slug.mdx` → `/en/guides/my-slug`
+
+**Linking translations:** use the `translations` frontmatter map so the language switcher navigates
+between translated versions instead of falling back to the listing page.
+
+**Available MDX components:** `<Info>`, `<Warning>`, `<Tip>`, `<Source>`, `<XmlExample copyable>`,
+`<FieldTable>` / `<Field>` — see README for usage examples.
+
+**Reading time** is calculated automatically. Do not set it manually.
+
+### Content voice
+
+Apply the same brand voice rules from this agent to long-form content — the Ania test, jargon
+translation table, and anti-patterns all apply. Blog posts and guides are the primary SEO surface
+for Polish freelancers; write them with that audience in mind, not for developers (unless the piece
+is explicitly in `docs`).
+
 ## Copy Review Checklist
 
 1. **Audience fit** — does this pass the Ania test? Does it respect Pani Krystyna's expertise?
