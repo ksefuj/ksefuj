@@ -150,10 +150,79 @@
   "languagePicker": {
     "ariaLabel": "Change language"
   },
+  "nav": {
+    "blog": "Blog",
+    "faq": "FAQ",
+    "docs": "Docs",
+    "guides": "Guides"
+  },
+  "translationBanner": {
+    "body": "This article isn't available in your language yet. You're reading the {language} original.",
+    "contribute": "Help translate",
+    "languageNames": {
+      "pl": "Polish",
+      "en": "English",
+      "uk": "Ukrainian"
+    }
+  },
+  "content": {
+    "blog": {
+      "title": "Blog",
+      "description": "Articles about KSeF, e-invoices, and the FA(3) schema.",
+      "empty": "New articles coming soon.",
+      "readingTime": "{minutes} min read",
+      "metaDescription": "Articles about KSeF, FA(3) and e-invoices for sole traders and small businesses."
+    },
+    "docs": {
+      "title": "Documentation",
+      "description": "Technical documentation for the validator and FA(3) schema.",
+      "empty": "Documentation is being prepared.",
+      "metaTitle": "Documentation",
+      "metaDescription": "Technical documentation for the ksefuj validator and FA(3) schema."
+    },
+    "faq": {
+      "title": "FAQ",
+      "description": "Frequently asked questions about KSeF and ksefuj.",
+      "empty": "FAQ is being prepared.",
+      "metaDescription": "Frequently asked questions about KSeF, FA(3) schema, and the ksefuj validator."
+    },
+    "guides": {
+      "title": "Guides",
+      "description": "Step by step through KSeF and e-invoices.",
+      "empty": "Guides are being prepared.",
+      "metaTitle": "Guides",
+      "metaDescription": "Step-by-step guides about KSeF and e-invoicing for sole traders and businesses."
+    },
+    "audience": {
+      "jdg": "Sole trader",
+      "accountant": "Accountant",
+      "developer": "Developer"
+    },
+    "layout": {
+      "backToBlog": "Blog",
+      "backToDocs": "Documentation",
+      "backToGuides": "Guides",
+      "readingTime": "{minutes} min read",
+      "lastVerified": "Last verified: {date}",
+      "guideAudience": "Who it's for",
+      "guideTime": "Time",
+      "guideLevel": "Level",
+      "tableOfContents": "Table of contents"
+    },
+    "mdx": {
+      "copy": "Copy",
+      "copied": "Copied"
+    }
+  },
   "footer": {
     "description": "Free KSeF invoice validator. Your file never leaves the browser.",
     "resources": "Resources",
-    "information": "Information",
+    "blog": "Blog",
+    "faq": "FAQ",
+    "docs": "Docs",
+    "guides": "Guides",
+    "content": "Content",
+    "legal": "Legal",
     "contact": "Contact",
     "emailLabel": "Questions? Suggestions?",
     "npmPackage": "npm Package",

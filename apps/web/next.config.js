@@ -4,6 +4,12 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async redirects() {
+    return [
+      { source: "/przewodniki", destination: "/guides", permanent: true },
+      { source: "/przewodniki/:path*", destination: "/guides/:path*", permanent: true },
+    ];
+  },
   transpilePackages: ["@ksefuj/validator"],
   webpack: (config, { isServer }) => {
     // Handle libxml2-wasm for browser usage

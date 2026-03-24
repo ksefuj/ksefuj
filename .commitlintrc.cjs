@@ -33,7 +33,7 @@ module.exports = {
     "scope-enum": [
       1,
       "always",
-      ["validator", "web", "i18n", "semantic", "xsd", "deps", "ci", "config", "skill"],
+      ["validator", "web", "i18n", "semantic", "xsd", "deps", "ci", "config", "skill", "content"],
     ],
     "subject-case": [2, "never", ["sentence-case", "start-case", "pascal-case", "upper-case"]],
     "header-max-length": [2, "always", 72],

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { track } from "@vercel/analytics";
 import { SectionContainer } from "@/components/section-container";
 
 interface NewsletterProps {
@@ -66,13 +67,16 @@ export function NewsletterSection({
       if (response.ok) {
         setStatus("success");
         setEmail("");
+        track("newsletter_subscribed");
       } else {
         setStatus("error");
+        track("newsletter_subscribe_failed");
       }
 
       scheduleReset();
     } catch {
       setStatus("error");
+      track("newsletter_subscribe_failed");
       scheduleReset();
     }
   };

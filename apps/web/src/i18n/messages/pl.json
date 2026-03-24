@@ -150,10 +150,79 @@
   "languagePicker": {
     "ariaLabel": "Zmień język"
   },
+  "nav": {
+    "blog": "Blog",
+    "faq": "FAQ",
+    "docs": "Dokumentacja",
+    "guides": "Przewodniki"
+  },
+  "translationBanner": {
+    "body": "Ten artykuł nie jest jeszcze dostępny w Twoim języku. Czytasz oryginalną wersję w języku {language}.",
+    "contribute": "Pomóż przetłumaczyć",
+    "languageNames": {
+      "pl": "polskim",
+      "en": "angielskim",
+      "uk": "ukraińskim"
+    }
+  },
+  "content": {
+    "blog": {
+      "title": "Blog",
+      "description": "Artykuły o KSeF, e-fakturach i schemacie FA(3).",
+      "empty": "Wkrótce pojawią się nowe artykuły.",
+      "readingTime": "{minutes} min czytania",
+      "metaDescription": "Artykuły o KSeF, FA(3) i e-fakturach dla JDG i małych firm."
+    },
+    "docs": {
+      "title": "Dokumentacja",
+      "description": "Dokumentacja techniczna walidatora i schematu FA(3).",
+      "empty": "Dokumentacja jest w przygotowaniu.",
+      "metaTitle": "Dokumentacja",
+      "metaDescription": "Dokumentacja techniczna walidatora ksefuj i schematu FA(3)."
+    },
+    "faq": {
+      "title": "FAQ",
+      "description": "Często zadawane pytania o KSeF i ksefuj.",
+      "empty": "FAQ jest w przygotowaniu.",
+      "metaDescription": "Często zadawane pytania o KSeF, schemat FA(3) i walidator ksefuj."
+    },
+    "guides": {
+      "title": "Przewodniki",
+      "description": "Krok po kroku przez KSeF i faktury elektroniczne.",
+      "empty": "Przewodniki są w przygotowaniu.",
+      "metaTitle": "Przewodniki",
+      "metaDescription": "Przewodniki krok po kroku o KSeF i fakturach elektronicznych dla JDG i firm."
+    },
+    "audience": {
+      "jdg": "JDG",
+      "accountant": "Księgowy",
+      "developer": "Developer"
+    },
+    "layout": {
+      "backToBlog": "Blog",
+      "backToDocs": "Dokumentacja",
+      "backToGuides": "Przewodniki",
+      "readingTime": "{minutes} min czytania",
+      "lastVerified": "Ostatnia weryfikacja: {date}",
+      "guideAudience": "Dla kogo",
+      "guideTime": "Czas",
+      "guideLevel": "Poziom",
+      "tableOfContents": "Spis treści"
+    },
+    "mdx": {
+      "copy": "Kopiuj",
+      "copied": "Skopiowano"
+    }
+  },
   "footer": {
     "description": "Darmowy walidator faktur KSeF. Twój plik nie opuszcza przeglądarki.",
     "resources": "Zasoby",
-    "information": "Informacje",
+    "blog": "Blog",
+    "faq": "FAQ",
+    "docs": "Dokumentacja",
+    "guides": "Przewodniki",
+    "content": "Treści",
+    "legal": "Prawne",
     "contact": "Kontakt",
     "emailLabel": "Pytania? Sugestie?",
     "npmPackage": "npm Package",

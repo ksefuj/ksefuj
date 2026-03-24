@@ -170,3 +170,78 @@ body {
 .btn-ghost {
   @apply text-violet-600 hover:bg-violet-50 rounded-xl px-4 py-2 font-medium transition-colors;
 }
+
+/* MDX / prose content styles */
+.mdx-content {
+  max-width: 680px;
+  line-height: 1.75;
+  @apply text-slate-700;
+}
+
+.mdx-content h2 {
+  @apply text-2xl font-bold text-slate-900 mt-10 mb-4 scroll-mt-24;
+}
+
+.mdx-content h3 {
+  @apply text-xl font-semibold text-slate-900 mt-8 mb-3 scroll-mt-24;
+}
+
+.mdx-content p {
+  @apply mb-4 leading-relaxed;
+}
+
+.mdx-content ul {
+  @apply list-disc pl-6 mb-4 space-y-1;
+}
+
+.mdx-content ol {
+  @apply list-decimal pl-6 mb-4 space-y-1;
+}
+
+.mdx-content li {
+  @apply leading-relaxed;
+}
+
+.mdx-content a {
+  @apply text-violet-600 hover:text-violet-700 underline underline-offset-2 transition-colors;
+}
+
+.mdx-content code:not(pre code) {
+  @apply font-mono bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded text-sm;
+}
+
+.mdx-content pre {
+  @apply rounded-xl bg-slate-950 text-slate-100 p-4 overflow-x-auto text-sm my-4 border border-slate-800;
+}
+
+.mdx-content pre code {
+  @apply bg-transparent text-inherit p-0;
+}
+
+.mdx-content blockquote {
+  @apply border-l-4 border-violet-200 pl-4 italic text-slate-600 my-4;
+}
+
+.mdx-content hr {
+  @apply border-slate-200 my-8;
+}
+
+.mdx-content strong {
+  @apply font-semibold text-slate-800;
+}
+
+.mdx-content table {
+  @apply w-full text-sm my-4;
+}
+
+.mdx-content thead {
+  @apply bg-slate-50;
+}
+
+.mdx-content th {
+  @apply px-4 py-2.5 text-left font-semibold text-slate-700 border-b border-slate-200;
+}
+
+.mdx-content td {
+  @apply px-4 py-2.5 border-b border-slate-100;
+}
