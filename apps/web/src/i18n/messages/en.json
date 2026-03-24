@@ -206,6 +206,10 @@
     }
   },
   "landing": {
+    "meta": {
+      "title": "Free KSeF FA(3) invoice validator — ksefuj.to",
+      "description": "Validate KSeF FA(3) invoices online. XSD schema and business rules validation. Free, no registration. Your data never leaves the browser."
+    },
     "hero": {
       "title": "KSeF validation. Simpler than ever.",
       "description": "Drag in your XML, see everything in seconds. Full MF validation based on the official information sheet, zero privacy compromises.",
