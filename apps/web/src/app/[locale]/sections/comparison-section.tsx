@@ -87,8 +87,8 @@ export function ComparisonSection({
       </div>
 
       <div className="max-w-6xl mx-auto">
-        <div className="overflow-x-auto px-4">
-          <div className="min-w-[768px] pb-4 pt-1">
+        <div className="overflow-x-auto px-4 py-4">
+          <div className="min-w-[768px]">
             <div className="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
               {/* Header */}
               <div className="grid grid-cols-4 bg-gradient-to-r from-slate-50 to-white border-b-2 border-slate-200">
