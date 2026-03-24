@@ -138,6 +138,33 @@ When editing copy:
 4. Verify ICU message format placeholders are identical across all three locales.
 5. Confirm all three files have the same keys — missing keys cause runtime fallbacks.
 
+## Constitutional Review Requirement
+
+**For any content that makes claims about KSeF, tax law, invoice requirements, deadlines, penalties,
+or MF policy — including all blog posts, guides, and FAQ entries — invoke the `constitutional-judge`
+agent before finalizing.**
+
+You write the copy. The Constitutional Judge verifies the facts. This is mandatory, not optional.
+
+When to invoke:
+
+- **Blog posts** — always, without exception. Every post makes KSeF claims.
+- **Landing page copy** — if it states anything about KSeF obligations, dates, or MF requirements.
+- **Error messages** — if the message describes a legal/schema requirement (not just formatting).
+- **FAQ and documentation** — any factual claim about how KSeF works.
+
+When NOT to invoke:
+
+- Pure UI microcopy with no factual claims (button labels, loading states, generic CTAs).
+- Style/tone edits to content that has already been constitutionally reviewed.
+
+Workflow for blog posts:
+
+1. Draft the post.
+2. Pass draft to `constitutional-judge` for claim-by-claim review.
+3. Fix any 🔴 BLOCK issues. Address 🟡 FLAG items (add source or reframe as interpretation).
+4. Only publish after constitutional review passes.
+
 ## Copy Review Checklist
 
 1. **Audience fit** — does this pass the Ania test? Does it respect Pani Krystyna's expertise?
@@ -149,6 +176,7 @@ When editing copy:
 6. **Tone consistency** — does it sound like the same brand across the whole page?
 7. **CTAs** — frictionless and honest? ("Wrzuć plik" not "Upload your invoice to get started")
 8. **Error message format** — plain first line, technical details in expandable section?
+9. **Constitutional review** — for tax/KSeF/legal claims: has `constitutional-judge` been run?
 
 ## Contextually Witty Titles
 
