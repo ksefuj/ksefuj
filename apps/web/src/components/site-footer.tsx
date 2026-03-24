@@ -71,16 +71,6 @@ export function SiteFooter() {
                   {t("faq")}
                 </Link>
               </li>
-              <li>
-                <Link href={`${p}/docs`} className="hover:text-slate-300 transition-colors">
-                  {t("docs")}
-                </Link>
-              </li>
-              <li>
-                <Link href={`${p}/guides`} className="hover:text-slate-300 transition-colors">
-                  {t("guides")}
-                </Link>
-              </li>
             </ul>
           </div>
 

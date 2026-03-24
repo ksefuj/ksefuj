@@ -50,8 +50,6 @@ export function SiteHeader({ locale, languagePicker }: SiteHeaderProps) {
   const navLinks = [
     { href: `${p}/blog`, label: t("blog") },
     { href: `${p}/faq`, label: t("faq") },
-    { href: `${p}/docs`, label: t("docs") },
-    { href: `${p}/guides`, label: t("guides") },
   ];
 
   return (
