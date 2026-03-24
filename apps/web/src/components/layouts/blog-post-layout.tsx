@@ -13,6 +13,7 @@ interface BlogPostLayoutProps {
   headings: Array<{ level: 2 | 3; text: string; id: string }>;
   children: React.ReactNode;
   locale: string;
+  contentLocale?: string;
 }
 
 export async function BlogPostLayout({
@@ -21,6 +22,7 @@ export async function BlogPostLayout({
   headings,
   children,
   locale,
+  contentLocale,
 }: BlogPostLayoutProps) {
   const t = await getTranslations({ locale, namespace: "content" });
   const p = locale === "pl" ? "" : `/${locale}`;
@@ -79,7 +81,12 @@ export async function BlogPostLayout({
 
           <div className="prose prose-slate max-w-none mdx-content">{children}</div>
 
-          <ContributeFooter locale={locale} section={frontmatter.section} slug={frontmatter.slug} />
+          <ContributeFooter
+            locale={locale}
+            section={frontmatter.section}
+            slug={frontmatter.slug}
+            contentLocale={contentLocale}
+          />
         </article>
 
         {/* Sidebar TOC (desktop only) */}

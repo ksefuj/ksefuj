@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 
 interface Heading {
@@ -14,6 +15,7 @@ interface TableOfContentsProps {
 }
 
 export function TableOfContents({ headings }: TableOfContentsProps) {
+  const t = useTranslations("content.layout");
   const [activeId, setActiveId] = useState<string>("");
 
   useEffect(() => {
@@ -21,11 +23,23 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
       return;
     }
 
+    // Track all currently-visible heading IDs, then pick the first one in
+    // document order (headings array) to avoid non-deterministic ordering
+    // from IntersectionObserver's entries array.
+    const visibleIds = new Set<string>();
+
     const observer = new IntersectionObserver(
       (entries) => {
-        const visible = entries.filter((e) => e.isIntersecting);
-        if (visible.length > 0) {
-          setActiveId(visible[0].target.id);
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            visibleIds.add(entry.target.id);
+          } else {
+            visibleIds.delete(entry.target.id);
+          }
+        }
+        const first = headings.find((h) => visibleIds.has(h.id));
+        if (first) {
+          setActiveId(first.id);
         }
       },
       { rootMargin: "0px 0px -70% 0px", threshold: 0 },
@@ -46,9 +60,9 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
   }
 
   return (
-    <nav aria-label="Spis treści" className="space-y-1">
+    <nav aria-label={t("tableOfContents")} className="space-y-1">
       <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">
-        Spis treści
+        {t("tableOfContents")}
       </p>
       {headings.map((h) => (
         <a

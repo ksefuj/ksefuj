@@ -175,7 +175,7 @@ body {
 .mdx-content {
   max-width: 680px;
   line-height: 1.75;
-  color: theme(colors.slate.700);
+  @apply text-slate-700;
 }
 
 .mdx-content h2 {

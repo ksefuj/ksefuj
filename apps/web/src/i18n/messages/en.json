@@ -206,7 +206,12 @@
       "lastVerified": "Last verified: {date}",
       "guideAudience": "Who it's for",
       "guideTime": "Time",
-      "guideLevel": "Level"
+      "guideLevel": "Level",
+      "tableOfContents": "Table of contents"
+    },
+    "mdx": {
+      "copy": "Copy",
+      "copied": "Copied"
     }
   },
   "footer": {

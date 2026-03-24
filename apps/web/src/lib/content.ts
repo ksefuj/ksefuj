@@ -31,7 +31,8 @@ export interface ContentItem {
 
 /** Estimate reading time from word count (~200 wpm for Polish) */
 export function estimateReadingTime(content: string): number {
-  const wordCount = content.trim().split(/\s+/).length;
+  const trimmed = content.trim();
+  const wordCount = trimmed ? trimmed.split(/\s+/).length : 0;
   return Math.max(1, Math.ceil(wordCount / 200));
 }
 
@@ -165,14 +166,19 @@ export function extractHeadings(
   const headings: Array<{ level: 2 | 3; text: string; id: string }> = [];
   let match: RegExpExecArray | null;
 
+  const seen = new Map<string, number>();
+
   while ((match = headingRegex.exec(content)) !== null) {
     const level = match[1].length as 2 | 3;
     const text = match[2].trim();
-    const id = text
+    const base = text
       .toLowerCase()
       .replace(/[^\w\s-]/g, "")
       .replace(/\s+/g, "-")
       .replace(/-+/g, "-");
+    const count = seen.get(base) ?? 0;
+    seen.set(base, count + 1);
+    const id = count === 0 ? base : `${base}-${count}`;
     headings.push({ level, text, id });
   }
 

@@ -206,7 +206,12 @@
       "lastVerified": "Остання перевірка: {date}",
       "guideAudience": "Для кого",
       "guideTime": "Час",
-      "guideLevel": "Рівень"
+      "guideLevel": "Рівень",
+      "tableOfContents": "Зміст"
+    },
+    "mdx": {
+      "copy": "Копіювати",
+      "copied": "Скопійовано"
     }
   },
   "footer": {

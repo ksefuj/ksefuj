@@ -90,7 +90,8 @@ export default async function BlogPostPage({ params }: Props) {
           frontmatter={item.frontmatter}
           readingTime={item.readingTime}
           headings={headings}
-          locale={contentLocale}
+          locale={locale}
+          contentLocale={contentLocale !== locale ? contentLocale : undefined}
         >
           {content}
         </BlogPostLayout>

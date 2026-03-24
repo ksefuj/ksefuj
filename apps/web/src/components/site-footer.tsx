@@ -91,12 +91,12 @@ export function SiteFooter() {
             </h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/privacy" className="hover:text-slate-300 transition-colors">
+                <Link href={`${p}/privacy`} className="hover:text-slate-300 transition-colors">
                   {t("privacyPolicy")}
                 </Link>
               </li>
               <li>
-                <Link href="/terms" className="hover:text-slate-300 transition-colors">
+                <Link href={`${p}/terms`} className="hover:text-slate-300 transition-colors">
                   {t("termsOfUse")}
                 </Link>
               </li>

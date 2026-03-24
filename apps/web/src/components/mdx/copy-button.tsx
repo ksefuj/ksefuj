@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useTranslations } from "next-intl";
 import { track } from "@vercel/analytics";
 
 interface CopyButtonProps {
@@ -8,6 +9,7 @@ interface CopyButtonProps {
 }
 
 export function CopyButton({ text }: CopyButtonProps) {
+  const t = useTranslations("content.mdx");
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -26,9 +28,9 @@ export function CopyButton({ text }: CopyButtonProps) {
       type="button"
       onClick={handleCopy}
       className="absolute top-2 right-2 z-10 px-2 py-1 text-xs rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white transition-colors opacity-0 group-hover:opacity-100"
-      aria-label="Kopiuj"
+      aria-label={t("copy")}
     >
-      {copied ? "Skopiowano" : "Kopiuj"}
+      {copied ? t("copied") : t("copy")}
     </button>
   );
 }

@@ -77,7 +77,7 @@ export function SiteHeader({ locale, languagePicker }: SiteHeaderProps) {
           )}
         >
           <div className="max-w-4xl mx-auto px-4 md:px-6 py-4 flex items-center justify-between">
-            <Link href={`/${locale}`} className="hover:opacity-80 transition-opacity">
+            <Link href={p || "/"} className="hover:opacity-80 transition-opacity">
               <Logo size="md" />
             </Link>
 

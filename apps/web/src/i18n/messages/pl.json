@@ -206,7 +206,12 @@
       "lastVerified": "Ostatnia weryfikacja: {date}",
       "guideAudience": "Dla kogo",
       "guideTime": "Czas",
-      "guideLevel": "Poziom"
+      "guideLevel": "Poziom",
+      "tableOfContents": "Spis treści"
+    },
+    "mdx": {
+      "copy": "Kopiuj",
+      "copied": "Skopiowano"
     }
   },
   "footer": {

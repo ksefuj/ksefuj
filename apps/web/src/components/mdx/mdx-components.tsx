@@ -16,9 +16,15 @@ export function Source({ href, label }: SourceProps) {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      onClick={() =>
-        track("external_link_clicked", { href, domain: new URL(href).hostname, source: true })
-      }
+      onClick={() => {
+        let domain = "";
+        try {
+          domain = new URL(href).hostname;
+        } catch {
+          // relative or malformed URL — track without domain
+        }
+        track("external_link_clicked", { href, domain, source: true });
+      }}
       className="inline-flex items-center gap-1.5 text-sm text-violet-600 hover:text-violet-700 transition-colors"
     >
       <svg

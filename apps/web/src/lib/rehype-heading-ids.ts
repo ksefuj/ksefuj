@@ -36,6 +36,8 @@ function visitElements(node: UnistNode, callback: (node: UnistNode) => void): vo
 
 export function rehypeAddHeadingIds() {
   return (tree: UnistNode) => {
+    const seen = new Map<string, number>();
+
     visitElements(tree, (node) => {
       if (node.tagName !== "h2" && node.tagName !== "h3") {
         return;
@@ -46,11 +48,14 @@ export function rehypeAddHeadingIds() {
         return;
       }
 
-      const id = text
+      const base = text
         .toLowerCase()
         .replace(/[^\w\s-]/g, "")
         .replace(/\s+/g, "-")
         .replace(/-+/g, "-");
+      const count = seen.get(base) ?? 0;
+      seen.set(base, count + 1);
+      const id = count === 0 ? base : `${base}-${count}`;
 
       node.properties = { ...node.properties, id };
     });

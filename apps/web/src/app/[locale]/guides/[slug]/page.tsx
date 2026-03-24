@@ -87,7 +87,7 @@ export default async function GuidePage({ params }: Props) {
           frontmatter={item.frontmatter}
           readingTime={item.readingTime}
           headings={headings}
-          locale={contentLocale}
+          locale={locale}
         >
           {content}
         </GuideLayout>
