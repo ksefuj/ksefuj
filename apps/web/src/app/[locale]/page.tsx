@@ -171,15 +171,9 @@ export default async function Home({ params }: Props) {
         <ComparisonSection
           title={t("landing.comparison.title")}
           subtitle={t("landing.comparison.subtitle")}
-          ourProduct={t("landing.comparison.ourProduct")}
-          recommended={t("landing.comparison.recommended")}
+          featuresHeader={t("landing.comparison.featuresHeader")}
           features={t.raw("landing.comparison.features")}
           competitors={t.raw("landing.comparison.competitors")}
-          checkmark={t("landing.comparison.checkmark")}
-          cross={t("landing.comparison.cross")}
-          partial={t("landing.comparison.partial")}
-          ctaSubtitle={t("landing.comparison.ctaSubtitle")}
-          ctaButton={t("landing.comparison.ctaButton")}
           disclaimer={t("landing.comparison.disclaimer")}
         />
 

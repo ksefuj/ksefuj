@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { SectionContainer } from "@/components/section-container";
 
 interface NewsletterProps {
@@ -26,6 +26,22 @@ export function NewsletterSection({
 }: NewsletterProps) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const resetTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (resetTimerRef.current) {
+        clearTimeout(resetTimerRef.current);
+      }
+    };
+  }, []);
+
+  const scheduleReset = () => {
+    if (resetTimerRef.current) {
+      clearTimeout(resetTimerRef.current);
+    }
+    resetTimerRef.current = setTimeout(() => setStatus("idle"), 5000);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -54,13 +70,10 @@ export function NewsletterSection({
         setStatus("error");
       }
 
-      // Reset status after 5 seconds
-      setTimeout(() => setStatus("idle"), 5000);
+      scheduleReset();
     } catch {
       setStatus("error");
-
-      // Reset status after 5 seconds
-      setTimeout(() => setStatus("idle"), 5000);
+      scheduleReset();
     }
   };
 
@@ -72,7 +85,11 @@ export function NewsletterSection({
 
         <div className="relative">
           {status === "success" && (
-            <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-8">
+            <div
+              role="status"
+              aria-live="polite"
+              className="bg-emerald-50 border border-emerald-200 rounded-2xl p-8"
+            >
               <div className="flex items-center justify-center w-16 h-16 bg-emerald-100 rounded-full mx-auto mb-4">
                 <svg
                   className="w-8 h-8 text-emerald-600"
@@ -93,7 +110,11 @@ export function NewsletterSection({
           )}
 
           {status === "error" && (
-            <div className="bg-rose-50 border border-rose-200 rounded-2xl p-8">
+            <div
+              role="alert"
+              aria-live="assertive"
+              className="bg-rose-50 border border-rose-200 rounded-2xl p-8"
+            >
               <div className="flex items-center justify-center w-16 h-16 bg-rose-100 rounded-full mx-auto mb-4">
                 <svg
                   className="w-8 h-8 text-rose-600"
@@ -116,7 +137,11 @@ export function NewsletterSection({
           {(status === "idle" || status === "loading") && (
             <form onSubmit={handleSubmit} className="flex gap-4 max-w-md mx-auto">
               <div className="flex-1">
+                <label className="sr-only" htmlFor="newsletter-email">
+                  {placeholder}
+                </label>
                 <input
+                  id="newsletter-email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}

@@ -7,8 +7,7 @@ import { useState } from "react";
 interface ComparisonProps {
   title: string;
   subtitle: string;
-  ourProduct: string;
-  recommended: string;
+  featuresHeader: string;
   features: {
     privacy: { title: string; ksefuj: string; freemium: string; enterprise: string };
     pricing: { title: string; ksefuj: string; freemium: string; enterprise: string };
@@ -17,21 +16,15 @@ interface ComparisonProps {
     errorDetails: { title: string; ksefuj: string; freemium: string; enterprise: string };
     cli: { title: string; ksefuj: string; freemium: string; enterprise: string };
     openSource: { title: string; ksefuj: string; freemium: string; enterprise: string };
-    registration: { title: string; ksefuj: string; freemium: string; enterprise: string };
-    batchProcessing: { title: string; ksefuj: string; freemium: string; enterprise: string };
   };
   competitors: Array<{ name: string; tagline: string }>;
-  checkmark: string;
-  cross: string;
-  partial: string;
-  ctaSubtitle: string;
-  ctaButton: string;
   disclaimer: string;
 }
 
 export function ComparisonSection({
   title,
   subtitle,
+  featuresHeader,
   features,
   competitors,
   disclaimer,
@@ -78,8 +71,9 @@ export function ComparisonSection({
       lowerValue === "brak" ||
       lowerValue === "none" ||
       lowerValue === "немає" ||
-      lowerValue.includes("serwery") ||
-      lowerValue.includes("servers") ||
+      lowerValue.includes("serwer") ||
+      lowerValue.includes("server") ||
+      lowerValue.includes("сервер") ||
       lowerValue.includes("wymagana") ||
       lowerValue.includes("required") ||
       lowerValue.includes("обов'язкова") ||
@@ -191,7 +185,7 @@ export function ComparisonSection({
               <div className="grid grid-cols-4 bg-gradient-to-r from-slate-50 to-white border-b-2 border-slate-200">
                 <div className="p-4 flex items-center">
                   <div className="text-sm font-medium text-slate-500 uppercase tracking-wider">
-                    Features
+                    {featuresHeader}
                   </div>
                 </div>
 
