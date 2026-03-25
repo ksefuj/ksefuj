@@ -3,6 +3,14 @@
   "private": true,
   "type": "module",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ksefuj/ksefuj.git"
+  },
+  "homepage": "https://ksefuj.to",
+  "bugs": {
+    "url": "https://github.com/ksefuj/ksefuj/issues"
+  },
   "packageManager": "pnpm@9.15.0",
   "scripts": {
     "dev": "pnpm --filter @ksefuj/web dev",

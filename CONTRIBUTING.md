@@ -342,8 +342,7 @@ Run pnpm format, lint, and test before committing.
 
 ## 📞 Getting Help
 
-- **Discord**: [Join our community](https://discord.gg/ksefuj) (coming soon)
-- **Discussions**: Use GitHub Discussions for questions
+- **Discussions**: [GitHub Discussions](https://github.com/ksefuj/ksefuj/discussions) for questions and community
 - **Issues**: Report bugs via GitHub Issues
 
 ---

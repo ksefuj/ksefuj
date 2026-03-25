@@ -216,47 +216,13 @@ Follow official FA(3) specification (§2.6) decimal precision limits:
 - There is NO standalone XML validator in KSeF 2.0 — validation happens only on invoice submission.
   This is the gap we fill.
 
-## Competitor Landscape
-
-### Sorgera (services.sorgera.com/ksef)
-
-Turkish SAP consultancy based in Istanbul. Enterprise-focused, English-only, credit-based pricing
-(€35/1000 invoices). Targets large companies with SAP/ERP integrations. Has XML validator (currently
-free, will be paid), XML→PDF converter, API, AI error assistant. Does NOT have: generator, CLI, npm
-package. Does NOT serve freelancer/JDG market.
-
-### ksefwalidator.pl
-
-Polish, visually polished freemium validator. Appears to be vibe-coded — nice landing page but
-questionable depth of validation and reliability. Client-side. Free basic validation, building
-towards paid features. Targets the same "quick validator" niche we're entering. Our advantage: truly
-free (no limits, no tiers), open source, CLI, npm package, deeper semantic rules, part of a bigger
-toolkit (not just a validator).
-
-### naprawksef.pl
-
-Polish, free validator with "auto-fix" suggestions. Similar vibe-coded feel. Shows errors + repair
-instructions. No registration required. Narrow scope (validator only).
-
-### ksefu.pl
-
-"KSeF Assistant" — offline validator. Minimal information available. Appears early-stage.
-
-### General pattern
-
-A wave of small, quickly-built KSeF validator sites is appearing as the April 2026 deadline
-approaches. Most are single-purpose validators with limited depth, and virtually all are building
-towards a paywall (freemium, credits, paid tiers). Our advantage: completely free with no limits,
-open source toolkit approach (validator + preview + generator + CLI + API + skills), privacy-first
-client-side processing, and near-zero server costs that make "free forever" sustainable.
-
 ## Roadmap
 
 See [README.md](./README.md#roadmap) for the current project roadmap.
 
-### Cost Minimization Strategy
+### Architecture Principles
 
-Everything should be client-side wherever possible to keep server costs near zero:
+Everything should be client-side wherever possible:
 
 - **Validation**: 100% client-side (DOMParser + semantic rules, libxml2-wasm for XSD)
 - **Preview**: 100% client-side (XML parsing + HTML template rendering in browser)
@@ -266,21 +232,6 @@ Everything should be client-side wherever possible to keep server costs near zer
 - **Static hosting**: Vercel free tier handles static/SSG pages well
 - **No database**: localStorage for saved data, no user accounts unless absolutely needed
 - **No auth**: no Clerk, no login walls. If accounts are ever added, they're optional convenience
-
-The only server costs should be: Vercel hosting (free tier), domain renewal (~$25/year), and
-potentially a small API proxy for NIP lookups.
-
-### Monetization
-
-Not a priority in early phases. Once there's meaningful traffic:
-
-- **Sponsorships**: tasteful, single-sponsor ads like Daring Fireball / Carbon Ads style. One small
-  banner, relevant to the audience (accounting tools, banking, business services). No programmatic
-  ads, no tracking pixels.
-- **"Powered by ksefuj" API**: if other tools want to embed our validator, that's a potential
-  sponsorship/partnership channel.
-- The site should always feel clean and ad-free. If ads ever appear, they should be so subtle that
-  users barely notice them.
 
 ## Claude Skills
 
