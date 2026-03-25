@@ -171,7 +171,12 @@
       "description": "Articles about KSeF, e-invoices, and the FA(3) schema.",
       "empty": "New articles coming soon.",
       "readingTime": "{minutes} min read",
-      "metaDescription": "Articles about KSeF, FA(3) and e-invoices for sole traders and small businesses."
+      "metaDescription": "Articles about KSeF, FA(3) and e-invoices for sole traders and small businesses.",
+      "languageBadge": "PL",
+      "filter": {
+        "all": "All",
+        "translatedOnly": "Translated only"
+      }
     },
     "docs": {
       "title": "Documentation",

@@ -171,7 +171,12 @@
       "description": "Статті про KSeF, е-рахунки та схему FA(3).",
       "empty": "Нові статті з'являться незабаром.",
       "readingTime": "{minutes} хв читання",
-      "metaDescription": "Статті про KSeF, FA(3) та е-рахунки для підприємців і малого бізнесу."
+      "metaDescription": "Статті про KSeF, FA(3) та е-рахунки для підприємців і малого бізнесу.",
+      "languageBadge": "PL",
+      "filter": {
+        "all": "Усі",
+        "translatedOnly": "Лише перекладені"
+      }
     },
     "docs": {
       "title": "Документація",
