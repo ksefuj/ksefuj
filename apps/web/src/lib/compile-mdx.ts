@@ -1,5 +1,6 @@
 import rehypeShiki from "@shikijs/rehype";
 import { compileMDX as compileMDXBase } from "next-mdx-remote/rsc";
+import remarkGfm from "remark-gfm";
 import { rehypeAddHeadingIds } from "./rehype-heading-ids";
 import { mdxComponents } from "@/components/mdx";
 
@@ -17,6 +18,7 @@ export async function compileMDXContent({ source }: CompileMDXOptions) {
     components: mdxComponents,
     options: {
       mdxOptions: {
+        remarkPlugins: [remarkGfm],
         rehypePlugins: [
           rehypeAddHeadingIds,
           [
