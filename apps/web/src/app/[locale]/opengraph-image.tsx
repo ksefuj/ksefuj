@@ -10,7 +10,7 @@ interface Props {
 
 export default async function Image({ params }: Props) {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "content.faq" });
+  const t = await getTranslations({ locale, namespace: "meta" });
 
   return new ImageResponse(ogLayout({ title: t("ogImageTitle") }), size);
 }

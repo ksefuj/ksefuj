@@ -10,7 +10,7 @@ interface Props {
 
 export default async function Image({ params }: Props) {
   const { locale, slug } = await params;
-  const result = await getContentItemWithFallback(locale, "blog", slug);
+  const result = await getContentItemWithFallback(locale, "docs", slug);
 
   const title = result?.item.frontmatter.title ?? "ksefuj.to";
   return new ImageResponse(ogLayout({ title }), size);

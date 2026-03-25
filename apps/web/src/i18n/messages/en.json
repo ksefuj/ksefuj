@@ -3,7 +3,8 @@
     "title": "ksefuj.to — KSeF FA(3) validator",
     "description": "Free KSeF FA(3) invoice validator. Drop XML, check errors. Your data never leaves your browser.",
     "ogTitle": "ksefuj.to — KSeF FA(3) validator",
-    "ogDescription": "Free KSeF invoice validator. Your file never leaves the browser."
+    "ogDescription": "Free KSeF invoice validator. Your file never leaves the browser.",
+    "ogImageTitle": "Free KSeF FA(3) invoice validator"
   },
   "validator": {
     "dropzone": {
@@ -172,6 +173,7 @@
       "empty": "New articles coming soon.",
       "readingTime": "{minutes} min read",
       "metaDescription": "Articles about KSeF, FA(3) and e-invoices for sole traders and small businesses.",
+      "ogImageTitle": "Blog — articles about KSeF and e-invoicing",
       "languageBadge": "PL",
       "filter": {
         "all": "All",
@@ -183,12 +185,14 @@
       "description": "Technical documentation for the validator and FA(3) schema.",
       "empty": "Documentation is being prepared.",
       "metaTitle": "Documentation",
-      "metaDescription": "Technical documentation for the ksefuj validator and FA(3) schema."
+      "metaDescription": "Technical documentation for the ksefuj validator and FA(3) schema.",
+      "ogImageTitle": "Technical documentation — KSeF validator"
     },
     "faq": {
       "title": "FAQ — KSeF Questions Answered",
       "description": "Answers to the most common questions about KSeF — from the basics to technical details.",
       "metaDescription": "Answers to 40+ questions about KSeF — from the basics to technical details. Everything you need to know about mandatory e-invoicing in Poland.",
+      "ogImageTitle": "FAQ — KSeF Questions Answered",
       "empty": "FAQ is being prepared."
     },
     "guides": {
@@ -196,7 +200,8 @@
       "description": "Step by step through KSeF and e-invoices.",
       "empty": "Guides are being prepared.",
       "metaTitle": "Guides",
-      "metaDescription": "Step-by-step guides about KSeF and e-invoicing for sole traders and businesses."
+      "metaDescription": "Step-by-step guides about KSeF and e-invoicing for sole traders and businesses.",
+      "ogImageTitle": "Guides — step by step through KSeF"
     },
     "layout": {
       "backToBlog": "Blog",

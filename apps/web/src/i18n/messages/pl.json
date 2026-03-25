@@ -3,7 +3,8 @@
     "title": "ksefuj.to — walidator KSeF FA(3)",
     "description": "Darmowy walidator faktur KSeF FA(3). Wrzuć XML, sprawdź błędy. Twoje dane nie opuszczają przeglądarki.",
     "ogTitle": "ksefuj.to — walidator KSeF FA(3)",
-    "ogDescription": "Darmowy walidator faktur KSeF. Twój plik nie opuszcza przeglądarki."
+    "ogDescription": "Darmowy walidator faktur KSeF. Twój plik nie opuszcza przeglądarki.",
+    "ogImageTitle": "Darmowy walidator faktur KSeF FA(3)"
   },
   "validator": {
     "dropzone": {
@@ -172,6 +173,7 @@
       "empty": "Wkrótce pojawią się nowe artykuły.",
       "readingTime": "{minutes} min czytania",
       "metaDescription": "Artykuły o KSeF, FA(3) i e-fakturach dla JDG i małych firm.",
+      "ogImageTitle": "Blog — artykuły o KSeF i e-fakturach",
       "languageBadge": "PL",
       "filter": {
         "all": "Wszystkie",
@@ -183,12 +185,14 @@
       "description": "Dokumentacja techniczna walidatora i schematu FA(3).",
       "empty": "Dokumentacja jest w przygotowaniu.",
       "metaTitle": "Dokumentacja",
-      "metaDescription": "Dokumentacja techniczna walidatora ksefuj i schematu FA(3)."
+      "metaDescription": "Dokumentacja techniczna walidatora ksefuj i schematu FA(3).",
+      "ogImageTitle": "Dokumentacja techniczna walidatora KSeF"
     },
     "faq": {
       "title": "FAQ — Najczęstsze pytania o KSeF",
       "description": "Odpowiedzi na najczęstsze pytania o KSeF — od podstaw po szczegóły techniczne.",
       "metaDescription": "Odpowiedzi na 40+ pytań o KSeF — od podstaw po szczegóły techniczne. Wszystko co potrzebujesz wiedzieć o obowiązkowym e-fakturowaniu.",
+      "ogImageTitle": "FAQ — Najczęstsze pytania o KSeF",
       "empty": "FAQ jest w przygotowaniu."
     },
     "guides": {
@@ -196,7 +200,8 @@
       "description": "Krok po kroku przez KSeF i faktury elektroniczne.",
       "empty": "Przewodniki są w przygotowaniu.",
       "metaTitle": "Przewodniki",
-      "metaDescription": "Przewodniki krok po kroku o KSeF i fakturach elektronicznych dla JDG i firm."
+      "metaDescription": "Przewodniki krok po kroku o KSeF i fakturach elektronicznych dla JDG i firm.",
+      "ogImageTitle": "Przewodniki — krok po kroku przez KSeF"
     },
     "layout": {
       "backToBlog": "Blog",
