@@ -12,7 +12,8 @@ export function BlogFilter({ labelAll, labelTranslatedOnly }: BlogFilterProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const current = searchParams.get("filter") ?? "all";
+  const rawFilter = searchParams.get("filter");
+  const current: "all" | "translated" = rawFilter === "translated" ? "translated" : "all";
 
   function setFilter(value: "all" | "translated") {
     const params = new URLSearchParams(searchParams.toString());
@@ -32,8 +33,9 @@ export function BlogFilter({ labelAll, labelTranslatedOnly }: BlogFilterProps) {
     "bg-white text-slate-600 border-slate-200 hover:border-violet-300 hover:text-violet-700";
 
   return (
-    <div className="flex gap-2" role="group">
+    <div className="flex gap-2" role="group" aria-label={`${labelAll} / ${labelTranslatedOnly}`}>
       <button
+        type="button"
         onClick={() => setFilter("all")}
         className={cn(base, current === "all" ? active : inactive)}
         aria-pressed={current === "all"}
@@ -41,6 +43,7 @@ export function BlogFilter({ labelAll, labelTranslatedOnly }: BlogFilterProps) {
         {labelAll}
       </button>
       <button
+        type="button"
         onClick={() => setFilter("translated")}
         className={cn(base, current === "translated" ? active : inactive)}
         aria-pressed={current === "translated"}
