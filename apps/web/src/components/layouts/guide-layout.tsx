@@ -1,7 +1,6 @@
 import React from "react";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
-import { Badge } from "@/components/badge";
 import { TableOfContents } from "@/components/table-of-contents";
 import { ShareButton } from "@/components/share-button";
 import type { Frontmatter } from "@/lib/content";
@@ -55,18 +54,6 @@ export async function GuideLayout({
 
       {/* Guide header card */}
       <div className="rounded-2xl border border-violet-100 bg-violet-50/50 px-6 py-5 mb-8 flex flex-wrap gap-6">
-        <div className="flex flex-col gap-1">
-          <span className="text-xs text-slate-500 uppercase tracking-wider font-semibold">
-            {t("layout.guideAudience")}
-          </span>
-          <div className="flex flex-wrap gap-1.5">
-            {frontmatter.audience?.map((a) => (
-              <Badge key={a} variant="info">
-                {t(`audience.${a}` as "audience.jdg")}
-              </Badge>
-            ))}
-          </div>
-        </div>
         <div className="flex flex-col gap-1">
           <span className="text-xs text-slate-500 uppercase tracking-wider font-semibold">
             {t("layout.guideTime")}

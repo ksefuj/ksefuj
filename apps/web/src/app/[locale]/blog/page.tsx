@@ -6,7 +6,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { SectionContainer } from "@/components/section-container";
 import { Badge } from "@/components/badge";
 import { LanguagePicker } from "../language-picker";
-import { listContentItems } from "@/lib/content";
+import { buildContentPath, listContentItems } from "@/lib/content";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -24,6 +24,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: tContent("metaDescription"),
     alternates: {
       canonical: locale === "pl" ? "/blog" : `/${locale}/blog`,
+    },
+    openGraph: {
+      type: "website",
     },
   };
 }
@@ -60,8 +63,7 @@ export default async function BlogListPage({ params }: Props) {
             ) : (
               <div className="grid gap-6 sm:grid-cols-2">
                 {posts.map((post) => {
-                  const p = locale === "pl" ? "" : `/${locale}`;
-                  const href = `${p}/blog/${post.frontmatter.slug}`;
+                  const href = buildContentPath(locale, "blog", post.frontmatter.slug);
                   return (
                     <Link
                       key={post.frontmatter.slug}
