@@ -12,26 +12,44 @@ translations:
 
 ## Dostęp i uprawnienia
 
-### Jak się zalogować do KSeF?
+<Question q="Jak się zalogować do KSeF?">
+  Do KSeF logujesz się przez Aplikację Podatnika (ap.ksef.mf.gov.pl) za pomocą jednej z metod:
+  Profil Zaufany, e-dowód, podpis kwalifikowany lub certyfikat KSeF. Profil Zaufany jest
+  najwygodniejszy dla większości przedsiębiorców — można go założyć bezpłatnie przez bankowość
+  elektroniczną lub w urzędzie. Dostęp przez API (dla programów) wymaga certyfikatu lub tokenu.
+</Question>
 
-Do KSeF logujesz się przez Aplikację Podatnika (ap.ksef.mf.gov.pl) za pomocą jednej z metod: Profil Zaufany, e-dowód, podpis kwalifikowany lub certyfikat KSeF. Profil Zaufany jest najwygodniejszy dla większości przedsiębiorców — można go założyć bezpłatnie przez bankowość elektroniczną lub w urzędzie. Dostęp przez API (dla programów) wymaga certyfikatu lub tokenu.
+<Question q="Co to jest ZAW-FA?">
+  ZAW-FA to formularz upoważnienia do korzystania z KSeF w imieniu podatnika. Składa się go w
+  urzędzie skarbowym lub elektronicznie przez e-Urząd Skarbowy i pozwala upoważnić inną osobę — np.
+  księgowego lub biuro rachunkowe — do wystawiania i odbierania faktur w KSeF. Upoważnienie może być
+  ograniczone zakresowo: tylko odczyt, tylko wystawianie lub pełny dostęp.
+</Question>
 
-### Co to jest ZAW-FA?
+<Question q="Jak upoważnić księgowego do KSeF?">
+  Możesz upoważnić księgowego przez złożenie formularza ZAW-FA w urzędzie skarbowym lub bezpośrednio
+  w Aplikacji Podatnika KSeF przez panel uprawnień. Uprawnienie określa, czy księgowy może tylko
+  odczytywać faktury, czy też je wystawiać. Biuro rachunkowe zazwyczaj samo prosi klientów o
+  stosowne upoważnienie — dopytaj swojego księgowego.
+</Question>
 
-ZAW-FA to formularz upoważnienia do korzystania z KSeF w imieniu podatnika. Składa się go w urzędzie skarbowym lub elektronicznie przez e-Urząd Skarbowy i pozwala upoważnić inną osobę — np. księgowego lub biuro rachunkowe — do wystawiania i odbierania faktur w KSeF. Upoważnienie może być ograniczone zakresowo: tylko odczyt, tylko wystawianie lub pełny dostęp.
+<Question q="Co to jest certyfikat KSeF?">
+  Certyfikat KSeF to elektroniczne poświadczenie tożsamości używane do uwierzytelniania w API KSeF.
+  Jest pobierany z systemu MF i pozwala programom i integratorom logować się do KSeF bez Profilu
+  Zaufanego. Wyróżniamy dwa typy certyfikatów: dla podatnika (typ 1) i dla podmiotu upoważnionego
+  (typ 2).
+</Question>
 
-### Jak upoważnić księgowego do KSeF?
+<Question q="Czym się różni certyfikat typ 1 od typ 2?">
+  Certyfikat typ 1 jest wydawany bezpośrednio dla podatnika (właściciela NIP) i ma najszersze
+  uprawnienia w KSeF. Certyfikat typ 2 jest przeznaczony dla podmiotów działających w imieniu
+  podatnika — np. biur rachunkowych czy systemów ERP obsługujących wielu klientów. Typ 2 zawsze
+  działa w kontekście konkretnego upoważnienia, które musi istnieć w KSeF.
+</Question>
 
-Możesz upoważnić księgowego przez złożenie formularza ZAW-FA w urzędzie skarbowym lub bezpośrednio w Aplikacji Podatnika KSeF przez panel uprawnień. Uprawnienie określa, czy księgowy może tylko odczytywać faktury, czy też je wystawiać. Biuro rachunkowe zazwyczaj samo prosi klientów o stosowne upoważnienie — dopytaj swojego księgowego.
-
-### Co to jest certyfikat KSeF?
-
-Certyfikat KSeF to elektroniczne poświadczenie tożsamości używane do uwierzytelniania w API KSeF. Jest pobierany z systemu MF i pozwala programom i integratorom logować się do KSeF bez Profilu Zaufanego. Wyróżniamy dwa typy certyfikatów: dla podatnika (typ 1) i dla podmiotu upoważnionego (typ 2).
-
-### Czym się różni certyfikat typ 1 od typ 2?
-
-Certyfikat typ 1 jest wydawany bezpośrednio dla podatnika (właściciela NIP) i ma najszersze uprawnienia w KSeF. Certyfikat typ 2 jest przeznaczony dla podmiotów działających w imieniu podatnika — np. biur rachunkowych czy systemów ERP obsługujących wielu klientów. Typ 2 zawsze działa w kontekście konkretnego upoważnienia, które musi istnieć w KSeF.
-
-### Co to jest token uwierzytelniający?
-
-Token uwierzytelniający to ciąg znaków generowany w Aplikacji Podatnika KSeF, używany zamiast certyfikatu do uwierzytelniania w API. Tokeny są wygodniejsze dla integratorów i mniejszych systemów — nie wymagają zarządzania certyfikatami PKI. Token ma określony czas ważności i zakres uprawnień. Można go w każdej chwili unieważnić z poziomu Aplikacji Podatnika.
+<Question q="Co to jest token uwierzytelniający?">
+  Token uwierzytelniający to ciąg znaków generowany w Aplikacji Podatnika KSeF, używany zamiast
+  certyfikatu do uwierzytelniania w API. Tokeny są wygodniejsze dla integratorów i mniejszych
+  systemów — nie wymagają zarządzania certyfikatami PKI. Token ma określony czas ważności i zakres
+  uprawnień. Można go w każdej chwili unieważnić z poziomu Aplikacji Podatnika.
+</Question>

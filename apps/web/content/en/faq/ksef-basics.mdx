@@ -12,34 +12,51 @@ translations:
 
 ## KSeF Basics
 
-### What is KSeF?
+<Question q="What is KSeF?">
+  KSeF (Krajowy System e-Faktur) is the Polish Ministry of Finance platform for issuing and
+  receiving structured invoices. Every B2B invoice must be submitted to KSeF as an XML file and
+  receive an official number before it reaches the buyer. The system acts as a central tax invoice
+  register maintained by the state.
+</Question>
 
-KSeF (Krajowy System e-Faktur) is the Polish Ministry of Finance platform for issuing and receiving structured invoices. Every B2B invoice must be submitted to KSeF as an XML file and receive an official number before it reaches the buyer. The system acts as a central tax invoice register maintained by the state.
+<Question q="When did KSeF become mandatory?">
+  For large businesses (sales above 200M PLN per year), KSeF became mandatory on February 1, 2026.
+  For all other active VAT taxpayers — from April 1, 2026. VAT-exempt taxpayers must use KSeF from
+  January 1, 2027.
+</Question>
 
-### When did KSeF become mandatory?
+<Question q="Who does KSeF apply to?">
+  KSeF applies to all active VAT taxpayers with a registered office or fixed place of business in
+  Poland. The obligation covers B2B invoices and invoices issued to individuals outside the cash
+  register system. VAT-exempt entities join the system from January 1, 2027.
+</Question>
 
-For large businesses (sales above 200M PLN per year), KSeF became mandatory on February 1, 2026. For all other active VAT taxpayers — from April 1, 2026. VAT-exempt taxpayers must use KSeF from January 1, 2027.
+<Question q="Does KSeF apply to consumer invoices (B2C)?">
+  Consumer invoices (B2C) are generally subject to KSeF, with one important exception: invoices
+  issued via cash registers are excluded. If you issue an invoice outside the cash register system —
+  e.g. in invoicing software — it must go through KSeF.
+</Question>
 
-### Who does KSeF apply to?
+<Question q="What is FA(3)?">
+  FA(3) is the current XML schema for structured invoices, published by the Polish Ministry of
+  Finance. The number 3 indicates the third version of the format. All invoices submitted to KSeF
+  must comply with this schema — any deviation results in rejection by the system.
+</Question>
 
-KSeF applies to all active VAT taxpayers with a registered office or fixed place of business in Poland. The obligation covers B2B invoices and invoices issued to individuals outside the cash register system. VAT-exempt entities join the system from January 1, 2027.
+<Question q="What is a KSeF number?">
+  A KSeF number is a unique invoice identifier assigned by the MF system upon successful
+  registration of the document. This number is required when issuing a corrective invoice — the
+  correction must reference the KSeF number of the original invoice.
+</Question>
 
-### Does KSeF apply to consumer invoices (B2C)?
+<Question q="What is UPO?">
+  UPO (Urzędowe Poświadczenie Odbioru — Official Receipt Confirmation) is a document confirming that
+  an invoice was accepted by KSeF. It contains the KSeF number, acceptance date, and a digital
+  signature from the system. UPO proves that the invoice was correctly registered.
+</Question>
 
-Consumer invoices (B2C) are generally subject to KSeF, with one important exception: invoices issued via cash registers are excluded. If you issue an invoice outside the cash register system — e.g. in invoicing software — it must go through KSeF.
-
-### What is FA(3)?
-
-FA(3) is the current XML schema for structured invoices, published by the Polish Ministry of Finance. The number 3 indicates the third version of the format. All invoices submitted to KSeF must comply with this schema — any deviation results in rejection by the system.
-
-### What is a KSeF number?
-
-A KSeF number is a unique invoice identifier assigned by the MF system upon successful registration of the document. This number is required when issuing a corrective invoice — the correction must reference the KSeF number of the original invoice.
-
-### What is UPO?
-
-UPO (Urzędowe Poświadczenie Odbioru — Official Receipt Confirmation) is a document confirming that an invoice was accepted by KSeF. It contains the KSeF number, acceptance date, and a digital signature from the system. UPO proves that the invoice was correctly registered.
-
-### Can I still send PDF invoices?
-
-No — PDF is not accepted by KSeF as a tax document. The system requires a structured XML file compliant with FA(3). You can still send the buyer a PDF visualization for convenience, but the legal version of the document is the XML file registered in KSeF.
+<Question q="Can I still send PDF invoices?">
+  No — PDF is not accepted by KSeF as a tax document. The system requires a structured XML file
+  compliant with FA(3). You can still send the buyer a PDF visualization for convenience, but the
+  legal version of the document is the XML file registered in KSeF.
+</Question>

@@ -12,22 +12,35 @@ translations:
 
 ## Issuing Invoices
 
-### How do I issue my first invoice in KSeF?
+<Question q="How do I issue my first invoice in KSeF?">
+  First, gain access to KSeF — log in through the Taxpayer Application KSeF (ap.ksef.mf.gov.pl) or
+  integrate your invoicing software with the KSeF API. Then prepare an XML file compliant with FA(3)
+  and submit it to the system. After successful acceptance, you receive a KSeF number and UPO.
+</Question>
 
-First, gain access to KSeF — log in through the Taxpayer Application KSeF (ap.ksef.mf.gov.pl) or integrate your invoicing software with the KSeF API. Then prepare an XML file compliant with FA(3) and submit it to the system. After successful acceptance, you receive a KSeF number and UPO.
+<Question q="Are there free tools from the Ministry of Finance?">
+  Yes — the Ministry of Finance provides the free Taxpayer Application KSeF (ap.ksef.mf.gov.pl) for
+  issuing, receiving, and viewing KSeF invoices. It's a good solution for people issuing a few
+  invoices per month. For higher volumes, a dedicated invoicing program with KSeF integration is
+  more convenient.
+</Question>
 
-### Are there free tools from the Ministry of Finance?
+<Question q="How does a corrective invoice work in KSeF?">
+  A corrective invoice in KSeF must include the KSeF number of the original invoice — when that
+  invoice was issued through KSeF. You submit it the same way as a regular invoice: as an XML file
+  to KSeF. After acceptance, it receives its own KSeF number.
+</Question>
 
-Yes — the Ministry of Finance provides the free Taxpayer Application KSeF (ap.ksef.mf.gov.pl) for issuing, receiving, and viewing KSeF invoices. It's a good solution for people issuing a few invoices per month. For higher volumes, a dedicated invoicing program with KSeF integration is more convenient.
+<Question q="How do I issue a foreign currency invoice?">
+  A foreign currency invoice in KSeF must include VAT amounts converted to Polish zloty (PLN) at the
+  NBP exchange rate. In the XML file, you provide both the foreign currency amounts and the PLN
+  equivalent. The exchange rate must match the rate from the day before the invoice date. PLN fields
+  are mandatory.
+</Question>
 
-### How does a corrective invoice work in KSeF?
-
-A corrective invoice in KSeF must include the KSeF number of the original invoice — when that invoice was issued through KSeF. You submit it the same way as a regular invoice: as an XML file to KSeF. After acceptance, it receives its own KSeF number.
-
-### How do I issue a foreign currency invoice?
-
-A foreign currency invoice in KSeF must include VAT amounts converted to Polish zloty (PLN) at the NBP exchange rate. In the XML file, you provide both the foreign currency amounts and the PLN equivalent. The exchange rate must match the rate from the day before the invoice date. PLN fields are mandatory.
-
-### How do I invoice a foreign buyer?
-
-Invoices for EU or non-EU buyers still go through KSeF. Tax rates differ — use 0% for intra-EU supply (WDT) or not-subject-to-VAT for exported services. In the NrVatUE field, enter the buyer's EU VAT number. Validate the file before submitting — errors in foreign buyer address fields are common.
+<Question q="How do I invoice a foreign buyer?">
+  Invoices for EU or non-EU buyers still go through KSeF. Tax rates differ — use 0% for intra-EU
+  supply (WDT) or not-subject-to-VAT for exported services. In the NrVatUE field, enter the buyer's
+  EU VAT number. Validate the file before submitting — errors in foreign buyer address fields are
+  common.
+</Question>
