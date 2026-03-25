@@ -35,7 +35,12 @@
     "dist",
     "!dist/**/*.xsd",
     "!dist/**/*.ts",
-    "dist/**/*.d.ts"
+    "dist/**/*.d.ts",
+    "!dist/**/*.test.js",
+    "!dist/**/*.test.js.map",
+    "!dist/**/*.test.d.ts",
+    "!dist/**/*.test.d.ts.map",
+    "!dist/__tests__"
   ],
   "keywords": [
     "ksef",

@@ -212,7 +212,7 @@ bundle if changes are detected. Run this:
 - [x] Behavioral analytics
 - [x] RSS feed
 - [ ] Global validation counter (Vercel KV)
-- [ ] Publish @ksefuj/validator to npm registry
+- [x] Publish @ksefuj/validator to npm registry
 
 ### Phase 2: Preview
 
