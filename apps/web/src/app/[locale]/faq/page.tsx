@@ -42,6 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: {
       canonical,
       languages: {
+        "x-default": "/faq",
         pl: "/faq",
         en: "/en/faq",
         uk: "/uk/faq",
@@ -50,8 +51,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title,
       description,
-      url: canonical,
+      url: `https://ksefuj.to${canonical}`,
       type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
     },
   };
 }
