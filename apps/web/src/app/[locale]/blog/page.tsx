@@ -39,6 +39,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         en: "/en/blog",
         uk: "/uk/blog",
       },
+      types: {
+        "application/rss+xml": "/feed.xml",
+      },
     },
     openGraph: {
       title,
