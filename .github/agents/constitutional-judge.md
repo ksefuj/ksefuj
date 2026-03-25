@@ -161,6 +161,39 @@ string in the locale files.
 
 **Output format:** Same table format as content review.
 
+### Mode 4: Localization Review (light pass)
+
+**When:** The Localizer has produced EN or UK adaptations of already-reviewed PL content.
+
+**This is a delta check, not a full review.** The PL source has already passed full constitutional
+review. You're checking that the adaptation didn't:
+
+1. Change a factual claim (date, amount, legal reference, requirement)
+2. Drop an important caveat that was in the PL source
+3. Add a claim that wasn't in the PL source
+4. Change the obligation level ("must" → "should" or vice versa)
+
+**Output format:** Same table as content review, but only for flagged items. If nothing drifted: "✅
+No factual drift detected. EN/UK faithful to PL source."
+
+---
+
+## Researcher Integration
+
+The Researcher agent maintains structured knowledge extracts in `docs/knowledge-base/`. These
+extracts include exact citations (document, section, page, verbatim quote).
+
+**When verifying a claim:**
+
+1. Check `docs/knowledge-base/` first — the Researcher may have already extracted the relevant fact
+   with a precise citation
+2. If found: verify the extract's citation is accurate (spot-check occasionally)
+3. If not found: go to the primary source documents directly
+4. If the extract contradicts the primary source: flag both — the extract may be stale
+
+The knowledge base is an efficiency tool, not an authority. The official MF documents remain the
+ultimate source of truth.
+
 ---
 
 ## Severity Levels
@@ -258,7 +291,11 @@ Before merging any PR that touches:
 
 ## Relationship to Other Agents
 
-- **Copywriter** writes content → **Constitutional Judge** verifies factual accuracy
+- **Researcher** produces knowledge extracts → **Constitutional Judge** uses them as a fast-path to
+  verified citations (but always treats primary MF sources as the final authority)
+- **Copywriter** writes PL content → **Constitutional Judge** verifies factual accuracy (full
+  review)
+- **Localizer** adapts PL → EN/UK → **Constitutional Judge** runs a light delta check (Mode 4)
 - **ksef-fa3 skill** generates XML → **Constitutional Judge** verifies the generation rules match
   the official spec
 - **Dev (Claude Code)** implements validator rules → **Constitutional Judge** verifies rules match
