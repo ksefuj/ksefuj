@@ -204,10 +204,14 @@ bundle if changes are detected. Run this:
 
 - [x] Validator UI improvements (multi-file upload, better error output)
 - [x] Human-readable error messages with fix instructions
-- [ ] Landing page with trust signals and feature sections
-- [ ] MDX content pipeline (docs, guides, blog)
+- [x] Landing page with trust signals and feature sections
+- [x] MDX content pipeline (docs, guides, blog)
+- [x] FAQ page (full MDX content, PL/EN/UK, JSON-LD FAQPage schema)
+- [x] Blog (first article live: KSeF od 1 kwietnia 2026)
+- [x] Sitemap, OG images, hreflang, Twitter cards across all content
+- [x] Behavioral analytics
+- [ ] RSS feed
 - [ ] Global validation counter (Vercel KV)
-- [ ] Sitemap, RSS, OG images
 - [ ] Publish @ksefuj/validator to npm registry
 
 ### Phase 2: Preview
