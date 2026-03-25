@@ -194,6 +194,19 @@ between translated versions instead of falling back to the listing page.
 
 **Reading time** is calculated automatically. Do not set it manually.
 
+### Tags
+
+Tags are displayed in the UI and must follow these rules:
+
+- **Capitalize as proper nouns or brand names:** `KSeF`, `JDG`, `Freelancer`, `FA(3)`. Never
+  lowercase (`ksef`, `jdg`, `freelancer`).
+- **No redundant tags:** `JDG` already means sole trader — do not also add
+  `jednoosobowa-dzialalnosc` or any Polish-language synonym that duplicates an existing tag.
+- **Keep it minimal:** 2–4 tags per article. Only tags that are genuinely useful for
+  filtering/discovery.
+- **Canonical tag list** (use exactly these spellings): `KSeF`, `JDG`, `Freelancer`, `FA(3)`,
+  `Walidacja`, `Faktura`, `VAT`.
+
 ### Content voice
 
 Apply the same brand voice rules from this agent to long-form content — the Ania test, jargon
