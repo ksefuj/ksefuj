@@ -1,0 +1,245 @@
+---
+title: "KSeF from 1 April 2026 — what you need to know"
+description: "KSeF becomes mandatory for all active VAT taxpayers in Poland on 1 April 2026. Who's affected, what changes, and how to prepare — a complete guide to Poland's e-invoicing system."
+date: 2026-03-25
+section: blog
+locale: en
+slug: "ksef-od-1-kwietnia-2026"
+translationOf: "ksef-od-1-kwietnia-2026"
+tags: ["KSeF", "FA(3)", "JDG"]
+sources:
+  - label: "FAQ MF — KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
+  - label: "VAT Act Art. 106a–106s, 108a, 108g, 145m"
+    url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
+  - label: "MF Regulation of 7.12.2025 (exclusions)"
+    url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250001740"
+  - label: "FA(3) Information Sheet"
+    url: "https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+seo:
+  canonical: "/blog/ksef-od-1-kwietnia-2026"
+---
+
+If you issue invoices in Poland and haven't yet got to grips with KSeF — this is where to start. **From 1 April 2026, mandatory e-invoicing applies to virtually every active VAT taxpayer.** There's no opting out, no staying with PDFs. But there is a clear set of things you can do right now — before non-compliance starts to cost you.
+
+---
+
+## What is KSeF
+
+**KSeF** (Krajowy System e-Faktur — Poland's National e-Invoicing System) is the government platform for issuing and receiving structured invoices (e-invoices). Instead of emailing a PDF or printing a paper invoice, you submit an XML file in a tightly specified format to the Ministry of Finance. The system archives it, assigns a unique KSeF number, and makes it immediately available to your counterparty.
+
+Put simply: **the invoice is no longer a document you send. It becomes an entry in a government database.**
+
+KSeF has been available as a voluntary system since 2022. It became mandatory for the largest companies on 1 February 2026. From 1 April 2026, the obligation extends to all active VAT taxpayers.
+
+<Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20" label="FAQ MF — KSeF 2.0" />
+
+---
+
+## Timeline and scope
+
+The KSeF rollout schedule is set out in the VAT Act (Art. 145m and following):
+
+| Date                | Who                                                   | Effect         |
+| :------------------ | :---------------------------------------------------- | :------------- |
+| **1 February 2026** | VAT taxpayers with turnover >200M PLN (gross) in 2024 | KSeF mandatory |
+| **1 April 2026**    | All other active VAT taxpayers                        | KSeF mandatory |
+
+**Legal basis:** Art. 145m of the Act of 11 March 2004 on goods and services tax (Journal of Laws 2025, item 775, as amended).
+
+<Info>
+  VAT-exempt taxpayers — both those below the 200,000 PLN turnover threshold who have opted for the
+  subjective exemption, and those conducting activities exempt by law — are not currently required
+  to use KSeF. This obligation may be extended to them in the future, but no date has been set. If
+  you are VAT-exempt, you can test KSeF voluntarily but are not obliged to.
+</Info>
+
+---
+
+## Who is affected
+
+The obligation applies to **active VAT taxpayers** — those registered for VAT and filing VAT-7 or VAT-7K returns. This includes:
+
+- sole traders (JDG — jednoosobowa działalność gospodarcza),
+- limited liability companies (sp. z o.o.), partnerships, and other entities,
+- regulated professions: doctors, lawyers, consultants, designers,
+- freelancers issuing VAT invoices,
+- landlords renting commercial property subject to VAT.
+
+**Not affected** (for now) are VAT-exempt taxpayers — those who haven't exceeded 200,000 PLN annual turnover and opted for the threshold exemption, and those conducting activities exempt from VAT by statute (Art. 43(1) of the VAT Act).
+
+### Exception: very small turnover
+
+If your monthly sales do not exceed 10,000 PLN, the regulations provide a temporary exemption from the KSeF obligation — **until 31 December 2026.** After that date the exemption expires and the requirement covers this group too. We've covered this in a separate article — [read the post on the 10,000 PLN threshold](/blog/limit-10000-zl).
+
+---
+
+## What changes in practice
+
+Today you issue an invoice in your accounting software or a spreadsheet, send it by email, and archive your copy. Your counterparty gets a PDF or a printout.
+
+**From 1 April 2026, that process no longer exists — at least for B2B transactions.**
+
+Here's how it works from 1 April:
+
+1. **You issue an invoice** — in your software or app that supports KSeF.
+2. **The software generates an XML file** — in the strictly defined FA(3) format.
+3. **The file is submitted to KSeF** — via the Ministry of Finance API.
+4. **KSeF assigns a KSeF number** — a unique identifier in the system.
+5. **Your counterparty retrieves the invoice from KSeF** — either by downloading it from their account or via automatic integration.
+
+Your counterparty no longer waits for your email. The invoice is in the system — and both parties have immediate access.
+
+**What about B2C invoices?** Invoices issued to natural persons not conducting business (consumers) are excluded from KSeF. You can still issue these on paper or as a PDF.
+
+---
+
+## What is FA(3)
+
+FA(3) is the official XML schema for structured invoices, mandatory from 1 February 2026. It replaced the earlier FA(2) schema, which was in use from September 2023.
+
+In plain terms: **FA(3) is the specification that defines exactly what your invoice XML must look like.** The Ministry of Finance has published a detailed technical document — the FA(3) Information Sheet — which specifies every field: what's mandatory, what's optional, data types, and permitted values.
+
+The FA(3) schema is publicly available at `https://crd.gov.pl/wzor/2025/06/25/13775/`.
+
+As an end user you typically won't write this XML yourself — your invoicing software handles it. But **if you're building an API integration or want to verify that a generated invoice is correct, FA(3) is the document you need to know** — or at least have a validator at hand that knows it for you.
+
+---
+
+## How to verify an invoice is valid
+
+KSeF 2.0 has no built-in validator — you only find out about errors when you submit an invoice and the system rejects it. **A rejected invoice is an invoice that doesn't exist.** That means payment delays, mandatory corrections, and potential issues with the date of issue.
+
+So before you send anything to KSeF, it's worth checking the XML file first.
+
+**[ksefuj.to](/)** is a free KSeF validator that runs entirely in your browser. Drop in an XML file — it checks both FA(3) schema compliance and semantic rules in line with official MF requirements. Your data never leaves your browser.
+
+<Tip>
+  Run your XML file through ksefuj.to before submitting to KSeF — catch errors before the system
+  does. No sign-up, no charge.
+</Tip>
+
+We've covered the most common KSeF file errors in a separate article: [Most common FA(3) validation errors](/blog/najczestsze-bledy-walidacji).
+
+---
+
+## Penalties for invoicing outside KSeF
+
+The VAT Act provides for sanctions for breaching the obligation to issue invoices through KSeF. The legal basis is **Art. 106gc of the VAT Act**.
+
+Penalties take the form of **additional tax liability**. The rates vary depending on the nature of the breach — issuing an invoice outside KSeF in breach of the obligation, failing to issue an invoice at all, or missing the deadline for submitting an invoice to the system.
+
+<Info>
+  Penalties for KSeF violations have been deferred until **1 January 2027.** This means the
+  obligation to issue invoices through KSeF applies from 1 April 2026, but enforcement of sanctions
+  does not begin until 2027. This is not a reason to delay — but it does mean you have time to learn
+  without immediate penalty risk.
+</Info>
+
+<Warning>
+  Tax penalties are not deductible as a business expense. A fine for invoicing outside KSeF may hurt
+  more financially than the underlying tax amount. Exact rates and conditions are set out in Art.
+  106gc of the VAT Act — consult a tax adviser if you have questions.
+</Warning>
+
+There is an additional risk: the VAT Act may restrict the buyer's right to deduct input VAT from an invoice issued outside KSeF in breach of the obligation. That's a potential double exposure — for the seller and the buyer.
+
+**Important:** the regulations include a conditional penalty mechanism. If you issue an invoice outside KSeF under emergency mode (see below) but actually submit it to KSeF within the required deadline, no penalty should apply. Details are governed by Art. 106gc of the VAT Act.
+
+---
+
+## Exclusions from KSeF
+
+Not every invoice must go through KSeF. Exclusions are set out in Art. 106nd(3) of the VAT Act and in the **Regulation of the Minister of Finance of 7 December 2025** on exclusions from the obligation to issue structured invoices.
+
+**Excluded from the obligation are invoices:**
+
+- issued to **consumers (B2C)** — natural persons not conducting business,
+- issued by **flat-rate agricultural producers** (for agricultural product sales),
+- **simplified invoices** (till receipts with a NIP number up to 450 PLN) — exclusion applies until 31 December 2026, after which the rules may change,
+- relating to supplies and services outside Polish territory (including intra-EU supplies — WDT — and exports),
+- consular and diplomatic invoices,
+- issued by entities with no registered office or fixed place of business in Poland.
+
+<Warning>
+  The exclusion list is subject to change. The MF Regulation of 7.12.2025 sets out the current
+  exceptions — always verify them directly at source or with a tax adviser before deciding to
+  exclude a particular invoice from KSeF.
+</Warning>
+
+<Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20" label="FAQ MF — KSeF 2.0" />
+
+---
+
+## Operating modes
+
+KSeF supports three invoice issuance modes. It's worth understanding them, as they affect your obligations and deadlines.
+
+### Online mode
+
+The invoice is submitted to KSeF in real time. **This is the standard mode.** When you have internet access and your software is integrated with KSeF — you simply send the invoice and immediately receive a KSeF number.
+
+### Offline 24h mode (offline24)
+
+If you have no internet access or KSeF is temporarily unavailable, you can issue an invoice locally. **You must submit it to KSeF promptly — no later than the end of the next business day.** The invoice is valid from the moment of issue, but you only receive the KSeF number after submission.
+
+This mode is designed for exceptional situations — not as a regular way of working.
+
+### Emergency mode
+
+If KSeF experiences an extended outage, the Ministry of Finance may declare emergency mode. In this mode invoices can be issued outside KSeF, but must meet specific formal requirements and be submitted to the system **no later than 7 business days after the outage ends**.
+
+A detailed guide to KSeF operating modes is available in our [guides section](/guides).
+
+---
+
+## What to do now — 5 steps
+
+You have a few days before the deadline. Here's what to prioritise:
+
+### Step 1: Confirm whether the obligation applies to you
+
+Active VAT taxpayer? Issuing B2B invoices? → You are obligated.
+VAT-exempt? → No current obligation. You can start testing voluntarily.
+
+### Step 2: Choose or update your software
+
+Your invoicing software must support KSeF. Check that your provider:
+
+- generates XML files in FA(3) format,
+- supports submission to KSeF via API,
+- supports invoice receipt (as the buyer).
+
+Most established platforms (Fakturownia, inFakt, wFirma, Comarch, Symfonia and others) already support this or are finalising their implementation. Contact your provider and confirm.
+
+### Step 3: Set up authentication in KSeF
+
+To submit invoices to KSeF, you need to authenticate. Authentication works via:
+
+- **qualified electronic signature**,
+- **Profil Zaufany** (free, via ePUAP or the mObywatel app),
+- **authorisation token** (for API integrations).
+
+Make sure your NIP is registered as an authorised entity in the system and that your software or integration is configured correctly.
+
+### Step 4: Test in the test environment
+
+The Ministry of Finance provides a KSeF 2.0 test environment at `https://web2te-ksef.mf.gov.pl/`. You can submit invoices with fictitious data and see how the system responds — with no legal consequences.
+
+**Don't leave testing to the last moment.** If something doesn't work, it's better to find out now than on day one of the obligation.
+
+### Step 5: Validate your XML files before submission
+
+Before sending your first live invoice, check its XML structure. Drop the file into **[ksefuj.to](/)** — the validator checks FA(3) schema compliance and detects semantic errors against official MF requirements before anything reaches KSeF. Your data never leaves your browser.
+
+Answers to frequently asked questions are in our [FAQ section](/faq).
+
+---
+
+## Summary
+
+KSeF is not going away. From 1 April 2026, **every active VAT taxpayer** must issue B2B invoices through the system. Enforcement of penalties begins 1 January 2027 — but a rejected invoice is legally non-existent regardless of whether sanctions are in play.
+
+The good news: there's still time to prepare. Choose or update your software, set up authentication, test in the test environment, and validate your files before submission.
+
+**Not sure where to start?** Drop your XML file into [ksefuj.to](/) — check it's correct before sending it to the system. It takes 30 seconds and costs nothing.
