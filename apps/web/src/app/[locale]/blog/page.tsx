@@ -91,6 +91,7 @@ export default async function BlogListPage({ params, searchParams }: Props) {
                 <a
                   href="/feed.xml"
                   title="RSS"
+                  aria-label="RSS"
                   className="shrink-0 text-slate-400 hover:text-violet-500 transition-colors"
                 >
                   <svg
