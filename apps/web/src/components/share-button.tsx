@@ -33,6 +33,9 @@ export function ShareButton({ title, locale }: ShareButtonProps) {
     try {
       await navigator.clipboard.writeText(window.location.href);
       setCopied(true);
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
       timerRef.current = setTimeout(() => setCopied(false), 2000);
       track("content_link_copied", { locale });
     } catch {

@@ -193,18 +193,12 @@
       "metaTitle": "Guides",
       "metaDescription": "Step-by-step guides about KSeF and e-invoicing for sole traders and businesses."
     },
-    "audience": {
-      "jdg": "Sole trader",
-      "accountant": "Accountant",
-      "developer": "Developer"
-    },
     "layout": {
       "backToBlog": "Blog",
       "backToDocs": "Documentation",
       "backToGuides": "Guides",
       "readingTime": "{minutes} min read",
       "lastVerified": "Last verified: {date}",
-      "guideAudience": "Who it's for",
       "guideTime": "Time",
       "guideLevel": "Level",
       "tableOfContents": "Table of contents",

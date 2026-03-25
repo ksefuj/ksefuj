@@ -26,6 +26,9 @@ export function CopyButton({ text }: CopyButtonProps) {
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
       timerRef.current = setTimeout(() => setCopied(false), 1500);
       track("code_copied");
     } catch {

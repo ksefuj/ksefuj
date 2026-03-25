@@ -13,7 +13,6 @@ export interface Frontmatter {
   locale: "pl" | "en" | "uk";
   slug: string;
   tags?: string[];
-  audience?: string[];
   sources?: Array<{ label: string; url: string }>;
   seo?: {
     canonical?: string;
@@ -157,11 +156,16 @@ export function buildContentLocalePaths(
 
 /** Normalize a heading text string to a URL-safe anchor id. */
 export function slugifyHeading(text: string): string {
-  return text
+  // Decompose combined characters so diacritics can be stripped (e.g. "ą" → "a" + combining ogonek)
+  const withoutDiacritics = text.normalize("NFD").replace(/\p{M}+/gu, "");
+  const slug = withoutDiacritics
     .toLowerCase()
-    .replace(/[^\w\s-]/g, "")
+    .replace(/[^\p{L}\p{N}\s-]/gu, "")
+    .trim()
     .replace(/\s+/g, "-")
-    .replace(/-+/g, "-");
+    .replace(/-+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  return slug || "section";
 }
 
 /**
