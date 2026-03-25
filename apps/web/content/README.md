@@ -68,7 +68,6 @@ section: blog
 locale: pl
 slug: "wprowadzenie-do-ksef"
 tags: [ksef, e-faktura, jdg]
-audience: [jdg, accountant]
 translations:
   en: "introduction-to-ksef"
 seo:
@@ -88,8 +87,7 @@ seo:
 | `section`       | Yes      | Must be exactly one of: `blog`, `guides`, `docs`, `faq`. Must match the directory.                                                                                                                  |
 | `locale`        | Yes      | Must be exactly one of: `pl`, `en`, `uk`. Must match the directory.                                                                                                                                 |
 | `slug`          | Yes      | URL-safe identifier. Must match the filename (without `.mdx`). Use hyphens, no spaces, no Polish characters.                                                                                        |
-| `tags`          | No       | List of lowercase keyword tags. Displayed as badges on the post.                                                                                                                                    |
-| `audience`      | No       | Who the content is for. Valid values: `jdg`, `accountant`, `developer`. Displayed as badges in guides.                                                                                              |
+| `tags`          | No       | List of keyword tags. Displayed as badges on the post.                                                                                                                                              |
 | `translations`  | No       | Maps locale codes to the slug of the same content in that language. Enables the language switcher to link between translations.                                                                     |
 | `seo.canonical` | No       | Canonical URL path (without domain). Defaults to the natural URL if omitted.                                                                                                                        |
 | `seo.ogImage`   | No       | Path to the Open Graph image for social sharing previews. Images are **not generated automatically** — you would need to place the file manually under `apps/web/public/og/`. Safe to omit for now. |
@@ -108,9 +106,6 @@ translations:
   en: "introduction-to-ksef"
   # uk not listed — no Ukrainian translation exists yet
 ```
-
-**`audience`** — only used in `guides`. Rendered as audience badges in the guide header card. Skip
-for blog, docs, and faq.
 
 **`updated`** — only used in `docs`. Shown as the "Last verified" badge. Update it whenever you make
 a significant factual change to a doc.

@@ -193,21 +193,16 @@
       "metaTitle": "Przewodniki",
       "metaDescription": "Przewodniki krok po kroku o KSeF i fakturach elektronicznych dla JDG i firm."
     },
-    "audience": {
-      "jdg": "JDG",
-      "accountant": "Księgowy",
-      "developer": "Developer"
-    },
     "layout": {
       "backToBlog": "Blog",
       "backToDocs": "Dokumentacja",
       "backToGuides": "Przewodniki",
       "readingTime": "{minutes} min czytania",
       "lastVerified": "Ostatnia weryfikacja: {date}",
-      "guideAudience": "Dla kogo",
       "guideTime": "Czas",
       "guideLevel": "Poziom",
-      "tableOfContents": "Spis treści"
+      "tableOfContents": "Spis treści",
+      "sources": "Źródła"
     },
     "mdx": {
       "copy": "Kopiuj",

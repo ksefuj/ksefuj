@@ -1,11 +1,10 @@
-import { slugifyHeading } from "./utils";
-
 /**
  * Rehype plugin that adds `id` attributes to h2/h3 headings
  * so the TOC anchor links work correctly.
  *
  * Uses generic unist node types to avoid a hard dependency on @types/hast.
  */
+import { slugifyHeading } from "./content";
 
 interface UnistNode {
   type: string;

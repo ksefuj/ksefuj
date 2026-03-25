@@ -117,6 +117,13 @@ claims about KSeF, tax law, invoice requirements, or MF policy.
 7. **Omissions** — flag important caveats the content leaves out that could mislead users.
 8. **Stale information** — flag anything that may have been true for KSeF 1.0 / FA(2) but changed in
    KSeF 2.0 / FA(3).
+9. **Source URL existence** — for every URL in `sources` frontmatter and every `<Source href="...">`
+   in the body: fetch the URL and confirm it resolves (not 404, not redirect to homepage). Flag any
+   empty `url: ""` as 🟡 FLAG — missing source URL.
+10. **Source URL legitimacy** — confirm the document at the URL actually supports the claim it is
+    cited for. A link to isap.sejm.gov.pl is not sufficient if the article at that URL is a
+    different act, a different year, or does not contain the cited provision. Quote the relevant
+    passage or section number from the linked document as evidence.
 
 **Output format:**
 

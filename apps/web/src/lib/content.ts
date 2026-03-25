@@ -1,7 +1,6 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { slugifyHeading } from "./utils";
 
 const CONTENT_DIR = path.join(process.cwd(), "content");
 
@@ -14,7 +13,6 @@ export interface Frontmatter {
   locale: "pl" | "en" | "uk";
   slug: string;
   tags?: string[];
-  audience?: string[];
   sources?: Array<{ label: string; url: string }>;
   seo?: {
     canonical?: string;
@@ -30,11 +28,11 @@ export interface ContentItem {
   readingTime: number;
 }
 
-/** Estimate reading time from word count (~200 wpm for Polish) */
+/** Estimate reading time from word count (~180 wpm for Polish) */
 export function estimateReadingTime(content: string): number {
   const trimmed = content.trim();
   const wordCount = trimmed ? trimmed.split(/\s+/).length : 0;
-  return Math.max(1, Math.ceil(wordCount / 200));
+  return Math.max(1, Math.ceil(wordCount / 180));
 }
 
 /**
@@ -139,6 +137,34 @@ export function buildContentPath(locale: string, section: string, slug: string):
 }
 
 /**
+ * Build hreflang alternates for Next.js Metadata from a content page's
+ * frontmatter translations map. Only includes locales that have a translation.
+ * Adds x-default pointing to the Polish (primary) version.
+ */
+export function buildHreflangAlternates(
+  section: string,
+  translations: Frontmatter["translations"],
+): Record<string, string> {
+  const alternates: Record<string, string> = {};
+
+  if (translations?.pl) {
+    alternates["pl"] = buildContentPath("pl", section, translations.pl);
+  }
+  if (translations?.en) {
+    alternates["en"] = buildContentPath("en", section, translations.en);
+  }
+  if (translations?.uk) {
+    alternates["uk"] = buildContentPath("uk", section, translations.uk);
+  }
+
+  if (alternates["pl"]) {
+    alternates["x-default"] = alternates["pl"];
+  }
+
+  return alternates;
+}
+
+/**
  * Build locale → path map for the language picker on a content detail page.
  * Uses the frontmatter `translations` map to find the correct slug per locale.
  * Falls back to the current slug (which will render with a translation banner).
@@ -154,6 +180,20 @@ export function buildContentLocalePaths(
       return [loc, `/${section}/${targetSlug}`];
     }),
   );
+}
+
+/** Normalize a heading text string to a URL-safe anchor id. */
+export function slugifyHeading(text: string): string {
+  // Decompose combined characters so diacritics can be stripped (e.g. "ą" → "a" + combining ogonek)
+  const withoutDiacritics = text.normalize("NFD").replace(/\p{M}+/gu, "");
+  const slug = withoutDiacritics
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}\s-]/gu, "")
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  return slug || "section";
 }
 
 /**

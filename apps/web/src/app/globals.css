@@ -231,7 +231,7 @@ body {
 }
 
 .mdx-content table {
-  @apply w-full text-sm my-4;
+  @apply w-full text-sm;
 }
 
 .mdx-content thead {
@@ -244,4 +244,12 @@ body {
 
 .mdx-content td {
   @apply px-4 py-2.5 border-b border-slate-100;
+}
+
+/* Prevent prose paragraph margins from adding extra space inside admonition boxes */
+.mdx-content .admonition-body > p:first-child {
+  margin-top: 0;
+}
+.mdx-content .admonition-body > p:last-child {
+  margin-bottom: 0;
 }

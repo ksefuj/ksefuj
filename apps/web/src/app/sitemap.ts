@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { routing } from "@/i18n/routing";
-import { listSlugs } from "@/lib/content";
+import { listContentItems } from "@/lib/content";
 
 const BASE_URL = "https://ksefuj.to";
 
@@ -68,12 +68,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Dynamic content pages
   for (const [locale, sections] of Object.entries(contentSections)) {
     for (const { section, urlPrefix } of sections) {
-      const slugs = await listSlugs(locale, section);
-      for (const slug of slugs) {
+      const items = await listContentItems(locale, section);
+      for (const item of items) {
         entries.push({
-          url: `${BASE_URL}${urlPrefix}/${slug}`,
+          url: `${BASE_URL}${urlPrefix}/${item.frontmatter.slug}`,
           changeFrequency: "monthly",
           priority: 0.6,
+          lastModified: item.frontmatter.updated ?? item.frontmatter.date,
         });
       }
     }
