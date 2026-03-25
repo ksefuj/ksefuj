@@ -79,14 +79,8 @@ export default async function FaqPage({ params }: Props) {
     items.map(async (item) => {
       const { content } = await compileMDXContent({ source: item.content });
       return (
-        <div key={item.frontmatter.slug}>
-          <div className="prose prose-slate max-w-none mdx-content">{content}</div>
-          <ContributeFooter
-            locale={locale}
-            section="faq"
-            slug={item.frontmatter.slug as string}
-            contentLocale={item.frontmatter.locale as string}
-          />
+        <div key={item.frontmatter.slug} className="prose prose-slate max-w-none mdx-content">
+          {content}
         </div>
       );
     }),
@@ -117,6 +111,13 @@ export default async function FaqPage({ params }: Props) {
             ) : (
               <p className="text-slate-500">{t("empty")}</p>
             )}
+            <ContributeFooter
+              locale={locale}
+              section="faq"
+              slug=""
+              contentLocale={locale}
+              editUrl={`https://github.com/ksefuj/ksefuj/tree/main/apps/web/content/${locale}/faq`}
+            />
           </div>
         </SectionContainer>
       </main>
