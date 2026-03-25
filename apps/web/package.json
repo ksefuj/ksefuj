@@ -5,10 +5,7 @@
   "type": "module",
   "license": "Apache-2.0",
   "scripts": {
-    "setup-content": "tsx ../../scripts/setup-content.ts",
-    "predev": "tsx ../../scripts/setup-content.ts",
     "dev": "next dev",
-    "prebuild": "tsx ../../scripts/setup-content.ts",
     "build": "cd ../.. && pnpm --filter @ksefuj/validator build && cd apps/web && next build",
     "start": "next start",
     "lint": "next lint",
