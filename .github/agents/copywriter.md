@@ -161,9 +161,14 @@ When NOT to invoke:
 Workflow for blog posts:
 
 1. Draft the post.
-2. Pass draft to `constitutional-judge` for claim-by-claim review.
-3. Fix any 🔴 BLOCK issues. Address 🟡 FLAG items (add source or reframe as interpretation).
-4. Only publish after constitutional review passes.
+2. **Research and fill all source URLs.** Every entry in the `sources` frontmatter array and every
+   `<Source>` component in the body must have a real, working URL — never leave `url: ""`. Search
+   isap.sejm.gov.pl for legal acts and regulations, ksef.podatki.gov.pl for MF guidance, and
+   crd.gov.pl for schemas. Do not invent URLs — if you cannot find one, omit the source or mark it
+   explicitly for follow-up.
+3. Pass draft (with URLs) to `constitutional-judge` for claim-by-claim review.
+4. Fix any 🔴 BLOCK issues. Address 🟡 FLAG items (add source or reframe as interpretation).
+5. Only publish after constitutional review passes.
 
 ## Content System (Blog / Guides / Docs / FAQ)
 
