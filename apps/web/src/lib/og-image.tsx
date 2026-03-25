@@ -11,12 +11,18 @@ interface OgImageProps {
 
 // Load the pre-generated SVG logo (JetBrains Mono text converted to paths — no font needed at runtime).
 // Regenerate with: node apps/web/scripts/generate-logo-svg.mjs
+//
+// Lazy-loaded: reading at module level would crash the serverless function bundle on first import
+// because @vercel/nft cannot trace dynamic process.cwd() paths. The file is explicitly included
+// via outputFileTracingIncludes in next.config.js.
+let _logoDataUrl: string | undefined;
 function getLogoDataUrl() {
-  const svg = readFileSync(join(process.cwd(), "public/logo-og.svg"));
-  return `data:image/svg+xml;base64,${svg.toString("base64")}`;
+  if (!_logoDataUrl) {
+    const svg = readFileSync(join(process.cwd(), "public/logo-og.svg"));
+    _logoDataUrl = `data:image/svg+xml;base64,${svg.toString("base64")}`;
+  }
+  return _logoDataUrl;
 }
-
-const LOGO_DATA_URL = getLogoDataUrl();
 
 export function ogLayout({ title }: OgImageProps): ReactElement {
   const titleSize = title.length > 50 ? "56px" : "72px";
@@ -58,7 +64,7 @@ export function ogLayout({ title }: OgImageProps): ReactElement {
       </div>
 
       <img
-        src={LOGO_DATA_URL}
+        src={getLogoDataUrl()}
         width={263}
         height={60}
         alt="ksefuj.to"

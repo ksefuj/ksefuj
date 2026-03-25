@@ -4,6 +4,12 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Ensure logo-og.svg is bundled into all serverless functions.
+  // @vercel/nft cannot trace dynamic readFileSync(join(process.cwd(), ...)) paths,
+  // so we must declare the file explicitly.
+  outputFileTracingIncludes: {
+    "/**": ["./public/logo-og.svg"],
+  },
   async redirects() {
     return [
       { source: "/przewodniki", destination: "/guides", permanent: true },
