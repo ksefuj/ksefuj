@@ -210,7 +210,7 @@ bundle if changes are detected. Run this:
 - [x] Blog (first article live: KSeF od 1 kwietnia 2026)
 - [x] Sitemap, OG images, hreflang, Twitter cards across all content
 - [x] Behavioral analytics
-- [ ] RSS feed
+- [x] RSS feed
 - [ ] Global validation counter (Vercel KV)
 - [ ] Publish @ksefuj/validator to npm registry
 
