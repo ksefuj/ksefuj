@@ -39,14 +39,26 @@
   ],
   "keywords": [
     "ksef",
-    "fa3",
-    "e-faktura",
-    "xml",
+    "faktura",
+    "invoice",
     "validator",
+    "xml",
+    "xsd",
     "poland",
-    "invoice"
+    "e-invoicing",
+    "fa3"
   ],
+  "author": "ksefuj contributors",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ksefuj/ksefuj.git",
+    "directory": "packages/validator"
+  },
+  "homepage": "https://ksefuj.to",
+  "bugs": {
+    "url": "https://github.com/ksefuj/ksefuj/issues"
+  },
   "devDependencies": {
     "@types/node": "^25.4.0",
     "typescript": "^5.7.0"

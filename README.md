@@ -1,5 +1,9 @@
 # ksefuj
 
+[![CI](https://github.com/ksefuj/ksefuj/actions/workflows/ci.yml/badge.svg)](https://github.com/ksefuj/ksefuj/actions/workflows/ci.yml)
+[![npm version](https://img.shields.io/npm/v/@ksefuj/validator)](https://www.npmjs.com/package/@ksefuj/validator)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue)](LICENSE)
+
 Open source toolkit for Polish KSeF FA(3) e-invoicing.
 
 - **100% free forever** — no limits, no signup, no hidden costs

@@ -44,7 +44,7 @@ officially representing the community in public spaces.
 ## Enforcement
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the community
-leaders responsible for enforcement at [INSERT CONTACT EMAIL].
+leaders responsible for enforcement at hej@ksefuj.to.
 
 All complaints will be reviewed and investigated promptly and fairly.
 
