@@ -28,11 +28,11 @@ export interface ContentItem {
   readingTime: number;
 }
 
-/** Estimate reading time from word count (~200 wpm for Polish) */
+/** Estimate reading time from word count (~180 wpm for Polish) */
 export function estimateReadingTime(content: string): number {
   const trimmed = content.trim();
   const wordCount = trimmed ? trimmed.split(/\s+/).length : 0;
-  return Math.max(1, Math.ceil(wordCount / 200));
+  return Math.max(1, Math.ceil(wordCount / 180));
 }
 
 /**
@@ -134,6 +134,34 @@ export async function getContentItemWithFallback(
  */
 export function buildContentPath(locale: string, section: string, slug: string): string {
   return locale === "pl" ? `/${section}/${slug}` : `/${locale}/${section}/${slug}`;
+}
+
+/**
+ * Build hreflang alternates for Next.js Metadata from a content page's
+ * frontmatter translations map. Only includes locales that have a translation.
+ * Adds x-default pointing to the Polish (primary) version.
+ */
+export function buildHreflangAlternates(
+  section: string,
+  translations: Frontmatter["translations"],
+): Record<string, string> {
+  const alternates: Record<string, string> = {};
+
+  if (translations?.pl) {
+    alternates["pl"] = buildContentPath("pl", section, translations.pl);
+  }
+  if (translations?.en) {
+    alternates["en"] = buildContentPath("en", section, translations.en);
+  }
+  if (translations?.uk) {
+    alternates["uk"] = buildContentPath("uk", section, translations.uk);
+  }
+
+  if (alternates["pl"]) {
+    alternates["x-default"] = alternates["pl"];
+  }
+
+  return alternates;
 }
 
 /**

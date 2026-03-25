@@ -8,6 +8,7 @@ import { TranslationBanner } from "@/components/translation-banner";
 import {
   buildContentLocalePaths,
   buildContentPath,
+  buildHreflangAlternates,
   extractHeadings,
   getContentItemWithFallback,
   listSlugs,
@@ -34,15 +35,31 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const { item } = result;
   const canonical = item.frontmatter.seo?.canonical ?? buildContentPath(locale, "guides", slug);
+  const hreflang = buildHreflangAlternates("guides", item.frontmatter.translations);
+  const ogLocaleMap: Record<string, string> = { en: "en_US", uk: "uk_UA" };
+  const ogLocale = ogLocaleMap[locale] ?? "pl_PL";
 
   return {
-    title: item.frontmatter.title,
+    title: `${item.frontmatter.title} — ksefuj.to`,
     description: item.frontmatter.description,
-    alternates: { canonical },
+    alternates: {
+      canonical,
+      ...(Object.keys(hreflang).length > 0 ? { languages: hreflang } : {}),
+    },
     openGraph: {
       title: item.frontmatter.title,
       description: item.frontmatter.description,
+      type: "article",
+      url: `https://ksefuj.to${buildContentPath(locale, "guides", slug)}`,
+      locale: ogLocale,
+      publishedTime: item.frontmatter.date,
+      modifiedTime: item.frontmatter.updated,
       ...(item.frontmatter.seo?.ogImage ? { images: [{ url: item.frontmatter.seo.ogImage }] } : {}),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: item.frontmatter.title,
+      description: item.frontmatter.description,
     },
   };
 }
@@ -57,7 +74,7 @@ export default async function GuidePage({ params }: Props) {
   const { item, contentLocale } = result;
   const headings = extractHeadings(item.content);
   const urlPath = buildContentPath(locale, "guides", slug);
-  const schema = buildHowToSchema(item.frontmatter, urlPath);
+  const schema = buildHowToSchema(item.frontmatter, urlPath, locale);
   const localePaths = buildContentLocalePaths("guides", slug, item.frontmatter.translations);
 
   const { content } = await compileMDXContent({ source: item.content });
