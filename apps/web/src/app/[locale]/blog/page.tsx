@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { SiteHeader } from "@/components/site-header";
@@ -6,10 +7,14 @@ import { SiteFooter } from "@/components/site-footer";
 import { SectionContainer } from "@/components/section-container";
 import { Badge } from "@/components/badge";
 import { LanguagePicker } from "../language-picker";
-import { buildContentPath, listContentItems } from "@/lib/content";
+import { buildContentPath, listContentItemsUnified } from "@/lib/content";
+import { BlogFilter } from "./blog-filter";
+
+const FILTER_TRANSLATED = "translated" as const;
 
 interface Props {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{ filter?: string }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -31,12 +36,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function BlogListPage({ params }: Props) {
-  const { locale } = await params;
-  const [posts, t] = await Promise.all([
-    listContentItems(locale, "blog"),
+export default async function BlogListPage({ params, searchParams }: Props) {
+  const [{ locale }, { filter }] = await Promise.all([params, searchParams]);
+  const [allPosts, t] = await Promise.all([
+    listContentItemsUnified(locale, "blog"),
     getTranslations({ locale, namespace: "content" }),
   ]);
+
+  const activeFilter = filter === FILTER_TRANSLATED ? FILTER_TRANSLATED : "all";
+  const posts =
+    activeFilter === FILTER_TRANSLATED
+      ? allPosts.filter((p) => p.contentLocale === locale)
+      : allPosts;
 
   const dateFormatted = (dateStr: string) =>
     new Date(dateStr).toLocaleDateString(locale, {
@@ -58,12 +69,21 @@ export default async function BlogListPage({ params }: Props) {
               <p className="text-lg text-slate-600">{t("blog.description")}</p>
             </div>
 
+            {locale !== "pl" && (
+              <Suspense>
+                <BlogFilter
+                  labelAll={t("blog.filter.all")}
+                  labelTranslatedOnly={t("blog.filter.translatedOnly")}
+                />
+              </Suspense>
+            )}
+
             {posts.length === 0 ? (
               <p className="text-slate-500">{t("blog.empty")}</p>
             ) : (
               <div className="grid gap-6 sm:grid-cols-2">
                 {posts.map((post) => {
-                  const href = buildContentPath(locale, "blog", post.frontmatter.slug);
+                  const href = buildContentPath(post.contentLocale, "blog", post.frontmatter.slug);
                   return (
                     <Link
                       key={post.frontmatter.slug}
@@ -76,6 +96,11 @@ export default async function BlogListPage({ params }: Props) {
                             {tag}
                           </Badge>
                         ))}
+                        {post.contentLocale !== locale && (
+                          <Badge variant="neutral" className="ml-auto">
+                            {t("blog.languageBadge")}
+                          </Badge>
+                        )}
                       </div>
                       <h2 className="text-xl font-bold text-slate-900 group-hover:text-violet-700 transition-colors leading-snug mb-2">
                         {post.frontmatter.title}

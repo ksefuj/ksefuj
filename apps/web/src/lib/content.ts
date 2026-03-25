@@ -28,6 +28,11 @@ export interface ContentItem {
   readingTime: number;
 }
 
+export interface ContentItemWithLocale extends ContentItem {
+  /** The actual language of the content returned (may differ from the requested locale). */
+  contentLocale: string;
+}
+
 /** Estimate reading time from word count (~180 wpm for Polish) */
 export function estimateReadingTime(content: string): number {
   const trimmed = content.trim();
@@ -84,6 +89,44 @@ export async function listContentItems(locale: string, section: string): Promise
   return items.sort(
     (a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime(),
   );
+}
+
+/**
+ * Unified blog feed driven by the PL canonical content directory.
+ *
+ * For every PL post:
+ *  - If a translated slug is declared in `frontmatter.translations[locale]` and the
+ *    corresponding file exists, that translated item is returned with `contentLocale: locale`.
+ *  - Otherwise the PL item is returned with `contentLocale: "pl"`.
+ *
+ * Sort order follows the PL post dates (newest first) regardless of locale.
+ */
+export async function listContentItemsUnified(
+  locale: string,
+  section: string,
+): Promise<ContentItemWithLocale[]> {
+  const plItems = await listContentItems("pl", section);
+
+  const results: ContentItemWithLocale[] = await Promise.all(
+    plItems.map(async (plItem): Promise<ContentItemWithLocale> => {
+      if (locale === "pl") {
+        return { ...plItem, contentLocale: "pl" };
+      }
+
+      const translatedSlug = plItem.frontmatter.translations?.[locale as "pl" | "en" | "uk"];
+
+      if (translatedSlug) {
+        const translated = await getContentItem(locale, section, translatedSlug);
+        if (translated) {
+          return { ...translated, contentLocale: locale };
+        }
+      }
+
+      return { ...plItem, contentLocale: "pl" };
+    }),
+  );
+
+  return results;
 }
 
 /**

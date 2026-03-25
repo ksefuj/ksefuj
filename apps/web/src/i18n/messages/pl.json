@@ -171,7 +171,12 @@
       "description": "Artykuły o KSeF, e-fakturach i schemacie FA(3).",
       "empty": "Wkrótce pojawią się nowe artykuły.",
       "readingTime": "{minutes} min czytania",
-      "metaDescription": "Artykuły o KSeF, FA(3) i e-fakturach dla JDG i małych firm."
+      "metaDescription": "Artykuły o KSeF, FA(3) i e-fakturach dla JDG i małych firm.",
+      "languageBadge": "PL",
+      "filter": {
+        "all": "Wszystkie",
+        "translatedOnly": "Tylko przetłumaczone"
+      }
     },
     "docs": {
       "title": "Dokumentacja",
