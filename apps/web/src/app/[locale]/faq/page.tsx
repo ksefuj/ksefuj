@@ -11,6 +11,19 @@ interface Props {
   params: Promise<{ locale: string }>;
 }
 
+function extractFaqItems(content: string): Array<{ question: string; answer: string }> {
+  const regex = /<Question q="([^"]+)">([\s\S]*?)<\/Question>/g;
+  const items: Array<{ question: string; answer: string }> = [];
+  let match;
+  while ((match = regex.exec(content)) !== null) {
+    items.push({
+      question: match[1].trim(),
+      answer: match[2].replace(/\s+/g, " ").trim(),
+    });
+  }
+  return items;
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const [tMeta, tContent] = await Promise.all([
@@ -18,11 +31,26 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     getTranslations({ locale, namespace: "content.faq" }),
   ]);
 
+  const canonical = locale === "pl" ? "/faq" : `/${locale}/faq`;
+  const title = `${tContent("title")} — ${tMeta("title")}`;
+  const description = tContent("metaDescription");
+
   return {
-    title: `${tContent("title")} — ${tMeta("title")}`,
-    description: tContent("metaDescription"),
+    title,
+    description,
     alternates: {
-      canonical: locale === "pl" ? "/faq" : `/${locale}/faq`,
+      canonical,
+      languages: {
+        pl: "/faq",
+        en: "/en/faq",
+        uk: "/uk/faq",
+      },
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      type: "website",
     },
   };
 }
@@ -33,6 +61,18 @@ export default async function FaqPage({ params }: Props) {
     listContentItems(locale, "faq"),
     getTranslations({ locale, namespace: "content.faq" }),
   ]);
+
+  const faqItems = items.flatMap((item) => extractFaqItems(item.content));
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqItems.map(({ question, answer }) => ({
+      "@type": "Question",
+      name: question,
+      acceptedAnswer: { "@type": "Answer", text: answer },
+    })),
+  };
 
   const compiled = await Promise.all(
     items.map(async (item) => {
@@ -47,6 +87,14 @@ export default async function FaqPage({ params }: Props) {
 
   return (
     <>
+      {faqItems.length > 0 && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(faqSchema).replace(/</g, "\\u003c"),
+          }}
+        />
+      )}
       <SiteHeader locale={locale} languagePicker={<LanguagePicker currentLocale={locale} />} />
       <main className="min-h-screen">
         <SectionContainer>
