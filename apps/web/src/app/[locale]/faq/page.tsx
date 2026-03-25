@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SectionContainer } from "@/components/section-container";
+import { ContributeFooter } from "@/components/contribute-footer";
 import { LanguagePicker } from "../language-picker";
 import { listContentItems } from "@/lib/content";
 import { compileMDXContent } from "@/lib/compile-mdx";
@@ -78,8 +79,14 @@ export default async function FaqPage({ params }: Props) {
     items.map(async (item) => {
       const { content } = await compileMDXContent({ source: item.content });
       return (
-        <div key={item.frontmatter.slug} className="prose prose-slate max-w-none mdx-content">
-          {content}
+        <div key={item.frontmatter.slug}>
+          <div className="prose prose-slate max-w-none mdx-content">{content}</div>
+          <ContributeFooter
+            locale={locale}
+            section="faq"
+            slug={item.frontmatter.slug as string}
+            contentLocale={item.frontmatter.locale as string}
+          />
         </div>
       );
     }),
