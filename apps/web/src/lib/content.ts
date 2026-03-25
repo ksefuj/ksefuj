@@ -41,6 +41,24 @@ export function estimateReadingTime(content: string): number {
 }
 
 /**
+ * Normalize frontmatter from gray-matter output.
+ * gray-matter parses unquoted YAML dates (e.g. `date: 2026-03-25`) as JS Date
+ * objects. Converting them to ISO date strings prevents timezone-dependent
+ * hydration mismatches when React serializes the value into a DOM attribute
+ * like `dateTime` on the server (UTC) vs. the client (local timezone).
+ */
+function normalizeFrontmatter(data: Record<string, unknown>): Frontmatter {
+  const normalized = { ...data };
+  if (normalized.date instanceof Date) {
+    normalized.date = normalized.date.toISOString().split("T")[0];
+  }
+  if (normalized.updated instanceof Date) {
+    normalized.updated = (normalized.updated as Date).toISOString().split("T")[0];
+  }
+  return normalized as unknown as Frontmatter;
+}
+
+/**
  * Read and parse a single MDX file.
  * Returns null if the file does not exist.
  */
@@ -58,7 +76,7 @@ export async function getContentItem(
   const { data, content } = matter(raw);
 
   return {
-    frontmatter: data as Frontmatter,
+    frontmatter: normalizeFrontmatter(data),
     content,
     readingTime: estimateReadingTime(content),
   };
@@ -80,7 +98,7 @@ export async function listContentItems(locale: string, section: string): Promise
     const raw = fs.readFileSync(path.join(dirPath, file), "utf8");
     const { data, content } = matter(raw);
     return {
-      frontmatter: data as Frontmatter,
+      frontmatter: normalizeFrontmatter(data),
       content,
       readingTime: estimateReadingTime(content),
     };
