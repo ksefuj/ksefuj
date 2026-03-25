@@ -155,6 +155,15 @@ export function buildContentLocalePaths(
   );
 }
 
+/** Normalize a heading text string to a URL-safe anchor id. */
+export function slugifyHeading(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-");
+}
+
 /**
  * Extract headings from MDX content for table of contents.
  * Returns h2/h3 headings with their text and id.
@@ -171,11 +180,7 @@ export function extractHeadings(
   while ((match = headingRegex.exec(content)) !== null) {
     const level = match[1].length as 2 | 3;
     const text = match[2].trim();
-    const base = text
-      .toLowerCase()
-      .replace(/[^\w\s-]/g, "")
-      .replace(/\s+/g, "-")
-      .replace(/-+/g, "-");
+    const base = slugifyHeading(text);
     const count = seen.get(base) ?? 0;
     seen.set(base, count + 1);
     const id = count === 0 ? base : `${base}-${count}`;

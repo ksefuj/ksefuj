@@ -5,7 +5,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SectionContainer } from "@/components/section-container";
 import { LanguagePicker } from "../language-picker";
-import { listContentItems } from "@/lib/content";
+import { buildContentPath, listContentItems } from "@/lib/content";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -52,8 +52,7 @@ export default async function DocsListPage({ params }: Props) {
             ) : (
               <div className="divide-y divide-slate-100">
                 {docs.map((doc) => {
-                  const p = locale === "pl" ? "" : `/${locale}`;
-                  const href = `${p}/docs/${doc.frontmatter.slug}`;
+                  const href = buildContentPath(locale, "docs", doc.frontmatter.slug);
                   return (
                     <Link
                       key={doc.frontmatter.slug}

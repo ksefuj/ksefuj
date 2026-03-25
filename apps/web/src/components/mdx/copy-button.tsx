@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { track } from "@vercel/analytics";
 
@@ -11,12 +11,22 @@ interface CopyButtonProps {
 export function CopyButton({ text }: CopyButtonProps) {
   const t = useTranslations("content.mdx");
   const [copied, setCopied] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(
+    () => () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+    },
+    [],
+  );
 
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      timerRef.current = setTimeout(() => setCopied(false), 1500);
       track("code_copied");
     } catch {
       // clipboard API unavailable (e.g. non-secure context) — silently ignore

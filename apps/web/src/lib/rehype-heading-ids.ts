@@ -4,6 +4,7 @@
  *
  * Uses generic unist node types to avoid a hard dependency on @types/hast.
  */
+import { slugifyHeading } from "./content";
 
 interface UnistNode {
   type: string;
@@ -48,11 +49,7 @@ export function rehypeAddHeadingIds() {
         return;
       }
 
-      const base = text
-        .toLowerCase()
-        .replace(/[^\w\s-]/g, "")
-        .replace(/\s+/g, "-")
-        .replace(/-+/g, "-");
+      const base = slugifyHeading(text);
       const count = seen.get(base) ?? 0;
       seen.set(base, count + 1);
       const id = count === 0 ? base : `${base}-${count}`;

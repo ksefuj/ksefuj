@@ -5,7 +5,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SectionContainer } from "@/components/section-container";
 import { LanguagePicker } from "../language-picker";
-import { listContentItems } from "@/lib/content";
+import { buildContentPath, listContentItems } from "@/lib/content";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -52,8 +52,7 @@ export default async function GuidesListPage({ params }: Props) {
             ) : (
               <div className="grid gap-6 sm:grid-cols-2">
                 {guides.map((guide) => {
-                  const p = locale === "pl" ? "" : `/${locale}`;
-                  const href = `${p}/guides/${guide.frontmatter.slug}`;
+                  const href = buildContentPath(locale, "guides", guide.frontmatter.slug);
                   return (
                     <Link
                       key={guide.frontmatter.slug}
