@@ -45,8 +45,10 @@ translations:
 
 <Question q="What is a KSeF number?">
   A KSeF number is a unique invoice identifier assigned by the MF system upon successful
-  registration of the document. This number is required when issuing a corrective invoice — the
-  correction must reference the KSeF number of the original invoice.
+  registration of the document. This number is required when correcting an invoice that was issued
+  through KSeF — the correction must reference the KSeF number of the original invoice, otherwise it
+  will be rejected. If the original invoice was issued outside KSeF (before the system was
+  introduced), the NrKSeFN marker is used instead.
 </Question>
 
 <Question q="What is UPO?">
