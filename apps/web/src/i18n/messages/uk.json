@@ -207,7 +207,8 @@
       "guideAudience": "Для кого",
       "guideTime": "Час",
       "guideLevel": "Рівень",
-      "tableOfContents": "Зміст"
+      "tableOfContents": "Зміст",
+      "sources": "Джерела"
     },
     "mdx": {
       "copy": "Копіювати",

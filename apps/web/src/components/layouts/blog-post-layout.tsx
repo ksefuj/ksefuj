@@ -81,6 +81,30 @@ export async function BlogPostLayout({
 
           <div className="prose prose-slate max-w-none mdx-content">{children}</div>
 
+          {frontmatter.sources && frontmatter.sources.filter((s) => s.url).length > 0 && (
+            <div className="mt-10 pt-6 border-t border-slate-100">
+              <h2 className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-3">
+                {t("layout.sources")}
+              </h2>
+              <ul className="space-y-1.5">
+                {frontmatter.sources
+                  .filter((s) => s.url)
+                  .map((source) => (
+                    <li key={source.url} className="text-sm">
+                      <a
+                        href={source.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-slate-500 hover:text-violet-600 transition-colors"
+                      >
+                        {source.label}
+                      </a>
+                    </li>
+                  ))}
+              </ul>
+            </div>
+          )}
+
           <ContributeFooter
             locale={locale}
             section={frontmatter.section}

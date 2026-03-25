@@ -207,7 +207,8 @@
       "guideAudience": "Who it's for",
       "guideTime": "Time",
       "guideLevel": "Level",
-      "tableOfContents": "Table of contents"
+      "tableOfContents": "Table of contents",
+      "sources": "Sources"
     },
     "mdx": {
       "copy": "Copy",
