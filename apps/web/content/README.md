@@ -67,7 +67,7 @@ updated: 2026-04-01
 section: blog
 locale: pl
 slug: "wprowadzenie-do-ksef"
-tags: [ksef, e-faktura, jdg]
+tags: ["KSeF", "JDG", "Freelancer"]
 translations:
   en: "introduction-to-ksef"
 seo:
