@@ -95,6 +95,10 @@ ksefuj/
 - **User-facing strings:** always in i18n locale files, never hardcoded. Polish is canonical.
 - **Commit style:** conventional commits — scopes: `validator`, `web`, `i18n`, `semantic`, `xsd`,
   `deps`, `ci`, `config`, `skill`
+- **Never commit a planning or status message.** Commits like `"Initial plan"`, `"Starting work"`,
+  `"WIP"`, or any message that describes intent rather than a code change are forbidden. Every
+  commit must describe an actual code change in the form `type(scope): description`. If you have
+  nothing to commit yet, do not commit.
 
 ## PR Review Checklist (by area)
 
