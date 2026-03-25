@@ -181,10 +181,10 @@
       "metaDescription": "Technical documentation for the ksefuj validator and FA(3) schema."
     },
     "faq": {
-      "title": "FAQ",
-      "description": "Frequently asked questions about KSeF and ksefuj.",
-      "empty": "FAQ is being prepared.",
-      "metaDescription": "Frequently asked questions about KSeF, FA(3) schema, and the ksefuj validator."
+      "title": "FAQ — KSeF Questions Answered",
+      "description": "Answers to the most common questions about KSeF — from the basics to technical details.",
+      "metaDescription": "Answers to 40+ questions about KSeF — from the basics to technical details. Everything you need to know about mandatory e-invoicing in Poland.",
+      "empty": "FAQ is being prepared."
     },
     "guides": {
       "title": "Guides",

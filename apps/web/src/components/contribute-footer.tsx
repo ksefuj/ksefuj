@@ -15,6 +15,8 @@ interface ContributeFooterProps {
    * Defaults to `locale` if not provided.
    */
   contentLocale?: string;
+  /** Override the computed edit URL (e.g. to link to a directory instead of a file). */
+  editUrl?: string;
 }
 
 const REPO = "https://github.com/ksefuj/ksefuj";
@@ -53,12 +55,19 @@ const copy: Record<
   },
 };
 
-export function ContributeFooter({ locale, section, slug, contentLocale }: ContributeFooterProps) {
+export function ContributeFooter({
+  locale,
+  section,
+  slug,
+  contentLocale,
+  editUrl: editUrlOverride,
+}: ContributeFooterProps) {
   const strings = copy[locale] ?? copy.pl;
   const fileLocale = contentLocale ?? locale;
 
   // Direct link to GitHub's editor for the specific MDX file
-  const editUrl = `${REPO}/edit/main/apps/web/content/${fileLocale}/${section}/${slug}.mdx`;
+  const editUrl =
+    editUrlOverride ?? `${REPO}/edit/main/apps/web/content/${fileLocale}/${section}/${slug}.mdx`;
   const issueUrl = `${REPO}/issues/new?labels=content&title=Feedback%3A+${encodeURIComponent(slug)}`;
 
   return (

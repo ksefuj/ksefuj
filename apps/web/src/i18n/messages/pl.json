@@ -181,10 +181,10 @@
       "metaDescription": "Dokumentacja techniczna walidatora ksefuj i schematu FA(3)."
     },
     "faq": {
-      "title": "FAQ",
-      "description": "Często zadawane pytania o KSeF i ksefuj.",
-      "empty": "FAQ jest w przygotowaniu.",
-      "metaDescription": "Często zadawane pytania o KSeF, schemat FA(3) i walidator ksefuj."
+      "title": "FAQ — Najczęstsze pytania o KSeF",
+      "description": "Odpowiedzi na najczęstsze pytania o KSeF — od podstaw po szczegóły techniczne.",
+      "metaDescription": "Odpowiedzi na 40+ pytań o KSeF — od podstaw po szczegóły techniczne. Wszystko co potrzebujesz wiedzieć o obowiązkowym e-fakturowaniu.",
+      "empty": "FAQ jest w przygotowaniu."
     },
     "guides": {
       "title": "Przewodniki",

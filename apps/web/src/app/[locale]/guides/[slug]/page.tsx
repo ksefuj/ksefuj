@@ -105,6 +105,7 @@ export default async function GuidePage({ params }: Props) {
           readingTime={item.readingTime}
           headings={headings}
           locale={locale}
+          contentLocale={contentLocale !== locale ? contentLocale : undefined}
         >
           {content}
         </GuideLayout>

@@ -4,8 +4,6 @@
 module.exports = {
   extends: ["@commitlint/config-conventional"],
   ignores: [
-    // "Initial plan" — empty commit from a previous agent run, bad message
-    (commit) => /^Initial plan(\n|$)/.test(commit),
     // docs(skill) — valid type/scope but header was 79 chars (limit is 72)
     (commit) =>
       commit.startsWith(

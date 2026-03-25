@@ -1,0 +1,52 @@
+---
+title: Validation and Errors
+description: How to check your invoice XML and what validator errors mean.
+date: 2026-03-20
+section: faq
+locale: en
+slug: validation-and-errors
+translations:
+  pl: walidacja-i-bledy
+  uk: validatsiya-ta-pomylky
+---
+
+## Validation and Errors
+
+<Question q="How do I check if my invoice is valid?">
+  Before sending your invoice to KSeF, drop the XML file on ksefuj.to — validation runs entirely in
+  your browser, data never leaves your computer. We check both FA(3) schema compliance and MF
+  semantic rules. Errors are described in plain language — you'll know exactly what to fix.
+</Question>
+
+<Question q="What does an XSD validation error mean?">
+  An XSD error means the XML file structure does not match the FA(3) schema. Common causes: missing
+  required field, wrong element order, typo in element name, or invalid date format. The ksefuj.to
+  validator describes each XSD error clearly and indicates the exact location in the file.
+</Question>
+
+<Question q="What are the most common errors in KSeF invoices?">
+  The most common errors are: missing required annotation fields (P_16, P_17, P_18, P_18A, P_23 and
+  other Adnotacje section fields), incorrect GTU format (should be GTU_01, not a separate element),
+  missing PLN currency conversions, a Polish NIP entered in the EU VAT number field instead of the
+  NIP field, and excessive decimal precision on amounts. The ksefuj.to validator detects all of
+  these automatically and suggests how to fix them.
+</Question>
+
+<Question q="Does ksefuj.to store my data?">
+  No. Your XML file never leaves the browser — all processing happens locally on your computer. We
+  have no access to your invoices, do not transmit them to any servers, and keep no content logs.
+  Invoices are sensitive data — which is why we designed ksefuj.to as a fully private tool.
+</Question>
+
+<Question q="Is ksefuj.to free?">
+  Yes — forever. The ksefuj.to validator is free with no limits, no registration, no paywall. We
+  believe basic KSeF tools should be available to everyone — especially small businesses and
+  freelancers. The full source code is publicly available on GitHub.
+</Question>
+
+<Question q="How does ksefuj.to differ from the MF validator?">
+  The MF does not provide a standalone XML validator — validation only happens when you submit an
+  invoice to KSeF, meaning you find out about errors too late. ksefuj.to fills that gap: you can
+  check your XML file before sending, without logging in and without risking invoice rejection. We
+  also check semantic rules that the XSD schema alone cannot verify.
+</Question>

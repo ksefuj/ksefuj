@@ -19,14 +19,32 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     getTranslations({ locale, namespace: "content.blog" }),
   ]);
 
+  const canonical = locale === "pl" ? "/blog" : `/${locale}/blog`;
+  const title = `${tContent("title")} — ${tMeta("title")}`;
+  const description = tContent("metaDescription");
+
   return {
-    title: `${tContent("title")} — ${tMeta("title")}`,
-    description: tContent("metaDescription"),
+    title,
+    description,
     alternates: {
-      canonical: locale === "pl" ? "/blog" : `/${locale}/blog`,
+      canonical,
+      languages: {
+        "x-default": "/blog",
+        pl: "/blog",
+        en: "/en/blog",
+        uk: "/uk/blog",
+      },
     },
     openGraph: {
+      title,
+      description,
+      url: `https://ksefuj.to${canonical}`,
       type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
     },
   };
 }

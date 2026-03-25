@@ -102,6 +102,32 @@ function extractTextContent(node: React.ReactNode): string {
   return "";
 }
 
+/** FAQ accordion item — question as `q` prop, answer as children */
+interface QuestionProps {
+  q: string;
+  children: React.ReactNode;
+}
+
+export function Question({ q, children }: QuestionProps) {
+  return (
+    <details className="group not-prose border border-slate-100 rounded-xl mb-2">
+      <summary className="flex items-center justify-between gap-4 px-5 py-4 cursor-pointer list-none text-slate-900 font-medium hover:bg-slate-50 transition-colors rounded-xl group-open:rounded-b-none">
+        <span>{q}</span>
+        <svg
+          className="w-4 h-4 shrink-0 text-slate-400 transition-transform group-open:rotate-180"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </summary>
+      <div className="px-5 pb-5 pt-2 text-sm text-slate-600 leading-relaxed">{children}</div>
+    </details>
+  );
+}
+
 /** A single row inside a <FieldTable> */
 interface FieldProps {
   name: string;

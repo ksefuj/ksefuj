@@ -1,4 +1,13 @@
-import { Field, FieldTable, Info, MdxTable, Tip, Warning, XmlExample } from "./mdx-components";
+import {
+  Field,
+  FieldTable,
+  Info,
+  MdxTable,
+  Question,
+  Tip,
+  Warning,
+  XmlExample,
+} from "./mdx-components";
 import { ExternalLink } from "./external-link";
 import { Source } from "./source";
 
@@ -10,6 +19,7 @@ export const mdxComponents: Record<string, any> = {
   Warning,
   Info,
   Tip,
+  Question,
   XmlExample,
   FieldTable,
   Field,
