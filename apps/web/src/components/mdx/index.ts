@@ -1,4 +1,13 @@
-import { Field, FieldTable, Info, MdxTable, Source, Tip, Warning, XmlExample } from "./mdx-components";
+import {
+  Field,
+  FieldTable,
+  Info,
+  MdxTable,
+  Source,
+  Tip,
+  Warning,
+  XmlExample,
+} from "./mdx-components";
 import { ExternalLink } from "./external-link";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
