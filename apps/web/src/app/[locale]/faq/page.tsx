@@ -120,7 +120,7 @@ export default async function FaqPage({ params }: Props) {
             <ContributeFooter
               locale={locale}
               section="faq"
-              slug=""
+              slug="faq"
               contentLocale={locale}
               editUrl={`https://github.com/ksefuj/ksefuj/tree/main/apps/web/content/${locale}/faq`}
             />
