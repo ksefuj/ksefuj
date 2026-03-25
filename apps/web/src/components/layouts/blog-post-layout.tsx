@@ -70,7 +70,7 @@ export async function BlogPostLayout({
               {frontmatter.title}
             </h1>
 
-            <div className="flex items-center gap-3 text-sm text-slate-500">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-slate-500">
               <time dateTime={frontmatter.date}>{dateFormatted}</time>
               <span aria-hidden>·</span>
               <span>{t("layout.readingTime", { minutes: readingTime })}</span>
