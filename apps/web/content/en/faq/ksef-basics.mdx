@@ -34,13 +34,35 @@ translations:
 <Question q="Does KSeF apply to consumer invoices (B2C)?">
   Consumer invoices (B2C) are generally subject to KSeF, with one important exception: invoices
   issued via cash registers are excluded. If you issue an invoice outside the cash register system —
-  e.g. in invoicing software — it must go through KSeF.
+  e.g. in invoicing software — it must go through KSeF. In practice, most retail invoices issued via
+  a cash register remain outside the system.
+</Question>
+
+<Question q="Does KSeF apply to till receipts with a NIP number?">
+  Till receipts with the buyer's NIP number issued via a cash register are treated as simplified
+  invoices and are not subject to KSeF. These receipts still have full legal force as proof of
+  purchase. Only regular VAT invoices issued outside the cash register system are subject to the
+  KSeF obligation.
 </Question>
 
 <Question q="What is FA(3)?">
   FA(3) is the current XML schema for structured invoices, published by the Polish Ministry of
   Finance. The number 3 indicates the third version of the format. All invoices submitted to KSeF
   must comply with this schema — any deviation results in rejection by the system.
+</Question>
+
+<Question q="What is the difference between FA(2) and FA(3)?">
+  FA(2) was the previous schema version, used in KSeF 1.0 (until the end of 2025). FA(3) introduced
+  a new XML namespace, updated fields, and expanded annotation requirements. FA(2) invoices are not
+  accepted by KSeF 2.0 — if your software was generating FA(2), confirm with your vendor that an
+  update to FA(3) has been released.
+</Question>
+
+<Question q="Can I still send PDF invoices?">
+  No — PDF is not accepted by KSeF as a tax document. The system requires a structured XML file
+  compliant with FA(3). You can still send the buyer a PDF visualization for convenience, but the
+  legal version of the document is the XML file registered in KSeF. Good invoicing software
+  generates both: XML for KSeF and PDF for the buyer.
 </Question>
 
 <Question q="What is a KSeF number?">
@@ -54,11 +76,6 @@ translations:
 <Question q="What is UPO?">
   UPO (Urzędowe Poświadczenie Odbioru — Official Receipt Confirmation) is a document confirming that
   an invoice was accepted by KSeF. It contains the KSeF number, acceptance date, and a digital
-  signature from the system. UPO proves that the invoice was correctly registered.
-</Question>
-
-<Question q="Can I still send PDF invoices?">
-  No — PDF is not accepted by KSeF as a tax document. The system requires a structured XML file
-  compliant with FA(3). You can still send the buyer a PDF visualization for convenience, but the
-  legal version of the document is the XML file registered in KSeF.
+  signature from the system. UPO proves that the invoice was correctly registered — it is worth
+  archiving alongside the invoice XML file.
 </Question>

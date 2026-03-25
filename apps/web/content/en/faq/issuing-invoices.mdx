@@ -15,32 +15,61 @@ translations:
 <Question q="How do I issue my first invoice in KSeF?">
   First, gain access to KSeF — log in through the Taxpayer Application KSeF (ap.ksef.mf.gov.pl) or
   integrate your invoicing software with the KSeF API. Then prepare an XML file compliant with FA(3)
-  and submit it to the system. After successful acceptance, you receive a KSeF number and UPO.
+  and submit it to the system. After successful acceptance, you receive a KSeF number and UPO — from
+  that moment the invoice is legally effective.
+</Question>
+
+<Question q="What if my invoicing software doesn't support KSeF?">
+  Contact your software vendor and ask about an update to KSeF 2.0 with FA(3) support. Most popular
+  invoicing programs already have or are planning such an update. As a temporary alternative, you
+  can use the free Taxpayer Application KSeF from the Ministry of Finance — it is basic but
+  sufficient for manual invoice issuance.
 </Question>
 
 <Question q="Are there free tools from the Ministry of Finance?">
   Yes — the Ministry of Finance provides the free Taxpayer Application KSeF (ap.ksef.mf.gov.pl) for
-  issuing, receiving, and viewing KSeF invoices. It's a good solution for people issuing a few
+  issuing, receiving, and viewing KSeF invoices. It is a good solution for people issuing a few
   invoices per month. For higher volumes, a dedicated invoicing program with KSeF integration is
   more convenient.
+</Question>
+
+<Question q="What is e-mikrofirma?">
+  e-mikrofirma is a free MF web application for the smallest businesses, enabling invoice issuance
+  and tax settlement. It supports KSeF in a limited scope and is an alternative to commercial
+  invoicing software. It works well for people who issue invoices occasionally.
+</Question>
+
+<Question q="What is the Taxpayer Application KSeF?">
+  This is the official MF application (ap.ksef.mf.gov.pl) for managing invoices in KSeF. It allows
+  you to issue invoices manually via a form, upload ready-made XML files, view received invoices,
+  and manage permissions. Access via Trusted Profile, e-ID, or qualified certificate. It is free and
+  requires no installation.
 </Question>
 
 <Question q="How does a corrective invoice work in KSeF?">
   A corrective invoice in KSeF must include the KSeF number of the original invoice — when that
   invoice was issued through KSeF. You submit it the same way as a regular invoice: as an XML file
-  to KSeF. After acceptance, it receives its own KSeF number.
+  to KSeF. After acceptance, it receives its own KSeF number. The rules for agreeing corrections
+  with the buyer remain unchanged.
 </Question>
 
 <Question q="How do I issue a foreign currency invoice?">
   A foreign currency invoice in KSeF must include VAT amounts converted to Polish zloty (PLN) at the
   NBP exchange rate. In the XML file, you provide both the foreign currency amounts and the PLN
   equivalent. The exchange rate must match the rate from the day before the invoice date. PLN fields
-  are mandatory.
+  are mandatory — missing the conversion results in rejection.
 </Question>
 
 <Question q="How do I invoice a foreign buyer?">
-  Invoices for EU or non-EU buyers still go through KSeF. Tax rates differ — use 0% for intra-EU
-  supply (WDT) or not-subject-to-VAT for exported services. In the NrVatUE field, enter the buyer's
-  EU VAT number. Validate the file before submitting — errors in foreign buyer address fields are
-  common.
+  Invoices for EU or non-EU buyers submitted to KSeF use different VAT rates. For intra-EU supply
+  (WDT) use 0%, for exported services — the not-subject-to-VAT designation with the appropriate
+  code. Enter the buyer's EU VAT number in the NrVatUE field. Validate the file before submitting —
+  errors in foreign buyer address fields are common.
+</Question>
+
+<Question q="What is self-invoicing in KSeF?">
+  Self-invoicing is when the buyer issues an invoice on behalf of the seller — based on a prior
+  agreement between the parties. In KSeF it requires special permissions: the seller must authorize
+  the buyer to issue invoices in their name. The document in KSeF is marked as issued under
+  self-invoicing.
 </Question>
