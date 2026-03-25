@@ -1,3 +1,5 @@
+import { slugifyHeading } from "./utils";
+
 /**
  * Rehype plugin that adds `id` attributes to h2/h3 headings
  * so the TOC anchor links work correctly.
@@ -48,11 +50,7 @@ export function rehypeAddHeadingIds() {
         return;
       }
 
-      const base = text
-        .toLowerCase()
-        .replace(/[^\w\s-]/g, "")
-        .replace(/\s+/g, "-")
-        .replace(/-+/g, "-");
+      const base = slugifyHeading(text);
       const count = seen.get(base) ?? 0;
       seen.set(base, count + 1);
       const id = count === 0 ? base : `${base}-${count}`;

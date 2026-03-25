@@ -1,0 +1,49 @@
+---
+title: Wystawianie faktur
+description: Jak wystawiać faktury w KSeF — pierwsze kroki, korekty, waluty i nabywcy zagraniczni.
+date: 2026-03-23
+section: faq
+locale: pl
+slug: wystawianie-faktur
+translations:
+  en: issuing-invoices
+  uk: vystavlennya-rakhunkiv
+---
+
+## Wystawianie faktur
+
+### Jak wystawić pierwszą fakturę w KSeF?
+
+Najpierw musisz mieć dostęp do KSeF — zaloguj się przez Aplikację Podatnika KSeF (ap.ksef.mf.gov.pl) lub zintegruj swój program fakturowy z API KSeF. Następnie przygotuj plik XML zgodny z FA(3) i prześlij go do systemu. Po pomyślnym przyjęciu otrzymasz numer KSeF i UPO — od tej chwili faktura jest prawnie skuteczna.
+
+### Co jeśli mój program nie obsługuje KSeF?
+
+Skontaktuj się z dostawcą oprogramowania i zapytaj o aktualizację do KSeF 2.0 z obsługą FA(3). Większość popularnych programów fakturowych już ma lub planuje taką aktualizację. Jako alternatywa możesz tymczasowo korzystać z bezpłatnej Aplikacji Podatnika KSeF od MF — jest ona podstawowa, ale wystarczająca do ręcznego wystawiania faktur.
+
+### Czy mogę korzystać z darmowych narzędzi MF?
+
+Tak — Ministerstwo Finansów udostępnia bezpłatną Aplikację Podatnika KSeF (ap.ksef.mf.gov.pl), która pozwala wystawiać, odbierać i przeglądać faktury KSeF. To dobre rozwiązanie dla osób wystawiających kilka faktur miesięcznie. Dla większych wolumenów wygodniejszy jest dedykowany program fakturowy z integracją KSeF.
+
+### Co to jest e-mikrofirma?
+
+e-mikrofirma to bezpłatna aplikacja webowa MF dla najmniejszych przedsiębiorców, umożliwiająca wystawianie faktur i rozliczanie podatków. Obsługuje KSeF w ograniczonym zakresie i jest alternatywą dla komercyjnych programów fakturowych. Sprawdza się u osób wystawiających faktury okazjonalnie.
+
+### Co to jest Aplikacja Podatnika KSeF?
+
+To oficjalna aplikacja MF (ap.ksef.mf.gov.pl) do zarządzania fakturami w KSeF. Pozwala wystawiać faktury ręcznie przez formularz, przesyłać gotowe pliki XML, przeglądać faktury otrzymane i zarządzać uprawnieniami. Dostęp przez Profil Zaufany, e-dowód lub certyfikat kwalifikowany. Jest bezpłatna i nie wymaga instalacji.
+
+### Jak wygląda faktura korygująca w KSeF?
+
+Faktura korygująca w KSeF musi zawierać numer KSeF faktury pierwotnej — jeśli ta faktura była wystawiona w KSeF. Wysyłasz ją tak samo jak zwykłą fakturę: jako plik XML do KSeF. Po zaakceptowaniu otrzymuje własny numer KSeF. Zasady uzgadniania korekt z nabywcą pozostają bez zmian.
+
+### Jak wystawić fakturę walutową?
+
+Faktura walutowa w KSeF musi zawierać kwoty podatku VAT przeliczone na złote według kursu NBP. W pliku XML podajesz zarówno kwoty w walucie obcej, jak i równoważnik w PLN. Kurs walutowy musi odpowiadać temu z dnia poprzedzającego datę wystawienia. Pamiętaj: pola PLN są obowiązkowe — brak przeliczenia skutkuje odrzuceniem faktury.
+
+### Jak wystawić fakturę dla zagranicznego nabywcy?
+
+Faktura dla nabywcy z UE lub spoza UE wystawiana w KSeF różni się stawkami VAT. Przy wewnątrzwspólnotowej dostawie towarów (WDT) stosuje się stawkę 0%, przy eksporcie usług — oznaczenie np z właściwym kodem. W polu NrVatUE wpisujesz unijny numer VAT nabywcy. Warto zwalidować taki plik przed wysłaniem — błędy w polach adresowych zagranicznych nabywców są częste.
+
+### Co to jest samofakturowanie w KSeF?
+
+Samofakturowanie to sytuacja, gdy nabywca wystawia fakturę w imieniu sprzedawcy — na podstawie uprzedniego porozumienia między stronami. W KSeF wymaga specjalnych uprawnień: sprzedawca musi upoważnić nabywcę do wystawiania faktur w swoim imieniu. Dokument w KSeF jest oznaczany jako wystawiony w ramach samofakturowania.

@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+import { slugifyHeading } from "./utils";
 
 const CONTENT_DIR = path.join(process.cwd(), "content");
 
@@ -171,11 +172,7 @@ export function extractHeadings(
   while ((match = headingRegex.exec(content)) !== null) {
     const level = match[1].length as 2 | 3;
     const text = match[2].trim();
-    const base = text
-      .toLowerCase()
-      .replace(/[^\w\s-]/g, "")
-      .replace(/\s+/g, "-")
-      .replace(/-+/g, "-");
+    const base = slugifyHeading(text);
     const count = seen.get(base) ?? 0;
     seen.set(base, count + 1);
     const id = count === 0 ? base : `${base}-${count}`;

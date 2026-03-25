@@ -1,9 +1,9 @@
 import React from "react";
-import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { Badge } from "@/components/badge";
 import { TableOfContents } from "@/components/table-of-contents";
 import { ShareButton } from "@/components/share-button";
+import { BackLink } from "./back-link";
 import type { Frontmatter } from "@/lib/content";
 
 interface GuideLayoutProps {
@@ -32,26 +32,7 @@ export async function GuideLayout({
 
   return (
     <div className="max-w-4xl mx-auto px-4 md:px-6 py-12">
-      {/* Back link */}
-      <Link
-        href={backHref}
-        className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 transition-colors mb-8"
-      >
-        <svg
-          className="w-4 h-4"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
-          />
-        </svg>
-        {t("layout.backToGuides")}
-      </Link>
+      <BackLink href={backHref} label={t("layout.backToGuides")} />
 
       {/* Guide header card */}
       <div className="rounded-2xl border border-violet-100 bg-violet-50/50 px-6 py-5 mb-8 flex flex-wrap gap-6">

@@ -1,0 +1,29 @@
+---
+title: Validation and Errors
+description: How to check your invoice XML and what validator errors mean.
+date: 2026-03-20
+section: faq
+locale: en
+slug: validation-and-errors
+translations:
+  pl: walidacja-i-bledy
+  uk: validatsiya-ta-pomylky
+---
+
+## Validation and Errors
+
+### How do I check if my invoice is valid?
+
+Before sending your invoice to KSeF, drop the XML file on ksefuj.to — validation runs entirely in your browser, data never leaves your computer. We check both FA(3) schema compliance and MF semantic rules. Errors are described in plain language — you'll know exactly what to fix.
+
+### What does an XSD validation error mean?
+
+An XSD error means the XML file structure does not match the FA(3) schema. Common causes: missing required field, wrong element order, typo in element name, or invalid date format. The ksefuj.to validator describes each XSD error clearly and indicates the exact location in the file.
+
+### Does ksefuj.to store my data?
+
+No. Your XML file never leaves the browser — all processing happens locally on your computer. We have no access to your invoices, do not transmit them to any servers, and keep no content logs. Invoices are sensitive data — which is why we designed ksefuj.to as a fully private tool.
+
+### Is ksefuj.to free?
+
+Yes — forever. The ksefuj.to validator is free with no limits, no registration, no paywall. We believe basic KSeF tools should be available to everyone — especially small businesses and freelancers. The full source code is publicly available on GitHub.

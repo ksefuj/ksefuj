@@ -1,0 +1,37 @@
+---
+title: Walidacja i błędy
+description: Jak sprawdzić poprawność faktury XML i co oznaczają błędy walidatora.
+date: 2026-03-20
+section: faq
+locale: pl
+slug: walidacja-i-bledy
+translations:
+  en: validation-and-errors
+  uk: validatsiya-ta-pomylky
+---
+
+## Walidacja i błędy
+
+### Jak sprawdzić czy moja faktura jest poprawna?
+
+Zanim wyślesz fakturę do KSeF, wrzuć plik XML na ksefuj.to — walidacja działa w całości w twojej przeglądarce, dane nie opuszczają twojego komputera. Sprawdzamy zarówno zgodność ze schematem FA(3), jak i reguły semantyczne MF. Błędy opisujemy po polsku, bez żargonu — wiesz dokładnie, co poprawić.
+
+### Co oznacza błąd walidacji XSD?
+
+Błąd XSD to niezgodność struktury pliku XML ze schematem FA(3). Najczęstsze przyczyny: brakujące obowiązkowe pole, zła kolejność elementów, literówka w nazwie elementu lub nieprawidłowy format daty. Walidator ksefuj.to opisuje każdy błąd XSD w zrozumiały sposób i wskazuje dokładne miejsce w pliku.
+
+### Jakie są najczęstsze błędy w fakturach KSeF?
+
+Najczęstsze błędy to: brakujące obowiązkowe pola adnotacji (P_16, P_17, P_18, P_18A, P_23 i inne pola sekcji Adnotacje), zły format GTU (powinno być GTU_01, nie osobny element), brak przeliczenia walut na PLN, błędny NIP w polu dla numeru VAT UE zamiast w polu NIP, oraz zbyt duża precyzja dziesiętna kwot. Walidator ksefuj.to wykrywa wszystkie te błędy automatycznie i podpowiada, jak je naprawić.
+
+### Czy ksefuj.to przechowuje moje dane?
+
+Nie. Twój plik XML nie opuszcza przeglądarki — całe przetwarzanie odbywa się lokalnie na twoim komputerze. Nie mamy dostępu do twoich faktur, nie przesyłamy ich na żadne serwery i nie prowadzimy logów zawartości. Faktury to dane wrażliwe — dlatego zaprojektowaliśmy ksefuj.to jako narzędzie w pełni prywatne.
+
+### Czy ksefuj.to jest darmowy?
+
+Tak — na zawsze. Walidator ksefuj.to jest bezpłatny bez żadnych limitów, bez rejestracji, bez paywallu. Uważamy, że podstawowe narzędzia do obsługi KSeF powinny być dostępne dla każdego — szczególnie dla małych firm i freelancerów. Cały kod źródłowy jest dostępny publicznie na GitHub.
+
+### Czym ksefuj.to różni się od walidatora MF?
+
+MF nie udostępnia standalone walidatora XML — walidacja odbywa się dopiero przy wysyłaniu faktury do KSeF, co oznacza, że dowiadujesz się o błędach za późno. ksefuj.to wypełnia tę lukę: możesz sprawdzić plik XML przed wysyłką, bez logowania i bez ryzyka odrzucenia faktury. Sprawdzamy też reguły semantyczne, których sam schemat XSD nie weryfikuje.
