@@ -4,6 +4,7 @@ const SITE_URL = "https://ksefuj.to";
 
 function escapeXml(text: string): string {
   // Strip XML-illegal control characters (U+0000–U+001F except tab, LF, CR)
+  // eslint-disable-next-line no-control-regex
   const sanitized = text.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, "");
   // Ampersand must be replaced first to avoid double-escaping
   return sanitized
