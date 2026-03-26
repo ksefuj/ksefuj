@@ -88,7 +88,9 @@ Schemat FA(3) używa reguły `xs:sequence` — kolejność elementów nie jest u
 
 Elementy na najwyższym poziomie muszą występować w tej kolejności:
 
-`Naglowek` → `Podmiot1` → `Podmiot2` → `Fa` → `FaWiersz`
+`Naglowek` → `Podmiot1` → `Podmiot2` → [`Podmiot3`] → [`PodmiotUpowazniony`] → `Fa` (w tym `FaWiersz`) → [`Stopka`] → [`Zalacznik`]
+
+Elementy w nawiasach kwadratowych są opcjonalne, ale jeśli występują, muszą być na właściwym miejscu. `FaWiersz` to element **wewnątrz** `Fa`, nie obok niego.
 
 <XmlExample copyable>
   ```xml
@@ -212,7 +214,7 @@ Polski format daty (`DD.MM.RRRR`) i format ISO (`RRRR-MM-DD`) wyglądają zupeł
   <!-- ❌ Brak sufiksu Z -->
   <DataWytworzeniaFa>2026-09-15T10:00:00</DataWytworzeniaFa>
 
-  <!-- ❌ Offset strefy czasowej zamiast Z -->
+  <!-- ❌ Offset strefy czasowej zamiast Z (broszura MF wymaga Z) -->
   <DataWytworzeniaFa>2026-09-15T10:00:00+02:00</DataWytworzeniaFa>
 
   <!-- ✅ Data i czas z Z (UTC) -->
@@ -279,7 +281,7 @@ W poprzedniej wersji schematu (FA(2)) pola `JST` i `GV` nie istniały. Jeśli Tw
 
 Dodaj `JST` i `GV` na końcu bloku `Podmiot2` — po `Adres` i ewentualnych polach opcjonalnych. Dla zdecydowanej większości faktur wartość obu pól to `2`.
 
-- `JST` = `1` → faktura dotyczy jednostki samorządu terytorialnego; `2` → nie dotyczy
+- `JST` = `1` → faktura dotyczy jednostki **podrzędnej** samorządu terytorialnego; `2` → nie dotyczy
 - `GV` = `1` → faktura dotyczy członka grupy VAT; `2` → nie dotyczy
 
 <XmlExample copyable>
@@ -498,7 +500,7 @@ Trzy pola, trzy różne zastosowania — i łatwo je pomylić:
 - **P_6A** (w `FaWiersz`) — data dostawy/wykonania dla konkretnego wiersza, gdy wiersze mają różne daty
 - **OkresFa** (w `Fa`) — okres rozliczeniowy (np. abonament za wrzesień), z polami `P_6_Od` i `P_6_Do`
 
-Kluczowa zasada: **P_6 i P_6A wzajemnie się wykluczają** — nie mogą wystąpić w tym samym dokumencie. `OkresFa` jest niezależny i może współistnieć z każdym z nich.
+Kluczowa zasada: w sekcji `Fa` pole **P_6 i element OkresFa wzajemnie się wykluczają** — stanowią alternatywę w schemacie XSD (`xs:choice`). Podobnie **P_6 i P_6A nie mogą współistnieć**. Natomiast `OkresFa` (w `Fa`) może wystąpić razem z `P_6A` (w `FaWiersz`) — bo to pola z różnych poziomów struktury.
 
 **Jak naprawić**
 
@@ -540,7 +542,7 @@ Kluczowa zasada: **P_6 i P_6A wzajemnie się wykluczają** — nie mogą wystąp
     ...
   </FaWiersz>
 
-  <!-- ✅ Okres rozliczeniowy (niezależny od P_6/P_6A) -->
+  <!-- ✅ Opcja C: okres rozliczeniowy (OkresFa zamiast P_6) -->
   <Fa>
     <OkresFa>
       <P_6_Od>2026-09-01</P_6_Od>
