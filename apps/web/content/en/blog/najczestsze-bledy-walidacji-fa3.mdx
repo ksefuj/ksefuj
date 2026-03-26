@@ -541,7 +541,7 @@ Three fields, three different purposes — and they're easy to mix up:
 - **P_6A** (in `FaWiersz`) — delivery/service date for a specific line, when lines have different dates
 - **OkresFa** (in `Fa`) — billing period (e.g. September subscription), with sub-fields `P_6_Od` and `P_6_Do`
 
-The key rule: within the `Fa` section, **P_6 and OkresFa are mutually exclusive** — they form an `xs:choice` in the XSD schema. Likewise, **P_6 and P_6A cannot coexist**. However, `OkresFa` (in `Fa`) can appear alongside `P_6A` (in `FaWiersz`) — because they belong to different levels of the structure.
+The key rule: within the `Fa` section, **P_6 and OkresFa are mutually exclusive** — they form an `xs:choice` in the XSD schema. The prohibition on combining **P_6 with P_6A** is a separate semantic validation rule. However, `OkresFa` (in `Fa`) can appear alongside `P_6A` (in `FaWiersz`), because `OkresFa` does not conflict with `P_6A` at any level of the schema.
 
 **How to fix it**
 

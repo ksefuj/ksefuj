@@ -538,7 +538,7 @@ Trzy pola, trzy różne zastosowania — i łatwo je pomylić:
 - **P_6A** (w `FaWiersz`) — data dostawy/wykonania dla konkretnego wiersza, gdy wiersze mają różne daty
 - **OkresFa** (w `Fa`) — okres rozliczeniowy (np. abonament za wrzesień), z polami `P_6_Od` i `P_6_Do`
 
-Kluczowa zasada: w sekcji `Fa` pole **P_6 i element OkresFa wzajemnie się wykluczają** — stanowią alternatywę w schemacie XSD (`xs:choice`). Podobnie **P_6 i P_6A nie mogą współistnieć**. Natomiast `OkresFa` (w `Fa`) może wystąpić razem z `P_6A` (w `FaWiersz`) — bo to pola z różnych poziomów struktury.
+Kluczowa zasada: w sekcji `Fa` pole **P_6 i element OkresFa wzajemnie się wykluczają** — stanowią alternatywę w schemacie XSD (`xs:choice`). Zakaz łączenia **P_6 z P_6A** to odrębna reguła walidacji semantycznej. Natomiast `OkresFa` (w `Fa`) może wystąpić razem z `P_6A` (w `FaWiersz`), ponieważ `OkresFa` nie wchodzi w konflikt z `P_6A` na żadnym poziomie schematu.
 
 **Jak naprawić**
 
