@@ -271,8 +271,11 @@ Podmiot2:
 Fa (partial — most critical order):
 
 ```
-KodWaluty → P_1 → [P_1M] → P_2 → [WZ] → [P_6] → [OkresFa] → ... → P_13_x → P_14_x → P_15 → [KursWalutyZ] → Adnotacje → RodzajFaktury → ...
+KodWaluty → P_1 → [P_1M] → P_2 → [WZ] → [P_6 | OkresFa] → ... → P_13_x → P_14_x → P_15 → [KursWalutyZ] → Adnotacje → RodzajFaktury → ...
 ```
+
+Note: `[P_6 | OkresFa]` is an `xsd:choice` group (mutually exclusive — use one or neither, never
+both).
 
 - **Source:** FA(3) Information Sheet, §3.1, §4.1, §5.2, §6.1, §9.2–§9.5
 - **Confidence:** HIGH
@@ -957,7 +960,10 @@ above: P_16 → P_17 → P_18 → P_18A → Zwolnienie → NoweSrodkiTransportu 
 **Mutual exclusion rule:**
 
 - `P_6` (in `Fa`) and `P_6A` (in `FaWiersz`) **cannot both be present** in the same invoice.
-- `OkresFa` is independent — it can coexist with either `P_6` or `P_6A` (or neither).
+- `P_6` (in `Fa`) and `OkresFa` (in `Fa`) are **mutually exclusive** via `xsd:choice` — use one or
+  neither, never both.
+- `OkresFa` (in `Fa`) CAN coexist with `P_6A` (in `FaWiersz`) — they are in separate subtrees with
+  no schema constraint linking them.
 - `P_1` (invoice issue date) is always mandatory and separate from all three.
 
 - **Validator code:** `P6_P6A_MUTUAL_EXCLUSION` (semantic.ts, Rule 10, §9.2/§10.2/Appendix D #8)
