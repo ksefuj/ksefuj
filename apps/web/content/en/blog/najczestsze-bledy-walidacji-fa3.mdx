@@ -1,0 +1,636 @@
+---
+title: "Most common FA(3) validation errors — and how to fix them"
+description: "12 most common FA(3) validation errors in KSeF — what they mean and how to fix them. With before-and-after XML examples."
+date: 2026-03-26
+section: blog
+locale: en
+slug: "najczestsze-bledy-walidacji-fa3"
+tags: ["ksef", "fa(3)", "validation", "xml"]
+sources:
+  - label: "FA(3) Information Sheet (MF)"
+    url: "https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "FA(3) XSD Schema"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+translationOf: "najczestsze-bledy-walidacji-fa3"
+seo:
+  canonical: "/blog/najczestsze-bledy-walidacji-fa3"
+---
+
+You submitted an invoice to KSeF (Krajowy System e-Faktur — Poland's National e-Invoicing System) and got an error. Or worse — your invoicing software flashed a red alert and the message is incomprehensible.
+
+You're not alone. XML validation messages are notoriously opaque — even if you know the FA(3) schema inside out. Instead of "missing delivery date" you get something like `cvc-complex-type.2.4.b: element P_6 not found`. Not particularly illuminating.
+
+This article covers the **12 most common FA(3) validation errors** — with plain-English explanations and ready-to-use XML. For each error you'll find:
+
+- what the message actually means,
+- why it happens,
+- how to fix it — with before-and-after XML examples.
+
+If your invoicing software generates the XML automatically, it should catch most of these for you. But if you're integrating with KSeF via the API, writing a custom exporter, or simply trying to understand why an invoice was rejected — this is the reference you need.
+
+<Tip>
+  Before submitting an invoice to KSeF, drop your XML file into [ksefuj.to](/) — a free validator
+  that checks compliance with official MF requirements and explains every error in plain language.
+  Your data never leaves your browser.
+</Tip>
+
+All examples in this article are based on the FA(3) schema effective from 1 February 2026.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  label="FA(3) Information Sheet — Ministry of Finance"
+/>
+
+---
+
+## 1. Missing or incorrect namespace declaration
+
+The `<Faktura>` root element must include the FA(3) namespace declaration. Without it, the validator cannot recognise any element in the file — and will report an error on every single one.
+
+**Why this happens**
+
+Most commonly: you copied a template from the internet that uses the previous schema version (FA(2)), or omitted the `xmlns` attribute entirely. Typos in the namespace URI are also common — the date segment `2025/06/25/13775` is easy to get wrong.
+
+**How to fix it**
+
+Make sure your `<Faktura>` element starts exactly like this:
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ Missing namespace -->
+  <Faktura>
+    ...
+  </Faktura>
+
+  <!-- ❌ Old FA(2) namespace — invalid since 1 February 2026 -->
+
+<Faktura xmlns="http://crd.gov.pl/wzor/2023/06/29/12648/">...</Faktura>
+
+  <!-- ✅ Correct FA(3) namespace -->
+
+  <Faktura xmlns="http://crd.gov.pl/wzor/2025/06/25/13775/">
+    ...
+  </Faktura>
+  ```
+</XmlExample>
+
+<Warning>
+  If you're using templates or tutorials from before February 2026, the namespace is almost
+  certainly outdated. FA(2) ceased to be valid on 31 January 2026.
+</Warning>
+
+---
+
+## 2. Incorrect element order
+
+The FA(3) schema requires elements to appear in a strictly defined order. Swap `Podmiot2` and `Podmiot1`, or place `Adnotacje` after `RodzajFaktury` — and the validator rejects the entire file.
+
+**Why this happens**
+
+The FA(3) schema uses `xs:sequence`, which means element order is mandatory, not conventional. Most software generates elements in the correct order automatically, but manual edits or custom exporters can easily break it.
+
+**How to fix it**
+
+Top-level elements must appear in this order:
+
+`Naglowek` → `Podmiot1` → `Podmiot2` → [`Podmiot3`] → [`PodmiotUpowazniony`] → `Fa` (containing `FaWiersz`) → [`Stopka`] → [`Zalacznik`]
+
+Elements in square brackets are optional, but when present they must be in the correct position. Note that `FaWiersz` is a child of `Fa`, not a sibling.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ Podmiot2 before Podmiot1 -->
+  <Faktura xmlns="http://crd.gov.pl/wzor/2025/06/25/13775/">
+    <Naglowek>...</Naglowek>
+    <Podmiot2>...</Podmiot2>
+    <Podmiot1>...</Podmiot1>
+    <Fa>...</Fa>
+  </Faktura>
+
+  <!-- ✅ Correct order -->
+
+  <Faktura xmlns="http://crd.gov.pl/wzor/2025/06/25/13775/">
+    <Naglowek>...</Naglowek>
+    <Podmiot1>...</Podmiot1>
+    <Podmiot2>...</Podmiot2>
+    <Fa>...</Fa>
+  </Faktura>
+  ```
+</XmlExample>
+
+The same rule applies to child elements within `Naglowek`, `Podmiot1`, `Podmiot2`, `Fa`, and other sections. For example, within `Naglowek` the order is: `KodFormularza` → `WariantFormularza` → `DataWytworzeniaFa`. The full element order is documented in the [FA(3) schema reference](/docs/schemat-fa3).
+
+---
+
+## 3. Missing required elements
+
+The XML file is missing one or more fields that the FA(3) schema marks as mandatory. The validator will tell you which element is missing.
+
+**Why this happens**
+
+FA(3) has dozens of required fields across multiple levels of the document. It's easy to overlook one — especially `WariantFormularza`, `KodWaluty`, `P_15` (total amount due), or `RodzajFaktury`.
+
+**How to fix it**
+
+Check that your file includes at least these elements:
+
+- **Naglowek:** `KodFormularza` (with attributes `kodSystemowy="FA (3)"` and `wersjaSchemy="1-0E"`), `WariantFormularza`, `DataWytworzeniaFa`
+- **Podmiot1/DaneIdentyfikacyjne:** `NIP`, `Nazwa`
+- **Podmiot1/Adres:** `KodKraju`, `AdresL1`
+- **Podmiot2/DaneIdentyfikacyjne:** `NIP` (or `KodUE` + `NrVatUE`, or `KodKraju` + `NrID`), `Nazwa`
+- **Podmiot2:** `JST`, `GV`
+- **Fa:** `KodWaluty`, `P_1`, `P_2`, `P_15`, `Adnotacje`, `RodzajFaktury`
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ Missing WariantFormularza -->
+  <Naglowek>
+    <KodFormularza kodSystemowy="FA (3)" wersjaSchemy="1-0E">FA</KodFormularza>
+    <DataWytworzeniaFa>2026-09-15T10:00:00Z</DataWytworzeniaFa>
+  </Naglowek>
+
+  <!-- ✅ All required Naglowek fields present -->
+
+  <Naglowek>
+    <KodFormularza kodSystemowy="FA (3)" wersjaSchemy="1-0E">FA</KodFormularza>
+    <WariantFormularza>3</WariantFormularza>
+    <DataWytworzeniaFa>2026-09-15T10:00:00Z</DataWytworzeniaFa>
+  </Naglowek>
+  ```
+</XmlExample>
+
+The full list of required fields is long — the easiest approach is to drop your file into [ksefuj.to](/) and see exactly what's missing.
+
+---
+
+## 4. Invalid NIP format
+
+The NIP (Polish tax identification number) in the XML contains hyphens, spaces, a country prefix, or the wrong number of digits. The FA(3) schema requires exactly 10 digits with no separators.
+
+**Why this happens**
+
+In everyday documents, NIP is often formatted as `123-456-78-90` or `PL 1234567890`. Neither form is valid in FA(3) XML. The `PL` prefix belongs in a separate field (`PrefiksPodatnika` in `Podmiot1`, or `KodUE` in `Podmiot2`).
+
+**How to fix it**
+
+Strip all separators and the country prefix. NIP is 10 consecutive digits.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ Hyphens in NIP -->
+  <NIP>123-456-78-90</NIP>
+
+  <!-- ❌ Country prefix in NIP -->
+
+<NIP>PL1234567890</NIP>
+
+  <!-- ✅ 10 digits, no separators -->
+
+  <NIP>1234567890</NIP>
+  ```
+</XmlExample>
+
+<Warning>
+  A Polish buyer's NIP must go in the `NIP` field within `Podmiot2/DaneIdentyfikacyjne` — not in
+  `NrVatUE` or `NrID`. If the buyer's NIP ends up in the wrong field, the invoice will not be
+  correctly delivered within KSeF.
+</Warning>
+
+---
+
+## 5. Invalid date format
+
+A date field contains a value in the wrong format — e.g. `15.09.2026` instead of `2026-09-15`, or the `DataWytworzeniaFa` field is missing the UTC time designator.
+
+**Why this happens**
+
+The Polish date format (`DD.MM.YYYY`) and ISO format (`YYYY-MM-DD`) look completely different. It's also easy to confuse date-only fields (e.g. `P_1`) with datetime fields (e.g. `DataWytworzeniaFa`). `P_1` accepts a date only. `DataWytworzeniaFa` requires a full timestamp with the `Z` suffix (UTC).
+
+**How to fix it**
+
+- **Date fields** (P_1, P_6, P_6A, etc.): format `YYYY-MM-DD`, e.g. `2026-09-15`
+- **DataWytworzeniaFa**: format `YYYY-MM-DDTHH:MM:SSZ`, e.g. `2026-09-15T10:00:00Z`
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ Polish date format -->
+  <P_1>15.09.2026</P_1>
+
+  <!-- ❌ Datetime in a date-only field -->
+
+<P_1>2026-09-15T10:00:00Z</P_1>
+
+  <!-- ✅ Correct date -->
+
+<P_1>2026-09-15</P_1>
+
+  <!-- ❌ Missing Z suffix -->
+
+<DataWytworzeniaFa>2026-09-15T10:00:00</DataWytworzeniaFa>
+
+  <!-- ❌ Timezone offset instead of Z (MF Information Sheet requires Z) -->
+
+<DataWytworzeniaFa>2026-09-15T10:00:00+02:00</DataWytworzeniaFa>
+
+  <!-- ✅ Datetime with Z (UTC) -->
+
+  <DataWytworzeniaFa>2026-09-15T10:00:00Z</DataWytworzeniaFa>
+  ```
+</XmlExample>
+
+---
+
+## 6. Too many decimal places
+
+An amount, unit price, or quantity has more decimal places than the schema allows. FA(3) defines precise limits for each group of fields.
+
+**Why this happens**
+
+ERP systems and spreadsheets often store values at full floating-point precision (e.g. `123.456789`). When exported to XML, that excess precision carries over and violates the schema constraints.
+
+**How to fix it**
+
+Round values to the appropriate number of decimal places:
+
+- **Amounts** (P_11, P_13_x, P_14_x, P_15): max **2** decimal places
+- **Quantities** (P_8B): max **6** decimal places
+- **Unit prices** (P_9A, P_9B): max **8** decimal places
+
+The decimal separator is always a dot (`.`). Commas, spaces, and any other separators are not permitted.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ 3 decimal places in P_15 (max 2) -->
+  <P_15>123.123</P_15>
+
+  <!-- ✅ Correct — 2 decimal places -->
+
+<P_15>123.12</P_15>
+
+  <!-- ❌ 7 decimal places in quantity P_8B (max 6) -->
+
+<P_8B>1.1234567</P_8B>
+
+  <!-- ✅ Correct — 6 decimal places -->
+
+<P_8B>1.123456</P_8B>
+
+  <!-- ❌ Comma as decimal separator -->
+
+<P_15>123,45</P_15>
+
+  <!-- ❌ Space as thousands separator -->
+
+<P_15>1 234.56</P_15>
+
+  <!-- ✅ Dot only, no grouping separators -->
+
+<P_15>1234.56</P_15>
+
+````
+</XmlExample>
+
+---
+
+## 7. Missing Podmiot2 or its required fields
+
+The file is missing the `Podmiot2` section (buyer data) entirely, or the section is missing the `JST` and `GV` fields — both mandatory in FA(3).
+
+**Why this happens**
+
+The `JST` and `GV` fields did not exist in the previous schema version (FA(2)). If your XML export is based on an older template, it probably doesn't generate them. Many developers skip them, assuming they "don't apply" — but the schema requires them unconditionally, even when the value is `2` (not applicable).
+
+**What JST and GV mean:**
+
+- `JST` — whether the buyer is a **sub-entity of a local government unit** (jednostka samorządu terytorialnego): `1` = yes, `2` = no
+- `GV` — whether the buyer is a **VAT group member** (grupa VAT): `1` = yes, `2` = no
+
+For the vast majority of invoices, both values are `2`.
+
+**How to fix it**
+
+Add `JST` and `GV` at the end of the `Podmiot2` block — after `Adres` and any optional fields.
+
+<XmlExample copyable>
+```xml
+<!-- ❌ Missing JST and GV -->
+<Podmiot2>
+  <DaneIdentyfikacyjne>
+    <NIP>9876543210</NIP>
+    <Nazwa>Firma Nabywcy</Nazwa>
+  </DaneIdentyfikacyjne>
+  <Adres>
+    <KodKraju>PL</KodKraju>
+    <AdresL1>ul. Testowa 1, 00-001 Warszawa</AdresL1>
+  </Adres>
+</Podmiot2>
+
+<!-- ✅ With JST and GV -->
+<Podmiot2>
+  <DaneIdentyfikacyjne>
+    <NIP>9876543210</NIP>
+    <Nazwa>Firma Nabywcy</Nazwa>
+  </DaneIdentyfikacyjne>
+  <Adres>
+    <KodKraju>PL</KodKraju>
+    <AdresL1>ul. Testowa 1, 00-001 Warszawa</AdresL1>
+  </Adres>
+  <JST>2</JST>
+  <GV>2</GV>
+</Podmiot2>
+````
+
+</XmlExample>
+
+---
+
+## 8. Invalid VAT rate value (P_12)
+
+The `P_12` field (VAT rate) in an invoice line contains a value that is not in the FA(3) catalogue. For example, bare `0`, `23%`, or `ZW` (uppercase).
+
+**Why this happens**
+
+FA(3) accepts only a strictly defined set of values — case-sensitive and space-sensitive. Bare `0` does not exist in the catalogue — you must specify a variant: `0 KR`, `0 WDT`, or `0 EX`. The value `zw` must be lowercase. The space in `0 KR` is mandatory.
+
+**How to fix it**
+
+Permitted P_12 values: `23`, `22`, `8`, `7`, `5`, `4`, `3`, `0 KR`, `0 WDT`, `0 EX`, `zw`, `oo`, `np I`, `np II`.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ Bare 0 — missing variant -->
+  <P_12>0</P_12>
+
+  <!-- ✅ Domestic 0% rate -->
+
+<P_12>0 KR</P_12>
+
+  <!-- ❌ Percent sign -->
+
+<P_12>23%</P_12>
+
+  <!-- ✅ Without percent sign -->
+
+<P_12>23</P_12>
+
+  <!-- ❌ Uppercase -->
+
+<P_12>ZW</P_12>
+
+  <!-- ✅ Lowercase -->
+
+<P_12>zw</P_12>
+
+  <!-- ❌ Missing space -->
+
+<P_12>0KR</P_12>
+
+  <!-- ✅ With space -->
+
+<P_12>0 KR</P_12>
+
+````
+</XmlExample>
+
+<Info>
+The value `oo` (odwrotne obciążenie — domestic reverse charge) applies only to domestic transactions. For invoices to foreign buyers where the buyer accounts for VAT in their own country, use `np I` or `np II` (nie podlega — not subject to Polish VAT).
+</Info>
+
+<Source href="https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf" label="FA(3) Information Sheet, §10.3 — P_12 value catalogue" />
+
+---
+
+## 9. Missing KodKraju / KodUE for a foreign buyer
+
+The invoice is issued to a foreign counterparty, but `Podmiot2/DaneIdentyfikacyjne` is missing the country code or it's in the wrong field.
+
+**Why this happens**
+
+FA(3) requires different buyer identification depending on the buyer's country:
+
+- **Poland:** `NIP` field (10 digits, no prefix)
+- **EU:** `KodUE` + `NrVatUE` (country code separate, VAT number without prefix)
+- **Non-EU:** `KodKraju` + `NrID`
+
+A common mistake is embedding the country code inside the VAT number (e.g. `DE123456789` in `NrVatUE`) instead of splitting it into two separate fields.
+
+**How to fix it**
+
+<XmlExample copyable>
+```xml
+<!-- ❌ Country prefix inside VAT number -->
+<DaneIdentyfikacyjne>
+  <NrVatUE>DE123456789</NrVatUE>
+  <Nazwa>Deutsche Firma GmbH</Nazwa>
+</DaneIdentyfikacyjne>
+
+<!-- ✅ EU buyer — country code in a separate field -->
+<DaneIdentyfikacyjne>
+  <KodUE>DE</KodUE>
+  <NrVatUE>123456789</NrVatUE>
+  <Nazwa>Deutsche Firma GmbH</Nazwa>
+</DaneIdentyfikacyjne>
+
+<!-- ✅ Non-EU buyer -->
+<DaneIdentyfikacyjne>
+  <KodKraju>US</KodKraju>
+  <NrID>12-3456789</NrID>
+  <Nazwa>American Corp</Nazwa>
+</DaneIdentyfikacyjne>
+````
+
+</XmlExample>
+
+Note: `KodKraju` within `DaneIdentyfikacyjne` provides the tax identification context. `KodKraju` within `Adres` provides the address context. These are two separate fields in different sections — don't confuse them.
+
+---
+
+## 10. P_13 totals don't match P_15
+
+The total amount due (`P_15`) doesn't match the sum of net amounts (`P_13_x`) and tax amounts (`P_14_x`). The validator treats this as an arithmetic error.
+
+**Why this happens**
+
+Most commonly: a rounding error. Tax calculated on a net amount yields e.g. `22.9977` — and the software rounds to `22.99` instead of `23.00`. Another frequent cause: omitting one of the `P_13_x` fields (e.g. `P_13_6_1` for the 0% rate) when computing `P_15`.
+
+**How to fix it**
+
+The formula: **P_15 = sum of all P_13_x + sum of all P_14_x**.
+
+This covers P_13_1 through P_13_11 and P_14_1 through P_14_5. Fields P_13_6_1 through P_13_11 (0% rate, exempt, reverse charge) have no corresponding P_14_x — but their net amounts still count towards P_15.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ P_15 doesn't match the sum -->
+  <P_13_1>1000.00</P_13_1>
+  <P_14_1>230.00</P_14_1>
+  <P_15>1200.00</P_15>
+
+  <!-- ✅ Correct sum: 1000 + 230 = 1230 -->
+
+<P_13_1>1000.00</P_13_1>
+<P_14_1>230.00</P_14_1>
+<P_15>1230.00</P_15>
+
+  <!-- ✅ Example with mixed rates -->
+  <!-- 100 (net 23%) + 23 (VAT 23%) + 200 (net 8%) + 16 (VAT 8%) = 339 -->
+
+<P_13_1>100.00</P_13_1>
+<P_14_1>23.00</P_14_1>
+<P_13_2>200.00</P_13_2>
+<P_14_2>16.00</P_14_2>
+<P_15>339.00</P_15>
+
+````
+</XmlExample>
+
+<Tip>
+The [ksefuj.to](/) validator tolerates a difference of up to 0.01 PLN when comparing totals — to account for minor rounding discrepancies.
+</Tip>
+
+---
+
+## 11. Incomplete Adnotacje section
+
+The `Adnotacje` (annotations) section within the `Fa` block is incomplete or missing entirely. FA(3) requires **all eight fields** — even when none of them "apply" to your invoice.
+
+**Why this happens**
+
+The name "Adnotacje" (annotations) suggests something optional — notes, remarks. In reality, it's a mandatory section with eight fields, each of which must have a value. Three of them (`Zwolnienie`, `NoweSrodkiTransportu`, `PMarzy`) require nested child elements — even when the answer is "no".
+
+**How to fix it**
+
+For a standard VAT invoice with no special conditions, a complete `Adnotacje` block looks like this:
+
+<XmlExample copyable>
+```xml
+<!-- ❌ Incomplete Adnotacje -->
+<Adnotacje>
+  <P_16>2</P_16>
+  <P_17>2</P_17>
+</Adnotacje>
+
+<!-- ✅ Complete Adnotacje (standard invoice) -->
+<Adnotacje>
+  <P_16>2</P_16>
+  <P_17>2</P_17>
+  <P_18>2</P_18>
+  <P_18A>2</P_18A>
+  <Zwolnienie><P_19N>1</P_19N></Zwolnienie>
+  <NoweSrodkiTransportu><P_22N>1</P_22N></NoweSrodkiTransportu>
+  <P_23>2</P_23>
+  <PMarzy><P_PMarzyN>1</P_PMarzyN></PMarzy>
+</Adnotacje>
+````
+
+</XmlExample>
+
+Element order within `Adnotacje` is also mandatory: P_16 → P_17 → P_18 → P_18A → Zwolnienie → NoweSrodkiTransportu → P_23 → PMarzy. Copy the block above as a template — for most invoices, nothing in it needs to change.
+
+---
+
+## 12. Confusing OkresFa with P_6
+
+The invoice contains both `P_6` (shared delivery date) and `P_6A` (per-line delivery date), or `OkresFa` is used instead of `P_6` when the invoice doesn't relate to a recurring service.
+
+**Why this happens**
+
+Three fields, three different purposes — and they're easy to mix up:
+
+- **P_6** (in `Fa`) — delivery/service date, shared across all invoice lines
+- **P_6A** (in `FaWiersz`) — delivery/service date for a specific line, when lines have different dates
+- **OkresFa** (in `Fa`) — billing period (e.g. September subscription), with sub-fields `P_6_Od` and `P_6_Do`
+
+The key rule: within the `Fa` section, **P_6 and OkresFa are mutually exclusive** — they form an `xs:choice` in the XSD schema. The prohibition on combining **P_6 with P_6A** is a separate semantic validation rule. However, `OkresFa` (in `Fa`) can appear alongside `P_6A` (in `FaWiersz`), because `OkresFa` does not conflict with `P_6A` at any level of the schema.
+
+**How to fix it**
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ P_6 and P_6A at the same time -->
+  <Fa>
+    <P_6>2026-09-15</P_6>
+    ...
+  </Fa>
+  <FaWiersz>
+    <NrWierszaFa>1</NrWierszaFa>
+    <P_6A>2026-09-14</P_6A>
+    ...
+  </FaWiersz>
+
+  <!-- ✅ Option A: shared delivery date (P_6 in Fa, no P_6A) -->
+
+<Fa>
+  <P_6>2026-09-15</P_6>
+  ...
+</Fa>
+<FaWiersz>
+  <NrWierszaFa>1</NrWierszaFa>
+  ...
+</FaWiersz>
+
+  <!-- ✅ Option B: per-line dates (P_6A in FaWiersz, no P_6) -->
+
+<Fa>...</Fa>
+<FaWiersz>
+  <NrWierszaFa>1</NrWierszaFa>
+  <P_6A>2026-09-14</P_6A>
+  ...
+</FaWiersz>
+<FaWiersz>
+  <NrWierszaFa>2</NrWierszaFa>
+  <P_6A>2026-09-15</P_6A>
+  ...
+</FaWiersz>
+
+  <!-- ✅ Option C: billing period (OkresFa instead of P_6) -->
+
+  <Fa>
+    <OkresFa>
+      <P_6_Od>2026-09-01</P_6_Od>
+      <P_6_Do>2026-09-30</P_6_Do>
+    </OkresFa>
+    ...
+  </Fa>
+  ```
+</XmlExample>
+
+Don't confuse `P_6` with `P_1` either. `P_1` is the invoice issue date — always required. `P_6` is the delivery or service date — often the same as `P_1`, but they are two separate fields with distinct legal meaning.
+
+---
+
+## Validate before you submit
+
+Every error above leads to the same outcome: the invoice gets rejected — or worse, accepted with data that doesn't reflect reality.
+
+You don't need to memorise the FA(3) schema. You just need to check the file before submitting.
+
+> Drop your XML file into ksefuj.to — the validator shows you exactly what to fix, with clear instructions.
+
+**[ksefuj.to](/)** checks both schema compliance and semantic rules against official MF requirements. It runs entirely in your browser — your file is never uploaded anywhere. No sign-up, no charge.
+
+If you're just getting started with KSeF, begin with our [first invoice guide](/przewodniki/pierwsza-faktura).
+
+---
+
+## Cheat sheet — all 12 errors at a glance
+
+| #   | Error                         | Common cause                               | How to fix                                                     |
+| :-- | :---------------------------- | :----------------------------------------- | :------------------------------------------------------------- |
+| 1   | Missing / wrong namespace     | Old FA(2) template or missing `xmlns`      | Set `xmlns="http://crd.gov.pl/wzor/2025/06/25/13775/"`         |
+| 2   | Wrong element order           | Manual XML editing                         | Maintain order: Naglowek → Podmiot1 → Podmiot2 → Fa → FaWiersz |
+| 3   | Missing required elements     | Omitted mandatory field                    | Check required fields at each level                            |
+| 4   | Invalid NIP                   | Hyphens, spaces, `PL` prefix               | 10 consecutive digits, no separators                           |
+| 5   | Wrong date format             | Polish `DD.MM.YYYY` format                 | Date: `YYYY-MM-DD`; DataWytworzeniaFa: `YYYY-MM-DDTHH:MM:SSZ`  |
+| 6   | Too many decimal places       | Full precision from ERP/spreadsheet        | Amounts: max 2; quantities: max 6; unit prices: max 8          |
+| 7   | Missing Podmiot2 / JST / GV   | Old template without JST and GV            | Add `<JST>2</JST>` and `<GV>2</GV>`                            |
+| 8   | Invalid VAT rate              | Bare `0`, `23%`, `ZW`                      | Use exact catalogue value: `0 KR`, `23`, `zw`                  |
+| 9   | Missing buyer country code    | Prefix inside VAT number                   | Split into: `KodUE` + `NrVatUE` or `KodKraju` + `NrID`         |
+| 10  | P_15 doesn't match totals     | Rounding error or missing P_13_x           | P_15 = Σ P_13_x + Σ P_14_x                                     |
+| 11  | Incomplete Adnotacje          | "Irrelevant" fields omitted                | All 8 fields required — copy the template from this article    |
+| 12  | P_6 and P_6A at the same time | Confused delivery date with billing period | P_6 or P_6A — never both. OkresFa is independent               |
+
+<Source
+  href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+  label="FA(3) XSD Schema — crd.gov.pl"
+/>
