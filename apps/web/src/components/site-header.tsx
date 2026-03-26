@@ -70,7 +70,7 @@ export function SiteHeader({ locale, languagePicker }: SiteHeaderProps) {
           className={cn(
             "pointer-events-auto transition-all duration-200 ease-linear",
             scrolled
-              ? "mx-4 md:mx-auto mt-3 max-w-4xl rounded-2xl shadow-sm border border-white/60 bg-white/50 backdrop-blur-2xl"
+              ? "mx-2 md:mx-auto mt-2 md:mt-4 max-w-4xl rounded-2xl shadow-sm border border-white/60 bg-white/50 backdrop-blur-2xl"
               : "border-b border-slate-100 bg-white/80 backdrop-blur-xl pt-[env(safe-area-inset-top)]",
           )}
         >
