@@ -38,13 +38,6 @@ const contentSections: Record<string, Array<{ section: string; urlPrefix: string
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const entries: MetadataRoute.Sitemap = [];
 
-  // RSS feed
-  entries.push({
-    url: `${BASE_URL}/feed.xml`,
-    changeFrequency: "daily",
-    priority: 0.5,
-  });
-
   // Static pages (all locales)
   for (const page of pages) {
     for (const prefix of localePrefixes) {
