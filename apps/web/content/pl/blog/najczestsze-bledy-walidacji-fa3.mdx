@@ -30,12 +30,17 @@ Ten artykuł opisuje **12 najczęstszych błędów walidacji FA(3)** — po pols
 Jeśli Twój program do fakturowania generuje plik XML automatycznie, większość tych błędów powinien wyłapać za Ciebie. Ale jeśli integrujesz KSeF przez API, piszesz własny eksport albo po prostu chcesz zrozumieć, dlaczego faktura została odrzucona — tutaj znajdziesz odpowiedzi.
 
 <Tip>
-Zanim wyślesz fakturę do KSeF, wrzuć plik XML na [ksefuj.to](/) — bezpłatny walidator, który sprawdza zgodność z oficjalnymi wymaganiami MF i wyjaśnia każdy błąd po polsku. Twój plik nie opuszcza przeglądarki.
+  Zanim wyślesz fakturę do KSeF, wrzuć plik XML na [ksefuj.to](/) — bezpłatny walidator, który
+  sprawdza zgodność z oficjalnymi wymaganiami MF i wyjaśnia każdy błąd po polsku. Twój plik nie
+  opuszcza przeglądarki.
 </Tip>
 
 Wszystkie przykłady w tym artykule opierają się na schemacie FA(3) obowiązującym od 1 lutego 2026 roku.
 
-<Source href="https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf" label="Broszura informacyjna FA(3) — Ministerstwo Finansów" />
+<Source
+  href="https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  label="Broszura informacyjna FA(3) — Ministerstwo Finansów"
+/>
 
 ---
 
@@ -59,11 +64,11 @@ Upewnij się, że element `<Faktura>` zaczyna się dokładnie tak:
   </Faktura>
 
   <!-- ❌ Stary namespace FA(2) — nieważny od 1 lutego 2026 -->
-  <Faktura xmlns="http://crd.gov.pl/wzor/2023/06/29/12648/">
-    ...
-  </Faktura>
+
+<Faktura xmlns="http://crd.gov.pl/wzor/2023/06/29/12648/">...</Faktura>
 
   <!-- ✅ Poprawny namespace FA(3) -->
+
   <Faktura xmlns="http://crd.gov.pl/wzor/2025/06/25/13775/">
     ...
   </Faktura>
@@ -71,7 +76,8 @@ Upewnij się, że element `<Faktura>` zaczyna się dokładnie tak:
 </XmlExample>
 
 <Warning>
-Jeśli korzystasz z szablonów lub poradników sprzed lutego 2026 — namespace prawie na pewno jest nieaktualny. FA(2) przestał obowiązywać 31 stycznia 2026.
+  Jeśli korzystasz z szablonów lub poradników sprzed lutego 2026 — namespace prawie na pewno jest
+  nieaktualny. FA(2) przestał obowiązywać 31 stycznia 2026.
 </Warning>
 
 ---
@@ -103,6 +109,7 @@ Elementy w nawiasach kwadratowych są opcjonalne, ale jeśli występują, muszą
   </Faktura>
 
   <!-- ✅ Poprawna kolejność -->
+
   <Faktura xmlns="http://crd.gov.pl/wzor/2025/06/25/13775/">
     <Naglowek>...</Naglowek>
     <Podmiot1>...</Podmiot1>
@@ -144,6 +151,7 @@ Sprawdź, czy Twój plik zawiera przynajmniej te elementy:
   </Naglowek>
 
   <!-- ✅ Komplet wymaganych pól w Naglowek -->
+
   <Naglowek>
     <KodFormularza kodSystemowy="FA (3)" wersjaSchemy="1-0E">FA</KodFormularza>
     <WariantFormularza>3</WariantFormularza>
@@ -174,15 +182,19 @@ Usuń wszystkie separatory i prefiks kraju. NIP to 10 cyfr ciągiem.
   <NIP>123-456-78-90</NIP>
 
   <!-- ❌ Prefiks kraju w NIP -->
-  <NIP>PL1234567890</NIP>
+
+<NIP>PL1234567890</NIP>
 
   <!-- ✅ 10 cyfr, bez separatorów -->
+
   <NIP>1234567890</NIP>
   ```
 </XmlExample>
 
 <Warning>
-NIP polskiego nabywcy musi trafić do pola `NIP` w `Podmiot2/DaneIdentyfikacyjne` — nie do `NrVatUE` ani `NrID`. Jeśli NIP nabywcy znajdzie się w złym polu, faktura nie zostanie poprawnie doręczona w KSeF.
+  NIP polskiego nabywcy musi trafić do pola `NIP` w `Podmiot2/DaneIdentyfikacyjne` — nie do
+  `NrVatUE` ani `NrID`. Jeśli NIP nabywcy znajdzie się w złym polu, faktura nie zostanie poprawnie
+  doręczona w KSeF.
 </Warning>
 
 ---
@@ -206,18 +218,23 @@ Polski format daty (`DD.MM.RRRR`) i format ISO (`RRRR-MM-DD`) wyglądają zupeł
   <P_1>15.09.2026</P_1>
 
   <!-- ❌ Data i czas w polu, które przyjmuje tylko datę -->
-  <P_1>2026-09-15T10:00:00Z</P_1>
+
+<P_1>2026-09-15T10:00:00Z</P_1>
 
   <!-- ✅ Poprawna data -->
-  <P_1>2026-09-15</P_1>
+
+<P_1>2026-09-15</P_1>
 
   <!-- ❌ Brak sufiksu Z -->
-  <DataWytworzeniaFa>2026-09-15T10:00:00</DataWytworzeniaFa>
+
+<DataWytworzeniaFa>2026-09-15T10:00:00</DataWytworzeniaFa>
 
   <!-- ❌ Offset strefy czasowej zamiast Z (broszura MF wymaga Z) -->
-  <DataWytworzeniaFa>2026-09-15T10:00:00+02:00</DataWytworzeniaFa>
+
+<DataWytworzeniaFa>2026-09-15T10:00:00+02:00</DataWytworzeniaFa>
 
   <!-- ✅ Data i czas z Z (UTC) -->
+
   <DataWytworzeniaFa>2026-09-15T10:00:00Z</DataWytworzeniaFa>
   ```
 </XmlExample>
@@ -248,23 +265,30 @@ Separator dziesiętny to zawsze kropka (`.`). Przecinek, spacja ani żaden inny 
   <P_15>123.123</P_15>
 
   <!-- ✅ Poprawnie — 2 miejsca -->
-  <P_15>123.12</P_15>
+
+<P_15>123.12</P_15>
 
   <!-- ❌ 7 miejsc w ilości P_8B (maks. 6) -->
-  <P_8B>1.1234567</P_8B>
+
+<P_8B>1.1234567</P_8B>
 
   <!-- ✅ Poprawnie — 6 miejsc -->
-  <P_8B>1.123456</P_8B>
+
+<P_8B>1.123456</P_8B>
 
   <!-- ❌ Przecinek jako separator dziesiętny -->
-  <P_15>123,45</P_15>
+
+<P_15>123,45</P_15>
 
   <!-- ❌ Spacja jako separator tysięcy -->
-  <P_15>1 234.56</P_15>
+
+<P_15>1 234.56</P_15>
 
   <!-- ✅ Tylko kropka, bez separatorów -->
-  <P_15>1234.56</P_15>
-  ```
+
+<P_15>1234.56</P_15>
+
+````
 </XmlExample>
 
 ---
@@ -285,33 +309,34 @@ Dodaj `JST` i `GV` na końcu bloku `Podmiot2` — po `Adres` i ewentualnych pola
 - `GV` = `1` → faktura dotyczy członka grupy VAT; `2` → nie dotyczy
 
 <XmlExample copyable>
-  ```xml
-  <!-- ❌ Brak JST i GV -->
-  <Podmiot2>
-    <DaneIdentyfikacyjne>
-      <NIP>9876543210</NIP>
-      <Nazwa>Firma Nabywcy</Nazwa>
-    </DaneIdentyfikacyjne>
-    <Adres>
-      <KodKraju>PL</KodKraju>
-      <AdresL1>ul. Testowa 1, 00-001 Warszawa</AdresL1>
-    </Adres>
-  </Podmiot2>
+```xml
+<!-- ❌ Brak JST i GV -->
+<Podmiot2>
+  <DaneIdentyfikacyjne>
+    <NIP>9876543210</NIP>
+    <Nazwa>Firma Nabywcy</Nazwa>
+  </DaneIdentyfikacyjne>
+  <Adres>
+    <KodKraju>PL</KodKraju>
+    <AdresL1>ul. Testowa 1, 00-001 Warszawa</AdresL1>
+  </Adres>
+</Podmiot2>
 
-  <!-- ✅ Z JST i GV -->
-  <Podmiot2>
-    <DaneIdentyfikacyjne>
-      <NIP>9876543210</NIP>
-      <Nazwa>Firma Nabywcy</Nazwa>
-    </DaneIdentyfikacyjne>
-    <Adres>
-      <KodKraju>PL</KodKraju>
-      <AdresL1>ul. Testowa 1, 00-001 Warszawa</AdresL1>
-    </Adres>
-    <JST>2</JST>
-    <GV>2</GV>
-  </Podmiot2>
-  ```
+<!-- ✅ Z JST i GV -->
+<Podmiot2>
+  <DaneIdentyfikacyjne>
+    <NIP>9876543210</NIP>
+    <Nazwa>Firma Nabywcy</Nazwa>
+  </DaneIdentyfikacyjne>
+  <Adres>
+    <KodKraju>PL</KodKraju>
+    <AdresL1>ul. Testowa 1, 00-001 Warszawa</AdresL1>
+  </Adres>
+  <JST>2</JST>
+  <GV>2</GV>
+</Podmiot2>
+````
+
 </XmlExample>
 
 ---
@@ -334,26 +359,34 @@ Dozwolone wartości P_12: `23`, `22`, `8`, `7`, `5`, `4`, `3`, `0 KR`, `0 WDT`, 
   <P_12>0</P_12>
 
   <!-- ✅ Stawka 0% krajowa -->
-  <P_12>0 KR</P_12>
+
+<P_12>0 KR</P_12>
 
   <!-- ❌ Znak procentu -->
-  <P_12>23%</P_12>
+
+<P_12>23%</P_12>
 
   <!-- ✅ Bez znaku procentu -->
-  <P_12>23</P_12>
+
+<P_12>23</P_12>
 
   <!-- ❌ Wielkie litery -->
-  <P_12>ZW</P_12>
+
+<P_12>ZW</P_12>
 
   <!-- ✅ Małe litery -->
-  <P_12>zw</P_12>
+
+<P_12>zw</P_12>
 
   <!-- ❌ Brak spacji -->
-  <P_12>0KR</P_12>
+
+<P_12>0KR</P_12>
 
   <!-- ✅ Ze spacją -->
-  <P_12>0 KR</P_12>
-  ```
+
+<P_12>0 KR</P_12>
+
+````
 </XmlExample>
 
 <Info>
@@ -381,27 +414,28 @@ Częsty błąd to wpisanie kodu kraju wewnątrz numeru VAT (np. `DE123456789` w 
 **Jak naprawić**
 
 <XmlExample copyable>
-  ```xml
-  <!-- ❌ Prefiks kraju w numerze VAT -->
-  <DaneIdentyfikacyjne>
-    <NrVatUE>DE123456789</NrVatUE>
-    <Nazwa>Deutsche Firma GmbH</Nazwa>
-  </DaneIdentyfikacyjne>
+```xml
+<!-- ❌ Prefiks kraju w numerze VAT -->
+<DaneIdentyfikacyjne>
+  <NrVatUE>DE123456789</NrVatUE>
+  <Nazwa>Deutsche Firma GmbH</Nazwa>
+</DaneIdentyfikacyjne>
 
-  <!-- ✅ Nabywca z UE — kod kraju w osobnym polu -->
-  <DaneIdentyfikacyjne>
-    <KodUE>DE</KodUE>
-    <NrVatUE>123456789</NrVatUE>
-    <Nazwa>Deutsche Firma GmbH</Nazwa>
-  </DaneIdentyfikacyjne>
+<!-- ✅ Nabywca z UE — kod kraju w osobnym polu -->
+<DaneIdentyfikacyjne>
+  <KodUE>DE</KodUE>
+  <NrVatUE>123456789</NrVatUE>
+  <Nazwa>Deutsche Firma GmbH</Nazwa>
+</DaneIdentyfikacyjne>
 
-  <!-- ✅ Nabywca spoza UE -->
-  <DaneIdentyfikacyjne>
-    <KodKraju>US</KodKraju>
-    <NrID>12-3456789</NrID>
-    <Nazwa>American Corp</Nazwa>
-  </DaneIdentyfikacyjne>
-  ```
+<!-- ✅ Nabywca spoza UE -->
+<DaneIdentyfikacyjne>
+  <KodKraju>US</KodKraju>
+  <NrID>12-3456789</NrID>
+  <Nazwa>American Corp</Nazwa>
+</DaneIdentyfikacyjne>
+````
+
 </XmlExample>
 
 Pamiętaj: `KodKraju` w `DaneIdentyfikacyjne` to kontekst identyfikacji podatkowej. `KodKraju` w `Adres` to kontekst adresowy. To dwa osobne pola w różnych sekcjach.
@@ -430,18 +464,21 @@ Dotyczy to P_13_1 przez P_13_11 i P_14_1 przez P_14_5. Pola P_13_6_1 do P_13_11 
   <P_15>1200.00</P_15>
 
   <!-- ✅ Poprawna suma: 1000 + 230 = 1230 -->
-  <P_13_1>1000.00</P_13_1>
-  <P_14_1>230.00</P_14_1>
-  <P_15>1230.00</P_15>
+
+<P_13_1>1000.00</P_13_1>
+<P_14_1>230.00</P_14_1>
+<P_15>1230.00</P_15>
 
   <!-- ✅ Przykład z mieszanymi stawkami -->
   <!-- 100 (netto 23%) + 23 (VAT 23%) + 200 (netto 8%) + 16 (VAT 8%) = 339 -->
-  <P_13_1>100.00</P_13_1>
-  <P_14_1>23.00</P_14_1>
-  <P_13_2>200.00</P_13_2>
-  <P_14_2>16.00</P_14_2>
-  <P_15>339.00</P_15>
-  ```
+
+<P_13_1>100.00</P_13_1>
+<P_14_1>23.00</P_14_1>
+<P_13_2>200.00</P_13_2>
+<P_14_2>16.00</P_14_2>
+<P_15>339.00</P_15>
+
+````
 </XmlExample>
 
 <Tip>
@@ -463,25 +500,26 @@ Nazwa „Adnotacje" sugeruje coś opcjonalnego — notatki, uwagi. W rzeczywisto
 Dla standardowej faktury VAT bez szczególnych warunków, kompletny blok `Adnotacje` wygląda tak:
 
 <XmlExample copyable>
-  ```xml
-  <!-- ❌ Niekompletne Adnotacje -->
-  <Adnotacje>
-    <P_16>2</P_16>
-    <P_17>2</P_17>
-  </Adnotacje>
+```xml
+<!-- ❌ Niekompletne Adnotacje -->
+<Adnotacje>
+  <P_16>2</P_16>
+  <P_17>2</P_17>
+</Adnotacje>
 
-  <!-- ✅ Kompletne Adnotacje (standardowa faktura) -->
-  <Adnotacje>
-    <P_16>2</P_16>
-    <P_17>2</P_17>
-    <P_18>2</P_18>
-    <P_18A>2</P_18A>
-    <Zwolnienie><P_19N>1</P_19N></Zwolnienie>
-    <NoweSrodkiTransportu><P_22N>1</P_22N></NoweSrodkiTransportu>
-    <P_23>2</P_23>
-    <PMarzy><P_PMarzyN>1</P_PMarzyN></PMarzy>
-  </Adnotacje>
-  ```
+<!-- ✅ Kompletne Adnotacje (standardowa faktura) -->
+<Adnotacje>
+  <P_16>2</P_16>
+  <P_17>2</P_17>
+  <P_18>2</P_18>
+  <P_18A>2</P_18A>
+  <Zwolnienie><P_19N>1</P_19N></Zwolnienie>
+  <NoweSrodkiTransportu><P_22N>1</P_22N></NoweSrodkiTransportu>
+  <P_23>2</P_23>
+  <PMarzy><P_PMarzyN>1</P_PMarzyN></PMarzy>
+</Adnotacje>
+````
+
 </XmlExample>
 
 Kolejność elementów w `Adnotacje` też jest obowiązkowa: P_16 → P_17 → P_18 → P_18A → Zwolnienie → NoweSrodkiTransportu → P_23 → PMarzy. Skopiuj powyższy blok jako szablon — w większości faktur nic w nim nie trzeba zmieniać.
@@ -518,31 +556,32 @@ Kluczowa zasada: w sekcji `Fa` pole **P_6 i element OkresFa wzajemnie się wyklu
   </FaWiersz>
 
   <!-- ✅ Opcja A: wspólna data dostawy (P_6 w Fa, bez P_6A) -->
-  <Fa>
-    <P_6>2026-09-15</P_6>
-    ...
-  </Fa>
-  <FaWiersz>
-    <NrWierszaFa>1</NrWierszaFa>
-    ...
-  </FaWiersz>
+
+<Fa>
+  <P_6>2026-09-15</P_6>
+  ...
+</Fa>
+<FaWiersz>
+  <NrWierszaFa>1</NrWierszaFa>
+  ...
+</FaWiersz>
 
   <!-- ✅ Opcja B: daty per wiersz (P_6A w FaWiersz, bez P_6) -->
-  <Fa>
-    ...
-  </Fa>
-  <FaWiersz>
-    <NrWierszaFa>1</NrWierszaFa>
-    <P_6A>2026-09-14</P_6A>
-    ...
-  </FaWiersz>
-  <FaWiersz>
-    <NrWierszaFa>2</NrWierszaFa>
-    <P_6A>2026-09-15</P_6A>
-    ...
-  </FaWiersz>
+
+<Fa>...</Fa>
+<FaWiersz>
+  <NrWierszaFa>1</NrWierszaFa>
+  <P_6A>2026-09-14</P_6A>
+  ...
+</FaWiersz>
+<FaWiersz>
+  <NrWierszaFa>2</NrWierszaFa>
+  <P_6A>2026-09-15</P_6A>
+  ...
+</FaWiersz>
 
   <!-- ✅ Opcja C: okres rozliczeniowy (OkresFa zamiast P_6) -->
+
   <Fa>
     <OkresFa>
       <P_6_Od>2026-09-01</P_6_Od>
@@ -573,19 +612,22 @@ Jeśli dopiero zaczynasz przygodę z KSeF, zacznij od naszego [przewodnika po pi
 
 ## Ściągawka — 12 błędów w jednym miejscu
 
-| # | Błąd | Częsta przyczyna | Jak naprawić |
-| :-- | :--- | :--- | :--- |
-| 1 | Brak / zły namespace | Stary szablon FA(2) lub brak `xmlns` | Ustaw `xmlns="http://crd.gov.pl/wzor/2025/06/25/13775/"` |
-| 2 | Zła kolejność elementów | Ręczna edycja XML | Zachowaj kolejność: Naglowek → Podmiot1 → Podmiot2 → Fa → FaWiersz |
-| 3 | Brak wymaganych elementów | Pominięte pole obowiązkowe | Sprawdź listę wymaganych pól na każdym poziomie |
-| 4 | Nieprawidłowy NIP | Myślniki, spacje, prefiks `PL` | 10 cyfr ciągiem, bez separatorów |
-| 5 | Zły format daty | Polski format `DD.MM.RRRR` | Data: `RRRR-MM-DD`; DataWytworzeniaFa: `RRRR-MM-DDTHH:MM:SSZ` |
-| 6 | Za dużo miejsc po przecinku | Precyzja z ERP/arkusza | Kwoty: maks. 2; ilości: maks. 6; ceny: maks. 8 |
-| 7 | Brak Podmiot2 / JST / GV | Stary szablon bez JST i GV | Dodaj `<JST>2</JST>` i `<GV>2</GV>` |
-| 8 | Nieprawidłowa stawka VAT | Samo `0`, `23%`, `ZW` | Użyj dokładnej wartości z katalogu: `0 KR`, `23`, `zw` |
-| 9 | Brak kodu kraju nabywcy | Prefiks w numerze VAT | Rozdziel: `KodUE` + `NrVatUE` lub `KodKraju` + `NrID` |
-| 10 | P_15 nie zgadza się z sumami | Błąd zaokrąglania lub pominięte P_13_x | P_15 = Σ P_13_x + Σ P_14_x |
-| 11 | Niekompletne Adnotacje | Pominięte „nieistotne" pola | Wszystkie 8 pól obowiązkowe — skopiuj szablon z artykułu |
-| 12 | P_6 i P_6A jednocześnie | Pomylenie daty dostawy z okresem | P_6 lub P_6A — nigdy oba naraz. OkresFa jest niezależny |
+| #   | Błąd                         | Częsta przyczyna                       | Jak naprawić                                                       |
+| :-- | :--------------------------- | :------------------------------------- | :----------------------------------------------------------------- |
+| 1   | Brak / zły namespace         | Stary szablon FA(2) lub brak `xmlns`   | Ustaw `xmlns="http://crd.gov.pl/wzor/2025/06/25/13775/"`           |
+| 2   | Zła kolejność elementów      | Ręczna edycja XML                      | Zachowaj kolejność: Naglowek → Podmiot1 → Podmiot2 → Fa → FaWiersz |
+| 3   | Brak wymaganych elementów    | Pominięte pole obowiązkowe             | Sprawdź listę wymaganych pól na każdym poziomie                    |
+| 4   | Nieprawidłowy NIP            | Myślniki, spacje, prefiks `PL`         | 10 cyfr ciągiem, bez separatorów                                   |
+| 5   | Zły format daty              | Polski format `DD.MM.RRRR`             | Data: `RRRR-MM-DD`; DataWytworzeniaFa: `RRRR-MM-DDTHH:MM:SSZ`      |
+| 6   | Za dużo miejsc po przecinku  | Precyzja z ERP/arkusza                 | Kwoty: maks. 2; ilości: maks. 6; ceny: maks. 8                     |
+| 7   | Brak Podmiot2 / JST / GV     | Stary szablon bez JST i GV             | Dodaj `<JST>2</JST>` i `<GV>2</GV>`                                |
+| 8   | Nieprawidłowa stawka VAT     | Samo `0`, `23%`, `ZW`                  | Użyj dokładnej wartości z katalogu: `0 KR`, `23`, `zw`             |
+| 9   | Brak kodu kraju nabywcy      | Prefiks w numerze VAT                  | Rozdziel: `KodUE` + `NrVatUE` lub `KodKraju` + `NrID`              |
+| 10  | P_15 nie zgadza się z sumami | Błąd zaokrąglania lub pominięte P_13_x | P_15 = Σ P_13_x + Σ P_14_x                                         |
+| 11  | Niekompletne Adnotacje       | Pominięte „nieistotne" pola            | Wszystkie 8 pól obowiązkowe — skopiuj szablon z artykułu           |
+| 12  | P_6 i P_6A jednocześnie      | Pomylenie daty dostawy z okresem       | P_6 lub P_6A — nigdy oba naraz. OkresFa jest niezależny            |
 
-<Source href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd" label="Schemat XSD FA(3) — crd.gov.pl" />
+<Source
+  href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+  label="Schemat XSD FA(3) — crd.gov.pl"
+/>
