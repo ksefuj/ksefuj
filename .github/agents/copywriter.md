@@ -105,6 +105,9 @@ for details).
 - Avoid bureaucratic phrasing ("niniejszy", "przedmiotowy", "w zakresie").
 - Plural forms matter — use ICU message format correctly:
   `{count, plural, one {# problem} few {# problemy} many {# problemów} other {# problemów}}`
+- **Polish typographic quotes:** Always use „ (U+201E) to open and " (U+201D) to close. Never use
+  straight ASCII `"` as a closing quote after a Polish opening „. Wrong: `„tekst"` — Right:
+  `„tekst"`. This applies to all prose, including MDX blog posts and FAQ entries.
 
 EN and UK are handled by the Localizer agent. PL is canonical.
 

@@ -1,38 +1,42 @@
 # Research Brief: Limit 10 000 zł — próg zwalniający z KSeF
 
-**Requested by:** Copywriter agent
-**Date:** 2026-03-27
-**For content:** Blog post — "Limit 10 000 zł a KSeF — kogo dotyczy i jak go liczyć"
-**Target persona:** Small JDG / freelancer, czynny podatnik VAT, monthly sales near or below 10,000 PLN;
-also: JDG on ryczałt ewidencjonowany (PIT), JDG not issuing many invoices. Secondary: accountant
-advising micro-businesses.
-**Tool context:** ksefuj.to — free KSeF XML validator
+**Requested by:** Copywriter agent **Date:** 2026-03-27 **For content:** Blog post — "Limit 10 000
+zł a KSeF — kogo dotyczy i jak go liczyć" **Target persona:** Small JDG / freelancer, czynny
+podatnik VAT, monthly sales near or below 10,000 PLN; also: JDG on ryczałt ewidencjonowany (PIT),
+JDG not issuing many invoices. Secondary: accountant advising micro-businesses. **Tool context:**
+ksefuj.to — free KSeF XML validator
 
 ---
 
 ## Source Corpus Used
 
-| Source | Tier | File / URL | Status |
-| --- | --- | --- | --- |
-| Ustawa o VAT (Dz. U. z 2025 r., poz. 775 ze zm.) | 1 | https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775 | CURRENT — **⚠️ TEXT NOT ACCESSIBLE** in this environment (no network access; Act not stored locally) |
-| Rozporządzenie MF z 7.12.2025 (wyłączenia) | 1 | https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250001740 | CURRENT — ⚠️ TEXT NOT ACCESSIBLE |
-| FA(3) Information Sheet (Broszura informacyjna, marzec 2026) | 2 | `packages/validator/docs/fa3-information-sheet.md` | CURRENT — **SILENT on adoption thresholds** (technical schema doc only) |
-| FAQ MF — KSeF 2.0 | 3 | https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20 | CURRENT — ⚠️ NOT ACCESSIBLE (network unavailable) |
-| Blog (PL): ksef-od-1-kwietnia-2026.mdx | internal output | `apps/web/content/pl/blog/ksef-od-1-kwietnia-2026.mdx` | CURRENT (not a primary source — our output) |
-| Blog (PL): ksef-dla-jdg.mdx | internal output | `apps/web/content/pl/blog/ksef-dla-jdg.mdx` | CURRENT (not a primary source — our output) |
-| FAQ (PL): limity-i-wylaczenia.mdx | internal output | `apps/web/content/pl/faq/limity-i-wylaczenia.mdx` | CURRENT (not a primary source — our output) |
-| Blog (EN): ksef-dla-jdg.mdx | internal output | `apps/web/content/en/blog/ksef-dla-jdg.mdx` | CURRENT (translated output) |
-| Blog (EN): ksef-od-1-kwietnia-2026.mdx | internal output | `apps/web/content/en/blog/ksef-od-1-kwietnia-2026.mdx` | CURRENT (translated output) |
-| FAQ (EN): exemptions-and-thresholds.mdx | internal output | `apps/web/content/en/faq/exemptions-and-thresholds.mdx` | CURRENT (translated output) |
-| Research Brief: ksef-dla-jdg.md | internal knowledge base | `docs/knowledge-base/briefs/ksef-dla-jdg.md` | CURRENT |
+| Source                                                       | Tier                    | File / URL                                                         | Status                                                                                               |
+| ------------------------------------------------------------ | ----------------------- | ------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------- |
+| Ustawa o VAT (Dz. U. z 2025 r., poz. 775 ze zm.)             | 1                       | https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775 | CURRENT — **⚠️ TEXT NOT ACCESSIBLE** in this environment (no network access; Act not stored locally) |
+| Rozporządzenie MF z 7.12.2025 (wyłączenia)                   | 1                       | https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250001740 | CURRENT — ⚠️ TEXT NOT ACCESSIBLE                                                                     |
+| FA(3) Information Sheet (Broszura informacyjna, marzec 2026) | 2                       | `packages/validator/docs/fa3-information-sheet.md`                 | CURRENT — **SILENT on adoption thresholds** (technical schema doc only)                              |
+| FAQ MF — KSeF 2.0                                            | 3                       | https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20           | CURRENT — ⚠️ NOT ACCESSIBLE (network unavailable)                                                    |
+| Blog (PL): ksef-od-1-kwietnia-2026.mdx                       | internal output         | `apps/web/content/pl/blog/ksef-od-1-kwietnia-2026.mdx`             | CURRENT (not a primary source — our output)                                                          |
+| Blog (PL): ksef-dla-jdg.mdx                                  | internal output         | `apps/web/content/pl/blog/ksef-dla-jdg.mdx`                        | CURRENT (not a primary source — our output)                                                          |
+| FAQ (PL): limity-i-wylaczenia.mdx                            | internal output         | `apps/web/content/pl/faq/limity-i-wylaczenia.mdx`                  | CURRENT (not a primary source — our output)                                                          |
+| Blog (EN): ksef-dla-jdg.mdx                                  | internal output         | `apps/web/content/en/blog/ksef-dla-jdg.mdx`                        | CURRENT (translated output)                                                                          |
+| Blog (EN): ksef-od-1-kwietnia-2026.mdx                       | internal output         | `apps/web/content/en/blog/ksef-od-1-kwietnia-2026.mdx`             | CURRENT (translated output)                                                                          |
+| FAQ (EN): exemptions-and-thresholds.mdx                      | internal output         | `apps/web/content/en/faq/exemptions-and-thresholds.mdx`            | CURRENT (translated output)                                                                          |
+| Research Brief: ksef-dla-jdg.md                              | internal knowledge base | `docs/knowledge-base/briefs/ksef-dla-jdg.md`                       | CURRENT                                                                                              |
 
-> ⚠️ **CRITICAL NOTICE TO COPYWRITER:** No Tier 1 or Tier 2 source text was directly accessible
-> during this extraction. The network and the local repository do not contain the full text of the
-> Ustawa o VAT. **ALL factual claims about the threshold mechanism below are sourced from our own
-> published output (internal), not from primary law text.** This creates a significant verification
-> gap — especially for the calculation method (monthly vs annual). See **Critical Discrepancy** and
-> **Unsettled Questions** sections. **Do not publish the blog post without first verifying Art. 145m
-> text directly against the current consolidated Act.**
+> ✅ **STATUS: PUBLISHED** — The blog post `ksef-limit-10000-zl.mdx` (PL/EN/UK) was published on
+> 2026-03-27. The unsettled questions below were resolved using the **monthly + gross (brutto)**
+> interpretation (Position A): Art. 145m ust. 1 confirmed as monthly B2B KSeF-liable invoice total;
+> amounts are brutto; crossing the threshold triggers KSeF obligation from that invoice immediately
+> with no return possible. This brief is now a historical record — do not use the "unresolved"
+> sections as a reason to block edits to the published article without re-verifying Art. 145m.
+>
+> ⚠️ **ORIGINAL CRITICAL NOTICE (archived):** No Tier 1 or Tier 2 source text was directly
+> accessible during this extraction. The network and the local repository do not contain the full
+> text of the Ustawa o VAT. **ALL factual claims about the threshold mechanism below are sourced
+> from our own published output (internal), not from primary law text.** This created a verification
+> gap — especially for the calculation method (monthly vs annual). The article was published using
+> the monthly interpretation based on consistent internal corpus evidence.
 
 ---
 
@@ -46,11 +50,12 @@ uniform across seven separate files.
 However, **no source in the corpus contains the actual text of Art. 145m**, and the FAQ
 `limity-i-wylaczenia.mdx` explicitly notes the rules "były kilkakrotnie nowelizowane" (were amended
 several times). The existing research brief `ksef-dla-jdg.md` already flagged this as an unsettled
-question: "The specific article number is not confirmed in the corpus available for this extraction."
+question: "The specific article number is not confirmed in the corpus available for this
+extraction."
 
-A competing interpretation — **annual sales documented with invoices in the previous tax year** —
-is referenced in the task brief for this article but is **not found in any accessible corpus
-source**. See **Critical Discrepancy** section.
+A competing interpretation — **annual sales documented with invoices in the previous tax year** — is
+referenced in the task brief for this article but is **not found in any accessible corpus source**.
+See **Critical Discrepancy** section.
 
 ---
 
@@ -86,31 +91,31 @@ source**. See **Critical Discrepancy** section.
   enacted.
 - **Source:** FAQ `limity-i-wylaczenia.mdx` (PL and EN); Research Brief `ksef-dla-jdg.md`
 - **Verbatim (PL):** "Przepisy te były kilkakrotnie nowelizowane — sprawdź aktualne regulacje na
-  stronie ksef.podatki.gov.pl lub zapytaj księgowego." (FAQ `limity-i-wylaczenia.mdx`)
-  Also: "Limit był już nowelizowany — zawsze weryfikuj aktualną datę na ksef.podatki.gov.pl przed
-  podjęciem decyzji." (blog `ksef-dla-jdg.mdx`)
+  stronie ksef.podatki.gov.pl lub zapytaj księgowego." (FAQ `limity-i-wylaczenia.mdx`) Also: "Limit
+  był już nowelizowany — zawsze weryfikuj aktualną datę na ksef.podatki.gov.pl przed podjęciem
+  decyzji." (blog `ksef-dla-jdg.mdx`)
 - **Confidence:** HIGH (the amendment history itself is stated explicitly)
-- **Implication:** Do not cite the original legislative text for this threshold; always point readers
-  to the consolidated current version of the Act (Dz. U. z 2025 r., poz. 775 ze zm.) and advise
-  verification at ksef.podatki.gov.pl.
+- **Implication:** Do not cite the original legislative text for this threshold; always point
+  readers to the consolidated current version of the Act (Dz. U. z 2025 r., poz. 775 ze zm.) and
+  advise verification at ksef.podatki.gov.pl.
 
 ---
 
 **Fact 1.3 — This applies only to czynni podatnicy VAT (active VAT taxpayers)**
 
-- **Fact:** The 10,000 PLN exemption is a transitional provision for **czynni podatnicy VAT** — i.e.,
-  taxpayers registered for VAT who file VAT-7 or VAT-7K returns. Taxpayers already exempt from VAT
-  (zwolnienie podmiotowe — annual turnover below 200,000 PLN, or zwolnienie przedmiotowe — exempt
-  activity by law) are entirely outside the KSeF mandate as of 1 April 2026 and therefore do not
-  need the 10,000 PLN exemption at all.
+- **Fact:** The 10,000 PLN exemption is a transitional provision for **czynni podatnicy VAT** —
+  i.e., taxpayers registered for VAT who file VAT-7 or VAT-7K returns. Taxpayers already exempt from
+  VAT (zwolnienie podmiotowe — annual turnover below 200,000 PLN, or zwolnienie przedmiotowe —
+  exempt activity by law) are entirely outside the KSeF mandate as of 1 April 2026 and therefore do
+  not need the 10,000 PLN exemption at all.
 - **Source:** Blog `ksef-od-1-kwietnia-2026.mdx`, §"Kogo dotyczy obowiązek" and §"Wyjątek: bardzo
   małe obroty"; blog `ksef-dla-jdg.mdx`, §"Czy dotyczy mnie KSeF"
-- **Verbatim (PL):** "Obowiązek korzystania z KSeF mają **czynni podatnicy VAT** [...] **Nie dotyczy**
-  (na razie) podatników VAT zwolnionych."
+- **Verbatim (PL):** "Obowiązek korzystania z KSeF mają **czynni podatnicy VAT** [...] **Nie
+  dotyczy** (na razie) podatników VAT zwolnionych."
 - **Confidence:** HIGH
-- **Implication:** A JDG on zwolnienie z VAT (below 200k/year threshold) does NOT need the 10,000 PLN
-  exemption — they are already excluded. The 10,000 PLN provision is only relevant to a JDG who IS
-  registered for VAT but has very small sales.
+- **Implication:** A JDG on zwolnienie z VAT (below 200k/year threshold) does NOT need the 10,000
+  PLN exemption — they are already excluded. The 10,000 PLN provision is only relevant to a JDG who
+  IS registered for VAT but has very small sales.
 
 ---
 
@@ -126,11 +131,11 @@ source**. See **Critical Discrepancy** section.
 - **Source:** FAQ `limity-i-wylaczenia.mdx` (PL and EN); blog `ksef-dla-jdg.mdx` and its `<Info>`
   block; Research Brief `ksef-dla-jdg.md`, Fact 1.7
 - **Verbatim (PL — primary statement):** "Limit liczony jest jako łączna wartość sprzedaży w danym
-  miesiącu, nie suma wystawionych faktur. Wlicza się sprzedaż opodatkowaną VAT oraz zwolnioną."
-  (FAQ `limity-i-wylaczenia.mdx`)
-- **Verbatim (PL — corroborating blog):** "Limit 10 000 zł liczy się od łącznej wartości sprzedaży
-  w danym miesiącu — nie od liczby wystawionych faktur. Wlicza się zarówno sprzedaż opodatkowana
-  VAT, jak i zwolniona." (blog `ksef-dla-jdg.mdx`, `<Info>` block)
+  miesiącu, nie suma wystawionych faktur. Wlicza się sprzedaż opodatkowaną VAT oraz zwolnioną." (FAQ
+  `limity-i-wylaczenia.mdx`)
+- **Verbatim (PL — corroborating blog):** "Limit 10 000 zł liczy się od łącznej wartości sprzedaży w
+  danym miesiącu — nie od liczby wystawionych faktur. Wlicza się zarówno sprzedaż opodatkowana VAT,
+  jak i zwolniona." (blog `ksef-dla-jdg.mdx`, `<Info>` block)
 - **Confidence:** MEDIUM — Stated consistently across seven files, but ALL of these are our own
   published output, not primary law text. The Act text (Art. 145m) has not been read directly. See
   Critical Discrepancy below.
@@ -155,7 +160,8 @@ source**. See **Critical Discrepancy** section.
 **Fact 2.3 — The threshold is NOT based on the number of invoices issued**
 
 - **Fact:** The FAQ explicitly states the threshold is NOT calculated as the sum of invoices issued
-  ("nie suma wystawionych faktur"). The sales count whether or not they are documented with invoices.
+  ("nie suma wystawionych faktur"). The sales count whether or not they are documented with
+  invoices.
 - **Source:** FAQ `limity-i-wylaczenia.mdx`; blog `ksef-dla-jdg.mdx`
 - **Verbatim (PL):** "Limit liczony jest jako łączna wartość sprzedaży w danym miesiącu, **nie suma
   wystawionych faktur**."
@@ -173,8 +179,8 @@ source**. See **Critical Discrepancy** section.
 
 **Discrepancy 3.1 — "Monthly" (corpus) vs. "Annual invoice-documented" (task brief)**
 
-- **Position A (corpus — every accessible source):** The threshold is monthly total sales —
-  "łączna wartość sprzedaży w danym miesiącu."
+- **Position A (corpus — every accessible source):** The threshold is monthly total sales — "łączna
+  wartość sprzedaży w danym miesiącu."
 - **Position B (not found in corpus — cited in task brief for this article):** The threshold is
   annual sales documented with invoices in the **previous tax year** — "wartość sprzedaży
   udokumentowanej fakturami wystawionymi w poprzednim roku podatkowym."
@@ -194,9 +200,9 @@ source**. See **Critical Discrepancy** section.
   preserved in those files to confirm what that source was.
 - **Resolution status:** UNRESOLVED. Cannot be resolved without reading Art. 145m directly.
 - **Recommended action:** **Before writing the blog post, read Art. 145m of the current consolidated
-  Ustawa o VAT (Dz. U. z 2025 r., poz. 775 ze zm.) directly.** The exact statutory phrase
-  determines which interpretation is correct. If Position B is correct, ALL seven existing content
-  files contain a material error that must be corrected across the entire site.
+  Ustawa o VAT (Dz. U. z 2025 r., poz. 775 ze zm.) directly.** The exact statutory phrase determines
+  which interpretation is correct. If Position B is correct, ALL seven existing content files
+  contain a material error that must be corrected across the entire site.
 - **Confidence for Copywriter use:** Position A = MEDIUM (consistent internal usage, no direct law
   citation). Position B = LOW (not found in corpus, inference only).
 
@@ -204,15 +210,16 @@ source**. See **Critical Discrepancy** section.
 
 **Discrepancy 3.2 — Practical stakes of the discrepancy**
 
-| Question | If Position A (monthly) | If Position B (annual invoice-documented) |
-| --- | --- | --- |
-| How do you know if you qualify? | Check your sales each calendar month | Look at your previous year's invoice total |
-| If you earned 8,000 PLN/month in 2025 in invoices, do you qualify in 2026? | Yes, each month you check anew | Yes, based on 2025 data you qualify for all of 2026 |
-| If you earn 11,000 PLN in June 2026, do you lose the exemption that month? | Yes, immediately | No, you're still exempt all of 2026; 2027 status depends on 2026 totals |
-| Does non-invoiced revenue count? | Yes (total sales) | No (only invoice-documented sales per corpus description of Position B) |
-| Can you plan your KSeF adoption timing? | Month-by-month unpredictability | Annual predictability — you know at start of year |
+| Question                                                                   | If Position A (monthly)              | If Position B (annual invoice-documented)                               |
+| -------------------------------------------------------------------------- | ------------------------------------ | ----------------------------------------------------------------------- |
+| How do you know if you qualify?                                            | Check your sales each calendar month | Look at your previous year's invoice total                              |
+| If you earned 8,000 PLN/month in 2025 in invoices, do you qualify in 2026? | Yes, each month you check anew       | Yes, based on 2025 data you qualify for all of 2026                     |
+| If you earn 11,000 PLN in June 2026, do you lose the exemption that month? | Yes, immediately                     | No, you're still exempt all of 2026; 2027 status depends on 2026 totals |
+| Does non-invoiced revenue count?                                           | Yes (total sales)                    | No (only invoice-documented sales per corpus description of Position B) |
+| Can you plan your KSeF adoption timing?                                    | Month-by-month unpredictability      | Annual predictability — you know at start of year                       |
 
-- **Confidence:** LOW on the entire table — these are logical implications of the two interpretations, not facts from corpus sources.
+- **Confidence:** LOW on the entire table — these are logical implications of the two
+  interpretations, not facts from corpus sources.
 
 ---
 
@@ -222,8 +229,8 @@ source**. See **Critical Discrepancy** section.
 
 **Fact 4.1 — Hard expiry: 31 December 2026**
 
-- **Fact:** The 10,000 PLN exemption expires on **31 December 2026**. From **1 January 2027**,
-  all czynni podatnicy VAT — regardless of sales volume — must use KSeF.
+- **Fact:** The 10,000 PLN exemption expires on **31 December 2026**. From **1 January 2027**, all
+  czynni podatnicy VAT — regardless of sales volume — must use KSeF.
 - **Source:** Blog `ksef-od-1-kwietnia-2026.mdx`, §"Wyjątek: bardzo małe obroty"; blog
   `ksef-dla-jdg.mdx`; Research Brief `ksef-dla-jdg.md`, Fact 1.6
 - **Verbatim (PL):** "Po tym terminie zwolnienie wygasa i obowiązek KSeF obejmie również tę grupę."
@@ -237,7 +244,8 @@ source**. See **Critical Discrepancy** section.
 
 - **Finding:** No accessible source in the corpus describes what happens when a taxpayer CROSSES the
   10,000 PLN threshold. Specifically:
-  - Is the obligation immediate (starting with the invoice that causes the threshold to be exceeded)?
+  - Is the obligation immediate (starting with the invoice that causes the threshold to be
+    exceeded)?
   - Does it start from the following calendar month?
   - Does it start from the following invoice?
   - Is there a transition period?
@@ -251,11 +259,11 @@ source**. See **Critical Discrepancy** section.
 **Fact 4.3 — Penalty grace period applies independently of the threshold**
 
 - **Fact:** Financial penalties for violating the KSeF obligation are deferred until **1 January
-  2027** for all taxpayers — including those who exceed the 10,000 PLN threshold before 31 December
-  2026. The deferral of penalties does not extend the legal obligation itself.
-- **Source:** Blog `ksef-od-1-kwietnia-2026.mdx`, §"Co grozi za fakturę wystawioną poza KSeF";
-  blog `ksef-dla-jdg.mdx`, §"Najczęstsze pytania JDG o KSeF — Od kiedy grożą kary"; Research
-  Brief `ksef-dla-jdg.md`, Freshness Tracker
+  2027** for all taxpayers — including those who exceed the 10,000 PLN threshold before 31
+  December 2026. The deferral of penalties does not extend the legal obligation itself.
+- **Source:** Blog `ksef-od-1-kwietnia-2026.mdx`, §"Co grozi za fakturę wystawioną poza KSeF"; blog
+  `ksef-dla-jdg.mdx`, §"Najczęstsze pytania JDG o KSeF — Od kiedy grożą kary"; Research Brief
+  `ksef-dla-jdg.md`, Freshness Tracker
 - **Verbatim (PL):** "Kary za błędy w KSeF zostały odroczone do **1 stycznia 2027 r.** Oznacza to,
   że od 1 kwietnia 2026 roku obowiązek wystawiania faktur przez KSeF obowiązuje, ale sankcje za jego
   naruszenie zaczną być egzekwowane dopiero od 2027 roku."
@@ -270,8 +278,8 @@ source**. See **Critical Discrepancy** section.
 
 **Fact 5.1 — JDG on ryczałt ewidencjonowany (PIT) — NOT the same as VAT exemption**
 
-- **Fact:** A JDG paying income tax on the "ryczałt ewidencjonowany" (flat-rate income tax) basis
-  is NOT automatically VAT-exempt. Ryczałt refers to the PIT (income tax) settlement method — it is
+- **Fact:** A JDG paying income tax on the "ryczałt ewidencjonowany" (flat-rate income tax) basis is
+  NOT automatically VAT-exempt. Ryczałt refers to the PIT (income tax) settlement method — it is
   independent of VAT status. A JDG on ryczałt can be (and often is) a czynny podatnik VAT, in which
   case the KSeF obligation and the 10,000 PLN threshold apply normally.
 - **Source:** FAQ `limity-i-wylaczenia.mdx` is silent on this specific distinction. The distinction
@@ -282,8 +290,8 @@ source**. See **Critical Discrepancy** section.
   law, not specific to KSeF)
 - **Implication:** "Jestem na ryczałcie" is NOT a reason to be exempt from KSeF. Only being on VAT
   exemption (not registered as czynny podatnik VAT) creates the exclusion.
-- **⚠️ NOTE:** "Rolnik ryczałtowy" (flat-rate VAT farmer) is a DIFFERENT concept under Art. 43
-  ust. 1 pkt 3 — they are excluded from KSeF for agricultural product sales. FAQ
+- **⚠️ NOTE:** "Rolnik ryczałtowy" (flat-rate VAT farmer) is a DIFFERENT concept under Art. 43 ust.
+  1 pkt 3 — they are excluded from KSeF for agricultural product sales. FAQ
   `limity-i-wylaczenia.mdx` confirms this separately.
 
 ---
@@ -296,12 +304,12 @@ source**. See **Critical Discrepancy** section.
   is relevant only for B2B transactions where invoices must be issued.
 - **Source:** Blog `ksef-od-1-kwietnia-2026.mdx`, §"Kto jest wyłączony z KSeF" (B2C exclusion,
   paragony exclusion); FAQ `limity-i-wylaczenia.mdx`, §"Kto jest zwolniony z KSeF"
-- **Verbatim (PL):** "Faktury wystawiane dla **konsumentów (B2C)** — osób fizycznych
-  nieprowadzących działalności gospodarczej" — wyłączone z obowiązku.
+- **Verbatim (PL):** "Faktury wystawiane dla **konsumentów (B2C)** — osób fizycznych nieprowadzących
+  działalności gospodarczej" — wyłączone z obowiązku.
 - **Confidence:** HIGH (B2C exclusion is well-established)
 - **Implication:** A czynny podatnik VAT with only B2C transactions may not need the 10,000 PLN
-  threshold exemption at all, because their invoices are excluded from KSeF on other grounds. But
-  a JDG with ANY B2B sales (even occasional) is in scope.
+  threshold exemption at all, because their invoices are excluded from KSeF on other grounds. But a
+  JDG with ANY B2B sales (even occasional) is in scope.
 
 ---
 
@@ -310,10 +318,11 @@ source**. See **Critical Discrepancy** section.
 - **Fact:** Foundations and associations that are czynni podatnicy VAT are subject to KSeF from 1
   April 2026 for their VAT invoices, regardless of the 10,000 PLN threshold. Organizations
   conducting exclusively VAT-exempt activities join KSeF from 1 January 2027.
-- **Source:** FAQ `limity-i-wylaczenia.mdx`, §"Czy fundacja lub stowarzyszenie musi korzystać z KSeF"
-- **Verbatim (PL):** "Jeśli tak — od 1 kwietnia 2026 roku musi stosować KSeF dla swoich faktur
-  VAT. Organizacje prowadzące wyłącznie działalność zwolnioną z VAT dołączają do systemu od 1
-  stycznia 2027 roku."
+- **Source:** FAQ `limity-i-wylaczenia.mdx`, §"Czy fundacja lub stowarzyszenie musi korzystać z
+  KSeF"
+- **Verbatim (PL):** "Jeśli tak — od 1 kwietnia 2026 roku musi stosować KSeF dla swoich faktur VAT.
+  Organizacje prowadzące wyłącznie działalność zwolnioną z VAT dołączają do systemu od 1 stycznia
+  2027 roku."
 - **Confidence:** HIGH
 - **Relevance to 10k brief:** LIMITED — mention only in a "who does this apply to" context if
   needed; the main audience for the 10k article is JDG/small business, not NGOs.
@@ -371,23 +380,23 @@ source**. See **Critical Discrepancy** section.
    calendar month? No source in the corpus answers this. **Required for practical guidance.**
 
 3. **Exact sub-article of Art. 145m.** Art. 145m is referenced in all our blogs, but the specific
-   sub-article (ustęp) that contains the 10,000 PLN provision is not stated in any accessible source.
-   Research Brief `ksef-dla-jdg.md` already flagged this: "The specific article number is not
-   confirmed in the corpus available for this extraction."
+   sub-article (ustęp) that contains the 10,000 PLN provision is not stated in any accessible
+   source. Research Brief `ksef-dla-jdg.md` already flagged this: "The specific article number is
+   not confirmed in the corpus available for this extraction."
 
 4. **Whether the threshold uses gross (brutto) or net (netto) sales value.** None of the accessible
    sources specify whether the 10,000 PLN is calculated on gross amounts (with VAT) or net amounts
    (without VAT). Given that the 200,000 PLN VAT exemption under Art. 113 uses net values, the same
    might apply here — but this is inference, not a sourced fact.
 
-5. **Ryczałt ewidencjonowany (PIT) + VAT status.** The corpus is silent on whether a JDG on
-   ryczałt PIT in a specific sector (e.g., IT services at 12%, 8.5%) is more or less likely to be a
-   czynny podatnik VAT. This is a tax advisory question. Do not answer it; direct to an accountant.
+5. **Ryczałt ewidencjonowany (PIT) + VAT status.** The corpus is silent on whether a JDG on ryczałt
+   PIT in a specific sector (e.g., IT services at 12%, 8.5%) is more or less likely to be a czynny
+   podatnik VAT. This is a tax advisory question. Do not answer it; direct to an accountant.
 
-6. **Whether the "annual" interpretation (Position B) refers to the calendar year 2025 specifically.**
-   If Position B is correct, the threshold would be checked based on 2025 invoice data for the 2026
-   exemption. For 2027, it would use 2026 data. The exact reference year is unspecified in any
-   accessible source.
+6. **Whether the "annual" interpretation (Position B) refers to the calendar year 2025
+   specifically.** If Position B is correct, the threshold would be checked based on 2025 invoice
+   data for the 2026 exemption. For 2027, it would use 2026 data. The exact reference year is
+   unspecified in any accessible source.
 
 ---
 
@@ -406,16 +415,16 @@ For the article's "Źródła" footer:
 
 ## Warning: Common Misconceptions
 
-1. **"Zarabiam 8 000 zł miesięcznie, więc jestem poniżej limitu"** — INSUFFICIENT REASONING.
-   Monthly earnings ≠ monthly sales value for VAT purposes. The threshold (per corpus interpretation)
-   is based on total sales value in the month, not take-home pay, not net revenue after costs, not
+1. **"Zarabiam 8 000 zł miesięcznie, więc jestem poniżej limitu"** — INSUFFICIENT REASONING. Monthly
+   earnings ≠ monthly sales value for VAT purposes. The threshold (per corpus interpretation) is
+   based on total sales value in the month, not take-home pay, not net revenue after costs, not
    invoice amounts only. Additionally: (a) if VAT-exempt revenue is included, the total may be
    higher; (b) if the "annual invoice-documented" interpretation turns out to be correct, monthly
    earnings are the wrong metric entirely.
 
-2. **"Nie wystawiam faktur, więc mnie to nie dotyczy"** — WRONG in most B2B scenarios. If you are
-   a czynny podatnik VAT conducting B2B transactions, you are required to issue VAT invoices by law
-   — and therefore the KSeF obligation applies. "Not issuing invoices" may mean you are non-compliant
+2. **"Nie wystawiam faktur, więc mnie to nie dotyczy"** — WRONG in most B2B scenarios. If you are a
+   czynny podatnik VAT conducting B2B transactions, you are required to issue VAT invoices by law —
+   and therefore the KSeF obligation applies. "Not issuing invoices" may mean you are non-compliant
    with the invoicing obligation, not that you are exempt from KSeF. Exception: if you sell only to
    consumers (B2C) and issue only cash register receipts (paragony), those are excluded from KSeF.
 
@@ -437,35 +446,36 @@ For the article's "Źródła" footer:
    of taxpayers.
 
 6. **"Jeśli wystawię mniej faktur, zostanę poniżej limitu"** — WRONG per corpus interpretation. The
-   FAQ explicitly states the limit is NOT based on the sum of invoices issued ("nie suma wystawionych
-   faktur") — it is total sales value. Issuing fewer invoices does not reduce sales value.
+   FAQ explicitly states the limit is NOT based on the sum of invoices issued ("nie suma
+   wystawionych faktur") — it is total sales value. Issuing fewer invoices does not reduce sales
+   value.
 
-7. **"Limit obowiązuje mnie tylko jeśli mam stały, regularny obrót"** — NOT CONFIRMED. No source
-   in the corpus discusses seasonality, irregular sales, or single large transactions. A single
-   invoice for 12,000 PLN in one month would (per the monthly interpretation) push a taxpayer above
-   the threshold for that month even if all other months are below.
+7. **"Limit obowiązuje mnie tylko jeśli mam stały, regularny obrót"** — NOT CONFIRMED. No source in
+   the corpus discusses seasonality, irregular sales, or single large transactions. A single invoice
+   for 12,000 PLN in one month would (per the monthly interpretation) push a taxpayer above the
+   threshold for that month even if all other months are below.
 
 ---
 
 ## Freshness Tracker (date-sensitive claims)
 
-| Claim | Expires / Review trigger | Priority |
-| --- | --- | --- |
-| Exemption expires 31 December 2026 | Review on 1 January 2027; monitor for further amendments | HIGH |
-| Penalty grace period until 1 January 2027 | Review on 1 January 2027 | HIGH |
-| Threshold rules "były kilkakrotnie nowelizowane" — current version is Dz. U. z 2025 r., poz. 775 ze zm. | Review after any new amending act is published in Dziennik Ustaw | HIGH |
-| All czynni podatnicy VAT mandatory from 1 April 2026 | Past date — verify compliance state | MEDIUM |
-| VAT-exempt entities join from 1 January 2027 | Review after 1 January 2027 | HIGH |
+| Claim                                                                                                   | Expires / Review trigger                                         | Priority |
+| ------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- | -------- |
+| Exemption expires 31 December 2026                                                                      | Review on 1 January 2027; monitor for further amendments         | HIGH     |
+| Penalty grace period until 1 January 2027                                                               | Review on 1 January 2027                                         | HIGH     |
+| Threshold rules "były kilkakrotnie nowelizowane" — current version is Dz. U. z 2025 r., poz. 775 ze zm. | Review after any new amending act is published in Dziennik Ustaw | HIGH     |
+| All czynni podatnicy VAT mandatory from 1 April 2026                                                    | Past date — verify compliance state                              | MEDIUM   |
+| VAT-exempt entities join from 1 January 2027                                                            | Review after 1 January 2027                                      | HIGH     |
 
 ---
 
 ## Cross-References for the Copywriter
 
 - **Existing article** `ksef-od-1-kwietnia-2026.mdx` mentions the 10,000 PLN threshold briefly in
-  §"Wyjątek: bardzo małe obroty" with a link to this planned blog post (`/blog/limit-10000-zl`).
-  The new article must live at that slug and fulfill the link promise.
-- **FAQ** `limity-i-wylaczenia.mdx` covers the same questions at FAQ level. The blog post should
-  go deeper — practical calculation examples, scenarios, misconceptions — while the FAQ remains the
+  §"Wyjątek: bardzo małe obroty" with a link to this planned blog post
+  (`/blog/ksef-limit-10000-zl`). The article lives at that slug.
+- **FAQ** `limity-i-wylaczenia.mdx` covers the same questions at FAQ level. The blog post should go
+  deeper — practical calculation examples, scenarios, misconceptions — while the FAQ remains the
   quick-reference version.
 - **Research Brief** `ksef-dla-jdg.md` covers the 10,000 PLN threshold as a secondary fact (Facts
   1.6 and 1.7); this brief supersedes those entries for purposes of this dedicated article.
@@ -475,5 +485,5 @@ For the article's "Źródła" footer:
   content files will need to be updated. Notify the Copywriter and Constitutional Judge immediately.
   The files are: `pl/faq/limity-i-wylaczenia.mdx`, `pl/blog/ksef-dla-jdg.mdx`,
   `pl/blog/ksef-od-1-kwietnia-2026.mdx`, `en/faq/exemptions-and-thresholds.mdx`,
-  `en/blog/ksef-dla-jdg.mdx`, `en/blog/ksef-od-1-kwietnia-2026.mdx`,
-  `uk/blog/ksef-dla-jdg.mdx`, `uk/blog/ksef-od-1-kwietnia-2026.mdx`, `uk/faq/vyluchennya.mdx`.
+  `en/blog/ksef-dla-jdg.mdx`, `en/blog/ksef-od-1-kwietnia-2026.mdx`, `uk/blog/ksef-dla-jdg.mdx`,
+  `uk/blog/ksef-od-1-kwietnia-2026.mdx`, `uk/faq/vyluchennya.mdx`.
