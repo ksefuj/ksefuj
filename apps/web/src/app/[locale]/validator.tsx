@@ -184,6 +184,9 @@ export function Validator({ locale }: ValidatorProps) {
           errorCount,
           locale,
         });
+
+        // Increment global validation counter (fire-and-forget)
+        fetch("/api/count", { method: "POST" }).catch(() => {});
       } catch (error) {
         console.error("Failed to initialize validator:", error);
         setFiles(
