@@ -1,0 +1,312 @@
+---
+title: "FA(2) vs FA(3) — What Changed in the KSeF Schema"
+description: "FA(2) vs FA(3) — what changed in the KSeF invoice schema. Structural comparison, list of changes, and how to update your integration."
+date: 2026-03-28
+section: blog
+locale: en
+slug: "fa2-vs-fa3-ksef"
+tags: ["KSeF", "FA(3)", "FA(2)", "XML", "integration"]
+sources:
+  - label: "FA(3) Information Sheet"
+    url: "https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "FA(3) XSD Schema"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+translations:
+  pl: "fa2-vs-fa3-ksef"
+seo:
+  canonical: "/en/blog/fa2-vs-fa3-ksef"
+---
+
+You had a working KSeF 1.0 integration built on the FA(2) schema. It worked. Until 31 January 2026.
+
+From 1 February 2026, KSeF (Krajowy System e-Faktur — Poland's National e-Invoicing System) 2.0 rejects any XML document with an FA(2) namespace — no exceptions, no legacy compatibility mode. FA(3) is now the only accepted schema. This is not a minor update — it's a new, incompatible format that requires specific changes on your end.
+
+This article covers exactly what changed, what you don't need to touch, and how to migrate from FA(2) to FA(3) step by step.
+
+<Tip>
+  Already have an XML file? Drop it into [ksefuj.to](/) — the validator checks compliance with
+  official MF requirements and explains every error in plain language, pointing to the exact
+  element causing the problem. Your data never leaves your browser.
+</Tip>
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  label="FA(3) Information Sheet — Ministry of Finance"
+/>
+
+---
+
+## FA(2) Is Dead
+
+The FA(2) logical structure was in use from 1 September 2023 — initially on a voluntary basis, then as part of the KSeF pilot. It ceased to be valid at midnight on 31 January 2026.
+
+From 1 February 2026, **FA(3) is the only binding template for structured e-invoices**. KSeF 2.0 does not accept FA(2) in any form — no legacy mode, no transition period for the format.
+
+<Warning>
+  KSeF 2.0 rejects your document at the namespace level, before it even checks the contents. If
+  your XML contains the old FA(2) namespace, no other fix will help — you must start with the
+  namespace change.
+</Warning>
+
+Two dates are worth keeping distinct, as they are often confused:
+
+- **1 February 2026** — KSeF became mandatory for taxpayers with turnover above PLN 200 million in 2024; FA(3) simultaneously became the only accepted format for **all** KSeF invoices.
+- **1 April 2026** — KSeF became mandatory for all remaining active VAT payers.
+
+FA(3) as a format applies from 1 February regardless of when KSeF became mandatory for your organisation. If you're building an integration before April — you're building for FA(3), not FA(2).
+
+---
+
+## The Namespace Change — The First Thing to Fix
+
+The namespace is the `xmlns` attribute on the `<Faktura>` root element. The URI changed in FA(3) — and this single change is responsible for 100% of validation failures from developers migrating from FA(2).
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ FA(2) — invalid since 1 February 2026 -->
+  <Faktura xmlns="http://crd.gov.pl/wzor/2023/06/29/12648/">
+    ...
+  </Faktura>
+
+  <!-- ✅ FA(3) — required from 1 February 2026 -->
+  <Faktura xmlns="http://crd.gov.pl/wzor/2025/06/25/13775/">
+    ...
+  </Faktura>
+  ```
+</XmlExample>
+
+The fix is straightforward, but easy to miss — especially if the namespace is hardcoded in an XML template or was copied from an old example at some point.
+
+<Info>
+  The FA(3) XSD schema is officially published at `https://crd.gov.pl/wzor/2025/06/25/13775/`. The
+  date in the URL is the schema's publication date — not its effective date.
+</Info>
+
+---
+
+## Header Changes
+
+### KodFormularza — Updated Attributes
+
+The `<KodFormularza>` element in the `Naglowek` section requires both attributes to be updated:
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ FA(2) -->
+  <KodFormularza kodSystemowy="FA (2)" wersjaSchemy="...">FA</KodFormularza>
+
+  <!-- ✅ FA(3) -->
+  <KodFormularza kodSystemowy="FA (3)" wersjaSchemy="1-0E">FA</KodFormularza>
+  ```
+</XmlExample>
+
+Note: `kodSystemowy="FA (3)"` — with a space before the parenthesis. A typo here is one of the more common mistakes.
+
+### WariantFormularza — New Value
+
+The `<WariantFormularza>` value changes from `2` to `3`:
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ FA(2) -->
+  <WariantFormularza>2</WariantFormularza>
+
+  <!-- ✅ FA(3) -->
+  <WariantFormularza>3</WariantFormularza>
+  ```
+</XmlExample>
+
+A correct FA(3) header looks like this:
+
+<XmlExample copyable>
+  ```xml
+  <Naglowek>
+    <KodFormularza kodSystemowy="FA (3)" wersjaSchemy="1-0E">FA</KodFormularza>
+    <WariantFormularza>3</WariantFormularza>
+    <DataWytworzeniaFa>2026-03-28T10:00:00Z</DataWytworzeniaFa>
+  </Naglowek>
+  ```
+</XmlExample>
+
+---
+
+## New Mandatory Fields in Podmiot2
+
+This is the change most likely to catch you off-guard, because `Podmiot2` looks structurally identical to its FA(2) counterpart at first glance.
+
+FA(3) introduces two new **mandatory** fields in `Podmiot2`: `JST` and `GV`. Without them, the document fails XSD validation — regardless of what your business does.
+
+| Field | Meaning                    | Default value        | When `1`                                    |
+| ----- | -------------------------- | -------------------- | ------------------------------------------- |
+| `JST` | Local government unit flag | `2` = not applicable | Invoice relates to a subordinate JST unit   |
+| `GV`  | VAT group member flag      | `2` = not applicable | Invoice relates to a VAT group member       |
+
+For the vast majority of invoices: set both to `2` and move on.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ FA(2) — JST and GV missing -->
+  <Podmiot2>
+    <DaneIdentyfikacyjne>
+      <NIP>9876543210</NIP>
+      <Nazwa>Nabywca Sp. z o.o.</Nazwa>
+    </DaneIdentyfikacyjne>
+    <Adres>
+      <KodKraju>PL</KodKraju>
+      <AdresL1>ul. Przykładowa 1, 00-001 Warszawa</AdresL1>
+    </Adres>
+  </Podmiot2>
+
+  <!-- ✅ FA(3) — JST and GV present -->
+  <Podmiot2>
+    <DaneIdentyfikacyjne>
+      <NIP>9876543210</NIP>
+      <Nazwa>Nabywca Sp. z o.o.</Nazwa>
+    </DaneIdentyfikacyjne>
+    <Adres>
+      <KodKraju>PL</KodKraju>
+      <AdresL1>ul. Przykładowa 1, 00-001 Warszawa</AdresL1>
+    </Adres>
+    <JST>2</JST>
+    <GV>2</GV>
+  </Podmiot2>
+  ```
+</XmlExample>
+
+When `JST` = `1`, a corresponding entry in `Podmiot3` with `Rola` = `8` is required. When `GV` = `1` — an entry with `Rola` = `10`. See the [FA(3) schema documentation](/docs/schemat-fa3) for details.
+
+---
+
+## New Elements in FA(3)
+
+### Role 11 — Employee (new in FA(3))
+
+FA(3) introduces value `11` for the `Rola` field in `Podmiot3`. This covers employee expense invoices — where an employee makes a purchase on behalf of their employer and does not appear as a party to the transaction with their own NIP.
+
+When `Rola` = `11`, the `DaneIdentyfikacyjne/NIP` element is absent — instead, set `BrakID` = `1` and supply the employee's name in the `Nazwa` field.
+
+### Zalacznik — Optional Structured Attachment
+
+FA(3) adds an optional `<Zalacznik>` element at the top level of the document. It is intended for invoices with detailed data about units of measure, quantities, or net unit prices.
+
+<Warning>
+  Using `Zalacznik` requires prior notification to the Polish e-Tax Office (e-Urząd Skarbowy). The
+  attachment may only be used for tax data — using it for price lists, warranties, or contracts
+  results in loss of the right to issue invoices with attachments.
+</Warning>
+
+---
+
+## Watch Out: Corrective Invoices for FA(2) Originals
+
+This is a common source of errors after migration.
+
+If you're issuing a corrective invoice in 2026 for an original that was issued before 1 February 2026 in FA(2) format — **the corrective invoice must be in FA(3)**. There is no "FA(2) correction in FA(2) format" mode.
+
+<Warning>
+  FA(3) applies to **all** structured invoices issued from 1 February 2026 — including corrections
+  to original FA(2) invoices and final invoices for FA(2) advance invoices. This is stated
+  explicitly in §1.2 of the official FA(3) Information Sheet.
+</Warning>
+
+When correcting an invoice issued outside the current KSeF (i.e. any FA(2) invoice from KSeF 1.0), use `NrKSeFN` = `1` in the `DaneFaKorygowanej` section — not `NrKSeF`, which applies to invoices already issued in KSeF 2.0.
+
+---
+
+## Migration Checklist — What Needs to Change
+
+If your integration was working with FA(2), you have four mandatory changes and a few optional ones depending on your implementation scope.
+
+### Mandatory
+
+**1. Update the namespace**
+
+```
+xmlns="http://crd.gov.pl/wzor/2023/06/29/12648/"
+→
+xmlns="http://crd.gov.pl/wzor/2025/06/25/13775/"
+```
+
+**2. Update the KodFormularza attributes**
+
+```
+kodSystemowy="FA (3)"   ← changed from FA (2)
+wersjaSchemy="1-0E"
+```
+
+**3. Update WariantFormularza**
+
+```
+<WariantFormularza>3</WariantFormularza>   ← changed from 2
+```
+
+**4. Add JST and GV to every Podmiot2**
+
+```xml
+<JST>2</JST>
+<GV>2</GV>
+```
+
+For standard invoices, `2` means "not applicable" — correct for the vast majority of cases.
+
+### Optional / Case-Dependent
+
+- **Corrections to FA(2) invoices:** use `NrKSeFN` = `1` in `DaneFaKorygowanej` instead of `NrKSeF`.
+- **Employee expense invoices:** implement `Rola` = `11` in `Podmiot3` (with `BrakID` = `1` and the employee's name).
+- **Complex quantity invoices:** consider `Zalacznik` — but file a notification with the e-Tax Office first.
+
+---
+
+## Starting From Scratch
+
+Forget FA(2). There's no reason to study old examples, internet templates from before 2026 are outdated, and any code from the KSeF 1.0 pilot belongs in the archive.
+
+Build your integration directly against FA(3):
+
+1. Download the XSD schema from the MF site: `https://crd.gov.pl/wzor/2025/06/25/13775/`
+2. Generate classes / types from the XSD (JAXB, xsd.exe, xsd-to-ts — whatever fits your stack).
+3. Implement according to the official FA(3) Information Sheet.
+4. Validate locally before sending — more on that below.
+
+<Info>
+  All XML examples in this article and on ksefuj.to are based on the FA(3) schema effective from 1
+  February 2026. There is no newer schema version at the time of publication.
+</Info>
+
+---
+
+## The KSeF 2.0 Test Environment
+
+The KSeF 2.0 test environment is available at:
+
+**`https://web2te-ksef.mf.gov.pl/`**
+
+Invoices submitted to the test environment use fictitious data and have no legal effect.
+
+<Warning>
+  The old KSeF 1.0 address (`ap.ksef.mf.gov.pl`) has been offline since 1 February 2026. If it's
+  hardcoded anywhere in your configuration — now is the time to update it.
+</Warning>
+
+The test environment accepts FA(3) only. There is no separate endpoint for FA(2) — there wouldn't be much point.
+
+---
+
+## Validate Before You Submit
+
+Before sending anything to the test environment — let alone production — it's worth running a local check on your file first.
+
+[ksefuj.to](/) validates your XML against official MF requirements — the FA(3) schema plus semantic rules — and reports every error in plain language with a precise pointer to the problematic element. Your file is never sent to any server.
+
+<Tip>
+  Drop your file into [ksefuj.to](/) before submitting it to `web2te-ksef.mf.gov.pl`. You'll save
+  yourself several rounds of debugging — the validator will tell you exactly what's missing or
+  wrong.
+</Tip>
+
+If you're still hitting errors after migrating, check the [most common FA(3) validation errors](/en/blog/najczestsze-bledy-walidacji-fa3) — exact error messages, explanations, and ready-to-copy XML for each one.
+
+<Source
+  href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+  label="FA(3) XSD Schema — crd.gov.pl"
+/>
