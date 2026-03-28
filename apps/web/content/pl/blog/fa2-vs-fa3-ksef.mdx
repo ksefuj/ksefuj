@@ -17,11 +17,9 @@ seo:
   canonical: "/blog/fa2-vs-fa3-ksef"
 ---
 
-Miałeś działającą integrację z KSeF 1.0 opartą na schemacie FA(2). Działała. Do 31 stycznia 2026 roku.
+FA(2) należy już do historii. Od 1 lutego 2026 roku KSeF 2.0 przyjmuje wyłącznie FA(3) — nowy, niekompatybilny format bez trybu zgodności wstecznej.
 
-Od 1 lutego 2026 KSeF 2.0 odrzuca każdy dokument XML z namespace FA(2) — bez wyjątku, bez trybu zgodności wstecznej. Jedynym akceptowanym schematem jest teraz FA(3). To nie jest drobna aktualizacja — to nowy, niekompatybilny format, który wymaga kilku konkretnych zmian po Twojej stronie.
-
-Ten artykuł opisuje dokładnie co się zmieniło, czego dotknąć nie trzeba, i jak przejść z FA(2) na FA(3) krok po kroku.
+Ten artykuł to referencja zmian: co konkretnie różni FA(3) od FA(2), czego nie trzeba ruszać i co zaktualizować w integracji. Przydatne zarówno przy migracji istniejącej integracji, jak i przy budowie nowej od zera.
 
 <Tip>
   Masz już plik XML? Wrzuć go na [ksefuj.to](/) — walidator sprawdzi zgodność z oficjalnymi
@@ -173,7 +171,7 @@ Dla zdecydowanej większości faktur: ustaw oba na `2` i zapomnij o temacie.
   ```
 </XmlExample>
 
-Gdy `JST` = `1`, wymagany jest odpowiedni wpis w `Podmiot3` z `Rola` = `8`. Gdy `GV` = `1` — wpis z `Rola` = `10`. Szczegóły znajdziesz w [dokumentacji schematu FA(3)](/docs/schemat-fa3).
+Gdy `JST` = `1`, wymagany jest odpowiedni wpis w `Podmiot3` z `Rola` = `8`. Gdy `GV` = `1` — wpis z `Rola` = `10`. Szczegóły znajdziesz w [broszurze informacyjnej FA(3)](https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf).
 
 ---
 

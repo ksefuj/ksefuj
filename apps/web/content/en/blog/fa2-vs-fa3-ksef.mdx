@@ -17,11 +17,9 @@ seo:
   canonical: "/en/blog/fa2-vs-fa3-ksef"
 ---
 
-You had a working KSeF 1.0 integration built on the FA(2) schema. It worked. Until 31 January 2026.
+FA(2) is history. From 1 February 2026, KSeF (Krajowy System e-Faktur — Poland's National e-Invoicing System) 2.0 accepts only FA(3) — a new, incompatible format with no backward compatibility mode.
 
-From 1 February 2026, KSeF (Krajowy System e-Faktur — Poland's National e-Invoicing System) 2.0 rejects any XML document with an FA(2) namespace — no exceptions, no legacy compatibility mode. FA(3) is now the only accepted schema. This is not a minor update — it's a new, incompatible format that requires specific changes on your end.
-
-This article covers exactly what changed, what you don't need to touch, and how to migrate from FA(2) to FA(3) step by step.
+This article is a reference guide to what changed: exactly how FA(3) differs from FA(2), what you don't need to touch, and what needs updating in your integration. Useful whether you're migrating an existing integration or building a new one from scratch.
 
 <Tip>
   Already have an XML file? Drop it into [ksefuj.to](/) — the validator checks compliance with
@@ -173,7 +171,7 @@ For the vast majority of invoices: set both to `2` and move on.
   ```
 </XmlExample>
 
-When `JST` = `1`, a corresponding entry in `Podmiot3` with `Rola` = `8` is required. When `GV` = `1` — an entry with `Rola` = `10`. See the [FA(3) schema documentation](/docs/schemat-fa3) for details.
+When `JST` = `1`, a corresponding entry in `Podmiot3` with `Rola` = `8` is required. When `GV` = `1` — an entry with `Rola` = `10`. See the [FA(3) Information Sheet](https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf) for details.
 
 ---
 

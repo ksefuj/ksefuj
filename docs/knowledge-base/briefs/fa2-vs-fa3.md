@@ -126,7 +126,8 @@ by KSeF 2.0.
   `kodSystemowy="FA (3)"` (with a space before the parenthesis) and `wersjaSchemy="1-0E"`, with
   element text content `FA`.
 - **Source:** FA(3) Information Sheet, §4.1
-- **Verbatim:** "Two attributes: `kodSystemowy` = `FA(3)`, `wersjaSchemy` = `1-0E`"
+- **Verbatim:** "Two attributes: `kodSystemowy` = `FA (3)`, `wersjaSchemy` = `1-0E`"
+- **Note:** The FA(3) XSD fixes `kodSystemowy` to the exact literal `FA (3)` (with a space before the parenthesis); `FA(3)` (no space) is not valid.
 - **Confidence:** HIGH
 
 ```xml
