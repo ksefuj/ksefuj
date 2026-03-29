@@ -22,6 +22,8 @@ export async function generateMetadata({
     title: t("title"),
     description: t("description"),
     openGraph: {
+      type: "website",
+      siteName: "ksefuj.to",
       title: t("ogTitle"),
       description: t("ogDescription"),
       url: "https://ksefuj.to",

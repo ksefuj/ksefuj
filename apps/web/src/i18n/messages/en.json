@@ -285,9 +285,9 @@
       "description": "Validate KSeF FA(3) invoices online. XSD schema and business rules validation. Free, no registration. Your data never leaves the browser."
     },
     "hero": {
-      "title": "KSeF validation. Simpler than ever.",
-      "description": "Drag in your XML, see everything in seconds. Full validation that meets official MF requirements, zero privacy compromises.",
-      "trustLine": "Free forever • Full MF validation • 100% local"
+      "title": "Free KSeF FA(3) invoice validator",
+      "description": "Drag in your XML, see everything in seconds. Full KSeF FA(3) invoice validation that meets official MF requirements, zero privacy compromises.",
+      "trustLine": "Free validator • Full MF validation • 100% local"
     },
     "features": {
       "title": "KSeF is no joke.",

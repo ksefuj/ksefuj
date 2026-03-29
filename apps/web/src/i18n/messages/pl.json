@@ -285,25 +285,25 @@
       "description": "Sprawdź poprawność faktury KSeF FA(3) online. Walidacja schematu XSD i reguł biznesowych. Bezpłatnie, bez rejestracji. Twoje dane nie opuszczają przeglądarki."
     },
     "hero": {
-      "title": "Walidacja KSeF. Prosta jak nigdy.",
-      "description": "Przeciągnij XML, dowiedz się wszystkiego w sekundach. Pełna walidacja zgodna z oficjalnymi wymaganiami MF, zero kompromisów w prywatności.",
-      "trustLine": "Darmowe na zawsze • Pełna walidacja MF • 100% lokalne"
+      "title": "Darmowy walidator faktur KSeF FA(3)",
+      "description": "Przeciągnij XML, dowiedz się wszystkiego w sekundach. ksefuj oferuje pełną walidację faktur KSeF FA(3) zgodną z oficjalnymi wymaganiami MF, zero kompromisów w prywatności.",
+      "trustLine": "Darmowy walidator • Pełna walidacja MF • 100% lokalne"
     },
     "features": {
       "title": "Bo KSeF to nie żarty.",
-      "subtitle": "Profesjonalna walidacja bez paywallu.",
+      "subtitle": "ksefuj to profesjonalna walidacja bez paywallu.",
       "items": [
         {
           "title": "Ministerialnie precyzyjne",
-          "description": "Oficjalny schemat XSD z czerwca 2025 plus pełna walidacja semantyczna zgodna z oficjalnymi wymaganiami Ministerstwa Finansów"
+          "description": "ksefuj używa oficjalnego schematu XSD z czerwca 2025 plus pełna walidacja semantyczna zgodna z oficjalnymi wymaganiami Ministerstwa Finansów"
         },
         {
           "title": "Twoje dane, Twoja kontrola",
-          "description": "Cała walidacja w Twojej przeglądarce. Zero przesyłania danych, zero ryzyka przecieku"
+          "description": "ksefuj wykonuje całą walidację w Twojej przeglądarce. Zero przesyłania danych, zero ryzyka przecieku"
         },
         {
           "title": "Za darmo. Na zawsze.",
-          "description": "Bez limitów, bez subskrypcji, bez ukrytych kosztów. Podstawowe narzędzia powinny być dostępne dla każdego"
+          "description": "ksefuj jest bez limitów, bez subskrypcji, bez ukrytych kosztów. Podstawowe narzędzia powinny być dostępne dla każdego"
         }
       ]
     },
