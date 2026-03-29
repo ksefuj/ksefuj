@@ -1,0 +1,249 @@
+---
+title: "KSeF Certificates vs Tokens — Which to Choose in 2026"
+description: "Certificate, token, Trusted Profile, qualified seal — which KSeF authentication method should you choose? A plain-language decision guide."
+date: 2026-03-29
+section: blog
+locale: en
+slug: "certyfikaty-vs-tokeny-ksef"
+tags: ["KSeF", "JDG"]
+sources:
+  - label: "MF FAQ — permissions and certificates"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
+translations:
+  pl: "certyfikaty-vs-tokeny-ksef"
+  uk: "certyfikaty-vs-tokeny-ksef"
+seo:
+  canonical: "/blog/certyfikaty-vs-tokeny-ksef"
+---
+
+Before you issue your first invoice through KSeF (Krajowy System e-Faktur — Poland's National
+e-Invoicing System), you need to authenticate. Simple in principle — but the system offers several
+different authentication methods, each working differently and suited to a different type of user.
+
+Profil Zaufany (Poland's trusted identity profile), e-ID card, qualified electronic signature, KSeF
+certificate, token — which do you go with? And how do you know whether your invoicing software
+needs something on top of all this?
+
+If you're a freelancer or JDG (jednoosobowa działalność gospodarcza — sole trader) issuing a handful
+of invoices a month, the answer takes about a minute to understand. If you run an accounting office
+or are integrating KSeF with an ERP system — you'll find the right answer here too.
+
+---
+
+## Six methods — at a glance
+
+KSeF supports two access modes: **manual** (you log in through a browser and work in the Aplikacja
+Podatnika) and **automatic** (your software connects to KSeF via the API without your direct
+involvement for every transaction). Authentication methods divide accordingly.
+
+| Method                         | Mode    | For whom                                              | Cost                |
+| ------------------------------ | ------- | ----------------------------------------------------- | ------------------- |
+| Profil Zaufany                 | browser | any business owner                                    | free                |
+| e-dowód (e-ID card)            | browser | anyone with an activated chip-enabled ID              | free                |
+| Qualified signature / seal\*   | browser | individuals and entities with a qualified certificate | paid (subscription) |
+| KSeF certificate (type 1 or 2) | API     | ERP systems, integrators                              | free                |
+| Authentication token           | API     | invoicing software, integrators                       | free                |
+
+\*Qualified seal support for legal entities should be verified in the current MF FAQ.
+
+The rule is simple: logging in manually via the website → Profil Zaufany, e-ID card, or qualified
+signature (seal support should be verified). Your software connecting to KSeF automatically → it needs a certificate or a token.
+
+---
+
+## Profil Zaufany — enough for most
+
+Profil Zaufany is a free government digital identity. If you've ever filed a PIT return online,
+checked an e-prescription, or logged in to ZUS (Poland's social security system) — you almost
+certainly already have one.
+
+If not, setting one up takes a few minutes. You can do it via:
+
+- **internet banking** — most Polish banks support this process without leaving home,
+- **the mObywatel app** on your phone,
+- **ePUAP** (pz.gov.pl),
+- or in person at a tax office.
+
+In KSeF, Profil Zaufany gives full access to the Aplikacja Podatnika at
+[ap.ksef.mf.gov.pl](https://ap.ksef.mf.gov.pl/). From there you can issue invoices using a form,
+browse documents received from counterparties, and manage permissions for other parties — such as
+your accountant or accounting office.
+
+There is one important limitation: Profil Zaufany is for **manual login only**. Your invoicing
+software — Fakturownia, inFakt, wFirma, or any other — connects to KSeF via the API, and Profil
+Zaufany doesn't work there. The software needs a token or certificate instead. You don't have to
+sort this yourself, though — when you first configure the integration, the software will walk you
+through that step.
+
+<Info>
+  For a sole trader issuing a few invoices a month, Profil Zaufany is entirely sufficient. If you
+  use a commercial invoicing platform, the token setup is a one-off task — and typically takes just
+  a few minutes.
+</Info>
+
+---
+
+## e-ID card — if yours is already activated
+
+New Polish identity cards have a built-in chip that supports electronic login. If your e-dowód is
+activated for electronic signature purposes, you can use it to log in to KSeF in exactly the same
+way as Profil Zaufany. Activation requires a one-time visit to a government office.
+
+In practice, the e-ID card is the less popular choice — Profil Zaufany is more convenient because
+it doesn't require a card reader. But if you already have an activated e-dowód and use it elsewhere,
+it works perfectly well for KSeF too.
+
+---
+
+## Qualified signature and qualified seal — for companies
+
+A **qualified electronic signature** is the commercial equivalent of a handwritten signature —
+legally valid across the European Union under the eIDAS standard. It's issued by commercial
+providers including Certum, Sigillum, and EuroCert, on annual or multi-year subscriptions.
+It costs money.
+
+In the context of KSeF, a qualified signature gives the same browser-based access as Profil Zaufany
+— full access to the Aplikacja Podatnika. Who should use this? Primarily anyone who already holds a
+qualified signature for other purposes: e-KRS filings, public procurement, signing contracts. If you
+don't have one and don't need it elsewhere — Profil Zaufany is cheaper and equally effective.
+
+The eIDAS standard distinguishes between a qualified signature (an instrument for a natural person)
+and a **qualified seal** (an instrument for a legal entity, such as a company). Whether and to what
+extent KSeF supports the qualified seal as a distinct login method — always verify in the current
+Ministry of Finance FAQ or the Aplikacja Podatnika KSeF 2.0 manual.
+
+<Info>
+  The current list of supported authentication methods — including any support for qualified seals
+  for legal entities — should always be verified in the official [MF
+  FAQ](https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20). That is the authoritative source.
+</Info>
+
+---
+
+## KSeF certificate — two types, two use cases
+
+A KSeF certificate is an electronic identity credential used for API access — for software and
+systems that communicate with KSeF automatically, without a human involved in every operation.
+You obtain it from the Ministry of Finance system.
+
+There are two types that differ significantly.
+
+**Type 1** is issued directly to the taxpayer — the NIP holder. It carries the broadest permissions
+within that NIP. It's used when a company's own system integrates with KSeF under the company's own
+identity — for example, when a company connects its ERP directly to KSeF as itself, not through an
+intermediary.
+
+**Type 2** is intended for entities acting on behalf of a taxpayer: accounting offices, multi-client
+systems, external integrators. The key rule: a type 2 certificate always operates within the context
+of a specific authorisation. Without a valid mandate from the taxpayer — such as a ZAW-FA or a
+permission granted in the Aplikacja Podatnika panel — a type 2 certificate simply won't work.
+
+In short: **type 1 — when the system operates under the company's own NIP, type 2 — when it operates
+on behalf of someone else's NIP.**
+
+<Warning>
+  The details of the certificate download process may change with Ministry of Finance system
+  updates. Before you begin, check the current instructions in the Aplikacja Podatnika KSeF 2.0
+  manual, available at ksef.podatki.gov.pl.
+</Warning>
+
+---
+
+## Authentication token — the simplest API access
+
+An authentication token is a string — an access key that you generate yourself inside the Aplikacja
+Podatnika KSeF. It requires no certificate infrastructure to manage. Generate it in the app, enter
+it in your software's configuration, and you're done.
+
+A token has a defined validity period and permission scope — you can restrict it to invoice issuance
+only, or to read-only access. You can revoke it at any time from the Aplikacja Podatnika with a
+single click. That matters: if you change your software provider or something goes wrong, revoking
+access is instant and straightforward.
+
+When should you choose a token over a certificate? Tokens are more convenient for integrators and
+smaller systems, because they don't require PKI infrastructure setup. For complex deployments serving
+multiple taxpayers simultaneously, a certificate may be the better solution — more durable
+credentials and a broader control surface.
+
+<Tip>
+  If your software asks you to "configure a KSeF connection" or "enter a token" — log in to the
+  [Aplikacja Podatnika](https://ap.ksef.mf.gov.pl/), find the token management section and generate
+  a new one. The software will usually walk you through this step by step.
+</Tip>
+
+---
+
+## ZAW-FA — when someone acts on your behalf
+
+If you use an accounting office or want to give someone else access to your KSeF — you need a
+ZAW-FA authorisation.
+
+ZAW-FA is a formal authorisation form. It allows you to authorise a specific person or entity — your
+bookkeeper or accounting office, for example — to issue and receive invoices on your behalf. You can
+submit the authorisation in several ways:
+
+- **in person at a tax office**,
+- **via e-Urząd Skarbowy** ([podatki.gov.pl](https://www.podatki.gov.pl/e-urzad-skarbowy/)) — electronically,
+- **directly in the Aplikacja Podatnika KSeF** — via the permissions panel, without leaving the system.
+
+You can restrict the scope of access to three variants: read-only, issue-only, or full access. It's
+worth agreeing the scope with your accountant before granting permissions — better to match access to
+actual needs than to hand over broader rights than necessary.
+
+Good news for sole traders: if you work with an accounting office, they will typically ask you for
+the appropriate authorisation and guide you through the whole process. You don't need to know the
+details — just ask your accountant.
+
+For accounting offices and their clients, this is the key rule: a ZAW-FA from every client is a
+prerequisite before any API integration can be activated. A type 2 certificate without an active
+authorisation simply won't work.
+
+<Source
+  href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
+  label="MF FAQ — permissions and certificates"
+/>
+
+---
+
+## Which option is right for you?
+
+The table below is practical guidance — not legal advice. Always verify the current position in the
+[MF FAQ](https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20).
+
+| Your situation                                                | Recommended method                                                              |
+| ------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| Sole trader, issuing invoices manually in Aplikacja Podatnika | **Profil Zaufany**                                                              |
+| Using invoicing software (Fakturownia, inFakt, wFirma etc.)   | **Profil Zaufany** for manual login + **token** generated for the software      |
+| Company, own ERP integrating with KSeF                        | **KSeF certificate type 1** or token                                            |
+| Accounting office serving multiple clients                    | **ZAW-FA** from each client + **type 2 certificate** (or token)                 |
+| Developer integrating KSeF into a company system              | **Token** (easy start) or **type 1/2 certificate** (production)                 |
+| Already have a qualified signature for other purposes         | You can use it instead of Profil Zaufany — gives identical browser-based access |
+
+---
+
+## e-mikrofirma — if simplicity is the priority
+
+If you issue invoices occasionally and would rather focus on your work than on configuring access —
+take a look at **e-mikrofirma**. It's a free, browser-based Ministry of Finance application for the
+smallest businesses, covering basic invoicing and tax filings.
+
+e-mikrofirma supports KSeF in a limited capacity. Before choosing this tool, check the current
+feature list on the MF website — the scope of KSeF support may change with application updates. For
+those issuing invoices occasionally, it may well be sufficient and the simplest available option.
+
+More about preparing for KSeF as a sole trader in the article
+[KSeF from 1 April 2026 — what changes](/blog/ksef-od-1-kwietnia-2026).
+
+---
+
+## Before your invoice hits the system — validate it first
+
+Picking your authentication method is only half the job. Before your invoice reaches KSeF — make
+sure it's correct. An invoice rejected by the system is an invoice that legally doesn't exist —
+even if your client already received it by email.
+
+Drop the XML file into **[ksefuj.to](/)** — a free validator built to the official MF specification.
+It runs entirely in your browser: your file never leaves your browser. You get a result in seconds.
+
+More questions about login, certificates, and KSeF permissions? The answers to the most common ones
+are in our [FAQ](/faq).
