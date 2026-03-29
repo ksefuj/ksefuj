@@ -13,9 +13,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "privacy" });
 
+  // Canonical URL: Polish has no prefix, other locales have prefix
+  const canonical = locale === "pl" ? "/privacy" : `/${locale}/privacy`;
+
   return {
     title: t("metaTitle"),
     description: t("metaDescription"),
+    alternates: {
+      canonical,
+      languages: {
+        pl: "/privacy",
+        en: "/en/privacy",
+        uk: "/uk/privacy",
+        "x-default": "/privacy",
+      },
+    },
   };
 }
 

@@ -23,9 +23,22 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "landing.meta" });
+
+  // Canonical URL: Polish has no prefix, other locales have prefix
+  const canonical = locale === "pl" ? "/" : `/${locale}`;
+
   return {
     title: t("title"),
     description: t("description"),
+    alternates: {
+      canonical,
+      languages: {
+        pl: "/",
+        en: "/en",
+        uk: "/uk",
+        "x-default": "/",
+      },
+    },
   };
 }
 

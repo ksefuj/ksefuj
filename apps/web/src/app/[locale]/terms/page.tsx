@@ -13,9 +13,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "terms.meta" });
 
+  // Canonical URL: Polish has no prefix, other locales have prefix
+  const canonical = locale === "pl" ? "/terms" : `/${locale}/terms`;
+
   return {
     title: t("title"),
     description: t("description"),
+    alternates: {
+      canonical,
+      languages: {
+        pl: "/terms",
+        en: "/en/terms",
+        uk: "/uk/terms",
+        "x-default": "/terms",
+      },
+    },
   };
 }
 

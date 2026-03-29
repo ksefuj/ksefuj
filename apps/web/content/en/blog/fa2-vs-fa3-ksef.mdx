@@ -23,8 +23,8 @@ This article is a reference guide to what changed: exactly how FA(3) differs fro
 
 <Tip>
   Already have an XML file? Drop it into [ksefuj.to](/) — the validator checks compliance with
-  official MF requirements and explains every error in plain language, pointing to the exact
-  element causing the problem. Your data never leaves your browser.
+  official MF requirements and explains every error in plain language, pointing to the exact element
+  causing the problem. Your data never leaves your browser.
 </Tip>
 
 <Source
@@ -41,9 +41,9 @@ The FA(2) logical structure was in use from 1 September 2023 — initially on a 
 From 1 February 2026, **FA(3) is the only binding template for structured e-invoices**. KSeF 2.0 does not accept FA(2) in any form — no legacy mode, no transition period for the format.
 
 <Warning>
-  KSeF 2.0 rejects your document at the namespace level, before it even checks the contents. If
-  your XML contains the old FA(2) namespace, no other fix will help — you must start with the
-  namespace change.
+  KSeF 2.0 rejects your document at the namespace level, before it even checks the contents. If your
+  XML contains the old FA(2) namespace, no other fix will help — you must start with the namespace
+  change.
 </Warning>
 
 Two dates are worth keeping distinct, as they are often confused:
@@ -67,6 +67,7 @@ The namespace is the `xmlns` attribute on the `<Faktura>` root element. The URI 
   </Faktura>
 
   <!-- ✅ FA(3) — required from 1 February 2026 -->
+
   <Faktura xmlns="http://crd.gov.pl/wzor/2025/06/25/13775/">
     ...
   </Faktura>
@@ -94,6 +95,7 @@ The `<KodFormularza>` element in the `Naglowek` section requires both attributes
   <KodFormularza kodSystemowy="FA (2)" wersjaSchemy="...">FA</KodFormularza>
 
   <!-- ✅ FA(3) -->
+
   <KodFormularza kodSystemowy="FA (3)" wersjaSchemy="1-0E">FA</KodFormularza>
   ```
 </XmlExample>
@@ -110,6 +112,7 @@ The `<WariantFormularza>` value changes from `2` to `3`:
   <WariantFormularza>2</WariantFormularza>
 
   <!-- ✅ FA(3) -->
+
   <WariantFormularza>3</WariantFormularza>
   ```
 </XmlExample>
@@ -119,7 +122,9 @@ A correct FA(3) header looks like this:
 <XmlExample copyable>
   ```xml
   <Naglowek>
-    <KodFormularza kodSystemowy="FA (3)" wersjaSchemy="1-0E">FA</KodFormularza>
+    <KodFormularza kodSystemowy="FA (3)" wersjaSchemy="1-0E">
+      FA
+    </KodFormularza>
     <WariantFormularza>3</WariantFormularza>
     <DataWytworzeniaFa>2026-03-28T10:00:00Z</DataWytworzeniaFa>
   </Naglowek>
@@ -134,10 +139,10 @@ This is the change most likely to catch you off-guard, because `Podmiot2` looks 
 
 FA(3) introduces two new **mandatory** fields in `Podmiot2`: `JST` and `GV`. Without them, the document fails XSD validation — regardless of what your business does.
 
-| Field | Meaning                    | Default value        | When `1`                                    |
-| ----- | -------------------------- | -------------------- | ------------------------------------------- |
-| `JST` | Local government unit flag | `2` = not applicable | Invoice relates to a subordinate JST unit   |
-| `GV`  | VAT group member flag      | `2` = not applicable | Invoice relates to a VAT group member       |
+| Field | Meaning                    | Default value        | When `1`                                  |
+| ----- | -------------------------- | -------------------- | ----------------------------------------- |
+| `JST` | Local government unit flag | `2` = not applicable | Invoice relates to a subordinate JST unit |
+| `GV`  | VAT group member flag      | `2` = not applicable | Invoice relates to a VAT group member     |
 
 For the vast majority of invoices: set both to `2` and move on.
 
@@ -156,6 +161,7 @@ For the vast majority of invoices: set both to `2` and move on.
   </Podmiot2>
 
   <!-- ✅ FA(3) — JST and GV present -->
+
   <Podmiot2>
     <DaneIdentyfikacyjne>
       <NIP>9876543210</NIP>

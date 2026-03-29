@@ -40,9 +40,9 @@ Struktura logiczna FA(2) obowiązywała od 1 września 2023 roku — najpierw do
 Od 1 lutego 2026 **FA(3) jest jedynym wiążącym szablonem e-faktury strukturyzowanej**. KSeF 2.0 nie akceptuje FA(2) w żadnej formie — nie ma trybu legacy, nie ma okresu przejściowego dla formatu.
 
 <Warning>
-  KSeF 2.0 odrzuci Twój dokument już na poziomie namespace, zanim w ogóle sprawdzi zawartość.
-  Jeśli Twój XML zawiera stary namespace FA(2), żadna inna poprawka nie pomoże — musisz zacząć od
-  zmiany namespace.
+  KSeF 2.0 odrzuci Twój dokument już na poziomie namespace, zanim w ogóle sprawdzi zawartość. Jeśli
+  Twój XML zawiera stary namespace FA(2), żadna inna poprawka nie pomoże — musisz zacząć od zmiany
+  namespace.
 </Warning>
 
 Warto rozróżnić dwie osobne daty, które często są mylone:
@@ -66,6 +66,7 @@ Namespace to atrybut `xmlns` w elemencie `<Faktura>`. W FA(3) zmienił się adre
   </Faktura>
 
   <!-- ✅ FA(3) — wymagany od 1 lutego 2026 -->
+
   <Faktura xmlns="http://crd.gov.pl/wzor/2025/06/25/13775/">
     ...
   </Faktura>
@@ -94,6 +95,7 @@ Element `<KodFormularza>` w sekcji `Naglowek` wymaga zaktualizowania obu atrybut
   <KodFormularza kodSystemowy="FA (2)" wersjaSchemy="...">FA</KodFormularza>
 
   <!-- ✅ FA(3) -->
+
   <KodFormularza kodSystemowy="FA (3)" wersjaSchemy="1-0E">FA</KodFormularza>
   ```
 </XmlExample>
@@ -110,6 +112,7 @@ Wartość `<WariantFormularza>` zmieniła się z `2` na `3`:
   <WariantFormularza>2</WariantFormularza>
 
   <!-- ✅ FA(3) -->
+
   <WariantFormularza>3</WariantFormularza>
   ```
 </XmlExample>
@@ -119,7 +122,9 @@ Prawidłowy nagłówek FA(3) wygląda tak:
 <XmlExample copyable>
   ```xml
   <Naglowek>
-    <KodFormularza kodSystemowy="FA (3)" wersjaSchemy="1-0E">FA</KodFormularza>
+    <KodFormularza kodSystemowy="FA (3)" wersjaSchemy="1-0E">
+      FA
+    </KodFormularza>
     <WariantFormularza>3</WariantFormularza>
     <DataWytworzeniaFa>2026-03-28T10:00:00Z</DataWytworzeniaFa>
   </Naglowek>
@@ -134,10 +139,10 @@ To jest zmiana, którą najłatwiej przeoczyć, bo dotyczy sekcji, która na pie
 
 FA(3) wprowadza dwa nowe **obowiązkowe** pola w `Podmiot2`: `JST` i `GV`. Bez nich dokument nie przejdzie walidacji XSD — niezależnie od tego, czym zajmuje się Twoja firma.
 
-| Pole  | Znaczenie                         | Wartość domyślna | Kiedy "1"                                      |
-| ----- | --------------------------------- | ---------------- | ---------------------------------------------- |
-| `JST` | Flaga jednostki samorządu teryt.  | `2` = nie dotyczy | Faktura dotyczy podległej jednostki JST        |
-| `GV`  | Flaga członka grupy VAT           | `2` = nie dotyczy | Faktura dotyczy członka grupy VAT              |
+| Pole  | Znaczenie                        | Wartość domyślna  | Kiedy "1"                               |
+| ----- | -------------------------------- | ----------------- | --------------------------------------- |
+| `JST` | Flaga jednostki samorządu teryt. | `2` = nie dotyczy | Faktura dotyczy podległej jednostki JST |
+| `GV`  | Flaga członka grupy VAT          | `2` = nie dotyczy | Faktura dotyczy członka grupy VAT       |
 
 Dla zdecydowanej większości faktur: ustaw oba na `2` i zapomnij o temacie.
 
@@ -156,6 +161,7 @@ Dla zdecydowanej większości faktur: ustaw oba na `2` i zapomnij o temacie.
   </Podmiot2>
 
   <!-- ✅ FA(3) — JST i GV obecne -->
+
   <Podmiot2>
     <DaneIdentyfikacyjne>
       <NIP>9876543210</NIP>
