@@ -15,3 +15,11 @@ pnpm typecheck || (
   echo "❌ TypeScript errors found. Fix them before committing."
   exit 1
 )
+
+# Run SEO validation (currently in warning mode)
+# TODO: Enable strict mode after fixing existing issues
+pnpm validate:seo || (
+  echo "⚠️  SEO issues found (non-blocking for now)."
+  echo "💡 Run 'pnpm validate:seo' to see details."
+  # exit 1 # Uncomment to enforce
+)

@@ -26,6 +26,7 @@
     "format:check": "prettier --check .",
     "typecheck": "pnpm -r typecheck",
     "validate": "pnpm --filter @ksefuj/validator validate",
+    "validate:seo": "tsx scripts/validate-seo.ts",
     "update-schemas": "tsx scripts/update-schemas.ts",
     "prepare": "husky install",
     "postinstall": "pnpm --filter @ksefuj/validator build",
