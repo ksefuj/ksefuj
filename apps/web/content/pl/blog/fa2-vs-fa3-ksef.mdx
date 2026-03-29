@@ -1,0 +1,309 @@
+---
+title: "FA(2) vs FA(3) — co się zmieniło i co to znaczy dla Ciebie"
+description: "FA(2) vs FA(3) — co się zmieniło w schemacie KSeF. Porównanie struktur, lista zmian i jak zaktualizować integrację."
+date: 2026-03-28
+section: blog
+locale: pl
+slug: "fa2-vs-fa3-ksef"
+tags: ["KSeF", "FA(3)", "FA(2)", "XML", "Walidacja"]
+sources:
+  - label: "Broszura informacyjna FA(3)"
+    url: "https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "Schemat XSD FA(3)"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+translations:
+  en: "fa2-vs-fa3-ksef"
+seo:
+  canonical: "/blog/fa2-vs-fa3-ksef"
+---
+
+FA(2) należy już do historii. Od 1 lutego 2026 roku KSeF 2.0 przyjmuje wyłącznie FA(3) — nowy, niekompatybilny format bez trybu zgodności wstecznej.
+
+Ten artykuł to referencja zmian: co konkretnie różni FA(3) od FA(2), czego nie trzeba ruszać i co zaktualizować w integracji. Przydatne zarówno przy migracji istniejącej integracji, jak i przy budowie nowej od zera.
+
+<Tip>
+  Masz już plik XML? Wrzuć go na [ksefuj.to](/) — walidator sprawdzi zgodność z oficjalnymi
+  wymaganiami MF i pokaże każdy błąd po polsku. Twój plik nie opuszcza przeglądarki.
+</Tip>
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  label="Broszura informacyjna FA(3) — Ministerstwo Finansów"
+/>
+
+---
+
+## FA(2) oficjalnie wygasł 1 lutego 2026
+
+Struktura logiczna FA(2) obowiązywała od 1 września 2023 roku — najpierw dobrowolnie, potem w ramach pilotażu KSeF. Koniec nastąpił 31 stycznia 2026 o północy.
+
+Od 1 lutego 2026 **FA(3) jest jedynym wiążącym szablonem e-faktury strukturyzowanej**. KSeF 2.0 nie akceptuje FA(2) w żadnej formie — nie ma trybu legacy, nie ma okresu przejściowego dla formatu.
+
+<Warning>
+  KSeF 2.0 odrzuci Twój dokument już na poziomie namespace, zanim w ogóle sprawdzi zawartość.
+  Jeśli Twój XML zawiera stary namespace FA(2), żadna inna poprawka nie pomoże — musisz zacząć od
+  zmiany namespace.
+</Warning>
+
+Warto rozróżnić dwie osobne daty, które często są mylone:
+
+- **1 lutego 2026** — KSeF stał się obowiązkowy dla podatników o obrocie powyżej 200 mln zł w 2024 roku; jednocześnie FA(3) stało się jedynym akceptowanym formatem dla **wszystkich** faktur KSeF.
+- **1 kwietnia 2026** — KSeF stał się obowiązkowy dla pozostałych czynnych podatników VAT.
+
+FA(3) jako format obowiązuje od 1 lutego niezależnie od tego, od kiedy KSeF stał się dla Ciebie obowiązkowy. Jeśli integrujesz system przed kwietniem — integrujesz FA(3), nie FA(2).
+
+---
+
+## Zmiana namespace — pierwsza i najważniejsza zmiana
+
+Namespace to atrybut `xmlns` w elemencie `<Faktura>`. W FA(3) zmienił się adres URI — i to jest jedyna zmiana, która powoduje 100% błędów walidacji u deweloperów migrujących z FA(2).
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ FA(2) — nieważny od 1 lutego 2026 -->
+  <Faktura xmlns="http://crd.gov.pl/wzor/2023/06/29/12648/">
+    ...
+  </Faktura>
+
+  <!-- ✅ FA(3) — wymagany od 1 lutego 2026 -->
+  <Faktura xmlns="http://crd.gov.pl/wzor/2025/06/25/13775/">
+    ...
+  </Faktura>
+  ```
+</XmlExample>
+
+Zmiana jest prosta do wykonania, ale łatwa do przeoczenia — szczególnie jeśli namespace jest zahardkodowany w szablonie generatora XML albo pochodzi ze skopiowanego kiedyś przykładu.
+
+<Info>
+  Schemat XSD FA(3) jest opublikowany oficjalnie pod adresem
+  `https://crd.gov.pl/wzor/2025/06/25/13775/`. Data w URL to data publikacji schematu — nie data
+  jego wejścia w życie.
+</Info>
+
+---
+
+## Zmiany w nagłówku
+
+### KodFormularza — nowe atrybuty
+
+Element `<KodFormularza>` w sekcji `Naglowek` wymaga zaktualizowania obu atrybutów:
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ FA(2) -->
+  <KodFormularza kodSystemowy="FA (2)" wersjaSchemy="...">FA</KodFormularza>
+
+  <!-- ✅ FA(3) -->
+  <KodFormularza kodSystemowy="FA (3)" wersjaSchemy="1-0E">FA</KodFormularza>
+  ```
+</XmlExample>
+
+Uwaga: `kodSystemowy="FA (3)"` — ze spacją przed nawiasem. Literówki tutaj to jeden z częstszych błędów.
+
+### WariantFormularza — nowa wartość
+
+Wartość `<WariantFormularza>` zmieniła się z `2` na `3`:
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ FA(2) -->
+  <WariantFormularza>2</WariantFormularza>
+
+  <!-- ✅ FA(3) -->
+  <WariantFormularza>3</WariantFormularza>
+  ```
+</XmlExample>
+
+Prawidłowy nagłówek FA(3) wygląda tak:
+
+<XmlExample copyable>
+  ```xml
+  <Naglowek>
+    <KodFormularza kodSystemowy="FA (3)" wersjaSchemy="1-0E">FA</KodFormularza>
+    <WariantFormularza>3</WariantFormularza>
+    <DataWytworzeniaFa>2026-03-28T10:00:00Z</DataWytworzeniaFa>
+  </Naglowek>
+  ```
+</XmlExample>
+
+---
+
+## Nowe obowiązkowe pola w Podmiot2
+
+To jest zmiana, którą najłatwiej przeoczyć, bo dotyczy sekcji, która na pierwszy rzut oka wygląda tak samo jak w FA(2).
+
+FA(3) wprowadza dwa nowe **obowiązkowe** pola w `Podmiot2`: `JST` i `GV`. Bez nich dokument nie przejdzie walidacji XSD — niezależnie od tego, czym zajmuje się Twoja firma.
+
+| Pole  | Znaczenie                         | Wartość domyślna | Kiedy "1"                                      |
+| ----- | --------------------------------- | ---------------- | ---------------------------------------------- |
+| `JST` | Flaga jednostki samorządu teryt.  | `2` = nie dotyczy | Faktura dotyczy podległej jednostki JST        |
+| `GV`  | Flaga członka grupy VAT           | `2` = nie dotyczy | Faktura dotyczy członka grupy VAT              |
+
+Dla zdecydowanej większości faktur: ustaw oba na `2` i zapomnij o temacie.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ FA(2) — brak JST i GV -->
+  <Podmiot2>
+    <DaneIdentyfikacyjne>
+      <NIP>9876543210</NIP>
+      <Nazwa>Nabywca Sp. z o.o.</Nazwa>
+    </DaneIdentyfikacyjne>
+    <Adres>
+      <KodKraju>PL</KodKraju>
+      <AdresL1>ul. Przykładowa 1, 00-001 Warszawa</AdresL1>
+    </Adres>
+  </Podmiot2>
+
+  <!-- ✅ FA(3) — JST i GV obecne -->
+  <Podmiot2>
+    <DaneIdentyfikacyjne>
+      <NIP>9876543210</NIP>
+      <Nazwa>Nabywca Sp. z o.o.</Nazwa>
+    </DaneIdentyfikacyjne>
+    <Adres>
+      <KodKraju>PL</KodKraju>
+      <AdresL1>ul. Przykładowa 1, 00-001 Warszawa</AdresL1>
+    </Adres>
+    <JST>2</JST>
+    <GV>2</GV>
+  </Podmiot2>
+  ```
+</XmlExample>
+
+Gdy `JST` = `1`, wymagany jest odpowiedni wpis w `Podmiot3` z `Rola` = `8`. Gdy `GV` = `1` — wpis z `Rola` = `10`. Szczegóły znajdziesz w [broszurze informacyjnej FA(3)](https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf).
+
+---
+
+## Nowe elementy w FA(3)
+
+### Rola 11 — pracownik (nowa w FA(3))
+
+FA(3) wprowadza wartość `11` dla pola `Rola` w `Podmiot3`. Dotyczy faktur za wydatki pracownicze — gdy pracownik kupuje w imieniu pracodawcy i nie ma własnego NIP jako strony transakcji.
+
+Gdy `Rola` = `11`, pole `DaneIdentyfikacyjne/NIP` nie istnieje — zamiast tego ustawiasz `BrakID` = `1` i podajesz imię i nazwisko pracownika w polu `Nazwa`.
+
+### Zalacznik — opcjonalny załącznik strukturyzowany
+
+FA(3) dodaje opcjonalny element `<Zalacznik>` na najwyższym poziomie dokumentu. Przeznaczony dla faktur z rozbudowanymi danymi o jednostkach miary, ilości lub cenach jednostkowych netto.
+
+<Warning>
+  Użycie `Zalacznik` wymaga wcześniejszego zgłoszenia zamiaru w e-Urzędzie Skarbowym. Załącznik
+  można stosować wyłącznie do danych podatkowych — użycie go dla cenników, gwarancji lub umów
+  skutkuje utratą prawa do wystawiania faktur z załącznikiem.
+</Warning>
+
+---
+
+## Pułapka: korekty do faktur FA(2)
+
+To jest częste źródło błędów po migracji.
+
+Jeśli wystawiasz w 2026 roku fakturę korygującą do faktury, która była wystawiona przed 1 lutego 2026 w formacie FA(2) — **faktura korygująca musi być w FA(3)**. Nie ma żadnego trybu „korekta FA(2) w formacie FA(2)".
+
+<Warning>
+  FA(3) obowiązuje dla **wszystkich** faktur strukturyzowanych wystawionych od 1 lutego 2026 roku —
+  włącznie z korektami do starych faktur FA(2) i fakturami końcowymi do zaliczkowych faktur FA(2).
+  To wprost z §1.2 Broszury informacyjnej FA(3).
+</Warning>
+
+Przy korekcie faktury wystawionej poza obecnym KSeF (czyli każdej faktury FA(2) z KSeF 1.0) użyj w sekcji `DaneFaKorygowanej` pola `NrKSeFN` = `1` — a nie `NrKSeF`, które dotyczy faktur wystawionych już w KSeF 2.0.
+
+---
+
+## Kroki migracji — co musisz zmienić
+
+Jeśli Twoja integracja działała z FA(2), to masz do zrobienia cztery obowiązkowe kroki i kilka opcjonalnych, zależnie od zakresu Twojego wdrożenia.
+
+### Obowiązkowe
+
+**1. Zmień namespace**
+
+```
+xmlns="http://crd.gov.pl/wzor/2023/06/29/12648/"
+→
+xmlns="http://crd.gov.pl/wzor/2025/06/25/13775/"
+```
+
+**2. Zaktualizuj atrybuty KodFormularza**
+
+```
+kodSystemowy="FA (3)"   ← zmiana z FA (2)
+wersjaSchemy="1-0E"
+```
+
+**3. Zmień WariantFormularza**
+
+```
+<WariantFormularza>3</WariantFormularza>   ← zmiana z 2
+```
+
+**4. Dodaj JST i GV do każdego Podmiot2**
+
+```xml
+<JST>2</JST>
+<GV>2</GV>
+```
+
+Dla standardowych faktur wartość `2` oznacza „nie dotyczy" — i jest poprawna dla zdecydowanej większości przypadków.
+
+### Opcjonalne / zależne od Twojego przypadku
+
+- **Korekty do FA(2):** użyj `NrKSeFN` = `1` w `DaneFaKorygowanej` zamiast `NrKSeF`.
+- **Faktury pracownicze:** zaimplementuj `Rola` = `11` w `Podmiot3` (z `BrakID` = `1` i nazwą pracownika).
+- **Złożone faktury ilościowe:** rozważ `Zalacznik` — ale najpierw złóż zgłoszenie w e-US.
+
+---
+
+## Jeśli zaczynasz od nowa
+
+Zapomnij o FA(2). Nie ma potrzeby studiować starych przykładów, stare szablony z internetu są nieaktualne, a kod z pilotażu KSeF 1.0 nadaje się wyłącznie do archiwum.
+
+Zbuduj integrację bezpośrednio pod FA(3):
+
+1. Pobierz schemat XSD ze strony MF: `https://crd.gov.pl/wzor/2025/06/25/13775/`
+2. Wygeneruj klasy / typy z XSD (JAXB, xsd.exe, xsd-to-ts — cokolwiek pasuje do Twojego stosu).
+3. Implementuj zgodnie z Broszurą informacyjną FA(3).
+4. Waliduj lokalnie przed wysyłką — o tym niżej.
+
+<Info>
+  Wszystkie przykłady XML w tym artykule i na ksefuj.to opierają się na schemacie FA(3)
+  obowiązującym od 1 lutego 2026 roku. Nie ma nowszej wersji schematu na dzień publikacji.
+</Info>
+
+---
+
+## Środowisko testowe KSeF 2.0
+
+Środowisko testowe KSeF 2.0 jest dostępne pod adresem:
+
+**`https://web2te-ksef.mf.gov.pl/`**
+
+Faktury wysłane do środowiska testowego używają fikcyjnych danych i nie mają skutków prawnych.
+
+<Warning>
+  Stary adres KSeF 1.0 (`ap.ksef.mf.gov.pl`) nie działa od 1 lutego 2026. Jeśli masz go
+  zahardkodowanego gdzieś w konfiguracji — teraz jest dobry moment, żeby to zmienić.
+</Warning>
+
+Środowisko testowe przyjmuje wyłącznie FA(3). Nie ma osobnego endpointu dla FA(2) — nie byłby przydatny.
+
+---
+
+## Sprawdź swój plik przed wysyłką
+
+Zanim wyślesz cokolwiek do środowiska testowego ani tym bardziej produkcyjnego, warto wstępnie sprawdzić plik lokalnie.
+
+[ksefuj.to](/) waliduje Twój XML zgodnie z oficjalnymi wymaganiami MF — schemat FA(3) plus reguły semantyczne — i pokazuje każdy błąd po polsku z dokładnym wskazaniem problematycznego elementu. Twój plik nie trafia na żaden serwer.
+
+<Tip>
+  Wrzuć plik na [ksefuj.to](/) zanim wyślesz go do `web2te-ksef.mf.gov.pl`. Zaoszczędzisz rund
+  debugowania — walidator wskaże dokładnie, czego brakuje lub co jest nie tak.
+</Tip>
+
+Jeśli wciąż trafiasz na błędy po migracji, sprawdź też [najczęstsze błędy walidacji FA(3)](/blog/najczestsze-bledy-walidacji-fa3) — znajdziesz tam dokładne komunikaty, wyjaśnienia i gotowy kod XML do skopiowania.
+
+<Source
+  href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+  label="Schemat XSD FA(3) — crd.gov.pl"
+/>
