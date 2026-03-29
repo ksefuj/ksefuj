@@ -36,16 +36,18 @@ KSeF supports two access modes: **manual** (you log in through a browser and wor
 Podatnika) and **automatic** (your software connects to KSeF via the API without your direct
 involvement for every transaction). Authentication methods divide accordingly.
 
-| Method                               | Mode    | For whom                                              | Cost                |
-| ------------------------------------ | ------- | ----------------------------------------------------- | ------------------- |
-| Profil Zaufany                       | browser | any business owner                                    | free                |
-| e-dowód (e-ID card)                  | browser | anyone with an activated chip-enabled ID              | free                |
-| Qualified signature / qualified seal | browser | individuals and entities with a qualified certificate | paid (subscription) |
-| KSeF certificate (type 1 or 2)       | API     | ERP systems, integrators                              | free                |
-| Authentication token                 | API     | invoicing software, integrators                       | free                |
+| Method                         | Mode    | For whom                                              | Cost                |
+| ------------------------------ | ------- | ----------------------------------------------------- | ------------------- |
+| Profil Zaufany                 | browser | any business owner                                    | free                |
+| e-dowód (e-ID card)            | browser | anyone with an activated chip-enabled ID              | free                |
+| Qualified signature / seal\*   | browser | individuals and entities with a qualified certificate | paid (subscription) |
+| KSeF certificate (type 1 or 2) | API     | ERP systems, integrators                              | free                |
+| Authentication token           | API     | invoicing software, integrators                       | free                |
+
+\*Qualified seal support for legal entities should be verified in the current MF FAQ.
 
 The rule is simple: logging in manually via the website → Profil Zaufany, e-ID card, or qualified
-signature/seal. Your software connecting to KSeF automatically → it needs a certificate or a token.
+signature (seal support should be verified). Your software connecting to KSeF automatically → it needs a certificate or a token.
 
 ---
 
