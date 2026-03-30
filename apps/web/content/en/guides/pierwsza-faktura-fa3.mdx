@@ -1,0 +1,194 @@
+---
+title: "Send Your First Invoice to KSeF — Step by Step (Test Environment)"
+description: "A practical walkthrough: send your first invoice to KSeF in the test environment, collect your UPO, and verify receipt on the buyer's side. No risk, 15 minutes."
+date: 2026-04-02
+section: guides
+locale: en
+slug: "pierwsza-faktura-fa3"
+translations:
+  pl: "pierwsza-faktura-fa3"
+  uk: "pierwsza-faktura-fa3"
+tags: ["KSeF", "First invoice", "JDG", "Test environment"]
+sources:
+  - label: "FAQ MF — KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
+  - label: "KSeF 2.0 Test Environment"
+    url: "https://ap-test.ksef.mf.gov.pl/web/"
+  - label: "KSeF 2.0 Manual Part II — Issuing and Receiving Invoices (MF)"
+    url: "https://ksef.podatki.gov.pl/dokumenty-do-pobrania/"
+---
+
+KSeF (Krajowy System e-Faktur — Poland's National e-Invoicing System) is live — but before you send your first real invoice, run through the whole process in the sandbox. The Ministry of Finance provides a test environment where you can submit invoices with dummy data, with no legal consequences whatsoever. Fifteen minutes from now, you'll know exactly what to expect.
+
+This guide takes you from login, through submission, to confirming receipt on the buyer's side.
+
+---
+
+## Before you start
+
+Make sure you have:
+
+- **Invoicing software with KSeF 2.0 integration** — or the free [Aplikacja Podatnika](https://ap.ksef.mf.gov.pl/) from the Ministry of Finance (browser-based, no installation needed)
+- **Profil Zaufany, e-Dowód, or a qualified certificate** — to authenticate in KSeF (Profil Zaufany is the simplest option — if you don't have one, [set it up via online banking](https://www.gov.pl/web/gov/zaloz-profil-zaufany))
+- **Your company's NIP** (Polish tax identification number) — you log in with your real NIP, even in the test environment
+- **15 minutes**
+
+<Info>
+  The test environment is a sandbox — nothing you do there has any legal standing. You can submit
+  invoices with made-up amounts and buyer details. None of it reaches the tax office.
+</Info>
+
+---
+
+## Step 1: Log in to the KSeF test environment
+
+Go to [ap-test.ksef.mf.gov.pl](https://ap-test.ksef.mf.gov.pl/web/) — the official KSeF 2.0 test environment.
+
+1. Click "Zaloguj się" (Log in).
+2. Choose your authentication method — Profil Zaufany, e-Dowód, or qualified certificate.
+3. Enter your company's NIP.
+4. Once logged in, you'll see a panel with two tabs: **outbox** (invoices you've sent) and **inbox** (invoices sent to you).
+
+If this is your first login, both tabs will be empty. That's expected.
+
+<Warning>
+  Make sure you're logging in to the **test** environment (ap-test.ksef.mf.gov.pl), not the
+  production one. Invoices submitted to production have real legal consequences.
+</Warning>
+
+---
+
+## Step 2: Issue a test invoice
+
+Open your invoicing software (or the Aplikacja Podatnika) and create a new invoice. It doesn't need to be real — this is a test.
+
+1. **Enter dummy details** — any service name, amount, and date will do.
+2. **Use a fellow business owner's NIP as the buyer's NIP** — in step 5 you'll check whether the invoice arrived in their account. If you're testing solo, any valid NIP works (e.g. the Ministry of Finance NIP: `5260250274`).
+3. **Add one line item** — "Test service", 100 PLN net, 23% VAT rate is plenty.
+4. **Confirm the software is pointed at the test environment** — most tools let you switch between production and test in the KSeF integration settings.
+5. **Click "Send to KSeF"** (or the equivalent in your software).
+
+The software generates the XML file and submits it to the test environment. You don't need to touch the file — the software handles that.
+
+<Tip>
+  In the MF Aplikacja Podatnika, you create the invoice directly in the form — you'll find it after
+  logging in, under "Wystaw fakturę" (Issue invoice). No external software needed.
+</Tip>
+
+---
+
+## Step 3: Collect the UPO
+
+After submission, KSeF returns a **UPO (Urzędowe Poświadczenie Odbioru — Official Proof of Receipt)**. This is the system's formal acknowledgement that your invoice was accepted.
+
+The UPO contains:
+
+- **KSeF number** — your invoice's unique identifier in the system
+- **Date and time of acceptance** — from this moment, the invoice formally exists in KSeF
+- **File hash and system digital signature** — proof the document hasn't been altered in transit
+
+Find the UPO in your software — it typically appears alongside the invoice as a "Sent" or "Accepted by KSeF" status, with an option to download the details.
+
+<Warning>
+  Without a UPO, you have no confirmation that KSeF accepted the invoice. If you see an error
+  message instead of a confirmation — the invoice was rejected. Check the status and jump to "What
+  to do if submission fails" below.
+</Warning>
+
+<Source
+  href="https://ksef.podatki.gov.pl/dokumenty-do-pobrania/"
+  label="KSeF 2.0 Manual Part II — Issuing and Receiving Invoices (MF)"
+/>
+
+---
+
+## Step 4: Check the KSeF number
+
+Every invoice accepted by KSeF receives a **35-character KSeF number** — a long string of digits and letters, completely separate from your own invoice number (e.g. FV/001/04/2026).
+
+Check that it's visible:
+
+- **In your software** — it should appear alongside the invoice, next to or below the document number.
+- **On the printout / PDF** — if you generate a visual invoice, the KSeF number should appear on it, labelled "Numer KSeF" or "Numer identyfikujący fakturę w KSeF".
+
+<Info>
+  The KSeF number is the government system's identifier. Your invoice number (e.g. FV/001/04/2026)
+  is your internal reference. Both are required, but they serve different purposes — don't confuse
+  them.
+</Info>
+
+---
+
+## Step 5: Verify receipt on the buyer's side
+
+This is the most illuminating part of the test — you'll see what the invoice looks like from your client's perspective.
+
+If you used a fellow business owner's NIP in step 2:
+
+1. Ask them to log in to the test environment at [ap-test.ksef.mf.gov.pl](https://ap-test.ksef.mf.gov.pl/web/) — using their own NIP.
+2. Have them open the **inbox**.
+3. Your test invoice should be there — with the KSeF number, amounts, and your NIP as the issuer.
+
+<Info>
+  The buyer doesn't need to receive anything by email or any other channel. KSeF delivers the
+  invoice directly to the account linked to their NIP. Once they log in to KSeF — it's already
+  there.
+</Info>
+
+This is the new model: **the invoice goes into the system and both parties have access to it.** No more "I never received your invoice email".
+
+<Tip>
+  Testing solo and don't have a second NIP? The UPO from step 3 is sufficient proof that KSeF
+  accepted the invoice. You can verify the buyer's receipt separately — for instance with an
+  accountant who handles your client's books.
+</Tip>
+
+---
+
+## What to do if submission fails
+
+The three most common causes:
+
+### 1. Authentication error or expired session
+
+KSeF sessions expire after a set time. If your software shows an authentication error:
+
+- Refresh the KSeF connection in your software settings.
+- Log in again.
+- Retry the submission.
+
+### 2. Invalid buyer NIP
+
+KSeF validates NIP format. If you entered a string of digits that isn't a valid NIP:
+
+- Verify the NIP at [biznes.gov.pl](https://biznes.gov.pl).
+- Correct the NIP on the invoice and resubmit.
+
+### 3. Malformed XML file
+
+This is rare with decent software — your tool should generate valid XML automatically. But if you see a raw error message:
+
+- Paste the file into [ksefuj.to](/) — you'll get a clear description of every problem in plain language. Your data never leaves your browser.
+- Fix the flagged issues in your software and resubmit.
+
+---
+
+## Done — what next?
+
+You've just completed the full invoice lifecycle in KSeF: issue → submit → UPO → buyer confirmation. You know how it works. There was nothing scary about it.
+
+When you issue your first real invoice:
+
+1. Switch your software to the **production** KSeF environment.
+2. Make sure the buyer's details — NIP, name, address — are correct.
+3. Submit the invoice and check the UPO, exactly as you did in this test.
+
+Everything else works identically.
+
+**Useful links:**
+
+- [KSeF for Sole Traders — the Minimum You Need to Know](/en/blog/ksef-dla-jdg) — full context on the KSeF obligation for sole traders
+- [Frequently Asked Questions about KSeF](/en/faq) — operating modes, exemptions, deadlines
+
+<Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20" label="FAQ MF — KSeF 2.0" />
+<Source href="https://ap-test.ksef.mf.gov.pl/web/" label="KSeF 2.0 Test Environment" />
