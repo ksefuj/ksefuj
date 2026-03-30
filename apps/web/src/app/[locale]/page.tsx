@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Validator } from "./validator";
+import { HeroDropZone } from "./hero-drop-zone";
 import { LanguagePicker } from "./language-picker";
 import { type FaqItem, StructuredData } from "./structured-data";
 import { SiteHeader } from "@/components/site-header";
@@ -137,7 +137,7 @@ export default async function Home({ params }: Props) {
           description={t("landing.hero.description")}
           trustLine={t("landing.hero.trustLine")}
         >
-          <Validator locale={locale} />
+          <HeroDropZone locale={locale} />
         </HeroSection>
 
         {/* Features Section */}

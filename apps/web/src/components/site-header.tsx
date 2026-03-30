@@ -48,6 +48,7 @@ export function SiteHeader({ locale, languagePicker }: SiteHeaderProps) {
   }, [menuOpen]);
 
   const navLinks = [
+    { href: `${p}/validator`, label: t("validator") },
     { href: `${p}/blog`, label: t("blog") },
     { href: `${p}/guides`, label: t("guides") },
     { href: `${p}/faq`, label: t("faq") },

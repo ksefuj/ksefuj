@@ -62,6 +62,11 @@ export function SiteFooter() {
             </h3>
             <ul className="space-y-2 text-sm">
               <li>
+                <Link href={`${p}/validator`} className="hover:text-slate-300 transition-colors">
+                  {t("validator")}
+                </Link>
+              </li>
+              <li>
                 <Link href={`${p}/blog`} className="hover:text-slate-300 transition-colors">
                   {t("blog")}
                 </Link>
