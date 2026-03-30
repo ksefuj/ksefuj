@@ -9,23 +9,23 @@ context:** ksefuj.to — free KSeF XML validator
 
 ## Source Corpus Used
 
-| Source                                                               | Tier     | File / URL                                                         | Status                          |
-| -------------------------------------------------------------------- | -------- | ------------------------------------------------------------------ | ------------------------------- |
-| Ustawa o VAT (Dz. U. z 2025 r., poz. 775 ze zm.)                     | 1        | https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775 | CURRENT                         |
-| Rozporządzenie MF z 7.12.2025 (wyłączenia)                           | 1        | https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250001740 | CURRENT                         |
-| FA(3) Information Sheet (Broszura informacyjna, marzec 2026, 174 s.) | 2        | `packages/validator/docs/fa3-information-sheet.md`                 | CURRENT                         |
-| FAQ MF — KSeF 2.0                                                    | 3        | https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20           | CURRENT                         |
-| Blog: ksef-od-1-kwietnia-2026.mdx                                    | internal | `apps/web/content/pl/blog/ksef-od-1-kwietnia-2026.mdx`             | Output only — not a source      |
-| Blog: ksef-dla-jdg.mdx                                               | internal | `apps/web/content/pl/blog/ksef-dla-jdg.mdx`                        | Output only                     |
-| Blog: certyfikaty-vs-tokeny-ksef.mdx                                 | internal | `apps/web/content/pl/blog/certyfikaty-vs-tokeny-ksef.mdx`          | Output only                     |
-| Brief: ksef-dla-jdg.md                                               | internal | `docs/knowledge-base/briefs/ksef-dla-jdg.md`                       | Research brief (prior)          |
-| Brief: certyfikaty-tokeny.md                                         | internal | `docs/knowledge-base/briefs/certyfikaty-tokeny.md`                 | Research brief (prior)          |
-| FAQ: dostep-i-uprawnienia.mdx                                        | internal | `apps/web/content/pl/faq/dostep-i-uprawnienia.mdx`                 | Output only                     |
-| FAQ: tryby-i-awarie.mdx                                              | internal | `apps/web/content/pl/faq/tryby-i-awarie.mdx`                       | Output only                     |
-| FAQ: walidacja-i-bledy.mdx                                           | internal | `apps/web/content/pl/faq/walidacja-i-bledy.mdx`                    | Output only                     |
-| FAQ: podstawy-ksef.mdx                                               | internal | `apps/web/content/pl/faq/podstawy-ksef.mdx`                        | Output only                     |
-| FAQ: wystawianie-faktur.mdx                                          | internal | `apps/web/content/pl/faq/wystawianie-faktur.mdx`                   | Output only                     |
-| FAQ: limity-i-wylaczenia.mdx                                         | internal | `apps/web/content/pl/faq/limity-i-wylaczenia.mdx`                  | Output only                     |
+| Source                                                               | Tier     | File / URL                                                         | Status                     |
+| -------------------------------------------------------------------- | -------- | ------------------------------------------------------------------ | -------------------------- |
+| Ustawa o VAT (Dz. U. z 2025 r., poz. 775 ze zm.)                     | 1        | https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775 | CURRENT                    |
+| Rozporządzenie MF z 7.12.2025 (wyłączenia)                           | 1        | https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250001740 | CURRENT                    |
+| FA(3) Information Sheet (Broszura informacyjna, marzec 2026, 174 s.) | 2        | `packages/validator/docs/fa3-information-sheet.md`                 | CURRENT                    |
+| FAQ MF — KSeF 2.0                                                    | 3        | https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20           | CURRENT                    |
+| Blog: ksef-od-1-kwietnia-2026.mdx                                    | internal | `apps/web/content/pl/blog/ksef-od-1-kwietnia-2026.mdx`             | Output only — not a source |
+| Blog: ksef-dla-jdg.mdx                                               | internal | `apps/web/content/pl/blog/ksef-dla-jdg.mdx`                        | Output only                |
+| Blog: certyfikaty-vs-tokeny-ksef.mdx                                 | internal | `apps/web/content/pl/blog/certyfikaty-vs-tokeny-ksef.mdx`          | Output only                |
+| Brief: ksef-dla-jdg.md                                               | internal | `docs/knowledge-base/briefs/ksef-dla-jdg.md`                       | Research brief (prior)     |
+| Brief: certyfikaty-tokeny.md                                         | internal | `docs/knowledge-base/briefs/certyfikaty-tokeny.md`                 | Research brief (prior)     |
+| FAQ: dostep-i-uprawnienia.mdx                                        | internal | `apps/web/content/pl/faq/dostep-i-uprawnienia.mdx`                 | Output only                |
+| FAQ: tryby-i-awarie.mdx                                              | internal | `apps/web/content/pl/faq/tryby-i-awarie.mdx`                       | Output only                |
+| FAQ: walidacja-i-bledy.mdx                                           | internal | `apps/web/content/pl/faq/walidacja-i-bledy.mdx`                    | Output only                |
+| FAQ: podstawy-ksef.mdx                                               | internal | `apps/web/content/pl/faq/podstawy-ksef.mdx`                        | Output only                |
+| FAQ: wystawianie-faktur.mdx                                          | internal | `apps/web/content/pl/faq/wystawianie-faktur.mdx`                   | Output only                |
+| FAQ: limity-i-wylaczenia.mdx                                         | internal | `apps/web/content/pl/faq/limity-i-wylaczenia.mdx`                  | Output only                |
 
 > ⚠️ **NOTE TO COPYWRITER:** Internal FAQ and blog files are _our own published output_, not primary
 > sources. Facts extracted below are cited back to Tier 1–3 MF sources wherever available. Where a
@@ -71,8 +71,8 @@ context:** ksefuj.to — free KSeF XML validator
 
 **Fact 1.3 — Software requirements for KSeF compliance**
 
-- **Fact:** An invoicing program must: (a) generate XML files in FA(3) format, (b) support sending to
-  KSeF via API, and (c) support receiving invoices as a buyer.
+- **Fact:** An invoicing program must: (a) generate XML files in FA(3) format, (b) support sending
+  to KSeF via API, and (c) support receiving invoices as a buyer.
 - **Source:** Blog `ksef-od-1-kwietnia-2026.mdx`, §"Krok 2"; FA(3) Information Sheet, §1.2
 - **Verbatim:** "Twój program do fakturowania musi obsługiwać KSeF. Sprawdź, czy Twój dostawca:
   generuje pliki XML w formacie FA(3), obsługuje wysyłkę do KSeF przez API, obsługuje odbiór faktur
@@ -120,9 +120,9 @@ context:** ksefuj.to — free KSeF XML validator
   Podatnika KSeF web interface for manual invoice operations.
 - **Source:** FAQ `dostep-i-uprawnienia.mdx`; Blog `ksef-dla-jdg.mdx`, §"Jak wejść do KSeF"; Blog
   `certyfikaty-vs-tokeny-ksef.mdx`, §"Profil Zaufany"
-- **Verbatim:** "Profil Zaufany jest najwygodniejszy dla większości przedsiębiorców — można go założyć
-  bezpłatnie przez bankowość elektroniczną lub w urzędzie." / "Dla większości JDG Profil Zaufany to
-  najprostsze rozwiązanie — jeśli jeszcze go nie masz, załóż teraz."
+- **Verbatim:** "Profil Zaufany jest najwygodniejszy dla większości przedsiębiorców — można go
+  założyć bezpłatnie przez bankowość elektroniczną lub w urzędzie." / "Dla większości JDG Profil
+  Zaufany to najprostsze rozwiązanie — jeśli jeszcze go nie masz, załóż teraz."
 - **Confidence:** MEDIUM (internal output only; aligns with general public knowledge about Profil
   Zaufany)
 - **Ania-relevant:** ✅ Recommended primary path
@@ -158,8 +158,7 @@ context:** ksefuj.to — free KSeF XML validator
 **Fact 2.4 — Aplikacja Podatnika URL (production)**
 
 - **Fact:** The production Aplikacja Podatnika KSeF is accessible at `https://ap.ksef.mf.gov.pl/`.
-- **Source:** Blog `ksef-dla-jdg.mdx`, §"A co jeśli nie mam programu"; FAQ
-  `wystawianie-faktur.mdx`
+- **Source:** Blog `ksef-dla-jdg.mdx`, §"A co jeśli nie mam programu"; FAQ `wystawianie-faktur.mdx`
 - **Verbatim:** "Aplikacja Podatnika KSeF — oficjalna aplikacja MF dostępna pod adresem
   ap.ksef.mf.gov.pl."
 - **Confidence:** HIGH
@@ -187,9 +186,9 @@ context:** ksefuj.to — free KSeF XML validator
 
 **Fact 3.2 — A rejected invoice is legally non-existent**
 
-- **Fact:** An invoice rejected by KSeF is treated as if it was never issued — it has no legal force.
-  This means delayed payment, the need to reissue, and potential problems with statutory deadlines
-  for invoice issuance.
+- **Fact:** An invoice rejected by KSeF is treated as if it was never issued — it has no legal
+  force. This means delayed payment, the need to reissue, and potential problems with statutory
+  deadlines for invoice issuance.
 - **Source:** Blog `ksef-od-1-kwietnia-2026.mdx`, §"Jak sprawdzić, czy faktura jest poprawna"
 - **Verbatim:** "Odrzucona faktura to faktura, której nie ma. Oznacza to opóźnienie w płatności,
   konieczność korekty i potencjalne problemy z terminem wystawienia."
@@ -261,8 +260,8 @@ context:** ksefuj.to — free KSeF XML validator
 
 **Fact 4.3 — Don't postpone testing**
 
-- **Fact:** The blog explicitly advises against delaying tests: discovering integration issues on the
-  first day of the obligation is significantly worse than discovering them beforehand.
+- **Fact:** The blog explicitly advises against delaying tests: discovering integration issues on
+  the first day of the obligation is significantly worse than discovering them beforehand.
 - **Source:** Blog `ksef-od-1-kwietnia-2026.mdx`, §"Krok 4"
 - **Verbatim:** "Nie odkładaj testów na ostatni moment. Jeśli coś nie działa, lepiej odkryć to teraz
   niż pierwszego dnia obowiązku."
@@ -342,8 +341,8 @@ context:** ksefuj.to — free KSeF XML validator
 - **Fact:** The official status of the KSeF system is published at `ksef.podatki.gov.pl`. Planned
   outages are announced in advance; unplanned outages are announced promptly.
 - **Source:** FAQ `tryby-i-awarie.mdx`
-- **Verbatim:** "Oficjalny status systemu KSeF jest publikowany na stronie ksef.podatki.gov.pl. [...]
-  Awarie planowane są zazwyczaj ogłaszane z wyprzedzeniem, nieplanowane — bezzwłocznie."
+- **Verbatim:** "Oficjalny status systemu KSeF jest publikowany na stronie ksef.podatki.gov.pl.
+  [...] Awarie planowane są zazwyczaj ogłaszane z wyprzedzeniem, nieplanowane — bezzwłocznie."
 - **Confidence:** MEDIUM (internal output only)
 - **Ania-relevant:** ✅ She should bookmark this page
 
@@ -406,7 +405,8 @@ context:** ksefuj.to — free KSeF XML validator
   KSeF." / "ZAW-FA od każdego klienta jest warunkiem koniecznym przed uruchomieniem jakiejkolwiek
   integracji API."
 - **Confidence:** MEDIUM (internal output only)
-- **Ania-relevant:** ✅ If Ania doesn't grant the authorization, her accountant is locked out of KSeF
+- **Ania-relevant:** ✅ If Ania doesn't grant the authorization, her accountant is locked out of
+  KSeF
 
 ---
 
@@ -444,8 +444,8 @@ context:** ksefuj.to — free KSeF XML validator
 - **Ania-relevant:** ✅ Awareness-level: she should know that invoices contain QR codes and what
   they're for
 - **⚠️ CORPUS GAP:** The specific content and structure of online vs offline QR codes is NOT covered
-  in any processed document. The Copywriter should NOT describe QR code content in detail. State that
-  QR codes exist and that the software generates them. Link to MF FAQ for details.
+  in any processed document. The Copywriter should NOT describe QR code content in detail. State
+  that QR codes exist and that the software generates them. Link to MF FAQ for details.
 
 ---
 
@@ -453,7 +453,8 @@ context:** ksefuj.to — free KSeF XML validator
 
 - **Fact:** The QR code on KSeF invoices is generated by the invoicing software (or by the Aplikacja
   Podatnika). The taxpayer does not manually create QR codes.
-- **Source:** _Implied from general KSeF architecture — not explicitly stated in any processed source_
+- **Source:** _Implied from general KSeF architecture — not explicitly stated in any processed
+  source_
 - **Confidence:** MEDIUM (reasonable inference from the overall system design; not directly quoted)
 - **Ania-relevant:** ✅ Reassuring — she doesn't need to handle QR codes manually
 
@@ -475,8 +476,7 @@ context:** ksefuj.to — free KSeF XML validator
 - **⚠️ CRITICAL CORPUS GAP:** No processed source contains an MF helpdesk phone number, email, or
   URL for KSeF support. The Copywriter MUST NOT invent a phone number. Options:
   - Direct the reader to `https://ksef.podatki.gov.pl` for current contact information
-  - Direct the reader to `https://www.podatki.gov.pl/e-urzad-skarbowy/` for e-Urząd Skarbowy
-    contact
+  - Direct the reader to `https://www.podatki.gov.pl/e-urzad-skarbowy/` for e-Urząd Skarbowy contact
   - Recommend the general KIS (Krajowa Informacja Skarbowa) helpline as a fallback — but verify the
     current number before publishing (historically: 22 330 0330 or 801 055 055, but these must be
     confirmed)
@@ -504,14 +504,14 @@ context:** ksefuj.to — free KSeF XML validator
 
 **Fact 9.2 — Buyer's NIP must be in the correct XML field**
 
-- **Fact:** The invoice will be correctly made available to the buyer in KSeF only if the buyer's NIP
-  is entered in the `NIP` field of `Podmiot2/DaneIdentyfikacyjne` — not in `NrVatUE` or `NrID`.
+- **Fact:** The invoice will be correctly made available to the buyer in KSeF only if the buyer's
+  NIP is entered in the `NIP` field of `Podmiot2/DaneIdentyfikacyjne` — not in `NrVatUE` or `NrID`.
 - **Source:** FA(3) Information Sheet, §2.10
 - **Verbatim:** "The invoice will be correctly made available to the purchaser in KSeF only if the
   purchaser's NIP is entered in the NIP field — not in NrVatUE or NrID."
 - **Confidence:** HIGH
-- **Ania-relevant:** ❌ (too technical for the checklist; her software handles this; but worth noting
-  as a gotcha if validating manually)
+- **Ania-relevant:** ❌ (too technical for the checklist; her software handles this; but worth
+  noting as a gotcha if validating manually)
 
 ---
 
@@ -564,9 +564,9 @@ context:** ksefuj.to — free KSeF XML validator
 
 **Fact 10.2 — Penalty deferral does NOT mean non-compliance is safe**
 
-- **Fact:** Even during the penalty grace period, an invoice issued outside KSeF (in violation of the
-  obligation) is considered issued in breach of regulations. The invoice may be legally invalid, and
-  the buyer's right to deduct VAT may be affected. A rejected invoice is legally non-existent.
+- **Fact:** Even during the penalty grace period, an invoice issued outside KSeF (in violation of
+  the obligation) is considered issued in breach of regulations. The invoice may be legally invalid,
+  and the buyer's right to deduct VAT may be affected. A rejected invoice is legally non-existent.
 - **Source:** Blog `ksef-od-1-kwietnia-2026.mdx`, §"Co grozi za fakturę wystawioną poza KSeF"
 - **Verbatim:** "To nie jest wymówka, żeby zwlekać — ale warto wiedzieć, że masz czas na naukę bez
   natychmiastowego ryzyka kary." / "Odrzucona faktura to faktura, której nie ma."
@@ -614,9 +614,9 @@ context:** ksefuj.to — free KSeF XML validator
    `https://ksef.podatki.gov.pl` before publishing. Do NOT guess a phone number.
 
 2. **QR code content and structure (online vs offline)** — The specific content of QR codes on KSeF
-   invoices is NOT described in any processed source. The QR code specifications document (Tier 2) is
-   listed in the corpus but has NOT been processed. Do not describe QR code internals. State that QR
-   codes exist, that software generates them, and link to the MF FAQ.
+   invoices is NOT described in any processed source. The QR code specifications document (Tier 2)
+   is listed in the corpus but has NOT been processed. Do not describe QR code internals. State that
+   QR codes exist, that software generates them, and link to the MF FAQ.
 
 3. **How to download offline QR codes** — The FAQ mentions pre-downloading a "pool of codes" but
    does not describe the mechanism (API call? Aplikacja Podatnika download?). Do NOT write
@@ -628,8 +628,8 @@ context:** ksefuj.to — free KSeF XML validator
    amounts. Direct readers to Art. 106gc and a doradca podatkowy.
 
 5. **Client notification best practices** — No MF source addresses how to notify clients about the
-   KSeF transition. The checklist item is practical advice, not a legal obligation. Frame it as "good
-   practice" only.
+   KSeF transition. The checklist item is practical advice, not a legal obligation. Frame it as
+   "good practice" only.
 
 6. **Token validity duration** — The specific duration of a KSeF authentication token's validity
    period is not stated in any processed source. The FAQ says "określony czas ważności" without
@@ -641,19 +641,19 @@ context:** ksefuj.to — free KSeF XML validator
 
 The Copywriter should cross-link to these existing pages where contextually appropriate:
 
-| Topic in checklist                    | Link to                                                      |
-| ------------------------------------- | ------------------------------------------------------------ |
-| FA(3) schema / what changed from FA(2) | `/blog/ksef-od-1-kwietnia-2026` §"Co to jest FA(3)"          |
-| Software readiness / 5 steps          | `/blog/ksef-dla-jdg` §"Co muszę zrobić TERAZ"               |
-| Certificates vs tokens                | `/blog/certyfikaty-vs-tokeny-ksef`                           |
-| ZAW-FA details                        | `/blog/certyfikaty-vs-tokeny-ksef` §"ZAW-FA"                |
-| Offline / emergency modes             | `/faq/tryby-i-awarie`                                        |
-| Validation and errors                 | `/faq/walidacja-i-bledy`                                     |
-| Access and authorization              | `/faq/dostep-i-uprawnienia`                                  |
-| 10,000 PLN threshold                  | `/blog/limit-10000-zl`                                       |
-| Common validation errors              | `/blog/najczestsze-bledy-walidacji`                          |
-| All FAQ                               | `/faq`                                                       |
-| ksefuj.to validator                   | `/` (homepage)                                               |
+| Topic in checklist                     | Link to                                             |
+| -------------------------------------- | --------------------------------------------------- |
+| FA(3) schema / what changed from FA(2) | `/blog/ksef-od-1-kwietnia-2026` §"Co to jest FA(3)" |
+| Software readiness / 5 steps           | `/blog/ksef-dla-jdg` §"Co muszę zrobić TERAZ"       |
+| Certificates vs tokens                 | `/blog/certyfikaty-vs-tokeny-ksef`                  |
+| ZAW-FA details                         | `/blog/certyfikaty-vs-tokeny-ksef` §"ZAW-FA"        |
+| Offline / emergency modes              | `/faq/tryby-i-awarie`                               |
+| Validation and errors                  | `/faq/walidacja-i-bledy`                            |
+| Access and authorization               | `/faq/dostep-i-uprawnienia`                         |
+| 10,000 PLN threshold                   | `/blog/limit-10000-zl`                              |
+| Common validation errors               | `/blog/najczestsze-bledy-walidacji`                 |
+| All FAQ                                | `/faq`                                              |
+| ksefuj.to validator                    | `/` (homepage)                                      |
 
 ---
 
@@ -679,14 +679,15 @@ For the article's "Źródła" footer:
 
 1. **"Kary zaczynają się od 1 kwietnia"** — WRONG. The obligation starts April 1, 2026, but
    **penalties are deferred to 1 January 2027** (Art. 106gc framework). However, a rejected or
-   non-KSeF invoice is still legally invalid from day one — deferred penalties ≠ deferred obligation.
+   non-KSeF invoice is still legally invalid from day one — deferred penalties ≠ deferred
+   obligation.
 
 2. **"Wyślę PDF jak zawsze i będzie dobrze"** — WRONG after April 1, 2026 for B2B. PDF is not a
-   legally valid invoice once KSeF is mandatory. The XML in KSeF is the binding record. PDF can still
-   be sent in addition for the client's convenience.
+   legally valid invoice once KSeF is mandatory. The XML in KSeF is the binding record. PDF can
+   still be sent in addition for the client's convenience.
 
-3. **"Mój program używa jeszcze FA(2) — to wystarczy"** — WRONG. FA(2) has not been accepted since
-   1 February 2026. **KSeF 2.0 requires FA(3).** Any software still generating FA(2) will result in
+3. **"Mój program używa jeszcze FA(2) — to wystarczy"** — WRONG. FA(2) has not been accepted since 1
+   February 2026. **KSeF 2.0 requires FA(3).** Any software still generating FA(2) will result in
    rejected invoices.
 
 4. **"Nie potrzebuję Profilu Zaufanego — mój program robi wszystko"** — PARTIALLY WRONG. The
@@ -714,9 +715,9 @@ For the article's "Źródła" footer:
    ground in tutorial format. This checklist should link to it (and other existing content) rather
    than repeating everything.
 
-3. **Tone: calm urgency.** It's the last day before the deadline. The tone should be "you still
-   have time to check these 10 things" — not "PANIC! You're too late." The penalty grace period is
-   real; the obligation is real; both are true simultaneously.
+3. **Tone: calm urgency.** It's the last day before the deadline. The tone should be "you still have
+   time to check these 10 things" — not "PANIC! You're too late." The penalty grace period is real;
+   the obligation is real; both are true simultaneously.
 
 4. **CTA placement:** ksefuj.to validation should be the natural CTA for checklist items 3 (validate
    XML) and 10 (Plan B — validate before sending to catch errors). Don't force the CTA into every
@@ -733,13 +734,13 @@ For the article's "Źródła" footer:
 
 ## Freshness Tracker (date-sensitive claims)
 
-| Claim                                                  | Expires / Review trigger                                        | Priority |
-| ------------------------------------------------------ | --------------------------------------------------------------- | -------- |
-| KSeF mandatory from 1 April 2026 (all active VAT)     | Stable — based on Art. 145m                                     | LOW      |
-| Penalty grace period until 1 January 2027              | Review on 1 January 2027                                        | HIGH     |
-| Test environment URL: `https://web2te-ksef.mf.gov.pl/` | Verify before publication; may change with MF infra updates     | MEDIUM   |
-| Production AP URL: `https://ap.ksef.mf.gov.pl/`        | Verify before publication                                       | MEDIUM   |
-| FA(3) schema URL: `https://crd.gov.pl/wzor/...`       | Verify before publication; stable since June 2025               | LOW      |
+| Claim                                                  | Expires / Review trigger                                         | Priority |
+| ------------------------------------------------------ | ---------------------------------------------------------------- | -------- |
+| KSeF mandatory from 1 April 2026 (all active VAT)      | Stable — based on Art. 145m                                      | LOW      |
+| Penalty grace period until 1 January 2027              | Review on 1 January 2027                                         | HIGH     |
+| Test environment URL: `https://web2te-ksef.mf.gov.pl/` | Verify before publication; may change with MF infra updates      | MEDIUM   |
+| Production AP URL: `https://ap.ksef.mf.gov.pl/`        | Verify before publication                                        | MEDIUM   |
+| FA(3) schema URL: `https://crd.gov.pl/wzor/...`        | Verify before publication; stable since June 2025                | LOW      |
 | MF helpdesk contact details                            | Must be sourced fresh before publication — NOT in corpus         | HIGH     |
 | Commercial software KSeF support status                | Changes frequently; avoid naming specific vendors without caveat | MEDIUM   |
-| e-mikrofirma "limited KSeF support"                    | Review after any MF update to the tool                          | MEDIUM   |
+| e-mikrofirma "limited KSeF support"                    | Review after any MF update to the tool                           | MEDIUM   |
