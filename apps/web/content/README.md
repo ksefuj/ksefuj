@@ -5,6 +5,34 @@ FAQ. Content is written in **MDX** (Markdown with optional React components).
 
 ---
 
+## Editorial philosophy
+
+**ksefuj.to is a KSeF knowledge portal first. The validator is a useful tool, not the editorial
+lens.**
+
+Most readers arrive with a KSeF question — not a validator question. They use Fakturownia, wFirma,
+iFirma, Comarch, or another platform that handles KSeF integration for them. They are not building
+XML by hand.
+
+Write every piece of content with this in mind:
+
+- **Platform-agnostic.** Guides and blog posts should be useful regardless of which software the
+  reader uses. Describe processes and concepts, not tool-specific UI flows.
+- **Knowledge-first.** Explain what KSeF does, why fields exist, what happens in the system. Give
+  readers a mental model, not just instructions.
+- **Mention the validator only when genuinely useful.** The right moment: "your software returned a
+  validation error and you want to diagnose it." Not: as a mandatory step in every guide, or as a
+  CTA at the end of unrelated content. It's a niche developer/power-user tool.
+- **Don't oversell.** ksefuj.to earns trust by being the most helpful KSeF resource on the internet
+  — not by pushing its own product on every page. If the guide is excellent, readers will discover
+  the validator naturally.
+- **XML details are advanced content.** Sections explaining FA(3) XML structure (field names,
+  element order, Adnotacje values) are useful for developers and accountants debugging errors — not
+  for the average JDG user. Keep them in dedicated technical guides or clearly marked "dla
+  developerów" callouts. Never build a general guide around XML construction.
+
+---
+
 ## Directory structure
 
 ```
