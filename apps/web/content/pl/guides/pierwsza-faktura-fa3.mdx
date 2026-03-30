@@ -41,7 +41,7 @@ Upewnij się, że masz:
 
 Wejdź na [ap-test.ksef.mf.gov.pl](https://ap-test.ksef.mf.gov.pl/web/) — to oficjalne środowisko testowe KSeF 2.0.
 
-1. Kliknij „Zaloguj się".
+1. Kliknij „Zaloguj się”.
 2. Wybierz metodę uwierzytelnienia — Profil Zaufany, e-Dowód lub certyfikat kwalifikowany.
 3. Podaj NIP swojej firmy.
 4. Po zalogowaniu zobaczysz panel z dwiema zakładkami: **skrzynka wychodząca** (faktury, które wysłałeś) i **skrzynka odbiorcza** (faktury wysłane do Ciebie).
@@ -61,15 +61,15 @@ Otwórz swój program do fakturowania (lub Aplikację Podatnika) i utwórz nową
 
 1. **Wpisz fikcyjne dane** — dowolna nazwa usługi, kwota, data.
 2. **Jako NIP nabywcy wpisz NIP znajomego przedsiębiorcy**, który też chce przetestować KSeF — w kroku 5 sprawdzicie, czy faktura dotarła na jego konto. Jeśli testujesz solo, wpisz dowolny poprawny NIP (np. NIP Ministerstwa Finansów: `5260250274`).
-3. **Dodaj jedną pozycję** — wystarczy „Usługa testowa", 100 zł netto, stawka 23%.
+3. **Dodaj jedną pozycję** — wystarczy „Usługa testowa”, 100 zł netto, stawka 23%.
 4. **Sprawdź, czy program jest połączony ze środowiskiem testowym** — większość programów pozwala przełączyć się między środowiskiem produkcyjnym a testowym w ustawieniach integracji KSeF.
-5. **Kliknij „Wyślij do KSeF"** (lub odpowiednik w Twoim programie).
+5. **Kliknij „Wyślij do KSeF”** (lub odpowiednik w Twoim programie).
 
 Program wygeneruje plik XML i prześle go do środowiska testowego. Ty nie musisz dotykać tego pliku — robi to program.
 
 <Tip>
   W Aplikacji Podatnika MF tworzysz fakturę bezpośrednio w formularzu — znajdziesz go po
-  zalogowaniu, w sekcji „Wystaw fakturę". Nie potrzebujesz żadnego zewnętrznego oprogramowania.
+  zalogowaniu, w sekcji „Wystaw fakturę”. Nie potrzebujesz żadnego zewnętrznego oprogramowania.
 </Tip>
 
 ---
@@ -84,12 +84,12 @@ UPO zawiera:
 - **Datę i godzinę przyjęcia** — od tego momentu faktura formalnie istnieje w KSeF
 - **Skrót pliku i podpis cyfrowy systemu** — potwierdzenie, że dokument nie został zmieniony po drodze
 
-Znajdź UPO w swoim programie — zwykle pojawia się obok faktury jako status „Wysłano" lub „Przyjęto przez KSeF", z możliwością pobrania szczegółów.
+Znajdź UPO w swoim programie — zwykle pojawia się obok faktury jako status „Wysłano” lub „Przyjęto przez KSeF”, z możliwością pobrania szczegółów.
 
 <Warning>
   Bez UPO nie masz potwierdzenia, że KSeF przyjął fakturę. Jeśli zamiast potwierdzenia widzisz
   komunikat o błędzie — faktura została odrzucona. Sprawdź status i przejdź do sekcji „Co zrobić
-  jeśli wysyłka się nie powiodła" poniżej.
+  jeśli wysyłka się nie powiodła” poniżej.
 </Warning>
 
 <Source
@@ -106,7 +106,7 @@ Każda faktura przyjęta przez KSeF otrzymuje **35-znakowy numer KSeF** — dłu
 Sprawdź, czy jest widoczny:
 
 - **W programie** — powinien pojawić się przy fakturze, obok lub pod numerem dokumentu.
-- **Na wydruku / PDF** — jeśli generujesz wizualizację faktury, numer KSeF powinien się na niej pojawić jako „Numer KSeF" lub „Numer identyfikujący fakturę w KSeF".
+- **Na wydruku / PDF** — jeśli generujesz wizualizację faktury, numer KSeF powinien się na niej pojawić jako „Numer KSeF” lub „Numer identyfikujący fakturę w KSeF”.
 
 <Info>
   Numer KSeF to identyfikator w systemie rządowym. Numer faktury (np. FV/001/04/2026) to Twoja
@@ -130,7 +130,7 @@ Jeśli w kroku 2 użyłeś NIP-u znajomego przedsiębiorcy:
   konto powiązane z NIP-em nabywcy. Po zalogowaniu do KSeF — widzi ją natychmiast.
 </Info>
 
-To jest nowy model: **faktura trafia do systemu i obie strony mają do niej dostęp.** Koniec z „nie dostałem maila z fakturą".
+To jest nowy model: **faktura trafia do systemu i obie strony mają do niej dostęp.** Koniec z „nie dostałem maila z fakturą”.
 
 <Tip>
   Testujesz solo i nie masz drugiego NIP-u? UPO z kroku 3 to wystarczający dowód, że KSeF przyjął
