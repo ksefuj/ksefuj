@@ -1,0 +1,189 @@
+---
+title: "Wyślij pierwszą fakturę do KSeF — krok po kroku (środowisko testowe)"
+description: "Praktyczny przewodnik: wyślij pierwszą fakturę do KSeF w środowisku testowym, odbierz UPO i potwierdź odbiór po stronie nabywcy. Bez ryzyka, 15 minut."
+date: 2026-04-02
+section: guides
+locale: pl
+slug: "pierwsza-faktura-fa3"
+tags: ["KSeF", "Pierwsza faktura", "JDG", "Środowisko testowe"]
+sources:
+  - label: "FAQ MF — KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
+  - label: "Środowisko testowe KSeF 2.0"
+    url: "https://ap-test.ksef.mf.gov.pl/web/"
+  - label: "Podręcznik KSeF 2.0 cz. II — Wystawianie i otrzymywanie faktur (MF)"
+    url: "https://ksef.podatki.gov.pl/dokumenty-do-pobrania/"
+---
+
+KSeF działa — ale zanim wyślesz pierwszą fakturę do prawdziwego klienta, przetestuj cały proces na sucho. Ministerstwo Finansów udostępnia środowisko testowe, w którym możesz wysłać fakturę z fikcyjnymi danymi, bez żadnych skutków prawnych. Po 15 minutach będziesz wiedzieć dokładnie, czego się spodziewać.
+
+Ten przewodnik prowadzi Cię od logowania, przez wysyłkę, aż po potwierdzenie odbioru po stronie nabywcy.
+
+---
+
+## Zanim zaczniesz
+
+Upewnij się, że masz:
+
+- **Program do fakturowania z integracją KSeF 2.0** — lub bezpłatną [Aplikację Podatnika](https://ap.ksef.mf.gov.pl/) od Ministerstwa Finansów (działa w przeglądarce, nie wymaga instalacji)
+- **Profil Zaufany, e-Dowód lub certyfikat kwalifikowany** — do zalogowania się w KSeF (Profil Zaufany to najprostsza opcja — jeśli go nie masz, [załóż go przez bankowość elektroniczną](https://www.gov.pl/web/gov/zaloz-profil-zaufany))
+- **NIP swojej firmy** — logujesz się na swój prawdziwy NIP, nawet w środowisku testowym
+- **15 minut**
+
+<Info>
+  Środowisko testowe to piaskownica — dane w nim nie mają mocy prawnej. Możesz wysyłać faktury z
+  fikcyjnymi kwotami i danymi nabywcy. Nic, co tam zrobisz, nie trafi do urzędu skarbowego.
+</Info>
+
+---
+
+## Krok 1: Zaloguj się do środowiska testowego KSeF
+
+Wejdź na [ap-test.ksef.mf.gov.pl](https://ap-test.ksef.mf.gov.pl/web/) — to oficjalne środowisko testowe KSeF 2.0.
+
+1. Kliknij „Zaloguj się”.
+2. Wybierz metodę uwierzytelnienia — Profil Zaufany, e-Dowód lub certyfikat kwalifikowany.
+3. Podaj NIP swojej firmy.
+4. Po zalogowaniu zobaczysz panel z dwiema zakładkami: **skrzynka wychodząca** (faktury, które wysłałeś) i **skrzynka odbiorcza** (faktury wysłane do Ciebie).
+
+Jeśli logujesz się po raz pierwszy, obie skrzynki będą puste. To normalne.
+
+<Warning>
+  Upewnij się, że logujesz się do środowiska **testowego** (ap-test.ksef.mf.gov.pl), a nie
+  produkcyjnego. Faktury wysłane do środowiska produkcyjnego mają skutki prawne.
+</Warning>
+
+---
+
+## Krok 2: Wystaw fakturę testową
+
+Otwórz swój program do fakturowania (lub Aplikację Podatnika) i utwórz nową fakturę. Nie musi być prawdziwa — to test.
+
+1. **Wpisz fikcyjne dane** — dowolna nazwa usługi, kwota, data.
+2. **Jako NIP nabywcy wpisz NIP znajomego przedsiębiorcy**, który też chce przetestować KSeF — w kroku 5 sprawdzicie, czy faktura dotarła na jego konto. Jeśli testujesz solo, wpisz dowolny poprawny NIP (np. NIP Ministerstwa Finansów: `5260250274`).
+3. **Dodaj jedną pozycję** — wystarczy „Usługa testowa”, 100 zł netto, stawka 23%.
+4. **Sprawdź, czy program jest połączony ze środowiskiem testowym** — większość programów pozwala przełączyć się między środowiskiem produkcyjnym a testowym w ustawieniach integracji KSeF.
+5. **Kliknij „Wyślij do KSeF”** (lub odpowiednik w Twoim programie).
+
+Program wygeneruje plik XML i prześle go do środowiska testowego. Ty nie musisz dotykać tego pliku — robi to program.
+
+<Tip>
+  W Aplikacji Podatnika MF tworzysz fakturę bezpośrednio w formularzu — znajdziesz go po
+  zalogowaniu, w sekcji „Wystaw fakturę”. Nie potrzebujesz żadnego zewnętrznego oprogramowania.
+</Tip>
+
+---
+
+## Krok 3: Odczytaj UPO
+
+Po wysłaniu faktury KSeF zwraca **UPO — Urzędowe Poświadczenie Odbioru**. To oficjalny dowód, że system przyjął Twoją fakturę.
+
+UPO zawiera:
+
+- **Numer KSeF** — unikalny identyfikator Twojej faktury w systemie
+- **Datę i godzinę przyjęcia** — od tego momentu faktura formalnie istnieje w KSeF
+- **Skrót pliku i podpis cyfrowy systemu** — potwierdzenie, że dokument nie został zmieniony po drodze
+
+Znajdź UPO w swoim programie — zwykle pojawia się obok faktury jako status „Wysłano” lub „Przyjęto przez KSeF”, z możliwością pobrania szczegółów.
+
+<Warning>
+  Bez UPO nie masz potwierdzenia, że KSeF przyjął fakturę. Jeśli zamiast potwierdzenia widzisz
+  komunikat o błędzie — faktura została odrzucona. Sprawdź status i przejdź do sekcji „Co zrobić
+  jeśli wysyłka się nie powiodła” poniżej.
+</Warning>
+
+<Source
+  href="https://ksef.podatki.gov.pl/dokumenty-do-pobrania/"
+  label="Podręcznik KSeF 2.0 cz. II — Wystawianie i otrzymywanie faktur (MF)"
+/>
+
+---
+
+## Krok 4: Sprawdź numer KSeF
+
+Każda faktura przyjęta przez KSeF otrzymuje **35-znakowy numer KSeF** — długi ciąg cyfr i liter, zupełnie inny niż Twój numer faktury (np. FV/001/04/2026).
+
+Sprawdź, czy jest widoczny:
+
+- **W programie** — powinien pojawić się przy fakturze, obok lub pod numerem dokumentu.
+- **Na wydruku / PDF** — jeśli generujesz wizualizację faktury, numer KSeF powinien się na niej pojawić jako „Numer KSeF” lub „Numer identyfikujący fakturę w KSeF”.
+
+<Info>
+  Numer KSeF to identyfikator w systemie rządowym. Numer faktury (np. FV/001/04/2026) to Twoja
+  wewnętrzna numeracja. Oba są wymagane, ale pełnią różne role — nie myl ich ze sobą.
+</Info>
+
+---
+
+## Krok 5: Potwierdź odbiór po stronie nabywcy
+
+To najciekawszy moment testu — zobaczysz, jak faktura wygląda z perspektywy Twojego klienta.
+
+Jeśli w kroku 2 użyłeś NIP-u znajomego przedsiębiorcy:
+
+1. Poproś go, żeby zalogował się do środowiska testowego na [ap-test.ksef.mf.gov.pl](https://ap-test.ksef.mf.gov.pl/web/) — na swój NIP.
+2. Niech otworzy **skrzynkę odbiorczą**.
+3. Twoja testowa faktura powinna tam być — z numerem KSeF, kwotami i Twoim NIP-em jako wystawcy.
+
+<Info>
+  Klient nie musi dostać faktury mailem ani w żadnej innej formie. KSeF dostarcza ją bezpośrednio na
+  konto powiązane z NIP-em nabywcy. Po zalogowaniu do KSeF — widzi ją natychmiast.
+</Info>
+
+To jest nowy model: **faktura trafia do systemu i obie strony mają do niej dostęp.** Koniec z „nie dostałem maila z fakturą”.
+
+<Tip>
+  Testujesz solo i nie masz drugiego NIP-u? UPO z kroku 3 to wystarczający dowód, że KSeF przyjął
+  fakturę. Odbiór po stronie nabywcy możesz zweryfikować przy okazji — np. z księgowym, który
+  obsługuje Twojego klienta.
+</Tip>
+
+---
+
+## Co zrobić jeśli wysyłka się nie powiodła
+
+Trzy najczęstsze przyczyny:
+
+### 1. Błędna autoryzacja lub wygasła sesja
+
+Sesja w KSeF wygasa po określonym czasie. Jeśli program wyświetla błąd uwierzytelnienia:
+
+- Odśwież połączenie z KSeF w ustawieniach programu.
+- Zaloguj się ponownie.
+- Spróbuj wysłać fakturę jeszcze raz.
+
+### 2. Błędny NIP nabywcy
+
+KSeF sprawdza poprawność formatu NIP-u. Jeśli wpisałeś ciąg cyfr, który nie jest prawidłowym NIP-em:
+
+- Sprawdź NIP na [biznes.gov.pl](https://biznes.gov.pl).
+- Popraw NIP w fakturze i wyślij ponownie.
+
+### 3. Błąd w strukturze pliku
+
+To rzadkość przy dobrym oprogramowaniu — program powinien generować poprawny plik automatycznie. Ale jeśli widzisz surowy komunikat o błędzie:
+
+- Wklej plik na [ksefuj.to](/) — zobaczysz czytelny opis każdego problemu, po polsku. Twoje dane nie opuszczają przeglądarki.
+- Napraw wskazane błędy w programie i wyślij ponownie.
+
+---
+
+## Gotowe — co dalej?
+
+Właśnie przeszłeś cały cykl życia faktury w KSeF: wystawienie → wysyłka → UPO → odbiór po stronie nabywcy. Wiesz, jak to działa. Nie było w tym nic strasznego.
+
+Gdy będziesz wystawiać pierwszą prawdziwą fakturę:
+
+1. Przełącz program na **środowisko produkcyjne** KSeF.
+2. Upewnij się, że dane nabywcy — NIP, nazwa, adres — są poprawne.
+3. Wyślij fakturę i sprawdź UPO, dokładnie tak jak w tym teście.
+
+Reszta działa identycznie.
+
+**Przydatne linki:**
+
+- [KSeF dla JDG — minimum, które musisz wiedzieć](/blog/ksef-dla-jdg) — pełny kontekst obowiązku KSeF dla jednoosobowej działalności
+- [Najczęściej zadawane pytania o KSeF](/faq) — tryby pracy, wyłączenia, terminy
+
+<Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20" label="FAQ MF — KSeF 2.0" />
+<Source href="https://ap-test.ksef.mf.gov.pl/web/" label="Środowisko testowe KSeF 2.0" />

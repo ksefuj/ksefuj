@@ -5,7 +5,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SectionContainer } from "@/components/section-container";
 import { LanguagePicker } from "../language-picker";
-import { buildContentPath, listContentItems } from "@/lib/content";
+import { buildContentPath, listContentItemsUnified } from "@/lib/content";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -51,7 +51,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function GuidesListPage({ params }: Props) {
   const { locale } = await params;
   const [guides, t] = await Promise.all([
-    listContentItems(locale, "guides"),
+    listContentItemsUnified(locale, "guides"),
     getTranslations({ locale, namespace: "content" }),
   ]);
 

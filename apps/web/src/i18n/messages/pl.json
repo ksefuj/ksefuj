@@ -155,7 +155,7 @@
     "blog": "Blog",
     "faq": "FAQ",
     "docs": "Dokumentacja",
-    "guides": "Przewodniki"
+    "guides": "Poradniki"
   },
   "translationBanner": {
     "body": "Ten artykuł nie jest jeszcze dostępny w Twoim języku. Czytasz oryginalną wersję w języku {language}.",
@@ -196,17 +196,17 @@
       "empty": "FAQ jest w przygotowaniu."
     },
     "guides": {
-      "title": "Przewodniki",
+      "title": "Poradniki",
       "description": "Krok po kroku przez KSeF i faktury elektroniczne.",
-      "empty": "Przewodniki są w przygotowaniu.",
-      "metaTitle": "Przewodniki",
-      "metaDescription": "Przewodniki krok po kroku o KSeF i fakturach elektronicznych dla JDG i firm.",
-      "ogImageTitle": "Przewodniki — krok po kroku przez KSeF"
+      "empty": "Poradniki są w przygotowaniu.",
+      "metaTitle": "Poradniki",
+      "metaDescription": "Poradniki krok po kroku o KSeF i fakturach elektronicznych dla JDG i firm.",
+      "ogImageTitle": "Poradniki — krok po kroku przez KSeF"
     },
     "layout": {
       "backToBlog": "Blog",
       "backToDocs": "Dokumentacja",
-      "backToGuides": "Przewodniki",
+      "backToGuides": "Poradniki",
       "readingTime": "{minutes} min czytania",
       "lastVerified": "Ostatnia weryfikacja: {date}",
       "guideTime": "Czas",
@@ -225,7 +225,7 @@
     "blog": "Blog",
     "faq": "FAQ",
     "docs": "Dokumentacja",
-    "guides": "Przewodniki",
+    "guides": "Poradniki",
     "content": "Treści",
     "legal": "Prawne",
     "contact": "Kontakt",

@@ -155,7 +155,7 @@
     "blog": "Блог",
     "faq": "FAQ",
     "docs": "Документація",
-    "guides": "Посібники"
+    "guides": "Порадники"
   },
   "translationBanner": {
     "body": "Ця стаття ще не доступна вашою мовою. Ви читаєте оригінал {language} мовою.",
@@ -196,17 +196,17 @@
       "empty": "FAQ готується."
     },
     "guides": {
-      "title": "Посібники",
+      "title": "Порадники",
       "description": "Крок за кроком через KSeF та е-рахунки.",
-      "empty": "Посібники готуються.",
-      "metaTitle": "Посібники",
-      "metaDescription": "Покрокові посібники про KSeF та е-рахунки для підприємців і бізнесу.",
-      "ogImageTitle": "Посібники — крок за кроком по KSeF"
+      "empty": "Порадники готуються.",
+      "metaTitle": "Порадники",
+      "metaDescription": "Покрокові порадники про KSeF та е-рахунки для підприємців і бізнесу.",
+      "ogImageTitle": "Порадники — крок за кроком по KSeF"
     },
     "layout": {
       "backToBlog": "Блог",
       "backToDocs": "Документація",
-      "backToGuides": "Посібники",
+      "backToGuides": "Порадники",
       "readingTime": "{minutes} хв читання",
       "lastVerified": "Остання перевірка: {date}",
       "guideTime": "Час",
@@ -225,7 +225,7 @@
     "blog": "Блог",
     "faq": "FAQ",
     "docs": "Документація",
-    "guides": "Посібники",
+    "guides": "Порадники",
     "content": "Контент",
     "legal": "Правове",
     "contact": "Контакт",

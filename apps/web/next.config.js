@@ -14,6 +14,8 @@ const nextConfig = {
     return [
       { source: "/przewodniki", destination: "/guides", permanent: true },
       { source: "/przewodniki/:path*", destination: "/guides/:path*", permanent: true },
+      { source: "/poradniki", destination: "/guides", permanent: true },
+      { source: "/poradniki/:path*", destination: "/guides/:path*", permanent: true },
     ];
   },
   transpilePackages: ["@ksefuj/validator"],
