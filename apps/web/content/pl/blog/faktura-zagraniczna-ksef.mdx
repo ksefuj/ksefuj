@@ -1,0 +1,304 @@
+---
+title: "Faktura zagraniczna w KSeF — jak to zrobić dobrze"
+description: "Faktura dla zagranicznego kontrahenta w KSeF — nabywca z UE, spoza UE, reverse charge. Gotowe przykłady XML i konkretne pola do wypełnienia."
+date: 2026-03-30
+section: blog
+locale: pl
+slug: "faktura-zagraniczna-ksef"
+tags: ["KSeF", "FA(3)", "VAT"]
+sources:
+  - label: "Broszura informacyjna FA(3), marzec 2026"
+    url: "https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "FAQ MF — KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
+  - label: "Objaśnienia podatkowe MF 28.01.2026"
+    url: "https://www.gov.pl/web/finanse/objasnienia-podatkowe-ksef"
+  - label: "Ustawa o VAT art. 28b"
+    url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
+  - label: "VIES — weryfikacja numeru VAT-UE"
+    url: "https://ec.europa.eu/taxation_customs/vies/"
+translations:
+  en: "foreign-invoice-ksef"
+  uk: "rakhunok-inozemnomu-kontrahenty-ksef"
+---
+
+Jutro — 1 kwietnia 2026 — [KSeF staje się obowiązkowy](/blog/ksef-od-1-kwietnia-2026) dla wszystkich czynnych podatników VAT. Jeśli masz klientów za granicą, obowiązek dotyczy Cię tak samo. Faktura dla kontrahenta z Berlina, Amsterdamu czy Nowego Jorku musi trafić do KSeF — nawet jeśli ten kontrahent nie ma polskiego NIP-u i nigdy nie zaloguje się do systemu.
+
+Zagraniczny nabywca nie ma dostępu do KSeF. Musisz mu wysłać czytelną kopię faktury osobno — mailem, pocztą, jak dotąd. To dodatkowa praca, ale nie ma innego wyjścia. Ten artykuł pokazuje krok po kroku, jak poprawnie wypełnić dane zagranicznego nabywcy, dobrać stawkę VAT i nie dać się zaskoczyć odrzuconą fakturą.
+
+Jeśli Twój program do fakturowania obsługuje kontrahentów zagranicznych — większość pól wypełni za Ciebie automatycznie. Ale jeśli coś pójdzie nie tak albo chcesz zrozumieć, dlaczego faktura została odrzucona — tutaj znajdziesz konkretne odpowiedzi.
+
+---
+
+## Nabywca z UE z numerem VAT-UE
+
+To najczęstszy przypadek dla freelancerów i małych firm: wystawiasz fakturę firmie z Unii Europejskiej, która ma aktywny numer VAT-UE.
+
+W danych nabywcy (sekcja Podmiot2 w FA(3)) musisz użyć pary pól `KodUE` + `NrVatUE` — **nie NIP**. Pole NIP jest zarezerwowane wyłącznie dla polskich numerów identyfikacji podatkowej. Zagraniczny numer VAT wpisany w NIP spowoduje odrzucenie faktury przez KSeF.
+
+### Jakie pola wypełnić
+
+- **`KodUE`** — dwuliterowy prefiks kraju UE (np. `DE` dla Niemiec, `NL` dla Holandii, `FR` dla Francji)
+- **`NrVatUE`** — numer VAT nabywcy **bez prefiksu kraju** (sam numer, bez „DE" na początku)
+- **`Nazwa`** — pełna nazwa firmy nabywcy
+
+W adresie nabywcy podajesz `KodKraju` (ten sam kod co w `KodUE`), `AdresL1` (ulica i numer) i `AdresL2` (kod pocztowy i miasto).
+
+<Tip>
+  Zanim wystawisz fakturę, sprawdź numer VAT-UE kontrahenta w systemie VIES — oficjalnej bazie
+  Komisji Europejskiej. Nieaktywny numer oznacza problemy przy rozliczeniu WDT lub usług
+  wewnątrzwspólnotowych.
+</Tip>
+
+Przykład — faktura dla firmy z Niemiec:
+
+<XmlExample copyable>
+  ```xml
+  <Podmiot2>
+    <DaneIdentyfikacyjne>
+      <KodUE>DE</KodUE>
+      <NrVatUE>123456789</NrVatUE>
+      <Nazwa>Berlin Design GmbH</Nazwa>
+    </DaneIdentyfikacyjne>
+    <Adres>
+      <KodKraju>DE</KodKraju>
+      <AdresL1>Musterstraße 1</AdresL1>
+      <AdresL2>10115 Berlin</AdresL2>
+    </Adres>
+    <JST>2</JST>
+    <GV>2</GV>
+  </Podmiot2>
+  ```
+</XmlExample>
+
+`JST` i `GV` to obowiązkowe pola w każdym bloku Podmiot2 w FA(3). Dla kontrahentów zagranicznych zawsze wpisz wartość `2` („nie dotyczy"). Pominięcie tych pól spowoduje błąd walidacji.
+
+<Source
+  href="https://ec.europa.eu/taxation_customs/vies/"
+  label="VIES — weryfikacja numeru VAT-UE"
+/>
+
+---
+
+## Nabywca z UE bez numeru VAT
+
+Nie każdy kontrahent unijny ma numer VAT-UE. Osoba prywatna, freelancer na ryczałcie, firma niezarejestrowana do VAT — w takich przypadkach nie masz numeru do wpisania.
+
+Zamiast `KodUE` + `NrVatUE` użyj pola `BrakID` z wartością `1`. Oznacza to: „nabywca nie posiada numeru identyfikacyjnego." Pole `Nazwa` pozostaje obowiązkowe.
+
+<XmlExample copyable>
+  ```xml
+  <Podmiot2>
+    <DaneIdentyfikacyjne>
+      <BrakID>1</BrakID>
+      <Nazwa>Anna Müller</Nazwa>
+    </DaneIdentyfikacyjne>
+    <Adres>
+      <KodKraju>DE</KodKraju>
+      <AdresL1>Hauptstraße 5</AdresL1>
+      <AdresL2>80331 München</AdresL2>
+    </Adres>
+    <JST>2</JST>
+    <GV>2</GV>
+  </Podmiot2>
+  ```
+</XmlExample>
+
+<Warning>
+  Jeśli nabywca z UE nie ma numeru VAT-UE, nie możesz zastosować stawki `0 WDT` na towary ani `np
+  II` na usługi wewnątrzwspólnotowe. Zasady opodatkowania mogą być inne — skonsultuj konkretny
+  przypadek z księgowym.
+</Warning>
+
+---
+
+## Nabywca spoza UE
+
+Klient z USA, Wielkiej Brytanii (po Brexicie), Szwajcarii, Kanady — to osobna kategoria. Nie używasz `KodUE` ani `NrVatUE`, bo te pola dotyczą wyłącznie nabywców z Unii Europejskiej.
+
+Dla nabywcy spoza UE masz dwie opcje identyfikacji.
+
+### Nabywca ma zagraniczny identyfikator podatkowy
+
+Użyj pary `KodKraju` + `NrID` w bloku `DaneIdentyfikacyjne`. To dwa osobne, równorzędne elementy XML — nie zagnieżdżone w sobie.
+
+- **`KodKraju`** — dwuliterowy kod ISO kraju (np. `US`, `GB`, `CH`, `NO`)
+- **`NrID`** — zagraniczny numer identyfikacyjny (np. EIN w USA, UTR w UK, UID w Szwajcarii)
+
+Przykład — faktura dla firmy z USA:
+
+<XmlExample copyable>
+  ```xml
+  <Podmiot2>
+    <DaneIdentyfikacyjne>
+      <KodKraju>US</KodKraju>
+      <NrID>12-3456789</NrID>
+      <Nazwa>US Design Inc.</Nazwa>
+    </DaneIdentyfikacyjne>
+    <Adres>
+      <KodKraju>US</KodKraju>
+      <AdresL1>123 Main Street</AdresL1>
+      <AdresL2>New York, NY 10001</AdresL2>
+    </Adres>
+    <JST>2</JST>
+    <GV>2</GV>
+  </Podmiot2>
+  ```
+</XmlExample>
+
+Zwróć uwagę: `KodKraju` pojawia się dwa razy — raz w `DaneIdentyfikacyjne` (kontekst identyfikacji podatkowej) i raz w `Adres` (adres siedziby). To dwa osobne pola w różnych sekcjach i oba są wymagane.
+
+### Nabywca nie ma identyfikatora
+
+Tak samo jak w przypadku nabywcy z UE bez numeru — użyj `BrakID` z wartością `1`:
+
+<XmlExample copyable>
+  ```xml
+  <DaneIdentyfikacyjne>
+    <BrakID>1</BrakID>
+    <Nazwa>John Smith Freelance</Nazwa>
+  </DaneIdentyfikacyjne>
+  ```
+</XmlExample>
+
+<Info>
+  Wielka Brytania po Brexicie nie jest krajem UE. Kontrahent z UK to nabywca spoza UE — użyj
+  `KodKraju` = `GB` i `NrID`, nie `KodUE` + `NrVatUE`.
+</Info>
+
+---
+
+## Stawki VAT na fakturach zagranicznych
+
+To moment, w którym najłatwiej o błąd. Stawka VAT na fakturze zagranicznej zależy od tego, **co** sprzedajesz (towar czy usługę) i **komu** (nabywca z UE czy spoza UE).
+
+| Typ transakcji           | Stawka (P_12) | Pole kwoty netto | Kiedy stosować                                                                    |
+| :----------------------- | :------------ | :--------------- | :-------------------------------------------------------------------------------- |
+| WDT — towary do UE       | `0 WDT`       | `P_13_6_2`       | Sprzedaż towarów nabywcy z numerem VAT-UE                                         |
+| Eksport towarów          | `0 EX`        | `P_13_6_3`       | Sprzedaż towarów nabywcy spoza UE                                                 |
+| Usługi dla firm z UE     | `np II`       | `P_13_9`         | Usługi wg art. 100 ust. 1 pkt 4 ustawy o VAT — nabywca rozlicza VAT w swoim kraju |
+| Usługi dla firm spoza UE | `np I`        | `P_13_8`         | Usługi poza terytorium kraju (art. 28b) — nabywca rozlicza VAT                    |
+
+### Co to znaczy w praktyce?
+
+Robisz stronę internetową dla klienta z Niemiec, który ma numer VAT-UE? → To usługa, nabywca rozlicza VAT u siebie, stawka **`np II`**.
+
+Robisz stronę dla klienta z USA? → To usługa poza terytorium UE, stawka **`np I`**.
+
+Wysyłasz fizyczny produkt do klienta z Holandii (z numerem VAT-UE)? → To wewnątrzwspólnotowa dostawa towarów, stawka **`0 WDT`**.
+
+Wysyłasz fizyczny produkt do klienta z Wielkiej Brytanii? → To eksport towarów, stawka **`0 EX`**.
+
+<Warning>
+  Stawka `oo` (odwrotne obciążenie krajowe) **nigdy** nie dotyczy kontrahentów zagranicznych. Dla
+  nabywców z UE i spoza UE stosuj `np I` lub `np II`. Użycie `oo` przy zagranicznym nabywcy to jeden
+  z najczęstszych błędów — i powód odrzucenia faktury.
+</Warning>
+
+Wartości stawek w FA(3) są **wrażliwe na wielkość liter i spacje**. Poprawnie: `np I`, `np II`, `0 WDT`, `0 EX`. Niepoprawnie: `NP I`, `npI`, `0WDT`.
+
+<Source
+  href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
+  label="Ustawa o VAT — art. 28b, miejsce świadczenia usług"
+/>
+
+---
+
+## Adnotacje — co zmienić dla faktury zagranicznej
+
+Blok Adnotacje w FA(3) zawiera obowiązkowe pola deklaracyjne. Dwa z nich mają bezpośredni związek z fakturami zagranicznymi — i łatwo je ze sobą pomylić:
+
+| Pole    | Wartość | Znaczenie                                                                                                     |
+| :------ | :------ | :------------------------------------------------------------------------------------------------------------ |
+| `P_18`  | `1`     | Odwrotne obciążenie — nabywca rozlicza VAT (usługi ze stawką `np I` lub `np II`)                              |
+| `P_18`  | `2`     | Brak odwrotnego obciążenia (np. WDT ze stawką `0 WDT`, eksport ze stawką `0 EX`)                              |
+| `P_18A` | `1`     | Mechanizm podzielonej płatności (MPP) — kwota powyżej 15 000 PLN i towary/usługi z załącznika 15 ustawy o VAT |
+| `P_18A` | `2`     | Brak MPP — domyślna wartość przy transakcjach zagranicznych                                                   |
+
+**`P_18` to odwrotne obciążenie. `P_18A` to mechanizm podzielonej płatności (MPP).** To dwa zupełnie różne pojęcia — nie myl ich. MPP dotyczy płatności krajowych na rachunek VAT i nie ma zastosowania w transakcjach zagranicznych.
+
+Dla większości faktur zagranicznych za usługi: **`P_18` = `1`**, **`P_18A` = `2`**.
+
+Dla WDT i eksportu towarów: **`P_18` = `2`**, **`P_18A` = `2`**.
+
+<Info>
+  Wszystkie osiem pól w bloku Adnotacje jest obowiązkowych — nawet jeśli ich wartość to „nie
+  dotyczy" (wartość `2` lub odpowiedni znacznik negatywny). Pominięcie któregokolwiek spowoduje błąd
+  walidacji. Pełną strukturę Adnotacji opisaliśmy w artykule o [najczęstszych błędach walidacji
+  FA(3)](/blog/najczestsze-bledy-walidacji-fa3).
+</Info>
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  label="Broszura informacyjna FA(3) — §9.6 Adnotacje"
+/>
+
+---
+
+## Faktura walutowa a zagraniczny nabywca
+
+Fakturę zagraniczną możesz wystawić w dowolnej walucie — EUR, USD, GBP, CHF. Pole `KodWaluty` w FA(3) przyjmuje standardowe kody ISO 4217. Kwoty netto i brutto podajesz w wybranej walucie.
+
+Jest jeden wyjątek: **kwota VAT musi być wyrażona w PLN** — przeliczona po kursie średnim NBP z ostatniego dnia roboczego przed datą powstania obowiązku podatkowego. Przy stawkach `np I`, `np II`, `0 WDT` i `0 EX` kwota VAT wynosi zero — więc przeliczanie nie jest potrzebne, a to zdecydowana większość faktur zagranicznych.
+
+---
+
+## Typowe pułapki
+
+Kilka błędów, które powtarzają się najczęściej przy fakturach dla kontrahentów zagranicznych:
+
+- **Zagraniczny numer VAT w polu NIP** — NIP to wyłącznie polski numer identyfikacyjny. Dla nabywcy z UE użyj `KodUE` + `NrVatUE`, dla nabywcy spoza UE — `KodKraju` + `NrID`. Wpisanie zagranicznego numeru w pole NIP → odrzucenie faktury.
+
+- **Prefiks kraju w numerze VAT** — pole `NrVatUE` to sam numer, **bez** prefiksu `DE`, `NL`, `FR`. Prefiks podajesz osobno w polu `KodUE`. Wpisanie `DE123456789` w `NrVatUE` to błąd.
+
+- **Brak `KodKraju` w adresie** — pole `KodKraju` w bloku `Adres` jest wymagane. Bez niego faktura nie przejdzie walidacji.
+
+- **Zapomnienie o wysyłce kopii do nabywcy** — KSeF nie dostarczy faktury zagranicznemu kontrahentowi. Musisz sam wysłać czytelną kopię (PDF z kodem QR weryfikacyjnym) mailem lub pocztą. Bez tego nabywca nie wie, że faktura istnieje.
+
+- **Pomylenie WDT z eksportem usług** — WDT dotyczy wyłącznie towarów do UE (stawka `0 WDT`). Usługi dla kontrahenta z UE to inna kategoria (stawka `np II`). Inne stawki, inne pola kwot netto, inna wartość P_18.
+
+- **Stawka `oo` dla zagranicznego nabywcy** — `oo` to odwrotne obciążenie krajowe i dotyczy wyłącznie transakcji w Polsce. Dla kontrahentów zagranicznych właściwa stawka to `np I` lub `np II`.
+
+- **Wielka Brytania jako kraj UE** — od Brexitu UK nie jest w Unii Europejskiej. Kontrahent z UK wymaga `KodKraju` + `NrID`, nie `KodUE` + `NrVatUE`.
+
+<Tip>
+  Wrzuć swój plik XML do walidatora na [ksefuj.to](/) zanim wyślesz do KSeF — za darmo sprawdzisz,
+  czy pola nabywcy zagranicznego są poprawne. Twój plik nie opuszcza przeglądarki.
+</Tip>
+
+---
+
+## TL;DR
+
+- Faktura dla zagranicznego kontrahenta **musi** trafić do KSeF — tak samo jak krajowa.
+- Zagraniczny nabywca nie ma dostępu do KSeF — wyślij mu czytelną kopię osobno (PDF z QR).
+- Nabywca z UE z numerem VAT-UE → `KodUE` + `NrVatUE` (nie NIP).
+- Nabywca z UE bez numeru VAT → `BrakID` = `1`.
+- Nabywca spoza UE z identyfikatorem → `KodKraju` + `NrID`.
+- Nabywca spoza UE bez identyfikatora → `BrakID` = `1`.
+- Usługi dla firm z UE → stawka `np II`, `P_18` = `1`.
+- Usługi dla firm spoza UE → stawka `np I`, `P_18` = `1`.
+- WDT (towary do UE) → stawka `0 WDT`, `P_18` = `2`.
+- Eksport towarów → stawka `0 EX`, `P_18` = `2`.
+- **Nigdy** nie używaj stawki `oo` dla kontrahentów zagranicznych.
+- Sprawdź numer VAT-UE w [VIES](https://ec.europa.eu/taxation_customs/vies/) przed wystawieniem faktury.
+
+---
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  label="Broszura informacyjna FA(3) — Ministerstwo Finansów"
+/>
+<Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20" label="FAQ MF — KSeF 2.0" />
+<Source
+  href="https://www.gov.pl/web/finanse/objasnienia-podatkowe-ksef"
+  label="Objaśnienia podatkowe MF — 28.01.2026"
+/>
+<Source
+  href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
+  label="Ustawa o VAT"
+/>
+<Source
+  href="https://ec.europa.eu/taxation_customs/vies/"
+  label="VIES — weryfikacja numeru VAT-UE"
+/>
