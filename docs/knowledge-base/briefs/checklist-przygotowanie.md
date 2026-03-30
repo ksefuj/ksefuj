@@ -233,16 +233,16 @@ context:** ksefuj.to — free KSeF XML validator
 
 **Fact 4.1 — MF test environment URL**
 
-- **Fact:** MF provides a KSeF 2.0 test environment at `https://web2te-ksef.mf.gov.pl/`. Invoices
-  with fictitious data can be sent there without any legal consequences.
+- **Fact:** MF provides a KSeF 2.0 test environment at `https://ap-test.ksef.mf.gov.pl/web/`.
+  Invoices with fictitious data can be sent there without any legal consequences.
 - **Source:** Blog `ksef-od-1-kwietnia-2026.mdx`, §"Krok 4"; Blog `ksef-dla-jdg.mdx`, §"Krok 4"
 - **Verbatim:** "Ministerstwo Finansów udostępnia środowisko testowe KSeF 2.0 pod adresem
-  https://web2te-ksef.mf.gov.pl/. Możesz tam wysyłać faktury z fikcyjnymi danymi i sprawdzać, jak
-  system reaguje — bez żadnych konsekwencji prawnych."
+  https://ap-test.ksef.mf.gov.pl/web/. Możesz tam wysyłać faktury z fikcyjnymi danymi i sprawdzać,
+  jak system reaguje — bez żadnych konsekwencji prawnych."
 - **Confidence:** HIGH (URL cited consistently in internal sources; should be verified before
   publication as test environments can change)
 - **Ania-relevant:** ✅ Core preparation step
-- **⚠️ Freshness flag:** URL `https://web2te-ksef.mf.gov.pl/` — verify before publish
+- **⚠️ Freshness flag:** URL `https://ap-test.ksef.mf.gov.pl/web/` — verify before publish
 
 ---
 
@@ -671,7 +671,7 @@ For the article's "Źródła" footer:
 4. **Broszura informacyjna FA(3)** — Ministerstwo Finansów, marzec 2026 —
    https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf
 5. **Aplikacja Podatnika KSeF 2.0** — https://ap.ksef.mf.gov.pl/
-6. **Środowisko testowe KSeF 2.0** — https://web2te-ksef.mf.gov.pl/
+6. **Środowisko testowe KSeF 2.0** — https://ap-test.ksef.mf.gov.pl/web/
 
 ---
 
@@ -734,13 +734,13 @@ For the article's "Źródła" footer:
 
 ## Freshness Tracker (date-sensitive claims)
 
-| Claim                                                  | Expires / Review trigger                                         | Priority |
-| ------------------------------------------------------ | ---------------------------------------------------------------- | -------- |
-| KSeF mandatory from 1 April 2026 (all active VAT)      | Stable — based on Art. 145m                                      | LOW      |
-| Penalty grace period until 1 January 2027              | Review on 1 January 2027                                         | HIGH     |
-| Test environment URL: `https://web2te-ksef.mf.gov.pl/` | Verify before publication; may change with MF infra updates      | MEDIUM   |
-| Production AP URL: `https://ap.ksef.mf.gov.pl/`        | Verify before publication                                        | MEDIUM   |
-| FA(3) schema URL: `https://crd.gov.pl/wzor/...`        | Verify before publication; stable since June 2025                | LOW      |
-| MF helpdesk contact details                            | Must be sourced fresh before publication — NOT in corpus         | HIGH     |
-| Commercial software KSeF support status                | Changes frequently; avoid naming specific vendors without caveat | MEDIUM   |
-| e-mikrofirma "limited KSeF support"                    | Review after any MF update to the tool                           | MEDIUM   |
+| Claim                                                       | Expires / Review trigger                                         | Priority |
+| ----------------------------------------------------------- | ---------------------------------------------------------------- | -------- |
+| KSeF mandatory from 1 April 2026 (all active VAT)           | Stable — based on Art. 145m                                      | LOW      |
+| Penalty grace period until 1 January 2027                   | Review on 1 January 2027                                         | HIGH     |
+| Test environment URL: `https://ap-test.ksef.mf.gov.pl/web/` | Verify before publication; may change with MF infra updates      | MEDIUM   |
+| Production AP URL: `https://ap.ksef.mf.gov.pl/`             | Verify before publication                                        | MEDIUM   |
+| FA(3) schema URL: `https://crd.gov.pl/wzor/...`             | Verify before publication; stable since June 2025                | LOW      |
+| MF helpdesk contact details                                 | Must be sourced fresh before publication — NOT in corpus         | HIGH     |
+| Commercial software KSeF support status                     | Changes frequently; avoid naming specific vendors without caveat | MEDIUM   |
+| e-mikrofirma "limited KSeF support"                         | Review after any MF update to the tool                           | MEDIUM   |
