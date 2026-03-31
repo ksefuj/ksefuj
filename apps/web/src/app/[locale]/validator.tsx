@@ -1,7 +1,7 @@
 "use client";
 
 import { type ChangeEvent, type DragEvent, useCallback, useMemo, useRef, useState } from "react";
-import { track } from "@vercel/analytics";
+import * as amplitude from "@amplitude/unified";
 import { useTranslations } from "next-intl";
 import type { ValidationResult } from "@ksefuj/validator";
 import { Badge } from "@/components/badge";
@@ -110,7 +110,7 @@ export function Validator({ locale }: ValidatorProps) {
       }
 
       // Track validation started
-      track("validation_started", {
+      amplitude.track("validation_started", {
         fileCount: xmlFiles.length,
         locale,
       });
@@ -179,7 +179,7 @@ export function Validator({ locale }: ValidatorProps) {
 
         // Track validation completed
         const errorCount = results.filter((r) => !r.result?.valid || r.status === "error").length;
-        track("validation_completed", {
+        amplitude.track("validation_completed", {
           fileCount: xmlFiles.length,
           errorCount,
           locale,

@@ -12,9 +12,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@amplitude/unified": "^1.0.14",
     "@ksefuj/validator": "workspace:*",
     "@shikijs/rehype": "^4.0.2",
-    "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
     "clsx": "^2.1.1",
     "gray-matter": "^4.0.3",

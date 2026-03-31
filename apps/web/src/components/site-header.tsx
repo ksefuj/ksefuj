@@ -3,7 +3,7 @@
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { track } from "@vercel/analytics";
+import * as amplitude from "@amplitude/unified";
 import { cn } from "@/lib/utils";
 import { Logo } from "./logo";
 
@@ -86,7 +86,7 @@ export function SiteHeader({ locale, languagePicker }: SiteHeaderProps) {
                 <Link
                   key={href}
                   href={href}
-                  onClick={() => track("nav_clicked", { destination: href, locale })}
+                  onClick={() => amplitude.track("nav_clicked", { destination: href, locale })}
                   className="text-sm font-medium text-slate-600 hover:text-violet-600 transition-colors"
                 >
                   {label}
@@ -142,7 +142,7 @@ export function SiteHeader({ locale, languagePicker }: SiteHeaderProps) {
                   href={href}
                   onClick={() => {
                     setMenuOpen(false);
-                    track("nav_clicked", { destination: href, locale, mobile: true });
+                    amplitude.track("nav_clicked", { destination: href, locale, mobile: true });
                   }}
                   className="text-sm font-medium text-slate-600 hover:text-violet-600 hover:bg-slate-50 transition-colors px-3 py-2 rounded-lg"
                 >

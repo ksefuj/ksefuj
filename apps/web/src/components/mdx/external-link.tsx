@@ -1,7 +1,7 @@
 "use client";
 
 import type { AnchorHTMLAttributes } from "react";
-import { track } from "@vercel/analytics";
+import * as amplitude from "@amplitude/unified";
 
 type ExternalLinkProps = AnchorHTMLAttributes<HTMLAnchorElement>;
 
@@ -23,7 +23,7 @@ export function ExternalLink({ href, children, ...props }: ExternalLinkProps) {
       rel="noopener noreferrer"
       onClick={() => {
         const domain = new URL(href).hostname;
-        track("external_link_clicked", { href, domain });
+        amplitude.track("external_link_clicked", { href, domain });
       }}
       {...props}
     >
