@@ -189,9 +189,9 @@ export function Validator({ locale }: ValidatorProps) {
         );
         const errorCount = results.filter((r) => !r.result?.valid || r.status === "error").length;
         amplitude.track("validation_complete", {
-          issue_codes: allIssueCodes,
-          file_count: xmlFiles.length,
-          issue_count: issueCount,
+          issueCodes: allIssueCodes,
+          fileCount: xmlFiles.length,
+          issueCount,
           locale,
         });
 
