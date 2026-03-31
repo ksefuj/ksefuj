@@ -3,9 +3,10 @@
 import { type ChangeEvent, type DragEvent, useCallback, useMemo, useRef, useState } from "react";
 import { track } from "@vercel/analytics";
 import { useTranslations } from "next-intl";
-import type { ValidationResult } from "@ksefuj/validator";
+import type { CurrencyRate, ValidationResult } from "@ksefuj/validator";
 import { Badge } from "@/components/badge";
 import { ValidationIssuesList } from "@/components/validation-issues-list";
+import { getNbpRate } from "@/lib/nbp";
 import { cn } from "@/lib/utils";
 
 interface ValidatorProps {
@@ -150,7 +151,26 @@ export function Validator({ locale }: ValidatorProps) {
             let fileResult: FileValidationResult;
             try {
               const content = await file.text();
-              const result = await validate(content, { maxIssues: 100 });
+
+              // Extract currency and date for NBP rate lookup
+              const currencyRates: Record<string, CurrencyRate> = {};
+              try {
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(content, "application/xml");
+                const ns = "http://crd.gov.pl/wzor/2025/06/25/13775/";
+                const kodWaluty =
+                  xmlDoc.getElementsByTagNameNS(ns, "KodWaluty")[0]?.textContent ?? null;
+                const dataWystawienia =
+                  xmlDoc.getElementsByTagNameNS(ns, "P_1")[0]?.textContent ?? null;
+                if (kodWaluty && kodWaluty !== "PLN" && dataWystawienia) {
+                  const rate = await getNbpRate(kodWaluty, dataWystawienia);
+                  if (rate) {currencyRates[kodWaluty] = rate;}
+                }
+              } catch {
+                // NBP lookup failure is non-fatal — validation continues without currency check
+              }
+
+              const result = await validate(content, { maxIssues: 100, currencyRates });
               fileResult = { ...newFiles[index], result, status: "completed" as const };
             } catch (error) {
               console.error(`Validation error for ${file.name}:`, error);

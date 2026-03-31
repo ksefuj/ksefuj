@@ -123,7 +123,8 @@
       "ENCODING_ERROR": "Character encoding error",
       "VALIDATION_TIMEOUT": "Validation timeout exceeded",
       "EXECUTION_ERROR": "Unexpected validation error",
-      "P12_INVALID": "Invalid **VAT** rate: `{actual}`. Allowed values: {allowedValues}"
+      "P12_INVALID": "Invalid **VAT** rate: `{actual}`. Allowed values: {allowedValues}",
+      "CURRENCY_RATE_MISMATCH": "KursWaluty ({actual}) differs from the NBP rate on {date} ({expected})"
     },
     "errors": {
       "field": "field",

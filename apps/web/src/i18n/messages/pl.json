@@ -123,7 +123,8 @@
       "ENCODING_ERROR": "Błąd kodowania znaków",
       "VALIDATION_TIMEOUT": "Przekroczono limit czasu walidacji",
       "EXECUTION_ERROR": "Niespodziewany błąd podczas walidacji",
-      "P12_INVALID": "Nieprawidłowa stawka **VAT**: `{actual}`. Dozwolone wartości: {allowedValues}"
+      "P12_INVALID": "Nieprawidłowa stawka **VAT**: `{actual}`. Dozwolone wartości: {allowedValues}",
+      "CURRENCY_RATE_MISMATCH": "KursWaluty ({actual}) odbiega od kursu NBP z dnia {date} ({expected})"
     },
     "errors": {
       "field": "pole",

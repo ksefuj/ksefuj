@@ -984,7 +984,9 @@ describe("Semantic Validation", () => {
 
     it("should skip when currency is not found in currencyRates", () => {
       const xml = foreignCurrencyInvoice("4.30");
-      const result = validateXml(xml, { USD: { currency: "USD", date: "2026-09-12", mid: 3.7257 } });
+      const result = validateXml(xml, {
+        USD: { currency: "USD", date: "2026-09-12", mid: 3.7257 },
+      });
       expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_MISMATCH")).toBe(false);
     });
 
