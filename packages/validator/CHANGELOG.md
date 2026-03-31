@@ -27,11 +27,16 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Rate fetching is intentionally out of scope for the package — see `apps/web/src/lib/nbp.ts` for
   the reference client (one NBP range request per unique currency covers an entire batch)
 
-## [0.2.1] — 2026-03-15
+## [0.2.1] — 2026-03-31
+
+### Fixed
+
+- Corrected Polish IBAN length check (Rule 40): `NrRB` in IBAN format must be **28** characters
+  (`PL` + 26 digits), not 26; bare NRB format (26 digits without prefix) remains valid
 
 ### Changed
 
-- Internal patch release; no public API changes
+- Excluded test files from the npm publish bundle
 
 ## [0.2.0] — 2026-03-01
 
