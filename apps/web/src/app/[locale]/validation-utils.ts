@@ -36,6 +36,10 @@ export function translateValidationIssue(
       }
     }
 
+    if (issue.context.metadata?.nbpDate) {
+      context.date = String(issue.context.metadata.nbpDate);
+    }
+
     // Debug logging in development
     if (process.env.NODE_ENV === "development") {
       console.warn("Translating error code:", errorCode, "with key:", translationKey);

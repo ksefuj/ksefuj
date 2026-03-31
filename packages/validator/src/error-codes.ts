@@ -792,7 +792,8 @@ export const SEMANTIC_ERRORS = {
       code: "CURRENCY_RATE_MISMATCH",
       severity: "warning",
     },
-    description: "KursWaluty does not match the NBP mid-rate (FA(3) §4.3.4 — KursWaluty)",
+    description:
+      "KursWaluty does not match the NBP mid-rate (Art. 31a ustawy o VAT — previous business day's NBP Table A rate)",
     commonCauses: [
       "Manually entered exchange rate differs from the official NBP rate",
       "Rounding error in exchange rate",

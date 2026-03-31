@@ -82,7 +82,8 @@ export async function getNbpRate(currency: string, date: string): Promise<Curren
     // localStorage may be unavailable (SSR, private browsing)
   }
 
-  const rate = await fetchNbpRate(currency, date);
+  // Art. 31a ustawy o VAT: use the rate from the last business day *before* the invoice date
+  const rate = await fetchNbpRate(currency, subtractDays(date, 1));
 
   if (rate) {
     try {

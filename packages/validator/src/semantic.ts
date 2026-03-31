@@ -1366,7 +1366,7 @@ function checkCurrencyRateMismatch(
   doc: XmlDocument,
   currencyRates: Record<string, CurrencyRate>,
 ): ValidationIssue[] {
-  // Rule: CURRENCY_RATE_MISMATCH - KursWaluty must match NBP mid-rate (FA(3) §4.3.4)
+  // Rule: CURRENCY_RATE_MISMATCH - KursWaluty must match NBP mid-rate (Art. 31a ustawy o VAT)
   const issues: ValidationIssue[] = [];
 
   // Read KodWaluty (the invoice currency)
@@ -1383,46 +1383,51 @@ function checkCurrencyRateMismatch(
     return issues;
   }
 
-  // Read KursWaluty from the invoice
-  const kursWalutyStr = text(doc, "string(//ns:Fa/ns:KursWaluty)");
-  if (!kursWalutyStr) {
-    return issues;
-  }
+  // KursWaluty lives in FaWiersz (line items) per FA(3) §10.2 — check each line
+  const faWiersze = els(doc, "//ns:Fa/ns:FaWiersz");
+  for (const wiersz of faWiersze) {
+    const kursWalutyStr = text(wiersz, "string(ns:KursWaluty)");
+    if (!kursWalutyStr) {
+      continue;
+    }
 
-  const kursWaluty = parseFloat(kursWalutyStr);
-  if (isNaN(kursWaluty)) {
-    return issues;
-  }
+    const kursWaluty = parseFloat(kursWalutyStr);
+    if (isNaN(kursWaluty)) {
+      continue;
+    }
 
-  // Compare using integer arithmetic to avoid floating-point issues
-  if (Math.round(kursWaluty * 10000) !== Math.round(rate.mid * 10000)) {
-    const errorDef = ERROR_CODES.CURRENCY_RATE_MISMATCH;
-    issues.push({
-      code: errorDef.code,
-      context: {
-        location: {
-          xpath: "/Faktura/Fa/KursWaluty",
-          element: "KursWaluty",
+    // Compare using integer arithmetic to avoid floating-point issues
+    if (Math.round(kursWaluty * 10000) !== Math.round(rate.mid * 10000)) {
+      const nrWiersza = text(wiersz, "string(ns:NrWierszaFa)");
+      const xpath = `/Faktura/Fa/FaWiersz[NrWierszaFa=${nrWiersza}]/KursWaluty`;
+      const errorDef = ERROR_CODES.CURRENCY_RATE_MISMATCH;
+      issues.push({
+        code: errorDef.code,
+        context: {
+          location: {
+            xpath,
+            element: "KursWaluty",
+          },
+          actualValue: kursWalutyStr,
+          expectedValues: [rate.mid.toFixed(4)],
+          metadata: {
+            currency: kodWaluty,
+            nbpDate: rate.date,
+            nbpMid: rate.mid,
+          },
         },
-        actualValue: kursWalutyStr,
-        expectedValues: [String(rate.mid)],
-        metadata: {
-          currency: kodWaluty,
-          nbpDate: rate.date,
-          nbpMid: rate.mid,
-        },
-      },
-      message: `KursWaluty (${kursWalutyStr}) differs from the NBP rate on ${rate.date} (${rate.mid}).`,
-      fixSuggestions: [
-        {
-          type: "replace",
-          targetXPath: "/Faktura/Fa/KursWaluty",
-          content: String(rate.mid),
-          description: `Set KursWaluty to ${rate.mid} (NBP Table A mid-rate for ${kodWaluty} on ${rate.date}).`,
-          confidence: 0.95,
-        },
-      ],
-    });
+        message: `KursWaluty (${kursWalutyStr}) in line ${nrWiersza} differs from the NBP rate on ${rate.date} (${rate.mid.toFixed(4)}).`,
+        fixSuggestions: [
+          {
+            type: "replace",
+            targetXPath: xpath,
+            content: rate.mid.toFixed(4),
+            description: `Set KursWaluty to ${rate.mid.toFixed(4)} (NBP Table A mid-rate for ${kodWaluty} on ${rate.date}).`,
+            confidence: 0.95,
+          },
+        ],
+      });
+    }
   }
 
   return issues;
