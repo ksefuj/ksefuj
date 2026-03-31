@@ -9,7 +9,13 @@
  */
 
 import { ERROR_CODES } from "./error-codes.js";
-import type { SemanticRule, ValidationAssertion, ValidationIssue, XmlDocument } from "./types.js";
+import type {
+  CurrencyRate,
+  SemanticRule,
+  ValidationAssertion,
+  ValidationIssue,
+  XmlDocument,
+} from "./types.js";
 
 // Namespace for FA(3) schema
 const NS = "http://crd.gov.pl/wzor/2025/06/25/13775/";
@@ -1356,6 +1362,72 @@ function checkTransportMinimumData(doc: XmlDocument): ValidationIssue[] {
   return issues;
 }
 
+function checkCurrencyRateMismatch(
+  doc: XmlDocument,
+  currencyRates: Record<string, CurrencyRate>,
+): ValidationIssue[] {
+  // Rule: CURRENCY_RATE_MISMATCH - KursWaluty must match NBP mid-rate (FA(3) §4.3.4)
+  const issues: ValidationIssue[] = [];
+
+  // Read KodWaluty (the invoice currency)
+  const kodWaluty = text(doc, "string(//ns:Fa/ns:KodWaluty)");
+
+  // Skip if no foreign currency or currency is PLN
+  if (!kodWaluty || kodWaluty === "PLN") {
+    return issues;
+  }
+
+  // Look up the rate for the invoice currency
+  const rate = currencyRates[kodWaluty];
+  if (!rate) {
+    return issues;
+  }
+
+  // Read KursWaluty from the invoice
+  const kursWalutyStr = text(doc, "string(//ns:Fa/ns:KursWaluty)");
+  if (!kursWalutyStr) {
+    return issues;
+  }
+
+  const kursWaluty = parseFloat(kursWalutyStr);
+  if (isNaN(kursWaluty)) {
+    return issues;
+  }
+
+  // Compare using integer arithmetic to avoid floating-point issues
+  if (Math.round(kursWaluty * 10000) !== Math.round(rate.mid * 10000)) {
+    const errorDef = ERROR_CODES.CURRENCY_RATE_MISMATCH;
+    issues.push({
+      code: errorDef.code,
+      context: {
+        location: {
+          xpath: "/Faktura/Fa/KursWaluty",
+          element: "KursWaluty",
+        },
+        actualValue: kursWalutyStr,
+        expectedValues: [String(rate.mid)],
+        metadata: {
+          currency: kodWaluty,
+          nbpDate: rate.date,
+          nbpMid: rate.mid,
+        },
+      },
+      message: `KursWaluty (${kursWalutyStr}) differs from the NBP rate on ${rate.date} (${rate.mid}).`,
+      fixSuggestions: [
+        {
+          type: "replace",
+          targetXPath: "/Faktura/Fa/KursWaluty",
+          content: String(rate.mid),
+          description: `Set KursWaluty to ${rate.mid} (NBP Table A mid-rate for ${kodWaluty} on ${rate.date}).`,
+          confidence: 0.95,
+        },
+      ],
+    });
+  }
+
+  return issues;
+}
+
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // Group 7: Format Rules (Constitution §2)
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -2084,11 +2156,13 @@ export const semanticRules: SemanticRule[] = [
  *
  * @param doc - The XML document to validate
  * @param collectAssertions - Whether to collect positive assertions about what passed validation
+ * @param currencyRates - Optional map of currency → NBP rate for KursWaluty accuracy validation
  * @returns Object containing validation issues and assertions
  */
 export function checkSemantics(
   doc: XmlDocument,
   collectAssertions: boolean = false,
+  currencyRates?: Record<string, CurrencyRate>,
 ): {
   issues: ValidationIssue[];
   assertions: ValidationAssertion[];
@@ -2108,6 +2182,22 @@ export function checkSemantics(
         aspect: rule.category,
         description: rule.description,
         elements: [rule.id],
+        confidence: 1.0,
+      });
+    }
+  }
+
+  // Execute currency rate check if rates are provided
+  if (currencyRates && Object.keys(currencyRates).length > 0) {
+    const ruleIssues = checkCurrencyRateMismatch(doc, currencyRates);
+    issues.push(...ruleIssues);
+
+    if (collectAssertions && ruleIssues.length === 0) {
+      assertions.push({
+        domain: "semantic",
+        aspect: "business_logic",
+        description: "Check KursWaluty matches NBP mid-rate",
+        elements: ["CURRENCY_RATE_MISMATCH"],
         confidence: 1.0,
       });
     }

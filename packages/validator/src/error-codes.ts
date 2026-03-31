@@ -785,6 +785,22 @@ export const SEMANTIC_ERRORS = {
     fixTemplates: [],
   },
 
+  CURRENCY_RATE_MISMATCH: {
+    code: {
+      domain: "semantic",
+      category: "business_logic",
+      code: "CURRENCY_RATE_MISMATCH",
+      severity: "warning",
+    },
+    description: "KursWaluty does not match the NBP mid-rate (FA(3) §4.3.4 — KursWaluty)",
+    commonCauses: [
+      "Manually entered exchange rate differs from the official NBP rate",
+      "Rounding error in exchange rate",
+      "Wrong date used for the exchange rate lookup",
+    ],
+    fixTemplates: [],
+  },
+
   // Group 7: Format Rules — Constitution §2
   AMOUNT_NO_SEPARATORS: {
     code: {

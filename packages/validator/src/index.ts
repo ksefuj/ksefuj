@@ -10,6 +10,7 @@ export { validate } from "./validate.js";
 
 // --- Core types ---
 export type {
+  CurrencyRate,
   ValidationResult,
   ValidationIssue,
   ValidationAssertion,

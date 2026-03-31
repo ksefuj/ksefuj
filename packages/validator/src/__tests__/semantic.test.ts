@@ -9,6 +9,7 @@ import { describe, expect, it } from "vitest";
 import { XmlDocument } from "libxml2-wasm";
 import { checkSemantics, semanticRules } from "../semantic.js";
 import { ERROR_CODES } from "../error-codes.js";
+import type { CurrencyRate } from "../types.js";
 
 // Helper to create a minimal valid FA(3) document for testing
 function wrapInFaktura(partialXml: string): string {
@@ -24,11 +25,11 @@ function wrapInFaktura(partialXml: string): string {
 }
 
 // Helper to validate a document and return issues
-function validateXml(xml: string) {
+function validateXml(xml: string, currencyRates?: Record<string, CurrencyRate>) {
   const doc = XmlDocument.fromString(xml);
   try {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return checkSemantics(doc as unknown as any, false);
+    return checkSemantics(doc as unknown as any, false, currencyRates);
   } finally {
     doc.dispose();
   }
@@ -908,8 +909,137 @@ describe("Semantic Validation", () => {
     });
   });
 
+  describe("Currency Rate Validation", () => {
+    const foreignCurrencyInvoice = (kursWaluty: string) =>
+      wrapInFaktura(`
+        <Podmiot1>
+          <DaneIdentyfikacyjne><NIP>1234567890</NIP><Nazwa>Test</Nazwa></DaneIdentyfikacyjne>
+          <Adres><KodKraju>PL</KodKraju><AdresL1>Test</AdresL1></Adres>
+        </Podmiot1>
+        <Podmiot2>
+          <DaneIdentyfikacyjne><NIP>9876543210</NIP><Nazwa>Test</Nazwa></DaneIdentyfikacyjne>
+          <Adres><KodKraju>PL</KodKraju><AdresL1>Test</AdresL1></Adres>
+          <JST>2</JST>
+          <GV>2</GV>
+        </Podmiot2>
+        <Fa>
+          <KodWaluty>EUR</KodWaluty>
+          <P_1>2026-09-15</P_1>
+          <P_2>FV/001/09/2026</P_2>
+          <P_15>123.00</P_15>
+          <KursWaluty>${kursWaluty}</KursWaluty>
+          <Adnotacje>
+            <P_16>2</P_16><P_17>2</P_17><P_18>2</P_18><P_18A>2</P_18A>
+            <Zwolnienie><P_19N>1</P_19N></Zwolnienie>
+            <NoweSrodkiTransportu><P_22N>1</P_22N></NoweSrodkiTransportu>
+            <P_23>2</P_23>
+            <PMarzy><P_PMarzyN>1</P_PMarzyN></PMarzy>
+          </Adnotacje>
+          <RodzajFaktury>VAT</RodzajFaktury>
+        </Fa>
+      `);
+
+    const eurRate: CurrencyRate = { currency: "EUR", date: "2026-09-12", mid: 4.2856 };
+
+    it("should not emit warning when KursWaluty matches NBP rate exactly", () => {
+      const xml = foreignCurrencyInvoice("4.2856");
+      const result = validateXml(xml, { EUR: eurRate });
+      expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_MISMATCH")).toBe(false);
+    });
+
+    it("should emit warning when KursWaluty differs from NBP rate", () => {
+      const xml = foreignCurrencyInvoice("4.29");
+      const result = validateXml(xml, { EUR: eurRate });
+      const issue = result.issues.find((i) => i.code.code === "CURRENCY_RATE_MISMATCH");
+      expect(issue).toBeDefined();
+      expect(issue!.code.severity).toBe("warning");
+      expect(issue!.context.location.xpath).toBe("/Faktura/Fa/KursWaluty");
+      expect(issue!.context.actualValue).toBe("4.29");
+      expect(issue!.context.expectedValues).toEqual(["4.2856"]);
+    });
+
+    it("should emit warning when KursWaluty differs at 4th decimal place", () => {
+      const xml = foreignCurrencyInvoice("4.2857");
+      const result = validateXml(xml, { EUR: eurRate });
+      expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_MISMATCH")).toBe(true);
+    });
+
+    it("should include correct fix suggestion with NBP rate", () => {
+      const xml = foreignCurrencyInvoice("4.30");
+      const result = validateXml(xml, { EUR: eurRate });
+      const issue = result.issues.find((i) => i.code.code === "CURRENCY_RATE_MISMATCH");
+      expect(issue).toBeDefined();
+      expect(issue!.fixSuggestions).toHaveLength(1);
+      expect(issue!.fixSuggestions[0].content).toBe("4.2856");
+      expect(issue!.fixSuggestions[0].description).toContain("4.2856");
+      expect(issue!.fixSuggestions[0].description).toContain("EUR");
+      expect(issue!.fixSuggestions[0].description).toContain("2026-09-12");
+    });
+
+    it("should skip when currencyRates is not provided", () => {
+      const xml = foreignCurrencyInvoice("4.30");
+      const result = validateXml(xml);
+      expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_MISMATCH")).toBe(false);
+    });
+
+    it("should skip when currency is not found in currencyRates", () => {
+      const xml = foreignCurrencyInvoice("4.30");
+      const result = validateXml(xml, { USD: { currency: "USD", date: "2026-09-12", mid: 3.7257 } });
+      expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_MISMATCH")).toBe(false);
+    });
+
+    it("should skip for PLN invoices", () => {
+      const xml = wrapInFaktura(`
+        <Podmiot1>
+          <DaneIdentyfikacyjne><NIP>1234567890</NIP><Nazwa>Test</Nazwa></DaneIdentyfikacyjne>
+          <Adres><KodKraju>PL</KodKraju><AdresL1>Test</AdresL1></Adres>
+        </Podmiot1>
+        <Podmiot2>
+          <DaneIdentyfikacyjne><NIP>9876543210</NIP><Nazwa>Test</Nazwa></DaneIdentyfikacyjne>
+          <Adres><KodKraju>PL</KodKraju><AdresL1>Test</AdresL1></Adres>
+          <JST>2</JST>
+          <GV>2</GV>
+        </Podmiot2>
+        <Fa>
+          <KodWaluty>PLN</KodWaluty>
+          <P_1>2026-09-15</P_1>
+          <P_2>FV/001/09/2026</P_2>
+          <P_15>123.00</P_15>
+          <Adnotacje>
+            <P_16>2</P_16><P_17>2</P_17><P_18>2</P_18><P_18A>2</P_18A>
+            <Zwolnienie><P_19N>1</P_19N></Zwolnienie>
+            <NoweSrodkiTransportu><P_22N>1</P_22N></NoweSrodkiTransportu>
+            <P_23>2</P_23>
+            <PMarzy><P_PMarzyN>1</P_PMarzyN></PMarzy>
+          </Adnotacje>
+          <RodzajFaktury>VAT</RodzajFaktury>
+        </Fa>
+      `);
+      const result = validateXml(xml, { EUR: eurRate });
+      expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_MISMATCH")).toBe(false);
+    });
+
+    it("should use integer comparison to avoid floating-point issues", () => {
+      // 0.1 + 0.2 !== 0.3 in floating point, but 1000 + 2000 === 3000 in integer
+      const xml = foreignCurrencyInvoice("4.2856");
+      const rate: CurrencyRate = { currency: "EUR", date: "2026-09-12", mid: 4.2856 };
+      const result = validateXml(xml, { EUR: rate });
+      expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_MISMATCH")).toBe(false);
+    });
+
+    it("should show NBP publication date in message when it differs from invoice date", () => {
+      const xml = foreignCurrencyInvoice("4.30");
+      // NBP date is Friday 2026-09-12, invoice date is Monday 2026-09-15
+      const result = validateXml(xml, { EUR: eurRate });
+      const issue = result.issues.find((i) => i.code.code === "CURRENCY_RATE_MISMATCH");
+      expect(issue).toBeDefined();
+      expect(issue!.message).toContain("2026-09-12");
+      expect(issue!.context.metadata?.nbpDate).toBe("2026-09-12");
+    });
+  });
+
   describe("Rule Coverage", () => {
-    it("should have all 42 rules implemented", () => {
+    it("should have all 43 rules implemented", () => {
       expect(semanticRules).toHaveLength(35); // Some rules are grouped (ADNOTACJE_MANDATORY_FIELDS covers 8 rules)
       const uniqueRuleCodes = new Set([
         "PODMIOT2_JST_MISSING",
@@ -954,6 +1084,7 @@ describe("Semantic Validation", () => {
         "INVALID_BANK_ACCOUNT_FORMAT",
         "DUPLICATE_LINE_NUMBERS",
         "NEGATIVE_QUANTITY_NOT_ALLOWED",
+        "CURRENCY_RATE_MISMATCH",
       ]);
 
       // Check that all error codes are defined
