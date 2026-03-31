@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import { track } from "@vercel/analytics";
+import * as amplitude from "@amplitude/unified";
 
 interface CopyButtonProps {
   text: string;
@@ -30,7 +30,7 @@ export function CopyButton({ text }: CopyButtonProps) {
         clearTimeout(timerRef.current);
       }
       timerRef.current = setTimeout(() => setCopied(false), 1500);
-      track("code_copied");
+      amplitude.track("code_copied");
     } catch {
       // clipboard API unavailable (e.g. non-secure context) — silently ignore
     }

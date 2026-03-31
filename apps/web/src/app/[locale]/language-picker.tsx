@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from "../../i18n/routing";
 import { useEffect, useRef, useState, useTransition } from "react";
-import { track } from "@vercel/analytics";
+import * as amplitude from "@amplitude/unified";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 
@@ -51,7 +51,7 @@ export function LanguagePicker({ currentLocale, localePaths }: Props) {
 
   const handleChange = (locale: string) => {
     // Track language change
-    track("language_changed", {
+    amplitude.track("language_changed", {
       from: currentLocale,
       to: locale,
       path: pathname,

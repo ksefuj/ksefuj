@@ -520,11 +520,11 @@
     },
     "cookies": {
       "title": "Pliki cookie",
-      "description": "ksefuj nie używa śledzących plików cookie do celów reklamowych. Jedyny plik cookie, który może zostać ustawiony, służy do zapamiętania preferencji językowych. Korzystamy z Vercel Analytics, która działa bez plików cookie, używając zamiast tego zanonimizowanych danych."
+      "description": "ksefuj nie używa śledzących plików cookie do celów reklamowych. Jedyny plik cookie, który może zostać ustawiony, służy do zapamiętania preferencji językowych. Korzystamy z Amplitude Analytics, która działa bez plików cookie, używając zamiast tego zanonimizowanych danych."
     },
     "thirdParty": {
       "title": "Usługi zewnętrzne",
-      "description": "Strona jest hostowana na platformie Vercel. Używamy Vercel Analytics i Speed Insights do zbierania zagregowanych, zanonimizowanych metryk użytkowania (wyświetlenia stron, podstawowe informacje o urządzeniu, dane wydajnościowe oraz interakcje użytkownika jak kliknięcia przycisków). Te dane pomagają nam zrozumieć jak narzędzie jest używane i poprawić jego wydajność. Żadne dane osobowe ani treść faktur nigdy nie są śledzone ani przesyłane."
+      "description": "Strona jest hostowana na platformie Vercel. Korzystamy z Amplitude Analytics (strefa EU — dane pozostają w Unii Europejskiej) oraz Vercel Speed Insights. Amplitude rejestruje wyświetlenia stron i interakcje, które świadomie instrumentujemy (np. kliknięcia przycisków) — pomagają nam one zrozumieć, jak narzędzie jest używane. Treść faktur nigdy nie jest rejestrowana. Vercel Speed Insights zbiera zagregowane dane wydajnościowe. Dane te służą wyłącznie celom diagnostycznym i ulepszaniu usługi; nie wykorzystujemy ich do identyfikacji konkretnych osób."
     },
     "noAccounts": {
       "title": "Brak kont użytkowników",
