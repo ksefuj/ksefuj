@@ -5,7 +5,7 @@ import { listContentItems } from "@/lib/content";
 const BASE_URL = "https://ksefuj.to";
 
 // Pages available in all locales
-const pages = ["/", "/privacy", "/terms"];
+const pages = ["/", "/validator", "/privacy", "/terms"];
 
 // Derive URL prefixes per locale from central i18n routing configuration
 const localePrefixes =
@@ -42,10 +42,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   for (const page of pages) {
     for (const prefix of localePrefixes) {
       const path = page === "/" ? prefix || "/" : `${prefix}${page}`;
+      const isHome = page === "/";
+      const isValidator = page === "/validator";
+
+      let changeFrequency: "weekly" | "monthly" = "monthly";
+      if (isHome || isValidator) {
+        changeFrequency = "weekly";
+      }
+
+      let priority = 0.7;
+      if (isHome) {
+        priority = 1.0;
+      } else if (isValidator) {
+        priority = 0.9;
+      }
+
       entries.push({
         url: `${BASE_URL}${path}`,
-        changeFrequency: page === "/" ? "weekly" : "monthly",
-        priority: page === "/" ? 1.0 : 0.7,
+        changeFrequency,
+        priority,
       });
     }
   }

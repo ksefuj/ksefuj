@@ -5,6 +5,7 @@ import { getMessages, getTranslations, setRequestLocale } from "next-intl/server
 import { notFound } from "next/navigation";
 
 import { routing } from "../../i18n/routing";
+import { FileHandoffProvider } from "@/contexts/file-handoff-context";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -49,7 +50,7 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
-      {children}
+      <FileHandoffProvider>{children}</FileHandoffProvider>
     </NextIntlClientProvider>
   );
 }

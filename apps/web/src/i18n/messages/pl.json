@@ -155,7 +155,8 @@
     "blog": "Blog",
     "faq": "FAQ",
     "docs": "Dokumentacja",
-    "guides": "Poradniki"
+    "guides": "Poradniki",
+    "validator": "Walidator"
   },
   "translationBanner": {
     "body": "Ten artykuł nie jest jeszcze dostępny w Twoim języku. Czytasz oryginalną wersję w języku {language}.",
@@ -234,7 +235,8 @@
     "ksefPortal": "Portal KSeF",
     "privacyPolicy": "Polityka prywatności",
     "termsOfUse": "Warunki użytkowania",
-    "copyright": "© 2026 ksefuj. Cały kod jest publiczny na GitHub."
+    "copyright": "© 2026 ksefuj. Cały kod jest publiczny na GitHub.",
+    "validator": "Walidator"
   },
   "terms": {
     "meta": {
@@ -287,7 +289,8 @@
     "hero": {
       "title": "Darmowy walidator faktur KSeF FA(3)",
       "description": "Przeciągnij XML, dowiedz się wszystkiego w sekundach. ksefuj oferuje pełną walidację faktur KSeF FA(3) zgodną z oficjalnymi wymaganiami MF, zero kompromisów w prywatności.",
-      "trustLine": "Darmowy walidator • Pełna walidacja MF • 100% lokalne"
+      "trustLine": "Darmowy walidator • Pełna walidacja MF • 100% lokalne",
+      "cta": "Sprawdź swoją fakturę →"
     },
     "features": {
       "title": "Bo KSeF to nie żarty.",
@@ -586,5 +589,14 @@
         "answer": "Tak — ksefuj.to to w pełni darmowy, open-source’owy walidator faktur KSeF FA(3). Sprawdza zgodność XML ze schematem XSD oraz weryfikuje reguły biznesowe zgodne z oficjalnymi wymaganiami Ministerstwa Finansów. Działa w całości w przeglądarce (dane nie opuszczają komputera), jest dostępny też jako pakiet npm (@ksefuj/validator) i narzędzie CLI. Bez limitów, bez rejestracji, bez opłat."
       }
     ]
+  },
+  "validatorPage": {
+    "meta": {
+      "title": "Walidator KSeF — sprawdź swoją fakturę | ksefuj.to",
+      "description": "Sprawdź poprawność faktury KSeF FA(3) online. Pełna walidacja schematu XSD i reguł biznesowych MF. Bezpłatnie, bez rejestracji. Twoje dane nie opuszczają przeglądarki."
+    },
+    "heading": "Walidator KSeF FA(3)",
+    "description": "Sprawdź poprawność faktury KSeF FA(3) online. Pełna walidacja schematu XSD i reguł biznesowych MF. Bezpłatnie, bez rejestracji. Twoje dane nie opuszczają przeglądarki.",
+    "backToHome": "← Strona główna"
   }
 }

@@ -1,6 +1,14 @@
 "use client";
 
-import { type ChangeEvent, type DragEvent, useCallback, useMemo, useRef, useState } from "react";
+import {
+  type ChangeEvent,
+  type DragEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { track } from "@vercel/analytics";
 import { useTranslations } from "next-intl";
 import type { ValidationResult } from "@ksefuj/validator";
@@ -10,6 +18,7 @@ import { cn } from "@/lib/utils";
 
 interface ValidatorProps {
   locale?: string;
+  initialFiles?: File[];
 }
 
 type FileValidationResult = {
@@ -36,7 +45,7 @@ type ValidationSummary = {
 const ITEMS_PER_PAGE = 10;
 const CONCURRENCY_LIMIT = 4;
 
-export function Validator({ locale }: ValidatorProps) {
+export function Validator({ locale, initialFiles }: ValidatorProps) {
   const t = useTranslations("validator");
   const [files, setFiles] = useState<FileValidationResult[]>([]);
   const [dragging, setDragging] = useState(false);
@@ -102,9 +111,7 @@ export function Validator({ locale }: ValidatorProps) {
 
   // File handling
   const handleFiles = useCallback(
-    async (fileList: FileList) => {
-      const xmlFiles = Array.from(fileList).filter((file) => file.name.endsWith(".xml"));
-
+    async (xmlFiles: File[]) => {
       if (xmlFiles.length === 0) {
         return;
       }
@@ -230,7 +237,8 @@ export function Validator({ locale }: ValidatorProps) {
     setDragging(false);
     setDragCounter(0);
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      handleFiles(e.dataTransfer.files);
+      const xmlFiles = Array.from(e.dataTransfer.files).filter((f) => f.name.endsWith(".xml"));
+      handleFiles(xmlFiles);
     }
   };
 
@@ -240,7 +248,8 @@ export function Validator({ locale }: ValidatorProps) {
 
   const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      handleFiles(e.target.files);
+      const xmlFiles = Array.from(e.target.files).filter((f) => f.name.endsWith(".xml"));
+      handleFiles(xmlFiles);
     }
   };
 
@@ -254,6 +263,16 @@ export function Validator({ locale }: ValidatorProps) {
       inputRef.current.value = "";
     }
   };
+
+  // Auto-validate initial files (e.g. handed off from landing page)
+  const initialFilesHandled = useRef(false);
+  useEffect(() => {
+    if (initialFiles && initialFiles.length > 0 && !initialFilesHandled.current) {
+      initialFilesHandled.current = true;
+      const xmlFiles = initialFiles.filter((f) => f.name.endsWith(".xml"));
+      handleFiles(xmlFiles);
+    }
+  }, [initialFiles, handleFiles]);
 
   const toggleFileExpanded = (fileName: string) => {
     setExpandedFile(expandedFile === fileName ? null : fileName);

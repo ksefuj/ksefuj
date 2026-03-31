@@ -155,7 +155,8 @@
     "blog": "Blog",
     "faq": "FAQ",
     "docs": "Docs",
-    "guides": "Guides"
+    "guides": "Guides",
+    "validator": "Validator"
   },
   "translationBanner": {
     "body": "This article isn't available in your language yet. You're reading the {language} original.",
@@ -234,7 +235,8 @@
     "ksefPortal": "KSeF Portal",
     "privacyPolicy": "Privacy Policy",
     "termsOfUse": "Terms of Use",
-    "copyright": "© 2026 ksefuj. All code is public on GitHub."
+    "copyright": "© 2026 ksefuj. All code is public on GitHub.",
+    "validator": "Validator"
   },
   "terms": {
     "meta": {
@@ -287,7 +289,8 @@
     "hero": {
       "title": "Free KSeF FA(3) invoice validator",
       "description": "Drag in your XML, see everything in seconds. Full KSeF FA(3) invoice validation that meets official MF requirements, zero privacy compromises.",
-      "trustLine": "Free validator • Full MF validation • 100% local"
+      "trustLine": "Free validator • Full MF validation • 100% local",
+      "cta": "Check your invoice →"
     },
     "features": {
       "title": "KSeF is no joke.",
@@ -586,5 +589,14 @@
         "answer": "Yes — ksefuj.to is a completely free, open-source KSeF FA(3) invoice validator. It checks XML compliance with the XSD schema and verifies business rules that meet official Ministry of Finance requirements. It runs entirely in your browser (your data never leaves your computer), and is also available as an npm package (@ksefuj/validator) and CLI tool. No limits, no registration, no fees."
       }
     ]
+  },
+  "validatorPage": {
+    "meta": {
+      "title": "KSeF Validator — check your invoice | ksefuj.to",
+      "description": "Validate KSeF FA(3) invoices online. Full XSD schema and MF business rules validation. Free, no registration. Your data never leaves the browser."
+    },
+    "heading": "KSeF FA(3) Validator",
+    "description": "Validate KSeF FA(3) invoices online. Full XSD schema and MF business rules validation. Free, no registration. Your data never leaves the browser.",
+    "backToHome": "← Home"
   }
 }
