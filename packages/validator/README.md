@@ -44,21 +44,35 @@ if (!result.valid) {
 
 ### Currency rate validation
 
-Optionally validate that `KursWaluty` matches the official NBP mid-rate. Provide a `currencyRates`
-map — the validator stays pure and network-free; you fetch the rates.
+Optionally validate that `KursWaluty` matches the official NBP mid-rate (Art. 31a VAT Act). Pass a
+rate table per currency — the validator picks the correct date based on the invoice's `P_1`.
 
 ```typescript
 import { validate, type CurrencyRate } from "@ksefuj/validator";
 
-const currencyRates: Record<string, CurrencyRate> = {
-  EUR: { currency: "EUR", date: "2026-03-30", mid: 4.2856 },
+// Pass an array of rates for each currency (e.g. fetched from the NBP range API).
+// The validator selects the rate from the last business day before P_1 automatically.
+const currencyRates: Record<string, CurrencyRate[] | null> = {
+  EUR: [
+    { currency: "EUR", date: "2026-03-28", mid: 4.21 },
+    { currency: "EUR", date: "2026-03-29", mid: 4.2856 }, // picked for a 2026-03-30 invoice
+  ],
+  USD: null, // looked up but unavailable → emits CURRENCY_RATE_UNVERIFIABLE
 };
 
 const result = await validate(xmlString, { currencyRates });
-// → emits CURRENCY_RATE_MISMATCH warning if KursWaluty ≠ 4.2856
+// → CURRENCY_RATE_MISMATCH  if KursWaluty ≠ the selected NBP rate
+// → CURRENCY_RATE_UNVERIFIABLE  if the rate table is null or has no rate within 10 days of P_1
 ```
 
-If `currencyRates` is omitted, the check is skipped entirely (backwards-compatible with `0.2.0`).
+| `currencyRates[currency]` | behaviour                                                                 |
+| ------------------------- | ------------------------------------------------------------------------- |
+| key absent                | skipped silently — currency was never looked up                           |
+| `null`                    | `CURRENCY_RATE_UNVERIFIABLE` — lookup was attempted but failed            |
+| `CurrencyRate[]`          | validator picks most recent rate strictly before `P_1` and within 10 days |
+
+If `currencyRates` is omitted entirely, all currency checks are skipped (backwards-compatible with
+`0.2.0`).
 
 ## CLI Usage
 
