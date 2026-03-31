@@ -12,7 +12,7 @@ export function AmplitudeProvider() {
     }
     initialized = true;
 
-    amplitude.initAll("8182177694f99934e6f8b3628d51c13b", {
+    amplitude.initAll(process.env.NEXT_PUBLIC_AMPLITUDE_API_KEY!, {
       serverZone: "EU",
       analytics: { autocapture: true },
       sessionReplay: { sampleRate: 1 },
