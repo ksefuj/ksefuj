@@ -216,16 +216,21 @@ export function Validator({ locale }: ValidatorProps) {
           Array.from({ length: Math.min(CONCURRENCY_LIMIT, xmlFiles.length) }, () => worker()),
         );
 
-        // Track validation completed
-        const errorCount = results.filter((r) => !r.result?.valid || r.status === "error").length;
+        // Track validation complete
+        const allIssueCodes = [
+          ...new Set(results.flatMap((r) => r.result?.issues.map((i) => i.code.code) ?? [])),
+        ];
+        const issueCount = results.reduce((sum, r) => sum + (r.result?.issues.length ?? 0), 0);
         const warningCount = results.reduce(
           (sum, r) =>
             sum + (r.result?.issues.filter((i) => i.code.severity === "warning").length ?? 0),
           0,
         );
-        amplitude.track("validation_completed", {
+        const errorCount = results.filter((r) => !r.result?.valid || r.status === "error").length;
+        amplitude.track("validation_complete", {
+          issueCodes: allIssueCodes,
           fileCount: xmlFiles.length,
-          errorCount,
+          issueCount,
           locale,
         });
 
