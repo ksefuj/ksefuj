@@ -115,7 +115,7 @@ Full validation against official Ministry of Finance FA(3) XSD schemas:
 
 ### Semantic Business Rules
 
-**43 comprehensive validation rules** based on the official FA(3) information sheet from the
+**44 comprehensive validation rules** based on the official FA(3) information sheet from the
 Ministry of Finance:
 
 #### Rule Categories
@@ -126,7 +126,7 @@ Ministry of Finance:
    procedures
 4. **FaWiersz Rules** (4 rules) — Tax rate validation, GTU format, decimal precision
 5. **Corrective Invoice Rules** (2 rules) — KSeF number consistency, reverse charge validation
-6. **Payment & Transaction Rules** (7 rules) — Payment dates, bank accounts, currency pairs, NBP
+6. **Payment & Transaction Rules** (8 rules) — Payment dates, bank accounts, currency pairs, NBP
    rate validation
 7. **Format Rules** (2 rules) — Number formatting, separator validation
 8. **Additional Business Logic Rules** (4 rules) — Tax calculations, bank account format, line

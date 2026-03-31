@@ -2,7 +2,7 @@
 
 ## Implementation Status
 
-**Semantic validation**: All 42 semantic validation rules based on the official FA(3) information
+**Semantic validation**: All 44 semantic validation rules based on the official FA(3) information
 sheet from the Ministry of Finance.
 
 ## Source of Truth
