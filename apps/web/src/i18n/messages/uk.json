@@ -124,7 +124,8 @@
       "VALIDATION_TIMEOUT": "Перевищено час очікування валідації",
       "EXECUTION_ERROR": "Несподівана помилка валідації",
       "P12_INVALID": "Неправильна ставка **ПДВ**: `{actual}`. Дозволені значення: {allowedValues}",
-      "CURRENCY_RATE_MISMATCH": "KursWaluty ({actual}) відрізняється від курсу НБП на {date} ({expected})"
+      "CURRENCY_RATE_UNVERIFIABLE": "Неможливо перевірити курс {currency} — курс НБП недоступний для дати {invoiceDate}",
+      "CURRENCY_RATE_MISMATCH": "KursWaluty {currency} ({actual}) відрізняється від курсу НБП на {date} ({expected})"
     },
     "errors": {
       "field": "поле",

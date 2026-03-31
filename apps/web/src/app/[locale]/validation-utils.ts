@@ -40,6 +40,14 @@ export function translateValidationIssue(
       context.date = String(issue.context.metadata.nbpDate);
     }
 
+    if (issue.context.metadata?.currency) {
+      context.currency = String(issue.context.metadata.currency);
+    }
+
+    if (issue.context.metadata?.invoiceDate) {
+      context.invoiceDate = String(issue.context.metadata.invoiceDate);
+    }
+
     // Debug logging in development
     if (process.env.NODE_ENV === "development") {
       console.warn("Translating error code:", errorCode, "with key:", translationKey);
