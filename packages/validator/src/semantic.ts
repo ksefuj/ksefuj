@@ -1438,12 +1438,16 @@ function checkCurrencyRateMismatch(
 
     if (Math.round(kursWaluty * 10000) !== Math.round(rate.mid * 10000)) {
       const nrWiersza = text(wiersz, "string(ns:NrWierszaFa)");
-      const xpath = `/Faktura/Fa/FaWiersz[NrWierszaFa=${nrWiersza}]/KursWaluty`;
+      const xpath = `/Faktura/Fa/FaWiersz[NrWierszaFa='${nrWiersza}']/KursWaluty`;
       const errorDef = ERROR_CODES.CURRENCY_RATE_MISMATCH;
       issues.push({
         code: errorDef.code,
         context: {
-          location: { xpath, element: "KursWaluty" },
+          location: {
+            xpath,
+            element: "KursWaluty",
+            lineNumber: nrWiersza ? parseInt(nrWiersza) : undefined,
+          },
           actualValue: kursWalutyStr,
           expectedValues: [rate.mid.toFixed(4)],
           metadata: {

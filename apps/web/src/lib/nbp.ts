@@ -14,8 +14,9 @@ import type { CurrencyRate } from "@ksefuj/validator";
 const NBP_API_BASE = "https://api.nbp.pl/api/exchangerates/rates/A";
 
 function subtractDays(dateStr: string, days: number): string {
-  const date = new Date(dateStr);
-  date.setDate(date.getDate() - days);
+  // Use UTC-based arithmetic to avoid timezone-dependent off-by-one errors.
+  const date = new Date(`${dateStr}T00:00:00Z`);
+  date.setUTCDate(date.getUTCDate() - days);
   return date.toISOString().slice(0, 10);
 }
 

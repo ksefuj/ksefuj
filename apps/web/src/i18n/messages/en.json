@@ -125,7 +125,7 @@
       "EXECUTION_ERROR": "Unexpected validation error",
       "P12_INVALID": "Invalid **VAT** rate: `{actual}`. Allowed values: {allowedValues}",
       "CURRENCY_RATE_UNVERIFIABLE": "Unable to verify {currency} rate — NBP rate unavailable for {invoiceDate}",
-      "CURRENCY_RATE_MISMATCH": "KursWaluty {currency} ({actual}) differs from the NBP rate on {date} ({expected})"
+      "CURRENCY_RATE_MISMATCH": "`KursWaluty` {currency} ({actual}) differs from the NBP rate on {date} ({expected})"
     },
     "errors": {
       "field": "field",

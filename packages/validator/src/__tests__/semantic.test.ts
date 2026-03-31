@@ -1024,7 +1024,9 @@ describe("Semantic Validation", () => {
       const issue = result.issues.find((i) => i.code.code === "CURRENCY_RATE_MISMATCH");
       expect(issue).toBeDefined();
       expect(issue!.code.severity).toBe("warning");
-      expect(issue!.context.location.xpath).toBe("/Faktura/Fa/FaWiersz[NrWierszaFa=1]/KursWaluty");
+      expect(issue!.context.location.xpath).toBe(
+        "/Faktura/Fa/FaWiersz[NrWierszaFa='1']/KursWaluty",
+      );
       expect(issue!.context.actualValue).toBe("4.29");
       expect(issue!.context.expectedValues).toEqual(["4.2856"]);
     });
