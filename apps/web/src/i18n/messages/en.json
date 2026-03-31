@@ -524,7 +524,7 @@
     },
     "thirdParty": {
       "title": "Third-Party Services",
-      "description": "The site is hosted on Vercel. We use Amplitude Analytics (EU zone — data stays in the European Union) and Vercel Speed Insights. Amplitude automatically captures page views and user interactions (e.g. button clicks), and records anonymized session replays to help us understand how the tool is used. Invoice content is never captured. Vercel Speed Insights collects aggregated performance data. No personal data is ever tracked or transmitted."
+      "description": "The site is hosted on Vercel. We use Amplitude Analytics (EU zone — data stays in the European Union) and Vercel Speed Insights. Amplitude captures page views and the interactions we explicitly instrument (e.g. button clicks) to help us understand how the tool is used. Invoice content is never captured. Vercel Speed Insights collects aggregated performance data. This data is used solely for diagnostics and improvement; we do not use it to identify individuals."
     },
     "noAccounts": {
       "title": "No User Accounts",

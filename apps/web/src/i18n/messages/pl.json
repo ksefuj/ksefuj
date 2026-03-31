@@ -524,7 +524,7 @@
     },
     "thirdParty": {
       "title": "Usługi zewnętrzne",
-      "description": "Strona jest hostowana na platformie Vercel. Korzystamy z Amplitude Analytics (strefa EU — dane pozostają w Unii Europejskiej) oraz Vercel Speed Insights. Amplitude automatycznie rejestruje wyświetlenia stron i interakcje użytkownika (np. kliknięcia przycisków), a także zapisuje zanonimizowane nagrania sesji — pomagają nam one zrozumieć, jak narzędzie jest używane. Treść faktur nigdy nie jest rejestrowana. Vercel Speed Insights zbiera zagregowane dane wydajnościowe. Żadne dane osobowe nie są śledzone ani przesyłane."
+      "description": "Strona jest hostowana na platformie Vercel. Korzystamy z Amplitude Analytics (strefa EU — dane pozostają w Unii Europejskiej) oraz Vercel Speed Insights. Amplitude rejestruje wyświetlenia stron i interakcje, które świadomie instrumentujemy (np. kliknięcia przycisków) — pomagają nam one zrozumieć, jak narzędzie jest używane. Treść faktur nigdy nie jest rejestrowana. Vercel Speed Insights zbiera zagregowane dane wydajnościowe. Dane te służą wyłącznie celom diagnostycznym i ulepszaniu usługi; nie wykorzystujemy ich do identyfikacji konkretnych osób."
     },
     "noAccounts": {
       "title": "Brak kont użytkowników",
