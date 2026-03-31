@@ -650,8 +650,8 @@ The Copywriter should cross-link to these existing pages where contextually appr
 | Offline / emergency modes              | `/faq/tryby-i-awarie`                               |
 | Validation and errors                  | `/faq/walidacja-i-bledy`                            |
 | Access and authorization               | `/faq/dostep-i-uprawnienia`                         |
-| 10,000 PLN threshold                   | `/blog/limit-10000-zl`                              |
-| Common validation errors               | `/blog/najczestsze-bledy-walidacji`                 |
+| 10,000 PLN threshold                   | `/blog/ksef-limit-10000-zl`                         |
+| Common validation errors               | `/blog/najczestsze-bledy-walidacji-fa3`             |
 | All FAQ                                | `/faq`                                              |
 | ksefuj.to validator                    | `/` (homepage)                                      |
 
