@@ -39,10 +39,14 @@ async function fetchNbpRate(currency: string, date: string): Promise<CurrencyRat
     if (exact.status === 404) {
       const start = subtractDays(date, 7);
       const range = await fetch(`${NBP_API_BASE}/${currency}/${start}/${date}/?format=json`);
-      if (!range.ok) {return null;}
+      if (!range.ok) {
+        return null;
+      }
       const data = await range.json();
       const last = data.rates.at(-1);
-      if (!last) {return null;}
+      if (!last) {
+        return null;
+      }
       return {
         currency,
         date: last.effectiveDate,
@@ -71,7 +75,9 @@ export async function getNbpRate(currency: string, date: string): Promise<Curren
   // Check localStorage cache first
   try {
     const cached = localStorage.getItem(key);
-    if (cached) {return JSON.parse(cached) as CurrencyRate;}
+    if (cached) {
+      return JSON.parse(cached) as CurrencyRate;
+    }
   } catch {
     // localStorage may be unavailable (SSR, private browsing)
   }

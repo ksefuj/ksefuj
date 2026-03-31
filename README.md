@@ -144,7 +144,7 @@ Ministry of Finance:
 - Currency inconsistencies (foreign currency needs PLN conversions)
 - Number formatting issues (thousand separators, wrong decimal separator)
 - Tax calculation errors (incorrect VAT amounts, wrong totals)
-- Invalid Polish bank account format (must be 26 characters for IBAN)
+- Invalid Polish bank account format (IBAN must be 28 chars: PL + 26 digits; NRB must be 26 digits)
 - Duplicate invoice line numbers
 - Negative quantities in non-corrective invoices
 

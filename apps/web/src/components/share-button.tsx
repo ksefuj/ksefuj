@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { track } from "@vercel/analytics";
+import * as amplitude from "@amplitude/unified";
 
 interface ShareButtonProps {
   title: string;
@@ -37,7 +37,7 @@ export function ShareButton({ title, locale }: ShareButtonProps) {
         clearTimeout(timerRef.current);
       }
       timerRef.current = setTimeout(() => setCopied(false), 2000);
-      track("content_link_copied", { locale });
+      amplitude.track("content_link_copied", { locale });
     } catch {
       // Clipboard not available
     }
@@ -46,7 +46,7 @@ export function ShareButton({ title, locale }: ShareButtonProps) {
   const handleShare = async () => {
     try {
       await navigator.share({ title, url: window.location.href });
-      track("content_shared", { locale });
+      amplitude.track("content_shared", { locale });
     } catch {
       // User cancelled
     }

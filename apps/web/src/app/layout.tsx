@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Inter, JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
-import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { AmplitudeProvider } from "@/components/amplitude-provider";
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
@@ -69,7 +69,7 @@ export default async function RootLayout({ children, params }: Props) {
     >
       <body className="antialiased min-h-screen bg-[#FAFAF8]">
         {children}
-        <Analytics />
+        <AmplitudeProvider />
         <SpeedInsights />
       </body>
     </html>

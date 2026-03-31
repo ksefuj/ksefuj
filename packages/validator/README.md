@@ -44,8 +44,8 @@ if (!result.valid) {
 
 ### Currency rate validation
 
-Optionally validate that `KursWaluty` matches the official NBP mid-rate. Provide a
-`currencyRates` map — the validator stays pure and network-free; you fetch the rates.
+Optionally validate that `KursWaluty` matches the official NBP mid-rate. Provide a `currencyRates`
+map — the validator stays pure and network-free; you fetch the rates.
 
 ```typescript
 import { validate, type CurrencyRate } from "@ksefuj/validator";

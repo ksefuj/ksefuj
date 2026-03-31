@@ -117,7 +117,7 @@
       "TRANSPORT_MINIMUM_DATA": "Missing required transport data",
       "AMOUNT_NO_SEPARATORS": "Amounts cannot contain thousand separators",
       "TAX_CALCULATION_MISMATCH": "Tax calculation error — check **VAT** calculations",
-      "INVALID_BANK_ACCOUNT_FORMAT": "Polish bank account (`NrRB`) must be **26** characters in **IBAN** format (`PL` + **24** digits)",
+      "INVALID_BANK_ACCOUNT_FORMAT": "Polish bank account (`NrRB`) must be **28** characters in **IBAN** format (`PL` + **26** digits) or **26** digits in NRB format",
       "DUPLICATE_LINE_NUMBERS": "Duplicate invoice line numbers",
       "NEGATIVE_QUANTITY_NOT_ALLOWED": "Negative quantities only allowed in corrective invoices",
       "ENCODING_ERROR": "Character encoding error",
@@ -521,11 +521,11 @@
     },
     "cookies": {
       "title": "Cookies",
-      "description": "ksefuj does not use tracking cookies for advertising. The only cookie that may be set is for remembering your language preference. We use Vercel Analytics which operates without cookies, using anonymized data instead."
+      "description": "ksefuj does not use tracking cookies for advertising. The only cookie that may be set is for remembering your language preference. We use Amplitude Analytics which operates without cookies, using anonymized data instead."
     },
     "thirdParty": {
       "title": "Third-Party Services",
-      "description": "The site is hosted on Vercel. We use Vercel Analytics and Speed Insights to collect aggregated, anonymized usage metrics (page views, basic device information, performance data, and user interactions like button clicks). This data helps us understand how the tool is used and improve performance. No personal data or invoice content is ever tracked or transmitted."
+      "description": "The site is hosted on Vercel. We use Amplitude Analytics (EU zone — data stays in the European Union) and Vercel Speed Insights. Amplitude captures page views and the interactions we explicitly instrument (e.g. button clicks) to help us understand how the tool is used. Invoice content is never captured. Vercel Speed Insights collects aggregated performance data. This data is used solely for diagnostics and improvement; we do not use it to identify individuals."
     },
     "noAccounts": {
       "title": "No User Accounts",

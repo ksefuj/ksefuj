@@ -844,7 +844,7 @@ export const SEMANTIC_ERRORS = {
       severity: "error",
     },
     description:
-      "Polish bank account (NrRB) must be 26 characters for IBAN format (PL + 24 digits)",
+      "Polish bank account (NrRB) must be 28 characters for IBAN format (PL + 26 digits) or 26 digits for NRB format",
     commonCauses: [
       "Incorrect Polish IBAN format",
       "Wrong number of digits in bank account",

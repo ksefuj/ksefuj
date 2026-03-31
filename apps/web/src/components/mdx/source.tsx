@@ -1,6 +1,6 @@
 "use client";
 
-import { track } from "@vercel/analytics";
+import * as amplitude from "@amplitude/unified";
 
 interface SourceProps {
   href: string;
@@ -21,7 +21,7 @@ export function Source({ href, label }: SourceProps) {
         } catch {
           // relative or malformed URL — track without domain
         }
-        track("external_link_clicked", { href, domain, source: true });
+        amplitude.track("external_link_clicked", { href, domain, source: true });
       }}
       className="inline-flex items-center gap-1.5 text-sm text-violet-600 hover:text-violet-700 transition-colors"
     >
