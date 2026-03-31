@@ -2,8 +2,9 @@
  * NBP (National Bank of Poland) exchange rate client.
  *
  * Fetches official mid-rates from the NBP Table A API.
- * Handles weekend/holiday fallback (7-day lookback window)
- * and caches results in localStorage keyed by invoice date.
+ * Groups by currency and fetches a single date range per currency,
+ * then caches in localStorage. The validator selects the correct
+ * rate for each invoice from the returned table.
  *
  * @see https://api.nbp.pl/ for API documentation
  */
@@ -18,80 +19,88 @@ function subtractDays(dateStr: string, days: number): string {
   return date.toISOString().slice(0, 10);
 }
 
-function cacheKey(currency: string, date: string): string {
-  return `nbp:${currency}:${date}`;
+function rangeCacheKey(currency: string, start: string, end: string): string {
+  return `nbp:range:${currency}:${start}:${end}`;
 }
 
-async function fetchNbpRate(currency: string, date: string): Promise<CurrencyRate | null> {
+async function fetchRateRange(
+  currency: string,
+  start: string,
+  end: string,
+): Promise<CurrencyRate[] | null> {
   try {
-    // 1. Try exact date (works on business days)
-    const exact = await fetch(`${NBP_API_BASE}/${currency}/${date}/?format=json`);
-    if (exact.ok) {
-      const data = await exact.json();
-      return {
-        currency,
-        date: data.rates[0].effectiveDate,
-        mid: data.rates[0].mid,
-      };
+    const response = await fetch(`${NBP_API_BASE}/${currency}/${start}/${end}/?format=json`);
+    if (!response.ok) {
+      return null;
     }
-
-    // 2. Fallback: fetch last 7 days up to invoice date, take the most recent published rate
-    if (exact.status === 404) {
-      const start = subtractDays(date, 7);
-      const range = await fetch(`${NBP_API_BASE}/${currency}/${start}/${date}/?format=json`);
-      if (!range.ok) {
-        return null;
-      }
-      const data = await range.json();
-      const last = data.rates.at(-1);
-      if (!last) {
-        return null;
-      }
-      return {
-        currency,
-        date: last.effectiveDate,
-        mid: last.mid,
-      };
-    }
-
-    return null;
+    const data = await response.json();
+    return data.rates.map((r: { effectiveDate: string; mid: number }) => ({
+      currency,
+      date: r.effectiveDate,
+      mid: r.mid,
+    }));
   } catch {
-    // Network error — validation continues without currency check
+    // Network error
     return null;
   }
 }
 
 /**
- * Get the NBP mid-rate for a given currency and invoice date.
- * Results are cached in localStorage keyed by invoice date.
- * Returns null on any network error — validation continues without the currency check.
+ * Fetch NBP Table A mid-rates for a set of (currency, invoice date) pairs.
+ * Groups by currency and issues one range request per unique currency.
+ * Results are cached in localStorage keyed by currency + date range.
  *
- * @param currency - ISO 4217 currency code (e.g. "EUR", "USD")
- * @param date - Invoice date in YYYY-MM-DD format (DataWystawienia)
+ * @param pairs - { currency, date } where date is the invoice P_1 (YYYY-MM-DD)
+ * @returns Record mapping currency → rate array (null if fetch failed)
  */
-export async function getNbpRate(currency: string, date: string): Promise<CurrencyRate | null> {
-  const key = cacheKey(currency, date);
-
-  // Check localStorage cache first
-  try {
-    const cached = localStorage.getItem(key);
-    if (cached) {
-      return JSON.parse(cached) as CurrencyRate;
+export async function fetchCurrencyRateTable(
+  pairs: { currency: string; date: string }[],
+): Promise<Record<string, CurrencyRate[] | null>> {
+  // Group invoice dates by currency, skip PLN
+  const byCurrency = new Map<string, string[]>();
+  for (const { currency, date } of pairs) {
+    if (currency === "PLN") {
+      continue;
     }
-  } catch {
-    // localStorage may be unavailable (SSR, private browsing)
+    if (!byCurrency.has(currency)) {
+      byCurrency.set(currency, []);
+    }
+    byCurrency.get(currency)!.push(date);
   }
 
-  // Art. 31a ustawy o VAT: use the rate from the last business day *before* the invoice date
-  const rate = await fetchNbpRate(currency, subtractDays(date, 1));
+  const table: Record<string, CurrencyRate[] | null> = {};
 
-  if (rate) {
-    try {
-      localStorage.setItem(key, JSON.stringify(rate));
-    } catch {
-      // localStorage may be full or unavailable
-    }
-  }
+  await Promise.all(
+    Array.from(byCurrency.entries()).map(async ([currency, dates]) => {
+      const sorted = [...dates].sort();
+      // Range covers the stale window (10 days) before the earliest invoice
+      // and ends one day before the latest invoice (Art. 31a: previous business day)
+      const rangeStart = subtractDays(sorted[0], 10);
+      const rangeEnd = subtractDays(sorted[sorted.length - 1], 1);
 
-  return rate;
+      const key = rangeCacheKey(currency, rangeStart, rangeEnd);
+      try {
+        const cached = localStorage.getItem(key);
+        if (cached) {
+          table[currency] = JSON.parse(cached) as CurrencyRate[];
+          return;
+        }
+      } catch {
+        // localStorage unavailable
+      }
+
+      const rates = await fetchRateRange(currency, rangeStart, rangeEnd);
+      table[currency] = rates;
+
+      if (rates) {
+        try {
+          localStorage.setItem(key, JSON.stringify(rates));
+        } catch {
+          // localStorage full or unavailable
+        }
+      }
+    }),
+  );
+
+  return table;
 }

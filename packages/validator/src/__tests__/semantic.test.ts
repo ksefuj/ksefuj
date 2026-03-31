@@ -25,7 +25,7 @@ function wrapInFaktura(partialXml: string): string {
 }
 
 // Helper to validate a document and return issues
-function validateXml(xml: string, currencyRates?: Record<string, CurrencyRate>) {
+function validateXml(xml: string, currencyRates?: Record<string, CurrencyRate[] | null>) {
   const doc = XmlDocument.fromString(xml);
   try {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -970,6 +970,7 @@ describe("Semantic Validation", () => {
   });
 
   describe("Currency Rate Validation", () => {
+    // KursWaluty belongs in FaWiersz per FA(3) §10.2, not directly in Fa
     const foreignCurrencyInvoice = (kursWaluty: string) =>
       wrapInFaktura(`
         <Podmiot1>
@@ -987,7 +988,6 @@ describe("Semantic Validation", () => {
           <P_1>2026-09-15</P_1>
           <P_2>FV/001/09/2026</P_2>
           <P_15>123.00</P_15>
-          <KursWaluty>${kursWaluty}</KursWaluty>
           <Adnotacje>
             <P_16>2</P_16><P_17>2</P_17><P_18>2</P_18><P_18A>2</P_18A>
             <Zwolnienie><P_19N>1</P_19N></Zwolnienie>
@@ -996,37 +996,48 @@ describe("Semantic Validation", () => {
             <PMarzy><P_PMarzyN>1</P_PMarzyN></PMarzy>
           </Adnotacje>
           <RodzajFaktury>VAT</RodzajFaktury>
+          <FaWiersz>
+            <NrWierszaFa>1</NrWierszaFa>
+            <P_7>Test service</P_7>
+            <P_8A>szt</P_8A>
+            <P_8B>1</P_8B>
+            <P_9A>123.00</P_9A>
+            <P_11>123.00</P_11>
+            <P_12>np I</P_12>
+            <KursWaluty>${kursWaluty}</KursWaluty>
+          </FaWiersz>
         </Fa>
       `);
 
+    // Invoice date is 2026-09-15 (Monday); correct NBP rate is from 2026-09-12 (Friday)
     const eurRate: CurrencyRate = { currency: "EUR", date: "2026-09-12", mid: 4.2856 };
 
     it("should not emit warning when KursWaluty matches NBP rate exactly", () => {
       const xml = foreignCurrencyInvoice("4.2856");
-      const result = validateXml(xml, { EUR: eurRate });
+      const result = validateXml(xml, { EUR: [eurRate] });
       expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_MISMATCH")).toBe(false);
     });
 
     it("should emit warning when KursWaluty differs from NBP rate", () => {
       const xml = foreignCurrencyInvoice("4.29");
-      const result = validateXml(xml, { EUR: eurRate });
+      const result = validateXml(xml, { EUR: [eurRate] });
       const issue = result.issues.find((i) => i.code.code === "CURRENCY_RATE_MISMATCH");
       expect(issue).toBeDefined();
       expect(issue!.code.severity).toBe("warning");
-      expect(issue!.context.location.xpath).toBe("/Faktura/Fa/KursWaluty");
+      expect(issue!.context.location.xpath).toBe("/Faktura/Fa/FaWiersz[NrWierszaFa=1]/KursWaluty");
       expect(issue!.context.actualValue).toBe("4.29");
       expect(issue!.context.expectedValues).toEqual(["4.2856"]);
     });
 
     it("should emit warning when KursWaluty differs at 4th decimal place", () => {
       const xml = foreignCurrencyInvoice("4.2857");
-      const result = validateXml(xml, { EUR: eurRate });
+      const result = validateXml(xml, { EUR: [eurRate] });
       expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_MISMATCH")).toBe(true);
     });
 
     it("should include correct fix suggestion with NBP rate", () => {
       const xml = foreignCurrencyInvoice("4.30");
-      const result = validateXml(xml, { EUR: eurRate });
+      const result = validateXml(xml, { EUR: [eurRate] });
       const issue = result.issues.find((i) => i.code.code === "CURRENCY_RATE_MISMATCH");
       expect(issue).toBeDefined();
       expect(issue!.fixSuggestions).toHaveLength(1);
@@ -1040,13 +1051,58 @@ describe("Semantic Validation", () => {
       const xml = foreignCurrencyInvoice("4.30");
       const result = validateXml(xml);
       expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_MISMATCH")).toBe(false);
+      expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_UNVERIFIABLE")).toBe(false);
     });
 
-    it("should skip when currency is not found in currencyRates", () => {
+    it("should skip when currency key is absent from currencyRates", () => {
       const xml = foreignCurrencyInvoice("4.30");
       const result = validateXml(xml, {
-        USD: { currency: "USD", date: "2026-09-12", mid: 3.7257 },
+        USD: [{ currency: "USD", date: "2026-09-12", mid: 3.7257 }],
       });
+      expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_MISMATCH")).toBe(false);
+      expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_UNVERIFIABLE")).toBe(false);
+    });
+
+    it("should emit CURRENCY_RATE_UNVERIFIABLE when rate table is null (fetch failed)", () => {
+      const xml = foreignCurrencyInvoice("4.30");
+      const result = validateXml(xml, { EUR: null });
+      const issue = result.issues.find((i) => i.code.code === "CURRENCY_RATE_UNVERIFIABLE");
+      expect(issue).toBeDefined();
+      expect(issue!.code.severity).toBe("warning");
+      expect(issue!.context.metadata?.currency).toBe("EUR");
+    });
+
+    it("should emit CURRENCY_RATE_UNVERIFIABLE when rate table is empty", () => {
+      const xml = foreignCurrencyInvoice("4.30");
+      const result = validateXml(xml, { EUR: [] });
+      expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_UNVERIFIABLE")).toBe(true);
+    });
+
+    it("should emit CURRENCY_RATE_UNVERIFIABLE when no rate is within the 10-day window", () => {
+      const xml = foreignCurrencyInvoice("4.30");
+      // Rate is 11 days before invoice date 2026-09-15 → outside stale window
+      const staleRate: CurrencyRate = { currency: "EUR", date: "2026-09-04", mid: 4.2856 };
+      const result = validateXml(xml, { EUR: [staleRate] });
+      expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_UNVERIFIABLE")).toBe(true);
+      expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_MISMATCH")).toBe(false);
+    });
+
+    it("should emit CURRENCY_RATE_UNVERIFIABLE when rate date equals invoice date", () => {
+      const xml = foreignCurrencyInvoice("4.2856");
+      // Same-day rate is invalid — must be strictly before P_1
+      const sameDayRate: CurrencyRate = { currency: "EUR", date: "2026-09-15", mid: 4.2856 };
+      const result = validateXml(xml, { EUR: [sameDayRate] });
+      expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_UNVERIFIABLE")).toBe(true);
+    });
+
+    it("should pick the most recent valid rate when multiple rates are in the table", () => {
+      const xml = foreignCurrencyInvoice("4.2856");
+      const rates: CurrencyRate[] = [
+        { currency: "EUR", date: "2026-09-10", mid: 4.3 },
+        { currency: "EUR", date: "2026-09-12", mid: 4.2856 }, // correct one
+        { currency: "EUR", date: "2026-09-08", mid: 4.25 },
+      ];
+      const result = validateXml(xml, { EUR: rates });
       expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_MISMATCH")).toBe(false);
     });
 
@@ -1077,7 +1133,7 @@ describe("Semantic Validation", () => {
           <RodzajFaktury>VAT</RodzajFaktury>
         </Fa>
       `);
-      const result = validateXml(xml, { EUR: eurRate });
+      const result = validateXml(xml, { EUR: [eurRate] });
       expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_MISMATCH")).toBe(false);
     });
 
@@ -1085,14 +1141,14 @@ describe("Semantic Validation", () => {
       // 0.1 + 0.2 !== 0.3 in floating point, but 1000 + 2000 === 3000 in integer
       const xml = foreignCurrencyInvoice("4.2856");
       const rate: CurrencyRate = { currency: "EUR", date: "2026-09-12", mid: 4.2856 };
-      const result = validateXml(xml, { EUR: rate });
+      const result = validateXml(xml, { EUR: [rate] });
       expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_MISMATCH")).toBe(false);
     });
 
     it("should show NBP publication date in message when it differs from invoice date", () => {
       const xml = foreignCurrencyInvoice("4.30");
       // NBP date is Friday 2026-09-12, invoice date is Monday 2026-09-15
-      const result = validateXml(xml, { EUR: eurRate });
+      const result = validateXml(xml, { EUR: [eurRate] });
       const issue = result.issues.find((i) => i.code.code === "CURRENCY_RATE_MISMATCH");
       expect(issue).toBeDefined();
       expect(issue!.message).toContain("2026-09-12");
@@ -1147,6 +1203,7 @@ describe("Semantic Validation", () => {
         "DUPLICATE_LINE_NUMBERS",
         "NEGATIVE_QUANTITY_NOT_ALLOWED",
         "CURRENCY_RATE_MISMATCH",
+        "CURRENCY_RATE_UNVERIFIABLE",
       ]);
 
       // Check that all error codes are defined

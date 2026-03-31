@@ -106,12 +106,14 @@ export interface ValidateOptions {
   readonly maxIssues?: number;
 
   /**
-   * Optional map of currency → NBP rate for the invoice date.
-   * When provided, enables KursWaluty accuracy validation.
+   * Optional map of currency → NBP rate table for KursWaluty validation.
    * Key is ISO 4217 code ("EUR", "USD", …).
-   * Omit to skip currency rate checks entirely.
+   * - Key absent: currency was not looked up — check is skipped silently.
+   * - null: lookup was attempted but failed (rate-limited, network error) → CURRENCY_RATE_UNVERIFIABLE.
+   * - CurrencyRate[]: full rate table; validator picks the correct date based on P_1.
+   * Omit entirely to skip all currency rate checks.
    */
-  readonly currencyRates?: Record<string, CurrencyRate>;
+  readonly currencyRates?: Record<string, CurrencyRate[] | null>;
 }
 
 // --- Semantic Rule Definition ---

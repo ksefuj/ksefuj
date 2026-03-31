@@ -144,7 +144,7 @@ class ValidationOrchestrator {
     private readonly enableSemantic: boolean,
     private readonly collectAssertions: boolean,
     private readonly maxIssues: number,
-    private readonly currencyRates?: Record<string, CurrencyRate>,
+    private readonly currencyRates?: Record<string, CurrencyRate[] | null>,
   ) {
     this.startTime = Date.now();
   }

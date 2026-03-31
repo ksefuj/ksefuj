@@ -1362,24 +1362,64 @@ function checkTransportMinimumData(doc: XmlDocument): ValidationIssue[] {
   return issues;
 }
 
+// Maximum days between invoice P_1 and a valid NBP rate date (accounts for long holiday weekends)
+const STALE_WINDOW_MS = 10 * 24 * 60 * 60 * 1000;
+
+function findRateForInvoiceDate(rates: CurrencyRate[], invoiceDate: string): CurrencyRate | null {
+  const invoiceTime = new Date(invoiceDate).getTime();
+  let best: CurrencyRate | null = null;
+  for (const rate of rates) {
+    if (rate.date >= invoiceDate) {
+      continue;
+    } // must be strictly before invoice date
+    const rateTime = new Date(rate.date).getTime();
+    if (invoiceTime - rateTime > STALE_WINDOW_MS) {
+      continue;
+    } // too old
+    if (!best || rate.date > best.date) {
+      best = rate;
+    }
+  }
+  return best;
+}
+
 function checkCurrencyRateMismatch(
   doc: XmlDocument,
-  currencyRates: Record<string, CurrencyRate>,
+  currencyRates: Record<string, CurrencyRate[] | null>,
 ): ValidationIssue[] {
-  // Rule: CURRENCY_RATE_MISMATCH - KursWaluty must match NBP mid-rate (Art. 31a ustawy o VAT)
+  // Rule: CURRENCY_RATE_MISMATCH / CURRENCY_RATE_UNVERIFIABLE (Art. 31a ustawy o VAT)
   const issues: ValidationIssue[] = [];
 
-  // Read KodWaluty (the invoice currency)
   const kodWaluty = text(doc, "string(//ns:Fa/ns:KodWaluty)");
-
-  // Skip if no foreign currency or currency is PLN
   if (!kodWaluty || kodWaluty === "PLN") {
     return issues;
   }
 
-  // Look up the rate for the invoice currency
-  const rate = currencyRates[kodWaluty];
-  if (!rate) {
+  // Key absent = currency was never looked up — skip silently
+  if (!Object.prototype.hasOwnProperty.call(currencyRates, kodWaluty)) {
+    return issues;
+  }
+
+  const rateData = currencyRates[kodWaluty];
+  const p1 = text(doc, "string(//ns:Fa/ns:P_1)");
+
+  // Find the correct rate from the table based on invoice date
+  const rate =
+    rateData !== null && rateData.length > 0 && p1 ? findRateForInvoiceDate(rateData, p1) : null;
+
+  // null table, empty array, or no rate within window → unverifiable
+  if (rateData === null || !rate) {
+    const errorDef = ERROR_CODES.CURRENCY_RATE_UNVERIFIABLE;
+    issues.push({
+      code: errorDef.code,
+      context: {
+        location: { xpath: "/Faktura/Fa/KodWaluty", element: "KodWaluty" },
+        actualValue: kodWaluty,
+        metadata: { currency: kodWaluty, invoiceDate: p1 ?? undefined },
+      },
+      message: `Unable to verify KursWaluty — NBP rate for ${kodWaluty} is unavailable for invoice date ${p1}.`,
+      fixSuggestions: [],
+    });
     return issues;
   }
 
@@ -1396,7 +1436,6 @@ function checkCurrencyRateMismatch(
       continue;
     }
 
-    // Compare using integer arithmetic to avoid floating-point issues
     if (Math.round(kursWaluty * 10000) !== Math.round(rate.mid * 10000)) {
       const nrWiersza = text(wiersz, "string(ns:NrWierszaFa)");
       const xpath = `/Faktura/Fa/FaWiersz[NrWierszaFa=${nrWiersza}]/KursWaluty`;
@@ -1404,10 +1443,7 @@ function checkCurrencyRateMismatch(
       issues.push({
         code: errorDef.code,
         context: {
-          location: {
-            xpath,
-            element: "KursWaluty",
-          },
+          location: { xpath, element: "KursWaluty" },
           actualValue: kursWalutyStr,
           expectedValues: [rate.mid.toFixed(4)],
           metadata: {
@@ -2164,13 +2200,13 @@ export const semanticRules: SemanticRule[] = [
  *
  * @param doc - The XML document to validate
  * @param collectAssertions - Whether to collect positive assertions about what passed validation
- * @param currencyRates - Optional map of currency → NBP rate for KursWaluty accuracy validation
+ * @param currencyRates - Optional map of currency → NBP rate table for KursWaluty accuracy validation
  * @returns Object containing validation issues and assertions
  */
 export function checkSemantics(
   doc: XmlDocument,
   collectAssertions: boolean = false,
-  currencyRates?: Record<string, CurrencyRate>,
+  currencyRates?: Record<string, CurrencyRate[] | null>,
 ): {
   issues: ValidationIssue[];
   assertions: ValidationAssertion[];
@@ -2205,7 +2241,7 @@ export function checkSemantics(
         domain: "semantic",
         aspect: "business_logic",
         description: "Check KursWaluty matches NBP mid-rate",
-        elements: ["CURRENCY_RATE_MISMATCH"],
+        elements: ["CURRENCY_RATE_MISMATCH", "CURRENCY_RATE_UNVERIFIABLE"],
         confidence: 1.0,
       });
     }

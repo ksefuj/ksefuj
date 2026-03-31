@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import type { CurrencyRate, ValidationResult } from "@ksefuj/validator";
 import { Badge } from "@/components/badge";
 import { ValidationIssuesList } from "@/components/validation-issues-list";
-import { getNbpRate } from "@/lib/nbp";
+import { fetchCurrencyRateTable } from "@/lib/nbp";
 import { cn } from "@/lib/utils";
 
 interface ValidatorProps {
@@ -135,6 +135,40 @@ export function Validator({ locale }: ValidatorProps) {
         // Dynamic import to avoid SSR issues
         const { validate } = await import("@ksefuj/validator/validate");
 
+        // Pre-scan: read all files and collect (currency, date) pairs for batch NBP fetch
+        const ns = "http://crd.gov.pl/wzor/2025/06/25/13775/";
+        const fileContents = new Map<number, string>();
+        const currencyDatePairs: { currency: string; date: string }[] = [];
+
+        await Promise.all(
+          xmlFiles.map(async (file, i) => {
+            try {
+              const content = await file.text();
+              fileContents.set(i, content);
+              const xmlDoc = new DOMParser().parseFromString(content, "application/xml");
+              const kodWaluty =
+                xmlDoc.getElementsByTagNameNS(ns, "KodWaluty")[0]?.textContent ?? null;
+              const dataWystawienia =
+                xmlDoc.getElementsByTagNameNS(ns, "P_1")[0]?.textContent ?? null;
+              if (kodWaluty && kodWaluty !== "PLN" && dataWystawienia) {
+                currencyDatePairs.push({ currency: kodWaluty, date: dataWystawienia });
+              }
+            } catch {
+              // Non-fatal — file will be processed without currency rate check
+            }
+          }),
+        );
+
+        // Fetch all needed rates in one range request per currency
+        let currencyRateTable: Record<string, CurrencyRate[] | null> = {};
+        if (currencyDatePairs.length > 0) {
+          try {
+            currencyRateTable = await fetchCurrencyRateTable(currencyDatePairs);
+          } catch {
+            // Non-fatal — validation continues without currency rate checks
+          }
+        }
+
         const results: FileValidationResult[] = Array(xmlFiles.length).fill(undefined);
         let nextIndex = 0;
 
@@ -150,29 +184,12 @@ export function Validator({ locale }: ValidatorProps) {
 
             let fileResult: FileValidationResult;
             try {
-              const content = await file.text();
+              const content = fileContents.get(index) ?? (await file.text());
 
-              // Extract currency and date for NBP rate lookup
-              const currencyRates: Record<string, CurrencyRate> = {};
-              try {
-                const parser = new DOMParser();
-                const xmlDoc = parser.parseFromString(content, "application/xml");
-                const ns = "http://crd.gov.pl/wzor/2025/06/25/13775/";
-                const kodWaluty =
-                  xmlDoc.getElementsByTagNameNS(ns, "KodWaluty")[0]?.textContent ?? null;
-                const dataWystawienia =
-                  xmlDoc.getElementsByTagNameNS(ns, "P_1")[0]?.textContent ?? null;
-                if (kodWaluty && kodWaluty !== "PLN" && dataWystawienia) {
-                  const rate = await getNbpRate(kodWaluty, dataWystawienia);
-                  if (rate) {
-                    currencyRates[kodWaluty] = rate;
-                  }
-                }
-              } catch {
-                // NBP lookup failure is non-fatal — validation continues without currency check
-              }
-
-              const result = await validate(content, { maxIssues: 100, currencyRates });
+              const result = await validate(content, {
+                maxIssues: 100,
+                currencyRates: currencyRateTable,
+              });
               fileResult = { ...newFiles[index], result, status: "completed" as const };
             } catch (error) {
               console.error(`Validation error for ${file.name}:`, error);

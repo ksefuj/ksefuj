@@ -785,6 +785,23 @@ export const SEMANTIC_ERRORS = {
     fixTemplates: [],
   },
 
+  CURRENCY_RATE_UNVERIFIABLE: {
+    code: {
+      domain: "semantic",
+      category: "business_logic",
+      code: "CURRENCY_RATE_UNVERIFIABLE",
+      severity: "warning",
+    },
+    description:
+      "KursWaluty cannot be verified — NBP rate unavailable or outside the valid date window (Art. 31a ustawy o VAT)",
+    commonCauses: [
+      "NBP API unavailable or rate-limited during validation",
+      "Rate data provided is from a date too far from the invoice date",
+      "Network error during rate lookup",
+    ],
+    fixTemplates: [],
+  },
+
   CURRENCY_RATE_MISMATCH: {
     code: {
       domain: "semantic",
