@@ -117,7 +117,7 @@
       "TRANSPORT_MINIMUM_DATA": "Missing required transport data",
       "AMOUNT_NO_SEPARATORS": "Amounts cannot contain thousand separators",
       "TAX_CALCULATION_MISMATCH": "Tax calculation error — check **VAT** calculations",
-      "INVALID_BANK_ACCOUNT_FORMAT": "Polish bank account (`NrRB`) must be **26** characters in **IBAN** format (`PL` + **24** digits)",
+      "INVALID_BANK_ACCOUNT_FORMAT": "Polish bank account (`NrRB`) must be **28** characters in **IBAN** format (`PL` + **26** digits) or **26** digits in NRB format",
       "DUPLICATE_LINE_NUMBERS": "Duplicate invoice line numbers",
       "NEGATIVE_QUANTITY_NOT_ALLOWED": "Negative quantities only allowed in corrective invoices",
       "ENCODING_ERROR": "Character encoding error",

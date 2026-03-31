@@ -1695,15 +1695,18 @@ function checkTaxCalculations(doc: XmlDocument): ValidationIssue[] {
 }
 
 function checkPolishBankAccountFormat(doc: XmlDocument): ValidationIssue[] {
-  // Rule 40: INVALID_BANK_ACCOUNT_FORMAT - Polish IBAN must be 26 characters
+  // Rule 40: INVALID_BANK_ACCOUNT_FORMAT - Polish IBAN (PL + 26 digits = 28 chars) or NRB (26 digits)
   const issues: ValidationIssue[] = [];
   const nrRB = text(doc, "string(//ns:Fa/ns:Platnosc/ns:RachunekBankowy/ns:NrRB)");
 
   if (nrRB) {
-    // Check if it looks like a Polish account (starts with PL or is all digits)
-    const isPolishAccount = nrRB.startsWith("PL") || /^\d+$/.test(nrRB);
+    const startsWithPL = nrRB.startsWith("PL");
+    const isAllDigits = /^\d+$/.test(nrRB);
+    // PL-prefixed IBAN must be PL + 26 digits = 28 chars; bare NRB must be 26 digits
+    const isInvalidLength =
+      (startsWithPL && nrRB.length !== 28) || (isAllDigits && nrRB.length !== 26);
 
-    if (isPolishAccount && nrRB.length !== 26) {
+    if (isInvalidLength) {
       const errorDef = ERROR_CODES.INVALID_BANK_ACCOUNT_FORMAT;
       issues.push({
         code: errorDef.code,

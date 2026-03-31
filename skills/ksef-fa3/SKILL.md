@@ -704,7 +704,7 @@ GTU is a **text value** in one element: `<GTU>GTU_12</GTU>`
   </TerminPlatnosci>
   <FormaPlatnosci>6</FormaPlatnosci>  <!-- 6=bank transfer -->
   <RachunekBankowy>
-    <NrRB>PL49...</NrRB>              <!-- IBAN without spaces; Polish IBAN = 26 chars (rule R40) -->
+    <NrRB>PL49...</NrRB>              <!-- IBAN without spaces; Polish IBAN = 28 chars (PL + 26 digits, rule R40) -->
     <SWIFT>BREXPLPWMBK</SWIFT>        <!-- optional -->
     <NazwaBanku>mBank S.A.</NazwaBanku>  <!-- NazwaBanku not NazwaBank -->
   </RachunekBankowy>
@@ -798,7 +798,7 @@ a compact reference — always consult `packages/validator/src/semantic.ts` for 
 
 | # | Rule ID | Description |
 |---|---|---|
-| R40 | INVALID_BANK_ACCOUNT_FORMAT | Polish IBAN must be exactly 26 characters |
+| R40 | INVALID_BANK_ACCOUNT_FORMAT | Polish IBAN must be 28 chars (PL + 26 digits); bare NRB must be 26 digits |
 | R41 | DUPLICATE_LINE_NUMBERS | NrWierszaFa must be unique (except in corrective invoices) |
 | R42 | NEGATIVE_QUANTITY_NOT_ALLOWED | Negative P_8B only valid in corrective invoice types |
 

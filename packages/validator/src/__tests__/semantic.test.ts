@@ -735,6 +735,66 @@ describe("Semantic Validation", () => {
     });
   });
 
+  describe("Group 8: Additional Business Logic Rules", () => {
+    const withBankAccount = (nrRB: string) =>
+      wrapInFaktura(`
+        <Podmiot1>
+          <DaneIdentyfikacyjne><NIP>1234567890</NIP><Nazwa>Test</Nazwa></DaneIdentyfikacyjne>
+          <Adres><KodKraju>PL</KodKraju><AdresL1>Test</AdresL1></Adres>
+        </Podmiot1>
+        <Podmiot2>
+          <DaneIdentyfikacyjne><NIP>9876543210</NIP><Nazwa>Test</Nazwa></DaneIdentyfikacyjne>
+          <Adres><KodKraju>PL</KodKraju><AdresL1>Test</AdresL1></Adres>
+          <JST>2</JST><GV>2</GV>
+        </Podmiot2>
+        <Fa>
+          <KodWaluty>PLN</KodWaluty>
+          <P_1>2026-09-15</P_1>
+          <P_2>FV/001/09/2026</P_2>
+          <P_15>123.00</P_15>
+          <Adnotacje>
+            <P_16>2</P_16><P_17>2</P_17><P_18>2</P_18><P_18A>2</P_18A>
+            <Zwolnienie><P_19N>1</P_19N></Zwolnienie>
+            <NoweSrodkiTransportu><P_22N>1</P_22N></NoweSrodkiTransportu>
+            <P_23>2</P_23>
+            <PMarzy><P_PMarzyN>1</P_PMarzyN></PMarzy>
+          </Adnotacje>
+          <RodzajFaktury>VAT</RodzajFaktury>
+          <Platnosc>
+            <FormaPlatnosci>6</FormaPlatnosci>
+            <RachunekBankowy>
+              <NrRB>${nrRB}</NrRB>
+              <NazwaBanku>Test Bank</NazwaBanku>
+            </RachunekBankowy>
+          </Platnosc>
+        </Fa>
+      `);
+
+    it("should accept valid Polish IBAN (PL + 26 digits = 28 chars)", () => {
+      // PL49114020040000311207405865 — real Polish IBAN, 28 chars
+      const result = validateXml(withBankAccount("PL49114020040000311207405865"));
+      expect(result.issues.some((i) => i.code.code === "INVALID_BANK_ACCOUNT_FORMAT")).toBe(false);
+    });
+
+    it("should accept valid Polish NRB without prefix (26 digits)", () => {
+      // 49114020040000311207405865 — NRB without PL prefix, 26 digits
+      const result = validateXml(withBankAccount("49114020040000311207405865"));
+      expect(result.issues.some((i) => i.code.code === "INVALID_BANK_ACCOUNT_FORMAT")).toBe(false);
+    });
+
+    it("should reject PL-prefixed account with wrong length (not 28 chars)", () => {
+      // PL + 24 digits = 26 chars — wrong, IBAN must be PL + 26 digits = 28 total
+      const result = validateXml(withBankAccount("PL491140200400003112074058"));
+      expect(result.issues.some((i) => i.code.code === "INVALID_BANK_ACCOUNT_FORMAT")).toBe(true);
+    });
+
+    it("should reject all-digit NRB with wrong length (not 26 digits)", () => {
+      // 24 digits — wrong, NRB must be 26 digits
+      const result = validateXml(withBankAccount("491140200400003112074058"));
+      expect(result.issues.some((i) => i.code.code === "INVALID_BANK_ACCOUNT_FORMAT")).toBe(true);
+    });
+  });
+
   describe("Group 7: Format Rules", () => {
     it("should detect thousand separators in amount fields", () => {
       const xml = wrapInFaktura(`

@@ -117,7 +117,7 @@
       "TRANSPORT_MINIMUM_DATA": "Brak wymaganych danych transportu",
       "AMOUNT_NO_SEPARATORS": "Kwoty nie mogą zawierać separatorów tysięcy",
       "TAX_CALCULATION_MISMATCH": "Błąd kalkulacji podatku — sprawdź obliczenia **VAT**",
-      "INVALID_BANK_ACCOUNT_FORMAT": "Polski rachunek bankowy (`NrRB`) musi mieć **26** znaków w formacie **IBAN** (`PL` + **24** cyfry)",
+      "INVALID_BANK_ACCOUNT_FORMAT": "Polski rachunek bankowy (`NrRB`) musi mieć **28** znaków w formacie **IBAN** (`PL` + **26** cyfr) lub **26** cyfr w formacie NRB",
       "DUPLICATE_LINE_NUMBERS": "Zduplikowane numery wierszy faktury",
       "NEGATIVE_QUANTITY_NOT_ALLOWED": "Ujemne ilości dozwolone tylko w fakturach korygujących",
       "ENCODING_ERROR": "Błąd kodowania znaków",
