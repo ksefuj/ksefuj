@@ -13,11 +13,11 @@ KSeF FA(3) XML validator with full XSD schema validation and semantic business r
 ## Installation
 
 ```bash
-npm install @ksefuj/validator
+npm install @ksefuj/validator@0.3.0
 # or
-pnpm add @ksefuj/validator
+pnpm add @ksefuj/validator@0.3.0
 # or
-yarn add @ksefuj/validator
+yarn add @ksefuj/validator@0.3.0
 ```
 
 ## Usage
@@ -41,6 +41,38 @@ if (!result.valid) {
   }
 }
 ```
+
+### Currency rate validation
+
+Optionally validate that `KursWaluty` matches the official NBP mid-rate (Art. 31a VAT Act). Pass a
+rate table per currency — the validator picks the correct date based on the invoice's `P_1`.
+
+```typescript
+import { validate, type CurrencyRate } from "@ksefuj/validator";
+
+// Pass an array of rates for each currency (e.g. fetched from the NBP range API).
+// The validator selects the rate from the last business day before P_1 automatically.
+const currencyRates: Record<string, CurrencyRate[] | null> = {
+  EUR: [
+    { currency: "EUR", date: "2026-03-28", mid: 4.21 },
+    { currency: "EUR", date: "2026-03-29", mid: 4.2856 }, // picked for a 2026-03-30 invoice
+  ],
+  USD: null, // looked up but unavailable → emits CURRENCY_RATE_UNVERIFIABLE
+};
+
+const result = await validate(xmlString, { currencyRates });
+// → CURRENCY_RATE_MISMATCH  if KursWaluty ≠ the selected NBP rate
+// → CURRENCY_RATE_UNVERIFIABLE  if the rate table is null or has no rate within 10 days of P_1
+```
+
+| `currencyRates[currency]` | behaviour                                                                 |
+| ------------------------- | ------------------------------------------------------------------------- |
+| key absent                | skipped silently — currency was never looked up                           |
+| `null`                    | `CURRENCY_RATE_UNVERIFIABLE` — lookup was attempted but failed            |
+| `CurrencyRate[]`          | validator picks most recent rate strictly before `P_1` and within 10 days |
+
+If `currencyRates` is omitted entirely, all currency checks are skipped (backwards-compatible with
+`0.2.0`).
 
 ## CLI Usage
 
@@ -106,7 +138,7 @@ Full compliance with official Ministry of Finance FA(3) schemas using libxml2-wa
 
 ### 2. Semantic Business Rules
 
-**42 comprehensive validation rules** based on the official FA(3) information sheet from the
+**44 comprehensive validation rules** based on the official FA(3) information sheet from the
 Ministry of Finance.
 
 #### Rule Categories
@@ -117,7 +149,8 @@ Ministry of Finance.
    procedures
 4. **FaWiersz Rules** (4 rules) — Tax rate validation, GTU format, decimal precision
 5. **Corrective Invoice Rules** (2 rules) — KSeF number consistency, reverse charge validation
-6. **Payment & Transaction Rules** (6 rules) — Payment dates, bank accounts, currency pairs
+6. **Payment & Transaction Rules** (8 rules) — Payment dates, bank accounts, currency pairs, NBP
+   rate validation
 7. **Format Rules** (2 rules) — Number formatting, separator validation
 8. **Additional Business Logic Rules** (4 rules) — Tax calculations, bank account format, line
    number uniqueness, negative quantities

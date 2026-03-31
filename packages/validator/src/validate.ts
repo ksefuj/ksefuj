@@ -10,6 +10,7 @@ import { checkSemantics } from "./semantic.js";
 import { validateXsd } from "./xsd.js";
 import { ERROR_CODES } from "./error-codes.js";
 import type {
+  CurrencyRate,
   XmlDocument as IXmlDocument,
   ValidateOptions,
   ValidationAssertion,
@@ -29,7 +30,7 @@ async function getLibxml2Module() {
   return libxml2Module;
 }
 
-const VALIDATOR_VERSION = "0.2.0";
+const VALIDATOR_VERSION = "0.3.0";
 const SCHEMA_VERSION = "FA(3) 2025-06-25";
 
 // Environment detection utility
@@ -143,6 +144,7 @@ class ValidationOrchestrator {
     private readonly enableSemantic: boolean,
     private readonly collectAssertions: boolean,
     private readonly maxIssues: number,
+    private readonly currencyRates?: Record<string, CurrencyRate[] | null>,
   ) {
     this.startTime = Date.now();
   }
@@ -205,6 +207,7 @@ class ValidationOrchestrator {
           const semanticResult = checkSemantics(
             xmlDoc as unknown as IXmlDocument,
             this.collectAssertions,
+            this.currencyRates,
           );
           issues.push(...semanticResult.issues);
           assertions.push(...semanticResult.assertions);
@@ -281,6 +284,7 @@ export async function validate(
       enableSemanticValidation = true,
       collectAssertions = false,
       maxIssues = undefined,
+      currencyRates = undefined,
     } = options;
 
     const orchestrator = new ValidationOrchestrator(
@@ -288,6 +292,7 @@ export async function validate(
       enableSemanticValidation,
       collectAssertions,
       maxIssues ?? Number.MAX_SAFE_INTEGER,
+      currencyRates,
     );
 
     return await orchestrator.validate(xml);

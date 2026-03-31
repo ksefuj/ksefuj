@@ -9,7 +9,13 @@
  */
 
 import { ERROR_CODES } from "./error-codes.js";
-import type { SemanticRule, ValidationAssertion, ValidationIssue, XmlDocument } from "./types.js";
+import type {
+  CurrencyRate,
+  SemanticRule,
+  ValidationAssertion,
+  ValidationIssue,
+  XmlDocument,
+} from "./types.js";
 
 // Namespace for FA(3) schema
 const NS = "http://crd.gov.pl/wzor/2025/06/25/13775/";
@@ -1356,6 +1362,117 @@ function checkTransportMinimumData(doc: XmlDocument): ValidationIssue[] {
   return issues;
 }
 
+// Maximum days between invoice P_1 and a valid NBP rate date (accounts for long holiday weekends)
+const STALE_WINDOW_MS = 10 * 24 * 60 * 60 * 1000;
+
+function findRateForInvoiceDate(rates: CurrencyRate[], invoiceDate: string): CurrencyRate | null {
+  const invoiceTime = new Date(invoiceDate).getTime();
+  let best: CurrencyRate | null = null;
+  for (const rate of rates) {
+    if (rate.date >= invoiceDate) {
+      continue;
+    } // must be strictly before invoice date
+    const rateTime = new Date(rate.date).getTime();
+    if (invoiceTime - rateTime > STALE_WINDOW_MS) {
+      continue;
+    } // too old
+    if (!best || rate.date > best.date) {
+      best = rate;
+    }
+  }
+  return best;
+}
+
+function checkCurrencyRateMismatch(
+  doc: XmlDocument,
+  currencyRates: Record<string, CurrencyRate[] | null>,
+): ValidationIssue[] {
+  // Rule: CURRENCY_RATE_MISMATCH / CURRENCY_RATE_UNVERIFIABLE (Art. 31a ustawy o VAT)
+  const issues: ValidationIssue[] = [];
+
+  const kodWaluty = text(doc, "string(//ns:Fa/ns:KodWaluty)");
+  if (!kodWaluty || kodWaluty === "PLN") {
+    return issues;
+  }
+
+  // Key absent = currency was never looked up — skip silently
+  if (!Object.prototype.hasOwnProperty.call(currencyRates, kodWaluty)) {
+    return issues;
+  }
+
+  const rateData = currencyRates[kodWaluty];
+  const p1 = text(doc, "string(//ns:Fa/ns:P_1)");
+
+  // Find the correct rate from the table based on invoice date
+  const rate =
+    rateData !== null && rateData.length > 0 && p1 ? findRateForInvoiceDate(rateData, p1) : null;
+
+  // null table, empty array, or no rate within window → unverifiable
+  if (rateData === null || !rate) {
+    const errorDef = ERROR_CODES.CURRENCY_RATE_UNVERIFIABLE;
+    issues.push({
+      code: errorDef.code,
+      context: {
+        location: { xpath: "/Faktura/Fa/KodWaluty", element: "KodWaluty" },
+        actualValue: kodWaluty,
+        metadata: { currency: kodWaluty, invoiceDate: p1 ?? undefined },
+      },
+      message: `Unable to verify KursWaluty — NBP rate for ${kodWaluty} is unavailable for invoice date ${p1}.`,
+      fixSuggestions: [],
+    });
+    return issues;
+  }
+
+  // KursWaluty lives in FaWiersz (line items) per FA(3) §10.2 — check each line
+  const faWiersze = els(doc, "//ns:Fa/ns:FaWiersz");
+  for (const wiersz of faWiersze) {
+    const kursWalutyStr = text(wiersz, "string(ns:KursWaluty)");
+    if (!kursWalutyStr) {
+      continue;
+    }
+
+    const kursWaluty = parseFloat(kursWalutyStr);
+    if (isNaN(kursWaluty)) {
+      continue;
+    }
+
+    if (Math.round(kursWaluty * 10000) !== Math.round(rate.mid * 10000)) {
+      const nrWiersza = text(wiersz, "string(ns:NrWierszaFa)");
+      const xpath = `/Faktura/Fa/FaWiersz[NrWierszaFa='${nrWiersza}']/KursWaluty`;
+      const errorDef = ERROR_CODES.CURRENCY_RATE_MISMATCH;
+      issues.push({
+        code: errorDef.code,
+        context: {
+          location: {
+            xpath,
+            element: "KursWaluty",
+            lineNumber: nrWiersza ? parseInt(nrWiersza) : undefined,
+          },
+          actualValue: kursWalutyStr,
+          expectedValues: [rate.mid.toFixed(4)],
+          metadata: {
+            currency: kodWaluty,
+            nbpDate: rate.date,
+            nbpMid: rate.mid,
+          },
+        },
+        message: `KursWaluty (${kursWalutyStr}) in line ${nrWiersza} differs from the NBP rate on ${rate.date} (${rate.mid.toFixed(4)}).`,
+        fixSuggestions: [
+          {
+            type: "replace",
+            targetXPath: xpath,
+            content: rate.mid.toFixed(4),
+            description: `Set KursWaluty to ${rate.mid.toFixed(4)} (NBP Table A mid-rate for ${kodWaluty} on ${rate.date}).`,
+            confidence: 0.95,
+          },
+        ],
+      });
+    }
+  }
+
+  return issues;
+}
+
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // Group 7: Format Rules (Constitution §2)
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -2087,11 +2204,13 @@ export const semanticRules: SemanticRule[] = [
  *
  * @param doc - The XML document to validate
  * @param collectAssertions - Whether to collect positive assertions about what passed validation
+ * @param currencyRates - Optional map of currency → NBP rate table for KursWaluty accuracy validation
  * @returns Object containing validation issues and assertions
  */
 export function checkSemantics(
   doc: XmlDocument,
   collectAssertions: boolean = false,
+  currencyRates?: Record<string, CurrencyRate[] | null>,
 ): {
   issues: ValidationIssue[];
   assertions: ValidationAssertion[];
@@ -2111,6 +2230,22 @@ export function checkSemantics(
         aspect: rule.category,
         description: rule.description,
         elements: [rule.id],
+        confidence: 1.0,
+      });
+    }
+  }
+
+  // Execute currency rate check if rates are provided
+  if (currencyRates && Object.keys(currencyRates).length > 0) {
+    const ruleIssues = checkCurrencyRateMismatch(doc, currencyRates);
+    issues.push(...ruleIssues);
+
+    if (collectAssertions && ruleIssues.length === 0) {
+      assertions.push({
+        domain: "semantic",
+        aspect: "business_logic",
+        description: "Check KursWaluty matches NBP mid-rate",
+        elements: ["CURRENCY_RATE_MISMATCH", "CURRENCY_RATE_UNVERIFIABLE"],
         confidence: 1.0,
       });
     }

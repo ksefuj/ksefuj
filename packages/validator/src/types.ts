@@ -86,6 +86,17 @@ export interface ValidationResult {
   readonly metadata: ValidationMetadata;
 }
 
+// --- Currency Rate ---
+
+export interface CurrencyRate {
+  /** ISO 4217 currency code, e.g. "EUR" */
+  readonly currency: string;
+  /** YYYY-MM-DD — the effective NBP publication date of this rate (may differ from invoice date on weekends/holidays) */
+  readonly date: string;
+  /** NBP mid-rate (Table A), 4 decimal places e.g. 3.7257 */
+  readonly mid: number;
+}
+
 // --- Validation Options ---
 
 export interface ValidateOptions {
@@ -93,6 +104,16 @@ export interface ValidateOptions {
   readonly enableSemanticValidation?: boolean;
   readonly collectAssertions?: boolean;
   readonly maxIssues?: number;
+
+  /**
+   * Optional map of currency → NBP rate table for KursWaluty validation.
+   * Key is ISO 4217 code ("EUR", "USD", …).
+   * - Key absent: currency was not looked up — check is skipped silently.
+   * - null: lookup was attempted but failed (rate-limited, network error) → CURRENCY_RATE_UNVERIFIABLE.
+   * - CurrencyRate[]: full rate table; validator picks the correct date based on P_1.
+   * Omit entirely to skip all currency rate checks.
+   */
+  readonly currencyRates?: Record<string, CurrencyRate[] | null>;
 }
 
 // --- Semantic Rule Definition ---

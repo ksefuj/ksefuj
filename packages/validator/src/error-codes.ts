@@ -785,6 +785,40 @@ export const SEMANTIC_ERRORS = {
     fixTemplates: [],
   },
 
+  CURRENCY_RATE_UNVERIFIABLE: {
+    code: {
+      domain: "semantic",
+      category: "business_logic",
+      code: "CURRENCY_RATE_UNVERIFIABLE",
+      severity: "warning",
+    },
+    description:
+      "KursWaluty cannot be verified — NBP rate unavailable or outside the valid date window (Art. 31a ustawy o VAT)",
+    commonCauses: [
+      "NBP API unavailable or rate-limited during validation",
+      "Rate data provided is from a date too far from the invoice date",
+      "Network error during rate lookup",
+    ],
+    fixTemplates: [],
+  },
+
+  CURRENCY_RATE_MISMATCH: {
+    code: {
+      domain: "semantic",
+      category: "business_logic",
+      code: "CURRENCY_RATE_MISMATCH",
+      severity: "warning",
+    },
+    description:
+      "KursWaluty does not match the NBP mid-rate (Art. 31a ustawy o VAT — previous business day's NBP Table A rate)",
+    commonCauses: [
+      "Manually entered exchange rate differs from the official NBP rate",
+      "Rounding error in exchange rate",
+      "Wrong date used for the exchange rate lookup",
+    ],
+    fixTemplates: [],
+  },
+
   // Group 7: Format Rules — Constitution §2
   AMOUNT_NO_SEPARATORS: {
     code: {
