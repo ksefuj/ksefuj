@@ -179,11 +179,23 @@ export function Validator({ locale }: ValidatorProps) {
 
         // Track validation completed
         const errorCount = results.filter((r) => !r.result?.valid || r.status === "error").length;
+        const warningCount = results.reduce(
+          (sum, r) =>
+            sum + (r.result?.issues.filter((i) => i.code.severity === "warning").length ?? 0),
+          0,
+        );
         amplitude.track("validation_completed", {
           fileCount: xmlFiles.length,
           errorCount,
           locale,
         });
+
+        // Increment global validation counter (fire-and-forget)
+        fetch("/api/count", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ fileCount: xmlFiles.length, errorCount, warningCount }),
+        }).catch(() => {});
       } catch (error) {
         console.error("Failed to initialize validator:", error);
         setFiles(
