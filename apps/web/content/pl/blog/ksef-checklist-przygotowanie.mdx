@@ -1,0 +1,130 @@
+---
+title: "Jak przygotować się na KSeF — checklist ostatniego dnia"
+description: "Ostatni dzień przed KSeF — 10-punktowy checklist. Sprawdź czy jesteś gotowy na 1 kwietnia 2026."
+date: 2026-03-31
+section: blog
+locale: pl
+slug: "ksef-checklist-przygotowanie"
+tags: ["KSeF", "JDG", "Walidacja"]
+sources:
+  - label: "FAQ MF — KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
+  - label: "Ustawa o VAT art. 106na, 106nda, 106nf, 106gc, 145m"
+    url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
+translations:
+  pl: "ksef-checklist-przygotowanie"
+  en: "ksef-checklist-przygotowanie"
+  uk: "ksef-checklist-przygotowanie"
+seo:
+  canonical: "/blog/ksef-checklist-przygotowanie"
+---
+
+Jutro 1 kwietnia. Nie prima aprilis — pierwszy dzień obowiązkowego KSeF dla wszystkich czynnych podatników VAT. Bez paniki. Poniżej 10 punktów do odhaczenia. Jeśli na każdy odpowiesz „tak” — jesteś gotowy/a.
+
+Nie wiesz, czy KSeF w ogóle Cię dotyczy? [Sprawdź tutaj](/blog/ksef-od-1-kwietnia-2026). Jeśli Twoja miesięczna sprzedaż nie przekracza 10 000 zł — [możesz mieć tymczasowe zwolnienie](/blog/ksef-limit-10000-zl).
+
+---
+
+## Checklist — 10 rzeczy do sprawdzenia
+
+### 1. Czy mój program do fakturowania obsługuje KSeF i FA(3)?
+
+Od 1 lutego 2026 jedynym akceptowanym formatem faktury ustrukturyzowanej jest FA(3). Wcześniejszy schemat FA(2) nie jest już przyjmowany przez system. Skontaktuj się z dostawcą swojego programu i zapytaj wprost: „Czy obsługujecie KSeF 2.0 i FA(3)?”
+
+Jeśli odpowiedź brzmi „nie” lub „jeszcze nie” — czas na zmianę. Popularne programy — Fakturownia, inFakt, wFirma, Comarch — już obsługują lub właśnie wdrażają KSeF. Różnice między FA(2) a FA(3) [opisaliśmy w osobnym artykule](/blog/fa2-vs-fa3-ksef).
+
+### 2. Czy mam dostęp do KSeF?
+
+Do logowania w KSeF potrzebujesz jednego z trzech narzędzi: **Profilu Zaufanego** (bezpłatny — założysz go przez bankowość elektroniczną lub mObywatel), kwalifikowanego podpisu elektronicznego lub tokenu autoryzacyjnego.
+
+Dla większości JDG Profil Zaufany to najprostsze rozwiązanie. Jeśli jeszcze go nie masz — załóż teraz. Jeśli masz — sprawdź, czy logowanie na [ap.ksef.mf.gov.pl](https://ap.ksef.mf.gov.pl/) działa.
+
+Więcej o metodach uwierzytelniania w artykule o [certyfikatach i tokenach KSeF](/blog/certyfikaty-vs-tokeny-ksef).
+
+### 3. Czy wygenerowałem testową fakturę i ją zwalidowałem?
+
+Stwórz fakturę z fikcyjnymi danymi w swoim programie. Następnie wrzuć wygenerowany plik XML na **[ksefuj.to](/)** — bezpłatny walidator, który sprawdzi zgodność ze schematem FA(3) i z oficjalnymi wymaganiami MF. Twoje dane zostają u Ciebie — plik nie opuszcza przeglądarki.
+
+<Tip>
+  KSeF 2.0 nie ma wbudowanego walidatora. O błędach dowiesz się dopiero po odrzuceniu faktury przez
+  system — a odrzucona faktura to faktura, której formalnie nie ma. Lepiej sprawdzić wcześniej.
+</Tip>
+
+Najczęstsze problemy, które wyłapuje walidacja, opisaliśmy w artykule o [błędach walidacji FA(3)](/blog/najczestsze-bledy-walidacji-fa3).
+
+### 4. Czy wysłałem testową fakturę na środowisko testowe MF?
+
+Ministerstwo Finansów udostępnia środowisko testowe pod adresem [ap-test.ksef.mf.gov.pl](https://ap-test.ksef.mf.gov.pl/web/). Możesz tam wysłać fakturę z fikcyjnymi danymi — bez żadnych konsekwencji prawnych. To najlepszy sposób, żeby sprawdzić, czy Twój program poprawnie komunikuje się z KSeF.
+
+Nie odkładaj testu na jutro. Jutro będziesz już wystawiać prawdziwe faktury.
+
+### 5. Czy wiem co robić, gdy KSeF jest niedostępny?
+
+Przepisy przewidują dwa tryby awaryjne:
+
+- **Tryb offline** — gdy nie masz internetu lub KSeF chwilowo nie działa. Wystawiasz fakturę lokalnie i wysyłasz ją do KSeF najpóźniej **do końca następnego dnia roboczego**.
+- **Tryb awaryjny** — gdy MF oficjalnie ogłasza dłuższą awarię systemu. Wystawiasz faktury poza KSeF, a po zakończeniu awarii przesyłasz je do systemu **w ciągu 7 dni roboczych**.
+
+Twój program do fakturowania powinien obsługiwać oba tryby automatycznie — zapytaj dostawcę, zanim dojdzie do sytuacji kryzysowej. Szczegóły znajdziesz w naszym [FAQ](/faq).
+
+### 6. Czy mój księgowy ma uprawnienia w KSeF?
+
+Jeśli korzystasz z biura rachunkowego, Twój księgowy potrzebuje formalnego dostępu do KSeF w Twoim imieniu. Służy do tego formularz **ZAW-FA** — składa się go w urzędzie skarbowym lub elektronicznie przez e-Urząd Skarbowy.
+
+<Warning>
+  Bez ZAW-FA (lub upoważnienia nadanego w panelu Aplikacji Podatnika) księgowy nie ma żadnego
+  dostępu do Twoich faktur w KSeF — nawet jeśli prowadzi Twoją księgowość od lat. Sprawdź to dziś.
+</Warning>
+
+Biuro rachunkowe zazwyczaj samo przeprowadza Cię przez ten proces — ale upewnij się, że temat jest załatwiony. Więcej o uprawnieniach w artykule o [certyfikatach i tokenach KSeF](/blog/certyfikaty-vs-tokeny-ksef).
+
+### 7. Czy wiem, jak wygląda kod QR na fakturze?
+
+Faktury wystawione przez KSeF zawierają kod QR, który umożliwia weryfikację dokumentu. Twój program do fakturowania generuje go automatycznie — nie musisz robić tego ręcznie.
+
+Sprawdź, jak wygląda wizualizacja (wydruk) faktury w Twoim programie i czy kod QR się na niej pojawia. Jeśli masz wątpliwości — zapytaj dostawcę oprogramowania.
+
+### 8. Czy wiem, gdzie szukać pomocy?
+
+Ministerstwo Finansów prowadzi helpdesk dla pytań związanych z KSeF. Aktualne dane kontaktowe znajdziesz na stronie [ksef.podatki.gov.pl](https://ksef.podatki.gov.pl).
+
+<Info>
+  Zapisz sobie ten adres teraz — nie szukaj go w momencie kryzysu. Warto też mieć pod ręką numer
+  Krajowej Informacji Skarbowej na wypadek pytań podatkowych.
+</Info>
+
+### 9. Czy powiadomiłem klientów o zmianie?
+
+Od jutra Twoje faktury trafiają do KSeF zamiast na maila. Twoi klienci powinni o tym wiedzieć — i mieć własny dostęp do KSeF, żeby pobierać faktury zakupowe.
+
+Krótki mail lub wiadomość teraz oszczędzi pytań i nieporozumień później. Możesz nadal wysyłać PDF-a dla wygody kontrahenta — ale dokumentem prawnym jest plik XML zarejestrowany w KSeF.
+
+### 10. Czy mam plan B?
+
+Co jeśli Twój program nie zadziała pierwszego dnia?
+
+**Opcja 1:** [Aplikacja Podatnika KSeF](https://ap.ksef.mf.gov.pl/) — bezpłatne narzędzie MF, działa w przeglądarce, pozwala wystawić fakturę ręcznie przez formularz. Logujesz się Profilem Zaufanym. Przy 2–3 fakturach miesięcznie w zupełności wystarczy.
+
+**Opcja 2:** Tryb offline — wystawiasz fakturę lokalnie i wysyłasz do KSeF do końca następnego dnia roboczego. To legalny mechanizm, nie obejście przepisów.
+
+<Info>
+  Kary finansowe za naruszenie obowiązku KSeF są odroczone do 1 stycznia 2027 r. Ale odrzucona
+  faktura to faktura, której formalnie nie ma — niezależnie od kar. Nie czekaj na sankcje, żeby się
+  przygotować.
+</Info>
+
+---
+
+## Gotowy/a?
+
+Jeśli na każdy punkt odpowiedziałeś/aś „tak” — jutro będzie zwykłym dniem pracy. Jedna faktura, jedno kliknięcie, numer KSeF w systemie.
+
+Jeśli gdzieś odpowiedź brzmi „nie” — masz jeszcze kilka godzin. Zacznij od punktu 3: wrzuć plik na **[ksefuj.to](/)** i sprawdź, czy Twoja faktura jest poprawna. Bez rejestracji, bez opłat. Twoje dane zostają u Ciebie.
+
+Więcej o KSeF dla jednoosobowej działalności znajdziesz w [kompletnym poradniku](/blog/ksef-dla-jdg). Odpowiedzi na pytania — w dziale [FAQ](/faq).
+
+<Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20" label="FAQ MF — KSeF 2.0" />
+<Source
+  href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
+  label="Ustawa o VAT — Dz. U. z 2025 r., poz. 775 ze zm."
+/>

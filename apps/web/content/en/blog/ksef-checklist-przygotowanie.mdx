@@ -1,0 +1,131 @@
+---
+title: "Getting Ready for KSeF — Your Last-Day Checklist"
+description: "The day before KSeF goes live — a 10-point checklist. Make sure you're ready for 1 April 2026."
+date: 2026-03-31
+section: blog
+locale: en
+slug: "ksef-checklist-przygotowanie"
+translations:
+  pl: "ksef-checklist-przygotowanie"
+  uk: "ksef-checklist-przygotowanie"
+tags: ["KSeF", "JDG", "Walidacja"]
+sources:
+  - label: "FAQ MF — KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
+  - label: "Polish VAT Act Art. 106na, 106nda, 106nf, 106gc, 145m"
+    url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
+seo:
+  canonical: "/en/blog/ksef-checklist-przygotowanie"
+---
+
+Tomorrow is 1 April. Not an April Fools' joke — it's the first day of mandatory KSeF (Krajowy System e-Faktur — Poland's National e-Invoicing System) for all active VAT taxpayers. Don't panic. Here are 10 things to tick off. If you can say "yes" to each one, you're good to go.
+
+Not sure whether KSeF applies to you at all? [Check here](/blog/ksef-od-1-kwietnia-2026). If your monthly sales don't exceed 10,000 PLN — [you may have a temporary exemption](/blog/ksef-limit-10000-zl).
+
+---
+
+## Checklist — 10 things to verify
+
+### 1. Does my invoicing software support KSeF and FA(3)?
+
+Since 1 February 2026, the only accepted format for structured invoices is FA(3). The earlier FA(2) schema is no longer accepted by the system. Contact your software provider and ask directly: "Do you support KSeF 2.0 and FA(3)?"
+
+If the answer is "no" or "not yet" — it's time to switch. Major platforms — Fakturownia, inFakt, wFirma, Comarch — already support KSeF or are in the final stages of rollout. We've covered the differences between FA(2) and FA(3) in a [separate article](/blog/fa2-vs-fa3-ksef).
+
+### 2. Can I log in to KSeF?
+
+To authenticate in KSeF you need one of three things: **Profil Zaufany** (Poland's trusted identity profile — free, set up via internet banking or the mObywatel app), a qualified electronic signature, or an authorisation token.
+
+For most sole traders (JDG — jednoosobowa działalność gospodarcza), Profil Zaufany is the simplest option. If you don't have one yet — set it up now. If you do — check that login works at [ap.ksef.mf.gov.pl](https://ap.ksef.mf.gov.pl/).
+
+More on authentication methods in our article on [KSeF certificates and tokens](/blog/certyfikaty-vs-tokeny-ksef).
+
+### 3. Have I generated a test invoice and validated it?
+
+Create an invoice with fictitious data in your software. Then drop the generated XML file into **[ksefuj.to](/)** — a free validator that checks compliance with the FA(3) schema and official MF requirements. Your data never leaves your browser.
+
+<Tip>
+  KSeF 2.0 has no built-in validator. You only find out about errors when the system rejects your
+  invoice — and a rejected invoice is an invoice that doesn't legally exist. Better to check
+  beforehand.
+</Tip>
+
+We've covered the most common issues caught by validation in our article on [FA(3) validation errors](/blog/najczestsze-bledy-walidacji-fa3).
+
+### 4. Have I submitted a test invoice to the MF test environment?
+
+The Ministry of Finance provides a test environment at [ap-test.ksef.mf.gov.pl](https://ap-test.ksef.mf.gov.pl/web/). You can submit invoices with fictitious data there — with no legal consequences whatsoever. It's the best way to confirm that your software communicates correctly with KSeF.
+
+Don't leave this test for tomorrow. Tomorrow you'll be issuing real invoices.
+
+### 5. Do I know what to do when KSeF is unavailable?
+
+The regulations provide two fallback modes:
+
+- **Offline mode** — when you have no internet or KSeF is temporarily down. You issue an invoice locally and submit it to KSeF no later than **the end of the next business day**.
+- **Emergency mode** — when the MF officially declares an extended system outage. You issue invoices outside KSeF and submit them after the outage ends, within **7 business days**.
+
+Your invoicing software should handle both modes automatically — check with your provider before a crisis hits. Details in our [FAQ](/faq).
+
+### 6. Does my accountant have access to KSeF?
+
+If you use an accounting firm, your accountant needs formal access to KSeF on your behalf. This is done via the **ZAW-FA** form — filed at the tax office or electronically through e-Urząd Skarbowy (e-Tax Office).
+
+<Warning>
+  Without ZAW-FA (or authorisation granted in the Aplikacja Podatnika panel), your accountant has
+  zero access to your invoices in KSeF — even if they've been handling your books for years. Check
+  this today.
+</Warning>
+
+Your accounting firm will usually walk you through the process — but make sure it's actually done. More on permissions in the article on [KSeF certificates and tokens](/blog/certyfikaty-vs-tokeny-ksef).
+
+### 7. Do I know what the QR code on the invoice looks like?
+
+Invoices issued through KSeF include a QR code that enables document verification. Your invoicing software generates it automatically — you don't need to create it yourself.
+
+Check how the print version of your invoice looks in your software and whether the QR code appears. If in doubt — ask your software provider.
+
+### 8. Do I know where to get help?
+
+The Ministry of Finance runs a helpdesk for KSeF-related queries. Current contact details are available at [ksef.podatki.gov.pl](https://ksef.podatki.gov.pl).
+
+<Info>
+  Save that address now — don't go looking for it in a crisis. It's also worth having the Krajowa
+  Informacja Skarbowa (National Tax Information) helpline number to hand for tax questions.
+</Info>
+
+### 9. Have I notified my clients about the change?
+
+From tomorrow, your invoices go into KSeF instead of landing in an inbox. Your clients should know — and they'll need their own KSeF access to retrieve purchase invoices.
+
+A brief email or message now will save questions and confusion later. You can still send a PDF for your counterparty's convenience — but the legally binding document is the XML file registered in KSeF.
+
+### 10. Do I have a plan B?
+
+What if your software doesn't work on day one?
+
+**Option 1:** [Aplikacja Podatnika KSeF](https://ap.ksef.mf.gov.pl/) — the free MF tool that runs in a browser. Log in with Profil Zaufany and issue an invoice manually via the form. For 2–3 invoices a month, it's more than enough.
+
+**Option 2:** Offline mode — issue the invoice locally and submit it to KSeF by the end of the next business day. This is a lawful mechanism, not a workaround.
+
+<Info>
+  Financial penalties for breaching the KSeF obligation are deferred until 1 January 2027. But a
+  rejected invoice is an invoice that doesn't legally exist — regardless of penalties. Don't wait
+  for sanctions to motivate your preparation.
+</Info>
+
+---
+
+## Ready?
+
+If you answered "yes" to every point — tomorrow will be a normal working day. One invoice, one click, a KSeF number in the system.
+
+If any answer was "no" — you still have a few hours. Start with point 3: drop your file into **[ksefuj.to](/)** and check whether your invoice is valid. No sign-up, no charge. Your data never leaves your browser.
+
+More on KSeF for sole traders in our [complete guide](/blog/ksef-dla-jdg). Answers to common questions in the [FAQ](/faq).
+
+<Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20" label="FAQ MF — KSeF 2.0" />
+<Source
+  href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
+  label="Polish VAT Act — Journal of Laws 2025, item 775, as amended"
+/>
