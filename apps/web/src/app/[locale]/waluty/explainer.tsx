@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { ReactNode } from "react";
 
 const content: Record<string, { title: string; paragraphs: ReactNode[] }> = {
@@ -21,9 +22,9 @@ const content: Record<string, { title: string; paragraphs: ReactNode[] }> = {
       <>
         Warto wiedzieć, że KSeF nie weryfikuje wartości pola <code>KursWaluty</code> — przyjmie
         każdą liczbę bez skargi. Błędny kurs nie blokuje przyjęcia faktury do systemu, ale może
-        skutkować <strong>nieprawidłowym rozliczeniem VAT</strong>. Walidator ksefuj.to sprawdza tę
-        wartość jako dodatkową warstwę kontroli, wykrywając rozbieżności z oficjalnym kursem NBP
-        zanim faktura trafi do urzędu.
+        skutkować <strong>nieprawidłowym rozliczeniem VAT</strong>. Walidator{" "}
+        <Link href="/">ksefuj.to</Link> sprawdza tę wartość jako dodatkową warstwę kontroli,
+        wykrywając rozbieżności z oficjalnym kursem NBP zanim faktura trafi do urzędu.
       </>,
     ],
   },
@@ -46,9 +47,10 @@ const content: Record<string, { title: string; paragraphs: ReactNode[] }> = {
       <>
         It is worth knowing that KSeF does not validate the <code>KursWaluty</code> field — it will
         accept any number without complaint. A wrong rate does not block the invoice from being
-        accepted, but it can result in an <strong>incorrect VAT settlement</strong>. The ksefuj.to
-        validator checks this value as an extra layer of control, catching discrepancies against the
-        official NBP rate before the invoice reaches the tax authority.
+        accepted, but it can result in an <strong>incorrect VAT settlement</strong>. The{" "}
+        <Link href="/">ksefuj.to</Link> validator checks this value as an extra layer of control,
+        catching discrepancies against the official NBP rate before the invoice reaches the tax
+        authority.
       </>,
     ],
   },
@@ -70,9 +72,10 @@ const content: Record<string, { title: string; paragraphs: ReactNode[] }> = {
       <>
         Варто знати, що KSeF не перевіряє значення поля <code>KursWaluty</code> — він прийме
         будь-яке число без зауважень. Неправильний курс не блокує прийняття рахунку-фактури до
-        системи, але може призвести до <strong>неправильного розрахунку ПДВ</strong>. Валідатор
-        ksefuj.to перевіряє це значення як додатковий рівень контролю, виявляючи розбіжності з
-        офіційним курсом NBP до того, як рахунок-фактура потрапить до органу влади.
+        системи, але може призвести до <strong>неправильного розрахунку ПДВ</strong>. Валідатор{" "}
+        <Link href="/">ksefuj.to</Link> перевіряє це значення як додатковий рівень контролю,
+        виявляючи розбіжності з офіційним курсом NBP до того, як рахунок-фактура потрапить до органу
+        влади.
       </>,
     ],
   },
@@ -87,7 +90,7 @@ export function WalutyExplainer({ locale }: Props) {
 
   return (
     <div className="space-y-4 max-w-2xl border-t border-slate-100 pt-8">
-      <h2 className="text-xl font-bold text-slate-900">{title}</h2>
+      <h2 className="text-2xl font-bold text-slate-900">{title}</h2>
       <div className="prose prose-slate max-w-none mdx-content">
         {paragraphs.map((p, i) => (
           <p key={i}>{p}</p>
