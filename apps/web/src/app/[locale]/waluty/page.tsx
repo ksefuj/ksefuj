@@ -8,6 +8,7 @@ import { buildWebApplicationSchema } from "@/lib/structured-data";
 import { buildContentPath, getContentItemWithFallback } from "@/lib/content";
 import { LanguagePicker } from "../language-picker";
 import { RateCalculator } from "./rate-calculator";
+import { WalutyExplainer } from "./explainer";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -101,8 +102,10 @@ export default async function WalutyPage({ params }: Props) {
               <RateCalculator />
             </div>
 
+            <WalutyExplainer locale={locale} />
+
             {articles.length > 0 && (
-              <div className="space-y-6 border-t border-slate-100 pt-8">
+              <div className="space-y-6">
                 <h2 className="text-lg font-semibold text-slate-900">{t("relatedArticles")}</h2>
                 <div className="grid gap-6 sm:grid-cols-2">
                   {articles.map((article) => (
