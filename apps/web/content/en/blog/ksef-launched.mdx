@@ -1,0 +1,95 @@
+---
+title: "KSeF is live — don't panic, you have time"
+description: "KSeF became mandatory on 1 April — but penalties don't start until 2027, and the 10,000 PLN threshold gives you breathing room. Here's what to do today."
+date: 2026-04-01
+section: blog
+locale: en
+slug: "ksef-launched"
+tags: ["KSeF", "JDG", "VAT"]
+sources:
+  - label: "FAQ MF — KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
+  - label: "Art. 106gc Polish VAT Act — penalties"
+    url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
+  - label: "Polish VAT Act Art. 145m — 10,000 PLN threshold"
+    url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
+  - label: "Ministry of Finance on KSeF Phase II (26.03.2026)"
+    url: "https://www.gov.pl/web/finanse/ksef"
+translations:
+  pl: "ksef-ruszyl"
+  en: "ksef-launched"
+  uk: "ksef-startuvav"
+---
+
+As of today, every B2B invoice in Poland should go through KSeF (Krajowy System e-Faktur — Poland's National e-Invoicing System). The internet is awash with "invoice apocalypse" headlines, forums are overflowing with questions, and your inbox probably is too. Before you spiral — here are three concrete things that actually matter today.
+
+The obligation is real from 1 April 2026. That's a fact. But the regulations leave more room than the headlines suggest. Below — specifics, no drama.
+
+For a comprehensive overview, see our [full article on KSeF from 1 April](/blog/ksef-od-1-kwietnia-2026). This post is the short version: what you need to know today — and what can safely wait until tomorrow.
+
+---
+
+## Penalties? Not this year
+
+The most important piece of news today: **penalties for breaching the KSeF obligation have been deferred until 1 January 2027.** The legal basis is Art. 106gc of the Polish VAT Act.
+
+What does this mean in practice? From today you must issue B2B invoices through KSeF (unless you qualify for an exemption — more on that in a moment). But if something goes wrong — the system rejects your invoice, you get the format wrong, your software fails — you won't face a financial penalty. Not in 2026.
+
+<Info>
+  The deferral of penalties to 2027 means that 2026 is effectively a transition period. The
+  obligation applies, but enforcement of financial sanctions starts on 1 January 2027.
+</Info>
+
+This doesn't mean you can ignore KSeF. An invoice issued outside the system in breach of the obligation is formally defective — even without a penalty. Your counterparty may have issues deducting VAT from such an invoice — consult a tax adviser for specifics. And an invoice rejected by KSeF does not receive a KSeF number and is not treated as a structured invoice — regardless of sanctions.
+
+But you have time to learn. 2026 is there so you can make mistakes without financial consequences — and learn from them.
+
+For details on sanctions — rates, conditions, mechanics — see our [article on KSeF from 1 April](/blog/ksef-od-1-kwietnia-2026).
+
+<Source
+  href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
+  label="Art. 106gc Polish VAT Act — penalties"
+/>
+
+---
+
+## Check whether you even need to — today
+
+If the total value of your B2B invoices doesn't exceed 10,000 PLN gross per month, you can continue issuing invoices outside KSeF until the end of 2026. This is a temporary exemption under Art. 145m of the Polish VAT Act — not a permanent exclusion, but concrete breathing room for micro-businesses.
+
+How exactly the threshold is counted, what's included and what isn't, and what happens when you cross it — [read the dedicated article](/blog/ksef-limit-10000-zl).
+
+---
+
+## Today's trap: a March invoice issued in April
+
+Today is 1 April. You might be issuing an invoice for a service delivered in March — after all, you have until the 15th of the following month. Here's the catch: **what matters is the invoice issue date, not the period the invoice covers.**
+
+If you issue an invoice today — even for March — the KSeF obligation already applies to you (unless you're under the 10,000 PLN threshold). It doesn't matter that the service was performed before 1 April.
+
+Conversely: if you issued March invoices yesterday — you don't need to recall them or reissue through KSeF. They were issued before the obligation took effect and remain valid.
+
+<Warning>
+  Issue date = obligation date. If your software generates an invoice dated today — it must go
+  through KSeF. No exceptions (apart from the 10,000 PLN threshold).
+</Warning>
+
+This is the most common first-day trap. If you use invoicing software, check what date it assigns to invoices generated today — and whether KSeF integration is already enabled.
+
+<Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20" label="FAQ MF — KSeF 2.0" />
+
+---
+
+## What to do now — 3 steps
+
+**Step 1: Log in to KSeF.** Check that you have access. Go to [ksef.podatki.gov.pl](https://ksef.podatki.gov.pl/) and log in with Profil Zaufany (Poland's trusted digital identity), via mObywatel, or with a qualified electronic signature. If your invoicing software needs a token or certificate — generate one in the Aplikacja Podatnika (Taxpayer Application). Not sure which method to choose? Read our [guide to certificates and tokens](/blog/certyfikaty-vs-tokeny-ksef).
+
+**Step 2: Validate your invoice before sending.** KSeF has no built-in validator — you'll only find out about errors when the system rejects your invoice. And a rejected invoice does not receive a KSeF number and is not treated as a structured invoice. So before you send anything, drop the XML file into [ksefuj.to](/) — the validator checks compliance with official MF requirements. No sign-up, no charge. Your file never leaves your browser. We've covered the most common errors and how to fix them in a [separate article](/blog/najczestsze-bledy-walidacji-fa3).
+
+**Step 3: Don't panic if it doesn't work first time.** 2026 is a transition period — penalties only start from 2027. You're allowed to learn. If you have questions, check our [FAQ](/faq). And if you're integrating KSeF with your own system, our [FA(2) vs FA(3) comparison](/blog/fa2-vs-fa3-ksef) may come in handy.
+
+---
+
+## Summary
+
+KSeF is live, but it's not the end of the world. Penalties deferred to 2027 give you time to learn, the 10,000 PLN threshold gives micro-businesses breathing room, and the validator at [ksefuj.to](/) catches errors before they reach the system. Don't postpone your preparations — but don't act in panic either. Steady and methodical is the best strategy for the first month with KSeF.
