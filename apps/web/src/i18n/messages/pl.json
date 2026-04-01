@@ -245,7 +245,8 @@
         "title": "Nie udało się pobrać kursu",
         "noRate": "Brak kursu NBP dla wybranej waluty i daty. Sprawdź czy data nie jest zbyt dawna lub w przyszłości.",
         "network": "Błąd połączenia z API NBP. Sprawdź połączenie z internetem i spróbuj ponownie."
-      }
+      },
+      "today": "Dziś"
     }
   },
   "footer": {

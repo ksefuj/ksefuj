@@ -245,7 +245,8 @@
         "title": "Could not fetch rate",
         "noRate": "No NBP rate available for the selected currency and date. Check that the date is not too far in the past or in the future.",
         "network": "Connection error with NBP API. Check your internet connection and try again."
-      }
+      },
+      "today": "Today"
     }
   },
   "footer": {

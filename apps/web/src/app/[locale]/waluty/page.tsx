@@ -56,12 +56,12 @@ export default async function WalutyPage({ params }: Props) {
       <SiteHeader locale={locale} languagePicker={<LanguagePicker currentLocale={locale} />} />
       <main className="min-h-screen">
         <SectionContainer>
-          <div className="max-w-2xl space-y-8">
+          <div className="space-y-8">
             <div className="space-y-3">
               <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900">
                 {t("title")}
               </h1>
-              <p className="text-lg text-slate-600">{t("description")}</p>
+              <p className="text-lg text-slate-600 max-w-2xl">{t("description")}</p>
             </div>
             <RateCalculator />
           </div>
