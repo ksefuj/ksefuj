@@ -5,11 +5,14 @@ import {
   type FormEvent,
   type KeyboardEvent,
   useCallback,
+  useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
 import { useTranslations } from "next-intl";
-import { fetchNbpRateForInvoice, type NbpRateResult } from "@/lib/nbp";
+import * as amplitude from "@amplitude/unified";
+import { fetchNbpRateForInvoice, type NbpFetchError, type NbpRateResult } from "@/lib/nbp";
 
 const CURRENCIES = [
   "EUR",
@@ -57,14 +60,16 @@ function todayISO(): string {
 
 export function RateCalculator() {
   const t = useTranslations("content.waluty");
-  const [currency, setCurrency] = useState("");
-  const [dateDisplay, setDateDisplay] = useState("");
-  const [invoiceDate, setInvoiceDate] = useState("");
+  const today = useMemo(() => todayISO(), []);
+  const [currency, setCurrency] = useState("EUR");
+  const [dateDisplay, setDateDisplay] = useState(today);
+  const [invoiceDate, setInvoiceDate] = useState(today);
   const [status, setStatus] = useState<Status>("idle");
   const [result, setResult] = useState<NbpRateResult | null>(null);
-  const [errorType, setErrorType] = useState<"noRate" | "network">("noRate");
+  const [errorType, setErrorType] = useState<NbpFetchError>("no_rate");
   const [copied, setCopied] = useState(false);
   const hiddenDateRef = useRef<HTMLInputElement>(null);
+  const lastCheckedRef = useRef<{ currency: string; invoiceDate: string } | null>(null);
 
   const updateDate = useCallback((formatted: string) => {
     setDateDisplay(formatted);
@@ -73,9 +78,13 @@ export function RateCalculator() {
 
   const handleDateInput = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
-      updateDate(formatDateInput(e.target.value));
+      const formatted = formatDateInput(e.target.value);
+      if (isCompleteDate(formatted) && formatted > today) {
+        return;
+      }
+      updateDate(formatted);
     },
-    [updateDate],
+    [today, updateDate],
   );
 
   const handleDateKeyDown = useCallback(
@@ -99,10 +108,9 @@ export function RateCalculator() {
   }, []);
 
   const handleTodayClick = useCallback(() => {
-    const today = todayISO();
     setDateDisplay(today);
     setInvoiceDate(today);
-  }, []);
+  }, [today]);
 
   const handleSubmit = useCallback(
     async (e: FormEvent) => {
@@ -114,23 +122,36 @@ export function RateCalculator() {
       setStatus("loading");
       setResult(null);
       setCopied(false);
+      lastCheckedRef.current = { currency, invoiceDate };
 
-      try {
-        const rate = await fetchNbpRateForInvoice(currency, invoiceDate);
-        if (rate) {
-          setResult(rate);
-          setStatus("success");
-        } else {
-          setErrorType("noRate");
-          setStatus("error");
-        }
-      } catch {
-        setErrorType("network");
+      const sharedProps = {
+        currency,
+        date: invoiceDate,
+        isToday: invoiceDate === today,
+      };
+
+      const rate = await fetchNbpRateForInvoice(currency, invoiceDate);
+
+      if (typeof rate === "string") {
+        setErrorType(rate);
         setStatus("error");
+        amplitude.track("waluty_rate_failed", { ...sharedProps, reason: rate });
+      } else {
+        setResult(rate);
+        setStatus("success");
+        amplitude.track("waluty_rate_checked", { ...sharedProps, source: rate.source });
       }
     },
-    [currency, invoiceDate],
+    [currency, invoiceDate, today],
   );
+
+  useEffect(() => {
+    if (!copied) {
+      return;
+    }
+    const timer = setTimeout(() => setCopied(false), 2000);
+    return () => clearTimeout(timer);
+  }, [copied]);
 
   const handleCopy = useCallback(async () => {
     if (!result) {
@@ -139,7 +160,6 @@ export function RateCalculator() {
     try {
       await navigator.clipboard.writeText(result.mid.toFixed(4));
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
     } catch {
       // Clipboard API unavailable
     }
@@ -150,67 +170,61 @@ export function RateCalculator() {
   }, []);
 
   const isFormValid = currency && invoiceDate;
+  const isAlreadyShown =
+    status !== "idle" &&
+    lastCheckedRef.current?.currency === currency &&
+    lastCheckedRef.current?.invoiceDate === invoiceDate;
 
   return (
     <div className="space-y-8">
       {/* Form */}
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="grid grid-cols-1 sm:grid-cols-[1fr_1fr_auto] gap-4 items-end">
-          {/* Currency selector */}
-          <div className="space-y-2">
-            <label htmlFor="currency" className="block text-sm font-medium text-slate-700">
-              {t("currency")}
-            </label>
-            <select
-              id="currency"
-              value={currency}
-              onChange={handleCurrencyChange}
-              className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 shadow-sm transition-colors focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-100"
-            >
-              <option value="">{t("currencyPlaceholder")}</option>
-              {CURRENCIES.map((c) => (
-                <option key={c} value={c}>
-                  {c}
-                </option>
-              ))}
-            </select>
-          </div>
+      <form onSubmit={handleSubmit} className="space-y-4 max-w-sm">
+        {/* Currency selector */}
+        <div className="space-y-2">
+          <label htmlFor="currency" className="block text-sm font-medium text-slate-700">
+            {t("currency")}
+          </label>
+          <select
+            id="currency"
+            value={currency}
+            onChange={handleCurrencyChange}
+            className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 transition-colors focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-100"
+          >
+            <option value="">{t("currencyPlaceholder")}</option>
+            {CURRENCIES.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
+        </div>
 
-          {/* Date input with smart formatting */}
-          <div className="space-y-2">
-            <label htmlFor="invoiceDate" className="block text-sm font-medium text-slate-700">
-              {t("invoiceDate")}
-            </label>
-            <div className="flex gap-2">
-              <div className="relative flex-1">
-                <input
-                  id="invoiceDate"
-                  type="text"
-                  inputMode="numeric"
-                  placeholder="YYYY-MM-DD"
-                  value={dateDisplay}
-                  onChange={handleDateInput}
-                  onKeyDown={handleDateKeyDown}
-                  maxLength={10}
-                  aria-describedby="invoiceDateHint"
-                  className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 shadow-sm transition-colors focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-100"
-                />
-                {/* Hidden native date picker */}
-                <input
-                  ref={hiddenDateRef}
-                  type="date"
-                  value={invoiceDate}
-                  onChange={handleHiddenDateChange}
-                  className="sr-only"
-                  tabIndex={-1}
-                  aria-hidden="true"
-                />
-              </div>
-              {/* Calendar button */}
+        {/* Date input with smart formatting */}
+        <div className="space-y-2">
+          <label htmlFor="invoiceDate" className="block text-sm font-medium text-slate-700">
+            {t("invoiceDate")}
+          </label>
+          <div className="flex gap-2">
+            <div className="flex-1">
+              <input
+                id="invoiceDate"
+                type="text"
+                inputMode="numeric"
+                placeholder="YYYY-MM-DD"
+                value={dateDisplay}
+                onChange={handleDateInput}
+                onKeyDown={handleDateKeyDown}
+                maxLength={10}
+                aria-describedby="invoiceDateHint"
+                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 transition-colors focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-100"
+              />
+            </div>
+            {/* Calendar button — hidden date input lives here so picker anchors correctly */}
+            <div className="relative self-stretch">
               <button
                 type="button"
                 onClick={handleCalendarClick}
-                className="rounded-xl border border-slate-200 bg-white px-3 py-3 text-slate-500 shadow-sm transition-colors hover:bg-slate-50 hover:text-violet-600 focus:outline-none focus:ring-2 focus:ring-violet-100"
+                className="h-full rounded-xl border border-slate-200 bg-white p-3 text-slate-600 transition-colors hover:border-violet-300 hover:text-violet-600 focus:outline-none focus:ring-2 focus:ring-violet-100"
                 aria-label="Open date picker"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -222,85 +236,93 @@ export function RateCalculator() {
                   />
                 </svg>
               </button>
-              {/* Today button */}
-              <button
-                type="button"
-                onClick={handleTodayClick}
-                className="rounded-xl border border-slate-200 bg-white px-3 py-3 text-sm font-medium text-slate-500 shadow-sm transition-colors hover:bg-slate-50 hover:text-violet-600 focus:outline-none focus:ring-2 focus:ring-violet-100"
-              >
-                {t("today")}
-              </button>
+              <input
+                ref={hiddenDateRef}
+                type="date"
+                value={invoiceDate}
+                max={today}
+                onChange={handleHiddenDateChange}
+                className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
+                tabIndex={-1}
+                aria-hidden="true"
+              />
             </div>
-            <p id="invoiceDateHint" className="text-xs text-slate-500">
-              {t("invoiceDateHint")}
-            </p>
+            {/* Today button */}
+            <button
+              type="button"
+              onClick={handleTodayClick}
+              className="rounded-xl border border-slate-200 bg-white px-3 py-3 text-sm font-semibold text-slate-700 transition-colors hover:border-violet-300 hover:text-violet-600 focus:outline-none focus:ring-2 focus:ring-violet-100"
+            >
+              {t("today")}
+            </button>
           </div>
-
-          {/* Submit button — trailing edge */}
-          <button
-            type="submit"
-            disabled={!isFormValid || status === "loading"}
-            className="rounded-xl bg-violet-600 px-8 py-3 text-base font-semibold text-white shadow-sm transition-colors hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-violet-300 disabled:cursor-not-allowed disabled:opacity-50 whitespace-nowrap"
-          >
-            {status === "loading" ? t("loading") : t("checkRate")}
-          </button>
+          <p id="invoiceDateHint" className="text-xs text-slate-500">
+            {t("invoiceDateHint")}
+          </p>
         </div>
+
+        {/* Submit button */}
+        <button
+          type="submit"
+          disabled={!isFormValid || status === "loading" || isAlreadyShown}
+          className="w-full rounded-xl bg-violet-600 px-8 py-3 text-base font-semibold text-white transition-colors hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-violet-300 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          {status === "loading" ? t("loading") : t("checkRate")}
+        </button>
       </form>
 
       {/* Result */}
       {status === "success" && result && (
         <div className="rounded-2xl border border-emerald-200 bg-emerald-50/50 p-6 space-y-4">
-          <h2 className="text-lg font-bold text-slate-900">{t("result.title")}</h2>
+          <h2 className="text-2xl font-bold text-slate-900">{t("result.title")}</h2>
 
-          <div className="flex items-baseline gap-3 flex-wrap">
-            <span className="text-sm font-medium text-slate-600">{t("result.rate")}:</span>
-            <span className="text-3xl font-extrabold tracking-tight text-slate-900 font-mono">
-              {result.mid.toFixed(4)}
-            </span>
-            <span className="text-sm text-slate-500">{result.currency}/PLN</span>
-            <button
-              type="button"
-              onClick={handleCopy}
-              className="ml-auto inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-600 shadow-sm transition-colors hover:bg-slate-50 hover:text-violet-600"
-            >
-              {copied ? (
-                <>
-                  <svg
-                    className="w-4 h-4 text-emerald-500"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  {t("result.copied")}
-                </>
-              ) : (
-                <>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
-                    />
-                  </svg>
-                  {t("result.copyRate")}
-                </>
-              )}
-            </button>
+          <div className="flex items-end justify-between gap-4">
+            <div className="space-y-0.5">
+              <p className="text-sm font-medium text-slate-600">{t("result.rate")}:</p>
+              <div className="flex items-baseline gap-2">
+                <span className="text-3xl font-extrabold tracking-tight text-slate-900 font-mono">
+                  {result.mid.toFixed(4)}
+                </span>
+                <span className="text-sm text-slate-500">{result.currency}/PLN</span>
+                <button
+                  type="button"
+                  onClick={handleCopy}
+                  aria-label={t("result.copyRate")}
+                  className="text-slate-400 transition-colors hover:text-violet-600"
+                >
+                  {copied ? (
+                    <svg
+                      className="w-5 h-5 text-emerald-500"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                  ) : (
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                      />
+                    </svg>
+                  )}
+                </button>
+              </div>
+            </div>
+            <p className="text-sm text-slate-500 text-right shrink-0">
+              {t("result.table")} {result.tableNumber} {t("result.tableDate")} {result.date}
+            </p>
           </div>
 
-          <p className="text-sm text-slate-600">
-            {t("result.table")} {result.tableNumber} {t("result.tableDate")} {result.date}
-          </p>
-
-          <p className="text-sm text-slate-500 border-t border-emerald-200 pt-4">
+          <p className="text-sm text-slate-500 border-t border-emerald-200 pt-2">
             {t("result.explanation")}
           </p>
         </div>

@@ -1,10 +1,12 @@
 /**
  * NBP (National Bank of Poland) exchange rate client.
  *
- * Fetches official mid-rates from the NBP Table A API.
- * Groups by currency and fetches a single date range per currency,
- * then caches in localStorage. The validator selects the correct
- * rate for each invoice from the returned table.
+ * Cache structure mirrors the NBP API response:
+ *   localStorage `nbp:rates:<CURRENCY>` → Record<DateString, RawRate>
+ *
+ * The cache is a dumb accumulating store — it only grows, never invalidates.
+ * Business logic (Art. 31a "last business day before invoice date") lives in
+ * the public-facing functions, not here.
  *
  * @see https://api.nbp.pl/ for API documentation
  */
@@ -12,6 +14,7 @@
 import type { CurrencyRate } from "@ksefuj/validator";
 
 const NBP_API_BASE = "https://api.nbp.pl/api/exchangerates/rates/A";
+const LOOKBACK_DAYS = 10;
 
 /** Extended rate with NBP table number for display purposes. */
 export interface NbpRateResult {
@@ -22,45 +25,104 @@ export interface NbpRateResult {
   readonly mid: number;
   /** NBP table number, e.g. "052/A/NBP/2026" */
   readonly tableNumber: string;
+  /** Whether the result came from localStorage cache or a live network request */
+  readonly source: "cache" | "network";
 }
 
+export type NbpFetchError = "network" | "no_rate";
+
+interface RawRate {
+  effectiveDate: string;
+  mid: number;
+  no: string;
+}
+
+/** Per-currency cache: effectiveDate → RawRate */
+type RateStore = Record<string, RawRate>;
+
 function subtractDays(dateStr: string, days: number): string {
-  // Use UTC-based arithmetic to avoid timezone-dependent off-by-one errors.
   const date = new Date(`${dateStr}T00:00:00Z`);
   date.setUTCDate(date.getUTCDate() - days);
   return date.toISOString().slice(0, 10);
 }
 
-function rangeCacheKey(currency: string, start: string, end: string): string {
-  return `nbp:range:${currency}:${start}:${end}`;
+// --- Cache (dumb store, no business logic) ---
+
+function loadRates(currency: string): RateStore {
+  try {
+    const raw = localStorage.getItem(`nbp:rates:${currency}`);
+    if (raw) {
+      return JSON.parse(raw) as RateStore;
+    }
+  } catch {
+    // localStorage unavailable or parse error
+  }
+  return {};
 }
 
-async function fetchRateRange(
+function mergeRates(currency: string, incoming: RawRate[]): RateStore {
+  const store = loadRates(currency);
+  for (const rate of incoming) {
+    store[rate.effectiveDate] = rate;
+  }
+  try {
+    localStorage.setItem(`nbp:rates:${currency}`, JSON.stringify(store));
+  } catch {
+    // localStorage full or unavailable
+  }
+  return store;
+}
+
+// --- Network ---
+
+async function fetchFromApi(
   currency: string,
   start: string,
   end: string,
-): Promise<CurrencyRate[] | null> {
+): Promise<RawRate[] | null> {
   try {
     const response = await fetch(`${NBP_API_BASE}/${currency}/${start}/${end}/?format=json`);
     if (!response.ok) {
       return null;
     }
     const data = await response.json();
-    return data.rates.map((r: { effectiveDate: string; mid: number }) => ({
-      currency,
-      date: r.effectiveDate,
+    return data.rates.map((r: { effectiveDate: string; mid: number; no: string }) => ({
+      effectiveDate: r.effectiveDate,
       mid: r.mid,
+      no: r.no,
     }));
   } catch {
-    // Network error
     return null;
   }
 }
 
 /**
+ * Return the cached rate store for a currency, fetching and merging a date
+ * range only when no cached rate falls within the requested window.
+ */
+async function getOrFetch(
+  currency: string,
+  start: string,
+  end: string,
+): Promise<{ store: RateStore; source: "cache" | "network" } | null> {
+  const store = loadRates(currency);
+  const alreadyCovered = Object.keys(store).some((d) => d >= start && d <= end);
+  if (alreadyCovered) {
+    return { store, source: "cache" };
+  }
+
+  const fetched = await fetchFromApi(currency, start, end);
+  if (!fetched) {
+    return null;
+  }
+  return { store: mergeRates(currency, fetched), source: "network" };
+}
+
+// --- Public API ---
+
+/**
  * Fetch NBP Table A mid-rates for a set of (currency, invoice date) pairs.
- * Groups by currency and issues one range request per unique currency.
- * Results are cached in localStorage keyed by currency + date range.
+ * Groups by currency; skips network if cache already covers the date window.
  *
  * @param pairs - { currency, date } where date is the invoice P_1 (YYYY-MM-DD)
  * @returns Record mapping currency → rate array (null if fetch failed)
@@ -68,7 +130,6 @@ async function fetchRateRange(
 export async function fetchCurrencyRateTable(
   pairs: { currency: string; date: string }[],
 ): Promise<Record<string, CurrencyRate[] | null>> {
-  // Group invoice dates by currency, skip PLN
   const byCurrency = new Map<string, string[]>();
   for (const { currency, date } of pairs) {
     if (currency === "PLN") {
@@ -85,32 +146,13 @@ export async function fetchCurrencyRateTable(
   await Promise.all(
     Array.from(byCurrency.entries()).map(async ([currency, dates]) => {
       const sorted = [...dates].sort();
-      // Range covers the stale window (10 days) before the earliest invoice
-      // and ends one day before the latest invoice (Art. 31a: previous business day)
-      const rangeStart = subtractDays(sorted[0], 10);
+      const rangeStart = subtractDays(sorted[0], LOOKBACK_DAYS);
       const rangeEnd = subtractDays(sorted[sorted.length - 1], 1);
 
-      const key = rangeCacheKey(currency, rangeStart, rangeEnd);
-      try {
-        const cached = localStorage.getItem(key);
-        if (cached) {
-          table[currency] = JSON.parse(cached) as CurrencyRate[];
-          return;
-        }
-      } catch {
-        // localStorage unavailable
-      }
-
-      const rates = await fetchRateRange(currency, rangeStart, rangeEnd);
-      table[currency] = rates;
-
-      if (rates) {
-        try {
-          localStorage.setItem(key, JSON.stringify(rates));
-        } catch {
-          // localStorage full or unavailable
-        }
-      }
+      const result = await getOrFetch(currency, rangeStart, rangeEnd);
+      table[currency] = result
+        ? Object.values(result.store).map((r) => ({ currency, date: r.effectiveDate, mid: r.mid }))
+        : null;
     }),
   );
 
@@ -119,8 +161,7 @@ export async function fetchCurrencyRateTable(
 
 /**
  * Fetch the correct NBP Table A rate for a single invoice.
- * Selects the rate from the last business day before the invoice date
- * (Art. 31a §1 ustawy o VAT).
+ * Applies Art. 31a §1: selects the latest rate strictly before invoiceDate.
  *
  * @param currency - ISO 4217 currency code (e.g. "EUR")
  * @param invoiceDate - P_1 invoice date (YYYY-MM-DD)
@@ -129,46 +170,39 @@ export async function fetchCurrencyRateTable(
 export async function fetchNbpRateForInvoice(
   currency: string,
   invoiceDate: string,
-): Promise<NbpRateResult | null> {
+): Promise<NbpRateResult | NbpFetchError> {
   if (currency === "PLN") {
-    return null;
+    return "no_rate";
   }
 
-  const rangeStart = subtractDays(invoiceDate, 10);
+  const rangeStart = subtractDays(invoiceDate, LOOKBACK_DAYS);
   const rangeEnd = subtractDays(invoiceDate, 1);
 
-  try {
-    const response = await fetch(
-      `${NBP_API_BASE}/${currency}/${rangeStart}/${rangeEnd}/?format=json`,
-    );
-    if (!response.ok) {
-      return null;
-    }
-    const data = await response.json();
-    const rates: Array<{ effectiveDate: string; mid: number; no: string }> = data.rates;
-
-    // Find the latest rate strictly before the invoice date (same logic as findRateForInvoiceDate)
-    let best: (typeof rates)[number] | null = null;
-    for (const rate of rates) {
-      if (rate.effectiveDate >= invoiceDate) {
-        continue;
-      }
-      if (!best || rate.effectiveDate > best.effectiveDate) {
-        best = rate;
-      }
-    }
-
-    if (!best) {
-      return null;
-    }
-
-    return {
-      currency,
-      date: best.effectiveDate,
-      mid: best.mid,
-      tableNumber: best.no,
-    };
-  } catch {
-    return null;
+  const result = await getOrFetch(currency, rangeStart, rangeEnd);
+  if (!result) {
+    return "network";
   }
+
+  // Art. 31a §1: pick the latest published rate strictly before the invoice date
+  let best: RawRate | null = null;
+  for (const rate of Object.values(result.store)) {
+    if (rate.effectiveDate >= invoiceDate) {
+      continue;
+    }
+    if (!best || rate.effectiveDate > best.effectiveDate) {
+      best = rate;
+    }
+  }
+
+  if (!best) {
+    return "no_rate";
+  }
+
+  return {
+    currency,
+    date: best.effectiveDate,
+    mid: best.mid,
+    tableNumber: best.no,
+    source: result.source,
+  };
 }
