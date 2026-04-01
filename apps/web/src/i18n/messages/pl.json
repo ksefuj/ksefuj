@@ -222,7 +222,7 @@
       "copied": "Skopiowano"
     },
     "waluty": {
-      "title": "Kurs NBP do faktury",
+      "title": "Kurs NBP do faktury walutowej VAT",
       "description": "Znajdź kurs średni NBP, który obowiązuje dla Twojej faktury w obcej walucie — zgodnie z art. 31a ustawy o VAT.",
       "metaDescription": "Sprawdź jaki kurs NBP zastosować na fakturze w obcej walucie. Kalkulator automatycznie wybiera kurs z ostatniego dnia roboczego przed datą faktury (art. 31a ustawy o VAT).",
       "ogImageTitle": "Kurs NBP do faktury — art. 31a VAT",
@@ -246,7 +246,8 @@
         "no_rate": "Brak kursu NBP dla wybranej waluty i daty. Sprawdź czy data nie jest zbyt dawna lub w przyszłości.",
         "network": "Błąd połączenia z API NBP. Sprawdź połączenie z internetem i spróbuj ponownie."
       },
-      "today": "Dziś"
+      "today": "Dziś",
+      "relatedArticles": "Powiązane artykuły"
     }
   },
   "footer": {

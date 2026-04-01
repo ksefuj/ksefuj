@@ -17,6 +17,7 @@ const nextConfig = {
       { source: "/przewodniki/:path*", destination: "/guides/:path*", permanent: true },
       { source: "/poradniki", destination: "/guides", permanent: true },
       { source: "/poradniki/:path*", destination: "/guides/:path*", permanent: true },
+      { source: "/kurs-nbp", destination: "/waluty", permanent: true },
     ];
   },
   transpilePackages: ["@ksefuj/validator"],
