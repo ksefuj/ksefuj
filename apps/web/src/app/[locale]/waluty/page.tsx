@@ -106,21 +106,26 @@ export default async function WalutyPage({ params }: Props) {
             </div>
 
             {articles.length > 0 && (
-              <div className="space-y-4 border-t border-slate-100 pt-8">
+              <div className="space-y-6 border-t border-slate-100 pt-8">
                 <h2 className="text-lg font-semibold text-slate-900">{t("relatedArticles")}</h2>
-                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                   {articles.map((article) => (
                     <Link
                       key={article!.href}
                       href={article!.href}
-                      className="group block rounded-xl border border-slate-200 bg-white p-5 transition-colors hover:border-violet-300 hover:bg-violet-50/30"
+                      className="group flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
                     >
-                      <p className="font-semibold text-slate-900 group-hover:text-violet-700 leading-snug">
-                        {article!.title}
-                      </p>
-                      <p className="mt-1.5 text-sm text-slate-500 line-clamp-2">
-                        {article!.description}
-                      </p>
+                      <div>
+                        <p className="text-base font-bold leading-snug text-slate-900 group-hover:text-violet-700 transition-colors">
+                          {article!.title}
+                        </p>
+                        <p className="mt-2 text-sm text-slate-500 line-clamp-2">
+                          {article!.description}
+                        </p>
+                      </div>
+                      <span className="mt-4 text-sm font-medium text-violet-600 group-hover:text-violet-700">
+                        {t("readMore")}
+                      </span>
                     </Link>
                   ))}
                 </div>

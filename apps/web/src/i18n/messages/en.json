@@ -247,7 +247,8 @@
         "network": "Connection error with NBP API. Check your internet connection and try again."
       },
       "today": "Today",
-      "relatedArticles": "Related articles"
+      "relatedArticles": "Related articles",
+      "readMore": "Read →"
     }
   },
   "footer": {

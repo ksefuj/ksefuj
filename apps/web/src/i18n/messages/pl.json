@@ -247,7 +247,8 @@
         "network": "Błąd połączenia z API NBP. Sprawdź połączenie z internetem i spróbuj ponownie."
       },
       "today": "Dziś",
-      "relatedArticles": "Powiązane artykuły"
+      "relatedArticles": "Powiązane artykuły",
+      "readMore": "Czytaj →"
     }
   },
   "footer": {
