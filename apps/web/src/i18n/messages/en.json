@@ -157,7 +157,8 @@
     "blog": "Blog",
     "faq": "FAQ",
     "docs": "Docs",
-    "guides": "Guides"
+    "guides": "Guides",
+    "waluty": "Exchange rates"
   },
   "translationBanner": {
     "body": "This article isn't available in your language yet. You're reading the {language} original.",
@@ -219,6 +220,32 @@
     "mdx": {
       "copy": "Copy",
       "copied": "Copied"
+    },
+    "waluty": {
+      "title": "NBP exchange rate for invoices",
+      "description": "Find the official NBP mid-rate that applies to your foreign-currency invoice — per Art. 31a of the Polish VAT Act.",
+      "metaDescription": "Check which NBP exchange rate to use on a foreign-currency invoice. The calculator automatically selects the rate from the last business day before the invoice date (Art. 31a of the VAT Act).",
+      "ogImageTitle": "NBP exchange rate for invoices — Art. 31a VAT",
+      "currency": "Currency",
+      "currencyPlaceholder": "Select currency",
+      "invoiceDate": "Invoice date (P_1)",
+      "invoiceDateHint": "Invoice issue date in KSeF",
+      "checkRate": "Check rate",
+      "loading": "Fetching rate from NBP…",
+      "result": {
+        "title": "Applicable rate",
+        "rate": "NBP mid-rate",
+        "table": "Table",
+        "tableDate": "dated",
+        "explanation": "Per Art. 31a §1 of the Polish VAT Act, foreign-currency invoice amounts are converted using the NBP mid-rate from the last business day before the invoice issue date.",
+        "copied": "Copied!",
+        "copyRate": "Copy rate"
+      },
+      "error": {
+        "title": "Could not fetch rate",
+        "noRate": "No NBP rate available for the selected currency and date. Check that the date is not too far in the past or in the future.",
+        "network": "Connection error with NBP API. Check your internet connection and try again."
+      }
     }
   },
   "footer": {

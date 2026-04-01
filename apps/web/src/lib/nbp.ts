@@ -13,6 +13,17 @@ import type { CurrencyRate } from "@ksefuj/validator";
 
 const NBP_API_BASE = "https://api.nbp.pl/api/exchangerates/rates/A";
 
+/** Extended rate with NBP table number for display purposes. */
+export interface NbpRateResult {
+  readonly currency: string;
+  /** YYYY-MM-DD — the effective NBP publication date */
+  readonly date: string;
+  /** NBP mid-rate, 4 decimal places */
+  readonly mid: number;
+  /** NBP table number, e.g. "052/A/NBP/2026" */
+  readonly tableNumber: string;
+}
+
 function subtractDays(dateStr: string, days: number): string {
   // Use UTC-based arithmetic to avoid timezone-dependent off-by-one errors.
   const date = new Date(`${dateStr}T00:00:00Z`);
@@ -104,4 +115,60 @@ export async function fetchCurrencyRateTable(
   );
 
   return table;
+}
+
+/**
+ * Fetch the correct NBP Table A rate for a single invoice.
+ * Selects the rate from the last business day before the invoice date
+ * (Art. 31a §1 ustawy o VAT).
+ *
+ * @param currency - ISO 4217 currency code (e.g. "EUR")
+ * @param invoiceDate - P_1 invoice date (YYYY-MM-DD)
+ * @returns The applicable rate with table number, or null if unavailable
+ */
+export async function fetchNbpRateForInvoice(
+  currency: string,
+  invoiceDate: string,
+): Promise<NbpRateResult | null> {
+  if (currency === "PLN") {
+    return null;
+  }
+
+  const rangeStart = subtractDays(invoiceDate, 10);
+  const rangeEnd = subtractDays(invoiceDate, 1);
+
+  try {
+    const response = await fetch(
+      `${NBP_API_BASE}/${currency}/${rangeStart}/${rangeEnd}/?format=json`,
+    );
+    if (!response.ok) {
+      return null;
+    }
+    const data = await response.json();
+    const rates: Array<{ effectiveDate: string; mid: number; no: string }> = data.rates;
+
+    // Find the latest rate strictly before the invoice date (same logic as findRateForInvoiceDate)
+    let best: (typeof rates)[number] | null = null;
+    for (const rate of rates) {
+      if (rate.effectiveDate >= invoiceDate) {
+        continue;
+      }
+      if (!best || rate.effectiveDate > best.effectiveDate) {
+        best = rate;
+      }
+    }
+
+    if (!best) {
+      return null;
+    }
+
+    return {
+      currency,
+      date: best.effectiveDate,
+      mid: best.mid,
+      tableNumber: best.no,
+    };
+  } catch {
+    return null;
+  }
 }

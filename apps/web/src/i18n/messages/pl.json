@@ -157,7 +157,8 @@
     "blog": "Blog",
     "faq": "FAQ",
     "docs": "Dokumentacja",
-    "guides": "Poradniki"
+    "guides": "Poradniki",
+    "waluty": "Kursy walut"
   },
   "translationBanner": {
     "body": "Ten artykuł nie jest jeszcze dostępny w Twoim języku. Czytasz oryginalną wersję w języku {language}.",
@@ -219,6 +220,32 @@
     "mdx": {
       "copy": "Kopiuj",
       "copied": "Skopiowano"
+    },
+    "waluty": {
+      "title": "Kurs NBP do faktury",
+      "description": "Znajdź kurs średni NBP, który obowiązuje dla Twojej faktury w obcej walucie — zgodnie z art. 31a ustawy o VAT.",
+      "metaDescription": "Sprawdź jaki kurs NBP zastosować na fakturze w obcej walucie. Kalkulator automatycznie wybiera kurs z ostatniego dnia roboczego przed datą faktury (art. 31a ustawy o VAT).",
+      "ogImageTitle": "Kurs NBP do faktury — art. 31a VAT",
+      "currency": "Waluta",
+      "currencyPlaceholder": "Wybierz walutę",
+      "invoiceDate": "Data faktury (P_1)",
+      "invoiceDateHint": "Data wystawienia faktury w KSeF",
+      "checkRate": "Sprawdź kurs",
+      "loading": "Pobieranie kursu z NBP…",
+      "result": {
+        "title": "Kurs do zastosowania",
+        "rate": "Kurs średni NBP",
+        "table": "Tabela",
+        "tableDate": "z dnia",
+        "explanation": "Zgodnie z art. 31a §1 ustawy o VAT, do przeliczenia kwot na fakturze w walucie obcej stosuje się kurs średni NBP z ostatniego dnia roboczego poprzedzającego dzień wystawienia faktury.",
+        "copied": "Skopiowano!",
+        "copyRate": "Kopiuj kurs"
+      },
+      "error": {
+        "title": "Nie udało się pobrać kursu",
+        "noRate": "Brak kursu NBP dla wybranej waluty i daty. Sprawdź czy data nie jest zbyt dawna lub w przyszłości.",
+        "network": "Błąd połączenia z API NBP. Sprawdź połączenie z internetem i spróbuj ponownie."
+      }
     }
   },
   "footer": {
