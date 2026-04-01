@@ -50,11 +50,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-const RELATED_SLUGS = [
-  "faktura-zagraniczna-ksef",
-  "najczestsze-bledy-walidacji-fa3",
-  "ksef-dla-jdg",
-] as const;
+const RELATED_SLUGS = ["faktura-zagraniczna-ksef", "ksef-dla-jdg"] as const;
 
 export default async function WalutyPage({ params }: Props) {
   const { locale } = await params;
@@ -108,7 +104,7 @@ export default async function WalutyPage({ params }: Props) {
             {articles.length > 0 && (
               <div className="space-y-6 border-t border-slate-100 pt-8">
                 <h2 className="text-lg font-semibold text-slate-900">{t("relatedArticles")}</h2>
-                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="grid gap-6 sm:grid-cols-2">
                   {articles.map((article) => (
                     <Link
                       key={article!.href}
