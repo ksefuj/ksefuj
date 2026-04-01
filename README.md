@@ -213,7 +213,7 @@ bundle if changes are detected. Run this:
 - [x] Sitemap, OG images, hreflang, Twitter cards across all content
 - [x] Behavioral analytics
 - [x] RSS feed
-- [ ] Global validation counter (Vercel KV)
+- [x] Global validation counter (Vercel KV)
 - [x] Publish @ksefuj/validator to npm registry
 
 ### Phase 2: Preview
@@ -226,7 +226,7 @@ bundle if changes are detected. Run this:
 ### Phase 3: Generator
 
 - [ ] Form-based XML generation
-- [ ] Auto NBP exchange rates
+- [x] Auto NBP exchange rates
 - [ ] Auto NIP lookup (GUS/VIES)
 
 ## License
