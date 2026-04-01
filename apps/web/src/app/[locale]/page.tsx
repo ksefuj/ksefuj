@@ -170,30 +170,14 @@ export default async function Home({ params }: Props) {
         <ValidationLayersSection
           title={t("landing.validation.title")}
           subtitle={t("landing.validation.subtitle")}
-          layers={[
-            {
-              badge: t("landing.validation.layers.0.badge"),
-              title: t("landing.validation.layers.0.title"),
-              description: t("landing.validation.layers.0.description"),
-              checks: [
-                t("landing.validation.layers.0.checks.0"),
-                t("landing.validation.layers.0.checks.1"),
-                t("landing.validation.layers.0.checks.2"),
-                t("landing.validation.layers.0.checks.3"),
-              ],
-            },
-            {
-              badge: t("landing.validation.layers.1.badge"),
-              title: t("landing.validation.layers.1.title"),
-              description: t("landing.validation.layers.1.description"),
-              checks: [
-                t("landing.validation.layers.1.checks.0"),
-                t("landing.validation.layers.1.checks.1"),
-                t("landing.validation.layers.1.checks.2"),
-                t("landing.validation.layers.1.checks.3"),
-              ],
-            },
-          ]}
+          layers={
+            t.raw("landing.validation.layers") as Array<{
+              badge: string;
+              title: string;
+              description: string;
+              checks: string[];
+            }>
+          }
         />
 
         {/* Comparison Section */}

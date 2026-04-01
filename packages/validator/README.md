@@ -6,6 +6,8 @@ KSeF FA(3) XML validator with full XSD schema validation and semantic business r
 
 - **Full XSD validation** using libxml2-wasm (WebAssembly)
 - **Semantic business rules** that catch errors XSD can't express
+- **NBP currency rate validation** — checks `KursWaluty` against official NBP mid-rates (Art. 31a
+  VAT Act)
 - **Works everywhere** - Node.js, browser, CLI
 - **Zero network requests** - bundled schemas for offline use
 - **TypeScript support** with full type definitions

@@ -27,9 +27,10 @@ export const COMPARISON_STATUSES: Record<
   Record<"ksefuj" | "freemium" | "enterprise", CellStatus>
 > = {
   pricing: { ksefuj: "good", freemium: "partial", enterprise: "bad" },
-  validation: { ksefuj: "good", freemium: "bad", enterprise: "partial" },
-  localXsd: { ksefuj: "good", freemium: "bad", enterprise: "bad" },
-  privacy: { ksefuj: "good", freemium: "partial", enterprise: "bad" },
+  validationXsd: { ksefuj: "good", freemium: "partial", enterprise: "partial" },
+  validationSemantic: { ksefuj: "good", freemium: "bad", enterprise: "partial" },
+  currencyRate: { ksefuj: "good", freemium: "bad", enterprise: "partial" },
+  privacy: { ksefuj: "good", freemium: "bad", enterprise: "bad" },
   errorDetails: { ksefuj: "good", freemium: "bad", enterprise: "partial" },
   cli: { ksefuj: "good", freemium: "bad", enterprise: "partial" },
   openSource: { ksefuj: "good", freemium: "bad", enterprise: "bad" },
