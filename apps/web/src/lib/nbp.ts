@@ -98,7 +98,13 @@ async function fetchFromApi(
 
 /**
  * Return the cached rate store for a currency, fetching and merging a date
- * range only when no cached rate falls within the requested window.
+ * range only when the cache already has a recent rate near the end of the
+ * requested window (within 3 days of `end`).
+ *
+ * Checking proximity to `end` (not just any date in the window) avoids a
+ * stale-cache bug: a previous lookup for a different invoice date may have
+ * populated the early part of the window but not the most recent business
+ * days near `end` — which is where the Art. 31a best-rate candidate lives.
  */
 async function getOrFetch(
   currency: string,
@@ -106,7 +112,8 @@ async function getOrFetch(
   end: string,
 ): Promise<{ store: RateStore; source: "cache" | "network" } | null> {
   const store = loadRates(currency);
-  const alreadyCovered = Object.keys(store).some((d) => d >= start && d <= end);
+  const recentThreshold = subtractDays(end, 3);
+  const alreadyCovered = Object.keys(store).some((d) => d >= recentThreshold && d <= end);
   if (alreadyCovered) {
     return { store, source: "cache" };
   }
@@ -151,7 +158,9 @@ export async function fetchCurrencyRateTable(
 
       const result = await getOrFetch(currency, rangeStart, rangeEnd);
       table[currency] = result
-        ? Object.values(result.store).map((r) => ({ currency, date: r.effectiveDate, mid: r.mid }))
+        ? Object.entries(result.store)
+            .filter(([date]) => date >= rangeStart && date <= rangeEnd)
+            .map(([, r]) => ({ currency, date: r.effectiveDate, mid: r.mid }))
         : null;
     }),
   );
@@ -165,7 +174,7 @@ export async function fetchCurrencyRateTable(
  *
  * @param currency - ISO 4217 currency code (e.g. "EUR")
  * @param invoiceDate - P_1 invoice date (YYYY-MM-DD)
- * @returns The applicable rate with table number, or null if unavailable
+ * @returns The applicable rate with table number, or `"network"` / `"no_rate"` on failure
  */
 export async function fetchNbpRateForInvoice(
   currency: string,

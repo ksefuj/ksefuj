@@ -80,7 +80,7 @@ export default async function WalutyPage({ params }: Props) {
     }),
   );
 
-  const articles = relatedArticles.filter(Boolean);
+  const articles = relatedArticles.flatMap((a) => (a ? [a] : []));
 
   return (
     <>
@@ -110,16 +110,16 @@ export default async function WalutyPage({ params }: Props) {
                 <div className="grid gap-6 sm:grid-cols-2">
                   {articles.map((article) => (
                     <Link
-                      key={article!.href}
-                      href={article!.href}
+                      key={article.href}
+                      href={article.href}
                       className="group flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-6 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
                     >
                       <div>
                         <p className="text-base font-bold leading-snug text-slate-900 group-hover:text-violet-700 transition-colors">
-                          {article!.title}
+                          {article.title}
                         </p>
                         <p className="mt-2 text-sm text-slate-500 line-clamp-2">
-                          {article!.description}
+                          {article.description}
                         </p>
                       </div>
                       <span className="mt-4 text-sm font-medium text-violet-600 group-hover:text-violet-700">

@@ -225,7 +225,7 @@ export function RateCalculator() {
                 type="button"
                 onClick={handleCalendarClick}
                 className="h-full rounded-xl border border-slate-200 bg-white p-3 text-slate-600 transition-colors hover:border-violet-300 hover:text-violet-600 focus:outline-none focus:ring-2 focus:ring-violet-100"
-                aria-label="Open date picker"
+                aria-label={t("openDatePicker")}
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
