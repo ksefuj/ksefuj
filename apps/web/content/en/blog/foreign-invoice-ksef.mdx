@@ -238,7 +238,12 @@ For WDT and export of goods: **`P_18` = `2`**, **`P_18A` = `2`**.
 
 You can issue a foreign invoice in any currency — EUR, USD, GBP, CHF. The `KodWaluty` field in FA(3) accepts standard ISO 4217 currency codes. Net and gross amounts are stated in the chosen currency.
 
-There is one exception: **the VAT amount must be expressed in PLN** — converted at the NBP (National Bank of Poland) mid-rate from the last business day before the tax point. For rates `np I`, `np II`, `0 WDT`, and `0 EX` the VAT amount is zero — so no conversion is needed. That covers the vast majority of foreign invoices.
+There is one exception: **the VAT amount must be expressed in PLN** — converted at the [NBP (National Bank of Poland) mid-rate](/waluty) from the last business day before the tax point. For rates `np I`, `np II`, `0 WDT`, and `0 EX` the VAT amount is zero — so no conversion is needed. That covers the vast majority of foreign invoices.
+
+<Tip>
+  Need the exact NBP rate for your invoice date? The [NBP rate calculator](/waluty) looks it up
+  instantly — enter the date and get the correct mid-rate to use.
+</Tip>
 
 ---
 

@@ -76,6 +76,11 @@ export function SiteFooter() {
                   {t("faq")}
                 </Link>
               </li>
+              <li>
+                <Link href={`${p}/waluty`} className="hover:text-slate-300 transition-colors">
+                  {t("waluty")}
+                </Link>
+              </li>
             </ul>
           </div>
 

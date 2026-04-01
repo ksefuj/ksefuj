@@ -33,6 +33,34 @@ export function buildArticleSchema(
 }
 
 /**
+ * Generate WebApplication JSON-LD structured data for tool pages.
+ */
+export function buildWebApplicationSchema(
+  name: string,
+  description: string,
+  urlPath: string,
+  locale: string,
+): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name,
+    description,
+    url: `${BASE_URL}${urlPath}`,
+    inLanguage: locale,
+    applicationCategory: "FinanceApplication",
+    operatingSystem: "Any",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "PLN",
+    },
+    author: PUBLISHER,
+    publisher: PUBLISHER,
+  };
+}
+
+/**
  * Generate HowTo JSON-LD structured data for guides.
  */
 export function buildHowToSchema(
