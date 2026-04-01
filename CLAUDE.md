@@ -125,7 +125,7 @@ validation logic.
 
 ## Validation Architecture
 
-Two layers:
+Three layers:
 
 ### 1. XSD Schema Validation
 
@@ -137,19 +137,13 @@ Full XML validation against the official FA(3) XSD schema from Ministry of Finan
 - **Official compliance**: Uses exact schemas from `crd.gov.pl` (downloaded at build time)
 - **High performance**: Singleton validator pattern with efficient resource reuse
 
-### 2. Semantic Rules
+### 2. MF Semantic Rules
 
-Business logic checks that XSD cannot express.
+Business logic checks that XSD cannot express, derived directly from the official FA(3) information
+sheet (174-page MF document). Every rule in this layer cites a specific section (e.g. §6.1, §9.6,
+Appendix D).
 
-**44 comprehensive validation rules** based on the official FA(3) information sheet from the
-Ministry of Finance.
-
-**Key features:**
-
-- **Constitution-based**: Rules trace directly to specific sections in the official FA(3)
-  information sheet
-- **Comprehensive coverage**: All 8 rule groups (Podmiot, Fa Core, Adnotacje, FaWiersz, Corrective,
-  Payment & Transaction, Format, Additional Business Logic)
+- **Constitution-based**: Rules trace directly to sections in the official FA(3) information sheet
 - **Precise error reporting**: Each issue includes exact XPath location, error context, and fix
   suggestions
 - **Test coverage**: 100+ test cases based on official MF examples
@@ -158,15 +152,23 @@ Ministry of Finance.
 
 1. **Podmiot Rules** (8 rules) - Entity validation, JST/GV requirements, NIP placement
 2. **Fa Core Rules** (5 rules) - P_15 requirement, mutual exclusions, currency handling
-3. **Adnotacje Rules** (11 rules) - All mandatory fields, selection logic for exemptions/margin
-   procedures
+3. **Adnotacje Rules** (11 rules) - Mandatory fields, selection logic for exemptions/margin/NST
 4. **FaWiersz Rules** (4 rules) - Tax rate validation, GTU format, decimal precision
 5. **Corrective Invoice Rules** (2 rules) - KSeF number consistency, reverse charge validation
-6. **Payment & Transaction Rules** (8 rules) - Payment dates, bank accounts, currency pairs, NBP
-   rate validation
+6. **Payment & Transaction Rules** (7 rules) - Payment dates, bank accounts, currency pairs
 7. **Format Rules** (2 rules) - Number formatting, separator validation
-8. **Additional Business Logic Rules** (4 rules) - Tax calculations, bank account format, line
-   number uniqueness, negative quantities
+
+### 3. Extra Checks (beyond the spec)
+
+Checks that go beyond what the FA(3) information sheet mandates — things KSeF itself won't catch but
+that can cause real tax/accounting problems after a successful submission.
+
+- **Tax calculation arithmetic** — P_14_x = P_13_x × rate, P_15 = sum of all bases and taxes
+- **NBP currency rate** — `KursWaluty` matches the official NBP mid-rate from the last business day
+  before the invoice date (Art. 31a VAT Act). KSeF accepts any number here.
+- **Bank account format** — Polish NRB/IBAN format validation
+- **Duplicate line numbers** — `NrWierszaFa` uniqueness within an invoice
+- **Negative quantities** — only valid in corrective invoice context
 
 ## KSeF FA(3) Key Gotchas
 
@@ -178,7 +180,7 @@ Common validation errors now automatically detected by our validator:
 2. **Typos in element names** - `NazwaBank` instead of `NazwaBanku`
 3. **Missing required elements** - Each element has specific mandatory children
 
-### Semantic Issues (detected by our 38 rules)
+### Semantic Issues
 
 1. **Missing mandatory Adnotacje fields** - P_16, P_17, P_18, P_18A, Zwolnienie,
    NoweSrodkiTransportu, P_23, PMarzy

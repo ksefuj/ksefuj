@@ -29,7 +29,7 @@ interface ComparisonProps {
 const STATUS_ICONS: Record<CellStatus, React.ReactNode> = {
   good: (
     <svg
-      className="w-5 h-5 text-emerald-600"
+      className="w-5 h-5 shrink-0 text-emerald-600"
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"
@@ -40,7 +40,7 @@ const STATUS_ICONS: Record<CellStatus, React.ReactNode> = {
   ),
   bad: (
     <svg
-      className="w-5 h-5 text-rose-500"
+      className="w-5 h-5 shrink-0 text-rose-500"
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"
@@ -51,7 +51,7 @@ const STATUS_ICONS: Record<CellStatus, React.ReactNode> = {
   ),
   partial: (
     <svg
-      className="w-5 h-5 text-amber-500"
+      className="w-5 h-5 shrink-0 text-amber-500"
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"

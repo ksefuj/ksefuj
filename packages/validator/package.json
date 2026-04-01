@@ -51,7 +51,9 @@
     "xsd",
     "poland",
     "e-invoicing",
-    "fa3"
+    "fa3",
+    "nbp",
+    "currency-rate"
   ],
   "author": "ksefuj contributors",
   "license": "Apache-2.0",

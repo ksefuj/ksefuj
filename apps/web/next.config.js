@@ -12,6 +12,7 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      { source: "/walidator", destination: "/", permanent: true },
       { source: "/przewodniki", destination: "/guides", permanent: true },
       { source: "/przewodniki/:path*", destination: "/guides/:path*", permanent: true },
       { source: "/poradniki", destination: "/guides", permanent: true },

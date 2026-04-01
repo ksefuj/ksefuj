@@ -1,9 +1,10 @@
 /**
  * @ksefuj/validator — KSeF FA(3) XML validation
  *
- * Two-layer validation architecture:
+ * Three-layer validation architecture:
  * 1. XSD schema validation (via libxml2-wasm)
- * 2. Semantic rules that XSD can't express
+ * 2. Semantic rules that XSD can't express (per official MF FA(3) information sheet)
+ * 3. Additional checks beyond the spec: tax calculations, NBP rates, IBAN format
  */
 
 import { checkSemantics } from "./semantic.js";

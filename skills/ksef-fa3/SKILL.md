@@ -48,9 +48,10 @@ const result = await validate(xmlString);
 if (!result.valid) console.log(result.issues);
 ```
 
-The validator runs two layers:
+The validator runs three layers:
 1. **XSD validation** — structural compliance against the official FA(3) schema
-2. **42 semantic rules** — business logic checks that XSD cannot express
+2. **MF semantic rules** — business logic checks per the official FA(3) information sheet
+3. **Extra checks** — tax calculation math, NBP currency rates, IBAN format (beyond what KSeF validates)
 
 ---
 

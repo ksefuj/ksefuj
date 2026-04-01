@@ -14,10 +14,38 @@ interface ValidationLayersSectionProps {
   layers: ValidationLayer[];
 }
 
+const layerIconColor = ["text-amber-500", "text-emerald-500", "text-violet-500"];
+
+const badgeVariant = (index: number): "warning" | "success" | "info" => {
+  if (index === 0) {
+    return "warning";
+  }
+  if (index === 1) {
+    return "success";
+  }
+  return "info";
+};
+
+function renderBold(text: string) {
+  const parts = text.split(/\*\*(.+?)\*\*/);
+  if (parts.length === 1) {
+    return text;
+  }
+  return parts.map((part, i) =>
+    i % 2 === 1 ? (
+      <strong key={i} className="font-semibold text-slate-800">
+        {part}
+      </strong>
+    ) : (
+      part
+    ),
+  );
+}
+
 export function ValidationLayersSection({ title, subtitle, layers }: ValidationLayersSectionProps) {
   return (
     <SectionContainer background="white">
-      <div className="space-y-12">
+      <div className="space-y-8">
         <div className="text-center space-y-4">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 font-display">
             {title}
@@ -25,29 +53,29 @@ export function ValidationLayersSection({ title, subtitle, layers }: ValidationL
           {subtitle && <p className="text-lg text-slate-600 max-w-2xl mx-auto">{subtitle}</p>}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="bg-white rounded-2xl border border-slate-200 divide-y md:divide-y-0 md:divide-x divide-slate-100 flex flex-col md:flex-row">
           {layers.map((layer, index) => (
-            <div key={index} className="bg-white rounded-2xl border border-slate-200 p-6 md:p-8">
-              <div className="mb-4">
-                <Badge variant={index === 0 ? "info" : "success"}>{layer.badge}</Badge>
+            <div key={index} className="flex-1 p-6">
+              <div className="mb-3">
+                <Badge variant={badgeVariant(index)}>{layer.badge}</Badge>
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-2 font-display">{layer.title}</h3>
-              <p className="text-slate-600 mb-4">{layer.description}</p>
-              <ul className="space-y-2">
+              <h3 className="text-lg font-bold text-slate-900 mb-1 font-display">{layer.title}</h3>
+              <p className="text-sm text-slate-500 mb-4 pb-4 border-b border-slate-100">
+                {layer.description}
+              </p>
+              <ul className="space-y-2.5">
                 {layer.checks.map((check, checkIndex) => (
-                  <li key={checkIndex} className="flex items-start">
+                  <li key={checkIndex} className="flex items-start gap-2.5">
                     <svg
-                      className="w-5 h-5 text-emerald-500 mr-2 mt-0.5 flex-shrink-0"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
+                      className={`w-4 h-4 mt-0.5 shrink-0 ${layerIconColor[index]}`}
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={2.5}
+                      viewBox="0 0 24 24"
                     >
-                      <path
-                        fillRule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                        clipRule="evenodd"
-                      />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
-                    <span className="text-sm text-slate-600">{check}</span>
+                    <span className="text-sm text-slate-600 leading-5">{renderBold(check)}</span>
                   </li>
                 ))}
               </ul>

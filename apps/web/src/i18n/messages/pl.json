@@ -317,7 +317,7 @@
     "hero": {
       "title": "Darmowy walidator faktur KSeF FA(3)",
       "description": "Przeciągnij XML, dowiedz się wszystkiego w sekundach. ksefuj oferuje pełną walidację faktur KSeF FA(3) zgodną z oficjalnymi wymaganiami MF, zero kompromisów w prywatności.",
-      "trustLine": "Darmowy walidator • Pełna walidacja MF • 100% lokalne"
+      "trustLine": "Darmowy walidator • Pełna walidacja MF • Kursy NBP"
     },
     "features": {
       "title": "Bo KSeF to nie żarty.",
@@ -339,11 +339,11 @@
     },
     "validation": {
       "title": "Co sprawdzamy?",
-      "subtitle": "Dwupoziomowa walidacja zapewnia zgodność z wymogami KSeF",
+      "subtitle": "Trzy poziomy kontroli — od schematu MF po poprawność wyliczeń",
       "layers": [
         {
           "badge": "Poziom 1",
-          "title": "Struktura XML (XSD)",
+          "title": "Schemat XSD",
           "description": "Oficjalny schemat FA(3) z czerwca 2025 od Ministerstwa Finansów",
           "checks": [
             "Poprawność struktury dokumentu",
@@ -354,13 +354,24 @@
         },
         {
           "badge": "Poziom 2",
-          "title": "Reguły semantyczne MF",
-          "description": "Kompleksowa walidacja semantyczna zgodna z oficjalnymi wymaganiami MF",
+          "title": "Reguły MF",
+          "description": "Pełna walidacja zgodna z oficjalnymi wymaganiami MF",
           "checks": [
-            "Weryfikacja podmiotów (JST/GV, NIP, role)",
+            "Weryfikacja podmiotów: JST/GV, NIP, role",
             "Poprawność stawek VAT i GTU",
             "Precyzja dziesiętna kwot i ilości",
-            "Logika adnotacji (zwolnienia, marża, NST)"
+            "Logika adnotacji: zwolnienia, marża, NST"
+          ]
+        },
+        {
+          "badge": "Poziom 3",
+          "title": "Kontrole dodatkowe",
+          "description": "To, czego KSeF nie złapie — liczymy za Ciebie.",
+          "checks": [
+            "Kwota podatku zgodna ze stawką",
+            "Suma wierszy równa kwocie należności",
+            "**Kurs waluty zgodny z kursem NBP**",
+            "Format rachunku bankowego NRB/IBAN"
           ]
         }
       ]
@@ -419,23 +430,29 @@
           "freemium": "Z limitami",
           "enterprise": "Płatne / za użycie"
         },
-        "validation": {
-          "title": "Walidacja",
-          "ksefuj": "XSD + reguły semantyczne MF",
-          "freemium": "XSD + ograniczona",
-          "enterprise": "XSD + częściowa"
-        },
-        "localXsd": {
-          "title": "Lokalna walidacja XSD",
-          "ksefuj": "Wbudowane schematy",
-          "freemium": "Nie",
-          "enterprise": "Nie"
-        },
-        "privacy": {
-          "title": "Prywatność danych",
+        "validationXsd": {
+          "title": "Walidacja XSD",
           "ksefuj": "W przeglądarce",
           "freemium": "Różnie",
           "enterprise": "Na serwerze"
+        },
+        "validationSemantic": {
+          "title": "Reguły semantyczne",
+          "ksefuj": "Pełna zgodność z MF",
+          "freemium": "Ograniczona",
+          "enterprise": "Częściowa"
+        },
+        "currencyRate": {
+          "title": "Kursy walut",
+          "ksefuj": "Oficjalny kurs NBP",
+          "freemium": "Rzadko",
+          "enterprise": "Zależy od narzędzia"
+        },
+        "privacy": {
+          "title": "Konto",
+          "ksefuj": "Nie wymagane",
+          "freemium": "Wymagane",
+          "enterprise": "Wymagane"
         },
         "errorDetails": {
           "title": "Błędy",
@@ -444,7 +461,7 @@
           "enterprise": "AI (płatne)"
         },
         "cli": {
-          "title": "Developer tools",
+          "title": "Narzędzia dev",
           "ksefuj": "CLI + npm",
           "freemium": "Nie",
           "enterprise": "Płatne"

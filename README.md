@@ -22,11 +22,12 @@ KSeF using the FA(3) schema.
 
 ## Features
 
-### Two-Layer Validation
+### Three-Layer Validation
 
 - **XSD Schema Validation** — full compliance with official Ministry of Finance schemas
-- **Semantic Business Rules** — catches errors that XSD can't express
-- **Visual Validation Badges** — instant feedback on XSD and semantic compliance
+- **MF Semantic Rules** — catches errors that XSD can't express, per the official FA(3) information
+  sheet
+- **Extra checks** — tax calculation math, NBP currency rates, IBAN format: things KSeF won't catch
 
 ### Privacy & Performance
 

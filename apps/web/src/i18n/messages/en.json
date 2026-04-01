@@ -317,7 +317,7 @@
     "hero": {
       "title": "Free KSeF FA(3) invoice validator",
       "description": "Drag in your XML, see everything in seconds. Full KSeF FA(3) invoice validation that meets official MF requirements, zero privacy compromises.",
-      "trustLine": "Free validator • Full MF validation • 100% local"
+      "trustLine": "Free validator • Full MF validation • NBP rates"
     },
     "features": {
       "title": "KSeF is no joke.",
@@ -339,11 +339,11 @@
     },
     "validation": {
       "title": "What we check",
-      "subtitle": "Two-layer validation ensures KSeF compliance",
+      "subtitle": "Three-layer validation ensures KSeF compliance",
       "layers": [
         {
           "badge": "Layer 1",
-          "title": "XML Structure (XSD)",
+          "title": "XSD Schema",
           "description": "Official FA(3) schema from June 2025 by Ministry of Finance",
           "checks": [
             "Document structure validity",
@@ -354,13 +354,24 @@
         },
         {
           "badge": "Layer 2",
-          "title": "MF Semantic Rules",
-          "description": "Comprehensive semantic validation meeting official MF requirements",
+          "title": "MF Rules",
+          "description": "Full validation aligned with official MF requirements",
           "checks": [
-            "Entity verification (JST/GV, NIP, roles)",
+            "Entity check: JST/GV, NIP, roles",
             "VAT rates and GTU compliance",
             "Decimal precision for amounts and quantities",
-            "Annotation logic (exemptions, margin, NST)"
+            "Annotation logic: exemptions, margin, NST"
+          ]
+        },
+        {
+          "badge": "Layer 3",
+          "title": "Extra checks",
+          "description": "What KSeF won't catch — we run the numbers.",
+          "checks": [
+            "Tax amount matches the applied rate",
+            "Line totals equal the amount due",
+            "**Exchange rate matches the NBP rate**",
+            "Bank account format (NRB/IBAN)"
           ]
         }
       ]
@@ -419,23 +430,29 @@
           "freemium": "Free with limits",
           "enterprise": "Paid / usage-based"
         },
-        "validation": {
-          "title": "Validation",
-          "ksefuj": "XSD + MF semantic rules",
-          "freemium": "XSD + limited",
-          "enterprise": "XSD + partial"
-        },
-        "localXsd": {
-          "title": "Local XSD validation",
-          "ksefuj": "Built-in schemas",
-          "freemium": "No",
-          "enterprise": "No"
-        },
-        "privacy": {
-          "title": "Data privacy",
+        "validationXsd": {
+          "title": "XSD validation",
           "ksefuj": "In browser",
           "freemium": "Varies",
-          "enterprise": "On servers"
+          "enterprise": "Server-only"
+        },
+        "validationSemantic": {
+          "title": "Semantic rules",
+          "ksefuj": "Full MF compliance",
+          "freemium": "Limited",
+          "enterprise": "Partial"
+        },
+        "currencyRate": {
+          "title": "Currency rate check",
+          "ksefuj": "Official NBP rate",
+          "freemium": "Rarely",
+          "enterprise": "Depends on tool"
+        },
+        "privacy": {
+          "title": "Account",
+          "ksefuj": "Not required",
+          "freemium": "Required",
+          "enterprise": "Required"
         },
         "errorDetails": {
           "title": "Errors",
@@ -444,7 +461,7 @@
           "enterprise": "AI (paid)"
         },
         "cli": {
-          "title": "Developer tools",
+          "title": "Dev tools",
           "ksefuj": "CLI + npm",
           "freemium": "No",
           "enterprise": "Paid"
