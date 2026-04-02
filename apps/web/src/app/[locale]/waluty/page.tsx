@@ -5,7 +5,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SectionContainer } from "@/components/section-container";
 import { buildWebApplicationSchema } from "@/lib/structured-data";
-import { buildContentPath, getContentItemWithFallback } from "@/lib/content";
+import { buildContentPath, getContentItem } from "@/lib/content";
 import { LanguagePicker } from "../language-picker";
 import { RateCalculator } from "./rate-calculator";
 import { WalutyExplainer } from "./explainer";
@@ -66,16 +66,30 @@ export default async function WalutyPage({ params }: Props) {
   );
 
   const relatedArticles = await Promise.all(
-    RELATED_SLUGS.map(async (slug) => {
-      const result = await getContentItemWithFallback(locale, "blog", slug);
-      if (!result) {
+    RELATED_SLUGS.map(async (plSlug) => {
+      const plItem = await getContentItem("pl", "blog", plSlug);
+      if (!plItem) {
         return null;
       }
-      const { item, contentLocale } = result;
+
+      if (locale !== "pl") {
+        const translatedSlug = plItem.frontmatter.translations?.[locale as "en" | "uk"];
+        if (translatedSlug) {
+          const translated = await getContentItem(locale, "blog", translatedSlug);
+          if (translated) {
+            return {
+              title: translated.frontmatter.title,
+              description: translated.frontmatter.description,
+              href: buildContentPath(locale, "blog", translated.frontmatter.slug),
+            };
+          }
+        }
+      }
+
       return {
-        title: item.frontmatter.title,
-        description: item.frontmatter.description,
-        href: buildContentPath(contentLocale, "blog", item.frontmatter.slug),
+        title: plItem.frontmatter.title,
+        description: plItem.frontmatter.description,
+        href: buildContentPath("pl", "blog", plItem.frontmatter.slug),
       };
     }),
   );
