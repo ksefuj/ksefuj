@@ -57,9 +57,21 @@ function isCompleteDate(value: string): boolean {
   return /^\d{4}-\d{2}-\d{2}$/.test(value);
 }
 
+function loadCurrency(): string {
+  try {
+    const saved = localStorage.getItem("waluty:currency");
+    if (saved && (CURRENCIES as readonly string[]).includes(saved)) {
+      return saved;
+    }
+  } catch {
+    // localStorage unavailable
+  }
+  return "EUR";
+}
+
 export function RateCalculator() {
   const t = useTranslations("content.waluty");
-  const [currency, setCurrency] = useState("EUR");
+  const [currency, setCurrency] = useState(loadCurrency);
   const [dateDisplay, setDateDisplay] = useState(todayWarsaw);
   const [invoiceDate, setInvoiceDate] = useState(todayWarsaw);
   const [status, setStatus] = useState<Status>("idle");
@@ -165,7 +177,13 @@ export function RateCalculator() {
   }, [result]);
 
   const handleCurrencyChange = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
-    setCurrency(e.target.value);
+    const value = e.target.value;
+    setCurrency(value);
+    try {
+      localStorage.setItem("waluty:currency", value);
+    } catch {
+      // localStorage unavailable
+    }
   }, []);
 
   const isFormValid = currency && invoiceDate;
