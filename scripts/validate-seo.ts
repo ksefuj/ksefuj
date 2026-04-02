@@ -142,8 +142,8 @@ function validateContentFiles() {
       }
     }
 
-    // Check for missing translations mapping (for blog posts)
-    if (file.includes("/blog/") && !file.includes("/uk/")) {
+    // Check for missing translations mapping (all blog posts in all locales)
+    if (file.includes("/blog/")) {
       if (!frontmatter.translations) {
         addError(relPath, "Blog post missing translations mapping for hreflang alternates");
       }
@@ -168,6 +168,43 @@ function validateContentFiles() {
         relPath,
         `Description too long (${frontmatter.description.length} chars, recommended max 160)`,
       );
+    }
+  }
+}
+
+// Check that translation slugs declared in frontmatter actually exist on disk
+function validateTranslationCrossReferences() {
+  console.log("🔍 Checking translation cross-references...\n");
+
+  const contentFiles = getFiles("apps/web/content", /\.mdx$/);
+
+  for (const file of contentFiles) {
+    const content = readFileSync(file, "utf-8");
+    const frontmatter = parseFrontmatter(content);
+    const relPath = relative(process.cwd(), file);
+
+    const translations = frontmatter.translations as Record<string, string> | undefined;
+    if (!translations) {
+      continue;
+    }
+
+    // Detect section from path (blog, guides, docs, faq)
+    const sectionMatch = file.match(/\/content\/\w+\/(\w+)\//);
+    if (!sectionMatch) {
+      continue;
+    }
+    const section = sectionMatch[1];
+
+    for (const [locale, slug] of Object.entries(translations)) {
+      const expectedPath = join("apps/web/content", locale, section, `${slug}.mdx`);
+      try {
+        statSync(expectedPath);
+      } catch {
+        addError(
+          relPath,
+          `translations.${locale}: "${slug}" — file not found: ${relative(process.cwd(), expectedPath)}`,
+        );
+      }
     }
   }
 }
@@ -240,6 +277,7 @@ function main() {
   console.log(`${"=".repeat(60)}\n`);
 
   validateContentFiles();
+  validateTranslationCrossReferences();
   validatePageComponents();
   checkSEOFiles();
 

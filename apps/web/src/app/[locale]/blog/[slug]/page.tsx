@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
@@ -34,7 +34,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const { item } = result;
-  const canonical = item.frontmatter.seo?.canonical ?? buildContentPath(locale, "blog", slug);
+
+  // Canonical: use the localized slug if available, otherwise fall back to the PL URL.
+  // This ensures old PL-slug URLs accessed via EN/UK don't self-canonicalize incorrectly.
+  let canonical: string;
+  if (item.frontmatter.seo?.canonical) {
+    canonical = item.frontmatter.seo.canonical;
+  } else {
+    const localizedSlug = item.frontmatter.translations?.[locale as "pl" | "en" | "uk"];
+    if (localizedSlug) {
+      canonical = buildContentPath(locale, "blog", localizedSlug);
+    } else {
+      canonical = buildContentPath("pl", "blog", item.frontmatter.translations?.pl ?? slug);
+    }
+  }
   const hreflang = buildHreflangAlternates("blog", item.frontmatter.translations);
   const ogLocaleMap: Record<string, string> = { en: "en_US", uk: "uk_UA" };
   const ogLocale = ogLocaleMap[locale] ?? "pl_PL";
@@ -72,6 +85,15 @@ export default async function BlogPostPage({ params }: Props) {
   }
 
   const { item, contentLocale } = result;
+
+  // Redirect old/wrong slugs to the correct translated URL for this locale.
+  if (contentLocale !== locale) {
+    const correctSlug = item.frontmatter.translations?.[locale as "pl" | "en" | "uk"];
+    if (correctSlug && correctSlug !== slug) {
+      redirect(buildContentPath(locale, "blog", correctSlug));
+    }
+  }
+
   const headings = extractHeadings(item.content);
   const urlPath = buildContentPath(locale, "blog", slug);
   const schema = buildArticleSchema(item.frontmatter, urlPath, locale);
