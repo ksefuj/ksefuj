@@ -4,12 +4,14 @@ import {
   type ChangeEvent,
   type FormEvent,
   type KeyboardEvent,
+  Suspense,
   useCallback,
   useEffect,
   useRef,
   useState,
 } from "react";
 import { useTranslations } from "next-intl";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import * as amplitude from "@amplitude/unified";
 import {
   fetchNbpRateForInvoice,
@@ -69,11 +71,24 @@ function loadCurrency(): string {
   return "EUR";
 }
 
-export function RateCalculator() {
+function RateCalculatorInner() {
   const t = useTranslations("content.waluty");
-  const [currency, setCurrency] = useState(loadCurrency);
-  const [dateDisplay, setDateDisplay] = useState(todayWarsaw);
-  const [invoiceDate, setInvoiceDate] = useState(todayWarsaw);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  // Read initial values from URL, falling back to localStorage/today.
+  // Cap any URL date to todayWarsaw() — no future dates.
+  const today = todayWarsaw();
+  const urlCurrency = searchParams.get("currency") ?? "";
+  const urlDate = searchParams.get("date") ?? "";
+  const validUrlCurrency =
+    urlCurrency && (CURRENCIES as readonly string[]).includes(urlCurrency) ? urlCurrency : null;
+  const validUrlDate = urlDate && isCompleteDate(urlDate) && urlDate <= today ? urlDate : null;
+
+  const [currency, setCurrency] = useState(() => validUrlCurrency ?? loadCurrency());
+  const [dateDisplay, setDateDisplay] = useState(() => validUrlDate ?? today);
+  const [invoiceDate, setInvoiceDate] = useState(() => validUrlDate ?? today);
   const [status, setStatus] = useState<Status>("idle");
   const [result, setResult] = useState<NbpRateResult | null>(null);
   const [errorType, setErrorType] = useState<NbpFetchError>("no_rate");
@@ -113,14 +128,52 @@ export function RateCalculator() {
 
   const handleHiddenDateChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
+    // Picker UI already prevents future dates via max attr, but double-check.
+    if (val > todayWarsaw()) {
+      return;
+    }
     setDateDisplay(val);
     setInvoiceDate(val);
   }, []);
 
   const handleTodayClick = useCallback(() => {
-    const today = todayWarsaw();
-    setDateDisplay(today);
-    setInvoiceDate(today);
+    const t = todayWarsaw();
+    setDateDisplay(t);
+    setInvoiceDate(t);
+  }, []);
+
+  const fetchRate = useCallback(async (cur: string, date: string) => {
+    setStatus("loading");
+    setResult(null);
+    setCopied(false);
+    lastCheckedRef.current = { currency: cur, invoiceDate: date };
+
+    const sharedProps = {
+      currency: cur,
+      date,
+      isToday: date === todayWarsaw(),
+    };
+
+    const rate = await fetchNbpRateForInvoice(cur, date);
+
+    if (typeof rate === "string") {
+      setErrorType(rate);
+      setStatus("error");
+      amplitude.track("waluty_rate_failed", { ...sharedProps, reason: rate });
+    } else {
+      setResult(rate);
+      setStatus("success");
+      amplitude.track("waluty_rate_checked", { ...sharedProps, source: rate.source });
+    }
+  }, []);
+
+  // Auto-fetch when both valid URL params are present on first render.
+  useEffect(() => {
+    if (validUrlCurrency && validUrlDate) {
+      fetchRate(validUrlCurrency, validUrlDate);
+    }
+    // Only on mount.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSubmit = useCallback(
@@ -130,30 +183,15 @@ export function RateCalculator() {
         return;
       }
 
-      setStatus("loading");
-      setResult(null);
-      setCopied(false);
-      lastCheckedRef.current = { currency, invoiceDate };
+      // Update URL so the result is shareable.
+      const params = new URLSearchParams();
+      params.set("currency", currency);
+      params.set("date", invoiceDate);
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
 
-      const sharedProps = {
-        currency,
-        date: invoiceDate,
-        isToday: invoiceDate === todayWarsaw(),
-      };
-
-      const rate = await fetchNbpRateForInvoice(currency, invoiceDate);
-
-      if (typeof rate === "string") {
-        setErrorType(rate);
-        setStatus("error");
-        amplitude.track("waluty_rate_failed", { ...sharedProps, reason: rate });
-      } else {
-        setResult(rate);
-        setStatus("success");
-        amplitude.track("waluty_rate_checked", { ...sharedProps, source: rate.source });
-      }
+      await fetchRate(currency, invoiceDate);
     },
-    [currency, invoiceDate],
+    [currency, invoiceDate, fetchRate, router, pathname],
   );
 
   useEffect(() => {
@@ -194,9 +232,7 @@ export function RateCalculator() {
 
   return (
     <div className="space-y-8">
-      {/* Form */}
       <form onSubmit={handleSubmit} className="space-y-4 max-w-sm">
-        {/* Currency selector */}
         <div className="space-y-2">
           <label htmlFor="currency" className="block text-sm font-medium text-slate-700">
             {t("currency")}
@@ -216,7 +252,6 @@ export function RateCalculator() {
           </select>
         </div>
 
-        {/* Date input with smart formatting */}
         <div className="space-y-2">
           <label htmlFor="invoiceDate" className="block text-sm font-medium text-slate-700">
             {t("invoiceDate")}
@@ -236,7 +271,6 @@ export function RateCalculator() {
                 className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 transition-colors focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-100"
               />
             </div>
-            {/* Calendar button — hidden date input lives here so picker anchors correctly */}
             <div className="relative self-stretch">
               <button
                 type="button"
@@ -257,13 +291,13 @@ export function RateCalculator() {
                 ref={hiddenDateRef}
                 type="date"
                 value={invoiceDate}
+                max={today}
                 onChange={handleHiddenDateChange}
                 className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
                 tabIndex={-1}
                 aria-hidden="true"
               />
             </div>
-            {/* Today button */}
             <button
               type="button"
               onClick={handleTodayClick}
@@ -277,7 +311,6 @@ export function RateCalculator() {
           </p>
         </div>
 
-        {/* Submit button */}
         <button
           type="submit"
           disabled={!isFormValid || status === "loading" || isAlreadyShown}
@@ -287,7 +320,6 @@ export function RateCalculator() {
         </button>
       </form>
 
-      {/* Result */}
       {status === "success" && result && (
         <div className="rounded-2xl border border-emerald-200 bg-emerald-50/50 p-6 space-y-4">
           <h2 className="text-2xl font-bold text-slate-900">{t("result.title")}</h2>
@@ -344,7 +376,6 @@ export function RateCalculator() {
         </div>
       )}
 
-      {/* Error */}
       {status === "error" && (
         <div className="rounded-2xl border border-rose-200 bg-rose-50/50 p-6 space-y-2">
           <h2 className="text-lg font-bold text-slate-900">{t("error.title")}</h2>
@@ -352,5 +383,13 @@ export function RateCalculator() {
         </div>
       )}
     </div>
+  );
+}
+
+export function RateCalculator() {
+  return (
+    <Suspense>
+      <RateCalculatorInner />
+    </Suspense>
   );
 }

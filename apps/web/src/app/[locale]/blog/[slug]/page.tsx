@@ -9,9 +9,11 @@ import {
   buildContentLocalePaths,
   buildContentPath,
   buildHreflangAlternates,
+  buildLocalizedCanonical,
   extractHeadings,
   getContentItemWithFallback,
   listSlugs,
+  resolveContentRedirect,
 } from "@/lib/content";
 import { compileMDXContent } from "@/lib/compile-mdx";
 import { buildArticleSchema } from "@/lib/structured-data";
@@ -35,19 +37,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const { item } = result;
 
-  // Canonical: use the localized slug if available, otherwise fall back to the PL URL.
-  // This ensures old PL-slug URLs accessed via EN/UK don't self-canonicalize incorrectly.
-  let canonical: string;
-  if (item.frontmatter.seo?.canonical) {
-    canonical = item.frontmatter.seo.canonical;
-  } else {
-    const localizedSlug = item.frontmatter.translations?.[locale as "pl" | "en" | "uk"];
-    if (localizedSlug) {
-      canonical = buildContentPath(locale, "blog", localizedSlug);
-    } else {
-      canonical = buildContentPath("pl", "blog", item.frontmatter.translations?.pl ?? slug);
-    }
-  }
+  const canonical = buildLocalizedCanonical(locale, "blog", slug, item.frontmatter);
   const hreflang = buildHreflangAlternates("blog", item.frontmatter.translations);
   const ogLocaleMap: Record<string, string> = { en: "en_US", uk: "uk_UA" };
   const ogLocale = ogLocaleMap[locale] ?? "pl_PL";
@@ -86,12 +76,15 @@ export default async function BlogPostPage({ params }: Props) {
 
   const { item, contentLocale } = result;
 
-  // Redirect old/wrong slugs to the correct translated URL for this locale.
-  if (contentLocale !== locale) {
-    const correctSlug = item.frontmatter.translations?.[locale as "pl" | "en" | "uk"];
-    if (correctSlug && correctSlug !== slug) {
-      redirect(buildContentPath(locale, "blog", correctSlug));
-    }
+  const redirectPath = resolveContentRedirect(
+    locale,
+    "blog",
+    slug,
+    contentLocale,
+    item.frontmatter,
+  );
+  if (redirectPath) {
+    redirect(redirectPath);
   }
 
   const headings = extractHeadings(item.content);

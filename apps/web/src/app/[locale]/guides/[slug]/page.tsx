@@ -9,9 +9,11 @@ import {
   buildContentLocalePaths,
   buildContentPath,
   buildHreflangAlternates,
+  buildLocalizedCanonical,
   extractHeadings,
   getContentItemWithFallback,
   listSlugs,
+  resolveContentRedirect,
 } from "@/lib/content";
 import { compileMDXContent } from "@/lib/compile-mdx";
 import { buildHowToSchema } from "@/lib/structured-data";
@@ -35,17 +37,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const { item } = result;
 
-  let canonical: string;
-  if (item.frontmatter.seo?.canonical) {
-    canonical = item.frontmatter.seo.canonical;
-  } else {
-    const localizedSlug = item.frontmatter.translations?.[locale as "pl" | "en" | "uk"];
-    if (localizedSlug) {
-      canonical = buildContentPath(locale, "guides", localizedSlug);
-    } else {
-      canonical = buildContentPath("pl", "guides", item.frontmatter.translations?.pl ?? slug);
-    }
-  }
+  const canonical = buildLocalizedCanonical(locale, "guides", slug, item.frontmatter);
   const hreflang = buildHreflangAlternates("guides", item.frontmatter.translations);
   const ogLocaleMap: Record<string, string> = { en: "en_US", uk: "uk_UA" };
   const ogLocale = ogLocaleMap[locale] ?? "pl_PL";
@@ -84,11 +76,15 @@ export default async function GuidePage({ params }: Props) {
 
   const { item, contentLocale } = result;
 
-  if (contentLocale !== locale) {
-    const correctSlug = item.frontmatter.translations?.[locale as "pl" | "en" | "uk"];
-    if (correctSlug && correctSlug !== slug) {
-      redirect(buildContentPath(locale, "guides", correctSlug));
-    }
+  const redirectPath = resolveContentRedirect(
+    locale,
+    "guides",
+    slug,
+    contentLocale,
+    item.frontmatter,
+  );
+  if (redirectPath) {
+    redirect(redirectPath);
   }
 
   const headings = extractHeadings(item.content);

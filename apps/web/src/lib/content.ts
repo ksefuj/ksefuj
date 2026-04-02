@@ -225,6 +225,47 @@ export function buildContentLocalePaths(
   );
 }
 
+/**
+ * Resolve the canonical URL for a content page, respecting localized slugs.
+ * Falls back to the PL URL when no localized slug exists.
+ */
+export function buildLocalizedCanonical(
+  locale: string,
+  section: string,
+  slug: string,
+  frontmatter: Frontmatter,
+): string {
+  if (frontmatter.seo?.canonical) {
+    return frontmatter.seo.canonical;
+  }
+  const localizedSlug = frontmatter.translations?.[locale as "pl" | "en" | "uk"];
+  if (localizedSlug) {
+    return buildContentPath(locale, section, localizedSlug);
+  }
+  return buildContentPath("pl", section, frontmatter.translations?.pl ?? slug);
+}
+
+/**
+ * Return the redirect path when a content item was served under the wrong locale slug,
+ * or null if no redirect is needed.
+ */
+export function resolveContentRedirect(
+  locale: string,
+  section: string,
+  slug: string,
+  contentLocale: string,
+  frontmatter: Frontmatter,
+): string | null {
+  if (contentLocale === locale) {
+    return null;
+  }
+  const correctSlug = frontmatter.translations?.[locale as "pl" | "en" | "uk"];
+  if (correctSlug && correctSlug !== slug) {
+    return buildContentPath(locale, section, correctSlug);
+  }
+  return null;
+}
+
 /** Normalize a heading text string to a URL-safe anchor id. */
 export function slugifyHeading(text: string): string {
   // Decompose combined characters so diacritics can be stripped (e.g. "ą" → "a" + combining ogonek)
