@@ -94,10 +94,10 @@ To serce każdej korekty: informacja, **którą fakturę poprawiasz**. Musisz po
 
 Masz dwie opcje, z których musisz wybrać **dokładnie jedną**:
 
-| Sytuacja                               | Co ustawić                                            |
-| :------------------------------------- | :---------------------------------------------------- |
-| Oryginał przeszedł przez KSeF          | `NrKSeF` = `1` + pole `NrKSeFFaKorygowanej` z numerem KSeF oryginału |
-| Oryginał wystawiony przed KSeF         | `NrKSeFN` = `1` (bez `NrKSeFFaKorygowanej`)          |
+| Sytuacja                       | Co ustawić                                                           |
+| :----------------------------- | :------------------------------------------------------------------- |
+| Oryginał przeszedł przez KSeF  | `NrKSeF` = `1` + pole `NrKSeFFaKorygowanej` z numerem KSeF oryginału |
+| Oryginał wystawiony przed KSeF | `NrKSeFN` = `1` (bez `NrKSeFFaKorygowanej`)                          |
 
 <Warning>
   Podanie obu pól jednocześnie — `NrKSeF` i `NrKSeFN` — oznacza odrzucenie faktury przez system.
@@ -118,8 +118,8 @@ Konkretnie:
 
 <Warning>
   Nie wpisuj 4 500 zł na korekcie. To nie jest „nowa kwota" — to byłby błąd. KSeF traktuje kwoty na
-  korekcie jako wartość do dodania do oryginału. Jeśli wpiszesz 4 500 zamiast −500, system „doda"
-  4 500 do 5 000 — i nagle Twoja faktura opiewa na 9 500 zł.
+  korekcie jako wartość do dodania do oryginału. Jeśli wpiszesz 4 500 zamiast −500, system „doda" 4
+  500 do 5 000 — i nagle Twoja faktura opiewa na 9 500 zł.
 </Warning>
 
 Ta sama zasada dotyczy pozycji na fakturze (`FaWiersz`): wartość `P_11` to różnica, nie nowa cena. Pola opisowe (np. `P_7` — nazwa towaru/usługi) podajesz natomiast w stanie **po korekcie** — czyli z poprawną treścią.
