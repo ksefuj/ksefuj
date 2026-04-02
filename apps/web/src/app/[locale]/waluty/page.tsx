@@ -99,7 +99,17 @@ export default async function WalutyPage({ params }: Props) {
                 </h1>
                 <p className="text-lg text-slate-600 max-w-2xl">{t("description")}</p>
               </div>
-              <RateCalculator />
+              <div className="space-y-2">
+                <RateCalculator />
+                <a
+                  href="https://nbp.pl/statystyka-i-sprawozdawczosc/kursy/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-violet-600 hover:text-violet-700 underline transition-colors"
+                >
+                  {t("source")}
+                </a>
+              </div>
             </div>
 
             <WalutyExplainer locale={locale} />
