@@ -6,13 +6,17 @@ import {
   type KeyboardEvent,
   useCallback,
   useEffect,
-  useMemo,
   useRef,
   useState,
 } from "react";
 import { useTranslations } from "next-intl";
 import * as amplitude from "@amplitude/unified";
-import { fetchNbpRateForInvoice, type NbpFetchError, type NbpRateResult } from "@/lib/nbp";
+import {
+  fetchNbpRateForInvoice,
+  type NbpFetchError,
+  type NbpRateResult,
+  todayWarsaw,
+} from "@/lib/nbp";
 
 const CURRENCIES = [
   "EUR",
@@ -53,17 +57,11 @@ function isCompleteDate(value: string): boolean {
   return /^\d{4}-\d{2}-\d{2}$/.test(value);
 }
 
-function todayISO(): string {
-  const d = new Date();
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-}
-
 export function RateCalculator() {
   const t = useTranslations("content.waluty");
-  const today = useMemo(() => todayISO(), []);
   const [currency, setCurrency] = useState("EUR");
-  const [dateDisplay, setDateDisplay] = useState(today);
-  const [invoiceDate, setInvoiceDate] = useState(today);
+  const [dateDisplay, setDateDisplay] = useState(todayWarsaw);
+  const [invoiceDate, setInvoiceDate] = useState(todayWarsaw);
   const [status, setStatus] = useState<Status>("idle");
   const [result, setResult] = useState<NbpRateResult | null>(null);
   const [errorType, setErrorType] = useState<NbpFetchError>("no_rate");
@@ -79,12 +77,12 @@ export function RateCalculator() {
   const handleDateInput = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       const formatted = formatDateInput(e.target.value);
-      if (isCompleteDate(formatted) && formatted > today) {
+      if (isCompleteDate(formatted) && formatted > todayWarsaw()) {
         return;
       }
       updateDate(formatted);
     },
-    [today, updateDate],
+    [updateDate],
   );
 
   const handleDateKeyDown = useCallback(
@@ -108,9 +106,10 @@ export function RateCalculator() {
   }, []);
 
   const handleTodayClick = useCallback(() => {
+    const today = todayWarsaw();
     setDateDisplay(today);
     setInvoiceDate(today);
-  }, [today]);
+  }, []);
 
   const handleSubmit = useCallback(
     async (e: FormEvent) => {
@@ -127,7 +126,7 @@ export function RateCalculator() {
       const sharedProps = {
         currency,
         date: invoiceDate,
-        isToday: invoiceDate === today,
+        isToday: invoiceDate === todayWarsaw(),
       };
 
       const rate = await fetchNbpRateForInvoice(currency, invoiceDate);
@@ -142,7 +141,7 @@ export function RateCalculator() {
         amplitude.track("waluty_rate_checked", { ...sharedProps, source: rate.source });
       }
     },
-    [currency, invoiceDate, today],
+    [currency, invoiceDate],
   );
 
   useEffect(() => {
@@ -240,7 +239,6 @@ export function RateCalculator() {
                 ref={hiddenDateRef}
                 type="date"
                 value={invoiceDate}
-                max={today}
                 onChange={handleHiddenDateChange}
                 className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
                 tabIndex={-1}
