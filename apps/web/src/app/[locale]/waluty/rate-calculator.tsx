@@ -15,6 +15,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import * as amplitude from "@amplitude/unified";
 import {
   fetchNbpRateForInvoice,
+  NBP_MIN_INVOICE_DATE,
   type NbpFetchError,
   type NbpRateResult,
   todayWarsaw,
@@ -84,7 +85,10 @@ function RateCalculatorInner() {
   const urlDate = searchParams.get("date") ?? "";
   const validUrlCurrency =
     urlCurrency && (CURRENCIES as readonly string[]).includes(urlCurrency) ? urlCurrency : null;
-  const validUrlDate = urlDate && isCompleteDate(urlDate) && urlDate <= today ? urlDate : null;
+  const validUrlDate =
+    urlDate && isCompleteDate(urlDate) && urlDate >= NBP_MIN_INVOICE_DATE && urlDate <= today
+      ? urlDate
+      : null;
 
   const [currency, setCurrency] = useState(() => validUrlCurrency ?? loadCurrency());
   const [dateDisplay, setDateDisplay] = useState(() => validUrlDate ?? today);
@@ -104,7 +108,10 @@ function RateCalculatorInner() {
   const handleDateInput = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       const formatted = formatDateInput(e.target.value);
-      if (isCompleteDate(formatted) && formatted > todayWarsaw()) {
+      if (
+        isCompleteDate(formatted) &&
+        (formatted > todayWarsaw() || formatted < NBP_MIN_INVOICE_DATE)
+      ) {
         return;
       }
       updateDate(formatted);
@@ -128,8 +135,8 @@ function RateCalculatorInner() {
 
   const handleHiddenDateChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
-    // Picker UI already prevents future dates via max attr, but double-check.
-    if (val > todayWarsaw()) {
+    // Picker UI already prevents out-of-range dates via min/max attrs, but double-check.
+    if (val > todayWarsaw() || val < NBP_MIN_INVOICE_DATE) {
       return;
     }
     setDateDisplay(val);
@@ -291,6 +298,7 @@ function RateCalculatorInner() {
                 ref={hiddenDateRef}
                 type="date"
                 value={invoiceDate}
+                min={NBP_MIN_INVOICE_DATE}
                 max={today}
                 onChange={handleHiddenDateChange}
                 className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"

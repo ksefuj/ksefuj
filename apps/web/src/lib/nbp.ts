@@ -17,6 +17,12 @@ import type { CurrencyRate } from "@ksefuj/validator";
 const NBP_API_BASE = "https://api.nbp.pl/api/exchangerates/rates/A";
 const LOOKBACK_DAYS = 10;
 
+/** Earliest date for which NBP Table A rates are available. */
+export const NBP_MIN_DATE = "2002-01-02";
+
+/** Earliest invoice date that can yield a valid NBP rate (one day after NBP_MIN_DATE). */
+export const NBP_MIN_INVOICE_DATE = "2002-01-03";
+
 /** Cached formatter — en-CA produces YYYY-MM-DD, Europe/Warsaw ties dates to the Polish calendar. */
 const warsawFormatter = new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Warsaw" });
 
@@ -51,6 +57,10 @@ interface RawRate {
  * null means NBP was queried for this date but published no rate (weekend/holiday).
  */
 type RateStore = Record<string, RawRate | null>;
+
+function clampToNbpEra(date: string): string {
+  return date < NBP_MIN_DATE ? NBP_MIN_DATE : date;
+}
 
 function subtractDays(dateStr: string, days: number): string {
   const date = new Date(`${dateStr}T12:00:00Z`); // noon UTC keeps the same calendar date in any timezone
@@ -184,8 +194,12 @@ export async function fetchCurrencyRateTable(
   await Promise.all(
     Array.from(byCurrency.entries()).map(async ([currency, dates]) => {
       const sorted = [...dates].sort();
-      const rangeStart = subtractDays(sorted[0], LOOKBACK_DAYS);
+      const rangeStart = clampToNbpEra(subtractDays(sorted[0], LOOKBACK_DAYS));
       const rangeEnd = subtractDays(sorted[sorted.length - 1], 1);
+      if (rangeEnd < NBP_MIN_DATE) {
+        table[currency] = [];
+        return;
+      }
 
       const result = await getOrFetch(currency, rangeStart, rangeEnd);
       table[currency] = result
@@ -218,8 +232,11 @@ export async function fetchNbpRateForInvoice(
     return "no_rate";
   }
 
-  const rangeStart = subtractDays(invoiceDate, LOOKBACK_DAYS);
   const rangeEnd = subtractDays(invoiceDate, 1);
+  if (rangeEnd < NBP_MIN_DATE) {
+    return "no_rate";
+  }
+  const rangeStart = clampToNbpEra(subtractDays(invoiceDate, LOOKBACK_DAYS));
 
   const result = await getOrFetch(currency, rangeStart, rangeEnd);
   if (!result) {
