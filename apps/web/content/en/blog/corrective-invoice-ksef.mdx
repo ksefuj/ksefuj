@@ -1,0 +1,298 @@
+---
+title: "Corrective Invoices in KSeF — How to Fix a Mistake"
+description: "Made an error on a KSeF invoice? You can't edit it — you need to issue a correction. Step-by-step guide, common pitfalls, and a complete XML example."
+date: 2026-04-02
+section: blog
+locale: en
+slug: "corrective-invoice-ksef"
+translationOf: "faktura-korygujaca-ksef"
+tags: ["KSeF", "Invoice", "VAT"]
+sources:
+  - label: "FA(3) Information Sheet, March 2026"
+    url: "https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "FAQ MF — KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
+  - label: "FA(3) XSD Schema"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/"
+  - label: "Art. 106j Polish VAT Act (corrective invoices)"
+    url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
+translations:
+  pl: "faktura-korygujaca-ksef"
+  en: "corrective-invoice-ksef"
+  uk: "koryguvalna-faktura-ksef"
+---
+
+Wrong amount on an invoice. Pricing mistake on a service. And KSeF (Krajowy System e-Faktur — Poland's National e-Invoicing System) has no "edit" button.
+
+That's by design. Every invoice in KSeF is immutable. Once submitted, it cannot be deleted or overwritten. But mistakes happen — especially in the early days after [mandatory KSeF went live](/blog/ksef-ruszyl). The fix is the same as it was before KSeF: a **corrective invoice**. The mechanism hasn't changed — only the format has. Corrections now go through the system as an XML file in the FA(3) schema, just like any other invoice.
+
+Below — step by step, calmly and without drama.
+
+---
+
+## What You Can Correct (and What You Can't)
+
+A corrective invoice can fix nearly anything on the original document:
+
+- net amount, VAT, and gross total,
+- quantity, unit price,
+- VAT rate,
+- description of goods or services,
+- date of supply,
+- buyer's name and address.
+
+One field is the **exception: the buyer's NIP** (tax identification number). If you entered the wrong company's NIP on the original invoice, a standard correction won't do. You need to issue a zero-value correction that cancels the entire invoice, then issue a brand-new invoice with the correct NIP. More on that — [below](#zero-value-correction-when-the-nip-is-wrong).
+
+<Info>
+  The rules for issuing corrective invoices come from Art. 106j of the Polish VAT Act. KSeF doesn't
+  introduce new types of corrections — it carries existing rules into an electronic format.
+</Info>
+
+<Source
+  href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
+  label="Art. 106j Polish VAT Act (corrective invoices)"
+/>
+
+---
+
+## Step by Step — Correcting an Amount
+
+Here's the scenario: you issued invoice FV/001/04/2026 for 5,000 zł net (23% VAT) for a graphic design project — a visual identity for your client. It should have been 4,500 zł. The difference is −500 zł net.
+
+Here's what you need to do. If you use invoicing software (Fakturownia, inFakt, wFirma, or similar) — most of these steps happen automatically when you select "issue correction". Below, we explain what happens under the bonnet — so you know what your software is doing on your behalf.
+
+### Step 1: Invoice type — `KOR`
+
+Instead of a standard VAT invoice, the document must be flagged as a correction. In the XML structure, this means the `RodzajFaktury` field is set to `KOR` — rather than `VAT`, which you'd see on a regular invoice. Your software does this automatically when you choose "corrective invoice".
+
+### Step 2: Reason for correction — `PrzyczynaKorekty`
+
+A brief description of why you're correcting — e.g. "Incorrect service price". This field is technically optional in the FA(3) schema, but filling it in is good practice. The tax office may ask for an explanation, and your counterparty will appreciate a clear note on the document.
+
+### Step 3: Correction period — `TypKorekty`
+
+This field (optional in the schema, but important for VAT settlement) determines when the correction affects your VAT return:
+
+- **`1`** — the correction takes effect in the period of the original invoice (retrospective correction),
+- **`2`** — the correction takes effect in the period when the correction is issued (current-period correction),
+- **`3`** — the correction takes effect in a different period (including when dates differ across individual line items).
+
+For a straightforward amount correction — like this one — the most common choice is `2`. If you're not sure, ask your accountant. The `TypKorekty` value determines which VAT return the correction falls into, so it has real tax consequences.
+
+<Tip>
+  Most invoicing software selects `TypKorekty` automatically based on the type of correction. If
+  yours doesn't — make sure you know which value to pick. For a simple amount correction, `2` is the
+  safe default.
+</Tip>
+
+### Step 4: Reference to the original — `DaneFaKorygowanej`
+
+This is the heart of every correction: the information about **which invoice you're fixing**. You need to provide:
+
+- **issue date of the original** — `DataWystFaKorygowanej`,
+- **number of the original** — `NrFaKorygowanej`,
+- **KSeF number information** — and here's the catch.
+
+You have two options, and you must choose **exactly one**:
+
+| Situation                        | What to set                                                                  |
+| :------------------------------- | :--------------------------------------------------------------------------- |
+| Original was issued through KSeF | `NrKSeF` = `1` + `NrKSeFFaKorygowanej` field with the original's KSeF number |
+| Original was issued before KSeF  | `NrKSeFN` = `1` (without `NrKSeFFaKorygowanej`)                              |
+
+<Warning>
+  Setting both fields — `NrKSeF` and `NrKSeFN` — at the same time means the system rejects your
+  invoice. You must choose one or the other. Not both.
+</Warning>
+
+In our example, invoice FV/001/04/2026 was issued on 1 April through KSeF, so we set `NrKSeF` to `1` and provide its KSeF number in the `NrKSeFFaKorygowanej` field.
+
+### Step 5: Amounts as a difference (delta)
+
+This is the **single most common mistake** with KSeF corrections. The amounts on a corrective invoice are not the new correct value — they're the **difference** between what was and what should be.
+
+Specifically:
+
+- Original invoice: **5,000 zł** net, **1,150 zł** VAT (23%), **6,150 zł** gross
+- Should be: **4,500 zł** net, **1,035 zł** VAT, **5,535 zł** gross
+- On the correction you enter: **−500.00 zł** net, **−115.00 zł** VAT, **−615.00 zł** gross
+
+<Warning>
+  Do not enter 4,500 zł on the correction. That is not "the new amount" — it would be an error. KSeF
+  treats the amounts on a correction as a value to add to the original. If you enter 4,500 instead
+  of −500, the system "adds" 4,500 to 5,000 — and suddenly your invoice reads 9,500 zł.
+</Warning>
+
+The same rule applies to line items (`FaWiersz`): the `P_11` value is a difference, not the new price. Descriptive fields (e.g. `P_7` — name of goods/services), on the other hand, should reflect the state **after** correction — i.e. the corrected text.
+
+There is also an alternative method for correcting line items — "before/after" using the `StanPrzed` field. With this method, you provide two rows: one with the original data (marked `StanPrzed=1`) and one with the corrected data. This method is more verbose — in this article we focus on the simpler delta method.
+
+### Step 6: Validate and send
+
+A corrective invoice has more required fields than a standard VAT invoice — it's easier to miss something. Before you send the correction to KSeF, make sure everything checks out.
+
+If your software doesn't validate corrections before submission — drop the XML file into [ksefuj.to](/) to check compliance with MF requirements, including the consistency of reference fields to the original. We've covered the [most common FA(3) validation errors](/blog/najczestsze-bledy-walidacji-fa3) in a separate article.
+
+---
+
+## Zero-Value Correction — When the NIP Is Wrong
+
+Put the wrong company's NIP on an invoice? A standard correction won't cut it — the FA(3) structure doesn't allow you to swap the buyer's NIP on a corrective invoice.
+
+The only solution requires **two documents**:
+
+1. **Zero-value correction** — a corrective invoice that "zeroes out" the entire original. All amounts with a minus sign, equal to the values on the original. The result: original + zero-value correction = 0 zł.
+2. **New invoice** — with the correct buyer NIP, for the correct amount. An entirely new document in KSeF.
+
+This is the only scenario where you need to issue two documents instead of one. No invoicing software will "swap" a NIP with a single click — the procedure is the same regardless of the tool.
+
+<Info>
+  A zero-value correction is not an annulment. In KSeF, both documents — the original and the
+  zero-value correction — remain visible permanently. "Annulment" here simply means their combined
+  value is zero.
+</Info>
+
+---
+
+## Correcting a Pre-KSeF Invoice
+
+Correcting an invoice that was issued before 1 April 2026 — i.e. before KSeF became mandatory for you? Two things to know:
+
+**First:** in the `DaneFaKorygowanej` section, you set `NrKSeFN` to `1` instead of providing `NrKSeF` and `NrKSeFFaKorygowanej`. The reason is simple — the original has no KSeF number because it never went through the system.
+
+**Second:** the correction itself **must** be in FA(3) format. There is no such thing as "a correction in FA(2)". The old schema expired on 31 January 2026 and KSeF will not accept it in any form. Even if the invoice being corrected dates from the FA(2) era — the correction goes in FA(3).
+
+For a detailed comparison of both schemas, see [FA(2) vs FA(3) — What Changed](/blog/fa2-vs-fa3-ksef).
+
+---
+
+## Common Pitfalls
+
+### Amounts instead of differences
+
+The most common mistake we see with corrections. On a corrective invoice you enter the **difference** (delta), not the new value. If you enter 4,500 zł instead of −500 zł, the system treats it as adding 4,500 zł to the original. Result: an invoice for 9,500 zł instead of 4,500 zł.
+
+### `NrKSeF` and `NrKSeFN` at the same time
+
+You must choose one: either the original invoice has a KSeF number (and you provide it), or it doesn't (because it was issued before KSeF). Both fields at once — rejection. No exceptions.
+
+### Correcting a NIP with a standard correction
+
+Not possible. The FA(3) structure doesn't support changing the buyer's NIP via a standard correction. The only route: zero-value correction + new invoice with the correct NIP.
+
+### Missing reason for correction
+
+The `PrzyczynaKorekty` field isn't required by the schema — your correction will pass validation without it. But the tax office may ask for an explanation, and your counterparty will appreciate a clear document. Entering a short description (e.g. "Incorrect service price") takes three seconds and saves headaches if you're ever audited.
+
+### Typo in the original's KSeF number
+
+If you're correcting an invoice that went through KSeF — copy the original's KSeF number exactly as you received it. The number has the format `NIP-DATE-XXXXXX-YYYYYY-ZZ` and it's long — easy to get wrong when typing manually. An incorrect number prevents the system from linking the correction to the original.
+
+<Tip>
+  If your software generates the correction XML automatically, drop the finished file into
+  [ksefuj.to](/) — the validator checks the consistency of reference fields to the original, among
+  other things, before you send it to KSeF.
+</Tip>
+
+---
+
+## XML Example — Complete Correction
+
+Below is the full XML for the corrective invoice in our scenario: Ania Kowalska (JDG (sole trader), graphic designer) corrects invoice FV/001/04/2026 by −500 zł net for a graphic design project, at 23% VAT.
+
+<XmlExample copyable>
+  ```xml
+  <?xml version="1.0" encoding="UTF-8"?>
+  <Faktura xmlns="http://crd.gov.pl/wzor/2025/06/25/13775/">
+    <Naglowek>
+      <KodFormularza kodSystemowy="FA (3)" wersjaSchemy="1-0E">FA</KodFormularza>
+      <WariantFormularza>3</WariantFormularza>
+      <DataWytworzeniaFa>2026-04-02T10:00:00Z</DataWytworzeniaFa>
+    </Naglowek>
+    <Podmiot1>
+      <DaneIdentyfikacyjne>
+        <NIP>5214567890</NIP>
+        <Nazwa>Ania Kowalska Grafika</Nazwa>
+      </DaneIdentyfikacyjne>
+      <Adres>
+        <KodKraju>PL</KodKraju>
+        <AdresL1>ul. Kwiatowa 12</AdresL1>
+        <AdresL2>00-123 Warszawa</AdresL2>
+      </Adres>
+    </Podmiot1>
+    <Podmiot2>
+      <DaneIdentyfikacyjne>
+        <NIP>7891234560</NIP>
+        <Nazwa>Klient Sp. z o.o.</Nazwa>
+      </DaneIdentyfikacyjne>
+      <Adres>
+        <KodKraju>PL</KodKraju>
+        <AdresL1>ul. Handlowa 5</AdresL1>
+        <AdresL2>30-002 Kraków</AdresL2>
+      </Adres>
+      <JST>2</JST>
+      <GV>2</GV>
+    </Podmiot2>
+    <Fa>
+      <KodWaluty>PLN</KodWaluty>
+      <P_1>2026-04-02</P_1>
+      <P_2>FV/001K/04/2026</P_2>
+      <P_13_1>-500.00</P_13_1>
+      <P_14_1>-115.00</P_14_1>
+      <P_15>-615.00</P_15>
+      <Adnotacje>
+        <P_16>2</P_16>
+        <P_17>2</P_17>
+        <P_18>2</P_18>
+        <P_18A>2</P_18A>
+        <Zwolnienie><P_19N>1</P_19N></Zwolnienie>
+        <NoweSrodkiTransportu><P_22N>1</P_22N></NoweSrodkiTransportu>
+        <P_23>2</P_23>
+        <PMarzy><P_PMarzyN>1</P_PMarzyN></PMarzy>
+      </Adnotacje>
+      <RodzajFaktury>KOR</RodzajFaktury>
+      <PrzyczynaKorekty>Błędna cena usługi</PrzyczynaKorekty>
+      <TypKorekty>2</TypKorekty>
+      <DaneFaKorygowanej>
+        <DataWystFaKorygowanej>2026-04-01</DataWystFaKorygowanej>
+        <NrFaKorygowanej>FV/001/04/2026</NrFaKorygowanej>
+        <NrKSeF>1</NrKSeF>
+        <NrKSeFFaKorygowanej>5214567890-20260401-000001-000001-01</NrKSeFFaKorygowanej>
+      </DaneFaKorygowanej>
+      <FaWiersz>
+        <NrWierszaFa>1</NrWierszaFa>
+        <P_7>Projekt graficzny — identyfikacja wizualna</P_7>
+        <P_8B>1</P_8B>
+        <P_9A>-500.00</P_9A>
+        <P_11>-500.00</P_11>
+        <P_12>23</P_12>
+      </FaWiersz>
+    </Fa>
+  </Faktura>
+  ```
+</XmlExample>
+
+Key elements to note:
+
+- **`RodzajFaktury`** = `KOR` — marks this as a corrective invoice, not a new one,
+- **`DaneFaKorygowanej`** — references the original: issue date, invoice number, KSeF number,
+- **`P_13_1`**, **`P_14_1`**, **`P_15`** — negative amounts, because these are **differences** (deltas), not new values,
+- **`FaWiersz`** with a negative `P_11` value — the correction applies to a specific line item on the invoice.
+
+<Source href="https://crd.gov.pl/wzor/2025/06/25/13775/" label="FA(3) XSD Schema — CRD" />
+
+---
+
+## Summary
+
+A correction in KSeF is a regular invoice flagged as `KOR`, with a reference to the original in `DaneFaKorygowanej`. Three things you must not forget:
+
+1. **Amounts are deltas** — the difference between the actual and the correct value, not "the new amount".
+2. **The original's KSeF number is mandatory** — either `NrKSeF` + `NrKSeFFaKorygowanej`, or `NrKSeFN` for pre-KSeF invoices. Never both at once.
+3. **You can't fix a NIP with a standard correction** — you need a zero-value correction and a new invoice.
+
+If this is your first correction in KSeF — validate the file at [ksefuj.to](/) before sending. We've covered the most common validation errors (not just for corrections) in the article [Most Common FA(3) Validation Errors](/blog/najczestsze-bledy-walidacji-fa3).
+
+For a comprehensive overview of KSeF obligations, see our [full compendium](/blog/ksef-od-1-kwietnia-2026), and for answers to the most common questions — check the [FAQ](/faq).
+
+<Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20" label="FAQ MF — KSeF 2.0" />

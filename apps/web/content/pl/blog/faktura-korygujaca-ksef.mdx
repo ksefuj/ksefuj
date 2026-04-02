@@ -1,0 +1,296 @@
+---
+title: "Faktura korygująca w KSeF — jak poprawić błąd"
+description: "Błąd na fakturze w KSeF? Nie da się edytować — trzeba wystawić korektę. Jak to zrobić krok po kroku, na co uważać i gotowy przykład XML."
+date: 2026-04-02
+section: blog
+locale: pl
+slug: "faktura-korygujaca-ksef"
+tags: ["KSeF", "Faktura", "VAT"]
+sources:
+  - label: "Broszura informacyjna FA(3), marzec 2026"
+    url: "https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "FAQ MF — KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
+  - label: "Schemat XSD FA(3)"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/"
+  - label: "Art. 106j ustawy o VAT"
+    url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
+translations:
+  pl: "faktura-korygujaca-ksef"
+  en: "corrective-invoice-ksef"
+  uk: "koryguvalna-faktura-ksef"
+---
+
+Zła kwota na fakturze. Pomyłka w cenie usługi. A system KSeF nie ma przycisku „edytuj”.
+
+I dobrze — tak to zostało zaprojektowane. Każda faktura w KSeF jest niezmienna. Raz wysłana, nie da się jej skasować ani nadpisać. Ale błędy się zdarzają, zwłaszcza w pierwszych dniach po [starcie obowiązkowego KSeF](/blog/ksef-ruszyl). Rozwiązanie jest to samo co przed KSeF: **faktura korygująca**. Mechanizm się nie zmienił — zmienił się format. Teraz korekta też musi przejść przez system jako plik XML w schemacie FA(3).
+
+Poniżej — krok po kroku, spokojnie i bez paniki.
+
+---
+
+## Co możesz skorygować, a czego nie
+
+Fakturą korygującą poprawisz prawie wszystko na dokumencie:
+
+- kwotę netto, VAT i brutto,
+- ilość, cenę jednostkową,
+- stawkę VAT,
+- opis towaru lub usługi,
+- datę sprzedaży,
+- nazwę i adres nabywcy.
+
+Jedno pole jest **wyjątkiem: NIP nabywcy**. Jeśli na fakturze wpisałeś NIP innej firmy — zwykła korekta nie wystarczy. Musisz wystawić korektę zerującą całą fakturę, a potem nową fakturę z prawidłowym NIP-em. Więcej o tym — [niżej](#korekta-do-zera-gdy-nip-jest-bledny).
+
+<Info>
+  Zasady wystawiania korekt wynikają z art. 106j ustawy o VAT. KSeF nie wprowadza nowych rodzajów
+  korekt — przenosi istniejące reguły do formatu elektronicznego.
+</Info>
+
+<Source
+  href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
+  label="Art. 106j ustawy o VAT"
+/>
+
+---
+
+## Krok po kroku — korekta kwoty
+
+Wyobraź sobie: wystawiłaś fakturę FV/001/04/2026 na 5 000 zł netto (23% VAT) za projekt graficzny — identyfikację wizualną dla klienta. Powinno być 4 500 zł. Różnica to −500 zł netto.
+
+Oto co musisz zrobić. Jeśli korzystasz z programu do fakturowania (Fakturownia, inFakt, wFirma i inne) — większość tych kroków wykona się automatycznie, gdy wybierzesz opcję „wystawienie korekty”. Poniżej wyjaśniamy, co dzieje się „pod spodem” — żebyś wiedziała, co program robi w Twoim imieniu.
+
+### Krok 1: Typ faktury — `KOR`
+
+Zamiast zwykłej faktury VAT, dokument musi być oznaczony jako korekta. W strukturze XML to pole `RodzajFaktury` ustawione na wartość `KOR` — zamiast `VAT`, które widzisz na zwykłej fakturze. Twój program zrobi to automatycznie, gdy wybierzesz „faktura korygująca”.
+
+### Krok 2: Przyczyna korekty — `PrzyczynaKorekty`
+
+Krótki opis, dlaczego koregujesz — np. „Błędna cena usługi”. To pole jest technicznie opcjonalne w schemacie FA(3), ale wypełnienie go to dobra praktyka. Urząd skarbowy może poprosić o wyjaśnienie przyczyny korekty, a Twój kontrahent doceni jasną informację na dokumencie.
+
+### Krok 3: Okres korekty — `TypKorekty`
+
+To pole (opcjonalne w schemacie, ale istotne dla rozliczenia VAT) określa, kiedy korekta wpływa na rozliczenie:
+
+- **`1`** — korekta skutkuje w dacie ujęcia faktury pierwotnej (korekta „wstecz”),
+- **`2`** — korekta skutkuje w dacie wystawienia korekty (korekta „bieżąca”),
+- **`3`** — korekta skutkuje w innej dacie (w tym gdy daty różnią się dla poszczególnych pozycji).
+
+Przy prostej korekcie kwoty — jak tutaj — najczęstszym wyborem jest `2`. Jeśli nie jesteś pewna — zapytaj swoją księgową. Wybór `TypKorekty` wpływa na to, w której deklaracji VAT ujmiesz korektę, więc ma realne konsekwencje podatkowe.
+
+<Tip>
+  Większość programów do fakturowania dobiera `TypKorekty` automatycznie na podstawie rodzaju
+  korekty. Jeśli Twój program tego nie robi — upewnij się, że wiesz, którą wartość wybrać. W
+  przypadku prostej korekty kwoty — `2` to bezpieczny domyślny wybór.
+</Tip>
+
+### Krok 4: Odniesienie do oryginału — `DaneFaKorygowanej`
+
+To serce każdej korekty: informacja, **którą fakturę poprawiasz**. Musisz podać:
+
+- **datę wystawienia oryginału** — `DataWystFaKorygowanej`,
+- **numer oryginału** — `NrFaKorygowanej`,
+- **informację o numerze KSeF** — tu jest pułapka.
+
+Masz dwie opcje, z których musisz wybrać **dokładnie jedną**:
+
+| Sytuacja                       | Co ustawić                                                           |
+| :----------------------------- | :------------------------------------------------------------------- |
+| Oryginał przeszedł przez KSeF  | `NrKSeF` = `1` + pole `NrKSeFFaKorygowanej` z numerem KSeF oryginału |
+| Oryginał wystawiony przed KSeF | `NrKSeFN` = `1` (bez `NrKSeFFaKorygowanej`)                          |
+
+<Warning>
+  Podanie obu pól jednocześnie — `NrKSeF` i `NrKSeFN` — oznacza odrzucenie faktury przez system.
+  Musisz wybrać jedno albo drugie. Nie oba.
+</Warning>
+
+W naszym przykładzie faktura FV/001/04/2026 została wystawiona 1 kwietnia przez KSeF, więc ustawiamy `NrKSeF` na `1` i podajemy jej numer KSeF w polu `NrKSeFFaKorygowanej`.
+
+### Krok 5: Kwoty jako różnica (delta)
+
+To **najczęstsza pomyłka** przy korektach w KSeF. Kwoty na fakturze korygującej to nie nowa prawidłowa wartość — to **różnica** między tym, co było, a tym, co powinno być.
+
+Konkretnie:
+
+- Pierwotna faktura: **5 000 zł** netto, **1 150 zł** VAT (23%), **6 150 zł** brutto
+- Powinno być: **4 500 zł** netto, **1 035 zł** VAT, **5 535 zł** brutto
+- Na korekcie wpisujesz: **−500,00 zł** netto, **−115,00 zł** VAT, **−615,00 zł** brutto
+
+<Warning>
+  Nie wpisuj 4 500 zł na korekcie. To nie jest „nowa kwota” — to byłby błąd. KSeF traktuje kwoty na
+  korekcie jako wartość do dodania do oryginału. Jeśli wpiszesz 4 500 zamiast −500, system „doda” 4
+  500 do 5 000 — i nagle Twoja faktura opiewa na 9 500 zł.
+</Warning>
+
+Ta sama zasada dotyczy pozycji na fakturze (`FaWiersz`): wartość `P_11` to różnica, nie nowa cena. Pola opisowe (np. `P_7` — nazwa towaru/usługi) podajesz natomiast w stanie **po korekcie** — czyli z poprawną treścią.
+
+Istnieje też alternatywna metoda korekty pozycji — „stan przed/po” z użyciem pola `StanPrzed`. W tej metodzie podajesz dwa wiersze: jeden z oryginalnymi danymi (oznaczony `StanPrzed=1`) i drugi z danymi po korekcie. Ta metoda jest bardziej rozbudowana — w tym artykule skupiamy się na prostszej metodzie delta.
+
+### Krok 6: Sprawdź i wyślij
+
+Faktura korygująca ma więcej wymaganych pól niż zwykła faktura VAT — łatwiej o przeoczenie. Zanim wyślesz korektę do KSeF, upewnij się, że wszystko się zgadza.
+
+Jeśli Twój program nie waliduje korekt przed wysyłką — wrzuć plik XML na [ksefuj.to](/) i sprawdź zgodność z wymaganiami MF, w tym spójność pól odniesienia do oryginału. [Najczęstsze błędy walidacji FA(3)](/blog/najczestsze-bledy-walidacji-fa3) opisaliśmy w osobnym artykule.
+
+---
+
+## Korekta do zera — gdy NIP jest błędny
+
+Wpisałeś na fakturze NIP innej firmy? Standardowa korekta tu nie wystarczy — struktura FA(3) nie pozwala „podmienić” NIP-u nabywcy na korekcie.
+
+Jedyne rozwiązanie wymaga **dwóch dokumentów**:
+
+1. **Korekta zerująca** — faktura korygująca, która „zeruje” całą pierwotną fakturę. Wszystkie kwoty ze znakiem minus, równe wartościom z oryginału. W efekcie: oryginał + korekta zerująca = 0 zł.
+2. **Nowa faktura** — z prawidłowym NIP-em nabywcy, na prawidłową kwotę. Zupełnie nowy dokument w KSeF.
+
+To jedyny scenariusz, w którym musisz wystawić dwa dokumenty zamiast jednego. Żaden program do fakturowania nie „podmieni” NIP-u jednym kliknięciem — procedura jest taka sama niezależnie od narzędzia.
+
+<Info>
+  Korekta do zera to nie anulowanie faktury. W systemie KSeF oba dokumenty — oryginał i korekta
+  zerująca — pozostają widoczne na zawsze. „Anulowanie” oznacza tu jedynie, że ich łączna wartość
+  wynosi zero.
+</Info>
+
+---
+
+## Korekta faktury sprzed KSeF
+
+Koregujesz fakturę wystawioną jeszcze przed 1 kwietnia 2026 — czyli zanim KSeF stał się dla Ciebie obowiązkowy? Dwie rzeczy musisz wiedzieć:
+
+**Po pierwsze:** w sekcji `DaneFaKorygowanej` ustawiasz `NrKSeFN` na `1` zamiast podawać `NrKSeF` i `NrKSeFFaKorygowanej`. Powód jest prosty — oryginał nie ma numeru KSeF, bo nigdy przez ten system nie przeszedł.
+
+**Po drugie:** sama korekta **musi** być w formacie FA(3). Nie istnieje coś takiego jak „korekta w FA(2)”. Stary schemat wygasł 31 stycznia 2026 roku i KSeF go nie przyjmie w żadnej formie. Nawet jeśli korygowana faktura pochodzi z czasów FA(2) — korekta idzie w FA(3).
+
+Szczegółowe porównanie obu schematów znajdziesz w artykule [FA(2) vs FA(3) — co się zmieniło](/blog/fa2-vs-fa3-ksef).
+
+---
+
+## Typowe pułapki
+
+### Kwoty zamiast różnic
+
+Najczęstsza pomyłka, którą widzimy przy korektach. Na fakturze korygującej wpisujesz **różnicę** (deltę), nie nową wartość. Jeśli zamiast −500 zł wpiszesz 4 500 zł — system potraktuje to jako dodanie 4 500 zł do oryginału. Efekt: faktura na 9 500 zł zamiast 4 500 zł.
+
+### `NrKSeF` i `NrKSeFN` jednocześnie
+
+Musisz wybrać jedno: albo faktura oryginalna ma numer KSeF (i podajesz go), albo nie ma (bo została wystawiona przed KSeF). Oba pola naraz — odrzucenie. Żadnych wyjątków.
+
+### Korekta NIP-u zwykłą korektą
+
+Nie da się. Struktura FA(3) nie przewiduje zmiany NIP-u nabywcy w ramach standardowej korekty. Jedyna droga: korekta do zera + nowa faktura z prawidłowym NIP-em.
+
+### Brak przyczyny korekty
+
+Pole `PrzyczynaKorekty` nie jest wymagane przez schemat — Twoja korekta przejdzie walidację bez niego. Ale urząd skarbowy może poprosić o wyjaśnienie, a kontrahent doceni czytelny dokument. Wpisanie krótkiego opisu (np. „Błędna cena usługi”) kosztuje trzy sekundy i oszczędza problemów przy ewentualnej kontroli.
+
+### Literówka w numerze KSeF oryginału
+
+Jeśli koregujesz fakturę, która przeszła przez KSeF — skopiuj numer KSeF oryginału dokładnie tak, jak go otrzymałeś. Numer ma postać `NIP-DATA-XXXXXX-YYYYYY-ZZ` i jest długi — łatwo o pomyłkę przy ręcznym przepisywaniu. Nieprawidłowy numer uniemożliwi systemowi powiązanie korekty z oryginałem.
+
+<Tip>
+  Jeśli Twój program generuje XML korekty automatycznie, wrzuć gotowy plik na [ksefuj.to](/) —
+  walidator sprawdzi m.in. spójność pól odniesienia do oryginału, zanim wyślesz do KSeF.
+</Tip>
+
+---
+
+## Przykład XML — pełna korekta
+
+Poniżej kompletny XML faktury korygującej dla naszego scenariusza: Ania Kowalska (JDG, graficzka) koryguje fakturę FV/001/04/2026 o −500 zł netto za projekt graficzny, stawka 23% VAT.
+
+<XmlExample copyable>
+  ```xml
+  <?xml version="1.0" encoding="UTF-8"?>
+  <Faktura xmlns="http://crd.gov.pl/wzor/2025/06/25/13775/">
+    <Naglowek>
+      <KodFormularza kodSystemowy="FA (3)" wersjaSchemy="1-0E">FA</KodFormularza>
+      <WariantFormularza>3</WariantFormularza>
+      <DataWytworzeniaFa>2026-04-02T10:00:00Z</DataWytworzeniaFa>
+    </Naglowek>
+    <Podmiot1>
+      <DaneIdentyfikacyjne>
+        <NIP>5214567890</NIP>
+        <Nazwa>Ania Kowalska Grafika</Nazwa>
+      </DaneIdentyfikacyjne>
+      <Adres>
+        <KodKraju>PL</KodKraju>
+        <AdresL1>ul. Kwiatowa 12</AdresL1>
+        <AdresL2>00-123 Warszawa</AdresL2>
+      </Adres>
+    </Podmiot1>
+    <Podmiot2>
+      <DaneIdentyfikacyjne>
+        <NIP>7891234560</NIP>
+        <Nazwa>Klient Sp. z o.o.</Nazwa>
+      </DaneIdentyfikacyjne>
+      <Adres>
+        <KodKraju>PL</KodKraju>
+        <AdresL1>ul. Handlowa 5</AdresL1>
+        <AdresL2>30-002 Kraków</AdresL2>
+      </Adres>
+      <JST>2</JST>
+      <GV>2</GV>
+    </Podmiot2>
+    <Fa>
+      <KodWaluty>PLN</KodWaluty>
+      <P_1>2026-04-02</P_1>
+      <P_2>FV/001K/04/2026</P_2>
+      <P_13_1>-500.00</P_13_1>
+      <P_14_1>-115.00</P_14_1>
+      <P_15>-615.00</P_15>
+      <Adnotacje>
+        <P_16>2</P_16>
+        <P_17>2</P_17>
+        <P_18>2</P_18>
+        <P_18A>2</P_18A>
+        <Zwolnienie><P_19N>1</P_19N></Zwolnienie>
+        <NoweSrodkiTransportu><P_22N>1</P_22N></NoweSrodkiTransportu>
+        <P_23>2</P_23>
+        <PMarzy><P_PMarzyN>1</P_PMarzyN></PMarzy>
+      </Adnotacje>
+      <RodzajFaktury>KOR</RodzajFaktury>
+      <PrzyczynaKorekty>Błędna cena usługi</PrzyczynaKorekty>
+      <TypKorekty>2</TypKorekty>
+      <DaneFaKorygowanej>
+        <DataWystFaKorygowanej>2026-04-01</DataWystFaKorygowanej>
+        <NrFaKorygowanej>FV/001/04/2026</NrFaKorygowanej>
+        <NrKSeF>1</NrKSeF>
+        <NrKSeFFaKorygowanej>5214567890-20260401-000001-000001-01</NrKSeFFaKorygowanej>
+      </DaneFaKorygowanej>
+      <FaWiersz>
+        <NrWierszaFa>1</NrWierszaFa>
+        <P_7>Projekt graficzny — identyfikacja wizualna</P_7>
+        <P_8B>1</P_8B>
+        <P_9A>-500.00</P_9A>
+        <P_11>-500.00</P_11>
+        <P_12>23</P_12>
+      </FaWiersz>
+    </Fa>
+  </Faktura>
+  ```
+</XmlExample>
+
+Najważniejsze fragmenty:
+
+- **`RodzajFaktury`** = `KOR` — oznacza, że to faktura korygująca, nie nowa faktura,
+- **`DaneFaKorygowanej`** — wskazuje oryginał: data wystawienia, numer faktury, numer KSeF,
+- **`P_13_1`**, **`P_14_1`**, **`P_15`** — kwoty ujemne, bo to **różnica** (delta), nie nowa wartość,
+- **`FaWiersz`** z ujemną wartością `P_11` — korekta dotyczy konkretnej pozycji na fakturze.
+
+<Source href="https://crd.gov.pl/wzor/2025/06/25/13775/" label="Schemat XSD FA(3) — CRD" />
+
+---
+
+## Podsumowanie
+
+Korekta w KSeF to zwykła faktura oznaczona jako `KOR`, z odniesieniem do oryginału w `DaneFaKorygowanej`. Trzy rzeczy, o których nie możesz zapomnieć:
+
+1. **Kwoty to delta** — różnica między stanem faktycznym a prawidłowym, nie „nowa kwota”.
+2. **Numer KSeF oryginału jest obowiązkowy** — albo `NrKSeF` + `NrKSeFFaKorygowanej`, albo `NrKSeFN` dla faktur sprzed KSeF. Nigdy oba naraz.
+3. **NIP-u nie poprawisz zwykłą korektą** — potrzebujesz korekty do zera i nowej faktury.
+
+Jeśli to Twoja pierwsza korekta w KSeF — sprawdź plik na [ksefuj.to](/) przed wysłaniem. Najczęstsze błędy walidacji (nie tylko przy korektach) opisaliśmy w artykule [Najczęstsze błędy walidacji FA(3)](/blog/najczestsze-bledy-walidacji-fa3).
+
+Kompletny przegląd obowiązków KSeF znajdziesz w [naszym kompendium](/blog/ksef-od-1-kwietnia-2026), a odpowiedzi na najczęstsze pytania — w dziale [FAQ](/faq).
+
+<Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20" label="FAQ MF — KSeF 2.0" />
