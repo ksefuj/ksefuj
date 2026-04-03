@@ -27,6 +27,9 @@ export function AmplitudeProvider() {
             formInteractions: false,
           },
         },
+        sessionReplay: {
+          optOut: true, // Completely disable session replay
+        },
       });
       initialized = true;
     } catch (error) {
