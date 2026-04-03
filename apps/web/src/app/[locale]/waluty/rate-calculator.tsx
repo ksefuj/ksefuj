@@ -332,7 +332,7 @@ function RateCalculatorInner() {
         <div className="rounded-2xl border border-emerald-200 bg-emerald-50/50 p-6 space-y-4">
           <h2 className="text-2xl font-bold text-slate-900">{t("result.title")}</h2>
 
-          <div className="flex items-end justify-between gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
             <div className="space-y-0.5">
               <p className="text-sm font-medium text-slate-600">{t("result.rate")}:</p>
               <div className="flex items-baseline gap-2">
@@ -373,7 +373,7 @@ function RateCalculatorInner() {
                 </button>
               </div>
             </div>
-            <p className="text-sm text-slate-500 text-right shrink-0">
+            <p className="text-sm text-slate-500 sm:text-right">
               {t("result.table")} {result.tableNumber} {t("result.tableDate")} {result.date}
             </p>
           </div>
