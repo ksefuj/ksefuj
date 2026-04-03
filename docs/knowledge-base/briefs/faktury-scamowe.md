@@ -115,7 +115,7 @@ validator
   (zaksięgowane/ujęte w ewidencji).
 - **Source:** Ustawa o VAT (Dz. U. z 2025 r., poz. 775 ze zm.), Art. 88 ust. 3a — **⚠️ TEXT NOT
   READ DIRECTLY.** Claim sourced from task brief description. Art. 88 ust. 3a URL:
-  https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20240000361
+  https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775
 - **Verbatim (PL):** _(Not extracted — Act text not accessible in this environment. The article
   should NOT quote Art. 88 ust. 3a verbatim without reading the current consolidated text.)_
 - **Confidence:** MEDIUM — The claim about "booking triggers tax consequences" is consistent with
@@ -465,7 +465,7 @@ validator
 1. **CRITICAL — Exact text of Art. 88 ust. 3a.** The claim that "an unbooked KSeF invoice has no
    tax effect" rests on this article. The current consolidated text of Art. 88 ust. 3a has not been
    read in this extraction. Verify at:
-   https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20240000361 (or the 2025 consolidated
+   https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775 (or the 2025 consolidated
    text poz. 775). **This is the single most important verification before publishing.**
 
 2. **Exact mechanics of the reporting form in Aplikacja Podatnika.** The Podręcznik KSeF 2.0,
@@ -596,7 +596,7 @@ records (zaksięgowane).
   deduct) is correct, but whether Art. 88 ust. 3a specifically addresses KSeF inbox presence vs.
   booking is unverified.
 - **Verification method:** Read current consolidated text of Art. 88 ust. 3a at ISAP:
-  https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20240000361
+  https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775
 - **Verdict needed from Judge:** Does Art. 88 ust. 3a, in its current text, support the claim that
   KSeF inbox presence alone has no tax effect?
 
