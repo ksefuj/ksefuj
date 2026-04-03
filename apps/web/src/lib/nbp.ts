@@ -23,12 +23,16 @@ export const NBP_MIN_DATE = "2002-01-02";
 /** Earliest invoice date that can yield a valid NBP rate (one day after NBP_MIN_DATE). */
 export const NBP_MIN_INVOICE_DATE = "2002-01-03";
 
-/** Cached formatter — en-CA produces YYYY-MM-DD, Europe/Warsaw ties dates to the Polish calendar. */
-const warsawFormatter = new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Warsaw" });
-
 /** Returns today's date in Warsaw local time (YYYY-MM-DD). */
 export function todayWarsaw(): string {
-  return warsawFormatter.format(new Date());
+  // Get Warsaw time but ensure consistent YYYY-MM-DD format across all browsers
+  // Some browsers (especially mobile Safari) don't reliably format en-CA as YYYY-MM-DD
+  const now = new Date();
+  const warsawDate = new Date(now.toLocaleString("en-US", { timeZone: "Europe/Warsaw" }));
+  const year = warsawDate.getFullYear();
+  const month = String(warsawDate.getMonth() + 1).padStart(2, "0");
+  const day = String(warsawDate.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
 }
 
 /** Extended rate with NBP table number for display purposes. */
