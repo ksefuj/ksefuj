@@ -123,6 +123,15 @@ for all FA(3) semantic rules is `packages/validator/docs/fa3-information-sheet.m
 conversion of the official 174-page MF information sheet. Always consult it before touching semantic
 validation logic.
 
+### Knowledge Base
+
+Official MF documentation is extracted into `docs/knowledge-base/briefs/`. Key briefs:
+
+- **`podrecznik-ksef-20-czesc-ii.md`** — Podręcznik KSeF 2.0 Part II: invoicing, receiving,
+  correcting, QR codes, storage. The most comprehensive single source for operational KSeF rules.
+  Consult it for corrective invoices, invoice types (ZAL/ROZ/KOR/UPR/marża), Podmiot3 roles,
+  identification rules, and the 10,000 PLN threshold details.
+
 ## Validation Architecture
 
 Three layers:
@@ -212,7 +221,7 @@ Follow official FA(3) specification (§2.6) decimal precision limits:
 
 - KSeF 1.0 (ksef.mf.gov.pl) is DEAD since Feb 1, 2026
 - Aplikacja Podatnika KSeF 2.0 (production): https://ap.ksef.mf.gov.pl/
-- Test environment (fake data, no legal effect): https://web2te-ksef.mf.gov.pl/
+- Test environment (fake data, no legal effect): https://ap-test.ksef.mf.gov.pl/web/
 - Documentation portal: https://ksef.podatki.gov.pl/
 - Schema namespace: `http://crd.gov.pl/wzor/2025/06/25/13775/`
 - XSD URL: `https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd`
@@ -241,6 +250,11 @@ Everything should be client-side wherever possible:
 The `skills/ksef-fa3/` directory contains a Claude Project skill for generating KSeF FA(3) XML from
 invoice data (PDF, text, etc.). It covers all transaction scenarios: domestic, reverse charge
 (EU/non-EU), WDT, export, VAT exemption, margin procedure.
+
+The `skills/ksef-korekta/` directory contains an interactive wizard skill for generating corrective
+invoices (KOR, KOR_ZAL, KOR_ROZ). It accepts a faulty invoice, asks targeted questions to fill gaps,
+and produces complete corrective XML — including the two-document flow for wrong-buyer-NIP
+scenarios.
 
 Skill files are also packaged as `.skill` files for distribution via GitHub Releases and MCP
 marketplace.

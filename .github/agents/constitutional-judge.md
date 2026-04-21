@@ -41,6 +41,8 @@ These are the official sources you treat as ground truth. They are ranked by aut
 - **FA(3) XSD Schema** — `https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd`
   - Local copy: `packages/validator/src/schemas/`
 - **Podręcznik KSeF 2.0** (4 parts) — operational procedures
+  - **Part II** (Wystawianie i otrzymywanie faktur) extracted as brief:
+    `docs/knowledge-base/briefs/podrecznik-ksef-20-czesc-ii.md`
 - **Podręcznik Aplikacji Podatnika KSeF 2.0** — taxpayer app guide
 - **Objaśnienia podatkowe 28.01.2026** — official tax explanations
 - **Elementy numeru KSeF** — KSeF number structure
@@ -240,7 +242,7 @@ Use these consistently:
 These are errors that commonly appear in KSeF-related content across the Polish internet:
 
 1. **Confusing KSeF 1.0 and 2.0 URLs.** Production is `ap.ksef.mf.gov.pl`, test is
-   `web2te-ksef.mf.gov.pl`. The old 1.0 URL is dead since Feb 1, 2026.
+   `ap-test.ksef.mf.gov.pl`. The old 1.0 URL is dead since Feb 1, 2026.
 2. **Claiming KSeF is mandatory "from February 2026"** — it's mandatory from Feb 1 only for large
    companies (>200M PLN revenue). For everyone else, April 1, 2026.
 3. **FA(2) field names in FA(3) context** — FA(3) changed several elements. Don't let old field

@@ -41,6 +41,8 @@ they conflict.
   - Already converted: `packages/validator/docs/fa3-information-sheet.md`
 - FA(3) XSD Schema — `packages/validator/src/schemas/`
 - Podręcznik KSeF 2.0 (4 parts)
+  - **Part II** (Wystawianie i otrzymywanie faktur) extracted as brief:
+    `docs/knowledge-base/briefs/podrecznik-ksef-20-czesc-ii.md`
 - Podręcznik Aplikacji Podatnika KSeF 2.0
 - Objaśnienia podatkowe 28.01.2026
 - Elementy numeru KSeF, Identyfikator zbiorczy, UPO elements

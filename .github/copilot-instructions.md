@@ -10,6 +10,8 @@ KSeF is Poland's mandatory e-invoicing system. All VAT taxpayers must issue stru
 everyone else. The XML schema is published by the Ministry of Finance (MF).
 
 The canonical reference for all FA(3) rules is `packages/validator/docs/fa3-information-sheet.md`.
+The official MF operational guide (invoicing, receiving, correcting) is at
+`docs/knowledge-base/briefs/podrecznik-ksef-20-czesc-ii.md`.
 
 ---
 

@@ -13,7 +13,9 @@ description: >
 
 > **Authority:** All rules in this skill are based on the official FA(3) information sheet from the
 > Polish Ministry of Finance (March 2026 edition), available at
-> `packages/validator/docs/fa3-information-sheet.md`.
+> `packages/validator/docs/fa3-information-sheet.md`. Operational rules (corrective invoices,
+> invoice types, identification) are from Podręcznik KSeF 2.0 Part II at
+> `docs/knowledge-base/briefs/podrecznik-ksef-20-czesc-ii.md`.
 >
 > **Validator:** Generated XML should pass `@ksefuj/validator` (XSD + 42 semantic rules). See the
 > [Semantic Rules Reference](#semantic-rules-reference) section and always use
@@ -28,7 +30,7 @@ description: >
 - **FA(3) Information Sheet:** `packages/validator/docs/fa3-information-sheet.md`
 - **Validator semantic rules:** `packages/validator/src/semantic.ts`
 - **KSeF 2.0 (production):** https://ap.ksef.mf.gov.pl/
-- **KSeF 2.0 test environment** (fake data, no legal effect): https://web2te-ksef.mf.gov.pl/
+- **KSeF 2.0 test environment** (fake data, no legal effect): https://ap-test.ksef.mf.gov.pl/web/
 - **KSeF documentation portal:** https://ksef.podatki.gov.pl/
 - ⚠️ Old validator at https://ksef.mf.gov.pl/web/login is **dead** since 2026-02-01 (KSeF 1.0 shut down)
 
@@ -856,3 +858,5 @@ For complex scenarios, see the reference files:
 - `references/scenariusze-vat.md` — WDT, export, VAT exemption, OSS, reverse charge, margin
 - `references/korekty.md` — corrective invoices (KOR, KOR_ZAL, KOR_ROZ)
 - `references/zaliczki.md` — advance invoices (ZAL, ROZ)
+- **`skills/ksef-korekta/SKILL.md`** — interactive wizard for generating corrective invoices from a
+  faulty original (use when the user has a concrete invoice to correct)

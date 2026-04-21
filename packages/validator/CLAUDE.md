@@ -11,6 +11,9 @@ The file `docs/fa3-information-sheet.md` is the **constitutional reference** for
 validation rules. It is a structured conversion of the official Ministry of Finance "Information
 sheet on the FA(3) logical structure" (March 2026 edition, 174 pages).
 
+For operational KSeF rules (corrective invoices, invoice types, Podmiot3 roles, identification,
+storage), see `docs/knowledge-base/briefs/podrecznik-ksef-20-czesc-ii.md` at the repo root.
+
 **All semantic validation rules follow this constitutional reference.** Each rule in
 `src/semantic.ts` includes a direct reference to the relevant section (e.g., "§6.1", "§9.6",
 "Appendix D #3").
