@@ -11,15 +11,22 @@ description: >
 
 # KSeF FA(3) — Invoice Generation Skill
 
-> **Authority:** All rules in this skill are based on the official FA(3) information sheet from the
-> Polish Ministry of Finance (March 2026 edition), available at
-> `packages/validator/docs/fa3-information-sheet.md`. Operational rules (corrective invoices,
-> invoice types, identification) are from Podręcznik KSeF 2.0 Part II at
-> `docs/knowledge-base/briefs/podrecznik-ksef-20-czesc-ii.md`.
+> **Authority:** FA(3) Information Sheet (March 2026) + Podręcznik KSeF 2.0 Part II.
+>
+> **Bundled references (self-contained for standalone use):**
+>
+> - `references/korekty.md` — corrective invoices (KOR, KOR_ZAL, KOR_ROZ)
+> - `references/zaliczki.md` — advance invoices (ZAL, ROZ)
+> - `references/scenariusze-vat.md` — WDT, export, reverse charge, exemption, margin
+>
+> **In-repo canonical sources (not bundled — for maintainers):**
+>
+> - `packages/validator/docs/fa3-information-sheet.md` — full schema rules (1,049 lines)
+> - `docs/knowledge-base/briefs/podrecznik-ksef-20-czesc-ii.md` — full Podręcznik Part II (1,189 lines)
+> - `packages/validator/src/semantic.ts` — validator rule implementations
 >
 > **Validator:** Generated XML should pass `@ksefuj/validator` (XSD + 42 semantic rules). See the
-> [Semantic Rules Reference](#semantic-rules-reference) section and always use
-> `packages/validator/src/semantic.ts` as the source of truth for rule logic.
+> [Semantic Rules Reference](#semantic-rules-reference) section.
 
 ---
 

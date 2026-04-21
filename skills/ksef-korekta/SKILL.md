@@ -10,9 +10,17 @@ description: >
 
 # KSeF Corrective Invoice — Interactive Wizard
 
-> **Authority:** Podręcznik KSeF 2.0, Cz. II, §2.13 (Faktury korygujące); FA(3) Information Sheet
-> (`packages/validator/docs/fa3-information-sheet.md`); Podręcznik brief
-> (`docs/knowledge-base/briefs/podrecznik-ksef-20-czesc-ii.md`, §2.13).
+> **Authority:** Podręcznik KSeF 2.0, Cz. II, §2.13 (Faktury korygujące); FA(3) Information Sheet.
+>
+> **Bundled references (self-contained for standalone use):**
+>
+> - `references/invoice-base.md` — FA(3) skeleton: Podmiot patterns, Adnotacje, P_12 rates, field order
+> - `references/korekty-procedury.md` — MF procedural rules for corrections (from Podręcznik §2.13)
+>
+> **In-repo canonical sources (not bundled — for maintainers):**
+>
+> - `packages/validator/docs/fa3-information-sheet.md` — full schema rules
+> - `docs/knowledge-base/briefs/podrecznik-ksef-20-czesc-ii.md` — full Podręcznik Part II
 >
 > **Validator:** Generated XML must pass `@ksefuj/validator` (XSD + semantic rules). See the
 > [ksef-fa3 skill](../ksef-fa3/SKILL.md) for the full semantic rules reference.
