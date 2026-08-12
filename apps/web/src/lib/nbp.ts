@@ -80,6 +80,65 @@ function subtractDays(dateStr: string, days: number): string {
   return date.toISOString().slice(0, 10);
 }
 
+function daysBetween(from: string, to: string): number {
+  const ms = new Date(`${to}T12:00:00Z`).getTime() - new Date(`${from}T12:00:00Z`).getTime();
+  return Math.round(ms / 86_400_000);
+}
+
+/** NBP rejects a range request spanning more than 367 days. */
+const NBP_MAX_RANGE_DAYS = 367;
+
+export interface RateWindow {
+  readonly start: string;
+  readonly end: string;
+}
+
+/**
+ * The NBP ranges that must be fetched to resolve a set of reference dates.
+ *
+ * Each date needs only the `LOOKBACK_DAYS` before it, so a batch is covered by the
+ * union of those small windows rather than by one span from the earliest date to the
+ * latest. Overlapping windows are merged to keep the request count down, and any
+ * merged window longer than NBP's limit is split — a full year of invoices spans more
+ * than 367 days, and a single request for it fails outright, which would mark every
+ * invoice of that currency unverifiable.
+ *
+ * Exported for testing.
+ */
+export function rateWindows(dates: string[]): RateWindow[] {
+  const sorted = dates
+    .map((date) => ({
+      start: clampToNbpEra(subtractDays(date, LOOKBACK_DAYS)),
+      end: subtractDays(date, 1),
+    }))
+    .filter((window) => window.end >= NBP_MIN_DATE)
+    .sort((a, b) => a.start.localeCompare(b.start));
+
+  const merged: { start: string; end: string }[] = [];
+  for (const window of sorted) {
+    const last = merged[merged.length - 1];
+    if (last && window.start <= last.end) {
+      if (window.end > last.end) {
+        last.end = window.end;
+      }
+    } else {
+      merged.push({ ...window });
+    }
+  }
+
+  const chunked: RateWindow[] = [];
+  for (const window of merged) {
+    let start = window.start;
+    while (daysBetween(start, window.end) >= NBP_MAX_RANGE_DAYS) {
+      const end = subtractDays(start, -(NBP_MAX_RANGE_DAYS - 1));
+      chunked.push({ start, end });
+      start = subtractDays(end, -1);
+    }
+    chunked.push({ start, end: window.end });
+  }
+  return chunked;
+}
+
 // --- Cache (dumb store, no business logic) ---
 
 function loadRates(currency: string): RateStore {
@@ -145,37 +204,40 @@ async function fetchFromApi(
 }
 
 /**
- * Return the cached rate store for a currency, fetching only when `end` has
- * not been seen before.
+ * Return the cached rate store for a currency, fetching only the windows whose
+ * `end` has not been seen before.
  *
- * A cache entry for `end` may hold a real rate or null (no NBP publication that
- * day) — both are valid: past data from NBP is final. Returns null only on an
- * actual network/server error or when NBP hasn't published yet (today/future).
+ * A cache entry for a window's `end` may hold a real rate or null (no NBP
+ * publication that day) — both are valid: past data from NBP is final. Returns null
+ * only on an actual network/server error or when NBP hasn't published yet
+ * (today/future).
  */
 async function getOrFetch(
   currency: string,
-  start: string,
-  end: string,
+  windows: readonly RateWindow[],
 ): Promise<{ store: RateStore; source: "cache" | "network" } | null> {
-  const store = loadRates(currency);
+  let store = loadRates(currency);
+  let source: "cache" | "network" = "cache";
 
-  if (end in store) {
-    return { store, source: "cache" };
+  for (const { start, end } of windows) {
+    if (end in store) {
+      continue;
+    }
+
+    const fetched = await fetchFromApi(currency, start, end);
+    const endIsPast = end < todayWarsaw();
+
+    // null = network/server error; [] on today/future = not yet published.
+    // Both mean "no reliable answer yet" — don't cache, signal the caller to retry.
+    if (fetched === null || (!endIsPast && fetched.length === 0)) {
+      return null;
+    }
+    // Past date with [] = weekend/holiday — absence is final, cache the null sentinel.
+    store = mergeRates(currency, store, fetched, endIsPast ? end : undefined);
+    source = "network";
   }
 
-  const fetched = await fetchFromApi(currency, start, end);
-  const endIsPast = end < todayWarsaw();
-
-  // null = network/server error; [] on today/future = not yet published.
-  // Both mean "no reliable answer yet" — don't cache, signal the caller to retry.
-  if (fetched === null || (!endIsPast && fetched.length === 0)) {
-    return null;
-  }
-  // Past date with [] = weekend/holiday — absence is final, cache the null sentinel.
-  return {
-    store: mergeRates(currency, store, fetched, endIsPast ? end : undefined),
-    source: "network",
-  };
+  return { store, source };
 }
 
 // --- Public API ---
@@ -207,20 +269,18 @@ export async function fetchCurrencyRateTable(
 
   await Promise.all(
     Array.from(byCurrency.entries()).map(async ([currency, dates]) => {
-      const sorted = [...dates].sort();
-      const rangeStart = clampToNbpEra(subtractDays(sorted[0], LOOKBACK_DAYS));
-      const rangeEnd = subtractDays(sorted[sorted.length - 1], 1);
-      if (rangeEnd < NBP_MIN_DATE) {
+      const windows = rateWindows(dates);
+      if (windows.length === 0) {
         table[currency] = [];
         return;
       }
 
-      const result = await getOrFetch(currency, rangeStart, rangeEnd);
+      const result = await getOrFetch(currency, windows);
       table[currency] = result
         ? Object.entries(result.store)
             .filter(
               (entry): entry is [string, RawRate] =>
-                entry[1] !== null && entry[0] >= rangeStart && entry[0] <= rangeEnd,
+                entry[1] !== null && windows.some((w) => entry[0] >= w.start && entry[0] <= w.end),
             )
             .map(([, r]) => ({ currency, date: r.effectiveDate, mid: r.mid }))
         : null;
@@ -256,13 +316,12 @@ export async function fetchNbpRateForInvoice(
     return "no_rate";
   }
 
-  const rangeEnd = subtractDays(reference.date, 1);
-  if (rangeEnd < NBP_MIN_DATE) {
+  const windows = rateWindows([reference.date]);
+  if (windows.length === 0) {
     return "no_rate";
   }
-  const rangeStart = clampToNbpEra(subtractDays(reference.date, LOOKBACK_DAYS));
 
-  const result = await getOrFetch(currency, rangeStart, rangeEnd);
+  const result = await getOrFetch(currency, windows);
   if (!result) {
     return "network";
   }

@@ -15,7 +15,8 @@ export default defineWorkspace([
       name: "web",
       root: "./apps/web",
       include: ["src/**/*.test.{ts,tsx}"],
-      environment: "jsdom",
+      // Node environment — the web tests cover pure logic. Add jsdom as a devDependency
+      // here if component tests are ever introduced; it is not currently installed.
     },
   },
   // Integration tests
