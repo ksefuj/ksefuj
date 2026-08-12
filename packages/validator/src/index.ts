@@ -34,6 +34,10 @@ export type {
 export { checkSemantics, semanticRules } from "./semantic.js";
 export type { SemanticRule, XmlDocument } from "./types.js";
 
+// --- Currency conversion date selection (Art. 31a ustawy o VAT) ---
+export { resolveRateReference, rateReferenceCandidates } from "./currency-date.js";
+export type { RateReference, RateReferenceRule } from "./currency-date.js";
+
 // --- XSD validation ---
 export { validateXsd, disposeValidator, isValidatorDisposed } from "./xsd.js";
 

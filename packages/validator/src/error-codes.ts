@@ -810,11 +810,12 @@ export const SEMANTIC_ERRORS = {
       severity: "warning",
     },
     description:
-      "KursWaluty does not match the NBP mid-rate (Art. 31a ustawy o VAT — previous business day's NBP Table A rate)",
+      "KursWaluty does not match the NBP Table A mid-rate for the reference date (Art. 31a ustawy o VAT — the business day before the tax obligation arises, or before the issue date when the invoice precedes it)",
     commonCauses: [
       "Manually entered exchange rate differs from the official NBP rate",
       "Rounding error in exchange rate",
-      "Wrong date used for the exchange rate lookup",
+      "Wrong date used for the exchange rate lookup — the issue date rather than the delivery or settlement-period date",
+      "Taxpayer lawfully elected a different basis that FA(3) does not record: ECB rates (Art. 31a ust. 1) or income-tax conversion rules (Art. 31a ust. 2a)",
     ],
     fixTemplates: [],
   },

@@ -5,6 +5,37 @@ All notable changes to `@ksefuj/validator` will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- `CURRENCY_RATE_MISMATCH` no longer keys the NBP rate to `P_1` alone. Art. 31a ust. 1 keys it to
+  the last business day before the **tax obligation date**; the issue date only governs when the
+  invoice is issued _before_ the tax obligation arises (ust. 2). The tax point is taken from
+  `FaWiersz/P_6A`, `Fa/P_6`, `Fa/OkresFa/P_6_Do` or the earliest `ZaliczkaCzesciowa/P_6Z`, falling
+  back to `P_1` when the XML carries none. This removes false positives on the most common B2B case
+  — a monthly service invoiced in the following month
+- When the inferred tax point precedes the issue date, the rate from before the issue date is also
+  accepted: Art. 19a ust. 5 moves the tax point onto the issue date for several categories
+  (construction, media, rental, leasing) that the XML cannot be distinguished from, and Art. 31a
+  ust. 1a lets those taxpayers elect it outright. Both readings are reported in `expectedValues`,
+  general rule first
+- Corrective invoices (`KOR`, `KOR_ZAL`, `KOR_ROZ`) are no longer checked against a current NBP
+  table. Art. 31b ust. 1 keeps the rate adopted for the invoice being corrected, which the
+  correction does not carry. Collective corrections (`OkresFaKorygowanej`) are still checked,
+  against their own issue date per Art. 31b ust. 2
+- Cash-accounting invoices (`P_16` = `1`) are skipped — Art. 21 keys the tax obligation to the day
+  payment is received, which no FA(3) field records
+- `CURRENCY_RATE_MISMATCH` now says "NBP Table A mid-rate" rather than implying the invoice is
+  simply wrong: a taxpayer may lawfully have elected ECB rates (Art. 31a ust. 1) or income-tax
+  conversion rules (Art. 31a ust. 2a), neither of which FA(3) records
+
+### Added
+
+- `resolveRateReference` and `rateReferenceCandidates`, exported from the package root and from the
+  dependency-free `@ksefuj/validator/currency-date` subpath, so rate-fetching clients can select the
+  same reference date the validator checks against
+
 ## [0.3.0] — 2026-03-31
 
 ### Added

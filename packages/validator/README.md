@@ -47,31 +47,41 @@ if (!result.valid) {
 ### Currency rate validation
 
 Optionally validate that `KursWaluty` matches the official NBP mid-rate (Art. 31a VAT Act). Pass a
-rate table per currency — the validator picks the correct date based on the invoice's `P_1`.
+rate table per currency — the validator picks the correct date itself.
+
+The reference date is **not** simply `P_1`. Art. 31a ust. 1 takes the rate from the last business
+day before the day the tax obligation arises; the issue date governs only when the invoice is issued
+_before_ that (ust. 2). The validator infers the tax point from `FaWiersz/P_6A`, `Fa/P_6` or
+`Fa/OkresFa/P_6_Do`, and falls back to `P_1` when the invoice carries none.
 
 ```typescript
 import { validate, type CurrencyRate } from "@ksefuj/validator";
 
 // Pass an array of rates for each currency (e.g. fetched from the NBP range API).
-// The validator selects the rate from the last business day before P_1 automatically.
+// A July service invoiced on 2026-08-05 takes the rate from before 2026-07-31,
+// so the table has to reach back to the tax point, not just to P_1.
 const currencyRates: Record<string, CurrencyRate[] | null> = {
   EUR: [
-    { currency: "EUR", date: "2026-03-28", mid: 4.21 },
-    { currency: "EUR", date: "2026-03-29", mid: 4.2856 }, // picked for a 2026-03-30 invoice
+    { currency: "EUR", date: "2026-07-29", mid: 4.21 },
+    { currency: "EUR", date: "2026-07-30", mid: 4.2856 }, // picked for a July settlement period
   ],
   USD: null, // looked up but unavailable → emits CURRENCY_RATE_UNVERIFIABLE
 };
 
 const result = await validate(xmlString, { currencyRates });
 // → CURRENCY_RATE_MISMATCH  if KursWaluty ≠ the selected NBP rate
-// → CURRENCY_RATE_UNVERIFIABLE  if the rate table is null or has no rate within 10 days of P_1
+// → CURRENCY_RATE_UNVERIFIABLE  if the rate table is null or has no rate within 10 days
 ```
 
-| `currencyRates[currency]` | behaviour                                                                 |
-| ------------------------- | ------------------------------------------------------------------------- |
-| key absent                | skipped silently — currency was never looked up                           |
-| `null`                    | `CURRENCY_RATE_UNVERIFIABLE` — lookup was attempted but failed            |
-| `CurrencyRate[]`          | validator picks most recent rate strictly before `P_1` and within 10 days |
+Use `rateReferenceCandidates(p1, taxPointDate)` from `@ksefuj/validator/currency-date` (a
+dependency-free subpath, safe in any bundle) to work out which dates a rate table has to cover
+before fetching it.
+
+| `currencyRates[currency]` | behaviour                                                                               |
+| ------------------------- | --------------------------------------------------------------------------------------- |
+| key absent                | skipped silently — currency was never looked up                                         |
+| `null`                    | `CURRENCY_RATE_UNVERIFIABLE` — lookup was attempted but failed                          |
+| `CurrencyRate[]`          | validator picks the most recent rate strictly before the reference date, within 10 days |
 
 If `currencyRates` is omitted entirely, all currency checks are skipped (backwards-compatible with
 `0.2.0`).

@@ -14,6 +14,10 @@
       "import": "./dist/types-export.js",
       "types": "./dist/types-export.d.ts"
     },
+    "./currency-date": {
+      "import": "./dist/currency-date.js",
+      "types": "./dist/currency-date.d.ts"
+    },
     "./validate": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
