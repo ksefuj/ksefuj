@@ -124,7 +124,7 @@
       "VALIDATION_TIMEOUT": "Przekroczono limit czasu walidacji",
       "EXECUTION_ERROR": "Niespodziewany błąd podczas walidacji",
       "P12_INVALID": "Nieprawidłowa stawka **VAT**: `{actual}`. Dozwolone wartości: {allowedValues}",
-      "CURRENCY_RATE_UNVERIFIABLE": "Nie można zweryfikować kursu {currency} — kurs NBP jest niedostępny dla daty {invoiceDate}",
+      "CURRENCY_RATE_UNVERIFIABLE": "Nie można zweryfikować kursu {currency} — brak kursu NBP dla faktury z dnia {invoiceDate}",
       "CURRENCY_RATE_MISMATCH": "`KursWaluty` {currency} ({actual}) odbiega od kursu NBP z dnia {date} ({expected})"
     },
     "errors": {
@@ -223,13 +223,16 @@
     },
     "waluty": {
       "title": "Kurs NBP do faktury walutowej VAT",
-      "description": "Znajdź kurs średni NBP, który obowiązuje dla Twojej faktury w obcej walucie — zgodnie z art. 31a ustawy o VAT.",
-      "metaDescription": "Sprawdź jaki kurs NBP zastosować na fakturze w obcej walucie. Kalkulator automatycznie wybiera kurs z ostatniego dnia roboczego przed datą faktury (art. 31a ustawy o VAT).",
+      "description": "Znajdź kurs średni NBP dla swojej faktury w obcej walucie. Zwykle liczy się dzień sprzedaży, a nie dzień wystawienia — kalkulator pilnuje tego za Ciebie.",
+      "metaDescription": "Jaki kurs NBP zastosować na fakturze w obcej walucie? Kalkulator bierze kurs z ostatniego dnia roboczego przed datą sprzedaży — albo przed datą wystawienia, jeśli faktura jest wcześniejsza (art. 31a ustawy o VAT).",
       "ogImageTitle": "Kurs NBP do faktury — art. 31a VAT",
       "currency": "Waluta",
       "currencyPlaceholder": "Wybierz walutę",
       "invoiceDate": "Data faktury (P_1)",
-      "invoiceDateHint": "Data wystawienia faktury w KSeF",
+      "invoiceDateHint": "Dzień, w którym wystawiasz fakturę (pole P_1)",
+      "saleDate": "Data sprzedaży (wykonania usługi)",
+      "saleDateHint": "Dla usługi rozliczanej miesięcznie to ostatni dzień miesiąca — skrót „Ub. miesiąc” zakłada, że fakturę wystawiasz już po zakończeniu okresu. Przy najmie, leasingu, stałej obsłudze prawnej lub biurowej i usługach budowlanych — data wystawienia faktury. Zostaw puste, jeśli sprzedaż nastąpiła w dniu wystawienia.",
+      "saleDatePlaceholder": "Jak data faktury",
       "checkRate": "Sprawdź kurs",
       "loading": "Pobieranie kursu z NBP…",
       "result": {
@@ -237,17 +240,23 @@
         "rate": "Kurs średni NBP",
         "table": "Tabela",
         "tableDate": "z dnia",
-        "explanation": "Zgodnie z art. 31a §1 ustawy o VAT, do przeliczenia kwot na fakturze w walucie obcej stosuje się kurs średni NBP z ostatniego dnia roboczego poprzedzającego dzień wystawienia faktury.",
+        "explanation": {
+          "tax_point": "Kurs pochodzi z ostatniego dnia roboczego przed {referenceDate} — datą sprzedaży, zwykle dniem powstania obowiązku podatkowego (art. 31a ust. 1 ustawy o VAT).",
+          "issue_date": "Kurs pochodzi z ostatniego dnia roboczego przed {referenceDate} — datą wystawienia faktury, bo wystawiasz ją przed sprzedażą (art. 31a ust. 2 ustawy o VAT).",
+          "issue_date_assumed": "Bez daty sprzedaży przyjmujemy dzień wystawienia faktury, więc kurs pochodzi z ostatniego dnia roboczego przed {referenceDate}. Jeśli sprzedaż nastąpiła innego dnia, wpisz tę datę — kurs może wyjść inny."
+        },
         "copied": "Skopiowano!",
         "copyRate": "Kopiuj kurs"
       },
       "error": {
         "title": "Nie udało się pobrać kursu",
-        "no_rate": "Brak kursu NBP dla wybranej waluty i daty. Sprawdź czy data nie jest zbyt dawna lub w przyszłości.",
+        "no_rate": "Nie znaleźliśmy kursu NBP dla wybranej waluty i podanych dat. Sprawdź, czy daty nie są zbyt dawne lub przyszłe.",
         "network": "Błąd połączenia z API NBP. Sprawdź połączenie z internetem i spróbuj ponownie."
       },
       "openDatePicker": "Otwórz kalendarz",
+      "openSaleDatePicker": "Otwórz kalendarz daty sprzedaży",
       "today": "Dziś",
+      "endOfLastMonth": "Ub. miesiąc",
       "relatedArticles": "Powiązane artykuły",
       "readMore": "Czytaj →",
       "source": "Źródło: NBP — kursy walut"
