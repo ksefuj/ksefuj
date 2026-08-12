@@ -1158,6 +1158,231 @@ describe("Semantic Validation", () => {
     });
   });
 
+  describe("Currency Rate Reference Date (Art. 31a ust. 1 vs ust. 2)", () => {
+    /**
+     * Monthly service for July 2026, invoiced on 5 Aug 2026 in USD.
+     * Tax point (Art. 19a ust. 3) = 2026-07-31, so the general rule (Art. 31a
+     * ust. 1) takes the rate from Thursday 2026-07-30 — not from before P_1.
+     */
+    const periodicInvoice = (opts: {
+      p1: string;
+      dates?: string;
+      kursWaluty?: string;
+      lines?: { nr: number; p6a?: string; kursWaluty: string }[];
+    }) => {
+      const lines = opts.lines ?? [{ nr: 1, kursWaluty: opts.kursWaluty ?? "3.7644" }];
+      return wrapInFaktura(`
+        <Podmiot1>
+          <DaneIdentyfikacyjne><NIP>1234567890</NIP><Nazwa>Test</Nazwa></DaneIdentyfikacyjne>
+          <Adres><KodKraju>PL</KodKraju><AdresL1>Test</AdresL1></Adres>
+        </Podmiot1>
+        <Podmiot2>
+          <DaneIdentyfikacyjne><NIP>9876543210</NIP><Nazwa>Test</Nazwa></DaneIdentyfikacyjne>
+          <Adres><KodKraju>PL</KodKraju><AdresL1>Test</AdresL1></Adres>
+          <JST>2</JST>
+          <GV>2</GV>
+        </Podmiot2>
+        <Fa>
+          <KodWaluty>USD</KodWaluty>
+          <P_1>${opts.p1}</P_1>
+          <P_2>FV/001/08/2026</P_2>
+          ${opts.dates ?? "<OkresFa><P_6_Od>2026-07-01</P_6_Od><P_6_Do>2026-07-31</P_6_Do></OkresFa>"}
+          <P_15>123.00</P_15>
+          <Adnotacje>
+            <P_16>2</P_16><P_17>2</P_17><P_18>2</P_18><P_18A>2</P_18A>
+            <Zwolnienie><P_19N>1</P_19N></Zwolnienie>
+            <NoweSrodkiTransportu><P_22N>1</P_22N></NoweSrodkiTransportu>
+            <P_23>2</P_23>
+            <PMarzy><P_PMarzyN>1</P_PMarzyN></PMarzy>
+          </Adnotacje>
+          <RodzajFaktury>VAT</RodzajFaktury>
+          ${lines
+            .map(
+              (l) => `
+          <FaWiersz>
+            <NrWierszaFa>${l.nr}</NrWierszaFa>
+            <P_7>Software development</P_7>
+            <P_8A>szt</P_8A>
+            <P_8B>1</P_8B>
+            <P_9A>123.00</P_9A>
+            <P_11>123.00</P_11>
+            <P_12>np I</P_12>
+            ${l.p6a ? `<P_6A>${l.p6a}</P_6A>` : ""}
+            <KursWaluty>${l.kursWaluty}</KursWaluty>
+          </FaWiersz>`,
+            )
+            .join("")}
+        </Fa>
+      `);
+    };
+
+    // Table 146/A/NBP/2026 of 2026-07-30 — the last business day before the tax point
+    const usdRates: CurrencyRate[] = [
+      { currency: "USD", date: "2026-07-29", mid: 3.7501 },
+      { currency: "USD", date: "2026-07-30", mid: 3.7644 },
+      { currency: "USD", date: "2026-07-31", mid: 3.771 },
+      { currency: "USD", date: "2026-08-03", mid: 3.7802 },
+      { currency: "USD", date: "2026-08-04", mid: 3.7911 },
+    ];
+
+    it("should use the OkresFa period end as the tax point when the invoice is issued later", () => {
+      // Art. 31a ust. 1: tax point 2026-07-31 → rate from 2026-07-30
+      const xml = periodicInvoice({ p1: "2026-08-05", kursWaluty: "3.7644" });
+      const result = validateXml(xml, { USD: usdRates });
+      expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_MISMATCH")).toBe(false);
+    });
+
+    it("should still accept the issue-date rate on a period invoice (Art. 19a ust. 5 pkt 4)", () => {
+      // Media/rental/leasing put the tax point on the issue date; the XML cannot
+      // distinguish those from ust. 3 services, so both readings are accepted.
+      const xml = periodicInvoice({ p1: "2026-08-05", kursWaluty: "3.7911" });
+      const result = validateXml(xml, { USD: usdRates });
+      expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_MISMATCH")).toBe(false);
+    });
+
+    it("should flag a rate matching neither the tax point nor the issue date", () => {
+      const xml = periodicInvoice({ p1: "2026-08-05", kursWaluty: "3.7802" });
+      const result = validateXml(xml, { USD: usdRates });
+      const issue = result.issues.find((i) => i.code.code === "CURRENCY_RATE_MISMATCH");
+      expect(issue).toBeDefined();
+      // Primary reading (general rule) first, issue-date alternative second
+      expect(issue!.context.expectedValues).toEqual(["3.7644", "3.7911"]);
+      expect(issue!.context.metadata?.nbpDate).toBe("2026-07-30");
+      expect(issue!.fixSuggestions[0].content).toBe("3.7644");
+    });
+
+    it("should use the issue date when the invoice precedes the period end (Art. 31a ust. 2)", () => {
+      // Issued 2026-07-20, period ends 2026-07-31 → only the ust. 2 reading applies
+      const xml = periodicInvoice({ p1: "2026-07-20", kursWaluty: "3.7501" });
+      const result = validateXml(xml, {
+        USD: [{ currency: "USD", date: "2026-07-17", mid: 3.74 }, ...usdRates],
+      });
+      const issue = result.issues.find((i) => i.code.code === "CURRENCY_RATE_MISMATCH");
+      expect(issue).toBeDefined();
+      expect(issue!.context.expectedValues).toEqual(["3.7400"]);
+    });
+
+    it("should use P_6 as the tax point when present", () => {
+      const xml = periodicInvoice({
+        p1: "2026-08-05",
+        dates: "<P_6>2026-07-31</P_6>",
+        kursWaluty: "3.7644",
+      });
+      const result = validateXml(xml, { USD: usdRates });
+      expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_MISMATCH")).toBe(false);
+    });
+
+    it("should use the per-line P_6A date when lines have different delivery dates", () => {
+      const xml = periodicInvoice({
+        p1: "2026-08-05",
+        dates: "",
+        lines: [
+          { nr: 1, p6a: "2026-07-31", kursWaluty: "3.7644" },
+          { nr: 2, p6a: "2026-08-04", kursWaluty: "3.7802" },
+        ],
+      });
+      const result = validateXml(xml, { USD: usdRates });
+      expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_MISMATCH")).toBe(false);
+    });
+
+    it("should fall back to P_1 when the invoice carries no delivery date", () => {
+      const xml = periodicInvoice({ p1: "2026-08-05", dates: "", kursWaluty: "3.7911" });
+      const result = validateXml(xml, { USD: usdRates });
+      expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_MISMATCH")).toBe(false);
+    });
+
+    it("should flag a stale rate even when a tax point is present", () => {
+      const xml = periodicInvoice({ p1: "2026-08-05", kursWaluty: "3.7501" });
+      const result = validateXml(xml, { USD: usdRates });
+      expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_MISMATCH")).toBe(true);
+    });
+
+    it("should skip corrective invoices — Art. 31b ust. 1 keeps the original invoice's rate", () => {
+      const xml = periodicInvoice({ p1: "2026-08-05", kursWaluty: "1.0000" }).replace(
+        "<RodzajFaktury>VAT</RodzajFaktury>",
+        "<RodzajFaktury>KOR</RodzajFaktury>",
+      );
+      const result = validateXml(xml, { USD: usdRates });
+      expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_MISMATCH")).toBe(false);
+      expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_UNVERIFIABLE")).toBe(false);
+    });
+
+    it("should check collective corrective invoices against their own issue date (Art. 31b ust. 2)", () => {
+      // OkresFaKorygowanej present → the corrected periods contribute no tax point
+      const xml = periodicInvoice({ p1: "2026-08-05", kursWaluty: "3.7911" })
+        .replace("<RodzajFaktury>VAT</RodzajFaktury>", "<RodzajFaktury>KOR</RodzajFaktury>")
+        .replace(
+          "<P_15>123.00</P_15>",
+          "<OkresFaKorygowanej><P_6_Od>2026-07-01</P_6_Od><P_6_Do>2026-07-31</P_6_Do></OkresFaKorygowanej><P_15>123.00</P_15>",
+        );
+      const result = validateXml(xml, { USD: usdRates });
+      // 3.7911 is the rate before P_1 — correct under Art. 31b ust. 2
+      expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_MISMATCH")).toBe(false);
+    });
+
+    it("should skip cash-accounting invoices — Art. 21 keys the tax point to payment", () => {
+      const xml = periodicInvoice({ p1: "2026-08-05", kursWaluty: "1.0000" }).replace(
+        "<P_16>2</P_16>",
+        "<P_16>1</P_16>",
+      );
+      const result = validateXml(xml, { USD: usdRates });
+      expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_MISMATCH")).toBe(false);
+    });
+
+    it("should accept a rate keyed to a documented advance payment date", () => {
+      const xml = periodicInvoice({ p1: "2026-08-05", dates: "", kursWaluty: "3.7644" }).replace(
+        "<P_15>123.00</P_15>",
+        "<P_15>123.00</P_15><ZaliczkaCzesciowa><P_6Z>2026-07-31</P_6Z><P_15Z>123.00</P_15Z></ZaliczkaCzesciowa>",
+      );
+      const result = validateXml(xml, { USD: usdRates });
+      expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_MISMATCH")).toBe(false);
+    });
+
+    it("should name the reference date, not the invoice date, when unverifiable", () => {
+      const xml = periodicInvoice({ p1: "2026-08-05", kursWaluty: "3.7644" });
+      const result = validateXml(xml, { USD: null });
+      const issue = result.issues.find((i) => i.code.code === "CURRENCY_RATE_UNVERIFIABLE");
+      expect(issue).toBeDefined();
+      // Tax point 2026-07-31 governs the lookup — calling it the invoice date would mislead
+      expect(issue!.context.metadata?.referenceDate).toBe("2026-07-31");
+      expect(issue!.message).toContain("2026-07-31");
+      expect(issue!.message).not.toContain("invoice date");
+    });
+
+    it("should never render a null date in the unverifiable message", () => {
+      const xml = periodicInvoice({ p1: "2026-08-05", dates: "", kursWaluty: "3.7644" }).replace(
+        "<P_1>2026-08-05</P_1>",
+        "",
+      );
+      const result = validateXml(xml, { USD: null });
+      const issue = result.issues.find((i) => i.code.code === "CURRENCY_RATE_UNVERIFIABLE");
+      expect(issue).toBeDefined();
+      expect(issue!.message).not.toContain("null");
+      expect(issue!.context.metadata?.referenceDate).toBeUndefined();
+    });
+
+    it("should stay silent on an invoice that carries no KursWaluty at all", () => {
+      // Advance invoices have no FaWiersz — their rate lives in KursWalutyZ, which this
+      // rule does not check, so claiming KursWaluty is unverifiable would be false.
+      const xml = periodicInvoice({ p1: "2026-08-05", kursWaluty: "3.7644" }).replace(
+        "<KursWaluty>3.7644</KursWaluty>",
+        "",
+      );
+      const result = validateXml(xml, { USD: null });
+      expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_UNVERIFIABLE")).toBe(false);
+      expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_MISMATCH")).toBe(false);
+    });
+
+    it("should report UNVERIFIABLE when no rate covers the tax point", () => {
+      // Only rates around P_1 available; the tax point is a month earlier
+      const xml = periodicInvoice({ p1: "2026-08-05", kursWaluty: "3.7644" });
+      const result = validateXml(xml, {
+        USD: [{ currency: "USD", date: "2026-06-30", mid: 3.7 }],
+      });
+      expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_UNVERIFIABLE")).toBe(true);
+    });
+  });
+
   describe("Rule Coverage", () => {
     it("should have all 43 rules implemented", () => {
       expect(semanticRules).toHaveLength(35); // Some rules are grouped (ADNOTACJE_MANDATORY_FIELDS covers 8 rules)

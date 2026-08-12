@@ -4,6 +4,8 @@ import { type ChangeEvent, type DragEvent, useCallback, useMemo, useRef, useStat
 import * as amplitude from "@amplitude/unified";
 import { useTranslations } from "next-intl";
 import type { CurrencyRate, ValidationResult } from "@ksefuj/validator";
+// Subpath import: dependency-free, so it does not drag libxml2-wasm into the initial bundle
+import { rateReferenceCandidates } from "@ksefuj/validator/currency-date";
 import { Badge } from "@/components/badge";
 import { ValidationIssuesList } from "@/components/validation-issues-list";
 import { fetchCurrencyRateTable } from "@/lib/nbp";
@@ -151,7 +153,16 @@ export function Validator({ locale }: ValidatorProps) {
               const dataWystawienia =
                 xmlDoc.getElementsByTagNameNS(ns, "P_1")[0]?.textContent ?? null;
               if (kodWaluty && kodWaluty !== "PLN" && dataWystawienia) {
-                currencyDatePairs.push({ currency: kodWaluty, date: dataWystawienia });
+                // Art. 31a ust. 1 keys the rate to the tax obligation date, which can
+                // predate P_1 by weeks — the fetched range has to reach back that far.
+                const taxPoints = ["P_6", "P_6_Do", "P_6A"]
+                  .flatMap((tag) => Array.from(xmlDoc.getElementsByTagNameNS(ns, tag)))
+                  .map((node) => node.textContent)
+                  .filter((date): date is string => date !== null && date < dataWystawienia)
+                  .sort();
+                for (const { date } of rateReferenceCandidates(dataWystawienia, taxPoints[0])) {
+                  currencyDatePairs.push({ currency: kodWaluty, date });
+                }
               }
             } catch {
               // Non-fatal — file will be processed without currency rate check

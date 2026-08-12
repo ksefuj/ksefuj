@@ -8,6 +8,7 @@
  * All rules trace directly to specific sections in the constitution.
  */
 
+import { rateReferenceCandidates, resolveRateReference } from "./currency-date.js";
 import { ERROR_CODES } from "./error-codes.js";
 import type {
   CurrencyRate,
@@ -1362,18 +1363,18 @@ function checkTransportMinimumData(doc: XmlDocument): ValidationIssue[] {
   return issues;
 }
 
-// Maximum days between invoice P_1 and a valid NBP rate date (accounts for long holiday weekends)
+// Maximum days between the reference date and a valid NBP rate date (accounts for long holiday weekends)
 const STALE_WINDOW_MS = 10 * 24 * 60 * 60 * 1000;
 
-function findRateForInvoiceDate(rates: CurrencyRate[], invoiceDate: string): CurrencyRate | null {
-  const invoiceTime = new Date(invoiceDate).getTime();
+function findRateBefore(rates: CurrencyRate[], referenceDate: string): CurrencyRate | null {
+  const referenceTime = new Date(referenceDate).getTime();
   let best: CurrencyRate | null = null;
   for (const rate of rates) {
-    if (rate.date >= invoiceDate) {
+    if (rate.date >= referenceDate) {
       continue;
-    } // must be strictly before invoice date
+    } // must be strictly before the reference date
     const rateTime = new Date(rate.date).getTime();
-    if (invoiceTime - rateTime > STALE_WINDOW_MS) {
+    if (referenceTime - rateTime > STALE_WINDOW_MS) {
       continue;
     } // too old
     if (!best || rate.date > best.date) {
@@ -1381,6 +1382,66 @@ function findRateForInvoiceDate(rates: CurrencyRate[], invoiceDate: string): Cur
     }
   }
   return best;
+}
+
+/**
+ * Date the tax obligation arises (Art. 19a), as far as the XML reveals it.
+ *
+ * `P_6` is the delivery/completion or payment-receipt date (§9.2) and maps
+ * directly onto Art. 19a ust. 1 / ust. 8. `OkresFa` marks a settlement period
+ * (Art. 19a ust. 3/4/5 pkt 4), where the service is deemed performed on the last
+ * day of the period — `P_6_Do`.
+ *
+ * Returns null for invoices that carry no such date; the caller then falls back
+ * to the issue date.
+ */
+function inferTaxPointDate(doc: XmlDocument, wiersz: XmlDocument | null): string | null {
+  // Per-line delivery/payment date, used when the dates differ between lines (§9.2)
+  const p6a = wiersz ? text(wiersz, "string(ns:P_6A)") : null;
+  if (p6a) {
+    return p6a;
+  }
+  const p6 = text(doc, "string(//ns:Fa/ns:P_6)");
+  if (p6) {
+    return p6;
+  }
+  const p6Do = text(doc, "string(//ns:Fa/ns:OkresFa/ns:P_6_Do)");
+  if (p6Do) {
+    return p6Do;
+  }
+  // Last resort: earliest documented payment receipt (§9.8, Art. 19a ust. 8). Several
+  // payments can appear, so this only ever widens the set of accepted rates.
+  const p6z = els(doc, "//ns:Fa/ns:ZaliczkaCzesciowa/ns:P_6Z")
+    .map((node) => text(node, "string(.)"))
+    .filter((date): date is string => Boolean(date))
+    .sort();
+  return p6z[0] ?? null;
+}
+
+/**
+ * Whether Art. 31a's NBP-rate rule governs this invoice at all.
+ *
+ * Two invoice shapes are settled by other provisions whose inputs the XML does not
+ * carry, so any comparison against a current NBP table would be a guess:
+ *
+ * - **Corrective invoices** — Art. 31b ust. 1 keeps the rate *adopted for the invoice
+ *   being corrected*, which is not present in the correction. The exception is the
+ *   collective corrective covering a period (Art. 31b ust. 2, `OkresFaKorygowanej`),
+ *   where the taxpayer *may* instead key off the corrective invoice's own issue date
+ *   — staying on the original rate is equally lawful there, so this branch can fire
+ *   on a correct invoice and its finding is a warning only.
+ * - **Cash accounting** (`P_16` = "1") — Art. 21 moves the tax obligation to the day
+ *   payment is received, a date no field records.
+ */
+function isRateRuleApplicable(doc: XmlDocument): boolean {
+  if (text(doc, "string(//ns:Fa/ns:Adnotacje/ns:P_16)") === "1") {
+    return false;
+  }
+  const rodzajFaktury = text(doc, "string(//ns:Fa/ns:RodzajFaktury)");
+  if (rodzajFaktury && ["KOR", "KOR_ZAL", "KOR_ROZ"].includes(rodzajFaktury)) {
+    return exists(doc, "//ns:Fa/ns:OkresFaKorygowanej");
+  }
+  return true;
 }
 
 function checkCurrencyRateMismatch(
@@ -1400,74 +1461,124 @@ function checkCurrencyRateMismatch(
     return issues;
   }
 
+  if (!isRateRuleApplicable(doc)) {
+    return issues;
+  }
+
   const rateData = currencyRates[kodWaluty];
   const p1 = text(doc, "string(//ns:Fa/ns:P_1)");
 
-  // Find the correct rate from the table based on invoice date
-  const rate =
-    rateData !== null && rateData.length > 0 && p1 ? findRateForInvoiceDate(rateData, p1) : null;
+  // Art. 31b ust. 2 — a collective corrective invoice converts at its own issue date,
+  // so the periods it corrects contribute no tax point.
+  const isCollectiveCorrection = exists(doc, "//ns:Fa/ns:OkresFaKorygowanej");
+  const taxPointFor = (wiersz: XmlDocument | null): string | null =>
+    isCollectiveCorrection ? null : inferTaxPointDate(doc, wiersz);
 
-  // null table, empty array, or no rate within window → unverifiable
-  if (rateData === null || !rate) {
+  /**
+   * Rates that may legitimately appear in KursWaluty, primary reading first.
+   * Empty when the table is missing or holds nothing inside the stale window.
+   */
+  const acceptableRates = (taxPoint: string | null): CurrencyRate[] => {
+    if (rateData === null || rateData.length === 0) {
+      return [];
+    }
+    const found: CurrencyRate[] = [];
+    for (const reference of rateReferenceCandidates(p1, taxPoint)) {
+      const rate = findRateBefore(rateData, reference.date);
+      if (rate && !found.some((r) => r.date === rate.date)) {
+        found.push(rate);
+      }
+    }
+    return found;
+  };
+
+  /**
+   * The date the lookup actually keyed on — not necessarily `P_1`, so the message
+   * must not call it the invoice date. Null when the invoice carries no usable date.
+   */
+  const unverifiable = (referenceDate: string | null): ValidationIssue => {
     const errorDef = ERROR_CODES.CURRENCY_RATE_UNVERIFIABLE;
-    issues.push({
+    return {
       code: errorDef.code,
       context: {
         location: { xpath: "/Faktura/Fa/KodWaluty", element: "KodWaluty" },
         actualValue: kodWaluty,
-        metadata: { currency: kodWaluty, invoiceDate: p1 ?? undefined },
+        metadata: {
+          currency: kodWaluty,
+          invoiceDate: p1 ?? undefined,
+          referenceDate: referenceDate ?? undefined,
+        },
       },
-      message: `Unable to verify KursWaluty — NBP rate for ${kodWaluty} is unavailable for invoice date ${p1}.`,
+      message: referenceDate
+        ? `Unable to verify KursWaluty — no NBP rate for ${kodWaluty} is available for the reference date ${referenceDate}.`
+        : `Unable to verify KursWaluty — no NBP rate for ${kodWaluty} is available.`,
       fixSuggestions: [],
-    });
-    return issues;
-  }
+    };
+  };
 
-  // KursWaluty lives in FaWiersz (line items) per FA(3) §10.2 — check each line
-  const faWiersze = els(doc, "//ns:Fa/ns:FaWiersz");
-  for (const wiersz of faWiersze) {
-    const kursWalutyStr = text(wiersz, "string(ns:KursWaluty)");
-    if (!kursWalutyStr) {
-      continue;
-    }
+  // KursWaluty lives in FaWiersz (line items) per FA(3) §10.2 — check each line.
+  // An invoice with no KursWaluty anywhere has nothing to verify: advance invoices
+  // carry no FaWiersz at all and keep their rate in KursWalutyZ / KursWalutyZW,
+  // which this rule does not cover, so reporting them as unverifiable would be wrong.
+  const linesWithRate = els(doc, "//ns:Fa/ns:FaWiersz").filter((w) =>
+    text(w, "string(ns:KursWaluty)"),
+  );
 
+  let reportedUnverifiable = false;
+  for (const wiersz of linesWithRate) {
+    const kursWalutyStr = text(wiersz, "string(ns:KursWaluty)")!;
     const kursWaluty = parseFloat(kursWalutyStr);
     if (isNaN(kursWaluty)) {
       continue;
     }
 
-    if (Math.round(kursWaluty * 10000) !== Math.round(rate.mid * 10000)) {
-      const nrWiersza = text(wiersz, "string(ns:NrWierszaFa)");
-      const xpath = `/Faktura/Fa/FaWiersz[NrWierszaFa='${nrWiersza}']/KursWaluty`;
-      const errorDef = ERROR_CODES.CURRENCY_RATE_MISMATCH;
-      issues.push({
-        code: errorDef.code,
-        context: {
-          location: {
-            xpath,
-            element: "KursWaluty",
-            lineNumber: nrWiersza ? parseInt(nrWiersza) : undefined,
-          },
-          actualValue: kursWalutyStr,
-          expectedValues: [rate.mid.toFixed(4)],
-          metadata: {
-            currency: kodWaluty,
-            nbpDate: rate.date,
-            nbpMid: rate.mid,
-          },
-        },
-        message: `KursWaluty (${kursWalutyStr}) in line ${nrWiersza} differs from the NBP rate on ${rate.date} (${rate.mid.toFixed(4)}).`,
-        fixSuggestions: [
-          {
-            type: "replace",
-            targetXPath: xpath,
-            content: rate.mid.toFixed(4),
-            description: `Set KursWaluty to ${rate.mid.toFixed(4)} (NBP Table A mid-rate for ${kodWaluty} on ${rate.date}).`,
-            confidence: 0.95,
-          },
-        ],
-      });
+    // null table, empty array, or no rate within window → unverifiable (reported once per invoice)
+    const taxPoint = taxPointFor(wiersz);
+    const rates = acceptableRates(taxPoint);
+    if (rates.length === 0) {
+      if (!reportedUnverifiable) {
+        issues.push(unverifiable(resolveRateReference(p1, taxPoint)?.date ?? null));
+        reportedUnverifiable = true;
+      }
+      continue;
     }
+
+    if (rates.some((r) => Math.round(kursWaluty * 10000) === Math.round(r.mid * 10000))) {
+      continue;
+    }
+
+    // Primary reading drives the message and the fix suggestion
+    const rate = rates[0];
+    const nrWiersza = text(wiersz, "string(ns:NrWierszaFa)");
+    const xpath = `/Faktura/Fa/FaWiersz[NrWierszaFa='${nrWiersza}']/KursWaluty`;
+    const errorDef = ERROR_CODES.CURRENCY_RATE_MISMATCH;
+    issues.push({
+      code: errorDef.code,
+      context: {
+        location: {
+          xpath,
+          element: "KursWaluty",
+          lineNumber: nrWiersza ? parseInt(nrWiersza) : undefined,
+        },
+        actualValue: kursWalutyStr,
+        expectedValues: rates.map((r) => r.mid.toFixed(4)),
+        metadata: {
+          currency: kodWaluty,
+          nbpDate: rate.date,
+          nbpMid: rate.mid,
+        },
+      },
+      message: `KursWaluty (${kursWalutyStr}) in line ${nrWiersza} differs from the NBP Table A mid-rate on ${rate.date} (${rate.mid.toFixed(4)}).`,
+      fixSuggestions: [
+        {
+          type: "replace",
+          targetXPath: xpath,
+          content: rate.mid.toFixed(4),
+          description: `Set KursWaluty to ${rate.mid.toFixed(4)} (NBP Table A mid-rate for ${kodWaluty} on ${rate.date}).`,
+          confidence: 0.95,
+        },
+      ],
+    });
   }
 
   return issues;
