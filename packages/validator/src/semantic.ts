@@ -8,7 +8,7 @@
  * All rules trace directly to specific sections in the constitution.
  */
 
-import { rateReferenceCandidates } from "./currency-date.js";
+import { rateReferenceCandidates, resolveRateReference } from "./currency-date.js";
 import { ERROR_CODES } from "./error-codes.js";
 import type {
   CurrencyRate,
@@ -1492,31 +1492,37 @@ function checkCurrencyRateMismatch(
     return found;
   };
 
-  const unverifiable = (): ValidationIssue => {
+  /**
+   * The date the lookup actually keyed on — not necessarily `P_1`, so the message
+   * must not call it the invoice date. Null when the invoice carries no usable date.
+   */
+  const unverifiable = (referenceDate: string | null): ValidationIssue => {
     const errorDef = ERROR_CODES.CURRENCY_RATE_UNVERIFIABLE;
     return {
       code: errorDef.code,
       context: {
         location: { xpath: "/Faktura/Fa/KodWaluty", element: "KodWaluty" },
         actualValue: kodWaluty,
-        metadata: { currency: kodWaluty, invoiceDate: p1 ?? undefined },
+        metadata: {
+          currency: kodWaluty,
+          invoiceDate: p1 ?? undefined,
+          referenceDate: referenceDate ?? undefined,
+        },
       },
-      message: `Unable to verify KursWaluty — NBP rate for ${kodWaluty} is unavailable for invoice date ${p1}.`,
+      message: referenceDate
+        ? `Unable to verify KursWaluty — no NBP rate for ${kodWaluty} is available for the reference date ${referenceDate}.`
+        : `Unable to verify KursWaluty — no NBP rate for ${kodWaluty} is available.`,
       fixSuggestions: [],
     };
   };
 
-  // KursWaluty lives in FaWiersz (line items) per FA(3) §10.2 — check each line
-  const faWiersze = els(doc, "//ns:Fa/ns:FaWiersz");
-  const linesWithRate = faWiersze.filter((w) => text(w, "string(ns:KursWaluty)"));
-
-  // Nothing to compare against, but an unusable rate table still means the check did not run
-  if (linesWithRate.length === 0) {
-    if (acceptableRates(taxPointFor(null)).length === 0) {
-      issues.push(unverifiable());
-    }
-    return issues;
-  }
+  // KursWaluty lives in FaWiersz (line items) per FA(3) §10.2 — check each line.
+  // An invoice with no KursWaluty anywhere has nothing to verify: advance invoices
+  // carry no FaWiersz at all and keep their rate in KursWalutyZ / KursWalutyZW,
+  // which this rule does not cover, so reporting them as unverifiable would be wrong.
+  const linesWithRate = els(doc, "//ns:Fa/ns:FaWiersz").filter((w) =>
+    text(w, "string(ns:KursWaluty)"),
+  );
 
   let reportedUnverifiable = false;
   for (const wiersz of linesWithRate) {
@@ -1527,10 +1533,11 @@ function checkCurrencyRateMismatch(
     }
 
     // null table, empty array, or no rate within window → unverifiable (reported once per invoice)
-    const rates = acceptableRates(taxPointFor(wiersz));
+    const taxPoint = taxPointFor(wiersz);
+    const rates = acceptableRates(taxPoint);
     if (rates.length === 0) {
       if (!reportedUnverifiable) {
-        issues.push(unverifiable());
+        issues.push(unverifiable(resolveRateReference(p1, taxPoint)?.date ?? null));
         reportedUnverifiable = true;
       }
       continue;

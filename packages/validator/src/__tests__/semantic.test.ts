@@ -1338,6 +1338,41 @@ describe("Semantic Validation", () => {
       expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_MISMATCH")).toBe(false);
     });
 
+    it("should name the reference date, not the invoice date, when unverifiable", () => {
+      const xml = periodicInvoice({ p1: "2026-08-05", kursWaluty: "3.7644" });
+      const result = validateXml(xml, { USD: null });
+      const issue = result.issues.find((i) => i.code.code === "CURRENCY_RATE_UNVERIFIABLE");
+      expect(issue).toBeDefined();
+      // Tax point 2026-07-31 governs the lookup — calling it the invoice date would mislead
+      expect(issue!.context.metadata?.referenceDate).toBe("2026-07-31");
+      expect(issue!.message).toContain("2026-07-31");
+      expect(issue!.message).not.toContain("invoice date");
+    });
+
+    it("should never render a null date in the unverifiable message", () => {
+      const xml = periodicInvoice({ p1: "2026-08-05", dates: "", kursWaluty: "3.7644" }).replace(
+        "<P_1>2026-08-05</P_1>",
+        "",
+      );
+      const result = validateXml(xml, { USD: null });
+      const issue = result.issues.find((i) => i.code.code === "CURRENCY_RATE_UNVERIFIABLE");
+      expect(issue).toBeDefined();
+      expect(issue!.message).not.toContain("null");
+      expect(issue!.context.metadata?.referenceDate).toBeUndefined();
+    });
+
+    it("should stay silent on an invoice that carries no KursWaluty at all", () => {
+      // Advance invoices have no FaWiersz — their rate lives in KursWalutyZ, which this
+      // rule does not check, so claiming KursWaluty is unverifiable would be false.
+      const xml = periodicInvoice({ p1: "2026-08-05", kursWaluty: "3.7644" }).replace(
+        "<KursWaluty>3.7644</KursWaluty>",
+        "",
+      );
+      const result = validateXml(xml, { USD: null });
+      expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_UNVERIFIABLE")).toBe(false);
+      expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_MISMATCH")).toBe(false);
+    });
+
     it("should report UNVERIFIABLE when no rate covers the tax point", () => {
       // Only rates around P_1 available; the tax point is a month earlier
       const xml = periodicInvoice({ p1: "2026-08-05", kursWaluty: "3.7644" });
