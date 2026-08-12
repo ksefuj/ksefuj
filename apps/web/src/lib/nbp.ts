@@ -13,6 +13,7 @@
  */
 
 import type { CurrencyRate } from "@ksefuj/validator";
+import { type RateReferenceRule, resolveRateReference } from "@ksefuj/validator/currency-date";
 
 const NBP_API_BASE = "https://api.nbp.pl/api/exchangerates/rates/A";
 const LOOKBACK_DAYS = 10;
@@ -46,6 +47,13 @@ export interface NbpRateResult {
   readonly tableNumber: string;
   /** Whether the result came from localStorage cache or a live network request */
   readonly source: "cache" | "network";
+  /** YYYY-MM-DD — the date the rate was looked up against (Art. 31a) */
+  readonly referenceDate: string;
+  /**
+   * `tax_point` = Art. 31a ust. 1, `issue_date` = Art. 31a ust. 2,
+   * `issue_date_assumed` = no tax point was supplied, so which one governs is undetermined
+   */
+  readonly rule: RateReferenceRule;
 }
 
 export type NbpFetchError = "network" | "no_rate";
@@ -176,7 +184,9 @@ async function getOrFetch(
  * Fetch NBP Table A mid-rates for a set of (currency, invoice date) pairs.
  * Groups by currency; skips network if cache already covers the date window.
  *
- * @param pairs - { currency, date } where date is the invoice P_1 (YYYY-MM-DD)
+ * @param pairs - { currency, date } where date is a rate reference date (YYYY-MM-DD).
+ *                An invoice may contribute more than one, since Art. 31a can key
+ *                the rate to either the tax-obligation date or the issue date.
  * @returns Record mapping currency → rate array (null if fetch failed)
  */
 export async function fetchCurrencyRateTable(
@@ -222,35 +232,45 @@ export async function fetchCurrencyRateTable(
 
 /**
  * Fetch the correct NBP Table A rate for a single invoice.
- * Applies Art. 31a §1: selects the latest rate strictly before invoiceDate.
+ *
+ * Applies Art. 31a: the rate is the last one published strictly before the
+ * reference date, which is the tax-obligation date (ust. 1) unless the invoice
+ * was issued earlier, in which case the issue date governs (ust. 2).
  *
  * @param currency - ISO 4217 currency code (e.g. "EUR")
  * @param invoiceDate - P_1 invoice date (YYYY-MM-DD)
+ * @param taxPointDate - date the tax obligation arises (YYYY-MM-DD); omit when unknown
  * @returns The applicable rate with table number, or `"network"` / `"no_rate"` on failure
  */
 export async function fetchNbpRateForInvoice(
   currency: string,
   invoiceDate: string,
+  taxPointDate?: string | null,
 ): Promise<NbpRateResult | NbpFetchError> {
   if (currency === "PLN") {
     return "no_rate";
   }
 
-  const rangeEnd = subtractDays(invoiceDate, 1);
+  const reference = resolveRateReference(invoiceDate, taxPointDate);
+  if (!reference) {
+    return "no_rate";
+  }
+
+  const rangeEnd = subtractDays(reference.date, 1);
   if (rangeEnd < NBP_MIN_DATE) {
     return "no_rate";
   }
-  const rangeStart = clampToNbpEra(subtractDays(invoiceDate, LOOKBACK_DAYS));
+  const rangeStart = clampToNbpEra(subtractDays(reference.date, LOOKBACK_DAYS));
 
   const result = await getOrFetch(currency, rangeStart, rangeEnd);
   if (!result) {
     return "network";
   }
 
-  // Art. 31a §1: pick the latest published rate strictly before the invoice date
+  // Pick the latest published rate strictly before the reference date
   let best: RawRate | null = null;
   for (const rate of Object.values(result.store)) {
-    if (!rate || rate.effectiveDate >= invoiceDate) {
+    if (!rate || rate.effectiveDate >= reference.date) {
       continue;
     }
     if (!best || rate.effectiveDate > best.effectiveDate) {
@@ -268,5 +288,7 @@ export async function fetchNbpRateForInvoice(
     mid: best.mid,
     tableNumber: best.no,
     source: result.source,
+    referenceDate: reference.date,
+    rule: reference.rule,
   };
 }

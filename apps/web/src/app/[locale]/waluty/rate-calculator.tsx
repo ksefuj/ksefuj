@@ -4,9 +4,11 @@ import {
   type ChangeEvent,
   type FormEvent,
   type KeyboardEvent,
+  type ReactNode,
   Suspense,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
@@ -60,6 +62,14 @@ function isCompleteDate(value: string): boolean {
   return /^\d{4}-\d{2}-\d{2}$/.test(value);
 }
 
+/** Last calendar day of the month preceding `dateStr` — the tax point of a monthly service. */
+function endOfPreviousMonth(dateStr: string): string {
+  const date = new Date(`${dateStr}T12:00:00Z`); // noon UTC keeps the same calendar date in any timezone
+  date.setUTCDate(1);
+  date.setUTCDate(0);
+  return date.toISOString().slice(0, 10);
+}
+
 function loadCurrency(): string {
   try {
     const saved = localStorage.getItem("waluty:currency");
@@ -70,6 +80,141 @@ function loadCurrency(): string {
     // localStorage unavailable
   }
   return "EUR";
+}
+
+const inputClass =
+  "w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 transition-colors focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-100";
+const secondaryButtonClass =
+  "rounded-xl border border-slate-200 bg-white px-3 py-3 text-sm font-semibold text-slate-700 transition-colors hover:border-violet-300 hover:text-violet-600 focus:outline-none focus:ring-2 focus:ring-violet-100 disabled:cursor-not-allowed disabled:opacity-50";
+
+interface DateFieldProps {
+  id: string;
+  label: string;
+  hint: ReactNode;
+  placeholder?: string;
+  /** What the user sees — may be a partial date while typing */
+  display: string;
+  /** Complete date, or "" while the display is partial */
+  value: string;
+  onChange: (formatted: string) => void;
+  max?: string;
+  pickerLabel: string;
+  quickFill: { label: string; date: string | null };
+}
+
+function DateField({
+  id,
+  label,
+  hint,
+  placeholder = "YYYY-MM-DD",
+  display,
+  value,
+  onChange,
+  max,
+  pickerLabel,
+  quickFill,
+}: DateFieldProps) {
+  const hiddenDateRef = useRef<HTMLInputElement>(null);
+
+  const inRange = useCallback(
+    (date: string) => date >= NBP_MIN_INVOICE_DATE && (!max || date <= max),
+    [max],
+  );
+
+  const handleInput = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const formatted = formatDateInput(e.target.value);
+      if (isCompleteDate(formatted) && !inRange(formatted)) {
+        return;
+      }
+      onChange(formatted);
+    },
+    [inRange, onChange],
+  );
+
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === "Backspace" && display.endsWith("-")) {
+        e.preventDefault();
+        onChange(display.slice(0, -2));
+      }
+    },
+    [display, onChange],
+  );
+
+  const handleHiddenDateChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      // Picker UI already prevents out-of-range dates via min/max attrs, but double-check.
+      if (!inRange(e.target.value)) {
+        return;
+      }
+      onChange(e.target.value);
+    },
+    [inRange, onChange],
+  );
+
+  return (
+    <div className="space-y-2">
+      <label htmlFor={id} className="block text-sm font-medium text-slate-700">
+        {label}
+      </label>
+      <div className="flex gap-2">
+        <div className="flex-1">
+          <input
+            id={id}
+            type="text"
+            inputMode="numeric"
+            placeholder={placeholder}
+            value={display}
+            onChange={handleInput}
+            onKeyDown={handleKeyDown}
+            maxLength={10}
+            aria-describedby={`${id}Hint`}
+            className={inputClass}
+          />
+        </div>
+        <div className="relative self-stretch">
+          <button
+            type="button"
+            onClick={() => hiddenDateRef.current?.showPicker()}
+            className="h-full rounded-xl border border-slate-200 bg-white p-3 text-slate-600 transition-colors hover:border-violet-300 hover:text-violet-600 focus:outline-none focus:ring-2 focus:ring-violet-100"
+            aria-label={pickerLabel}
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+              />
+            </svg>
+          </button>
+          <input
+            ref={hiddenDateRef}
+            type="date"
+            value={value}
+            min={NBP_MIN_INVOICE_DATE}
+            max={max}
+            onChange={handleHiddenDateChange}
+            className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
+            tabIndex={-1}
+            aria-hidden="true"
+          />
+        </div>
+        <button
+          type="button"
+          onClick={() => quickFill.date && onChange(quickFill.date)}
+          disabled={!quickFill.date}
+          className={secondaryButtonClass}
+        >
+          {quickFill.label}
+        </button>
+      </div>
+      <p id={`${id}Hint`} className="text-xs text-slate-500">
+        {hint}
+      </p>
+    </div>
+  );
 }
 
 function RateCalculatorInner() {
@@ -83,85 +228,54 @@ function RateCalculatorInner() {
   const today = todayWarsaw();
   const urlCurrency = searchParams.get("currency") ?? "";
   const urlDate = searchParams.get("date") ?? "";
+  const urlSaleDate = searchParams.get("sale") ?? "";
   const validUrlCurrency =
     urlCurrency && (CURRENCIES as readonly string[]).includes(urlCurrency) ? urlCurrency : null;
   const validUrlDate =
     urlDate && isCompleteDate(urlDate) && urlDate >= NBP_MIN_INVOICE_DATE && urlDate <= today
       ? urlDate
       : null;
+  // The tax point may fall after the issue date (advance invoices), so it is not capped to today.
+  const validUrlSaleDate =
+    urlSaleDate && isCompleteDate(urlSaleDate) && urlSaleDate >= NBP_MIN_INVOICE_DATE
+      ? urlSaleDate
+      : null;
 
   const [currency, setCurrency] = useState(() => validUrlCurrency ?? loadCurrency());
   const [dateDisplay, setDateDisplay] = useState(() => validUrlDate ?? today);
   const [invoiceDate, setInvoiceDate] = useState(() => validUrlDate ?? today);
+  const [saleDateDisplay, setSaleDateDisplay] = useState(() => validUrlSaleDate ?? "");
+  const [saleDate, setSaleDate] = useState(() => validUrlSaleDate ?? "");
   const [status, setStatus] = useState<Status>("idle");
   const [result, setResult] = useState<NbpRateResult | null>(null);
   const [errorType, setErrorType] = useState<NbpFetchError>("no_rate");
   const [copied, setCopied] = useState(false);
-  const hiddenDateRef = useRef<HTMLInputElement>(null);
-  const lastCheckedRef = useRef<{ currency: string; invoiceDate: string } | null>(null);
+  const lastCheckedRef = useRef<{ currency: string; date: string; saleDate: string } | null>(null);
 
-  const updateDate = useCallback((formatted: string) => {
+  const updateInvoiceDate = useCallback((formatted: string) => {
     setDateDisplay(formatted);
     setInvoiceDate(isCompleteDate(formatted) ? formatted : "");
   }, []);
 
-  const handleDateInput = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      const formatted = formatDateInput(e.target.value);
-      if (
-        isCompleteDate(formatted) &&
-        (formatted > todayWarsaw() || formatted < NBP_MIN_INVOICE_DATE)
-      ) {
-        return;
-      }
-      updateDate(formatted);
-    },
-    [updateDate],
-  );
-
-  const handleDateKeyDown = useCallback(
-    (e: KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === "Backspace" && dateDisplay.endsWith("-")) {
-        e.preventDefault();
-        updateDate(dateDisplay.slice(0, -2));
-      }
-    },
-    [dateDisplay, updateDate],
-  );
-
-  const handleCalendarClick = useCallback(() => {
-    hiddenDateRef.current?.showPicker();
+  const updateSaleDate = useCallback((formatted: string) => {
+    setSaleDateDisplay(formatted);
+    setSaleDate(isCompleteDate(formatted) ? formatted : "");
   }, []);
 
-  const handleHiddenDateChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value;
-    // Picker UI already prevents out-of-range dates via min/max attrs, but double-check.
-    if (val > todayWarsaw() || val < NBP_MIN_INVOICE_DATE) {
-      return;
-    }
-    setDateDisplay(val);
-    setInvoiceDate(val);
-  }, []);
-
-  const handleTodayClick = useCallback(() => {
-    const t = todayWarsaw();
-    setDateDisplay(t);
-    setInvoiceDate(t);
-  }, []);
-
-  const fetchRate = useCallback(async (cur: string, date: string) => {
+  const fetchRate = useCallback(async (cur: string, date: string, sale: string) => {
     setStatus("loading");
     setResult(null);
     setCopied(false);
-    lastCheckedRef.current = { currency: cur, invoiceDate: date };
+    lastCheckedRef.current = { currency: cur, date, saleDate: sale };
 
     const sharedProps = {
       currency: cur,
       date,
       isToday: date === todayWarsaw(),
+      hasSaleDate: sale !== "",
     };
 
-    const rate = await fetchNbpRateForInvoice(cur, date);
+    const rate = await fetchNbpRateForInvoice(cur, date, sale || null);
 
     if (typeof rate === "string") {
       setErrorType(rate);
@@ -170,14 +284,18 @@ function RateCalculatorInner() {
     } else {
       setResult(rate);
       setStatus("success");
-      amplitude.track("waluty_rate_checked", { ...sharedProps, source: rate.source });
+      amplitude.track("waluty_rate_checked", {
+        ...sharedProps,
+        source: rate.source,
+        rule: rate.rule,
+      });
     }
   }, []);
 
   // Auto-fetch when both valid URL params are present on first render.
   useEffect(() => {
     if (validUrlCurrency && validUrlDate) {
-      fetchRate(validUrlCurrency, validUrlDate);
+      fetchRate(validUrlCurrency, validUrlDate, validUrlSaleDate ?? "");
     }
     // Only on mount.
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -194,11 +312,14 @@ function RateCalculatorInner() {
       const params = new URLSearchParams();
       params.set("currency", currency);
       params.set("date", invoiceDate);
+      if (saleDate) {
+        params.set("sale", saleDate);
+      }
       router.replace(`${pathname}?${params.toString()}`, { scroll: false });
 
-      await fetchRate(currency, invoiceDate);
+      await fetchRate(currency, invoiceDate, saleDate);
     },
-    [currency, invoiceDate, fetchRate, router, pathname],
+    [currency, invoiceDate, saleDate, fetchRate, router, pathname],
   );
 
   useEffect(() => {
@@ -231,11 +352,19 @@ function RateCalculatorInner() {
     }
   }, []);
 
-  const isFormValid = currency && invoiceDate;
+  const saleDateQuickFill = useMemo(
+    () => (invoiceDate ? endOfPreviousMonth(invoiceDate) : null),
+    [invoiceDate],
+  );
+
+  // A half-typed sale date is not the same as an empty one — it must not silently be ignored.
+  const saleDatePending = saleDateDisplay !== "" && saleDate === "";
+  const isFormValid = currency && invoiceDate && !saleDatePending;
   const isAlreadyShown =
     status !== "idle" &&
     lastCheckedRef.current?.currency === currency &&
-    lastCheckedRef.current?.invoiceDate === invoiceDate;
+    lastCheckedRef.current?.date === invoiceDate &&
+    lastCheckedRef.current?.saleDate === saleDate;
 
   return (
     <div className="space-y-8">
@@ -248,7 +377,7 @@ function RateCalculatorInner() {
             id="currency"
             value={currency}
             onChange={handleCurrencyChange}
-            className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 transition-colors focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-100"
+            className={inputClass}
           >
             <option value="">{t("currencyPlaceholder")}</option>
             {CURRENCIES.map((c) => (
@@ -259,65 +388,29 @@ function RateCalculatorInner() {
           </select>
         </div>
 
-        <div className="space-y-2">
-          <label htmlFor="invoiceDate" className="block text-sm font-medium text-slate-700">
-            {t("invoiceDate")}
-          </label>
-          <div className="flex gap-2">
-            <div className="flex-1">
-              <input
-                id="invoiceDate"
-                type="text"
-                inputMode="numeric"
-                placeholder="YYYY-MM-DD"
-                value={dateDisplay}
-                onChange={handleDateInput}
-                onKeyDown={handleDateKeyDown}
-                maxLength={10}
-                aria-describedby="invoiceDateHint"
-                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 transition-colors focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-100"
-              />
-            </div>
-            <div className="relative self-stretch">
-              <button
-                type="button"
-                onClick={handleCalendarClick}
-                className="h-full rounded-xl border border-slate-200 bg-white p-3 text-slate-600 transition-colors hover:border-violet-300 hover:text-violet-600 focus:outline-none focus:ring-2 focus:ring-violet-100"
-                aria-label={t("openDatePicker")}
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                  />
-                </svg>
-              </button>
-              <input
-                ref={hiddenDateRef}
-                type="date"
-                value={invoiceDate}
-                min={NBP_MIN_INVOICE_DATE}
-                max={today}
-                onChange={handleHiddenDateChange}
-                className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
-                tabIndex={-1}
-                aria-hidden="true"
-              />
-            </div>
-            <button
-              type="button"
-              onClick={handleTodayClick}
-              className="rounded-xl border border-slate-200 bg-white px-3 py-3 text-sm font-semibold text-slate-700 transition-colors hover:border-violet-300 hover:text-violet-600 focus:outline-none focus:ring-2 focus:ring-violet-100"
-            >
-              {t("today")}
-            </button>
-          </div>
-          <p id="invoiceDateHint" className="text-xs text-slate-500">
-            {t("invoiceDateHint")}
-          </p>
-        </div>
+        <DateField
+          id="invoiceDate"
+          label={t("invoiceDate")}
+          hint={t("invoiceDateHint")}
+          display={dateDisplay}
+          value={invoiceDate}
+          onChange={updateInvoiceDate}
+          max={today}
+          pickerLabel={t("openDatePicker")}
+          quickFill={{ label: t("today"), date: today }}
+        />
+
+        <DateField
+          id="saleDate"
+          label={t("saleDate")}
+          hint={t("saleDateHint")}
+          placeholder={t("saleDatePlaceholder")}
+          display={saleDateDisplay}
+          value={saleDate}
+          onChange={updateSaleDate}
+          pickerLabel={t("openSaleDatePicker")}
+          quickFill={{ label: t("endOfLastMonth"), date: saleDateQuickFill }}
+        />
 
         <button
           type="submit"
@@ -379,7 +472,7 @@ function RateCalculatorInner() {
           </div>
 
           <p className="text-sm text-slate-500 border-t border-emerald-200 pt-2">
-            {t("result.explanation")}
+            {t(`result.explanation.${result.rule}`, { referenceDate: result.referenceDate })}
           </p>
         </div>
       )}
