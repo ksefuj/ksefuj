@@ -177,7 +177,8 @@ that can cause real tax/accounting problems after a successful submission.
   before the tax obligation arises (Art. 31a ust. 1 VAT Act), or before the issue date when the
   invoice precedes the tax point (ust. 2). The tax point is inferred from `P_6A`, `P_6`,
   `OkresFa/P_6_Do` or `ZaliczkaCzesciowa/P_6Z`, falling back to `P_1`. Advance rates (`KursWalutyZ`,
-  `KursWalutyZW`) convert at the payment receipt date (Art. 19a ust. 8). KSeF enforces only the
+  `KursWalutyZW`) convert at the payment receipt date (Art. 19a ust. 8), or at `P_1` when the
+  invoice was issued before the payment arrived — ust. 2 applies there too. KSeF enforces only the
   `TIlosci` format here (dot separator, max 6 decimals) — any well-formed value passes, however
   wrong.
 - **Bank account format** — Polish NRB/IBAN format validation

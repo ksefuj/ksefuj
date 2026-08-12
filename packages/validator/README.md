@@ -56,7 +56,9 @@ day before the day the tax obligation arises; the issue date governs only when t
 _before_ that (ust. 2). The validator infers the tax point from `FaWiersz/P_6A`, `Fa/P_6`,
 `Fa/OkresFa/P_6_Do` or `ZaliczkaCzesciowa/P_6Z`, and falls back to `P_1` when the invoice carries
 none. On an advance invoice the tax point is the day the payment was received (Art. 19a ust. 8), so
-each `KursWalutyZW` is checked against its own `P_6Z`.
+each `KursWalutyZW` is checked against its own `P_6Z` — unless the invoice was issued first, which
+Art. 106i ust. 7 permits up to 60 days ahead, in which case ust. 2 puts the reference date back on
+`P_1` like everywhere else.
 
 ```typescript
 import { validate, type CurrencyRate } from "@ksefuj/validator";

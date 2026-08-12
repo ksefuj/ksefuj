@@ -1505,6 +1505,50 @@ describe("Semantic Validation", () => {
       expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_MISMATCH")).toBe(false);
     });
 
+    it("should use the issue date when the advance invoice precedes the payment", () => {
+      // Art. 106i ust. 7 allows invoicing up to 60 days ahead of the payment, and
+      // Art. 31a ust. 2 then puts the reference date back on P_1
+      const xml = advanceInvoice(
+        "<P_6>2026-09-30</P_6><P_15>123.00</P_15><KursWalutyZ>3.7911</KursWalutyZ>",
+      );
+      const result = validateXml(xml, { USD: usdRates });
+      expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_MISMATCH")).toBe(false);
+    });
+
+    it("should flag the payment-date rate when the invoice precedes the payment", () => {
+      const xml = advanceInvoice(
+        "<P_6>2026-09-30</P_6><P_15>123.00</P_15><KursWalutyZ>3.7644</KursWalutyZ>",
+      );
+      const result = validateXml(xml, { USD: usdRates });
+      const issue = result.issues.find((i) => i.code.code === "CURRENCY_RATE_MISMATCH");
+      expect(issue).toBeDefined();
+      expect(issue!.context.expectedValues).toEqual(["3.7911"]);
+    });
+
+    it("should locate a payment by position when P_6Z is missing", () => {
+      // P_6Z is mandatory in the schema, but semantics also run on XSD-invalid documents
+      const xml = advanceInvoice(`<P_15>123.00</P_15>
+        <ZaliczkaCzesciowa>
+          <P_15Z>123.00</P_15Z><KursWalutyZW>1.0000</KursWalutyZW>
+        </ZaliczkaCzesciowa>`);
+      const result = validateXml(xml, { USD: usdRates });
+      const issue = result.issues.find((i) => i.code.code === "CURRENCY_RATE_MISMATCH");
+      expect(issue).toBeDefined();
+      expect(issue!.context.location.xpath).toBe("/Faktura/Fa/ZaliczkaCzesciowa[1]/KursWalutyZW");
+      expect(issue!.context.location.xpath).not.toContain("null");
+    });
+
+    it("should not name KursWaluty when an advance rate is unverifiable", () => {
+      // The invoice has no FaWiersz at all, so naming that field would be wrong
+      const xml = advanceInvoice(
+        "<P_6>2026-07-31</P_6><P_15>123.00</P_15><KursWalutyZ>3.7644</KursWalutyZ>",
+      );
+      const result = validateXml(xml, { USD: null });
+      const issue = result.issues.find((i) => i.code.code === "CURRENCY_RATE_UNVERIFIABLE");
+      expect(issue).toBeDefined();
+      expect(issue!.message).not.toContain("KursWaluty");
+    });
+
     it("should report UNVERIFIABLE once when the rate table cannot answer", () => {
       const xml = advanceInvoice(`<P_15>246.00</P_15><KursWalutyZ>3.7644</KursWalutyZ>
         <ZaliczkaCzesciowa>

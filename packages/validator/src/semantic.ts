@@ -1495,6 +1495,9 @@ function checkCurrencyRateMismatch(
   /**
    * The date the lookup actually keyed on — not necessarily `P_1`, so the message
    * must not call it the invoice date. Null when the invoice carries no usable date.
+   *
+   * One of these covers the whole invoice, and the field at fault may be any of
+   * `KursWaluty`, `KursWalutyZ` or `KursWalutyZW`, so the wording names none of them.
    */
   const unverifiable = (referenceDate: string | null): ValidationIssue => {
     const errorDef = ERROR_CODES.CURRENCY_RATE_UNVERIFIABLE;
@@ -1510,8 +1513,8 @@ function checkCurrencyRateMismatch(
         },
       },
       message: referenceDate
-        ? `Unable to verify KursWaluty — no NBP rate for ${kodWaluty} is available for the reference date ${referenceDate}.`
-        : `Unable to verify KursWaluty — no NBP rate for ${kodWaluty} is available.`,
+        ? `Unable to verify the exchange rate — no NBP rate for ${kodWaluty} is available for the reference date ${referenceDate}.`
+        : `Unable to verify the exchange rate — no NBP rate for ${kodWaluty} is available.`,
       fixSuggestions: [],
     };
   };
@@ -1641,21 +1644,27 @@ function checkCurrencyRateMismatch(
 
   // Each documented payment carries its own receipt date, so its own reference date
   const zaliczki = els(doc, "//ns:Fa/ns:ZaliczkaCzesciowa");
-  for (const zaliczka of zaliczki) {
+  zaliczki.forEach((zaliczka, index) => {
     const kursWalutyZW = text(zaliczka, "string(ns:KursWalutyZW)");
     if (!kursWalutyZW) {
-      continue;
+      return;
     }
     // `string()` yields "" for an absent node, which is not a date — normalise it away
     const p6z = text(zaliczka, "string(ns:P_6Z)") || null;
+    // P_6Z is mandatory inside ZaliczkaCzesciowa, but the semantic layer also runs on
+    // documents that failed XSD validation — fall back to position rather than emit a
+    // predicate matching nothing.
+    const zaliczkaPath = p6z
+      ? `/Faktura/Fa/ZaliczkaCzesciowa[P_6Z='${p6z}']`
+      : `/Faktura/Fa/ZaliczkaCzesciowa[${index + 1}]`;
     checkAdvanceRate(
       "KursWalutyZW",
       kursWalutyZW,
-      `/Faktura/Fa/ZaliczkaCzesciowa[P_6Z='${p6z}']/KursWalutyZW`,
+      `${zaliczkaPath}/KursWalutyZW`,
       isCollectiveCorrection ? null : p6z,
       p6z ? `for the payment received on ${p6z}` : undefined,
     );
-  }
+  });
 
   const kursWalutyZ = text(doc, "string(//ns:Fa/ns:KursWalutyZ)");
   if (kursWalutyZ) {

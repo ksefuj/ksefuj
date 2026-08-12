@@ -12,8 +12,10 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Exchange rate validation for advance invoices, which previously had none. `Fa/KursWalutyZ` and
   `ZaliczkaCzesciowa/KursWalutyZW` are now checked against the NBP Table A mid-rate, keyed to the
   date the payment was received (Art. 19a ust. 8) — `ZaliczkaCzesciowa/P_6Z` for a per-payment rate,
-  `Fa/P_6` for the invoice-level one. A foreign-currency `ZAL` carries no `FaWiersz`, so no rate on
-  it was reachable by any check before
+  `Fa/P_6` for the invoice-level one. Art. 31a ust. 2 still applies: an advance invoice may be
+  issued up to 60 days before the payment arrives (Art. 106i ust. 7), and the reference date is then
+  `P_1`. A foreign-currency `ZAL` carries no `FaWiersz`, so no rate on it was reachable by any check
+  before
 - Unlike `FaWiersz/KursWaluty`, exactly one rate is accepted here: an advance has a determinate tax
   point, so there is no Art. 19a ust. 5 ambiguity to widen for, and Art. 31a ust. 1a is keyed to
   that same invoice-issuance effect. `Fa/KursWalutyZ` is skipped when several payments carry
