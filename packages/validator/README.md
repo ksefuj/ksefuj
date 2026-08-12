@@ -6,8 +6,8 @@ KSeF FA(3) XML validator with full XSD schema validation and semantic business r
 
 - **Full XSD validation** using libxml2-wasm (WebAssembly)
 - **Semantic business rules** that catch errors XSD can't express
-- **NBP currency rate validation** — checks `KursWaluty` against official NBP mid-rates (Art. 31a
-  VAT Act)
+- **NBP currency rate validation** — checks `KursWaluty`, and the advance-invoice rates
+  `KursWalutyZ` and `KursWalutyZW`, against official NBP Table A mid-rates (Art. 31a VAT Act)
 - **Works everywhere** - Node.js, browser, CLI
 - **Zero network requests** - bundled schemas for offline use
 - **TypeScript support** with full type definitions
@@ -46,13 +46,19 @@ if (!result.valid) {
 
 ### Currency rate validation
 
-Optionally validate that `KursWaluty` matches the official NBP mid-rate (Art. 31a VAT Act). Pass a
-rate table per currency — the validator picks the correct date itself.
+Optionally validate that the invoice's exchange rates match the official NBP Table A mid-rate (Art.
+31a VAT Act). Pass a rate table per currency — the validator picks the correct date itself.
+`FaWiersz/KursWaluty` is checked per line; advance invoices are covered too, through
+`Fa/KursWalutyZ` and `ZaliczkaCzesciowa/KursWalutyZW`.
 
 The reference date is **not** simply `P_1`. Art. 31a ust. 1 takes the rate from the last business
 day before the day the tax obligation arises; the issue date governs only when the invoice is issued
-_before_ that (ust. 2). The validator infers the tax point from `FaWiersz/P_6A`, `Fa/P_6` or
-`Fa/OkresFa/P_6_Do`, and falls back to `P_1` when the invoice carries none.
+_before_ that (ust. 2). The validator infers the tax point from `FaWiersz/P_6A`, `Fa/P_6`,
+`Fa/OkresFa/P_6_Do` or `ZaliczkaCzesciowa/P_6Z`, and falls back to `P_1` when the invoice carries
+none. On an advance invoice the tax point is the day the payment was received (Art. 19a ust. 8), so
+each `KursWalutyZW` is checked against its own `P_6Z` — unless the invoice was issued first, which
+Art. 106i ust. 7 permits up to 60 days ahead, in which case ust. 2 puts the reference date back on
+`P_1` like everywhere else.
 
 ```typescript
 import { validate, type CurrencyRate } from "@ksefuj/validator";
