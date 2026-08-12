@@ -24,12 +24,13 @@ const content: Record<string, { title: string; paragraphs: ReactNode[] }> = {
         numerem i datą, gotową do wpisania w <code>KursWaluty</code>.
       </>,
       <>
-        Są jednak branże, w których obowiązek podatkowy powstaje dopiero w dniu wystawienia faktury
-        — o ile wystawisz ją w terminie. Dotyczy to m.in. usług budowlanych i budowlano-montażowych
-        (<strong>art. 19a ust. 5 pkt 3</strong>) oraz najmu, dzierżawy, leasingu, stałej obsługi
-        prawnej i biurowej, ochrony osób i mienia, a także dostawy i dystrybucji mediów — prądu,
-        gazu przewodowego, ciepła, wody (<strong>art. 19a ust. 5 pkt 4</strong>). Jeśli spóźnisz się
-        z fakturą, obowiązek podatkowy powstaje z upływem ustawowego terminu na jej wystawienie (
+        Są jednak transakcje, przy których obowiązek podatkowy powstaje dopiero w dniu wystawienia
+        faktury — o ile wystawisz ją w terminie. Dotyczy to m.in. usług budowlanych i
+        budowlano-montażowych (<strong>art. 19a ust. 5 pkt 3</strong>) oraz najmu, dzierżawy,
+        leasingu, stałej obsługi prawnej i biurowej, ochrony osób i mienia, a także dostawy i
+        dystrybucji mediów — prądu, gazu przewodowego i ciepła, a przez odesłanie do załącznika nr 3
+        także wody, ścieków i odpadów (<strong>art. 19a ust. 5 pkt 4</strong>). Jeśli spóźnisz się z
+        fakturą, obowiązek podatkowy powstaje z upływem ustawowego terminu na jej wystawienie (
         <strong>art. 19a ust. 7</strong>): przy usługach budowlanych to 30 dni od wykonania, przy
         najmie i mediach — upływ terminu płatności (<strong>art. 106i ust. 3 i 4</strong>). W tych
         przypadkach w kalkulatorze wpisz jako datę sprzedaży dzień powstania obowiązku podatkowego —
@@ -71,17 +72,17 @@ const content: Record<string, { title: string; paragraphs: ReactNode[] }> = {
         <code>KursWaluty</code>.
       </>,
       <>
-        There are industries, though, where the tax obligation arises only on the day the invoice is
-        issued — provided you issue it on time. This covers, among others, construction and
+        There are transactions, though, where the tax obligation arises only on the day the invoice
+        is issued — provided you issue it on time. This covers, among others, construction and
         construction-assembly services (<strong>Art. 19a(5)(3)</strong>) and rental, lease, leasing,
         permanent legal and office services, security of persons and property, and the supply and
-        distribution of utilities — electricity, piped gas, heat, water (
-        <strong>Art. 19a(5)(4)</strong>). If you invoice late, the tax obligation arises when the
-        statutory deadline for issuing the invoice expires (<strong>Art. 19a(7)</strong>): 30 days
-        from performance for construction services, the expiry of the payment deadline for rental
-        and utilities (<strong>Art. 106i(3) and (4)</strong>). In these cases, enter into the
-        calculator as the sale date the day the tax obligation arose — usually the invoice date, not
-        the month end.
+        distribution of utilities — electricity, piped gas and heat, and, through the reference to
+        Annex 3 to the VAT Act, also water, sewage and waste (<strong>Art. 19a(5)(4)</strong>). If
+        you invoice late, the tax obligation arises when the statutory deadline for issuing the
+        invoice expires (<strong>Art. 19a(7)</strong>): 30 days from performance for construction
+        services, the expiry of the payment deadline for rental and utilities (
+        <strong>Art. 106i(3) and (4)</strong>). In these cases, enter into the calculator as the
+        sale date the day the tax obligation arose — usually the invoice date, not the month end.
       </>,
       <>
         Worth knowing: KSeF polices the <code>KursWaluty</code> field on formatting alone: the
@@ -118,11 +119,12 @@ const content: Record<string, { title: string; paragraphs: ReactNode[] }> = {
         датою, готову до введення в <code>KursWaluty</code>.
       </>,
       <>
-        Але є галузі, де податковий обов&apos;язок виникає аж у день виставлення рахунку — за умови,
-        що виставиш його вчасно. Це стосується, зокрема, будівельних і будівельно-монтажних послуг (
-        <strong>ст. 19a ust. 5 pkt 3</strong>), а також оренди, найму, лізингу, постійного
+        Але є операції, за яких податковий обов&apos;язок виникає аж у день виставлення рахунку — за
+        умови, що виставиш його вчасно. Це стосується, зокрема, будівельних і будівельно-монтажних
+        послуг (<strong>ст. 19a ust. 5 pkt 3</strong>), а також оренди, найму, лізингу, постійного
         юридичного та офісного обслуговування, охорони осіб і майна, постачання та розподілу
-        комунальних послуг — електроенергії, газу з мережі, тепла, води (
+        комунальних послуг — електроенергії, газу з мережі й тепла, а через відсилання до додатка №
+        3 до Закону про ПДВ також води, каналізації та відходів (
         <strong>ст. 19a ust. 5 pkt 4</strong>). Якщо виставиш рахунок із запізненням, податковий
         обов&apos;язок виникає тоді, коли спливає встановлений законом термін на його виставлення (
         <strong>ст. 19a ust. 7</strong>). Для будівельних послуг це 30 днів від виконання, для
