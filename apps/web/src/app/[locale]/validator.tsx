@@ -155,7 +155,7 @@ export function Validator({ locale }: ValidatorProps) {
               if (kodWaluty && kodWaluty !== "PLN" && dataWystawienia) {
                 // Art. 31a ust. 1 keys the rate to the tax obligation date, which can
                 // predate P_1 by weeks — the fetched range has to reach back that far.
-                const taxPoints = ["P_6", "P_6_Do", "P_6A"]
+                const taxPoints = ["P_6", "P_6_Do", "P_6A", "P_6Z"]
                   .flatMap((tag) => Array.from(xmlDoc.getElementsByTagNameNS(ns, tag)))
                   .map((node) => node.textContent)
                   .filter((date): date is string => date !== null && date < dataWystawienia)

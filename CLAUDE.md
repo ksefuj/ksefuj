@@ -175,9 +175,11 @@ that can cause real tax/accounting problems after a successful submission.
 - **Tax calculation arithmetic** — P_14_x = P_13_x × rate, P_15 = sum of all bases and taxes
 - **NBP currency rate** — `KursWaluty` matches the official NBP mid-rate from the last business day
   before the tax obligation arises (Art. 31a ust. 1 VAT Act), or before the issue date when the
-  invoice precedes the tax point (ust. 2). The tax point is inferred from `P_6A`, `P_6` or
-  `OkresFa/P_6_Do`, falling back to `P_1`. KSeF enforces only the `TIlosci` format here (dot
-  separator, max 6 decimals) — any well-formed value passes, however wrong.
+  invoice precedes the tax point (ust. 2). The tax point is inferred from `P_6A`, `P_6`,
+  `OkresFa/P_6_Do` or `ZaliczkaCzesciowa/P_6Z`, falling back to `P_1`. Advance rates (`KursWalutyZ`,
+  `KursWalutyZW`) convert at the payment receipt date (Art. 19a ust. 8). KSeF enforces only the
+  `TIlosci` format here (dot separator, max 6 decimals) — any well-formed value passes, however
+  wrong.
 - **Bank account format** — Polish NRB/IBAN format validation
 - **Duplicate line numbers** — `NrWierszaFa` uniqueness within an invoice
 - **Negative quantities** — only valid in corrective invoice context

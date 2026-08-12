@@ -1516,6 +1516,44 @@ function checkCurrencyRateMismatch(
     };
   };
 
+  /**
+   * A rate field disagreeing with every rate that could lawfully appear in it.
+   * `rates` is ordered, primary reading first — it drives the message and the fix.
+   */
+  const mismatch = (opts: {
+    field: string;
+    value: string;
+    xpath: string;
+    rates: CurrencyRate[];
+    /** Which part of the invoice, e.g. "in line 1" — omitted for invoice-level fields */
+    where?: string;
+    lineNumber?: number;
+  }): ValidationIssue => {
+    const rate = opts.rates[0];
+    const expected = rate.mid.toFixed(4);
+    const errorDef = ERROR_CODES.CURRENCY_RATE_MISMATCH;
+    const where = opts.where ? ` ${opts.where}` : "";
+    return {
+      code: errorDef.code,
+      context: {
+        location: { xpath: opts.xpath, element: opts.field, lineNumber: opts.lineNumber },
+        actualValue: opts.value,
+        expectedValues: opts.rates.map((r) => r.mid.toFixed(4)),
+        metadata: { currency: kodWaluty, nbpDate: rate.date, nbpMid: rate.mid },
+      },
+      message: `${opts.field} (${opts.value})${where} differs from the NBP Table A mid-rate on ${rate.date} (${expected}).`,
+      fixSuggestions: [
+        {
+          type: "replace",
+          targetXPath: opts.xpath,
+          content: expected,
+          description: `Set ${opts.field} to ${expected} (NBP Table A mid-rate for ${kodWaluty} on ${rate.date}).`,
+          confidence: 0.95,
+        },
+      ],
+    };
+  };
+
   // KursWaluty lives in FaWiersz (line items) per FA(3) §10.2 — check each line.
   // An invoice with no KursWaluty anywhere has nothing to verify: advance invoices
   // carry no FaWiersz at all and keep their rate in KursWalutyZ / KursWalutyZW,
@@ -1547,38 +1585,99 @@ function checkCurrencyRateMismatch(
       continue;
     }
 
-    // Primary reading drives the message and the fix suggestion
-    const rate = rates[0];
     const nrWiersza = text(wiersz, "string(ns:NrWierszaFa)");
-    const xpath = `/Faktura/Fa/FaWiersz[NrWierszaFa='${nrWiersza}']/KursWaluty`;
-    const errorDef = ERROR_CODES.CURRENCY_RATE_MISMATCH;
-    issues.push({
-      code: errorDef.code,
-      context: {
-        location: {
-          xpath,
-          element: "KursWaluty",
-          lineNumber: nrWiersza ? parseInt(nrWiersza) : undefined,
-        },
-        actualValue: kursWalutyStr,
-        expectedValues: rates.map((r) => r.mid.toFixed(4)),
-        metadata: {
-          currency: kodWaluty,
-          nbpDate: rate.date,
-          nbpMid: rate.mid,
-        },
-      },
-      message: `KursWaluty (${kursWalutyStr}) in line ${nrWiersza} differs from the NBP Table A mid-rate on ${rate.date} (${rate.mid.toFixed(4)}).`,
-      fixSuggestions: [
-        {
-          type: "replace",
-          targetXPath: xpath,
-          content: rate.mid.toFixed(4),
-          description: `Set KursWaluty to ${rate.mid.toFixed(4)} (NBP Table A mid-rate for ${kodWaluty} on ${rate.date}).`,
-          confidence: 0.95,
-        },
-      ],
-    });
+    issues.push(
+      mismatch({
+        field: "KursWaluty",
+        value: kursWalutyStr,
+        xpath: `/Faktura/Fa/FaWiersz[NrWierszaFa='${nrWiersza}']/KursWaluty`,
+        rates,
+        where: `in line ${nrWiersza}`,
+        lineNumber: nrWiersza ? parseInt(nrWiersza) : undefined,
+      }),
+    );
+  }
+
+  // ── Advance-invoice rates (§9.5, §9.8) ──────────────────────────────────────
+  // A zaliczka converts at the moment the payment was received (Art. 19a ust. 8),
+  // and FA(3) records that date exactly. There is no Art. 19a ust. 5 ambiguity to
+  // widen for here — ust. 5 moves the tax point onto invoice issuance, which is not
+  // how an advance arises, and Art. 31a ust. 1a is keyed to that same effect — so
+  // exactly one rate is accepted rather than two.
+  //
+  // KursWalutyZK is deliberately not checked: it records the rate adopted for the
+  // invoice being corrected (Art. 31b ust. 1), not a fresh conversion.
+  const advanceRate = (taxPoint: string | null): CurrencyRate | null => {
+    if (rateData === null || rateData.length === 0) {
+      return null;
+    }
+    const reference = resolveRateReference(p1, taxPoint);
+    return reference ? findRateBefore(rateData, reference.date) : null;
+  };
+
+  const checkAdvanceRate = (
+    field: string,
+    value: string,
+    xpath: string,
+    taxPoint: string | null,
+    where?: string,
+  ): void => {
+    const parsed = parseFloat(value);
+    if (isNaN(parsed)) {
+      return;
+    }
+    const rate = advanceRate(taxPoint);
+    if (!rate) {
+      if (!reportedUnverifiable) {
+        issues.push(unverifiable(resolveRateReference(p1, taxPoint)?.date ?? null));
+        reportedUnverifiable = true;
+      }
+      return;
+    }
+    if (Math.round(parsed * 10000) !== Math.round(rate.mid * 10000)) {
+      issues.push(mismatch({ field, value, xpath, rates: [rate], where }));
+    }
+  };
+
+  // Each documented payment carries its own receipt date, so its own reference date
+  const zaliczki = els(doc, "//ns:Fa/ns:ZaliczkaCzesciowa");
+  for (const zaliczka of zaliczki) {
+    const kursWalutyZW = text(zaliczka, "string(ns:KursWalutyZW)");
+    if (!kursWalutyZW) {
+      continue;
+    }
+    // `string()` yields "" for an absent node, which is not a date — normalise it away
+    const p6z = text(zaliczka, "string(ns:P_6Z)") || null;
+    checkAdvanceRate(
+      "KursWalutyZW",
+      kursWalutyZW,
+      `/Faktura/Fa/ZaliczkaCzesciowa[P_6Z='${p6z}']/KursWalutyZW`,
+      isCollectiveCorrection ? null : p6z,
+      p6z ? `for the payment received on ${p6z}` : undefined,
+    );
+  }
+
+  const kursWalutyZ = text(doc, "string(//ns:Fa/ns:KursWalutyZ)");
+  if (kursWalutyZ) {
+    // P_6 on an advance invoice is the date the payment was received (§9.2). Failing
+    // that, a single documented payment fixes the date; several with different dates
+    // leave it undecidable, and KursWalutyZ is then left alone.
+    const p6 = text(doc, "string(//ns:Fa/ns:P_6)") || null;
+    const paymentDates = Array.from(
+      new Set(
+        zaliczki
+          .map((zaliczka) => text(zaliczka, "string(ns:P_6Z)"))
+          .filter((date): date is string => Boolean(date)),
+      ),
+    );
+    if (p6 || paymentDates.length <= 1) {
+      checkAdvanceRate(
+        "KursWalutyZ",
+        kursWalutyZ,
+        "/Faktura/Fa/KursWalutyZ",
+        isCollectiveCorrection ? null : (p6 ?? paymentDates[0] ?? null),
+      );
+    }
   }
 
   return issues;
