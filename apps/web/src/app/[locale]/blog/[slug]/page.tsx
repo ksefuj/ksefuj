@@ -1,5 +1,6 @@
 import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { LanguagePicker } from "../../language-picker";
@@ -16,7 +17,7 @@ import {
   resolveContentRedirect,
 } from "@/lib/content";
 import { compileMDXContent } from "@/lib/compile-mdx";
-import { buildArticleSchema } from "@/lib/structured-data";
+import { buildArticleSchema, buildBreadcrumbSchema } from "@/lib/structured-data";
 
 interface Props {
   params: Promise<{ locale: string; slug: string }>;
@@ -90,6 +91,12 @@ export default async function BlogPostPage({ params }: Props) {
   const headings = extractHeadings(item.content);
   const urlPath = buildContentPath(locale, "blog", slug);
   const schema = buildArticleSchema(item.frontmatter, urlPath, locale);
+  const tListing = await getTranslations({ locale, namespace: "content.blog" });
+  const breadcrumbs = buildBreadcrumbSchema([
+    { name: "ksefuj.to", path: locale === "pl" ? "/" : `/${locale}` },
+    { name: tListing("title"), path: locale === "pl" ? "/blog" : `/${locale}/blog` },
+    { name: item.frontmatter.title, path: urlPath },
+  ]);
   const localePaths = buildContentLocalePaths("blog", slug, item.frontmatter.translations);
 
   const { content } = await compileMDXContent({ source: item.content });
@@ -99,6 +106,10 @@ export default async function BlogPostPage({ params }: Props) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, "\\u003c") }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs).replace(/</g, "\\u003c") }}
       />
       <SiteHeader
         locale={locale}

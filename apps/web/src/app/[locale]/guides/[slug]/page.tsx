@@ -1,5 +1,6 @@
 import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { LanguagePicker } from "../../language-picker";
@@ -16,7 +17,7 @@ import {
   resolveContentRedirect,
 } from "@/lib/content";
 import { compileMDXContent } from "@/lib/compile-mdx";
-import { buildHowToSchema } from "@/lib/structured-data";
+import { buildGuideSchema, buildBreadcrumbSchema } from "@/lib/structured-data";
 
 interface Props {
   params: Promise<{ locale: string; slug: string }>;
@@ -89,7 +90,13 @@ export default async function GuidePage({ params }: Props) {
 
   const headings = extractHeadings(item.content);
   const urlPath = buildContentPath(locale, "guides", slug);
-  const schema = buildHowToSchema(item.frontmatter, urlPath, locale);
+  const schema = buildGuideSchema(item.frontmatter, urlPath, locale);
+  const tListing = await getTranslations({ locale, namespace: "content.guides" });
+  const breadcrumbs = buildBreadcrumbSchema([
+    { name: "ksefuj.to", path: locale === "pl" ? "/" : `/${locale}` },
+    { name: tListing("title"), path: locale === "pl" ? "/guides" : `/${locale}/guides` },
+    { name: item.frontmatter.title, path: urlPath },
+  ]);
   const localePaths = buildContentLocalePaths("guides", slug, item.frontmatter.translations);
 
   const { content } = await compileMDXContent({ source: item.content });
@@ -99,6 +106,10 @@ export default async function GuidePage({ params }: Props) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, "\\u003c") }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs).replace(/</g, "\\u003c") }}
       />
       <SiteHeader
         locale={locale}
