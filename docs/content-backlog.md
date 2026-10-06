@@ -19,12 +19,6 @@ what is not yet settled.
 
 ## Next up
 
-- [ ] **UPDATE** penalties postponed to 2028 — fix posts that say penalties start 2027-01-01:
-      `ksef-ruszyl`, `ksef-od-1-kwietnia-2026`, `ksef-dla-jdg`, `ksef-checklist-przygotowanie` (all
-      locales). MF announced 2026-09-16 that art. 106ni sanctions move to 2028-01-01 (draft UD477,
-      in the legislative register 2026-10-01). It is a draft, not law: say so. The KSeF obligation
-      itself still starts 2027-01-01. Sources: PRAWO; draft UD477 (find on legislacja.gov.pl), media
-      reports (podatki.biz, rp.pl) only as context.
 - [ ] `kary-ksef-2027-2028` — Kary za KSeF: co się zmienia od 1 stycznia 2027 · „kary KSeF 2027" ·
       A, K · before 2026-12-31 · PRAWO, UD477 · Obligation in 2027, fines from 2028 (if passed).
       What KAS does in 2027 instead (reminders, verification). Update when the act passes.
@@ -92,5 +86,8 @@ what is not yet settled.
       penalties update above).
 
 ## Done
+
+- [x] **UPDATE** penalties postponed to 2028: done in the rewrite of all existing posts (branch
+      `content/rewrite-existing-posts`).
 
 <!-- Move items here with the PR number when merged, e.g. `- [x] slug (#81)` -->
