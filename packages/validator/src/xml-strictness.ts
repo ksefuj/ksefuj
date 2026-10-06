@@ -27,7 +27,11 @@ export const KSEF_XML_RULES_URL =
 /** Date from which KSeF PROD rejects these constructs (issue #718). */
 export const KSEF_STRICT_XML_ENFORCEMENT_DATE = "2026-10-19";
 
-/** Discouraged code point ranges, exactly as listed by MF (inclusive). */
+/**
+ * Discouraged code point ranges, exactly as listed by MF (inclusive).
+ * Note: plane-0 U+FFFE/U+FFFF are not in MF's list (XML parsers reject them anyway), and
+ * U+0085 is deliberately excluded by the W3C ranges.
+ */
 function isDiscouraged(cp: number): boolean {
   if (cp >= 0x7f && cp <= 0x84) {
     return true;
@@ -48,41 +52,50 @@ function formatCodePoint(cp: number): string {
 
 const SNIPPET_RADIUS = 15;
 
+/** Individually reported findings per code; the rest are summarised in one issue. */
+export const MAX_REPORTED_FINDINGS = 20;
+
 function sanitizeSnippet(text: string): string {
   return text.replace(/[\r\n\t]+/g, " ");
 }
 
+/**
+ * Forward-only line/column cursor. Offsets must be requested in non-decreasing order, so the
+ * whole scan stays linear. Lines break on \r\n, \r or \n; columns count code points and a
+ * leading BOM does not occupy a column.
+ */
+function createCursor(xml: string) {
+  let offset = xml.charCodeAt(0) === 0xfeff ? 1 : 0;
+  let line = 1;
+  let column = 1;
+  return (target: number): { line: number; column: number } => {
+    while (offset < target) {
+      const c = xml.charCodeAt(offset);
+      if (c === 0x0a) {
+        line++;
+        column = 1;
+        offset++;
+      } else if (c === 0x0d) {
+        line++;
+        column = 1;
+        offset += xml.charCodeAt(offset + 1) === 0x0a ? 2 : 1;
+      } else if (c >= 0xd800 && c <= 0xdbff && offset + 1 < xml.length) {
+        column++;
+        offset += 2;
+      } else {
+        column++;
+        offset++;
+      }
+    }
+    return { line, column };
+  };
+}
+
 export function checkStrictXml(xml: string): ValidationIssue[] {
   const issues: ValidationIssue[] = [];
-
-  // Offsets of line starts. XML treats \r\n, \r and \n as one line break.
-  const lineStarts = [0];
-  for (let i = 0; i < xml.length; i++) {
-    const c = xml.charCodeAt(i);
-    if (c === 0x0a) {
-      lineStarts.push(i + 1);
-    } else if (c === 0x0d) {
-      if (xml.charCodeAt(i + 1) === 0x0a) {
-        i++;
-      }
-      lineStarts.push(i + 1);
-    }
-  }
-
-  const position = (offset: number): { line: number; column: number } => {
-    let lo = 0;
-    let hi = lineStarts.length - 1;
-    while (lo < hi) {
-      const mid = (lo + hi + 1) >> 1;
-      if (lineStarts[mid]! <= offset) {
-        lo = mid;
-      } else {
-        hi = mid - 1;
-      }
-    }
-    // Column counts code points, not UTF-16 units
-    const column = Array.from(xml.slice(lineStarts[lo]!, offset)).length + 1;
-    return { line: lo + 1, column };
+  const common = {
+    source: KSEF_XML_RULES_URL,
+    enforcedFrom: KSEF_STRICT_XML_ENFORCEMENT_DATE,
   };
 
   // --- BOM ---
@@ -91,47 +104,62 @@ export function checkStrictXml(xml: string): ValidationIssue[] {
     const errorDef = ERROR_CODES.XML_BOM_PRESENT;
     issues.push({
       code: errorDef.code,
-      context: {
-        location: { lineNumber: 1, columnNumber: 1 },
-        metadata: { source: KSEF_XML_RULES_URL, enforcedFrom: KSEF_STRICT_XML_ENFORCEMENT_DATE },
-      },
+      context: { location: { lineNumber: 1, columnNumber: 1 }, metadata: { ...common } },
       message: `The file starts with a UTF-8 byte order mark (BOM). KSeF requires UTF-8 without BOM and rejects such invoices from ${KSEF_STRICT_XML_ENFORCEMENT_DATE}.`,
       fixSuggestions: [],
     });
   }
 
   // --- Discouraged characters ---
+  const charCursor = createCursor(xml);
+  let charCount = 0;
   for (let i = 0; i < xml.length; ) {
     const cp = xml.codePointAt(i)!;
     const width = cp > 0xffff ? 2 : 1;
     if (isDiscouraged(cp)) {
-      const { line, column } = position(i);
-      const label = formatCodePoint(cp);
-      const before = sanitizeSnippet(xml.slice(Math.max(0, i - SNIPPET_RADIUS), i));
-      const after = sanitizeSnippet(xml.slice(i + width, i + width + SNIPPET_RADIUS));
-      const errorDef = ERROR_CODES.XML_DISCOURAGED_CHARACTER;
-      issues.push({
-        code: errorDef.code,
-        context: {
-          location: { lineNumber: line, columnNumber: column },
-          actualValue: label,
-          metadata: {
-            codePoint: label,
-            snippet: `${before}[${label}]${after}`,
-            source: KSEF_XML_RULES_URL,
-            enforcedFrom: KSEF_STRICT_XML_ENFORCEMENT_DATE,
+      charCount++;
+      if (charCount <= MAX_REPORTED_FINDINGS) {
+        const { line, column } = charCursor(i);
+        const label = formatCodePoint(cp);
+        const before = sanitizeSnippet(xml.slice(Math.max(0, i - SNIPPET_RADIUS), i));
+        const after = sanitizeSnippet(xml.slice(i + width, i + width + SNIPPET_RADIUS));
+        const errorDef = ERROR_CODES.XML_DISCOURAGED_CHARACTER;
+        issues.push({
+          code: errorDef.code,
+          context: {
+            location: { lineNumber: line, columnNumber: column },
+            actualValue: label,
+            metadata: { codePoint: label, snippet: `${before}[${label}]${after}`, ...common },
           },
-        },
-        message: `Character ${label} (discouraged by the W3C XML spec) at line ${line}, column ${column}: "${before}[${label}]${after}". KSeF rejects invoices containing it from ${KSEF_STRICT_XML_ENFORCEMENT_DATE}.`,
-        fixSuggestions: [],
-      });
+          message: `Character ${label} (discouraged by the W3C XML spec) at line ${line}, column ${column}: "${before}[${label}]${after}". KSeF rejects invoices containing it from ${KSEF_STRICT_XML_ENFORCEMENT_DATE}.`,
+          fixSuggestions: [],
+        });
+      }
     }
     i += width;
   }
+  if (charCount > MAX_REPORTED_FINDINGS) {
+    const errorDef = ERROR_CODES.XML_DISCOURAGED_CHARACTER_MORE;
+    const more = charCount - MAX_REPORTED_FINDINGS;
+    issues.push({
+      code: errorDef.code,
+      context: {
+        location: {},
+        actualValue: charCount,
+        metadata: { count: more, total: charCount, ...common },
+      },
+      message: `${more} more discouraged characters not listed individually (${charCount} in total).`,
+      fixSuggestions: [],
+    });
+  }
 
   // --- Processing instructions and XML declaration encoding ---
-  // The XML declaration is only legal at the very start (after an optional BOM).
-  const declarationOffset = hasBom ? 1 : 0;
+  // The XML declaration is only legal at the very start (after an optional BOM). A `<?xml` that
+  // is preceded only by whitespace is still treated as the declaration (the parser rejects the
+  // whitespace itself), so it is not mislabelled as a processing instruction.
+  const prologStart = hasBom ? 1 : 0;
+  const piCursor = createCursor(xml);
+  let piCount = 0;
   let i = 0;
   for (;;) {
     const lt = xml.indexOf("<", i);
@@ -165,21 +193,17 @@ export function checkStrictXml(xml: string): ValidationIssue[] {
     const target = /^[^\s?>]*/.exec(body)![0];
     i = end < 0 ? xml.length : end + 2;
 
-    if (lt === declarationOffset && target === "xml") {
+    if (target === "xml" && /^\s*$/.test(xml.slice(prologStart, lt))) {
       const encoding = /\bencoding\s*=\s*(["'])(.*?)\1/s.exec(body);
       if (encoding && !/^utf-8$/i.test(encoding[2]!)) {
-        const { line, column } = position(lt);
+        const { line, column } = piCursor(lt);
         const errorDef = ERROR_CODES.XML_ENCODING_NOT_UTF8;
         issues.push({
           code: errorDef.code,
           context: {
             location: { lineNumber: line, columnNumber: column },
             actualValue: encoding[2]!,
-            metadata: {
-              encoding: encoding[2]!,
-              source: KSEF_XML_RULES_URL,
-              enforcedFrom: KSEF_STRICT_XML_ENFORCEMENT_DATE,
-            },
+            metadata: { encoding: encoding[2]!, ...common },
           },
           message: `The XML declaration names encoding "${encoding[2]!}". KSeF requires UTF-8; invoices declaring another encoding are rejected from ${KSEF_STRICT_XML_ENFORCEMENT_DATE}.`,
           fixSuggestions: [],
@@ -188,20 +212,34 @@ export function checkStrictXml(xml: string): ValidationIssue[] {
       continue;
     }
 
-    const { line, column } = position(lt);
+    piCount++;
+    if (piCount > MAX_REPORTED_FINDINGS) {
+      continue;
+    }
+    const { line, column } = piCursor(lt);
     const errorDef = ERROR_CODES.XML_PROCESSING_INSTRUCTION;
     issues.push({
       code: errorDef.code,
       context: {
         location: { lineNumber: line, columnNumber: column },
         actualValue: target,
-        metadata: {
-          target,
-          source: KSEF_XML_RULES_URL,
-          enforcedFrom: KSEF_STRICT_XML_ENFORCEMENT_DATE,
-        },
+        metadata: { target, ...common },
       },
       message: `XML processing instruction <?${target} …?> at line ${line}, column ${column}. KSeF rejects invoices containing processing instructions from ${KSEF_STRICT_XML_ENFORCEMENT_DATE}.`,
+      fixSuggestions: [],
+    });
+  }
+  if (piCount > MAX_REPORTED_FINDINGS) {
+    const errorDef = ERROR_CODES.XML_PROCESSING_INSTRUCTION_MORE;
+    const more = piCount - MAX_REPORTED_FINDINGS;
+    issues.push({
+      code: errorDef.code,
+      context: {
+        location: {},
+        actualValue: piCount,
+        metadata: { count: more, total: piCount, ...common },
+      },
+      message: `${more} more processing instructions not listed individually (${piCount} in total).`,
       fixSuggestions: [],
     });
   }

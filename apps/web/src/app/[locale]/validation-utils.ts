@@ -4,6 +4,11 @@
 
 import type { ValidationIssue } from "@ksefuj/validator";
 
+/** Values from the file are interpolated into inline-code markdown; drop backticks. */
+function stripBackticks(value: unknown): string {
+  return String(value).replace(/`/g, "'");
+}
+
 /**
  * Translates a ValidationIssue to a localized message
  */
@@ -59,13 +64,19 @@ export function translateValidationIssue(
       context.codePoint = String(issue.context.metadata.codePoint);
     }
     if (issue.context.metadata?.snippet) {
-      context.snippet = `\`${String(issue.context.metadata.snippet)}\``;
+      context.snippet = `\`${stripBackticks(issue.context.metadata.snippet)}\``;
     }
     if (issue.context.metadata?.target !== undefined) {
-      context.target = String(issue.context.metadata.target);
+      context.target = stripBackticks(issue.context.metadata.target);
+    }
+    if (issue.context.metadata?.count !== undefined) {
+      context.count = String(issue.context.metadata.count);
+    }
+    if (issue.context.metadata?.total !== undefined) {
+      context.total = String(issue.context.metadata.total);
     }
     if (issue.context.metadata?.encoding) {
-      context.encoding = String(issue.context.metadata.encoding);
+      context.encoding = stripBackticks(issue.context.metadata.encoding);
     }
 
     // Debug logging in development

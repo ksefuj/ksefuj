@@ -120,6 +120,30 @@ export const PARSE_ERRORS = {
     fixTemplates: [],
   },
 
+  XML_DISCOURAGED_CHARACTER_MORE: {
+    code: {
+      domain: "parse",
+      category: "ksef_strict_xml",
+      code: "XML_DISCOURAGED_CHARACTER_MORE",
+      severity: "error",
+    },
+    description: "Summary: further discouraged characters beyond the individually reported ones",
+    commonCauses: [],
+    fixTemplates: [],
+  },
+
+  XML_PROCESSING_INSTRUCTION_MORE: {
+    code: {
+      domain: "parse",
+      category: "ksef_strict_xml",
+      code: "XML_PROCESSING_INSTRUCTION_MORE",
+      severity: "error",
+    },
+    description: "Summary: further processing instructions beyond the individually reported ones",
+    commonCauses: [],
+    fixTemplates: [],
+  },
+
   XML_BOM_PRESENT: {
     code: {
       domain: "parse",

@@ -39,6 +39,11 @@ type ValidationSummary = {
 const ITEMS_PER_PAGE = 10;
 const CONCURRENCY_LIMIT = 4;
 
+/** Decode as UTF-8 but keep a BOM (file.text() strips it) so validate() can flag it. */
+async function readFileText(file: File): Promise<string> {
+  return new TextDecoder("utf-8", { ignoreBOM: true }).decode(await file.arrayBuffer());
+}
+
 export function Validator({ locale }: ValidatorProps) {
   const t = useTranslations("validator");
   const [files, setFiles] = useState<FileValidationResult[]>([]);
@@ -145,7 +150,7 @@ export function Validator({ locale }: ValidatorProps) {
         await Promise.all(
           xmlFiles.map(async (file, i) => {
             try {
-              const content = await file.text();
+              const content = await readFileText(file);
               fileContents.set(i, content);
               const xmlDoc = new DOMParser().parseFromString(content, "application/xml");
               const kodWaluty =
@@ -195,7 +200,7 @@ export function Validator({ locale }: ValidatorProps) {
 
             let fileResult: FileValidationResult;
             try {
-              const content = fileContents.get(index) ?? (await file.text());
+              const content = fileContents.get(index) ?? (await readFileText(file));
 
               const result = await validate(content, {
                 maxIssues: 100,

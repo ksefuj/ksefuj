@@ -129,7 +129,9 @@
       "XML_DISCOURAGED_CHARACTER": "У файлі є заборонений символ, який KSeF відхилятиме з 19 жовтня 2026 — видали його або заміни на звичайний текст. Символ `{codePoint}` у рядку {line}, стовпці {column}: {snippet}. Джерело: [Weryfikacja faktury](https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md)",
       "XML_PROCESSING_INSTRUCTION": "У файлі є прихована інструкція, яку KSeF не прийматиме з 19 жовтня 2026 — видали її з файлу. Інструкція обробки XML `<?{target} …?>` у рядку {line}, стовпці {column} (наприклад, підключений стиль візуалізації). Джерело: [Weryfikacja faktury](https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md)",
       "XML_BOM_PRESENT": "Файл збережено так, що KSeF не прийматиме його з 19 жовтня 2026 — збережи його знову як UTF-8 без BOM. Файл починається з маркера BOM (байти `EF BB BF`). Джерело: [Weryfikacja faktury](https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md)",
-      "XML_ENCODING_NOT_UTF8": "Файл збережено в неправильному кодуванні — KSeF вимагає UTF-8 і відхилятиме інші з 19 жовтня 2026. Декларація XML вказує кодування `{encoding}` у рядку {line}, стовпці {column}. Джерело: [Weryfikacja faktury](https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md)"
+      "XML_ENCODING_NOT_UTF8": "Файл збережено в неправильному кодуванні — KSeF вимагає UTF-8 і відхилятиме інші з 19 жовтня 2026. Декларація XML вказує кодування `{encoding}` у рядку {line}, стовпці {column}. Джерело: [Weryfikacja faktury](https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md)",
+      "XML_DISCOURAGED_CHARACTER_MORE": "…і ще {count} таких символів у файлі (разом {total}). Видали всі.",
+      "XML_PROCESSING_INSTRUCTION_MORE": "…і ще {count} таких інструкцій у файлі (разом {total}). Видали всі."
     },
     "errors": {
       "field": "поле",

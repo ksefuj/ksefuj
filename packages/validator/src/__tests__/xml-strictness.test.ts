@@ -4,7 +4,7 @@
  */
 
 import { describe, expect, it } from "vitest";
-import { checkStrictXml } from "../xml-strictness.js";
+import { checkStrictXml, MAX_REPORTED_FINDINGS } from "../xml-strictness.js";
 import { validate } from "../validate.js";
 
 const BOM = String.fromCharCode(0xfeff);
@@ -75,7 +75,7 @@ describe("checkStrictXml", () => {
     });
 
     it("flags a second xml declaration-like PI that is not at the very start", () => {
-      expect(codes(`\n${DECL}<a/>`)).toEqual(["XML_PROCESSING_INSTRUCTION"]);
+      expect(codes(`${DECL}<a/><?xml version="1.0"?>`)).toEqual(["XML_PROCESSING_INSTRUCTION"]);
     });
   });
 
@@ -184,5 +184,48 @@ describe("validate() integration", () => {
     });
     expect(result.valid).toBe(true);
     expect(result.issues).toEqual([]);
+  });
+});
+
+describe("checkStrictXml robustness", () => {
+  it("does not count a leading BOM as a column", () => {
+    const issues = checkStrictXml(`${BOM}${DECL}<a>\u0084</a>`);
+    const ch = issues.find((i) => i.code.code === "XML_DISCOURAGED_CHARACTER")!;
+    expect(ch.context.location).toEqual({ lineNumber: 1, columnNumber: DECL.length + 4 });
+  });
+
+  it("caps individually reported characters and adds one summary", () => {
+    const issues = checkStrictXml(doc("\u0084".repeat(MAX_REPORTED_FINDINGS + 5)));
+    expect(issues.filter((i) => i.code.code === "XML_DISCOURAGED_CHARACTER")).toHaveLength(
+      MAX_REPORTED_FINDINGS,
+    );
+    const summary = issues.filter((i) => i.code.code === "XML_DISCOURAGED_CHARACTER_MORE");
+    expect(summary).toHaveLength(1);
+    expect(summary[0]!.context.metadata?.count).toBe(5);
+    expect(summary[0]!.context.metadata?.total).toBe(MAX_REPORTED_FINDINGS + 5);
+  });
+
+  it("caps processing instructions and adds one summary", () => {
+    const xml = `${DECL}<r>${"<?p x?>".repeat(MAX_REPORTED_FINDINGS + 2)}</r>`;
+    const issues = checkStrictXml(xml);
+    expect(issues.filter((i) => i.code.code === "XML_PROCESSING_INSTRUCTION")).toHaveLength(
+      MAX_REPORTED_FINDINGS,
+    );
+    expect(issues.filter((i) => i.code.code === "XML_PROCESSING_INSTRUCTION_MORE")).toHaveLength(1);
+  });
+
+  it("handles a multi-megabyte single-line file with many bad characters quickly", () => {
+    const xml = `${DECL}<r>${"ab\u0084\u{1f600}".repeat(500_000)}</r>`;
+    const start = Date.now();
+    const issues = checkStrictXml(xml);
+    expect(Date.now() - start).toBeLessThan(2000);
+    expect(issues.length).toBe(MAX_REPORTED_FINDINGS + 1);
+  });
+
+  it("treats a whitespace-preceded declaration as the declaration, not a PI", () => {
+    expect(codes(`\n <?xml version="1.0"?><a/>`)).toEqual([]);
+    expect(codes(`\n <?xml version="1.0" encoding="ISO-8859-2"?><a/>`)).toEqual([
+      "XML_ENCODING_NOT_UTF8",
+    ]);
   });
 });

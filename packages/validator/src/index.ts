@@ -46,6 +46,7 @@ export {
   checkStrictXml,
   KSEF_XML_RULES_URL,
   KSEF_STRICT_XML_ENFORCEMENT_DATE,
+  MAX_REPORTED_FINDINGS,
 } from "./xml-strictness.js";
 
 // --- Error code registry ---
