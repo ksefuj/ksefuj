@@ -21,12 +21,16 @@ sources:
     url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
   - label: "MF: KSeF technical notices"
     url: "https://ksef.podatki.gov.pl/komunikaty-techniczne/"
+  - label: "MF: JPK_VAT brochure with the declaration from 1 February 2026, p. 18"
+    url: "https://www.podatki.gov.pl/media/wgbkrejs/broszura-jpk_vat-z-deklaracj%C4%85-od-1-lutego-2026-r.pdf"
   - label: "KSeF Latarnia (public status API, MF repository)"
     url: "https://github.com/CIRFMF/ksef-latarnia"
   - label: "MF: extended penalty deferral (16.09.2026)"
     url: "https://www.gov.pl/web/finanse/przedluzenie-odroczenia-kar-za-bledy-w-stosowaniu-ksef-do-konca-2027-r"
   - label: "Draft UD477 in RCL"
     url: "https://legislacja.rcl.gov.pl/projekt/12414954"
+  - label: "Draft UD477: text of the Act, art. 2 point 2"
+    url: "https://legislacja.rcl.gov.pl/docs//2/12414954/13227844/13227845/dokument798515.docm"
 translations:
   pl: "awaria-ksef-offline"
   en: "ksef-outage-offline-mode"
@@ -44,12 +48,12 @@ When you cannot send an invoice to KSeF, you can still issue it: in offline24 mo
 
 Which mode you use depends on who announced what, not on the fact that "something is not working". For Ania, who issues a few invoices a month, this table is enough.
 
-| Situation                         | Mode                       | What the invoice needs                                     | Deadline to send to KSeF                                           | Who announces                                             |
-| --------------------------------- | -------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------ | --------------------------------------------------------- |
-| A problem on your side (internet) | offline24, art. 106nda     | FA(3) structure, OFFLINE and CERTYFIKAT QR codes, P_1 date | without delay, by the next working day after the day of issue      | nobody, the mode has no statutory precondition            |
-| KSeF unavailable                  | unavailability, art. 106nh | as above                                                   | next working day after the day the unavailability ended            | MF in the BIP (art. 106ne para. 4)                        |
-| KSeF outage                       | emergency mode, art. 106nf | as above                                                   | 7 working days from the end of the outage stated in the end notice | MF in the BIP and interface software (para. 1)            |
-| Total failure                     | art. 106ng                 | as above, but not sent to KSeF                             | you do not send the invoice to KSeF                                | MF in the mass media when the BIP is impossible (para. 3) |
+| Situation                         | Mode                       | What the invoice needs                                  | Deadline to send to KSeF                                           | Who announces                                             |
+| --------------------------------- | -------------------------- | ------------------------------------------------------- | ------------------------------------------------------------------ | --------------------------------------------------------- |
+| A problem on your side (internet) | offline24, art. 106nda     | FA(3) structure, P_1 date, QR codes only outside KSeF   | without delay, by the next working day after the day of issue      | nobody, the mode has no statutory precondition            |
+| KSeF unavailable                  | unavailability, art. 106nh | as above                                                | next working day after the day the unavailability ended            | MF in the BIP (art. 106ne para. 4)                        |
+| KSeF outage                       | emergency mode, art. 106nf | as above                                                | 7 working days from the end of the outage stated in the end notice | MF in the BIP and interface software (para. 1)            |
+| Total failure                     | art. 106ng                 | paper or electronic invoice, no FA(3) rule, no QR codes | you do not send the invoice to KSeF                                | MF in the mass media when the BIP is impossible (para. 3) |
 
 Two caveats. The Act does not define a "working day", so do not assume a Saturday counts: issue on Tuesday, send by Wednesday. The second concerns the 7-day window: if MF announces another outage during it, the deadline is counted afresh (art. 106nf para. 5), and a total-failure notice switches the window off (para. 7).
 
@@ -64,7 +68,7 @@ Offline24 is the only mode that needs no announcement. You do not have to prove 
 
 The date of issue is the P_1 date (art. 106nda para. 10), and the buyer's date of receipt is the date KSeF assigns the number (para. 11). The statutory deadline for issuing the invoice, generally the 15th of the following month, does not change. KSeF rejects a P_1 date in the future, while a P_1 date earlier than the day you send is fine.
 
-The invoice (or a page next to it) must carry two QR codes. CODE I, labelled OFFLINE, carries the invoice data. CODE II, labelled CERTYFIKAT, confirms the issuer and requires a KSeF certificate type 2. If the codes do not fit on the visualisation, you may give a separate link or graphic.
+QR codes are required only when you hand the invoice over outside KSeF, that is to a buyer under art. 106gb para. 4 (art. 106nda paras. 3, 4 and 6). In that case the invoice (or a page next to it) carries two codes: CODE I, labelled OFFLINE, carries the invoice data, and CODE II, labelled CERTYFIKAT, confirms the issuer and requires a KSeF certificate type 2. If the codes do not fit on the visualisation, you may give a separate link or graphic. A buyer with a Polish NIP receives the invoice only in KSeF, so it needs no codes, and in a total failure there are none at all.
 
 <Source
   href="https://ksef.podatki.gov.pl/media/nc4iqf42/ksef-kody-qr-dla-faktury-wystawionej-offline.pdf"
@@ -77,7 +81,12 @@ In emergency mode and during unavailability you do the same as in offline24, but
 
 An offline24 invoice issued just before an outage is announced falls under art. 106nha. If an ordinary outage was announced (art. 106ne para. 1), the art. 106nf deadlines apply. If a total failure was announced (para. 3), you do not send that invoice to KSeF.
 
-Total failure is the exception. Invoices from that period do not go to KSeF, and in the JPK file they are marked BFK. Offline24 and unavailability invoices that later get a KSeF number carry the DI marker and are later corrected to the number.
+Total failure is the exception. Invoices from that period do not go to KSeF, and in the JPK file they are marked BFK. An offline24 or unavailability invoice carries the DI marker in the JPK file only if it has no KSeF number on the day you file. If it already has one, you report it with the number (NrKSeF) and correct an earlier DI to the number. Emergency-mode invoices (art. 106nf) get the OFF marker.
+
+<Source
+  href="https://www.podatki.gov.pl/media/wgbkrejs/broszura-jpk_vat-z-deklaracj%C4%85-od-1-lutego-2026-r.pdf"
+  label="MF: JPK_VAT brochure with the declaration, p. 18"
+/>
 
 ## How to tell it is an outage
 
@@ -99,13 +108,13 @@ There is no clear interpretation of what follows if the rejection reaches you af
 
 ## What the buyer gets in the meantime
 
-A buyer with a Polish NIP receives the invoice only in KSeF (art. 106nda para. 3). Before the system accepts it, you may give them a voluntary "transaction confirmation" with two QR codes. It is not an invoice.
+In offline24 and during unavailability a buyer with a Polish NIP receives the invoice only in KSeF (art. 106nda para. 3, art. 106nh para. 4). Before the system accepts it, you may give them a voluntary "transaction confirmation" with two QR codes. It is not an invoice. In emergency mode every buyer receives the invoice in the agreed way (art. 106nf para. 2), with the codes as in offline24 if it does not go through KSeF (para. 3).
 
 A consumer, a foreign buyer or a buyer without a NIP (art. 106gb para. 4) receives the invoice in the agreed way, with the OFFLINE and CERTYFIKAT codes. Once the KSeF number is assigned, one code with that number is enough.
 
-A buyer who gets such a document before it is sent to KSeF has, according to the Handbook, the right to deduct from the day of actual receipt. MF nonetheless calls this "incorrect conduct" by the seller and recommends receiving invoices in KSeF.
+If a buyer with a Polish NIP gets an offline24 invoice outside KSeF before it is sent to KSeF, the Handbook gives them the right to deduct from the day of actual receipt. MF nonetheless calls this "incorrect conduct" by the seller and recommends receiving invoices in KSeF (Handbook part II, point 1.8, pp. 31-32). That label applies only to this situation.
 
-From 2027 the KSeF number is to appear in the transfer title. The duty does not apply to art. 106nda and 106nh invoices that were not entered into KSeF because of an outage notice (art. 108g para. 4).
+From 2027 the KSeF number is to appear in the transfer title between active VAT payers (the art. 108g duty concerns active VAT payers, Handbook point 4.1.5). The duty does not apply to art. 106nda and 106nh invoices that were not entered into KSeF because of an outage notice (art. 108g para. 4).
 
 ## Prepare before anything breaks
 
@@ -115,12 +124,16 @@ The second question is your software. According to MF, in the Aplikacja Podatnik
 
 ## Penalties for being late and their status
 
-Art. 106ni para. 1 point 3 provides a penalty for not sending an offline24, emergency or unavailability invoice on time: up to 100% of the VAT on the invoice, or up to 18.7% of the gross amount due where there is no VAT. These provisions take effect on 1 January 2027. On 16 September 2026 MF announced a deferral of penalties to 31 December 2027, but that needs an amendment to the Act, and draft UD477 is only at the consultation stage and is not law. Para. 4 is already in force: being late under art. 106nda para. 2, 106nf para. 4 or 106nh para. 2 does not lead to fiscal criminal or fiscal offence proceedings. A fuller discussion needs its own article.
+Art. 106ni para. 1 point 3 provides a penalty for not sending an offline24, emergency or unavailability invoice on time: up to 100% of the VAT on the invoice, or up to 18.7% of the gross amount due where there is no VAT. These provisions take effect on 1 January 2027. On 16 September 2026 MF announced a deferral of penalties to 31 December 2027. Draft UD477 moves art. 106ni paras. 1-3 and 5-7 to 1 January 2028 (art. 2 point 2 of the draft), but that needs an amendment to the Act, and the draft is only at the stage of inter-ministerial arrangements and public consultation (both opened 23.09.2026) and is not law. Para. 4 is already in force: being late under art. 106nda para. 2, 106nf para. 4 or 106nh para. 2 does not lead to fiscal criminal or fiscal offence proceedings. A fuller discussion needs its own article.
 
 <Source
   href="https://www.gov.pl/web/finanse/przedluzenie-odroczenia-kar-za-bledy-w-stosowaniu-ksef-do-konca-2027-r"
   label="MF: extended penalty deferral"
 />
 <Source href="https://legislacja.rcl.gov.pl/projekt/12414954" label="Draft UD477 in RCL" />
+<Source
+  href="https://legislacja.rcl.gov.pl/docs//2/12414954/13227844/13227845/dokument798515.docm"
+  label="Draft UD477: text of the Act, art. 2 point 2"
+/>
 
 Start with one thing: check today whether your software has an offline mode and whether you hold a type 2 certificate. If you are only starting with KSeF, read the [guide for sole traders](/en/blog/ksef-for-sole-traders).
