@@ -19,13 +19,10 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const [tMeta, tContent] = await Promise.all([
-    getTranslations({ locale, namespace: "meta" }),
-    getTranslations({ locale, namespace: "content.blog" }),
-  ]);
+  const tContent = await getTranslations({ locale, namespace: "content.blog" });
 
   const canonical = locale === "pl" ? "/blog" : `/${locale}/blog`;
-  const title = `${tContent("title")} — ${tMeta("title")}`;
+  const title = `${tContent("title")} — ksefuj.to`;
   const description = tContent("metaDescription");
 
   return {
