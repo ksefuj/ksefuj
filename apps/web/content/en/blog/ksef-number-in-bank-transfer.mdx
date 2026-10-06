@@ -1,0 +1,88 @@
+---
+title: "KSeF number in a bank transfer: from 2027"
+description: "From 1 January 2027, active VAT payers must put the KSeF number in the transfer title when paying active VAT payers. For several invoices: a collective ID."
+date: 2026-10-07
+section: blog
+locale: en
+slug: "ksef-number-in-bank-transfer"
+tags: ["KSeF", "VAT", "Invoice"]
+sources:
+  - label: "VAT Act, consolidated text Dz.U. 2026 item 1263 (art. 108a, art. 108g, art. 17 of the act of 16 June 2023)"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  - label: "MF: KSeF number and collective identifier"
+    url: "https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/numer-ksef-i-zbiorczy-identyfikator/"
+  - label: "MF: Legal basis and key dates"
+    url: "https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/podstawy-prawne-oraz-kluczowe-terminy/"
+  - label: "MF: FAQ KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/"
+  - label: "KSeF 2.0 Handbook, part II, sections 4.1.4 and 4.1.5"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "CIRFMF/ksef-docs: KSeF number structure"
+    url: "https://github.com/CIRFMF/ksef-docs/blob/main/faktury/numer-ksef.md"
+  - label: "MF: penalty deferral extended to the end of 2027"
+    url: "https://www.gov.pl/web/finanse/przedluzenie-odroczenia-kar-za-bledy-w-stosowaniu-ksef-do-konca-2027-r"
+translations:
+  pl: "numer-ksef-w-przelewie"
+  en: "ksef-number-in-bank-transfer"
+  uk: "nomer-ksef-u-perekazi"
+---
+
+From **1 January 2027**, an active VAT payer who pays a KSeF (Krajowy System e-Faktur, Poland's National e-Invoicing System) invoice by bank transfer to another active VAT payer must put that invoice's KSeF number in the transfer title. For several invoices from one seller in a single transfer, the title carries a collective identifier issued by KSeF. Until the end of 2026 the obligation is deferred, and what counts is the payment date, not the invoice date.
+
+Legal position as of 7 October 2026.
+
+<Source
+  href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  label="VAT Act, art. 108g and art. 17 of the act of 16 June 2023 (Dz.U. 2026 item 1263)"
+/>
+
+## Who must put the number in the title (art. 108g)
+
+Art. 108g applies to payments that meet three conditions at once:
+
+- the **payer is registered as an active VAT payer** and so is the recipient (the recipient's status is checked in the VAT taxpayer register under art. 96b on the payment date),
+- the payment is for structured invoices, or invoices issued in the offline24 mode or the offline mode during KSeF unavailability,
+- the payment is a bank transfer or another payment instrument that lets you enter a title.
+
+A third party paying invoices issued to the buyer is covered too. With a direct debit, the invoice issuer supplies the number, not the buyer. Anyone who is not an active VAT payer (payer or recipient) is outside the scope. Ania, if she is VAT-exempt, has no art. 108g obligation as a payer. If she is an active VAT payer and in January 2027 pays a KSeF invoice from a print shop that is also an active VAT payer, she puts the number in the title.
+
+The consolidated text attaches no penalty or additional tax liability to art. 108g.
+
+## Where to get the KSeF number
+
+The number has 35 characters, for example `5265877635-20250826-0100001AF629-AF` (an example from MF documentation): the seller's NIP, the date the invoice was accepted, 12 hexadecimal characters and a checksum. <Source href="https://github.com/CIRFMF/ksef-docs/blob/main/faktury/numer-ksef.md" label="CIRFMF/ksef-docs" />
+
+The number is not in the XML file and is not the number from field P_2: KSeF returns it in the UPO (official receipt). The seller does not have to send it to the buyer, because the invoice appears in the buyer's KSeF account automatically. <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/" label="MF FAQ" />
+
+## One transfer for several invoices
+
+A collective identifier is a number that aggregates at least two structured invoices from one seller. To get one, you declare a list of KSeF numbers. Either the issuer or the recipient can do this, in the Taxpayer Application or in software connected to the KSeF API. KSeF can also tell you which numbers a given identifier covers. It has 35 characters, and MF gives the pattern `9999999999-IZ202602-FFFFFFFFFFFF-FF`. <Source href="https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/numer-ksef-i-zbiorczy-identyfikator/" label="MF: KSeF number and collective identifier" />
+
+Pani Krystyna, an accountant, pays three invoices from the same supplier for a client in January 2027. MF provides for a collective identifier here: she declares the three numbers in KSeF, receives the identifier and puts it in the title of one transfer. We do not state a limit on the number of invoices per identifier, because the sources we checked do not give one.
+
+## Split payment: what art. 108a changes
+
+In a split payment (MPP) the KSeF number goes into the transfer message, next to the VAT amount, the gross amount and the supplier's NIP (art. 108a ust. 3 pkt 3). For an invoice issued outside KSeF, the ordinary invoice number is entered. The date is the same: payments from 1 January 2027. <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/" label="MF FAQ" />
+
+MPP remains optional (art. 108a ust. 1). It is mandatory, among other cases, for goods and services listed in annex 15 when the invoice exceeds PLN 15,000 (ust. 1a).
+
+For several invoices from one supplier within a period of one day to one month, MPP works differently than before. For structured invoices the message covers any of them, not all invoices from the period, and the collective identifier replaces the invoice number (ust. 3a, 3b pkt 1a and 3c pkt 2). For invoices issued outside KSeF the rule stays "all invoices from the period", with the period entered in the message.
+
+## Invoices issued outside KSeF
+
+- **Offline24 and offline during unavailability.** Art. 108g covers them. Exception: invoices that were not entered into KSeF because of an announced failure (ust. 4).
+- **Invoices issued during a KSeF failure (art. 106nf).** Ust. 1 does not list them, and MF confirms the obligation does not apply to them. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Handbook, part II, p. 75" />
+- **Paper and electronic invoices issued outside KSeF under the [PLN 10,000 limit](/en/blog/ksef-10000-pln-limit).** They can be issued until 31 December 2026 (art. 145m). They have no KSeF number, and ust. 1 names only structured invoices and the two offline modes, so the wording of the provision implies it does not cover them. We found no separate MF description of this case. From 2027 there is no limit.
+
+## Penalty deferral and the date for transfers
+
+On 16 September 2026 MF announced an extension of the penalty deferral for KSeF errors until the end of 2027. Draft UD477, which implements this, is not law yet: it would apply art. 106ni ust. 1-3 and 5-7 only from 1 January 2028. Art. 106ni concerns penalties for issuing and sending invoices, not payments. Neither in the announcement nor in other MF materials did we find a change to the date for art. 108g and art. 108a ust. 3 pkt 3. The MF legal-basis page still speaks of a deferral "until the end of 2026". <Source href="https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/podstawy-prawne-oraz-kluczowe-terminy/" label="MF: Legal basis and key dates" />
+
+<Warning>
+  We have not established what to enter for an offline invoice that the seller has not yet sent to
+  KSeF when no failure has been announced: there is no number yet, and the exception in ust. 4
+  covers only failures. The sources also do not settle how to label one transfer that mixes
+  structured and non-KSeF invoices, or how banks will show a field for a 35-character number.
+</Warning>
+
+Before January 2027, ask your accounting software vendor whether it will show the KSeF number on a purchase invoice and generate a collective identifier. The rest of the preparation is covered in the [KSeF preparation checklist](/en/blog/ksef-preparation-checklist), and the rules for sole traders in [KSeF for sole traders](/en/blog/ksef-for-sole-traders).
