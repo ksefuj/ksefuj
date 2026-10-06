@@ -1,0 +1,126 @@
+---
+title: "Awaria KSeF: co robić i do kiedy wysłać fakturę"
+description: "Awaria KSeF nie blokuje fakturowania: offline24, tryb awaryjny, niedostępność i awaria całkowita. Terminy wysłania i co dostaje nabywca."
+date: 2026-10-07
+section: blog
+locale: pl
+slug: "awaria-ksef-offline"
+tags: ["KSeF", "Faktura", "VAT"]
+sources:
+  - label: "Ustawa o VAT, tekst jednolity (Dz.U. 2026 poz. 1263), art. 106nda-106ni"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  - label: "MF: Tabela trybów wystawiania faktur (24.02.2026)"
+    url: "https://ksef.podatki.gov.pl/media/xp2dhszg/tabela-tryby-wystawiania-faktur-24022026.pdf"
+  - label: "MF: kody QR dla faktury wystawionej offline"
+    url: "https://ksef.podatki.gov.pl/media/nc4iqf42/ksef-kody-qr-dla-faktury-wystawionej-offline.pdf"
+  - label: "Podręcznik KSeF 2.0, cz. II (06.08.2026)"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "MF: KSeF, najczęstsze pytania"
+    url: "https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
+  - label: "MF: pytania i odpowiedzi KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
+  - label: "MF: komunikaty techniczne KSeF"
+    url: "https://ksef.podatki.gov.pl/komunikaty-techniczne/"
+  - label: "Latarnia KSeF (publiczne API statusu, repozytorium MF)"
+    url: "https://github.com/CIRFMF/ksef-latarnia"
+  - label: "MF: przedłużenie odroczenia kar (16.09.2026)"
+    url: "https://www.gov.pl/web/finanse/przedluzenie-odroczenia-kar-za-bledy-w-stosowaniu-ksef-do-konca-2027-r"
+  - label: "Projekt UD477 w RCL"
+    url: "https://legislacja.rcl.gov.pl/projekt/12414954"
+translations:
+  pl: "awaria-ksef-offline"
+  en: "ksef-outage-offline-mode"
+  uk: "zbiy-ksef-offlayn"
+---
+
+Gdy nie możesz wysłać faktury do KSeF, nadal możesz ją wystawić: w trybie offline24 zawsze, a w trybie awaryjnym lub podczas niedostępności po ogłoszeniu Ministerstwa Finansów. Fakturę wysyłasz potem do KSeF najpóźniej w następnym dniu roboczym albo w 7 dni roboczych od końca awarii, a przy awarii całkowitej w ogóle jej nie wysyłasz.
+
+<Info>
+  Stan prawny na 7 października 2026, według ustawy o VAT w brzmieniu z Dz.U. 2026 poz. 1263.
+  Podział na tryby opisuje też tabela MF z 24 lutego 2026.
+</Info>
+
+## Trzy sytuacje w jednej tabeli
+
+Wybór trybu zależy od tego, kto i co ogłosił, a nie od tego, że „coś nie działa". Dla Ani, która wystawia kilka faktur w miesiącu, wystarczy ta tabela.
+
+| Sytuacja                                 | Tryb                      | Co z fakturą                                                           | Termin wysłania do KSeF                                                 | Kto ogłasza                                        |
+| ---------------------------------------- | ------------------------- | ---------------------------------------------------------------------- | ----------------------------------------------------------------------- | -------------------------------------------------- |
+| Problem po Twojej stronie (np. internet) | offline24, art. 106nda    | struktura FA(3), kody QR OFFLINE i CERTYFIKAT, data wystawienia to P_1 | niezwłocznie, najpóźniej następny dzień roboczy po dniu wystawienia     | nikt, tryb nie ma warunku ustawowego               |
+| Niedostępność KSeF                       | niedostępność, art. 106nh | jak wyżej                                                              | następny dzień roboczy po dniu zakończenia niedostępności               | MF w BIP (art. 106ne ust. 4)                       |
+| Awaria KSeF                              | tryb awaryjny, art. 106nf | jak wyżej                                                              | 7 dni roboczych od dnia końca awarii podanego w komunikacie o jej końcu | MF w BIP i w oprogramowaniu interfejsowym (ust. 1) |
+| Awaria całkowita                         | art. 106ng                | jak wyżej, ale bez wysyłania do KSeF                                   | faktury nie wysyłasz do KSeF                                            | MF w mediach, gdy BIP jest niemożliwy (ust. 3)     |
+
+Dwa zastrzeżenia do tabeli. Ustawa nie definiuje „dnia roboczego", więc nie zakładaj, że sobota się liczy: wystawiasz we wtorek, wysyłasz najpóźniej w środę. Drugie dotyczy okna 7 dni: jeśli w jego trakcie MF ogłosi kolejną awarię, termin liczy się na nowo (art. 106nf ust. 5), a komunikat o awarii całkowitej wyłącza to okno (ust. 7).
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/xp2dhszg/tabela-tryby-wystawiania-faktur-24022026.pdf"
+  label="MF: Tabela trybów wystawiania faktur"
+/>
+
+## Offline24: tryb, który wybierasz sam
+
+Offline24 to jedyny tryb, który nie wymaga żadnego ogłoszenia. Nie musisz udowadniać, że padł Ci internet. Możesz go użyć także przy sprzedaży dla konsumenta.
+
+Data wystawienia to data z pola P_1 (art. 106nda ust. 10), a data otrzymania przez nabywcę to data nadania numeru KSeF (ust. 11). Ustawowy termin wystawienia faktury, zasadniczo 15. dnia następnego miesiąca, nie zmienia się. P_1 z przyszłości KSeF odrzuci, a P_1 wcześniejsza niż dzień wysyłki jest w porządku.
+
+Na fakturze (albo obok niej) musisz umieścić dwa kody QR. KOD I z napisem OFFLINE zawiera dane faktury, a KOD II z napisem CERTYFIKAT potwierdza wystawcę i wymaga certyfikatu KSeF typu 2. Jeśli kody nie mieszczą się na wizualizacji, wolno podać osobny link albo grafikę.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/nc4iqf42/ksef-kody-qr-dla-faktury-wystawionej-offline.pdf"
+  label="MF: kody QR dla faktury wystawionej offline"
+/>
+
+## Awaria, niedostępność i awaria całkowita
+
+W trybie awaryjnym i podczas niedostępności robisz to samo co w offline24, ale terminy są inne. Różnica dla Pani Krystyny: w niedostępności liczy się dzień po jej zakończeniu, w awarii masz 7 dni roboczych od końca awarii.
+
+Faktura offline24 wystawiona tuż przed ogłoszeniem awarii podlega art. 106nha. Jeśli ogłoszono zwykłą awarię (art. 106ne ust. 1), stosuje się terminy z art. 106nf. Jeśli ogłoszono awarię całkowitą (ust. 3), takiej faktury do KSeF nie wysyłasz.
+
+Awaria całkowita jest wyjątkiem. Faktury z tego okresu nie trafiają do KSeF, a w pliku JPK oznacza się je BFK. Faktury offline24 i z niedostępności, które potem dostaną numer KSeF, mają znacznik DI i są później poprawiane na numer.
+
+## Skąd wiedzieć, że to awaria
+
+Ustawa wskazuje BIP i oprogramowanie interfejsowe (awaria), BIP (niedostępność) oraz środki masowego przekazu (awaria całkowita). MF udostępnia też Latarnię, publiczne API bez autoryzacji ze statusem AVAILABLE, MAINTENANCE, FAILURE lub TOTAL_FAILURE. Nie znaleźliśmy dokumentu MF, który nazywałby Latarnię „oprogramowaniem interfejsowym" z ustawy, więc traktuj ją jako pomoc, a nie jako podstawę prawną.
+
+Na stronie „Komunikaty techniczne" MF publikuje też komunikaty serwisowe, na przykład o utrudnieniach w Aplikacji Podatnika. Art. 106ne tej strony nie wymienia, więc taki komunikat sam nie przesądza o awarii w rozumieniu ustawy. Gdy masz wątpliwości, wystaw w offline24, bo ten tryb nie wymaga ogłoszenia.
+
+<Source href="https://github.com/CIRFMF/ksef-latarnia" label="Latarnia KSeF, repozytorium MF" />
+<Source
+  href="https://ksef.podatki.gov.pl/komunikaty-techniczne/"
+  label="MF: komunikaty techniczne KSeF"
+/>
+
+## Co, gdy KSeF odrzuci fakturę offline
+
+Ustawa tego nie reguluje, wynika to z Podręcznika KSeF 2.0, cz. II. Jeśli weryfikacja pliku wypadnie negatywnie, faktura nie dostaje numeru KSeF i według MF „nie została wystawiona". Sprawdzasz błąd, poprawiasz dane i wysyłasz ponownie. Nie edytujesz i nie usuwasz faktury w KSeF, a błąd na przyjętej fakturze poprawia się fakturą korygującą ([jak ją wystawić](/blog/faktura-korygujaca-ksef)). KSeF nie sprawdza arytmetyki, więc rachunek sprawdź przed wysyłką.
+
+Nie ma natomiast jednoznacznej wykładni, jaki skutek ma odrzucenie, które zobaczysz po terminie z art. 106nda ust. 2. Nie wysyłaj w ostatniej minucie: wyślij zaraz po powrocie systemu, żeby zostawić zapas na poprawkę.
+
+## Co dostaje nabywca w międzyczasie
+
+Nabywca z krajowym NIP dostaje fakturę wyłącznie w KSeF (art. 106nda ust. 3). Zanim fakturę przyjmie system, możesz mu wydać dobrowolne „potwierdzenie transakcji" z dwoma kodami QR. To nie jest faktura.
+
+Konsument, podmiot zagraniczny lub nabywca bez NIP (art. 106gb ust. 4) dostaje fakturę w uzgodniony sposób, z kodami OFFLINE i CERTYFIKAT. Po nadaniu numeru KSeF wystarczy jeden kod z tym numerem.
+
+Nabywca, który dostaje taki dokument przed wysłaniem do KSeF, ma według Podręcznika prawo do odliczenia z dniem faktycznego otrzymania dokumentu. MF nazywa to jednak „działaniem nieprawidłowym" sprzedawcy i zaleca odbieranie faktur w KSeF.
+
+Od 2027 roku numer KSeF ma być w tytule przelewu. Obowiązek nie dotyczy faktur z art. 106nda i 106nh, których z powodu komunikatu o awarii nie wprowadzono do KSeF (art. 108g ust. 4).
+
+## Przygotuj się, zanim coś się zepsuje
+
+Certyfikat KSeF typu 2 musisz mieć przed pierwszą awarią. Wygenerujesz go z wyprzedzeniem, jest ważny do dwóch lat, a według art. 106nda ust. 7 pobierasz go z KSeF. Różnice w uwierzytelnianiu opisaliśmy w tekście [certyfikaty vs tokeny w KSeF](/blog/certyfikaty-vs-tokeny-ksef).
+
+Drugie pytanie to program. W Aplikacji Podatnika KSeF 2.0 wystawiasz według MF tylko faktury online, więc offline wymaga oprogramowania, które go obsługuje. Zapytaj dostawcę, czy generuje kody QR, pilnuje terminów i sam wysyła faktury po powrocie systemu. Listę kroków znajdziesz w [checkliście przygotowania do KSeF](/blog/ksef-checklist-przygotowanie).
+
+## Kary za spóźnienie i ich status
+
+Art. 106ni ust. 1 pkt 3 przewiduje karę za niewysłanie w terminie faktury offline24, awaryjnej albo z niedostępności, do 100% VAT z faktury, a bez VAT do 18,7% kwoty należności ogółem. Przepisy te wchodzą w życie 1 stycznia 2027. MF zapowiedziało 16 września 2026 odroczenie kar do 31 grudnia 2027, ale wymaga to zmiany ustawy, a projekt UD477 jest dopiero w uzgodnieniach i nie jest prawem. Już dziś obowiązuje natomiast ust. 4: za spóźnienie z art. 106nda ust. 2, 106nf ust. 4 czy 106nh ust. 2 nie grozi postępowanie w sprawie przestępstwa lub wykroczenia skarbowego. Szersze omówienie wymaga osobnego tekstu.
+
+<Source
+  href="https://www.gov.pl/web/finanse/przedluzenie-odroczenia-kar-za-bledy-w-stosowaniu-ksef-do-konca-2027-r"
+  label="MF: przedłużenie odroczenia kar"
+/>
+<Source href="https://legislacja.rcl.gov.pl/projekt/12414954" label="Projekt UD477 w RCL" />
+
+Zacznij od jednej rzeczy: sprawdź dziś w swoim programie, czy ma tryb offline i czy masz certyfikat typu 2. Jeśli dopiero zaczynasz z KSeF, czytaj [przewodnik dla JDG](/blog/ksef-dla-jdg).
