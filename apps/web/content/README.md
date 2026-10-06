@@ -3,6 +3,9 @@
 This directory holds all written content for ksefuj.to — blog posts, guides, technical docs, and
 FAQ. Content is written in **MDX** (Markdown with optional React components).
 
+> Prose rules (openings, em-dash budget, banned phrases, no summary sections) live in
+> [`STYLE.md`](./STYLE.md). Read both files before writing.
+
 ---
 
 ## Editorial philosophy
@@ -71,12 +74,12 @@ prefixed with `/en/` and `/uk/`.
 
 ## Sections
 
-| Section  | Purpose                                        | Typical length |
-| -------- | ---------------------------------------------- | -------------- |
-| `blog`   | Articles, news, opinion — broader KSeF context | 500–1500 words |
-| `guides` | Step-by-step how-tos for specific tasks        | 800–2000 words |
-| `docs`   | Technical reference documentation              | Any length     |
-| `faq`    | Q&A format, one file per locale                | Any length     |
+| Section  | Purpose                                        | Typical length       |
+| -------- | ---------------------------------------------- | -------------------- |
+| `blog`   | Articles, news, opinion — broader KSeF context | Follows the question |
+| `guides` | Step-by-step how-tos for specific tasks        | Follows the question |
+| `docs`   | Technical reference documentation              | Any length           |
+| `faq`    | Q&A format, one file per locale                | Any length           |
 
 ---
 
@@ -86,10 +89,10 @@ Every MDX file starts with a frontmatter block between `---` markers. Here is a 
 
 ```yaml
 ---
-title: "Czym jest KSeF i dlaczego dotyczy Ciebie"
+title: "Czy KSeF dotyczy JDG? Terminy i wyjątki"
 description:
-  "KSeF to Krajowy System e-Faktur — obowiązkowa platforma do wystawiania faktur elektronicznych w
-  Polsce od 2026 roku."
+  "KSeF obowiązuje JDG od 1 kwietnia 2026. Wyjątki: faktury dla osób prywatnych i sprzedaż do 10 000
+  zł miesięcznie."
 date: 2026-03-24
 updated: 2026-04-01
 section: blog
@@ -108,8 +111,8 @@ seo:
 
 | Field           | Required | Description                                                                                                                                                                                         |
 | --------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `title`         | Yes      | Page title. Shown as the `<h1>` and in browser tab. Keep under 70 characters.                                                                                                                       |
-| `description`   | Yes      | One-sentence summary. Used in search results and social previews. 120–160 characters ideal.                                                                                                         |
+| `title`         | Yes      | Page title. Shown as the `<h1>` and in browser tab. Keep under 60 characters so Google doesn't truncate it (see `STYLE.md`).                                                                        |
+| `description`   | Yes      | One-sentence summary. Used in search results and social previews. Under 160 characters; state the answer, not a table of contents (see `STYLE.md`).                                                 |
 | `date`          | Yes      | Publication date in `YYYY-MM-DD` format. Used for sorting and display.                                                                                                                              |
 | `updated`       | No       | Last significant update date. Shown in docs as "Last verified". Falls back to `date` if omitted.                                                                                                    |
 | `section`       | Yes      | Must be exactly one of: `blog`, `guides`, `docs`, `faq`. Must match the directory.                                                                                                                  |
