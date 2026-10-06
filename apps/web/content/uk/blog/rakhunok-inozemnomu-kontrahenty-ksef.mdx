@@ -7,8 +7,6 @@ section: blog
 locale: uk
 slug: "rakhunok-inozemnomu-kontrahenty-ksef"
 translationOf: "faktura-zagraniczna-ksef"
-  - label: "Брошура FA(3), с. 92"
-    url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
 translations:
   pl: "faktura-zagraniczna-ksef"
   en: "foreign-invoice-ksef"
@@ -23,6 +21,8 @@ sources:
     url: "https://ec.europa.eu/taxation_customs/vies/"
   - label: "Закон про ПДВ — ст. 28b"
     url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
+  - label: "Брошура FA(3), с. 92"
+    url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
 ---
 
 Рахунок іноземному контрагентові потрапляє до KSeF так само, як і внутрішній, навіть якщо покупець не має польського NIP і ніколи не увійде до системи. У даних покупця не вписуй іноземний номер у поле NIP: для компаній з ЄС використовуй `KodUE` + `NrVatUE`, для решти `KodKraju` + `NrID`, а коли номера немає, `BrakID`.

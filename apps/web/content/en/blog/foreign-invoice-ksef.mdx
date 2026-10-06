@@ -7,8 +7,6 @@ section: blog
 locale: en
 slug: "foreign-invoice-ksef"
 translationOf: "faktura-zagraniczna-ksef"
-  - label: "FA(3) information brochure, p. 92"
-    url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
 translations:
   pl: "faktura-zagraniczna-ksef"
   en: "foreign-invoice-ksef"
@@ -25,6 +23,8 @@ sources:
     url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
   - label: "VIES — VAT number verification"
     url: "https://ec.europa.eu/taxation_customs/vies/"
+  - label: "FA(3) information brochure, p. 92"
+    url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
 ---
 
 An invoice to a foreign buyer goes through KSeF (Poland's National e-Invoicing System) just like a domestic one, even if the buyer has no Polish NIP and will never log in. In the buyer's data you never put a foreign number in the NIP field: for EU companies use `KodUE` + `NrVatUE`, for everyone else `KodKraju` + `NrID`, and when there is no number, `BrakID`.
