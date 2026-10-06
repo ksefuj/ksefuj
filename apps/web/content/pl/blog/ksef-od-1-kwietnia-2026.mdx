@@ -1,7 +1,8 @@
 ---
-title: "KSeF od 1 kwietnia 2026 — co musisz wiedzieć"
-description: "KSeF od 1 kwietnia 2026 — kto musi, co się zmienia, jak się przygotować. Kompletny poradnik po obowiązkowym systemie e-faktur."
+title: "KSeF od 1 kwietnia 2026: kogo dotyczy i co zrobić"
+description: "Od 1 kwietnia 2026 faktury B2B wystawiasz w KSeF, także jako zwolniony z VAT. Do końca 2026 r. wyjątek: sprzedaż do 10 000 zł miesięcznie."
 date: 2026-03-25
+updated: 2026-10-07
 section: blog
 locale: pl
 slug: "ksef-od-1-kwietnia-2026"
@@ -11,6 +12,14 @@ sources:
     url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
   - label: "Ustawa o VAT art. 106a–106s, 108a, 108g, 145m"
     url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
+  - label: "Ustawa o VAT, t.j. Dz. U. 2026 poz. 1263 (art. 106ni, 145m, 145n)"
+    url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
+  - label: "Zapowiedź MF: przedłużenie odroczenia kar do końca 2027 r."
+    url: "https://www.gov.pl/web/finanse/przedluzenie-odroczenia-kar-za-bledy-w-stosowaniu-ksef-do-konca-2027-r"
+  - label: "Projekt UD477 — Rządowy Proces Legislacyjny"
+    url: "https://legislacja.rcl.gov.pl/projekt/12414954"
+  - label: "Podręcznik KSeF 2.0, cz. I"
+    url: "https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
   - label: "Rozporządzenie MF z 7.12.2025 (wyłączenia)"
     url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250001740"
   - label: "Broszura FA(3)"
@@ -21,229 +30,129 @@ translations:
   uk: "ksef-z-1-kvitnya-2026"
 ---
 
-Jeśli wystawiasz faktury w Polsce i jeszcze nie wiesz, co to jest KSeF — ten artykuł jest właśnie dla Ciebie. **Od 1 kwietnia 2026 roku obowiązkowe e-fakturowanie dotyczy praktycznie każdego czynnego podatnika VAT.** Nie ma odwrotu, nie ma opcji "zostanę przy PDF-ie". Jest za to konkretna wiedza, którą możesz zdobyć teraz — zanim zacznie Cię to kosztować.
-
----
+Od 1 kwietnia 2026 roku każdy podatnik wystawiający faktury B2B, czynny albo zwolniony z VAT, robi to przez KSeF, czyli Krajowy System e-Faktur. Wyjątki to faktury dla konsumentów i, do końca 2026 r., sprzedaż do 10 000 zł miesięcznie. Stan prawny na 7 października 2026.
 
 ## Co to jest KSeF
 
-**KSeF** — Krajowy System e-Faktur — to rządowa platforma do wystawiania i odbierania faktur ustrukturyzowanych (e-faktur). Zamiast wysyłać PDF-a mailem lub drukować papierową fakturę, wystawiasz plik XML w ściśle określonym formacie i wysyłasz go do systemu Ministerstwa Finansów. Tam trafia do archiwum, dostaje unikalny numer i jest od razu dostępny dla Twojego kontrahenta.
+KSeF to rządowa platforma do wystawiania i odbierania faktur ustrukturyzowanych. Zamiast PDF-a wysyłanego mailem wystawiasz plik XML w ściśle określonym formacie i wysyłasz go do systemu Ministerstwa Finansów. Faktura trafia do archiwum, dostaje unikalny numer KSeF i jest od razu dostępna dla kontrahenta.
 
-Krótko: **faktura przestaje być dokumentem, który sam wysyłasz. Staje się zapisem w rządowej bazie danych.**
-
-KSeF funkcjonuje w Polsce od 2022 roku jako system dobrowolny. Od 1 lutego 2026 roku jest obowiązkowy dla największych firm. Od 1 kwietnia 2026 roku — dla wszystkich czynnych podatników VAT.
+KSeF działa od 2022 roku jako system dobrowolny. Od 1 lutego 2026 jest obowiązkowy dla największych firm, od 1 kwietnia 2026 dla pozostałych podatników.
 
 <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20" label="FAQ MF — KSeF 2.0" />
 
----
+## Terminy i kogo dotyczy obowiązek
 
-## Kiedy i dla kogo
+Harmonogram wynika z art. 145m i następnych ustawy z dnia 11 marca 2004 r. o podatku od towarów i usług (Dz. U. z 2025 r., poz. 775 ze zm.):
 
-Harmonogram wdrożenia KSeF wynika z przepisów ustawy o VAT (art. 145m i nast.):
+| Data                | Kto                                                    | Skutek           |
+| :------------------ | :----------------------------------------------------- | :--------------- |
+| **1 lutego 2026**   | Podatnicy VAT z obrotem >200 mln zł brutto w 2024 r.   | KSeF obowiązkowy |
+| **1 kwietnia 2026** | Wszyscy pozostali podatnicy (czynni i zwolnieni z VAT) | KSeF obowiązkowy |
 
-| Data                | Kto                                                  | Skutek           |
-| :------------------ | :--------------------------------------------------- | :--------------- |
-| **1 lutego 2026**   | Podatnicy VAT z obrotem >200 mln zł brutto w 2024 r. | KSeF obowiązkowy |
-| **1 kwietnia 2026** | Wszyscy pozostali czynni podatnicy VAT               | KSeF obowiązkowy |
-
-**Podstawa prawna:** art. 145m ustawy z dnia 11 marca 2004 r. o podatku od towarów i usług (Dz. U. z 2025 r., poz. 775 ze zm.).
+Obowiązek mają wszyscy podatnicy wystawiający faktury, zarówno czynni, jak i zwolnieni z VAT: JDG, spółki, wolne zawody, freelancerzy, wynajmujący nieruchomości komercyjne.
 
 <Info>
-  Podatnicy zwolnieni z VAT (zarówno podmiotowo — ze względu na limit 240 000 PLN obrotu — jak i
-  przedmiotowo) na razie nie mają obowiązku korzystania z KSeF. Obowiązek ten wchodzi w życie **1
-  stycznia 2027 r.** (dla podatników, u których miesięczna wartość faktur nie przekracza 10 000 zł).
-  Jeśli jesteś na zwolnieniu z VAT, możesz KSeF testować dobrowolnie już teraz.
+  Podatnicy zwolnieni z VAT, podmiotowo (art. 113, limit 240 000 PLN obrotu rocznie) lub
+  przedmiotowo (art. 43 ust. 1), nie mają osobnego harmonogramu. Wystawiają faktury w KSeF w tych
+  samych terminach co czynni podatnicy, a limit 10 000 zł (art. 145m) obejmuje ich tak samo. Jedyny
+  stały wyjątek to procedura unijna dla małych przedsiębiorstw (art. 113a), wyłączona art. 106ga
+  ust. 2 pkt 6.
 </Info>
 
----
+<Source
+  href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
+  label="Art. 145m ustawy o VAT — limit 10 000 zł"
+/>
 
-## Kogo dotyczy obowiązek
+### Sprzedaż do 10 000 zł miesięcznie
 
-Obowiązek korzystania z KSeF mają **czynni podatnicy VAT** — czyli ci, którzy są zarejestrowani do VAT i składają deklaracje VAT-7 lub VAT-7K.
+Jeśli miesięczna sprzedaż nie przekracza 10 000 PLN, możesz wystawiać faktury poza KSeF do 31 grudnia 2026 r., niezależnie od statusu w VAT (art. 145m). Od 1 stycznia 2027 r. limitu nie ma dla nikogo. Jak liczyć limit, wyjaśnia [artykuł o limicie 10 000 zł](/blog/ksef-limit-10000-zl).
 
-Dotyczy to m.in.:
+## Jak wygląda wystawianie faktury
 
-- jednoosobowych działalności gospodarczych (JDG),
-- spółek z o.o., spółek jawnych, komandytowych i innych,
-- wolnych zawodów: lekarzy, prawników, doradców, projektantów,
-- freelancerów wystawiających faktury VAT,
-- najemców nieruchomości komercyjnych opodatkowanych VAT.
+1. Wystawiasz fakturę w programie obsługującym KSeF.
+2. Program generuje plik XML w formacie FA(3) i wysyła go przez API Ministerstwa Finansów.
+3. KSeF nadaje fakturze numer KSeF.
+4. Kontrahent odbiera fakturę ze swojego konta w KSeF albo przez integrację.
 
-**Nie dotyczy** (do końca 2026 r.) podatników VAT zwolnionych — ani tych, którzy nie przekroczyli 240 000 PLN obrotu rocznie i wybrali zwolnienie podmiotowe, ani tych, którzy prowadzą działalność zwolnioną z VAT z mocy prawa (art. 43 ust. 1 ustawy o VAT). Obowiązek KSeF dla tej grupy wchodzi w życie **1 stycznia 2027 r.**
+Faktury dla konsumentów (B2C), czyli osób fizycznych nieprowadzących działalności, są wyłączone z KSeF. Nadal możesz je wystawiać na papierze lub jako PDF.
 
-### Wyjątek: bardzo małe obroty
+FA(3) to oficjalny schemat XML dla faktur ustrukturyzowanych, obowiązujący od 1 lutego 2026 roku. Zastąpił FA(2) używany od września 2023. Ministerstwo Finansów opisało w arkuszu informacyjnym każde pole: co jest obowiązkowe, jakie ma typ i jakie wartości są dopuszczalne. Schemat jest publiczny pod adresem `https://crd.gov.pl/wzor/2025/06/25/13775/`. XML zwykle generuje program do fakturowania, ale przy integracji API FA(3) trzeba znać.
 
-Jeśli Twoja miesięczna sprzedaż nie przekracza 10 000 PLN, przepisy przewidują tymczasowe zwolnienie z obowiązku wystawiania faktur przez KSeF — **do 31 grudnia 2026 r.** Po tym terminie zwolnienie wygasa i obowiązek KSeF obejmie również tę grupę. Szczegóły omówiliśmy osobno — [przeczytaj artykuł o limicie 10 000 zł](/blog/ksef-limit-10000-zl).
+KSeF 2.0 nie ma wbudowanego walidatora, więc o błędach dowiesz się dopiero po wysłaniu faktury. Odrzucona faktura nie istnieje: nie dostaje numeru KSeF, co oznacza opóźnienie płatności, korektę i ryzyko z terminem wystawienia. Plik XML możesz sprawdzić wcześniej w [walidatorze ksefuj.to](/), który działa w przeglądarce i nie wysyła pliku na serwer. Typowe błędy opisujemy w artykule o [najczęstszych błędach walidacji FA(3)](/blog/najczestsze-bledy-walidacji-fa3).
 
----
+## Sankcje za fakturę poza KSeF
 
-## Co się zmienia w praktyce
+Podstawą jest art. 106ni ustawy o VAT. Kara grozi za niewystawienie faktury w KSeF, za wystawienie w czasie awarii lub w trybie offline24 faktury niezgodnej ze wzorem oraz za spóźnione przesłanie faktur offline i faktur z art. 106nf i 106nh. Wynosi do 100% kwoty VAT z faktury, a gdy faktura nie wykazuje VAT, do 18,7% kwoty brutto. Przepisy mogą też ograniczać prawo nabywcy do odliczenia VAT z takiej faktury, więc ryzyko ponoszą obie strony.
 
-Teraz wystawiasz fakturę w programie do fakturowania albo w Excelu, wysyłasz ją mailem lub pocztą i tyle. Twój kontrahent dostaje PDF lub papier. Archiwizujesz u siebie.
-
-**Od 1 kwietnia 2026 roku ten proces przestaje istnieć (przynajmniej w relacjach B2B).**
-
-Tak to działa od 1 kwietnia:
-
-1. **Wystawiasz fakturę** — w swoim programie lub aplikacji, która obsługuje KSeF.
-2. **Program generuje plik XML** — w ściśle określonym formacie FA(3).
-3. **Plik trafia do KSeF** — za pośrednictwem API Ministerstwa Finansów.
-4. **KSeF nadaje fakturze numer KSeF** — unikalny identyfikator w systemie.
-5. **Kontrahent odbiera fakturę z KSeF** — może ją pobrać ze swojego konta lub zintegrować automatycznie.
-
-Twój kontrahent nie musi już czekać na maila. Faktura jest w systemie — i obie strony mają do niej dostęp.
-
-**Co z fakturami B2C?** Faktury wystawiane dla osób fizycznych nieprowadzących działalności (konsumentów) są wyłączone z KSeF. Nadal możesz je wystawiać na papierze lub jako PDF.
-
----
-
-## Co to jest FA(3)
-
-FA(3) to oficjalny schemat XML dla faktur ustrukturyzowanych obowiązujący od 1 lutego 2026 roku. Zastąpił wcześniejszy FA(2), używany od września 2023 roku.
-
-Mówiąc prościej: **FA(3) to przepis na to, jak musi wyglądać plik XML z Twoją fakturą**. Ministerstwo Finansów opublikowało dokładną specyfikację techniczną — arkusz informacyjny FA(3) — która określa każde pole: co jest obowiązkowe, co opcjonalne, jakie mają typy danych i jakie wartości są dopuszczalne.
-
-Schemat FA(3) jest dostępny publicznie pod adresem `https://crd.gov.pl/wzor/2025/06/25/13775/`.
-
-Ty jako użytkownik końcowy zazwyczaj nie piszesz tego XML-a ręcznie — robi to za Ciebie program do fakturowania. Ale **jeśli korzystasz z integracji API lub chcesz sprawdzić, czy wygenerowana faktura jest poprawna, FA(3) to dokument, który musisz znać** (albo przynajmniej mieć pod ręką walidator, który go zna).
-
----
-
-## Jak sprawdzić, czy faktura jest poprawna
-
-KSeF 2.0 nie ma wbudowanego walidatora — dowiesz się o błędach dopiero wtedy, gdy wyślesz fakturę i system ją odrzuci. **Odrzucona faktura to faktura, której nie ma.** Oznacza to opóźnienie w płatności, konieczność korekty i potencjalne problemy z terminem wystawienia.
-
-Dlatego zanim wyślesz cokolwiek do KSeF, warto sprawdzić plik XML wcześniej.
-
-**[ksefuj.to](/)** to bezpłatny walidator KSeF działający w całości w przeglądarce. Wrzuć plik XML — sprawdzi zarówno zgodność ze schematem FA(3), jak i reguły semantyczne zgodne z oficjalnymi wymaganiami MF. Twoje dane nie opuszczają przeglądarki.
-
-<Tip>
-  Wrzuć swój plik XML na ksefuj.to przed wysyłką do KSeF — dowiesz się o błędach zanim system je
-  wyłapie. Bez rejestracji, bez opłat.
-</Tip>
-
-Najczęstsze błędy w plikach KSeF opisaliśmy w osobnym artykule: [Najczęstsze błędy walidacji FA(3)](/blog/najczestsze-bledy-walidacji-fa3).
-
----
-
-## Co grozi za fakturę wystawioną poza KSeF
-
-Ustawa o VAT przewiduje sankcje za naruszenie obowiązku wystawiania faktur przez KSeF. Podstawa prawna to **art. 106gc ustawy o VAT**.
-
-Sankcja ma postać **dodatkowego zobowiązania podatkowego**. Przepisy przewidują różne stawki zależnie od charakteru naruszenia — m.in. za wystawienie faktury poza KSeF z naruszeniem obowiązku, za brak faktury w ogóle, czy za niedotrzymanie terminu przesłania faktury do systemu.
+<Source
+  href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
+  label="Art. 106ni ustawy o VAT — sankcje"
+/>
 
 <Info>
-  Kary za błędy w KSeF zostały odroczone do **1 stycznia 2027 r.** Oznacza to, że od 1 kwietnia 2026
-  roku obowiązek wystawiania faktur przez KSeF obowiązuje, ale sankcje za jego naruszenie zaczną być
-  egzekwowane dopiero od 2027 roku. To nie jest wymówka, żeby zwlekać — ale warto wiedzieć, że masz
-  czas na naukę bez natychmiastowego ryzyka kary.
+  Aktualizacja 7.10.2026: 16 września 2026 Ministerstwo Finansów zapowiedziało przedłużenie
+  odroczenia kar za błędy w KSeF do końca 2027 r. Rządowy projekt nowelizacji ustawy o VAT (UD477,
+  wersja z 22 września 2026, etap uzgodnień międzyresortowych) przewiduje, że art. 106ni ust. 1–3 i
+  5–7 zaczną obowiązywać od 1 stycznia 2028. To jeszcze nie prawo, a obowiązek KSeF dla wszystkich
+  nadal zaczyna się 1 stycznia 2027. Stan prawny na 7 października 2026.
 </Info>
 
-<Warning>
-  Sankcje podatkowe nie są odliczane od kosztów uzyskania przychodu. Kara za wystawienie faktury
-  poza KSeF może być boleśniejsza finansowo niż sama kwota podatku. Dokładne stawki i warunki ich
-  stosowania określa art. 106gc ustawy o VAT — skonsultuj się z doradcą podatkowym, jeśli masz
-  wątpliwości.
-</Warning>
-
-Co więcej, przepisy ustawy o VAT mogą ograniczać prawo nabywcy do odliczenia VAT z faktury wystawionej poza KSeF z naruszeniem obowiązku. To potencjalnie podwójne ryzyko — dla sprzedawcy i dla nabywcy.
-
-**Ważne:** przepisy przewidują mechanizm sankcji warunkowej — jeśli wystawisz fakturę poza KSeF w trybie awaryjnym (więcej o tym poniżej), ale faktycznie przekażesz ją do KSeF w wymaganym terminie, sankcja nie powinna zostać nałożona. Szczegóły reguluje art. 106gc ustawy o VAT.
-
----
-
-## Kto jest wyłączony z KSeF
-
-Nie każda faktura musi przejść przez KSeF. Wyłączenia wynikają z art. 106nd ust. 3 ustawy o VAT oraz z **rozporządzenia Ministra Finansów z dnia 7 grudnia 2025 r.** w sprawie wyłączeń z obowiązku wystawiania faktur ustrukturyzowanych.
-
-**Wyłączone z obowiązku są m.in. faktury:**
-
-- wystawiane dla **konsumentów (B2C)** — osób fizycznych nieprowadzących działalności gospodarczej,
-- wystawiane przez **rolników ryczałtowych** (sprzedaż produktów rolnych),
-- **faktury uproszczone** (paragony z NIP-em do 450 PLN) — wyłączenie obowiązuje do 31 grudnia 2026 r., po czym zasady mogą się zmienić,
-- faktury związane z dostawami i usługami poza terytorium Polski — **uwaga: faktura nadal musi być wystawiona w KSeF**, ale nabywca zagraniczny otrzymuje ją poza systemem, w sposób uzgodniony (np. PDF z kodem QR). Dotyczy to m.in. WDT i eksportu,
-- faktury konsularne i dyplomatyczne,
-- faktury wystawiane przez podmioty nieposiadające siedziby ani stałego miejsca prowadzenia działalności w Polsce.
+<Source
+  href="https://www.gov.pl/web/finanse/przedluzenie-odroczenia-kar-za-bledy-w-stosowaniu-ksef-do-konca-2027-r"
+  label="Zapowiedź MF: przedłużenie odroczenia kar do końca 2027 r."
+/>
+<Source
+  href="https://legislacja.rcl.gov.pl/projekt/12414954"
+  label="Projekt UD477 — Rządowy Proces Legislacyjny"
+/>
 
 <Warning>
-  Lista wyłączeń może się zmienić. Rozporządzenie MF z 7.12.2025 r. precyzuje aktualne wyjątki —
-  koniecznie sprawdź je bezpośrednio w źródle lub skonsultuj z doradcą podatkowym przed podjęciem
-  decyzji o wyłączeniu konkretnej faktury z KSeF.
+  Sankcje podatkowe nie są kosztem uzyskania przychodu, więc kara może być dotkliwsza niż sama kwota
+  podatku.
 </Warning>
 
-<Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20" label="FAQ MF — KSeF 2.0" />
+Jeśli wystawisz fakturę w trybie awaryjnym, ale przekażesz ją do KSeF w wymaganym terminie, sankcja nie powinna zostać nałożona (art. 106ni ustawy o VAT).
 
----
+## Faktury wyłączone z KSeF
 
-## Tryby pracy w KSeF
+Wyłączenia wynikają z art. 106nd ust. 3 i art. 145n ustawy o VAT oraz z rozporządzenia Ministra Finansów z 7 grudnia 2025 r. Obejmują m.in. faktury:
 
-KSeF przewiduje trzy tryby wystawiania faktur. Warto je znać, bo wpływają na Twoje obowiązki i terminy.
+- dla **konsumentów (B2C)**,
+- wystawiane przez **rolników ryczałtowych**,
+- **faktury z kas rejestrujących i paragony z NIP-em** do 450 zł (lub 100 EUR), do 31 grudnia 2026 r. (art. 145n ustawy o VAT). Od 1 stycznia 2027 r. kasa nie wystawi już faktury, a paragon z NIP-em przestaje być fakturą uproszczoną,
+- konsularne i dyplomatyczne,
+- wystawiane przez podmioty bez siedziby i stałego miejsca prowadzenia działalności w Polsce,
+- dotyczące dostaw i usług poza terytorium Polski. Tu faktura nadal musi powstać w KSeF, ale nabywca zagraniczny dostaje ją poza systemem, w uzgodniony sposób (np. PDF z kodem QR). Dotyczy to m.in. WDT i eksportu.
 
-### Tryb online
+Rozporządzenie precyzuje aktualne wyjątki. Zanim wyłączysz konkretną fakturę z KSeF, sprawdź je w źródle albo zapytaj doradcę podatkowego.
 
-Faktura trafia do KSeF w czasie rzeczywistym. **To tryb standardowy.** Gdy masz internet i Twój program jest zintegrowany z KSeF — po prostu wysyłasz fakturę i od razu dostajesz numer KSeF.
+<Source
+  href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250001740"
+  label="Rozporządzenie MF z 7.12.2025 (wyłączenia)"
+/>
+<Source
+  href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
+  label="Art. 145n ustawy o VAT — kasy rejestrujące"
+/>
+<Source
+  href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. I, s. 14"
+/>
 
-### Tryb offline 24h (offline24)
+## Tryby pracy KSeF
 
-Jeśli nie masz dostępu do internetu lub KSeF jest chwilowo niedostępny, możesz wystawić fakturę lokalnie. **Musisz ją przesłać do KSeF niezwłocznie — nie później niż do końca następnego dnia roboczego.** Faktura jest ważna od momentu wystawienia, ale numer KSeF dostaniesz dopiero po wysyłce.
+- **Online.** Tryb standardowy: faktura trafia do KSeF od razu i od razu dostaje numer.
+- **Offline24.** Gdy nie masz internetu albo KSeF jest chwilowo niedostępny, wystawiasz fakturę lokalnie i przesyłasz ją niezwłocznie, nie później niż do końca następnego dnia roboczego. Faktura jest ważna od wystawienia, numer KSeF dostaniesz po wysyłce. To tryb na sytuacje wyjątkowe.
+- **Awaryjny.** Przy długotrwałej awarii KSeF Ministerstwo Finansów ogłasza tryb awaryjny. Faktury wystawiasz wtedy poza KSeF, spełniając ściśle określone wymagania formalne, i przesyłasz je nie później niż w ciągu 7 dni roboczych od zakończenia awarii.
 
-Ten tryb jest przeznaczony dla sytuacji wyjątkowych — nie jako stały sposób pracy.
+Szczegóły są w naszych [poradnikach](/guides).
 
-### Tryb awaryjny
+## Jak się przygotować
 
-W przypadku długotrwałej awarii KSeF Ministerstwo Finansów może ogłosić tryb awaryjny. W tym trybie faktury można wystawiać poza KSeF, ale muszą spełniać ściśle określone wymagania formalne i zostać przesłane do systemu **nie później niż w ciągu 7 dni roboczych od zakończenia awarii**.
+1. **Sprawdź, czy masz obowiązek.** Wystawiasz faktury B2B jako czynny albo zwolniony z VAT podatnik: tak, chyba że mieścisz się w 10 000 zł miesięcznie (do końca 2026 r.).
+2. **Sprawdź oprogramowanie.** Program musi generować XML w FA(3), wysyłać faktury przez API i odbierać faktury kupna. Fakturownia, inFakt, wFirma, Comarch, Symfonia i inne to obsługują albo wdrażają. Potwierdź to u dostawcy.
+3. **Skonfiguruj uwierzytelnienie:** kwalifikowany podpis elektroniczny, Profil Zaufany (przez ePUAP lub mObywatel) albo token autoryzacyjny dla integracji API. Twój NIP musi mieć uprawnienia w systemie.
+4. **Przetestuj w środowisku testowym** `https://ap-test.ksef.mf.gov.pl/web/`. Faktury z fikcyjnymi danymi nie mają skutków prawnych.
 
-Szczegółowy poradnik po trybach pracy KSeF znajdziesz w naszym dziale [poradników](/guides).
-
----
-
-## Co zrobić teraz — 5 kroków
-
-Masz kilka dni przed terminem. Oto co warto zrobić:
-
-### Krok 1: Sprawdź, czy masz obowiązek
-
-Jesteś czynnym podatnikiem VAT? Wystawiasz faktury B2B? → Masz obowiązek.
-Jesteś na zwolnieniu z VAT? → Na razie nie masz obowiązku. Możesz zacząć testować dobrowolnie.
-
-### Krok 2: Wybierz lub zaktualizuj oprogramowanie
-
-Twój program do fakturowania musi obsługiwać KSeF. Sprawdź, czy Twój dostawca:
-
-- generuje pliki XML w formacie FA(3),
-- obsługuje wysyłkę do KSeF przez API,
-- obsługuje odbiór faktur (jako kupujący).
-
-Większość popularnych programów (Fakturownia, inFakt, wFirma, Comarch, Symfonia i inne) już to obsługuje lub właśnie wdraża. Skontaktuj się z dostawcą i potwierdź.
-
-### Krok 3: Skonfiguruj uwierzytelnienie w KSeF
-
-Żeby wysyłać faktury do KSeF, musisz się uwierzytelnić. Uwierzytelnienie działa przez:
-
-- **kwalifikowany podpis elektroniczny**,
-- **Profil Zaufany** (bezpłatny, przez ePUAP lub mObywatel),
-- **token autoryzacyjny** (dla integracji API).
-
-Upewnij się, że Twój NIP figuruje jako podmiot uprawniony w systemie i że Twój program lub integracja mają właściwą konfigurację.
-
-### Krok 4: Przetestuj na środowisku testowym
-
-Ministerstwo Finansów udostępnia środowisko testowe KSeF 2.0 pod adresem `https://ap-test.ksef.mf.gov.pl/web/`. Możesz tam wysyłać faktury z fikcyjnymi danymi i sprawdzać, jak system reaguje — bez żadnych konsekwencji prawnych.
-
-**Nie odkładaj testów na ostatni moment.** Jeśli coś nie działa, lepiej odkryć to teraz niż pierwszego dnia obowiązku.
-
-### Krok 5: Zwaliduj pliki XML przed wysyłką
-
-Zanim wyślesz pierwszą prawdziwą fakturę, sprawdź jej strukturę XML. Wrzuć plik na **[ksefuj.to](/)** — walidator sprawdzi zgodność ze schematem FA(3) i wykryje błędy semantyczne zgodne z oficjalnymi wymaganiami MF, zanim trafi do KSeF. Twoje dane nie opuszczają przeglądarki.
-
-Odpowiedzi na najczęstsze pytania znajdziesz w naszym dziale [FAQ](/faq).
-
----
-
-## Podsumowanie
-
-KSeF to zmiana, której nie da się zignorować. Od 1 kwietnia 2026 roku **każdy czynny podatnik VAT** musi wystawiać faktury B2B przez ten system. Kary za naruszenie obowiązku zaczną być egzekwowane od 1 stycznia 2027 r. — ale odrzucona faktura to faktura, której formalnie nie ma, niezależnie od sankcji.
-
-Dobra wiadomość: masz jeszcze czas się przygotować. Wybierz lub zaktualizuj oprogramowanie, skonfiguruj uwierzytelnienie, przetestuj na środowisku testowym, waliduj pliki przed wysyłką.
-
-**Nie wiesz, od czego zacząć?** Wrzuć swój plik XML na [ksefuj.to](/) — sprawdź, czy jest poprawny, zanim wyślesz go do systemu. Zajmie Ci to 30 sekund i nic nie kosztuje.
+Odpowiedzi na inne pytania są w [FAQ](/faq). Jeśli masz gotowy plik XML, sprawdź go w [walidatorze](/) przed pierwszą wysyłką.

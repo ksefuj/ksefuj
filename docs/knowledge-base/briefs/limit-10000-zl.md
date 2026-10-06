@@ -267,8 +267,8 @@ See **Critical Discrepancy** section.
 - **Verbatim (PL):** "Kary za błędy w KSeF zostały odroczone do **1 stycznia 2027 r.** Oznacza to,
   że od 1 kwietnia 2026 roku obowiązek wystawiania faktur przez KSeF obowiązuje, ale sankcje za jego
   naruszenie zaczną być egzekwowane dopiero od 2027 roku."
-- **Confidence:** HIGH (consistent, with Art. 106gc cited as source)
-- **Legal basis cited:** Art. 106gc ustawy o VAT
+- **Confidence:** HIGH (consistent, with Art. 106ni cited as source)
+- **Legal basis cited:** Art. 106ni ustawy o VAT
 
 ---
 
