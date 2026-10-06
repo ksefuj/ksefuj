@@ -19,22 +19,26 @@ what is not yet settled.
 
 ## Next up
 
-- [ ] `kary-ksef-2027-2028` — Kary za KSeF: co się zmienia od 1 stycznia 2027 · „kary KSeF 2027" ·
-      A, K · before 2026-12-31 · PRAWO, UD477 · Obligation in 2027, fines from 2028 (if passed).
-      What KAS does in 2027 instead (reminders, verification). Update when the act passes.
-- [ ] `koniec-limitu-10000-zl` — Koniec limitu 10 000 zł: co zrobić przed 1 stycznia 2027 · „KSeF od
-      1 stycznia 2027" · A · 2026-12-31 · 10K, PRAWO · Link to `ksef-limit-10000-zl`; don't
-      re-explain the limit math.
-- [ ] `faktura-z-kasy-fiskalnej-ksef-2027` — Faktura z kasy fiskalnej i paragon z NIP od 2027 ·
-      „paragon z NIP KSeF 2027" · A · 2026-12-31 · FAQ, PRAWO · Transitional exclusion ends
+- [x] `kary-ksef-2027-2028` (in review: branch `content/kary-ksef-2027-2028`) — Kary za KSeF: co się
+      zmienia od 1 stycznia 2027 · „kary KSeF 2027" · A, K · before 2026-12-31 · PRAWO, UD477 ·
+      Obligation in 2027, fines from 2028 (if passed). What KAS does in 2027 instead (reminders,
+      verification). Update when the act passes.
+- [x] `koniec-limitu-10000-zl` (in review: branch `content/koniec-limitu-10000-zl`) — Koniec limitu
+      10 000 zł: co zrobić przed 1 stycznia 2027 · „KSeF od 1 stycznia 2027" · A · 2026-12-31 · 10K,
+      PRAWO · Link to `ksef-limit-10000-zl`; don't re-explain the limit math.
+- [x] `faktura-z-kasy-fiskalnej-ksef-2027` (in review: branch
+      `content/faktura-z-kasy-fiskalnej-ksef-2027`) — Faktura z kasy fiskalnej i paragon z NIP od
+      2027 · „paragon z NIP KSeF 2027" · A · 2026-12-31 · FAQ, PRAWO · Transitional exclusion ends
       2026-12-31 (UNVERIFIED legal basis).
-- [ ] `numer-ksef-w-przelewie` — Numer KSeF w przelewie i split payment · „numer KSeF w przelewie" ·
-      K, A · 2027-01-01 · PRAWO · Date and format UNVERIFIED; PRAWO says "not yet in force".
-- [ ] `tokeny-ksef-po-2026` — Tokeny KSeF po 31 grudnia 2026 · „token KSeF 2027" · M, K · 2026-12-31
-      · APP · MF announced tokens stay; regulation change UNVERIFIED. Link to
-      `certyfikaty-vs-tokeny-ksef` and UPDATE that post if the regulation is published.
-- [ ] `zwolniony-z-vat-ksef` — Zwolniony z VAT a KSeF od 2027 · „zwolniony z VAT KSeF" · A ·
-      2027-01-01 · P2 · art. 113 threshold UNVERIFIED.
+- [x] `numer-ksef-w-przelewie` (in review: branch `content/numer-ksef-w-przelewie`) — Numer KSeF w
+      przelewie i split payment · „numer KSeF w przelewie" · K, A · 2027-01-01 · PRAWO · Date and
+      format UNVERIFIED; PRAWO says "not yet in force".
+- [x] `tokeny-ksef-po-2026` (in review: branch `content/tokeny-ksef-po-2026`) — Tokeny KSeF po 31
+      grudnia 2026 · „token KSeF 2027" · M, K · 2026-12-31 · APP · MF announced tokens stay;
+      regulation change UNVERIFIED. Link to `certyfikaty-vs-tokeny-ksef` and UPDATE that post if the
+      regulation is published.
+- [x] `zwolniony-z-vat-ksef` (in review: branch `content/zwolniony-z-vat-ksef`) — Zwolniony z VAT a
+      KSeF od 2027 · „zwolniony z VAT KSeF" · A · 2027-01-01 · P2 · art. 113 threshold UNVERIFIED.
 - [ ] `aplikacja-podatnika-ksef-pierwsza-faktura` — Pierwsza faktura w Aplikacji Podatnika KSeF ·
       „aplikacja podatnika KSeF jak wystawić fakturę" · A · rolling · APP,
       `/czy-trzeba-miec-platny-program-zeby-wystawiac-faktury-w-ksef/` · Platform-agnostic intro,
