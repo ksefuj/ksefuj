@@ -19,6 +19,11 @@ what is not yet settled.
 
 ## Next up
 
+- [ ] `ksef-scisla-walidacja-xml-19-10` — KSeF od 19.10.2026 odrzuci XML z instrukcjami
+      przetwarzania i niezalecanymi znakami · „KSeF błąd xml-002" · M, K · 2026-10-19 · CIRFMF
+      ksef-api release 2.4.0 changelog and issue #718 (maintainer: PROD enforcement moved to
+      2026-10-19) · Urgent: explain what gets rejected, the `X-System-Warning` xml-00x warnings, and
+      how to check a file (the ksefuj validator, once it flags these).
 - [x] `kary-ksef-2027-2028` (in review: branch `content/kary-ksef-2027-2028`) — Kary za KSeF: co się
       zmienia od 1 stycznia 2027 · „kary KSeF 2027" · A, K · before 2026-12-31 · PRAWO, UD477 ·
       Obligation in 2027, fines from 2028 (if passed). What KAS does in 2027 instead (reminders,
