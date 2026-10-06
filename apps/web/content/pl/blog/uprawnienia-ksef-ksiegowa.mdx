@@ -1,0 +1,119 @@
+---
+title: "Jak dać księgowej dostęp do KSeF: krok po kroku"
+description: "Uprawnienia nadajesz online w Aplikacji Podatnika KSeF: biuru po NIP albo księgowej imiennie. ZAW-FA potrzebne tylko w wąskich przypadkach."
+date: 2026-10-07
+section: blog
+locale: pl
+slug: "uprawnienia-ksef-ksiegowa"
+tags: ["KSeF", "JDG", "Freelancer"]
+sources:
+  - label: "Podręcznik KSeF 2.0, cz. I (wyd. 6.08.2026): uprawnienia, ZAW-FA, model pośredni"
+    url: "https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  - label: "Podręcznik użytkownika Aplikacji Podatnika KSeF 2.0 (wyd. 6.08.2026)"
+    url: "https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
+  - label: "MF: Najczęstsze pytania o KSeF (pyt. 17-19)"
+    url: "https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
+  - label: "MF: Pytania i odpowiedzi KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
+  - label: "Rozporządzenie MF w sprawie korzystania z KSeF (Dz.U. 2025 poz. 1815)"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2025/1815/text.pdf"
+  - label: "MF: formularz ZAW-FA(3) w e-US"
+    url: "https://www.gov.pl/web/finanse/formularz-zaw-fa3-dostepny-w-e-us"
+translations:
+  pl: "uprawnienia-ksef-ksiegowa"
+  en: "ksef-accountant-access"
+  uk: "dostup-do-ksef-dlya-bukhgaltera"
+---
+
+Księgowej dajesz dostęp do KSeF elektronicznie: logujesz się do Aplikacji Podatnika KSeF 2.0 (albo używasz własnego programu), wchodzisz w Uprawnienia, Nadaj uprawnienie i wskazujesz biuro po NIP albo konkretną osobę. Zawiadomienie ZAW-FA nie jest do tego potrzebne, jeśli nadajesz jako osoba fizyczna prowadząca działalność.
+
+Stan prawny na 7 października 2026.
+
+## Co możesz nadać i czego lepiej nie nadawać
+
+Jako właściciel firmy masz w KSeF uprawnienia właścicielskie przypisane automatycznie do Twojego NIP. Nie składasz nic w urzędzie i nie da się ich sobie odebrać. <Source href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. I, s. 57" />
+
+Księgowej nadajesz wybrane z nich. Najczęściej dwa:
+
+- **wystawianie faktur**,
+- **przeglądanie faktur** (w samym systemie „dostęp do faktur"), czyli pobieranie faktur sprzedażowych i zakupowych.
+
+Jeśli Ania wystawia faktury sama, w programie zintegrowanym z KSeF, biuru wystarczy przeglądanie faktur: pobiera je, księguje i rozlicza. Wystawianie ma sens, gdy to biuro ma wystawiać faktury za Anię. MF opisuje obie opcje w cz. I podręcznika (s. 20).
+
+<Warning>
+  Uprawnienie „zarządzanie uprawnieniami" to osobna, szersza sprawa. Jest jednym uprawnieniem do
+  nadawania i odbierania dostępu, więc osoba, która je dostanie, może dopisać kolejne osoby w Twoim
+  imieniu. Nie da się nadać samego nadawania bez odbierania. Księgowej do codziennej pracy ono nie
+  jest potrzebne.
+</Warning>
+
+## Krok po kroku: dostęp dla biura rachunkowego
+
+To wariant dla firm, które współpracują z biurem. Nadajesz uprawnienie biuru jako podmiotowi (po NIP), a biuro samo decyduje, który pracownik obsługuje Twoją firmę. Gdy pracownik odejdzie, nie musisz niczego zmieniać.
+
+1. Zaloguj się do Aplikacji Podatnika KSeF przez login.gov.pl (Profil Zaufany, aplikacja mObywatel, bankowość elektroniczna, e-Dowód) albo kwalifikowanym podpisem lub pieczęcią. Jako kontekst wskaż swój NIP. Tokenem ani certyfikatem KSeF do tej aplikacji się nie zalogujesz. <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Podręcznik AP, s. 13-15" />
+2. Wejdź w **Uprawnienia**, **Nadaj uprawnienie**.
+3. W polu „Rodzaj uprawnienia" wybierz **„Podmiotowi do wystawiania i przeglądania faktur"**.
+4. Wpisz NIP i pełną nazwę biura.
+5. Zaznacz zakres: „wystawianie faktur" i/lub „przeglądanie faktur". Przy każdym możesz dodać **„z prawem do dalszego przekazywania uprawnienia"**. Bez tego zaznaczenia biuro samo nie przekaże dostępu pracownikom.
+6. Zatwierdź i sprawdź na liście „Zarządzaj uprawnieniami", że uprawnienie jest widoczne.
+
+Ścieżkę potwierdza MF w odpowiedzi na pytanie, jak nadać uprawnienia dla biura rachunkowego. <Source href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/" label="FAQ MF, pyt. 17" />
+
+Nie ma osobnego „konta" do założenia. Osoba z uprawnieniem uwierzytelnia się jedną z dozwolonych metod i może działać. <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20" label="FAQ KSeF 2.0, pyt. 8" />
+
+Jeśli korzystasz z programu zintegrowanego z API KSeF 2.0, to samo nadasz w programie. Aplikacja Podatnika jest tylko jedną z dwóch dróg.
+
+## Dostęp dla konkretnej księgowej
+
+Pracujesz z jedną osobą, a nie z biurem? Wybierz **„Osobie fizycznej do pracy w KSeF"** i wskaż ją po NIP albo PESEL, z imieniem i nazwiskiem. Zakres wybierasz z listy: wystawianie faktur, przeglądanie faktur, przeglądanie uprawnień, przeglądanie historii sesji (generowanie UPO) i zarządzanie podmiotami podrzędnymi. <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Podręcznik AP, s. 137-138" />
+
+Różnica wobec nadania biuru jest praktyczna. Uprawnienie jest przypisane do osoby, więc gdy ona zmieni pracę, dostęp trzeba odebrać i nadać nowej osobie. Przy nadaniu biuru zmianę robi biuro u siebie.
+
+## Co robi Pani Krystyna, żeby dostęp trafił do pracowników
+
+Gdy Ania zaznaczyła „z prawem do dalszego przekazywania", biuro może przekazać dostęp swoim pracownikom. Biuro nie loguje się w tym celu w kontekście Ani, tylko we własnym, na NIP biura. Przy każdym nadaniu wybiera jedną z dwóch opcji w Aplikacji Podatnika:
+
+- **„Osobie fizycznej do pracy dla klienta"**: pracownik obsługuje tylko wskazanego klienta (podaje się jego NIP),
+- **„Osobie fizycznej do pracy dla wszystkich klientów"**: pracownik obsługuje wszystkich, którzy nadali biuru uprawnienia z prawem do przekazywania.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. I, s. 74-76"
+/>
+
+Pracownik biura dostaje wyłącznie wystawianie i dostęp do faktur i nie może ich przekazać dalej. Żeby pracować dla Ani, loguje się do KSeF w kontekście jej NIP.
+
+<Info>
+  Działa tylko cały łańcuch: klient nadał uprawnienie biuru z prawem do przekazywania, a biuro
+  nadało je pracownikowi. System sprawdza to przy rozpoczęciu sesji, a kolejność nadawania nie ma
+  znaczenia. Jeśli Ania odbierze uprawnienie biuru, uprawnienia pracowników do jej firmy zostają
+  nadane, ale przestają działać.
+</Info>
+
+## Jak odebrać dostęp
+
+W Aplikacji Podatnika wejdź w **Zarządzaj uprawnieniami**, zaznacz uprawnienie na liście (np. na liście nadanych uprawnień podmiotowych), kliknij **„Odbierz uprawnienie"**, potwierdź i odśwież ekran, żeby zobaczyć wynik. Odebrać może tylko osoba z uprawnieniem do zarządzania uprawnieniami. <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Podręcznik AP, s. 160-161" />
+
+Odebranie biuru wyłącza w Twojej firmie wszystkich jego pracowników naraz. Własnych uprawnień właścicielskich odebrać się nie da.
+
+## Kiedy jednak potrzebny jest ZAW-FA
+
+Zawiadomienie ZAW-FA dotyczy wąskich przypadków:
+
+- **Firma nie jest osobą fizyczną i nie ma kwalifikowanej pieczęci.** Dotyczy to na przykład spółki z o.o. Pierwsze uprawnienia musi wtedy nadać przez ZAW-FA, wskazując jedną osobę fizyczną (nie musi być członkiem zarządu). Dalsze uprawnienia, także dla księgowej, ta osoba nadaje już elektronicznie. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2025/1815/text.pdf" label="Rozporządzenie Dz.U. 2025 poz. 1815, § 5 ust. 1" />
+- **Podpis kwalifikowany nie zawiera NIP ani PESEL.** Jego „odcisk palca" zgłasza się osobno (opis niżej). Własny podpis zgłasza przez ZAW-FA osoba fizyczna, to jedyny przypadek, w którym ona sama składa zawiadomienie.
+
+ZAW-FA(3) złożysz papierowo, przez interaktywny formularz w e-Urzędzie Skarbowym albo przez e-Doręczenia. Zawiadomienie wysłane przez ePUAP od 1 stycznia 2026 nie jest skuteczne. Uprawnienia ruszają dopiero, gdy urzędnik wprowadzi dane do systemu, a potwierdzenie przychodzi e-mailem. <Source href="https://www.gov.pl/web/finanse/formularz-zaw-fa3-dostepny-w-e-us" label="MF: ZAW-FA(3) w e-US" />
+
+W ZAW-FA wskazujesz jedną osobę. Żeby ją zmienić, składasz najpierw zawiadomienie o odebraniu uprawnień dotychczasowej osobie, potem o nadaniu nowej.
+
+## Podpis bez NIP i PESEL: odcisk palca
+
+Gdy księgowa używa podpisu kwalifikowanego, który nie zawiera NIP ani PESEL (np. wydanego za granicą), nie wystarczy wskazać jej po numerze. Uprawnienie nadaje się wtedy na „odcisk palca" certyfikatu: 64 znaki (cyfry i litery a-f), liczone algorytmem SHA-256. Aplikacja Podatnika ma na ekranie logowania przycisk „Pobierz odcisk palca": pobierasz plik, podpisujesz go certyfikatem i przekazujesz z powrotem. W formularzu nadania wybierasz wtedy osobę z certyfikatem bez NIP i PESEL, identyfikator „Brak" i wpisujesz odcisk. <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Podręcznik AP, s. 16-17 i 139" />
+
+Najczęstszy kłopot: księgowa przedłuża podpis albo kupuje nowy, a dostęp przestaje działać. Przy odcisku palca uprawnienia trzeba wtedy zgłosić ponownie. Jeśli nowy podpis nadal zawiera NIP lub PESEL, nic nie trzeba zmieniać. <Source href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/" label="FAQ MF, pyt. 19" />
+
+## Co dalej
+
+Logowanie programu księgowego do KSeF to osobna sprawa od uprawnień osób. Porównanie certyfikatów i tokenów znajdziesz w poście [Certyfikaty vs tokeny w KSeF](/blog/certyfikaty-vs-tokeny-ksef). Jeśli dopiero zaczynasz, zacznij od [KSeF dla JDG](/blog/ksef-dla-jdg).
