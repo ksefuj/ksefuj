@@ -17,10 +17,14 @@ sources:
     url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/"
   - label: "Посібник KSeF 2.0, ч. II, п. 4.1.4 і 4.1.5"
     url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
-  - label: "CIRFMF/ksef-docs: структура номера KSeF"
-    url: "https://github.com/CIRFMF/ksef-docs/blob/main/faktury/numer-ksef.md"
+  - label: "CIRFMF/ksef-api: структура номера KSeF"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/numer-ksef.md"
   - label: "MF: відстрочка штрафів до кінця 2027 року"
     url: "https://www.gov.pl/web/finanse/przedluzenie-odroczenia-kar-za-bledy-w-stosowaniu-ksef-do-konca-2027-r"
+  - label: "МФ: поширені запитання про KSeF (пит. 7)"
+    url: "https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
+  - label: "Проєкт UD477 (RCL)"
+    url: "https://legislacja.rcl.gov.pl/projekt/12414954"
 translations:
   pl: "numer-ksef-w-przelewie"
   en: "ksef-number-in-bank-transfer"
@@ -50,9 +54,9 @@ translations:
 
 ## Де взяти номер KSeF
 
-Номер має 35 символів, наприклад `5265877635-20250826-0100001AF629-AF` (приклад із документації MF): NIP продавця, дата прийняття рахунку, 12 шістнадцяткових символів і контрольна сума. <Source href="https://github.com/CIRFMF/ksef-docs/blob/main/faktury/numer-ksef.md" label="CIRFMF/ksef-docs" />
+Номер має 35 символів, наприклад `5265877635-20250826-0100001AF629-AF` (приклад із документації MF): NIP продавця, дата прийняття рахунку, 12 шістнадцяткових символів і контрольна сума. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/numer-ksef.md" label="CIRFMF/ksef-api" />
 
-Номера немає у файлі XML, і це не номер із поля P_2: KSeF повертає його в UPO (офіційному підтвердженні отримання). Продавець не мусить надсилати його контрагентові, бо рахунок з'являється в покупця в системі автоматично. <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/" label="FAQ MF" />
+Номера немає у файлі XML, і це не номер із поля P_2: KSeF повертає його в UPO (офіційному підтвердженні отримання). <Source href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/" label="МФ: поширені запитання, пит. 7" /> Продавець не мусить надсилати його контрагентові, бо рахунок з'являється в покупця в системі автоматично. <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/" label="FAQ MF" />
 
 ## Один переказ за кілька рахунків
 
@@ -62,7 +66,7 @@ translations:
 
 ## Split payment: що змінює ст. 108a
 
-При поділеному платежі (MPP) номер KSeF потрапляє в повідомлення переказу поруч із сумою ПДВ, сумою брутто і NIP постачальника (ст. 108a ust. 3 pkt 3). Для рахунку, виставленого поза KSeF, вписують звичайний номер рахунку. Термін той самий: платежі від 1 січня 2027 року. <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/" label="FAQ MF" />
+При поділеному платежі (MPP) номер KSeF потрапляє в повідомлення переказу поруч із сумою ПДВ, сумою брутто і NIP постачальника (ст. 108a ust. 3 pkt 3). Для рахунку, виставленого поза KSeF, вписують номер рахунку. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, с. 73-74" /> Термін той самий: платежі від 1 січня 2027 року. <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/" label="FAQ MF" />
 
 MPP лишається добровільним (ст. 108a ust. 1). Він обов'язковий, зокрема, для товарів і послуг із додатка № 15 при рахунку понад 15 000 PLN (ust. 1a).
 
@@ -76,7 +80,7 @@ MPP лишається добровільним (ст. 108a ust. 1). Він об
 
 ## Відстрочка штрафів і термін для переказів
 
-16 вересня 2026 року MF оголосило про продовження відстрочки штрафів за помилки в KSeF до кінця 2027 року. Проєкт UD477, який це реалізує, ще не закон: він застосовував би ст. 106ni ust. 1-3 і 5-7 лише від 1 січня 2028 року. Ст. 106ni стосується штрафів за виставлення й надсилання рахунків, а не платежів. Ні в оголошенні, ні в інших матеріалах MF ми не знайшли зміни терміну для ст. 108g і ст. 108a ust. 3 pkt 3. Сторінка MF про правову основу досі говорить про відстрочку «до кінця 2026 року». <Source href="https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/podstawy-prawne-oraz-kluczowe-terminy/" label="MF: правова основа та ключові терміни" />
+16 вересня 2026 року MF оголосило про продовження відстрочки штрафів за помилки в KSeF до кінця 2027 року. <Source href="https://www.gov.pl/web/finanse/przedluzenie-odroczenia-kar-za-bledy-w-stosowaniu-ksef-do-konca-2027-r" label="МФ: продовження відстрочки штрафів до кінця 2027 р." /> Проєкт UD477, який це реалізує, ще не закон: він застосовував би ст. 106ni ust. 1-3 і 5-7 лише від 1 січня 2028 року. <Source href="https://legislacja.rcl.gov.pl/projekt/12414954" label="Проєкт UD477 (RCL)" /> Ст. 106ni стосується штрафів за виставлення й надсилання рахунків, а не платежів. Проєкт (версія від 22 вересня 2026 року) не змінює ст. 108g і ст. 108a, тому ці положення залишаються на 1 січня 2027 року. Сторінка MF про правову основу досі говорить про відстрочку «до кінця 2026 року». <Source href="https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/podstawy-prawne-oraz-kluczowe-terminy/" label="MF: правова основа та ключові терміни" />
 
 <Warning>
   Ми не з'ясували, що вписувати для рахунку offline, який продавець ще не надіслав до KSeF, якщо

@@ -17,10 +17,14 @@ sources:
     url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/"
   - label: "Podręcznik KSeF 2.0, cz. II, pkt 4.1.4 i 4.1.5"
     url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
-  - label: "CIRFMF/ksef-docs: struktura numeru KSeF"
-    url: "https://github.com/CIRFMF/ksef-docs/blob/main/faktury/numer-ksef.md"
+  - label: "CIRFMF/ksef-api: struktura numeru KSeF"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/numer-ksef.md"
   - label: "MF: przedłużenie odroczenia kar do końca 2027 r."
     url: "https://www.gov.pl/web/finanse/przedluzenie-odroczenia-kar-za-bledy-w-stosowaniu-ksef-do-konca-2027-r"
+  - label: "MF: najczęstsze pytania o KSeF (pyt. 7)"
+    url: "https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
+  - label: "Projekt UD477 (RCL)"
+    url: "https://legislacja.rcl.gov.pl/projekt/12414954"
 translations:
   pl: "numer-ksef-w-przelewie"
   en: "ksef-number-in-bank-transfer"
@@ -50,9 +54,9 @@ W tekście jednolitym przy art. 108g nie ma kary ani dodatkowego zobowiązania.
 
 ## Skąd wziąć numer KSeF
 
-Numer ma 35 znaków, na przykład `5265877635-20250826-0100001AF629-AF` (przykład z dokumentacji MF): NIP sprzedawcy, data przyjęcia faktury, 12 znaków szesnastkowych i suma kontrolna. <Source href="https://github.com/CIRFMF/ksef-docs/blob/main/faktury/numer-ksef.md" label="CIRFMF/ksef-docs" />
+Numer ma 35 znaków, na przykład `5265877635-20250826-0100001AF629-AF` (przykład z dokumentacji MF): NIP sprzedawcy, data przyjęcia faktury, 12 znaków szesnastkowych i suma kontrolna. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/numer-ksef.md" label="CIRFMF/ksef-api" />
 
-Numeru nie ma w pliku XML i nie jest to numer z pola P_2: KSeF zwraca go w UPO. Sprzedawca nie musi go wysyłać kontrahentowi, bo faktura pojawia się u odbiorcy w systemie automatycznie. <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/" label="FAQ MF" />
+Numeru nie ma w pliku XML i nie jest to numer z pola P_2: KSeF zwraca go w UPO. <Source href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/" label="MF: najczęstsze pytania, pyt. 7" /> Sprzedawca nie musi go wysyłać kontrahentowi, bo faktura pojawia się u odbiorcy w systemie automatycznie. <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/" label="FAQ MF" />
 
 ## Jeden przelew za kilka faktur
 
@@ -62,7 +66,7 @@ Pani Krystyna w styczniu 2027 r. płaci za klienta trzy faktury tego samego dost
 
 ## Split payment: co zmienia art. 108a
 
-Przy podzielonej płatności (MPP) numer KSeF trafia do komunikatu przelewu, obok kwoty VAT, kwoty brutto i NIP dostawcy (art. 108a ust. 3 pkt 3). W przypadku faktury spoza KSeF wpisuje się zwykły numer faktury. Termin jest ten sam: płatności od 1 stycznia 2027 r. <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/" label="FAQ MF" />
+Przy podzielonej płatności (MPP) numer KSeF trafia do komunikatu przelewu, obok kwoty VAT, kwoty brutto i NIP dostawcy (art. 108a ust. 3 pkt 3). W przypadku faktury spoza KSeF wpisuje się numer faktury. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, s. 73-74" /> Termin jest ten sam: płatności od 1 stycznia 2027 r. <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/" label="FAQ MF" />
 
 MPP pozostaje dobrowolny (art. 108a ust. 1). Jest obowiązkowy m.in. dla towarów i usług z załącznika nr 15 przy fakturze powyżej 15 000 zł (ust. 1a).
 
@@ -76,7 +80,7 @@ Przy kilku fakturach jednego dostawcy z okresu od jednego dnia do miesiąca MPP 
 
 ## Odroczenie kar a termin dla przelewów
 
-MF zapowiedziało 16 września 2026 r. przedłużenie odroczenia kar za błędy w KSeF do końca 2027 r. Projekt UD477, który to wdraża, nie jest jeszcze prawem: miałby stosować art. 106ni ust. 1-3 i 5-7 dopiero od 1 stycznia 2028 r. Art. 106ni dotyczy kar za wystawianie i wysyłanie faktur, nie płatności. Ani w zapowiedzi, ani w innych materiałach MF nie znaleźliśmy zmiany terminu dla art. 108g i art. 108a ust. 3 pkt 3. Strona MF o podstawach prawnych nadal mówi o odroczeniu „do końca 2026 r." <Source href="https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/podstawy-prawne-oraz-kluczowe-terminy/" label="MF: Podstawy prawne oraz kluczowe terminy" />
+MF zapowiedziało 16 września 2026 r. przedłużenie odroczenia kar za błędy w KSeF do końca 2027 r. <Source href="https://www.gov.pl/web/finanse/przedluzenie-odroczenia-kar-za-bledy-w-stosowaniu-ksef-do-konca-2027-r" label="MF: przedłużenie odroczenia kar do końca 2027 r." /> Projekt UD477, który to wdraża, nie jest jeszcze prawem: miałby stosować art. 106ni ust. 1-3 i 5-7 dopiero od 1 stycznia 2028 r. <Source href="https://legislacja.rcl.gov.pl/projekt/12414954" label="Projekt UD477 (RCL)" /> Art. 106ni dotyczy kar za wystawianie i wysyłanie faktur, nie płatności. Projekt (wersja z 22 września 2026 r.) nie zmienia art. 108g ani art. 108a, więc te przepisy zostają na 1 stycznia 2027 r. Strona MF o podstawach prawnych nadal mówi o odroczeniu „do końca 2026 r." <Source href="https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/podstawy-prawne-oraz-kluczowe-terminy/" label="MF: Podstawy prawne oraz kluczowe terminy" />
 
 <Warning>
   Nie ustaliliśmy, co wpisać przy fakturze offline, której sprzedawca jeszcze nie wysłał do KSeF,

@@ -17,10 +17,14 @@ sources:
     url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/"
   - label: "KSeF 2.0 Handbook, part II, sections 4.1.4 and 4.1.5"
     url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
-  - label: "CIRFMF/ksef-docs: KSeF number structure"
-    url: "https://github.com/CIRFMF/ksef-docs/blob/main/faktury/numer-ksef.md"
+  - label: "CIRFMF/ksef-api: KSeF number structure"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/numer-ksef.md"
   - label: "MF: penalty deferral extended to the end of 2027"
     url: "https://www.gov.pl/web/finanse/przedluzenie-odroczenia-kar-za-bledy-w-stosowaniu-ksef-do-konca-2027-r"
+  - label: "MF: frequently asked questions about KSeF (Q7)"
+    url: "https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
+  - label: "Draft UD477 (RCL)"
+    url: "https://legislacja.rcl.gov.pl/projekt/12414954"
 translations:
   pl: "numer-ksef-w-przelewie"
   en: "ksef-number-in-bank-transfer"
@@ -50,9 +54,9 @@ The consolidated text attaches no penalty or additional tax liability to art. 10
 
 ## Where to get the KSeF number
 
-The number has 35 characters, for example `5265877635-20250826-0100001AF629-AF` (an example from MF documentation): the seller's NIP, the date the invoice was accepted, 12 hexadecimal characters and a checksum. <Source href="https://github.com/CIRFMF/ksef-docs/blob/main/faktury/numer-ksef.md" label="CIRFMF/ksef-docs" />
+The number has 35 characters, for example `5265877635-20250826-0100001AF629-AF` (an example from MF documentation): the seller's NIP, the date the invoice was accepted, 12 hexadecimal characters and a checksum. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/numer-ksef.md" label="CIRFMF/ksef-api" />
 
-The number is not in the XML file and is not the number from field P_2: KSeF returns it in the UPO (official receipt). The seller does not have to send it to the buyer, because the invoice appears in the buyer's KSeF account automatically. <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/" label="MF FAQ" />
+The number is not in the XML file and is not the number from field P_2: KSeF returns it in the UPO (official receipt). <Source href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/" label="MF FAQ, Q7" /> The seller does not have to send it to the buyer, because the invoice appears in the buyer's KSeF account automatically. <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/" label="MF FAQ" />
 
 ## One transfer for several invoices
 
@@ -62,7 +66,7 @@ Pani Krystyna, an accountant, pays three invoices from the same supplier for a c
 
 ## Split payment: what art. 108a changes
 
-In a split payment (MPP) the KSeF number goes into the transfer message, next to the VAT amount, the gross amount and the supplier's NIP (art. 108a ust. 3 pkt 3). For an invoice issued outside KSeF, the ordinary invoice number is entered. The date is the same: payments from 1 January 2027. <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/" label="MF FAQ" />
+In a split payment (MPP) the KSeF number goes into the transfer message, next to the VAT amount, the gross amount and the supplier's NIP (art. 108a ust. 3 pkt 3). For an invoice issued outside KSeF, the invoice number is entered. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Handbook, part II, pp. 73-74" /> The date is the same: payments from 1 January 2027. <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/" label="MF FAQ" />
 
 MPP remains optional (art. 108a ust. 1). It is mandatory, among other cases, for goods and services listed in annex 15 when the invoice exceeds PLN 15,000 (ust. 1a).
 
@@ -76,7 +80,7 @@ For several invoices from one supplier within a period of one day to one month, 
 
 ## Penalty deferral and the date for transfers
 
-On 16 September 2026 MF announced an extension of the penalty deferral for KSeF errors until the end of 2027. Draft UD477, which implements this, is not law yet: it would apply art. 106ni ust. 1-3 and 5-7 only from 1 January 2028. Art. 106ni concerns penalties for issuing and sending invoices, not payments. Neither in the announcement nor in other MF materials did we find a change to the date for art. 108g and art. 108a ust. 3 pkt 3. The MF legal-basis page still speaks of a deferral "until the end of 2026". <Source href="https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/podstawy-prawne-oraz-kluczowe-terminy/" label="MF: Legal basis and key dates" />
+On 16 September 2026 MF announced an extension of the penalty deferral for KSeF errors until the end of 2027. <Source href="https://www.gov.pl/web/finanse/przedluzenie-odroczenia-kar-za-bledy-w-stosowaniu-ksef-do-konca-2027-r" label="MF: extension of the penalty deferral to the end of 2027" /> Draft UD477, which implements this, is not law yet: it would apply art. 106ni ust. 1-3 and 5-7 only from 1 January 2028. <Source href="https://legislacja.rcl.gov.pl/projekt/12414954" label="Draft UD477 (RCL)" /> Art. 106ni concerns penalties for issuing and sending invoices, not payments. The draft (version of 22 September 2026) does not change art. 108g or art. 108a, so those provisions stay at 1 January 2027. The MF legal-basis page still speaks of a deferral "until the end of 2026". <Source href="https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/podstawy-prawne-oraz-kluczowe-terminy/" label="MF: Legal basis and key dates" />
 
 <Warning>
   We have not established what to enter for an offline invoice that the seller has not yet sent to
