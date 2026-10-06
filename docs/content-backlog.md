@@ -19,11 +19,12 @@ what is not yet settled.
 
 ## Next up
 
-- [ ] `ksef-scisla-walidacja-xml-19-10` — KSeF od 19.10.2026 odrzuci XML z instrukcjami
-      przetwarzania i niezalecanymi znakami · „KSeF błąd xml-002" · M, K · 2026-10-19 · CIRFMF
-      ksef-api release 2.4.0 changelog and issue #718 (maintainer: PROD enforcement moved to
-      2026-10-19) · Urgent: explain what gets rejected, the `X-System-Warning` xml-00x warnings, and
-      how to check a file (the ksefuj validator, once it flags these).
+- [x] `ksef-scisla-walidacja-xml-19-10` (in review: branch `content/ksef-scisla-walidacja-xml`) —
+      KSeF od 19.10.2026 odrzuci XML z instrukcjami przetwarzania i niezalecanymi znakami · „KSeF
+      błąd xml-002" · M, K · 2026-10-19 · CIRFMF ksef-api release 2.4.0 changelog and issue #718
+      (maintainer: PROD enforcement moved to 2026-10-19) · Urgent: explain what gets rejected, the
+      `X-System-Warning` xml-00x warnings, and how to check a file (the ksefuj validator, once it
+      flags these).
 - [x] `kary-ksef-2027-2028` (in review: branch `content/kary-ksef-2027-2028`) — Kary za KSeF: co się
       zmienia od 1 stycznia 2027 · „kary KSeF 2027" · A, K · before 2026-12-31 · PRAWO, UD477 ·
       Obligation in 2027, fines from 2028 (if passed). What KAS does in 2027 instead (reminders,
@@ -44,16 +45,18 @@ what is not yet settled.
       regulation is published.
 - [x] `zwolniony-z-vat-ksef` (in review: branch `content/zwolniony-z-vat-ksef`) — Zwolniony z VAT a
       KSeF od 2027 · „zwolniony z VAT KSeF" · A · 2027-01-01 · P2 · art. 113 threshold UNVERIFIED.
-- [ ] `aplikacja-podatnika-ksef-pierwsza-faktura` — Pierwsza faktura w Aplikacji Podatnika KSeF ·
-      „aplikacja podatnika KSeF jak wystawić fakturę" · A · rolling · APP,
+- [x] `aplikacja-podatnika-ksef-pierwsza-faktura` (in review: branch
+      `content/aplikacja-podatnika-ksef-pierwsza-faktura`) — Pierwsza faktura w Aplikacji Podatnika
+      KSeF · „aplikacja podatnika KSeF jak wystawić fakturę" · A · rolling · APP,
       `/czy-trzeba-miec-platny-program-zeby-wystawiac-faktury-w-ksef/` · Platform-agnostic intro,
       then MF's free app step by step.
 - [ ] `logowanie-ksef` — Logowanie do KSeF: Profil Zaufany, podpis, certyfikat · „KSeF logowanie
       profil zaufany" · A · rolling · APP, KOM
-- [ ] `uprawnienia-ksef-ksiegowa` — Jak dać księgowej dostęp do KSeF · „KSeF uprawnienia biuro
-      rachunkowe" · A, K · before 2027-01-01 · FAQ, P3
-- [ ] `awaria-ksef-offline` — Awaria KSeF: tryb offline24 i offline krok po kroku · „awaria KSeF co
-      robić" · A, K, M · evergreen · KOM, P2
+- [x] `uprawnienia-ksef-ksiegowa` (in review: branch `content/uprawnienia-ksef-ksiegowa`) — Jak dać
+      księgowej dostęp do KSeF · „KSeF uprawnienia biuro rachunkowe" · A, K · before 2027-01-01 ·
+      FAQ, P3
+- [x] `awaria-ksef-offline` (in review: branch `content/awaria-ksef-offline`) — Awaria KSeF: tryb
+      offline24 i offline krok po kroku · „awaria KSeF co robić" · A, K, M · evergreen · KOM, P2
 
 ## Evergreen
 
