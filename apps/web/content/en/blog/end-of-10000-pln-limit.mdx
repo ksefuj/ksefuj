@@ -1,6 +1,6 @@
 ---
 title: "KSeF from 1 January 2027: what to do before then"
-description: "From 1 January 2027 the 10,000 PLN limit is gone: every invoice to a business goes through KSeF, VAT-exempt sellers included. A preparation plan."
+description: "From 1 January 2027 the 10,000 PLN limit is gone: invoices to businesses go through KSeF as a rule, VAT-exempt sellers included. A preparation plan."
 date: 2026-10-07
 section: blog
 locale: en
@@ -11,6 +11,8 @@ sources:
     url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
   - label: "KSeF regulation, Dz.U. 2025 item 1815 (§ 13)"
     url: "https://api.sejm.gov.pl/eli/acts/DU/2025/1815/text.pdf"
+  - label: "MoF regulation on cases with no structured invoice duty, Dz.U. 2025 item 1740 (§ 2)"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2025/1740/text.pdf"
   - label: "MF: KSeF 2.0 implementation stages"
     url: "https://ksef.podatki.gov.pl/etapy-wdrozenia-ksef/"
   - label: "MF: KSeF 2.0 FAQ"
@@ -31,7 +33,7 @@ translations:
   uk: "kinets-limitu-10000-zl"
 ---
 
-From 1 January 2027 every invoice you issue to another business must go through KSeF (Krajowy System e-Faktur, Poland's national e-invoicing system), whatever the amount. The art. 145m exemption of the VAT Act, the 10,000 PLN monthly limit, applies only until 31 December 2026, and from the new year there is no threshold for anyone, VAT-exempt taxpayers included.
+From 1 January 2027 an invoice you issue to another business must, as a rule, go through KSeF (Krajowy System e-Faktur, Poland's national e-invoicing system), whatever the amount. The art. 145m exemption of the VAT Act, the 10,000 PLN monthly limit, applies only until 31 December 2026, and from the new year there is no threshold for anyone, VAT-exempt taxpayers included.
 
 From the same date a cash register can no longer issue invoices, and a receipt with a NIP (tax ID) stops counting as a simplified invoice. Legal position as of 7 October 2026.
 
@@ -51,7 +53,7 @@ Art. 145m(1) allowed paper or electronic invoices outside KSeF between 1 April a
 
 Several things change in practice:
 
-- **VAT-exempt taxpayers.** An exempt taxpayer (art. 113) still issues an invoice only on the buyer's request (art. 106b(3)(2)), but when they issue one to another taxpayer, it goes through KSeF. Only the EU SME scheme in art. 113a stays outside permanently (art. 106ga(2)(6)). Ewa, a hairdresser exempt from VAT who issues a 400 PLN invoice to a beauty salon every few months, issues it in KSeF from January.
+- **VAT-exempt taxpayers.** An exempt taxpayer (art. 113) still issues an invoice only on the buyer's request (art. 106b(3)(2)), but when they issue one to another taxpayer, it goes through KSeF. The art. 113 exemption is not an exception to KSeF (the exceptions are listed below). Ewa, a hairdresser exempt from VAT who issues a 400 PLN invoice to a beauty salon every few months, issues it in KSeF from January.
 - **Cash registers.** Art. 145n allowed invoices from a cash register until the end of 2026, and a receipt with a NIP (up to 450 PLN or 100 EUR) counted as a simplified invoice. That ends on 1 January 2027. A business customer who wants an invoice gets it from KSeF.
 - **Consumers.** Invoices to private individuals who do not run a business stay outside the obligation (art. 106ga(2)(4)).
 - **Bank transfers.** A buyer who is an active VAT taxpayer and pays an invoice to another active VAT taxpayer must put the KSeF number in the transfer (art. 108g(1), for payments from 1 January 2027).
@@ -59,6 +61,13 @@ Several things change in practice:
 <Source
   href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
   label="KSeF 2.0 Handbook, part I, p. 14"
+/>
+
+The permanent exceptions are few: art. 106ga(2) of the VAT Act lists, among others, sellers with no seat or permanent establishment in Poland, special procedures and the art. 113a exemption (point 6), and the Ministry of Finance regulation (Dz.U. 2025 item 1740, § 2) lists, among others, invoices for toll motorway travel and single tickets for passenger transport.
+
+<Source
+  href="https://api.sejm.gov.pl/eli/acts/DU/2025/1740/text.pdf"
+  label="MoF regulation on cases with no structured invoice duty, Dz.U. 2025 item 1740, § 2"
 />
 
 What counts is the invoice issue date: an online invoice is issued on the day it is sent to KSeF. From the wording of art. 145m it follows that an invoice for a December service issued on 4 January 2027 is already a 2027 invoice and goes through KSeF.
@@ -69,13 +78,18 @@ Order matters: without a login you cannot grant permissions, and without softwar
 
 ### 1. Choose how you log in
 
-A private individual logs in to KSeF through the national node (login.gov.pl: Profil Zaufany, the mObywatel app, online banking or an e-ID card), with a qualified electronic signature, with a token or with a KSeF certificate. The first method is free, and the login context is your NIP. Purchase invoices have been arriving in KSeF since 1 February 2026 regardless of the limit, so if you already check them there, you have this step covered.
+A private individual logs in to KSeF through the national node (login.gov.pl: Profil Zaufany, the mObywatel app, online banking or an e-ID card), with a qualified electronic signature, with a token or with a KSeF certificate. The first method is free, and the login context is your NIP. The duty to receive invoices through KSeF has applied since 1 February 2026 regardless of the limit, and covers invoices issued in KSeF (Handbook part II, p. 96), so if you already check them there, you have this step covered.
 
 Tokens are uncertain. The regulation allows them until 31 December 2026 (§ 13), MF has announced it will keep them, but no amendment has been published. If your software logs in with a token, ask the vendor about its plan. We describe the differences in [certificates vs tokens](/en/blog/certificates-vs-tokens-ksef).
 
 <Source
   href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
   label="KSeF 2.0 Handbook, part I, pp. 21 and 26"
+/>
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="KSeF 2.0 Handbook, part II, p. 96"
 />
 
 ### 2. Choose software
@@ -127,6 +141,9 @@ In a total failure announced in the mass media, invoices are issued outside KSeF
 
 ### 6. Issue the first invoice in January
 
-Send it to KSeF on the day you issue it. An online invoice counts as issued on the day it is sent, and one sent a day later is treated as an offline24 invoice. A buyer with a NIP sees it in the system automatically, so you do not need to email them a PDF or the KSeF number. For a foreign buyer you issue the invoice in KSeF and also pass it on in an agreed way, as we describe in [foreign invoices in KSeF](/en/blog/foreign-invoice-ksef).
+Send it to KSeF on the day you issue it. An online invoice counts as issued on the day it is sent, and one sent a day later is treated as an offline24 invoice. For a domestic buyer with a NIP you issue nothing beyond sending it to KSeF; they download it from the system after logging in or via a link or QR code, so you do not need to email them a PDF or the KSeF number. For a foreign buyer you issue the invoice in KSeF and also pass it on in an agreed way, as we describe in [foreign invoices in KSeF](/en/blog/foreign-invoice-ksef).
 
-<Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/" label="MF: KSeF 2.0 FAQ" />
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="KSeF 2.0 Handbook, part II, p. 97"
+/>
