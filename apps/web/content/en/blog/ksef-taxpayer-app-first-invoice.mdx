@@ -39,9 +39,11 @@ The Taxpayer App suits you if you issue a few invoices a month and have no invoi
 If you issue invoices in batches, software integrated with KSeF is a better fit. Typing everything by hand gets tiring quickly.
 
 <Info>
-  A VAT-exempt taxpayer issues an invoice on the buyer's request, within 3 months. They issue it in
-  KSeF from 1 April 2026, or from 1 January 2027 if their sales do not exceed PLN 10,000. This is
-  described in the KSeF 2.0 handbook, part II (edition of 6 August 2026).
+  A VAT-exempt taxpayer issues an invoice only on the buyer's request (with the buyer's NIP, if it
+  has one), made within 3 months of the end of the month in which the goods were delivered or the
+  service was performed. They issue it in KSeF from 1 April 2026, or from 1 January 2027 if their
+  sales do not exceed PLN 10,000. This is described in the KSeF 2.0 handbook, part II (edition of 6
+  August 2026).
 </Info>
 
 ---
@@ -64,7 +66,7 @@ If you issue invoices in batches, software integrated with KSeF is a better fit.
 
 ### 1. Log in and choose the context
 
-Go to [ap.ksef.mf.gov.pl](https://ap.ksef.mf.gov.pl), choose a login method and confirm your identity. Then pick the NIP identifier, enter your company's number and click "Przejdź dalej" (Continue).
+Go to [ap.ksef.mf.gov.pl](https://ap.ksef.mf.gov.pl), choose a login method. Then pick the NIP identifier, enter your company's number and click "Przejdź dalej" (Continue). If you log in through login.gov.pl, you are redirected to its site, where you confirm your identity. <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Taxpayer Application manual, p. 14" />
 
 ### 2. Choose "Wystaw fakturę VAT"
 
@@ -100,7 +102,7 @@ After sending you will see the **KSeF number**, the unique identifier of the inv
 
 ### 6. Download the UPO
 
-The UPO (Urzędowe Poświadczenie Odbioru, the official confirmation of receipt) is KSeF's confirmation that the invoice arrived. Open "Historia sesji" (Session history), end the session and, in the sending details, choose "Pobierz UPO zbiorcze" (Download collective UPO) as XML or PDF. You can download the UPO for a single invoice from its menu on the invoice list.
+The UPO (Urzędowe Poświadczenie Odbioru, the official confirmation of receipt) is KSeF's confirmation that the invoice arrived. Open "Historia sesji" (Session history), end the session and, in the sending details, choose "Pobierz UPO zbiorcze" (Download collective UPO) as XML or PDF. You can download the UPO for a single invoice from the invoice's context menu in the "Szczegóły wysyłki" (sending details) table under "Historia sesji". <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Taxpayer Application manual, pp. 125-126" />
 
 <Source
   href="https://ksef.podatki.gov.pl/pliki-do-pobrania-ksef-20/"
@@ -113,13 +115,13 @@ The UPO (Urzędowe Poświadczenie Odbioru, the official confirmation of receipt)
 
 A buyer with a Polish NIP receives the invoice in their own KSeF. You do not need to send it by any other means.
 
-It is different when the buyer does not use KSeF, for example a foreign buyer or one without a NIP. Then Article 106gb(4) of the VAT Act requires you to make the invoice available in a way agreed with them. The Ministry of Finance notes that the Act names no specific method and no form for the agreement. So you can send a visualisation, for example by email.
+It is different for the buyers listed in Article 106gb(4) of the VAT Act: when the place of supply is abroad, the buyer has no seat or fixed establishment in Poland (or its Polish establishment does not take part in the transaction), is exempt under Article 113a, has no tax identification number, or is a private individual outside business. Then you make the invoice available in a way agreed with them. The Ministry of Finance notes that the Act names no specific method and no form for the agreement. So you can send a visualisation, for example by email, but an invoice made available outside KSeF must carry a QR code (Article 106gb(5)(1)). <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, part II, pp. 23 and 82" />
 
 You download an invoice from the invoice list by choosing a file format. A visualisation may also be in another language, as long as, once translated, it matches the data in the XML file.
 
 <Source
-  href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
-  label="Ministry of Finance FAQ — KSeF 2.0 (questions 16 and 25)"
+  href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
+  label="Ministry of Finance FAQ (questions 16 and 25)"
 />
 
 ---

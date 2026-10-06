@@ -38,9 +38,10 @@ Aplikacja Podatnika jest dla Ciebie, jeśli wystawiasz kilka faktur w miesiącu 
 Jeśli wystawiasz faktury seriami, lepszy będzie program zintegrowany z KSeF. Wpisywanie wszystkiego ręcznie szybko męczy.
 
 <Info>
-  Podatnik zwolniony z VAT wystawia fakturę na żądanie nabywcy, w ciągu 3 miesięcy. W KSeF wystawia
-  ją od 1.04.2026, a jeśli jego sprzedaż nie przekracza 10 000 zł, od 1.01.2027. Opisuje to
-  Podręcznik KSeF 2.0, część II (wydanie z 6.08.2026).
+  Podatnik zwolniony z VAT wystawia fakturę tylko na żądanie nabywcy (z jego NIP-em, jeśli go ma),
+  zgłoszone w ciągu 3 miesięcy od końca miesiąca, w którym dostarczono towar lub wykonano usługę. W
+  KSeF wystawia ją od 1.04.2026, a jeśli jego sprzedaż nie przekracza 10 000 zł, od 1.01.2027.
+  Opisuje to Podręcznik KSeF 2.0, część II (wydanie z 6.08.2026).
 </Info>
 
 ---
@@ -63,7 +64,7 @@ Jeśli wystawiasz faktury seriami, lepszy będzie program zintegrowany z KSeF. W
 
 ### 1. Zaloguj się i wybierz kontekst
 
-Wejdź na [ap.ksef.mf.gov.pl](https://ap.ksef.mf.gov.pl), wybierz metodę logowania i potwierdź tożsamość. Potem wskaż identyfikator NIP, wpisz numer swojej firmy i kliknij „Przejdź dalej".
+Wejdź na [ap.ksef.mf.gov.pl](https://ap.ksef.mf.gov.pl), wybierz metodę logowania. Potem wskaż identyfikator NIP, wpisz numer swojej firmy i kliknij „Przejdź dalej". Przy logowaniu przez login.gov.pl zostaniesz przekierowany na jego stronę, gdzie potwierdzasz tożsamość. <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Podręcznik AP, s. 14" />
 
 ### 2. Wybierz „Wystaw fakturę VAT"
 
@@ -99,7 +100,7 @@ Po wysyłce zobaczysz **numer KSeF**, czyli unikalny identyfikator faktury. Przy
 
 ### 6. Pobierz UPO
 
-UPO to Urzędowe Poświadczenie Odbioru, czyli potwierdzenie z KSeF, że faktura dotarła. Wejdź w „Historię sesji", zakończ sesję i w szczegółach wysyłki wybierz „Pobierz UPO zbiorcze" w formacie XML albo PDF. UPO dla jednej faktury pobierzesz z jej menu na liście faktur.
+UPO to Urzędowe Poświadczenie Odbioru, czyli potwierdzenie z KSeF, że faktura dotarła. Wejdź w „Historię sesji", zakończ sesję i w szczegółach wysyłki wybierz „Pobierz UPO zbiorcze" w formacie XML albo PDF. UPO dla jednej faktury pobierzesz z menu kontekstowego faktury w tabeli „Szczegóły wysyłki" w „Historii sesji". <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Podręcznik AP, s. 125-126" />
 
 <Source
   href="https://ksef.podatki.gov.pl/pliki-do-pobrania-ksef-20/"
@@ -112,13 +113,13 @@ UPO to Urzędowe Poświadczenie Odbioru, czyli potwierdzenie z KSeF, że faktura
 
 Kupujący z polskim NIP-em dostanie fakturę we własnym KSeF. Nie musisz mu jej niczym wysyłać.
 
-Inaczej jest, gdy nabywca nie korzysta z KSeF, na przykład jest zagraniczny albo nie ma NIP-u. Wtedy art. 106gb ust. 4 ustawy o VAT wymaga udostępnienia faktury w sposób uzgodniony z nim. Ministerstwo Finansów przypomina, że ustawa nie wskazuje żadnego konkretnego sposobu ani formy uzgodnienia. Możesz więc wysłać wizualizację, na przykład mailem.
+Inaczej jest przy nabywcach z art. 106gb ust. 4 ustawy o VAT: gdy miejsce świadczenia jest za granicą, nabywca nie ma w Polsce siedziby ani stałego miejsca działalności (albo jego polski oddział nie uczestniczy w transakcji), jest zwolniony na podstawie art. 113a, nie ma numeru identyfikacji podatkowej albo jest osobą fizyczną bez działalności. Wtedy fakturę udostępniasz w sposób uzgodniony z nim. Ministerstwo Finansów przypomina, że ustawa nie wskazuje żadnego konkretnego sposobu ani formy uzgodnienia. Możesz więc wysłać wizualizację, na przykład mailem, ale faktura udostępniona poza KSeF musi mieć kod QR (art. 106gb ust. 5 pkt 1). <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, s. 23 i 82" />
 
 Fakturę pobierzesz z listy faktur, wybierając format pliku. Wizualizacja może być też w innym języku, pod warunkiem że po przetłumaczeniu zgadza się z danymi z pliku XML.
 
 <Source
-  href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
-  label="FAQ MF — KSeF 2.0 (pytania 16 i 25)"
+  href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
+  label="FAQ MF (pytania 16 i 25)"
 />
 
 ---
