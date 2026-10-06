@@ -19,7 +19,7 @@ sources:
     url: "https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
   - label: "W3C: XML 1.0, Characters"
     url: "https://www.w3.org/TR/xml/#charsets"
-  - label: "KSeF 2.0 Handbook part II (edition of 06.08.2026), sections 1.6.1 and 3.3 (Polish)"
+  - label: "KSeF 2.0 Handbook part II (edition of 06.08.2026), sections 1.6.1 and 3.3.2 (Polish)"
     url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
 translationOf: "ksef-scisla-walidacja-xml"
 translations:
@@ -27,13 +27,13 @@ translations:
   en: "ksef-strict-xml-validation"
 ---
 
-From 19 October 2026, production KSeF (Krajowy System e-Faktur, Poland's national e-invoicing system) will start rejecting invoices whose XML contains processing instructions (for example `<?xml-stylesheet ...?>`) or discouraged Unicode characters. If you maintain an API integration, remove them from the files you generate and log the `X-System-Warning` header from KSeF responses: until that date the system only warns.
+From 19 October 2026, production KSeF (Krajowy System e-Faktur, Poland's national e-invoicing system) will start rejecting invoices whose XML contains processing instructions (for example `<?xml-stylesheet ...?>`) or discouraged Unicode characters. If you maintain an API integration, remove them from the files you generate and log the `X-System-Warning` header from KSeF responses: until that date (according to the KSeF API team) the system only warns.
 
 Status as of 7 October 2026.
 
 ## Where the rule comes from and when it applies
 
-This is not a statute. It is a technical requirement from the KSeF API documentation maintained by the Ministry of Finance's IT centre (CIRF). It is described on the "Weryfikacja faktury" (invoice verification) page dated 9 April 2026. API version 2.4.0 (released 10 April 2026) introduced the stricter check, which was to start on production on 16 July 2026. On 24 June 2026 a repository maintainer wrote that the date had moved to 19 October 2026. The changelog still says 16 July, so that comment is the only source of the new date.
+This is not a statute. It is a technical requirement from the KSeF API documentation maintained by the Ministry of Finance's IT centre (CIRF). It is described on the "Weryfikacja faktury" (invoice verification) page dated 9 April 2026. API version 2.4.0 (deployed to TEST on 10 April, to DEMO on 13 April and to production on 16 April 2026) introduced the stricter check, which production was to enforce from 16 July 2026. On 24 June 2026 a repository maintainer wrote that the date had moved to 19 October 2026. The changelog still says 16 July, so that comment is the only source of the new date.
 
 <Source href="https://github.com/CIRFMF/ksef-api/issues/718" label="CIRFMF/ksef-api, issue #718" />
 
@@ -68,11 +68,17 @@ Until 19 October, production does not reject such files but may return an `X-Sys
 
 > Faktura o numerze KSeF 2026041400-20260514-5A9845400000-55 zawiera niedozwolone znaki Unicode, ktore po 16.07.2026 beda odrzucane.
 
-(In English: the invoice with this KSeF number contains disallowed Unicode characters that will be rejected after 16.07.2026.) The date in that example predates the postponement. Warning codes are neither predefined nor documented (the maintainer: "Bez schemy, bez predefiniowania kodów", meaning no schema and no predefined codes), so match on the message text. Logging every response where the header appears is enough.
+(In English: the invoice with this KSeF number contains disallowed Unicode characters that will be rejected after 16.07.2026.) The date in that example predates the postponement. The OpenAPI specification describes the header format in its `SystemWarning` schema, including a regular expression for a single warning, but the codes themselves are not predefined (the maintainer: "Bez schemy, bez predefiniowania kodów", meaning no schema and no predefined codes), so match on the message text. Logging every response where the header appears is enough.
 
 <Source href="https://github.com/CIRFMF/ksef-api/issues/807" label="CIRFMF/ksef-api, issue #807" />
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
+  label="CIRFMF/ksef-api, open-api.json (SystemWarning schema)"
+/>
 
 On TEST, a file with such an instruction or character is rejected rather than just flagged. The `X-Test-System-Warning` request header lets you force any text to come back in `X-System-Warning` there, but it only tests whether your code handles the header, not the file itself.
+
+{/* Requires validator PR #86 merged first */}
 
 You can also check files yourself: look for `<?` after the declaration at the start of the file, a BOM at the very beginning, and characters from the list in text fields. Drop a file into [ksefuj.to](/) to check whether it contains such elements. Our validator flags processing instructions, a BOM, encodings other than UTF-8 and discouraged characters, and the file never leaves your browser.
 
@@ -117,11 +123,15 @@ The repository maintainer also recommends filling in the optional `SystemInfo` f
 
 The KSeF 2.0 Handbook describes this for a file that fails verification: the system does not assign a KSeF number, so the invoice has not been issued, and after correcting the data you have to send it again. The Handbook says this about non-conformity with the schema, not about the rules in this article. We found no separate description for them in the documentation, and no error code.
 
-In batch sending only the faulty file is rejected, not the whole package. You can list the rejected invoices of a session with `GET /sessions/{referenceNumber}/invoices/failed`.
+In batch sending only the faulty file is rejected, not the whole package (Handbook part II, section 3.3.2). You can list the rejected invoices of a session with `GET /sessions/{referenceNumber}/invoices/failed`, which the OpenAPI specification describes.
 
 <Source
   href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
-  label="KSeF 2.0 Handbook part II, sections 1.6.1 and 3.3 (Polish)"
+  label="KSeF 2.0 Handbook part II, sections 1.6.1 and 3.3.2 (Polish)"
+/>
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
+  label="CIRFMF/ksef-api, open-api.json (invoices/failed endpoint)"
 />
 
 The errors KSeF already reports during schema validation are covered in [most common FA(3) validation errors](/en/blog/most-common-fa3-validation-errors).

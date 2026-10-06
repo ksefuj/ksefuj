@@ -19,20 +19,20 @@ sources:
     url: "https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
   - label: "W3C: XML 1.0, sekcja Characters"
     url: "https://www.w3.org/TR/xml/#charsets"
-  - label: "Podręcznik KSeF 2.0 cz. II (wydanie 06.08.2026), pkt 1.6.1 i 3.3"
+  - label: "Podręcznik KSeF 2.0 cz. II (wydanie 06.08.2026), pkt 1.6.1 i 3.3.2"
     url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
 translations:
   pl: "ksef-scisla-walidacja-xml"
   en: "ksef-strict-xml-validation"
 ---
 
-Od 19 października 2026 r. KSeF na środowisku produkcyjnym zacznie odrzucać faktury, w których plik XML zawiera instrukcje przetwarzania (np. `<?xml-stylesheet ...?>`) albo niezalecane znaki Unicode. Jeśli utrzymujesz integrację z API, usuń je z generowanego pliku i zapisuj w logach nagłówek `X-System-Warning` z odpowiedzi KSeF: do tej daty system tylko ostrzega.
+Od 19 października 2026 r. KSeF na środowisku produkcyjnym zacznie odrzucać faktury, w których plik XML zawiera instrukcje przetwarzania (np. `<?xml-stylesheet ...?>`) albo niezalecane znaki Unicode. Jeśli utrzymujesz integrację z API, usuń je z generowanego pliku i zapisuj w logach nagłówek `X-System-Warning` z odpowiedzi KSeF: do tej daty (według zespołu API KSeF) system tylko ostrzega.
 
 Stan na 7 października 2026 r.
 
 ## Skąd ta reguła i od kiedy obowiązuje
 
-To nie przepis ustawy, tylko wymóg techniczny z dokumentacji API KSeF, którą prowadzi Centrum Informatyki Resortu Finansów (CIRF). Opisuje go strona „Weryfikacja faktury” z 9 kwietnia 2026 r. Zaostrzenie wprowadziła wersja API 2.4.0 (release z 10 kwietnia 2026 r.), a na produkcji miało zacząć działać 16 lipca 2026 r. Opiekun repozytorium napisał 24 czerwca 2026 r., że termin przesunięto na 19 października 2026 r. Changelog nadal podaje 16 lipca, więc jedynym źródłem nowej daty jest ten komentarz.
+To nie przepis ustawy, tylko wymóg techniczny z dokumentacji API KSeF, którą prowadzi Centrum Informatyki Resortu Finansów (CIRF). Opisuje go strona „Weryfikacja faktury” z 9 kwietnia 2026 r. Zaostrzenie wprowadziła wersja API 2.4.0 (wdrożona na TEST 10 kwietnia, na DEMO 13 kwietnia i na produkcję 16 kwietnia 2026 r.), a egzekwować miała ją produkcja od 16 lipca 2026 r. Opiekun repozytorium napisał 24 czerwca 2026 r., że termin przesunięto na 19 października 2026 r. Changelog nadal podaje 16 lipca, więc jedynym źródłem nowej daty jest ten komentarz.
 
 <Source href="https://github.com/CIRFMF/ksef-api/issues/718" label="CIRFMF/ksef-api, issue #718" />
 
@@ -67,11 +67,17 @@ Do 19 października produkcja nie odrzuca takich plików, ale może zwrócić w 
 
 > Faktura o numerze KSeF 2026041400-20260514-5A9845400000-55 zawiera niedozwolone znaki Unicode, ktore po 16.07.2026 beda odrzucane.
 
-Data w tym przykładzie pochodzi sprzed przesunięcia terminu. Kody ostrzeżeń nie są predefiniowane ani opisane w dokumentacji (opiekun repozytorium: „Bez schemy, bez predefiniowania kodów”), więc rozpoznawaj je po treści. Wystarczy logować każdą odpowiedź, w której nagłówek się pojawia.
+Data w tym przykładzie pochodzi sprzed przesunięcia terminu. Format nagłówka opisuje schemat `SystemWarning` w specyfikacji OpenAPI, razem z wyrażeniem regularnym dla pojedynczego ostrzeżenia, ale same kody nie są predefiniowane (opiekun repozytorium: „Bez schemy, bez predefiniowania kodów”), więc rozpoznawaj je po treści. Wystarczy logować każdą odpowiedź, w której nagłówek się pojawia.
 
 <Source href="https://github.com/CIRFMF/ksef-api/issues/807" label="CIRFMF/ksef-api, issue #807" />
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
+  label="CIRFMF/ksef-api, open-api.json (schemat SystemWarning)"
+/>
 
 Na środowisku TEST plik z taką instrukcją lub znakiem zostanie odrzucony, a nie tylko oznaczony ostrzeżeniem. Nagłówek `X-Test-System-Warning` pozwala tam wymusić zwrot dowolnego tekstu w `X-System-Warning`, ale sprawdza tylko, czy Twój kod obsługuje nagłówek, a nie sam plik.
+
+{/* Requires validator PR #86 merged first */}
 
 Pliki możesz też sprawdzić sam: poszukaj `<?` poza deklaracją na początku pliku, BOM na początku i znaków z listy w polach tekstowych. Wrzuć plik na [ksefuj.to](/), żeby sprawdzić, czy zawiera takie elementy. Nasz walidator zgłasza instrukcje przetwarzania, BOM, kodowanie inne niż UTF-8 i niezalecane znaki, a plik nie opuszcza przeglądarki.
 
@@ -116,11 +122,15 @@ Opiekun repozytorium API zaleca też uzupełnianie opcjonalnego pola `SystemInfo
 
 Podręcznik KSeF 2.0 opisuje to dla negatywnej weryfikacji pliku: system nie przydziela numeru KSeF, więc faktura nie została wystawiona, a po poprawieniu danych trzeba ponowić wysyłkę. Podręcznik mówi tam o niezgodności ze strukturą, nie o regułach z tego artykułu. Osobnego opisu dla nich ani kodu błędu nie znaleźliśmy w dokumentacji.
 
-W wysyłce wsadowej odrzucany jest tylko błędny plik, a nie cała paczka. Odrzucone faktury z sesji pobierzesz przez `GET /sessions/{referenceNumber}/invoices/failed`.
+W wysyłce wsadowej odrzucany jest tylko błędny plik, a nie cała paczka (Podręcznik cz. II, pkt 3.3.2). Odrzucone faktury z sesji pobierzesz przez `GET /sessions/{referenceNumber}/invoices/failed`, który opisuje specyfikacja OpenAPI.
 
 <Source
   href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
-  label="Podręcznik KSeF 2.0 cz. II, pkt 1.6.1 i 3.3"
+  label="Podręcznik KSeF 2.0 cz. II, pkt 1.6.1 i 3.3.2"
+/>
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
+  label="CIRFMF/ksef-api, open-api.json (endpoint invoices/failed)"
 />
 
 Błędy, które KSeF zgłasza już teraz przy walidacji schematu, opisaliśmy w artykule o [najczęstszych błędach walidacji FA(3)](/blog/najczestsze-bledy-walidacji-fa3).
