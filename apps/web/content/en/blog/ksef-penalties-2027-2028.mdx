@@ -21,6 +21,10 @@ sources:
     url: "https://api.sejm.gov.pl/eli/acts/DU/2025/1691/text.pdf"
   - label: "KSeF regulation (Dz.U. 2025 item 1815)"
     url: "https://api.sejm.gov.pl/eli/acts/DU/2025/1815/text.pdf"
+  - label: "MoF regulation on cases with no structured invoice duty (Dz.U. 2025 item 1740)"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2025/1740/text.pdf"
+  - label: "KSeF 2.0 Handbook, part I (06.08.2026)"
+    url: "https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
 translations:
   pl: "kary-ksef-2027-2028"
   en: "ksef-penalties-2027-2028"
@@ -52,7 +56,12 @@ The draft moves art. 106ni paras. 1-3 and 5-7 to 1 January 2028, and the act its
 
 In 2026 the art. 145m limit applied: up to 10,000 PLN gross of sales per month could be invoiced outside KSeF. At year end it expires together with art. 145n (cash register invoices and receipts with a NIP). From 2027 there are no cash register invoices, and a receipt with a NIP is no longer a simplified invoice. We covered the limit in [our article on the 10,000 PLN limit](/en/blog/ksef-10000-pln-limit).
 
-Only the exceptions in art. 106ga para. 2 stay outside KSeF permanently: a foreign seller with no seat or permanent establishment in Poland, special procedures, a consumer buyer and art. 113a. The VAT exemption under art. 113 does not exclude you from KSeF.
+There are few permanent exceptions. Art. 106ga para. 2 of the VAT Act covers, among others, sellers with no seat or permanent establishment in Poland, invoices to private individuals not running a business, special procedures and the art. 113a exemption, and the Ministry of Finance regulation (Dz.U. 2025 item 1740, § 2) adds, among others, invoices for toll motorway travel and single tickets for passenger transport. The VAT exemption under art. 113 does not exclude you from KSeF.
+
+<Source
+  href="https://api.sejm.gov.pl/eli/acts/DU/2025/1740/text.pdf"
+  label="MoF regulation on cases with no structured invoice duty (Dz.U. 2025 item 1740)"
+/>
 
 ## What is penalised and how much
 
@@ -81,7 +90,7 @@ For Ania it looks like this. A 12,300 PLN gross invoice with 2,300 PLN VAT issue
 | Fines under art. 106ni | from 1.01.2028                              | from 1.01.2027                           |
 | Para. 1 point 2        | without the reference to art. 106ne para. 3 | with the reference to art. 106ne para. 3 |
 
-The last row concerns a total outage. Invoices from it are not entered into KSeF afterwards, so the draft's explanatory memorandum calls the reference an "obvious error".
+The last row concerns a total outage. Invoices from it are not entered into KSeF afterwards, so the draft's explanatory memorandum speaks of eliminating an "oczywisty błąd" (obvious error).
 
 ## No fine is not no consequences
 
@@ -89,7 +98,7 @@ The Ministry wrote plainly: "Odroczenie kar nie oznacza braku obowiązku stosowa
 
 The seller still owes the VAT on an invoice issued outside KSeF, and according to the Ministry the breach falls, as a rule, on the issuer.
 
-The buyer, such as your accountant Ms Krystyna, is in a better position. In its "Najczęstsze pytania" (frequently asked questions) the Ministry states that the right to deduct remains, provided the art. 86 conditions are met and no art. 88 negative conditions apply. A missing KSeF invoice is there a "formal defect", and the buyer need not ask the seller to issue one. At the same time such an invoice is a "warning signal" and may raise the risk that the whole transaction is checked. The Ministry published these answers in April 2026 and they rest on the phased rollout. It has not repeated them for 2027.
+The buyer, such as your accountant Ms Krystyna, is in a better position. In its "Najczęstsze pytania" (frequently asked questions) the Ministry states that the right to deduct remains, provided the art. 86 conditions are met and no art. 88 negative conditions apply. A missing KSeF invoice is there a "formal defect", and the buyer need not ask the seller to issue one. At the same time such an invoice is a "warning signal" and may raise the risk that the whole transaction is checked. Only the sentence on sanctions is limited in time ("za 2026 rok nie będą nakładane sankcje za błędy popełnione podczas korzystania z KSeF", meaning no sanctions for mistakes made while using KSeF in 2026). The deduction answers carry no time limit.
 
 In practice: keep proof of the transaction (payments, protocols, correspondence) and note the suppliers who still invoice outside KSeF.
 
@@ -102,7 +111,7 @@ In practice: keep proof of the transaction (payments, protocols, correspondence)
 
 Check that your invoicing software supports KSeF emergency and offline24 modes. The art. 106ni point 3 deadlines are short, so you need a procedure for when the system is unavailable. Offline mode needs a type 2 KSeF certificate obtained beforehand.
 
-Tokens are allowed by the regulation until 31 December 2026. In its consultation summary the Ministry proposed keeping them, but no amendment has been published. So do not rely on a token alone; we explain the differences in [certificates vs tokens in KSeF](/en/blog/certificates-vs-tokens-ksef).
+Tokens are allowed by the regulation until 31 December 2026 (§ 13). The KSeF 2.0 Handbook part I (06.08.2026, p. 26) says the Ministry "zdecydowało o zachowaniu tej metody uwierzytelniania na czas nieokreślony" (decided to keep this authentication method indefinitely) and that the regulation "zostanie odpowiednio znowelizowane" (will be amended accordingly). The amendment has not been published yet. So do not rely on a token alone; we explain the differences in [certificates vs tokens in KSeF](/en/blog/certificates-vs-tokens-ksef).
 
 If you generate XML yourself, check it in the [ksefuj.to validator](/) before sending.
 

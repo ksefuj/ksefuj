@@ -21,6 +21,10 @@ sources:
     url: "https://api.sejm.gov.pl/eli/acts/DU/2025/1691/text.pdf"
   - label: "Rozporządzenie w sprawie KSeF (Dz.U. 2025 poz. 1815)"
     url: "https://api.sejm.gov.pl/eli/acts/DU/2025/1815/text.pdf"
+  - label: "Rozporządzenie MF w sprawie przypadków bez obowiązku faktur ustrukturyzowanych (Dz.U. 2025 poz. 1740)"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2025/1740/text.pdf"
+  - label: "Podręcznik KSeF 2.0, cz. I (06.08.2026)"
+    url: "https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
 translations:
   pl: "kary-ksef-2027-2028"
   en: "ksef-penalties-2027-2028"
@@ -51,7 +55,12 @@ Projekt przesuwa wejście w życie art. 106ni ust. 1–3 i 5–7 na 1 stycznia 2
 
 W 2026 roku działał limit z art. 145m: do 10 000 zł brutto sprzedaży miesięcznie można było wystawiać faktury poza KSeF. Z końcem roku wygasa on razem z art. 145n (faktury z kas rejestrujących i paragony z NIP). Od 2027 nie ma faktur z kas, a paragon z NIP nie jest już fakturą uproszczoną. Szczegóły limitu opisaliśmy w [artykule o limicie 10 000 zł](/blog/ksef-limit-10000-zl).
 
-Poza KSeF zostają na stałe tylko wyjątki z art. 106ga ust. 2: zagraniczny sprzedawca bez siedziby i stałego miejsca prowadzenia działalności w Polsce, procedury szczególne, nabywca będący konsumentem i art. 113a. Zwolnienie podmiotowe z art. 113 nie wyłącza z KSeF.
+Stałych wyjątków jest niewiele. Art. 106ga ust. 2 ustawy o VAT obejmuje m.in. sprzedawców bez siedziby i stałego miejsca działalności w Polsce, faktury dla osób fizycznych nieprowadzących działalności, procedury szczególne i zwolnienie z art. 113a, a rozporządzenie MF (Dz.U. 2025 poz. 1740, § 2) dodaje m.in. faktury za przejazd płatną autostradą i bilety jednorazowe na przewóz osób. Zwolnienie podmiotowe z art. 113 nie wyłącza z KSeF.
+
+<Source
+  href="https://api.sejm.gov.pl/eli/acts/DU/2025/1740/text.pdf"
+  label="Rozporządzenie MF w sprawie przypadków bez obowiązku faktur ustrukturyzowanych (Dz.U. 2025 poz. 1740)"
+/>
 
 ## Za co grozi kara i ile
 
@@ -80,7 +89,7 @@ Dla Ani to wygląda tak. Faktura na 12 300 zł brutto z 2 300 zł VAT wystawiona
 | Kary z art. 106ni | od 1.01.2028                       | od 1.01.2027                      |
 | Pkt 2 ust. 1      | bez odwołania do art. 106ne ust. 3 | z odwołaniem do art. 106ne ust. 3 |
 
-Różnica w ostatnim wierszu dotyczy awarii totalnej. Faktur z niej nie wprowadza się potem do KSeF, więc uzasadnienie projektu nazywa odwołanie „oczywistym błędem".
+Różnica w ostatnim wierszu dotyczy awarii totalnej. Faktur z niej nie wprowadza się potem do KSeF, więc uzasadnienie projektu mówi o wyeliminowaniu „oczywistego błędu".
 
 ## Brak kary to nie brak konsekwencji
 
@@ -88,7 +97,7 @@ MF napisało wprost: „Odroczenie kar nie oznacza braku obowiązku stosowania K
 
 Sprzedawca nadal odpowiada za VAT z faktury wystawionej poza KSeF, a naruszenie obciąża, według MF, co do zasady wystawcę.
 
-Kupujący, czyli Twoja księgowa Pani Krystyna, ma lepszą sytuację. W „Najczęstszych pytaniach" MF stwierdza, że prawo do odliczenia jest nadal zapewnione, o ile spełnione są przesłanki z art. 86 i brak przesłanek negatywnych z art. 88. Brak faktury w KSeF to tam „uchybienie formalne", a nabywca nie musi wzywać sprzedawcy do jej wystawienia. Jednocześnie taka faktura jest „sygnałem ostrzegawczym" i może zwiększać ryzyko weryfikacji całej transakcji. Te odpowiedzi MF opublikowało w kwietniu 2026 i opierają się na etapowym wdrożeniu. Dla 2027 roku tego samego nie powtórzono.
+Kupujący, czyli Twoja księgowa Pani Krystyna, ma lepszą sytuację. W „Najczęstszych pytaniach" MF stwierdza, że prawo do odliczenia jest nadal zapewnione, o ile spełnione są przesłanki z art. 86 i brak przesłanek negatywnych z art. 88. Brak faktury w KSeF to tam „uchybienie formalne", a nabywca nie musi wzywać sprzedawcy do jej wystawienia. Jednocześnie taka faktura jest „sygnałem ostrzegawczym" i może zwiększać ryzyko weryfikacji całej transakcji. Ograniczenie czasowe ma tam tylko zdanie o sankcjach („za 2026 rok nie będą nakładane sankcje za błędy popełnione podczas korzystania z KSeF"). Odpowiedzi o odliczeniu nie mają ograniczenia w czasie.
 
 Praktycznie: trzymaj dowody transakcji (przelewy, protokoły, korespondencję) i notuj dostawców, którzy nadal wystawiają poza KSeF.
 
@@ -101,7 +110,7 @@ Praktycznie: trzymaj dowody transakcji (przelewy, protokoły, korespondencję) i
 
 Sprawdź, czy Twój program do faktur obsługuje KSeF w trybie awaryjnym i offline24. Terminy z art. 106ni pkt 3 są krótkie, więc potrzebujesz procedury na wypadek niedostępności systemu. Do trybu offline potrzebny jest wcześniej uzyskany certyfikat KSeF typu 2.
 
-Tokeny są dopuszczone w rozporządzeniu do 31 grudnia 2026. MF w podsumowaniu konsultacji proponowało ich utrzymanie, ale zmiany rozporządzenia nie opublikowano. Dlatego nie opieraj się wyłącznie na tokenie, a różnice opisaliśmy w tekście [certyfikaty vs tokeny w KSeF](/blog/certyfikaty-vs-tokeny-ksef).
+Tokeny są dopuszczone w rozporządzeniu do 31 grudnia 2026 (§ 13). Podręcznik KSeF 2.0 cz. I (06.08.2026, s. 26) podaje, że MF „zdecydowało o zachowaniu tej metody uwierzytelniania na czas nieokreślony", a rozporządzenie „zostanie odpowiednio znowelizowane". Nowelizacji jeszcze nie opublikowano. Dlatego nie opieraj się wyłącznie na tokenie, a różnice opisaliśmy w tekście [certyfikaty vs tokeny w KSeF](/blog/certyfikaty-vs-tokeny-ksef).
 
 Jeśli generujesz XML samodzielnie, sprawdź go w [walidatorze ksefuj.to](/) przed wysyłką.
 
