@@ -1,0 +1,84 @@
+---
+title: "KSeF tokens after 2026: what we know"
+description: "The KSeF regulation allows tokens only until 31 Dec 2026. MF and the API team say they will stay, but the rule is unchanged. What to do now."
+date: 2026-10-07
+section: blog
+locale: en
+slug: "ksef-tokens-after-2026"
+tags: ["KSeF", "Faktura"]
+sources:
+  - label: "MF regulation on using KSeF, Dz.U. 2025 item 1815, § 6 and § 13"
+    url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250001815"
+  - label: "List of amendments to the regulation (ELI, api.sejm.gov.pl)"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2025/1815"
+  - label: "KSeF 2.0 Handbook, part I: Getting started with KSeF (August 2026, Polish)"
+    url: "https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  - label: "MF: first consultations after the partial KSeF roll-out, summary (Polish)"
+    url: "https://ksef.podatki.gov.pl/wyjasnienia/pierwsze-konsultacje-po-czesciowym-wdrozeniu-ksef-podsumowanie/"
+  - label: "Taxpayer Application KSeF 2.0 user manual (August 2026, Polish)"
+    url: "https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
+  - label: "KSeF API team on tokens after 2026 (CIRFMF/ksef-api, issue 834, Polish)"
+    url: "https://github.com/CIRFMF/ksef-api/issues/834#issuecomment-5619765888"
+  - label: "MF FAQ: KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
+translations:
+  pl: "tokeny-ksef-po-2026"
+  en: "ksef-tokens-after-2026"
+---
+
+The regulation in force lets you authenticate to KSeF (Krajowy System e-Faktur, Poland's national e-invoicing system) with a token only until 31 December 2026. The Ministry of Finance (MF) and the KSeF API team say tokens will stay in use, but as of today the regulation has not been changed.
+
+<Info>
+  Legal status as of 7 October 2026. The only amendment to the regulation is Dz.U. 2026 item 169,
+  which does not concern tokens. We found no draft of a further amendment.{" "}
+  <Source href="https://api.sejm.gov.pl/eli/acts/DU/2025/1815" label="list of amendments, ELI" />
+</Info>
+
+## What exactly expires on 31 December
+
+§ 13 ust. 1 pkt 1 of the regulation on using KSeF allows authentication with an "alphanumeric string" (a token) until the end of 2026. The permanent methods are listed in § 6 ust. 1: the national node of electronic identification, a qualified signature, a qualified seal and a KSeF certificate. Tokens are not on that list. <Source href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250001815" label="Dz.U. 2025 item 1815" />
+
+Tokens from the old KSeF 1.0 are not compatible with KSeF 2.0, so the deadline concerns tokens generated for KSeF 2.0, in the Taxpayer Application (Aplikacja Podatnika) or through the API. <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20" label="MF FAQ, question 35" /> The provision points to a definition in the 2021 regulation and never says "KSeF 2.0 token". The KSeF 2.0 Handbook, however, treats these same tokens as covered by the 31 December 2026 date.
+
+## What has been announced, and what does not exist yet
+
+At the consultations on 9 June 2026 MF proposed keeping tokens after 31 December, with a validity period of 1 to 365 days and a new permission to renew a token automatically with the owner's consent. <Source href="https://ksef.podatki.gov.pl/wyjasnienia/pierwsze-konsultacje-po-czesciowym-wdrozeniu-ksef-podsumowanie/" label="consultation summary" />
+
+In the August edition of the KSeF 2.0 Handbook, part I (p. 26), MF went further: it "decided to keep this method of authentication for an indefinite period" and wrote that the regulation "will be amended accordingly". <Source href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf" label="KSeF 2.0 Handbook, part I" />
+
+On 10 September 2026 the team responsible for the KSeF API specification wrote in the official API repository that it is technically preparing to issue tokens under new rules from 1 January 2027. Tokens issued up to 31 December 2026 will still work for authentication, but their validity will be limited to 30 November 2027. The current token-creation endpoint is to run in "compatibility mode" and issue tokens with a limited lifetime, a new version of it will appear alongside, and the token format stays the same. The OpenAPI specification is not published yet. <Source href="https://github.com/CIRFMF/ksef-api/issues/834#issuecomment-5619765888" label="CIRFMF/ksef-api, issue 834" /> The same author added that the decision to retire tokens is written into the regulation, so changing it requires a change of the rules, and that formal communication belongs to MF. <Source href="https://github.com/CIRFMF/ksef-api/issues/834#issuecomment-5003022923" label="comment of 17 July" />
+
+All of this is announcements, not law: the law is § 13 as it stands. We do not know:
+
+- what the amendment will say and when it takes effect,
+- whether token validity (today a token works until revoked), automatic renewal and the 30 November 2027 date will make it into the regulation or an MF notice,
+- what the system will do on 1 January 2027 if the amendment is late. With § 13 as it stands, tokens are not permitted by the regulation from that date.
+
+## What to do now
+
+**Accounting offices.** Pani Krystyna should check which of her clients' programs log in to KSeF with a token. The Taxpayer Application lists generated tokens under "Lista tokenów". <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Taxpayer Application manual, ch. 5.6" /> It is also worth asking the software vendor whether it supports KSeF certificates and what it plans after 31 December. A token generated by a natural person (for example a sole trader) may be used only by that person, so an office cannot use a token generated by a client. <Source href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf" label="KSeF 2.0 Handbook, part I, p. 38" />
+
+### For integrators
+
+Marek, whose integration authenticates with a token, should not wait for the amendment. We suggest adding authentication with a type 1 KSeF certificate next to the token and hiding both behind one interface. Then the 1 January date does not force a rewrite. The API team says the aim is to get through 2026/2027 without touching integrator code, but tokens will get an expiry date, so you will need renewal handling either way.
+
+| Feature                       | Token                    | KSeF certificate (type 1)    |
+| ----------------------------- | ------------------------ | ---------------------------- |
+| Permissions                   | stored in the token      | none, taken from the account |
+| Context                       | the one it was issued in | several                      |
+| Validity                      | today until revoked      | up to 2 years                |
+| Interactive and batch session | yes                      | yes                          |
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  label="KSeF 2.0 Handbook, part I, table 3 and ch. 2.5"
+/>
+
+Renew a certificate before it expires: a new one can be issued a month before the oldest active one lapses. You request it in the API or the Taxpayer Application after logging in with the national node, a qualified signature or a qualified seal. A token login cannot generate a certificate (§ 13 ust. 2), so you need one of those three.
+
+<Info>
+  A type 2 certificate marks invoices issued OFFLINE with a QR code and is not used for logging in.
+  For authentication you need type 1, issued separately.
+</Info>
+
+For a comparison of all login methods see [KSeF certificates vs tokens](/en/blog/certificates-vs-tokens-ksef), and for what else to prepare before 2027 see the [KSeF preparation checklist](/en/blog/ksef-preparation-checklist). We will update this post when an amendment to § 13 appears in the Dziennik Ustaw.
