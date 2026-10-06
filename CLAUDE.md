@@ -181,6 +181,11 @@ that can cause real tax/accounting problems after a successful submission.
 - **Bank account format** — Polish NRB/IBAN format validation
 - **Duplicate line numbers** — `NrWierszaFa` uniqueness within an invoice
 - **Negative quantities** — only valid in corrective invoice context
+- **Strict XML (KSeF API 2.4.0)** — raw-text check in `src/xml-strictness.ts`: XML processing
+  instructions, W3C-discouraged Unicode characters (`[#x7F-#x84]`, `[#x86-#x9F]`, `[#xFDD0-#xFDEF]`,
+  `[#xNFFFE-#xNFFFF]` for planes 1-16), leading BOM, non-UTF-8 declared encoding. KSeF PROD rejects
+  these from 2026-10-19 (warnings via `X-System-Warning` until then). Source:
+  https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md
 
 ## KSeF FA(3) Key Gotchas
 

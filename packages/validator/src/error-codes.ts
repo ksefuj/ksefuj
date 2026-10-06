@@ -88,6 +88,66 @@ export const PARSE_ERRORS = {
     fixTemplates: [],
   },
 
+  XML_DISCOURAGED_CHARACTER: {
+    code: {
+      domain: "parse",
+      category: "ksef_strict_xml",
+      code: "XML_DISCOURAGED_CHARACTER",
+      severity: "error",
+    },
+    description:
+      "Character discouraged by the W3C XML spec ([#x7F-#x84], [#x86-#x9F], [#xFDD0-#xFDEF], [#xNFFFE-#xNFFFF]); KSeF rejects such invoices from 2026-10-19 (KSeF API 2.4.0, Weryfikacja faktury)",
+    commonCauses: [
+      "C1 control characters (U+0080-U+009F) pasted from Word, PDF or a legacy system",
+      "Noncharacters from a corrupted export or a wrong text conversion",
+    ],
+    fixTemplates: [],
+  },
+
+  XML_PROCESSING_INSTRUCTION: {
+    code: {
+      domain: "parse",
+      category: "ksef_strict_xml",
+      code: "XML_PROCESSING_INSTRUCTION",
+      severity: "error",
+    },
+    description:
+      "XML processing instruction (e.g. xml-stylesheet); KSeF rejects such invoices from 2026-10-19 (KSeF API 2.4.0, Weryfikacja faktury)",
+    commonCauses: [
+      "An integrator adds <?xml-stylesheet ...?> to attach a visualisation",
+      "Another tool injects a custom processing instruction",
+    ],
+    fixTemplates: [],
+  },
+
+  XML_BOM_PRESENT: {
+    code: {
+      domain: "parse",
+      category: "ksef_strict_xml",
+      code: "XML_BOM_PRESENT",
+      severity: "error",
+    },
+    description:
+      "File starts with a UTF-8 BOM; KSeF requires UTF-8 without BOM (Weryfikacja faktury)",
+    commonCauses: ['File saved as "UTF-8 with BOM" (e.g. Notepad, Excel exports)'],
+    fixTemplates: [],
+  },
+
+  XML_ENCODING_NOT_UTF8: {
+    code: {
+      domain: "parse",
+      category: "ksef_strict_xml",
+      code: "XML_ENCODING_NOT_UTF8",
+      severity: "error",
+    },
+    description:
+      "XML declaration names an encoding other than UTF-8; KSeF requires UTF-8 (Weryfikacja faktury)",
+    commonCauses: [
+      'Declaration copied from a legacy template with encoding="windows-1250" or "ISO-8859-2"',
+    ],
+    fixTemplates: [],
+  },
+
   ENCODING_ERROR: {
     code: {
       domain: "parse",

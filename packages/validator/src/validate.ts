@@ -9,6 +9,7 @@
 
 import { checkSemantics } from "./semantic.js";
 import { validateXsd } from "./xsd.js";
+import { checkStrictXml } from "./xml-strictness.js";
 import { ERROR_CODES } from "./error-codes.js";
 import type {
   CurrencyRate,
@@ -171,6 +172,12 @@ class ValidationOrchestrator {
         confidence: 1.0,
       });
     }
+
+    // Step 1b: Strict XML checks on the raw text (KSeF API 2.4.0: processing instructions,
+    // discouraged Unicode characters, BOM, non-UTF-8 declaration). Always on — KSeF rejects
+    // these from 2026-10-19 regardless of schema validity.
+    issues.push(...checkStrictXml(xml));
+    this.rulesExecuted++;
 
     // Step 2: XSD validation (if enabled)
     if (this.enableXsd) {

@@ -175,6 +175,16 @@ Ministry of Finance.
 - **Common gotchas**: NIP field placement, GTU format, decimal precision, selection logic
 - **Business logic**: Currency conversions, tax rate consistency, entity relationships
 
+### 3. Strict XML checks (KSeF API 2.4.0)
+
+Raw-text checks that KSeF PROD enforces from **2026-10-19** (until then the API only returns
+`X-System-Warning`). An invoice is rejected when it contains XML processing instructions
+(`XML_PROCESSING_INSTRUCTION`), Unicode characters discouraged by the W3C XML spec
+(`XML_DISCOURAGED_CHARACTER`: `[#x7F-#x84]`, `[#x86-#x9F]`, `[#xFDD0-#xFDEF]`, `[#xNFFFE-#xNFFFF]`),
+a leading BOM (`XML_BOM_PRESENT`) or an XML declaration with a non-UTF-8 encoding
+(`XML_ENCODING_NOT_UTF8`). Issues carry line/column, and the code point or PI target. Source:
+[Weryfikacja faktury](https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md)
+
 ## Testing
 
 Comprehensive test suite ensuring 100% compliance with government standards:

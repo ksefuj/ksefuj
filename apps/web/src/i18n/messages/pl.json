@@ -125,7 +125,11 @@
       "EXECUTION_ERROR": "Niespodziewany błąd podczas walidacji",
       "P12_INVALID": "Nieprawidłowa stawka **VAT**: `{actual}`. Dozwolone wartości: {allowedValues}",
       "CURRENCY_RATE_UNVERIFIABLE": "Nie można zweryfikować kursu {currency} — brak kursu NBP dla faktury z dnia {invoiceDate}",
-      "CURRENCY_RATE_MISMATCH": "`KursWaluty` {currency} ({actual}) odbiega od kursu NBP z dnia {date} ({expected})"
+      "CURRENCY_RATE_MISMATCH": "`KursWaluty` {currency} ({actual}) odbiega od kursu NBP z dnia {date} ({expected})",
+      "XML_DISCOURAGED_CHARACTER": "Plik zawiera niedozwolony znak, który KSeF odrzuci od 19 października 2026 — usuń go lub zamień na zwykły tekst. Znak `{codePoint}` w linii {line}, kolumnie {column}: {snippet}. Źródło: [Weryfikacja faktury](https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md)",
+      "XML_PROCESSING_INSTRUCTION": "Plik zawiera ukrytą instrukcję, której KSeF nie przyjmie od 19 października 2026 — usuń ją z pliku. Instrukcja przetwarzania XML `<?{target} …?>` w linii {line}, kolumnie {column} (np. dołączony styl wizualizacji). Źródło: [Weryfikacja faktury](https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md)",
+      "XML_BOM_PRESENT": "Plik zapisano w sposób, którego KSeF nie przyjmie od 19 października 2026 — zapisz go ponownie jako UTF-8 bez BOM. Plik zaczyna się od znacznika BOM (bajty `EF BB BF`). Źródło: [Weryfikacja faktury](https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md)",
+      "XML_ENCODING_NOT_UTF8": "Plik zapisano w złym kodowaniu znaków — KSeF wymaga UTF-8 i odrzuci inne od 19 października 2026. Deklaracja XML wskazuje kodowanie `{encoding}` w linii {line}, kolumnie {column}. Źródło: [Weryfikacja faktury](https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md)"
     },
     "errors": {
       "field": "pole",

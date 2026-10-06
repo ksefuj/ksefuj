@@ -48,6 +48,26 @@ export function translateValidationIssue(
       context.invoiceDate = String(issue.context.metadata.invoiceDate);
     }
 
+    // Strict-XML checks (KSeF API 2.4.0): raw-text position and offending construct
+    if (issue.context.location.lineNumber !== undefined) {
+      context.line = issue.context.location.lineNumber;
+    }
+    if (issue.context.location.columnNumber !== undefined) {
+      context.column = issue.context.location.columnNumber;
+    }
+    if (issue.context.metadata?.codePoint) {
+      context.codePoint = String(issue.context.metadata.codePoint);
+    }
+    if (issue.context.metadata?.snippet) {
+      context.snippet = `\`${String(issue.context.metadata.snippet)}\``;
+    }
+    if (issue.context.metadata?.target !== undefined) {
+      context.target = String(issue.context.metadata.target);
+    }
+    if (issue.context.metadata?.encoding) {
+      context.encoding = String(issue.context.metadata.encoding);
+    }
+
     // Debug logging in development
     if (process.env.NODE_ENV === "development") {
       console.warn("Translating error code:", errorCode, "with key:", translationKey);
