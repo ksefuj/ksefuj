@@ -11,9 +11,17 @@
 
 ## What is KSeF
 
-KSeF is Poland's mandatory e-invoicing system. All VAT taxpayers must issue structured XML invoices
-(schema FA(3)) through KSeF starting April 1, 2026 (large companies since Feb 1, 2026). The XML
-schema is published by the Ministry of Finance.
+KSeF is Poland's mandatory e-invoicing system. VAT taxpayers (czynni and zwolnieni, art. 113
+included) must issue structured XML invoices (schema FA(3)) through KSeF: since February 1, 2026 for
+taxpayers whose 2024 sales exceeded 200 mln zł, since April 1, 2026 for everyone else. Excluded:
+art. 106ga ust. 2 cases (e.g. consumer buyers, art. 113a EU SME scheme) and the regulation Dz.U.
+2025 poz. 1740 §2. Until December 31, 2026 (art. 145m) a taxpayer may issue paper/electronic
+invoices if monthly sales documented by them are at most 10 000 zł (incl. tax); cash-register
+invoices (art. 145n) are also allowed until then. The financial penalty of art. 106ni (up to 100% of
+tax, 18.7% of the total when no tax is shown) applies from January 1, 2027 in the law in force, but
+MF announced on 2026-09-16 a deferral to the end of 2027; draft UD477 (not yet enacted) moves it to
+January 1, 2028. Details: `docs/knowledge-base/briefs/sankcje-ksef-ud477.md`. The XML schema is
+published by the Ministry of Finance.
 
 ## Architecture
 
@@ -224,7 +232,12 @@ Follow official FA(3) specification (§2.6) decimal precision limits:
 
 - KSeF 1.0 (ksef.mf.gov.pl) is DEAD since Feb 1, 2026
 - Aplikacja Podatnika KSeF 2.0 (production): https://ap.ksef.mf.gov.pl/
-- Test environment (fake data, no legal effect): https://ap-test.ksef.mf.gov.pl/web/
+- Test environment (fake data, no legal effect): https://ap-test.ksef.mf.gov.pl/web/ (API docs:
+  https://api-test.ksef.mf.gov.pl/docs/v2; demo: https://ap-demo.ksef.mf.gov.pl/). The old
+  `web2te-ksef.mf.gov.pl` does not resolve.
+- Official API spec and changelog: https://github.com/CIRFMF/ksef-api (docs merged from ksef-docs)
+- KSeF tokens: the regulation (Dz.U. 2025 poz. 1815 §13) ends them 2026-12-31, but MF decided to
+  keep them; see `docs/knowledge-base/briefs/rozporzadzenie-ksef-i-tokeny.md`
 - Documentation portal: https://ksef.podatki.gov.pl/
 - Schema namespace: `http://crd.gov.pl/wzor/2025/06/25/13775/`
 - XSD URL: `https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd`

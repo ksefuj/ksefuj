@@ -11,6 +11,17 @@ tokeny w KSeF — co wybrać w 2026" **Target personas:**
 
 ---
 
+> **Freshness: 2026-10-07 update.**
+>
+> - Tokens: regulation text ends them 2026-12-31, but MF decided to keep them (cz. I of the manual,
+>   ed. 2026-08-06) and the API team says tokens issued by 31.12.2026 stay valid to 2027-11-30
+>   (issue #834). See `rozporzadzenie-ksef-i-tokeny.md`.
+> - Regulation Dz.U. 2026 poz. 169 changed the transitional date for podpis zaufany in §13 ust. 1
+>   pkt 2 to 2026-02-13; MF FAQ still lists Podpis Zaufany as an Aplikacja Podatnika login method,
+>   so do not state PZ is unavailable. See `rozporzadzenie-ksef-i-tokeny.md`.
+> - API 2.5.0 adds `publicKeyId` (key rotation); 2.4.0 lets a token revoke itself; 2.7.0 adds a TEST
+>   endpoint to shorten certificate validity. See `api-ksef-zmiany-cirfmf.md`.
+
 ## Source Corpus Used
 
 | Source                                                               | Tier     | File / URL                                                         | Status                                      |

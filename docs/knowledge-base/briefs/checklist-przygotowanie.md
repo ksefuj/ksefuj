@@ -7,6 +7,21 @@ context:** ksefuj.to — free KSeF XML validator
 
 ---
 
+> **Freshness: 2026-10-07 update.**
+>
+> - Penalty article is art. 106ni (not 106gc); applies from 2027-01-01 in the law in force (Dz.U.
+>   2026 poz. 1263) but MF announced on 2026-09-16 a deferral to the end of 2027 and draft UD477
+>   moves art. 106ni ust. 1-3, 5-7 to 2028-01-01 (not yet enacted). See `sankcje-ksef-ud477.md`.
+> - Tokens: regulation text ends them 2026-12-31, but MF decided to keep them (cz. I of the manual,
+>   ed. 2026-08-06) and the API team says tokens issued by 31.12.2026 stay valid to 2027-11-30
+>   (issue #834). See `rozporzadzenie-ksef-i-tokeny.md`.
+> - Test environment: https://ap-test.ksef.mf.gov.pl/web/ (AP) and
+>   https://api-test.ksef.mf.gov.pl/docs/v2 (API) return 200 on 2026-10-07; `web2te-ksef.mf.gov.pl`
+>   does not resolve and must not be cited.
+> - New: strict XML validation on PROD from 2026-10-19 (no processing instructions, no BOM, UTF-8),
+>   see `api-ksef-zmiany-cirfmf.md`. KSeF number in payment titles (art. 108g) applies from
+>   2027-01-01 (MF FAQ KSeF 2.0).
+
 ## Source Corpus Used
 
 | Source                                                               | Tier     | File / URL                                                         | Status                     |

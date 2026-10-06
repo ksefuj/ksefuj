@@ -8,6 +8,15 @@ validator
 
 ---
 
+> **Freshness: 2026-10-07 update.**
+>
+> - Penalty article is art. 106ni (not 106gc); applies from 2027-01-01 in the law in force (Dz.U.
+>   2026 poz. 1263) but MF announced on 2026-09-16 a deferral to the end of 2027 and draft UD477
+>   moves art. 106ni ust. 1-3, 5-7 to 2028-01-01 (not yet enacted). See `sankcje-ksef-ud477.md`.
+> - MF FAQ "Najczestsze pytania" Q1-Q5 (2026-04-29): invoice outside KSeF = formal defect; deduction
+>   kept if art. 86 met; buyer should secure evidence of the transaction. See
+>   `mf-faq-podreczniki-2026.md`.
+
 ## Source Corpus Used
 
 | Source                                                               | Tier            | File / URL                                                         | Status                                                                                                                                                     |
