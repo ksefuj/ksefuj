@@ -17,7 +17,7 @@ import {
   resolveContentRedirect,
 } from "@/lib/content";
 import { compileMDXContent } from "@/lib/compile-mdx";
-import { buildGuideSchema, buildBreadcrumbSchema } from "@/lib/structured-data";
+import { buildBreadcrumbSchema, buildGuideSchema } from "@/lib/structured-data";
 
 interface Props {
   params: Promise<{ locale: string; slug: string }>;
