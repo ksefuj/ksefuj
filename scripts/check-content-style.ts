@@ -238,8 +238,9 @@ function checkFile(file: string): FileReport {
   const warnings: string[] = [];
   const title = frontmatterValue(frontmatter, "title");
   const description = frontmatterValue(frontmatter, "description");
-  if (title && title.length > 60) {
-    warnings.push(`title is ${title.length} chars (limit 60)`);
+  // The page template appends " — ksefuj.to" (11 chars); Google truncates at ~60.
+  if (title && title.length > 49) {
+    warnings.push(`title is ${title.length} chars (limit 49)`);
   }
   if (description && description.length > 160) {
     warnings.push(`description is ${description.length} chars (limit 160)`);
