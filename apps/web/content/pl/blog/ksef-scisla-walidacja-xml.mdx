@@ -1,0 +1,134 @@
+---
+title: "KSeF od 19.10.2026 odrzuci XML z instrukcjami"
+description: "Od 19 października 2026 KSeF odrzuci fakturę z instrukcją przetwarzania XML lub niezalecanym znakiem Unicode. Do tej daty ostrzega nagłówkiem X-System-Warning."
+date: 2026-10-07
+section: blog
+locale: pl
+slug: "ksef-scisla-walidacja-xml"
+tags: ["KSeF", "FA(3)", "Walidacja"]
+sources:
+  - label: "MF / CIRF: Weryfikacja faktury (09.04.2026), sekcja „Weryfikacja XML”"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md"
+  - label: "CIRFMF/ksef-api: changelog API (wersje 2.3.0, 2.4.0, 2.6.0)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md"
+  - label: "CIRFMF/ksef-api: issue #718 (komentarz z 24.06.2026 o terminie 19.10.2026)"
+    url: "https://github.com/CIRFMF/ksef-api/issues/718"
+  - label: "CIRFMF/ksef-api: issue #807 (nagłówek X-System-Warning)"
+    url: "https://github.com/CIRFMF/ksef-api/issues/807"
+  - label: "CIRFMF/ksef-api: specyfikacja OpenAPI (schemat SystemWarning)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
+  - label: "W3C: XML 1.0, sekcja Characters"
+    url: "https://www.w3.org/TR/xml/#charsets"
+  - label: "Podręcznik KSeF 2.0 cz. II (wydanie 06.08.2026), pkt 1.6.1 i 3.3.2"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+translations:
+  pl: "ksef-scisla-walidacja-xml"
+  en: "ksef-strict-xml-validation"
+---
+
+Od 19 października 2026 r. KSeF na środowisku produkcyjnym zacznie odrzucać faktury, w których plik XML zawiera instrukcje przetwarzania (np. `<?xml-stylesheet ...?>`) albo niezalecane znaki Unicode. Jeśli utrzymujesz integrację z API, usuń je z generowanego pliku i zapisuj w logach nagłówek `X-System-Warning` z odpowiedzi KSeF: do tej daty (według zespołu API KSeF) system tylko ostrzega.
+
+Stan na 7 października 2026 r.
+
+## Skąd ta reguła i od kiedy obowiązuje
+
+To nie przepis ustawy, tylko wymóg techniczny z dokumentacji API KSeF, którą prowadzi Centrum Informatyki Resortu Finansów (CIRF). Opisuje go strona „Weryfikacja faktury” z 9 kwietnia 2026 r. Zaostrzenie wprowadziła wersja API 2.4.0 (wdrożona na TEST 10 kwietnia, na DEMO 13 kwietnia i na produkcję 16 kwietnia 2026 r.), a egzekwować miała ją produkcja od 16 lipca 2026 r. Opiekun repozytorium napisał 24 czerwca 2026 r., że termin przesunięto na 19 października 2026 r. Changelog nadal podaje 16 lipca, więc jedynym źródłem nowej daty jest ten komentarz.
+
+<Source href="https://github.com/CIRFMF/ksef-api/issues/718" label="CIRFMF/ksef-api, issue #718" />
+
+Według opiekuna repozytorium środowiska TEST i DEMO odrzucają takie pliki od wdrożenia wersji 2.4.0. Reguł nie znaleźliśmy w Podręczniku KSeF 2.0, broszurze FA(3), FAQ MF ani w komunikatach technicznych z ostatnich miesięcy na ksef.podatki.gov.pl.
+
+## Co dokładnie zostanie odrzucone
+
+MF zapisuje wymagania jako listę, którą plik musi spełniać łącznie: „Niespełnienie któregokolwiek z powyższych wymagań spowoduje odrzucenie faktury.”
+
+| Wymaganie                 | Co oznacza w praktyce                                                                                                                                                                                 |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Poprawny XML 1.0          | Plik musi się parsować jako XML 1.0 i być zgodny ze schematem podanym przy otwarciu sesji.                                                                                                            |
+| UTF-8 bez BOM             | Pierwsze trzy bajty pliku nie mogą mieć wartości `0xEF 0xBB 0xBF`.                                                                                                                                    |
+| Prolog XML                | Dozwolony, ale nie może wskazywać innego kodowania niż UTF-8 (np. `encoding="windows-1250"` zostanie odrzucone).                                                                                      |
+| Instrukcje przetwarzania  | Zakazane: każdy zapis `<?cel ...?>`, w tym `<?xml-stylesheet ...?>`.                                                                                                                                  |
+| Niezalecane znaki Unicode | Znaki z zakresów `[#x7F-#x84]`, `[#x86-#x9F]`, `[#xFDD0-#xFDEF]` oraz `[#xNFFFE-#xNFFFF]` dla każdej płaszczyzny N od 1 do 16 (U+1FFFE, U+1FFFF, U+2FFFE, U+2FFFF i tak dalej do U+10FFFE, U+10FFFF). |
+
+Znak U+0085 leży między dwoma pierwszymi zakresami i nie jest na liście. Zakresy pochodzą ze specyfikacji XML 1.0 (sekcja „Characters”), a dokument MF odsyła do tej sekcji.
+
+<Source href="https://www.w3.org/TR/xml/#charsets" label="W3C, XML 1.0: Characters" />
+
+Data 19 października dotyczy zaostrzenia z wersji 2.4.0, czyli instrukcji przetwarzania i niezalecanych znaków. Regułę o kodowaniu w prologu changelog przypisuje wersji 2.3.0, a dla BOM nie podaje osobnej daty. Nie wiemy więc, czy produkcja egzekwuje te dwa punkty już teraz.
+
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md"
+  label="MF / CIRF, Weryfikacja faktury, sekcja „Weryfikacja XML”"
+/>
+
+## Jak sprawdzić, czy Twoje pliki są dotknięte
+
+Do 19 października produkcja nie odrzuca takich plików, ale może zwrócić w odpowiedzi HTTP nagłówek `X-System-Warning`. Nie zmienia on wyniku operacji i nie oznacza błędu. Dodała go wersja 2.6.0, a w specyfikacji OpenAPI jest zadeklarowany m.in. dla wysyłki faktury i statusu faktury w sesji. Format to `[kod]: komunikat | [kod]: komunikat`, a wartość nie zawiera polskich znaków. Przykład od opiekuna repozytorium:
+
+> Faktura o numerze KSeF 2026041400-20260514-5A9845400000-55 zawiera niedozwolone znaki Unicode, ktore po 16.07.2026 beda odrzucane.
+
+Data w tym przykładzie pochodzi sprzed przesunięcia terminu. Format nagłówka opisuje schemat `SystemWarning` w specyfikacji OpenAPI, razem z wyrażeniem regularnym dla pojedynczego ostrzeżenia, ale same kody nie są predefiniowane (opiekun repozytorium: „Bez schemy, bez predefiniowania kodów”), więc rozpoznawaj je po treści. Wystarczy logować każdą odpowiedź, w której nagłówek się pojawia.
+
+<Source href="https://github.com/CIRFMF/ksef-api/issues/807" label="CIRFMF/ksef-api, issue #807" />
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
+  label="CIRFMF/ksef-api, open-api.json (schemat SystemWarning)"
+/>
+
+Na środowisku TEST plik z taką instrukcją lub znakiem zostanie odrzucony, a nie tylko oznaczony ostrzeżeniem. Nagłówek `X-Test-System-Warning` pozwala tam wymusić zwrot dowolnego tekstu w `X-System-Warning`, ale sprawdza tylko, czy Twój kod obsługuje nagłówek, a nie sam plik.
+
+Pliki możesz też sprawdzić sam: poszukaj `<?` poza deklaracją na początku pliku, BOM na początku i znaków z listy w polach tekstowych. Wrzuć plik na [ksefuj.to](/), żeby sprawdzić, czy zawiera takie elementy. Nasz walidator zgłasza instrukcje przetwarzania, BOM, kodowanie inne niż UTF-8 i niezalecane znaki, a plik nie opuszcza przeglądarki.
+
+## Jak to naprawić
+
+- **Instrukcje przetwarzania:** usuń `<?xml-stylesheet ...?>` i każdą inną instrukcję `<?...?>` z generowanego pliku. Wizualizację przenieś poza plik faktury.
+- **Znaki z listy:** usuń je albo zamień na zwykły tekst, najlepiej przed zapisem pliku. Takie znaki łatwo wnieść niechcący: wystarczy wkleić nazwę towaru z innego programu albo zaimportować tekst w złym kodowaniu.
+- **Kodowanie:** zapisuj plik jako UTF-8 bez BOM. W prologu zostaw `encoding="UTF-8"` albo pomiń prolog.
+
+Przed, z instrukcją po deklaracji (KSeF odrzuci):
+
+<XmlExample copyable>
+  ```xml
+  <?xml version="1.0" encoding="UTF-8"?>
+  <?xml-stylesheet version="1.0" type='text/xsl' href='WspolneSzablonyWizualizacji_v12-0E.xsl'?>
+  <Faktura xmlns="http://crd.gov.pl/wzor/2025/06/25/13775/">
+    ...
+  </Faktura>
+  ```
+</XmlExample>
+
+Po, sama deklaracja bez instrukcji:
+
+<XmlExample copyable>
+  ```xml
+  <?xml version="1.0" encoding="UTF-8"?>
+  <Faktura xmlns="http://crd.gov.pl/wzor/2025/06/25/13775/">
+    ...
+  </Faktura>
+  ```
+</XmlExample>
+
+Instrukcję `xml-stylesheet` dodawaną przez integratora opisuje zgłoszenie w issue #718: plik przechodził walidację schematu, ale przeglądarka nie mogła go wyświetlić z powodu błędu ładowania arkusza.
+
+## Kto musi to poprawić
+
+Producenci oprogramowania i integratorzy, bo to ich kod generuje XML. Jeśli wystawiasz faktury w programie do fakturowania, nie naprawisz tego sam: zapytaj dostawcę, czy program dodaje do pliku instrukcje wizualizacji i czy sprawdził wysyłkę na środowisku TEST po wersji 2.4.0. Możesz też otworzyć w edytorze tekstu wystawioną wcześniej fakturę (XML pobrany z KSeF) i poszukać `<?xml-stylesheet`.
+
+Opiekun repozytorium API zaleca też uzupełnianie opcjonalnego pola `SystemInfo` w nagłówku faktury (`Naglowek/SystemInfo`). Według jego komentarza z 24 czerwca 2026 r., jeśli problem nadal będzie widoczny przed terminem, istnieje duża szansa, że inżynier MF odezwie się wprost do producentów, których uda się rozpoznać po tym polu.
+
+## Co się dzieje z odrzuconą fakturą
+
+Podręcznik KSeF 2.0 opisuje to dla negatywnej weryfikacji pliku: system nie przydziela numeru KSeF, więc faktura nie została wystawiona, a po poprawieniu danych trzeba ponowić wysyłkę. Podręcznik mówi tam o niezgodności ze strukturą, nie o regułach z tego artykułu. Osobnego opisu dla nich ani kodu błędu nie znaleźliśmy w dokumentacji.
+
+W wysyłce wsadowej odrzucany jest tylko błędny plik, a nie cała paczka (Podręcznik cz. II, pkt 3.3.2). Odrzucone faktury z sesji pobierzesz przez `GET /sessions/{referenceNumber}/invoices/failed`, który opisuje specyfikacja OpenAPI.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0 cz. II, pkt 1.6.1 i 3.3.2"
+/>
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
+  label="CIRFMF/ksef-api, open-api.json (endpoint invoices/failed)"
+/>
+
+Błędy, które KSeF zgłasza już teraz przy walidacji schematu, opisaliśmy w artykule o [najczęstszych błędach walidacji FA(3)](/blog/najczestsze-bledy-walidacji-fa3).

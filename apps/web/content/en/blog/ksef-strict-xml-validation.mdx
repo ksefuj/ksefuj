@@ -1,0 +1,135 @@
+---
+title: "Strict XML validation in KSeF from 19 Oct 2026"
+description: "From 19 October 2026 KSeF rejects invoices with XML processing instructions or discouraged Unicode characters. Until then it warns via X-System-Warning."
+date: 2026-10-07
+section: blog
+locale: en
+slug: "ksef-strict-xml-validation"
+tags: ["KSeF", "FA(3)", "Validation"]
+sources:
+  - label: "MF / CIRF: Weryfikacja faktury (invoice verification), 09.04.2026, section on XML verification"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md"
+  - label: "CIRFMF/ksef-api: API changelog (versions 2.3.0, 2.4.0, 2.6.0)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md"
+  - label: "CIRFMF/ksef-api: issue #718 (comment of 24.06.2026 on the 19.10.2026 date)"
+    url: "https://github.com/CIRFMF/ksef-api/issues/718"
+  - label: "CIRFMF/ksef-api: issue #807 (X-System-Warning header)"
+    url: "https://github.com/CIRFMF/ksef-api/issues/807"
+  - label: "CIRFMF/ksef-api: OpenAPI specification (SystemWarning schema)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
+  - label: "W3C: XML 1.0, Characters"
+    url: "https://www.w3.org/TR/xml/#charsets"
+  - label: "KSeF 2.0 Handbook part II (edition of 06.08.2026), sections 1.6.1 and 3.3.2 (Polish)"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+translationOf: "ksef-scisla-walidacja-xml"
+translations:
+  pl: "ksef-scisla-walidacja-xml"
+  en: "ksef-strict-xml-validation"
+---
+
+From 19 October 2026, production KSeF (Krajowy System e-Faktur, Poland's national e-invoicing system) will start rejecting invoices whose XML contains processing instructions (for example `<?xml-stylesheet ...?>`) or discouraged Unicode characters. If you maintain an API integration, remove them from the files you generate and log the `X-System-Warning` header from KSeF responses: until that date (according to the KSeF API team) the system only warns.
+
+Status as of 7 October 2026.
+
+## Where the rule comes from and when it applies
+
+This is not a statute. It is a technical requirement from the KSeF API documentation maintained by the Ministry of Finance's IT centre (CIRF). It is described on the "Weryfikacja faktury" (invoice verification) page dated 9 April 2026. API version 2.4.0 (deployed to TEST on 10 April, to DEMO on 13 April and to production on 16 April 2026) introduced the stricter check, which production was to enforce from 16 July 2026. On 24 June 2026 a repository maintainer wrote that the date had moved to 19 October 2026. The changelog still says 16 July, so that comment is the only source of the new date.
+
+<Source href="https://github.com/CIRFMF/ksef-api/issues/718" label="CIRFMF/ksef-api, issue #718" />
+
+According to the maintainer, the TEST and DEMO environments have rejected such files since 2.4.0 was deployed. We found none of these rules in the KSeF 2.0 Handbook, the FA(3) information sheet, the MF FAQ or the technical notices of recent months on ksef.podatki.gov.pl.
+
+## What exactly will be rejected
+
+MF lists the requirements as a set a file must meet together: failing any of them means the invoice is rejected ("Niespełnienie któregokolwiek z powyższych wymagań spowoduje odrzucenie faktury").
+
+| Requirement                    | In practice                                                                                                                                                                                   |
+| ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Valid XML 1.0                  | The file must parse as XML 1.0 and match the schema declared when the session was opened.                                                                                                     |
+| UTF-8 without BOM              | The first three bytes of the file must not be `0xEF 0xBB 0xBF`.                                                                                                                               |
+| XML prolog                     | Allowed, but it must not declare an encoding other than UTF-8 (for example `encoding="windows-1250"` is rejected).                                                                            |
+| Processing instructions        | Forbidden: any `<?target ...?>`, including `<?xml-stylesheet ...?>`.                                                                                                                          |
+| Discouraged Unicode characters | Characters in `[#x7F-#x84]`, `[#x86-#x9F]`, `[#xFDD0-#xFDEF]` and `[#xNFFFE-#xNFFFF]` for every plane N from 1 to 16 (U+1FFFE, U+1FFFF, U+2FFFE, U+2FFFF and so on up to U+10FFFE, U+10FFFF). |
+
+U+0085 sits between the first two ranges and is not on the list. The ranges come from the XML 1.0 specification (section "Characters"), and the MF document points to that section.
+
+<Source href="https://www.w3.org/TR/xml/#charsets" label="W3C, XML 1.0: Characters" />
+
+The 19 October date applies to the 2.4.0 tightening, that is processing instructions and discouraged characters. The changelog attributes the prolog encoding rule to version 2.3.0 and gives no separate date for the BOM. We therefore do not know whether production already enforces those two points.
+
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md"
+  label="MF / CIRF, Weryfikacja faktury, section on XML verification (Polish)"
+/>
+
+## How to find out whether your files are affected
+
+Until 19 October, production does not reject such files but may return an `X-System-Warning` HTTP response header. It does not change the outcome of the operation and does not signal an error. Version 2.6.0 added it, and the OpenAPI specification declares it for, among others, sending an invoice and reading an invoice status in a session. The format is `[code]: message | [code]: message`, and the value contains no Polish diacritics. An example from the repository maintainer:
+
+> Faktura o numerze KSeF 2026041400-20260514-5A9845400000-55 zawiera niedozwolone znaki Unicode, ktore po 16.07.2026 beda odrzucane.
+
+(In English: the invoice with this KSeF number contains disallowed Unicode characters that will be rejected after 16.07.2026.) The date in that example predates the postponement. The OpenAPI specification describes the header format in its `SystemWarning` schema, including a regular expression for a single warning, but the codes themselves are not predefined (the maintainer: "Bez schemy, bez predefiniowania kodów", meaning no schema and no predefined codes), so match on the message text. Logging every response where the header appears is enough.
+
+<Source href="https://github.com/CIRFMF/ksef-api/issues/807" label="CIRFMF/ksef-api, issue #807" />
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
+  label="CIRFMF/ksef-api, open-api.json (SystemWarning schema)"
+/>
+
+On TEST, a file with such an instruction or character is rejected rather than just flagged. The `X-Test-System-Warning` request header lets you force any text to come back in `X-System-Warning` there, but it only tests whether your code handles the header, not the file itself.
+
+You can also check files yourself: look for `<?` after the declaration at the start of the file, a BOM at the very beginning, and characters from the list in text fields. Drop a file into [ksefuj.to](/) to check whether it contains such elements. Our validator flags processing instructions, a BOM, encodings other than UTF-8 and discouraged characters, and the file never leaves your browser.
+
+## How to fix it
+
+- **Processing instructions:** remove `<?xml-stylesheet ...?>` and any other `<?...?>` instruction from the generated file. Keep any visualisation outside the invoice file.
+- **Listed characters:** remove them or replace them with plain text, ideally before the file is written. They are easy to introduce by accident: pasting a product name from another program or importing text in the wrong encoding is enough.
+- **Encoding:** save the file as UTF-8 without BOM. In the prolog keep `encoding="UTF-8"` or omit the prolog.
+
+Before, with an instruction after the declaration (KSeF will reject it):
+
+<XmlExample copyable>
+  ```xml
+  <?xml version="1.0" encoding="UTF-8"?>
+  <?xml-stylesheet version="1.0" type='text/xsl' href='WspolneSzablonyWizualizacji_v12-0E.xsl'?>
+  <Faktura xmlns="http://crd.gov.pl/wzor/2025/06/25/13775/">
+    ...
+  </Faktura>
+  ```
+</XmlExample>
+
+After, the declaration alone:
+
+<XmlExample copyable>
+  ```xml
+  <?xml version="1.0" encoding="UTF-8"?>
+  <Faktura xmlns="http://crd.gov.pl/wzor/2025/06/25/13775/">
+    ...
+  </Faktura>
+  ```
+</XmlExample>
+
+An `xml-stylesheet` instruction added by an integrator is described in issue #718: the file passed schema validation, but a browser could not display it because the stylesheet failed to load.
+
+## Who has to fix it
+
+Software vendors and integrators, because their code generates the XML. If you issue invoices in invoicing software you cannot fix this yourself: ask the vendor whether the program adds visualisation instructions to the file and whether it re-tested sending on the TEST environment after version 2.4.0. You can also open an earlier invoice (XML downloaded from KSeF) in a text editor and search for `<?xml-stylesheet`.
+
+The repository maintainer also recommends filling in the optional `SystemInfo` field in the invoice header (`Naglowek/SystemInfo`). According to the 24 June 2026 comment, if the problem is still visible before the deadline, there is a good chance an MF engineer will contact the vendors identified by that field directly.
+
+## What happens to a rejected invoice
+
+The KSeF 2.0 Handbook describes this for a file that fails verification: the system does not assign a KSeF number, so the invoice has not been issued, and after correcting the data you have to send it again. The Handbook says this about non-conformity with the schema, not about the rules in this article. We found no separate description for them in the documentation, and no error code.
+
+In batch sending only the faulty file is rejected, not the whole package (Handbook part II, section 3.3.2). You can list the rejected invoices of a session with `GET /sessions/{referenceNumber}/invoices/failed`, which the OpenAPI specification describes.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="KSeF 2.0 Handbook part II, sections 1.6.1 and 3.3.2 (Polish)"
+/>
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
+  label="CIRFMF/ksef-api, open-api.json (invoices/failed endpoint)"
+/>
+
+The errors KSeF already reports during schema validation are covered in [most common FA(3) validation errors](/en/blog/most-common-fa3-validation-errors).
