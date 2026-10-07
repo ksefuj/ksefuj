@@ -167,6 +167,14 @@ export default async function Home({ params }: Props) {
           ]}
         />
 
+        {/* Latest Posts Section */}
+        <LatestPostsSection
+          locale={locale}
+          title={t("landing.latestPosts.title")}
+          allPostsLabel={t("landing.latestPosts.allPosts")}
+          guidesLabel={t("landing.latestPosts.guides")}
+        />
+
         {/* Validation Layers Section */}
         <ValidationLayersSection
           title={t("landing.validation.title")}
@@ -221,14 +229,6 @@ export default async function Home({ params }: Props) {
             icon: COMING_SOON_FEATURES[i].icon,
             badgeVariant: COMING_SOON_FEATURES[i].badgeVariant,
           }))}
-        />
-
-        {/* Latest Posts Section */}
-        <LatestPostsSection
-          locale={locale}
-          title={t("landing.latestPosts.title")}
-          allPostsLabel={t("landing.latestPosts.allPosts")}
-          guidesLabel={t("landing.latestPosts.guides")}
         />
 
         {/* Newsletter Section */}
