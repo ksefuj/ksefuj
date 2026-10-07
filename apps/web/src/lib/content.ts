@@ -1,6 +1,10 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+import type { ContentTopic } from "./topics";
+
+export { CONTENT_TOPICS, isContentTopic } from "./topics";
+export type { ContentTopic } from "./topics";
 
 const CONTENT_DIR = path.join(process.cwd(), "content");
 
@@ -12,7 +16,14 @@ export interface Frontmatter {
   section: "blog" | "docs" | "guides" | "faq";
   locale: "pl" | "en" | "uk";
   slug: string;
+  /** Tags stay in the files but are no longer rendered; `topic` replaces them in the UI. */
   tags?: string[];
+  /** Required on blog posts and guides (enforced by `pnpm validate:seo`). One of `CONTENT_TOPICS`. */
+  topic?: ContentTopic;
+  /** Up to 3 `blog/<pl-slug>` or `guides/<pl-slug>` refs that override the automatic "Read next" picks. */
+  related?: string[];
+  /** Pins the item on the homepage. */
+  featured?: boolean;
   sources?: Array<{ label: string; url: string }>;
   seo?: {
     canonical?: string;

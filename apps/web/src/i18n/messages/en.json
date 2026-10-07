@@ -215,6 +215,12 @@
       "metaDescription": "Step-by-step guides about KSeF and e-invoicing for sole traders and businesses.",
       "ogImageTitle": "Guides — step by step through KSeF"
     },
+    "topics": {
+      "deadlines": "Obligations, deadlines and penalties",
+      "access": "Login and permissions",
+      "invoicing": "Issuing and receiving invoices",
+      "errors": "Errors and validation"
+    },
     "layout": {
       "backToBlog": "Blog",
       "backToDocs": "Documentation",

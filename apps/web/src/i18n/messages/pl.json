@@ -215,6 +215,12 @@
       "metaDescription": "Poradniki krok po kroku o KSeF i fakturach elektronicznych dla JDG i firm.",
       "ogImageTitle": "Poradniki — krok po kroku przez KSeF"
     },
+    "topics": {
+      "deadlines": "Obowiązek, terminy i kary",
+      "access": "Logowanie i uprawnienia",
+      "invoicing": "Wystawianie i odbieranie faktur",
+      "errors": "Błędy i walidacja"
+    },
     "layout": {
       "backToBlog": "Blog",
       "backToDocs": "Dokumentacja",
