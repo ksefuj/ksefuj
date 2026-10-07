@@ -670,6 +670,7 @@
     "title": "Wrzuć plik XML z fakturą",
     "hint": "albo kliknij i wybierz go z dysku",
     "privacy": "Twój plik nie opuszcza przeglądarki.",
-    "openValidator": "Otwórz walidator"
+    "openValidator": "Otwórz walidator",
+    "opening": "Otwieram walidator…"
   }
 }

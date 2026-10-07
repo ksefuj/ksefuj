@@ -2,6 +2,7 @@
 
 import * as amplitude from "@amplitude/unified";
 import { useLocale, useTranslations } from "next-intl";
+import { useState } from "react";
 import { XmlDropZone } from "@/components/xml-drop-zone";
 import { setPendingFiles } from "@/lib/file-handoff";
 import { Link, useRouter } from "@/i18n/routing";
@@ -14,12 +15,15 @@ export function HeroDropZone() {
   const t = useTranslations("heroDropZone");
   const locale = useLocale();
   const router = useRouter();
+  // Locks the drop zone after a successful drop so a second drop cannot replace the first
+  const [opening, setOpening] = useState(false);
 
   return (
     <div className="w-full max-w-2xl mx-auto space-y-4">
       <XmlDropZone
         variant="compact"
-        title={t("title")}
+        title={opening ? t("opening") : t("title")}
+        disabled={opening}
         hint={t("hint")}
         note={t("privacy")}
         onSelection={({ xmlCount, skipped }) =>
@@ -29,8 +33,9 @@ export function HeroDropZone() {
             nonXmlCount: skipped,
           })
         }
-        onFiles={(files) => {
-          setPendingFiles(files);
+        onFiles={(files, { skipped }) => {
+          setOpening(true);
+          setPendingFiles(files, skipped);
           router.push("/validator");
         }}
       />

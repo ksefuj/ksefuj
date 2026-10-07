@@ -278,8 +278,8 @@ export function Validator({ locale }: ValidatorProps) {
   useEffect(() => {
     const pending = consumePendingFiles();
     if (pending) {
-      amplitude.track("validator_handoff_consumed", { locale, fileCount: pending.length });
-      void handleFiles(pending);
+      amplitude.track("validator_handoff_consumed", { locale, fileCount: pending.files.length });
+      void handleFiles(pending.files, pending.skipped);
     }
   }, [handleFiles, locale]);
 

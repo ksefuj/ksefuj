@@ -670,6 +670,7 @@
     "title": "Drop your invoice XML file here",
     "hint": "or click to choose it from your computer",
     "privacy": "Your file never leaves your browser.",
-    "openValidator": "Open the validator"
+    "openValidator": "Open the validator",
+    "opening": "Opening the validator…"
   }
 }
