@@ -50,8 +50,8 @@ what is not yet settled.
       KSeF · „aplikacja podatnika KSeF jak wystawić fakturę" · A · rolling · APP,
       `/czy-trzeba-miec-platny-program-zeby-wystawiac-faktury-w-ksef/` · Platform-agnostic intro,
       then MF's free app step by step.
-- [x] `logowanie-ksef` — Logowanie do KSeF: Profil Zaufany, podpis, certyfikat · „KSeF logowanie
-      profil zaufany" · A · rolling · APP, KOM
+- [x] `logowanie-ksef` (in review: branch `content/logowanie-ksef`) — Logowanie do KSeF: Profil
+      Zaufany, podpis, certyfikat · „KSeF logowanie profil zaufany" · A · rolling · APP, KOM
 - [x] `uprawnienia-ksef-ksiegowa` (in review: branch `content/uprawnienia-ksef-ksiegowa`) — Jak dać
       księgowej dostęp do KSeF · „KSeF uprawnienia biuro rachunkowe" · A, K · before 2027-01-01 ·
       FAQ, P3
