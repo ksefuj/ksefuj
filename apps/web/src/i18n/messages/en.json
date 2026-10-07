@@ -125,7 +125,13 @@
       "EXECUTION_ERROR": "Unexpected validation error",
       "P12_INVALID": "Invalid **VAT** rate: `{actual}`. Allowed values: {allowedValues}",
       "CURRENCY_RATE_UNVERIFIABLE": "Unable to verify the {currency} rate — no NBP rate found for the invoice dated {invoiceDate}",
-      "CURRENCY_RATE_MISMATCH": "`KursWaluty` {currency} ({actual}) differs from the NBP rate on {date} ({expected})"
+      "CURRENCY_RATE_MISMATCH": "`KursWaluty` {currency} ({actual}) differs from the NBP rate on {date} ({expected})",
+      "XML_DISCOURAGED_CHARACTER": "The file contains a character that KSeF will reject from 19 October 2026 — remove it or replace it with plain text. Character `{codePoint}` at line {line}, column {column}: {snippet}. Source: [Weryfikacja faktury](https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md)",
+      "XML_PROCESSING_INSTRUCTION": "The file contains a hidden instruction that KSeF will not accept from 19 October 2026 — remove it from the file. XML processing instruction `<?{target} …?>` at line {line}, column {column} (e.g. an attached visualisation stylesheet). Source: [Weryfikacja faktury](https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md)",
+      "XML_BOM_PRESENT": "The file is saved in a way KSeF will not accept from 19 October 2026 — save it again as UTF-8 without BOM. The file starts with a BOM marker (bytes `EF BB BF`). Source: [Weryfikacja faktury](https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md)",
+      "XML_ENCODING_NOT_UTF8": "The file uses the wrong character encoding — KSeF requires UTF-8 and will reject anything else from 19 October 2026. The XML declaration names encoding `{encoding}` at line {line}, column {column}. Source: [Weryfikacja faktury](https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md)",
+      "XML_DISCOURAGED_CHARACTER_MORE": "…and {count} more such characters in the file ({total} in total). Remove all of them.",
+      "XML_PROCESSING_INSTRUCTION_MORE": "…and {count} more such instructions in the file ({total} in total). Remove all of them."
     },
     "errors": {
       "field": "field",
