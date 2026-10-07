@@ -74,8 +74,14 @@ XML parsing.
 All features are free with no usage limits, no signup walls, no freemium tiers. KSeF is already a
 mandatory burden on small businesses — the tools to deal with it shouldn't cost extra. This is the
 core competitive advantage. Monetization comes from tasteful, non-intrusive sponsorships (Daring
-Fireball / Carbon Ads style) once the tool has meaningful traffic. No user tracking, no data
-selling, no annoying popups.
+Fireball / Carbon Ads style) once the tool has meaningful traffic. No ad tracking, no data selling,
+no annoying popups.
+
+**Analytics:** basic, anonymous product analytics only, via Amplitude (EU server zone, no cookies,
+page views plus explicitly instrumented events; session replay and click autocapture off). Event
+properties carry counts, locale, slugs and issue codes, never invoice content, file names or
+personal data. New features may add events in the same style (`amplitude.track` in the component).
+Any change here must be reflected in the privacy page (`privacy.*` in the locale messages).
 
 ### Freelancer-first, developer-friendly
 
