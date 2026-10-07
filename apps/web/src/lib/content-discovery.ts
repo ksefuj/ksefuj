@@ -4,6 +4,7 @@ import {
   getContentItem,
   listContentItemsUnified,
 } from "./content";
+import { type LatestPostEntry, selectLatestPosts } from "./latest-posts";
 import { type ReadNextEntry, type ReadNextReason, selectReadNext } from "./read-next";
 
 export interface ReadNextItem {
@@ -55,4 +56,46 @@ export async function getReadNextItems(
   );
 
   return picks.map(({ entry, reason }) => ({ item: entry.item, section: entry.section, reason }));
+}
+
+export interface LatestPostItem {
+  item: ContentItemWithLocale;
+  section: DiscoverySection;
+}
+
+/**
+ * Items for the homepage "Latest from the blog" section: `featured` items first, then the newest
+ * blog posts (see `selectLatestPosts`). Built from the PL-driven unified listing, so EN/UK get
+ * translations where they exist and PL fallbacks (shown with the PL badge) otherwise. `featured`
+ * is authored on the PL source; translations inherit it. Runs at build time.
+ */
+export async function getLatestPostItems(locale: string): Promise<LatestPostItem[]> {
+  const sections: DiscoverySection[] = ["blog", "guides"];
+  const lists = await Promise.all(
+    sections.map(async (section) => ({
+      section,
+      items: await listContentItemsUnified(locale, section),
+      plItems: locale === "pl" ? null : await listContentItemsUnified("pl", section),
+    })),
+  );
+
+  const candidates = lists.flatMap(({ section, items, plItems }) => {
+    const plFeatured = new Set(
+      (plItems ?? items)
+        .filter((i) => i.frontmatter.featured === true)
+        .map((i) => i.frontmatter.slug),
+    );
+    return items.map((item): LatestPostEntry & LatestPostItem => ({
+      item,
+      section,
+      plSlug: item.plSlug,
+      title: item.frontmatter.title,
+      date: item.frontmatter.date,
+      updated: item.frontmatter.updated,
+      featured: item.frontmatter.featured === true || plFeatured.has(item.plSlug),
+      translated: item.contentLocale === locale,
+    }));
+  });
+
+  return selectLatestPosts(candidates).map(({ item, section }) => ({ item, section }));
 }

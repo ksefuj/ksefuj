@@ -548,6 +548,11 @@
         }
       ]
     },
+    "latestPosts": {
+      "title": "Latest from the blog",
+      "allPosts": "All posts",
+      "guides": "Guides"
+    },
     "newsletter": {
       "title": "KSeF Newsletter",
       "subtitle": "Practical insights about e-invoices: tips, pitfalls, and everything you need to know — no bureaucratic jargon",
