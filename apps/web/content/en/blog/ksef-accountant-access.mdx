@@ -1,0 +1,119 @@
+---
+title: "Giving your accountant KSeF access: step by step"
+description: "You grant access online in the KSeF Taxpayer Application: to the firm by NIP or to the accountant by name. ZAW-FA is needed only in narrow cases."
+date: 2026-10-07
+section: blog
+locale: en
+slug: "ksef-accountant-access"
+tags: ["KSeF", "JDG", "Freelancer"]
+sources:
+  - label: "KSeF 2.0 Manual, part I (ed. 6 Aug 2026): permissions, ZAW-FA, indirect model (PL)"
+    url: "https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  - label: "KSeF 2.0 Taxpayer Application user manual (ed. 6 Aug 2026) (PL)"
+    url: "https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
+  - label: "Ministry of Finance: KSeF FAQ (Q17-19) (PL)"
+    url: "https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
+  - label: "Ministry of Finance: KSeF 2.0 questions and answers (PL)"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
+  - label: "Regulation on using KSeF (Dz.U. 2025 item 1815) (PL)"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2025/1815/text.pdf"
+  - label: "Ministry of Finance: ZAW-FA(3) form in e-US (PL)"
+    url: "https://www.gov.pl/web/finanse/formularz-zaw-fa3-dostepny-w-e-us"
+translations:
+  pl: "uprawnienia-ksef-ksiegowa"
+  en: "ksef-accountant-access"
+  uk: "dostup-do-ksef-dlya-bukhgaltera"
+---
+
+You give an accountant access to KSeF electronically: log in to the KSeF 2.0 Taxpayer Application (or use your own software), go to Uprawnienia (Permissions), Nadaj uprawnienie (Grant permission), and identify the accounting office by NIP or the accountant by name. You do not need the ZAW-FA notification for this if you grant access as a natural person running a business.
+
+Legal state as of 7 October 2026. The application and the official documents are in Polish, so the menu labels below are given in Polish with a translation.
+
+## What you can grant, and what to leave out
+
+As the business owner you already hold owner permissions in KSeF, assigned automatically to your NIP. You file nothing with the tax office, and you cannot revoke them from yourself. <Source href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf" label="KSeF 2.0 Manual, part I, p. 57" />
+
+You grant the accountant a selection of them. Usually two:
+
+- **wystawianie faktur** (issuing invoices),
+- **przeglądanie faktur** (viewing invoices; the system itself calls it "dostęp do faktur"), meaning downloading sales and purchase invoices.
+
+If Ania issues invoices herself in software connected to KSeF, the office only needs to view them: it downloads, books and settles them. Issuing makes sense when the office is to issue invoices on Ania's behalf. The Ministry describes both options in part I of the manual (p. 20).
+
+<Warning>
+  "Zarządzanie uprawnieniami" (permission management) is a separate, broader permission. It is a
+  single permission for granting and revoking access, so whoever receives it can add more people on
+  your behalf. You cannot grant "granting" without "revoking". An accountant does not need it for
+  daily work.
+</Warning>
+
+## Step by step: access for an accounting office
+
+This is the variant for firms that work with an office. You grant the permission to the office as an entity (by NIP), and the office decides which employee serves your firm. When an employee leaves, you change nothing.
+
+1. Log in to the Taxpayer Application through login.gov.pl (Profil Zaufany, the mObywatel app, online banking, e-Dowód) or with a qualified signature or seal. Enter your own NIP as the context. <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Taxpayer Application manual, pp. 14-15" /> A token or a KSeF certificate will not log you in to this application. <Source href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf" label="KSeF 2.0 Manual, part I, p. 41 (token) and p. 42 (certificate)" />
+2. Go to **Uprawnienia**, **Nadaj uprawnienie**.
+3. In the "Rodzaj uprawnienia" (type of permission) field choose **"Podmiotowi do wystawiania i przeglądania faktur"** (to an entity, for issuing and viewing invoices).
+4. Enter the office's NIP and full name.
+5. Tick the scope: "wystawianie faktur" and/or "przeglądanie faktur". Next to each you can add **"z prawem do dalszego przekazywania uprawnienia"** (with the right to pass the permission on). Without it the office cannot pass access to its staff.
+6. Confirm, then check in the "Zarządzaj uprawnieniami" list that the permission appears.
+
+The Ministry confirms this path in its answer on how to grant permissions to an accounting office. <Source href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/" label="MF FAQ, Q17" />
+
+There is no separate "account" to create. A person with a permission authenticates with one of the allowed methods and can start working. <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20" label="KSeF 2.0 FAQ, Q8" />
+
+If you use software integrated with the KSeF 2.0 API, you can grant the same permissions there. The Taxpayer Application is only one of two routes.
+
+## Access for a specific accountant
+
+Working with one person rather than an office? Choose **"Osobie fizycznej do pracy w KSeF"** (to a natural person, to work in KSeF) and identify her by NIP or PESEL, with first and last name. You pick the scope from a list: issuing invoices, viewing invoices, viewing permissions, viewing session history (generating UPO), and managing subordinate entities. <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Taxpayer Application manual, pp. 137-138" />
+
+The practical difference from granting to the office: the permission is tied to the person, so if she changes jobs you have to revoke it and grant it to her replacement. When you grant to the office, the office makes that change on its side.
+
+## What Pani Krystyna does to pass access to her staff
+
+If Ania ticked "with the right to pass on", the office can pass access to its employees. The office does not log in under Ania's context for this, but under its own, with the office's NIP. For each grant it chooses one of two options in the Taxpayer Application:
+
+- **"Osobie fizycznej do pracy dla klienta"** (to a person, to work for a client): the employee serves only the named client (you enter the client's NIP),
+- **"Osobie fizycznej do pracy dla wszystkich klientów"** (to work for all clients): the employee serves every client who granted the office permissions with the right to pass them on.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  label="KSeF 2.0 Manual, part I, pp. 74-76"
+/>
+
+An office employee receives only issuing and viewing of invoices and cannot pass them on. To work for Ania, they log in to KSeF in the context of her NIP.
+
+<Info>
+  The whole chain has to exist: the client granted the office the permission with the right to pass
+  it on, and the office granted it to the employee. The system checks this when the session starts,
+  and the order of granting does not matter. If Ania revokes the office's permission, the employees'
+  permissions for her firm stay granted but stop working.
+</Info>
+
+## How to revoke access
+
+In the Taxpayer Application go to **Zarządzaj uprawnieniami**, tick the permission in the list (for example in the list of granted entity permissions), click **"Odbierz uprawnienie"** (revoke permission), confirm, and refresh the screen to see the result. Only a person with the permission to manage permissions can revoke. <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Taxpayer Application manual, pp. 160-161" />
+
+Revoking the office switches off all its employees for your firm at once. Owner permissions cannot be revoked.
+
+## When you do need ZAW-FA
+
+The ZAW-FA notification covers narrow cases:
+
+- **The firm is not a natural person and has no qualified seal.** A limited-liability company is an example. It must then grant the first permissions through ZAW-FA, naming one natural person (not necessarily a board member). That person grants further permissions, including to the accountant, electronically. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2025/1815/text.pdf" label="Regulation Dz.U. 2025 item 1815, § 5(1)" />
+- **Your own qualified signature contains neither NIP nor PESEL.** ZAW-FA covers only the taxpayer's own signature (or the single person named in the notification), and its "fingerprint" is reported in that notification. An accountant's signature without NIP and PESEL is reported electronically in the Taxpayer Application (see below), with no ZAW-FA. <Source href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf" label="KSeF 2.0 Manual, part I, pp. 33 and 57" />
+
+You can file ZAW-FA(3) on paper, through the interactive form in e-Urząd Skarbowy, or through e-Doręczenia. <Source href="https://www.gov.pl/web/finanse/formularz-zaw-fa3-dostepny-w-e-us" label="MF: ZAW-FA(3) in e-US" /> A notification sent through ePUAP has not been effective since 1 January 2026. <Source href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf" label="KSeF 2.0 Manual, part I, pp. 58-59" /> Permissions start only once an official enters the data into the system, and a confirmation arrives by e-mail. <Source href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf" label="KSeF 2.0 Manual, part I, p. 33" /> <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20" label="KSeF 2.0 FAQ, Q16" />
+
+ZAW-FA names one person. To change her, you first file a notification revoking the current person's permissions, then one granting them to the new person.
+
+## A signature without NIP or PESEL: the fingerprint
+
+When an accountant uses a qualified signature that contains neither NIP nor PESEL (for example one issued abroad), you cannot identify her by number. The permission is granted to the certificate's "fingerprint" instead: 64 characters (digits and letters a-f), calculated with SHA-256. The Taxpayer Application has a "Pobierz odcisk palca" (download fingerprint) button on the login screen: you download a file, sign it with the certificate and upload it back. In the grant form you choose the person with a certificate without NIP and PESEL, the identifier "Brak" (none), and enter the fingerprint plus first name, last name, date of birth and identity document details (type, number, country). <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Taxpayer Application manual, pp. 16-17 and 139" />
+
+The most common problem: the accountant renews her signature or buys a new one, and access stops working. With a fingerprint the permissions then have to be reported again. If the new signature still contains NIP or PESEL, nothing needs to change. <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20" label="KSeF 2.0 FAQ, question on extending a signature" />
+
+## What next
+
+Logging accounting software in to KSeF is a separate matter from permissions for people. For a comparison of certificates and tokens see [Certificates vs tokens in KSeF](/en/blog/certificates-vs-tokens-ksef). If you are just starting, begin with [KSeF for sole traders](/en/blog/ksef-for-sole-traders).
