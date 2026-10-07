@@ -99,9 +99,16 @@ next block and homepage section. Replaces the two inline card implementations.
 
 - **Lead:** the newest post as a `featured` card above the grid.
 - **Topic filter:** chips „Wszystkie · Terminy i start · …" driven by `?topic=<key>`; combines with
-  the existing `?filter=translated` on EN/UK. Server-rendered from search params; chips are links.
-  Filtered views set `noindex, follow` and canonical to the unfiltered `/blog` (avoid thin duplicate
-  pages).
+  the existing `?filter=translated` on EN/UK. Chips are real links that update the query string.
+- **Static rendering:** `/[locale]/blog` and `/[locale]/guides` stay statically generated, so the
+  pages must not read `searchParams` on the server (that would make every request dynamic). The
+  server renders the full list (all topics, all items, PL fallbacks included); a small client
+  component reads the query with `useSearchParams` inside `<Suspense>` and shows the matching
+  subset. The Suspense fallback is the unfiltered list, so crawlers and no-JS clients see
+  everything. The lead card is the newest item of the current filtered view.
+- **SEO of filtered URLs:** they share the bare listing's static HTML, so the canonical points at
+  the unfiltered `/blog` (or `/guides`), which handles the duplicates. No per-filter `noindex`: it
+  cannot be computed for a static page.
 - **Guides strip:** one row under the lead, „Poradniki krok po kroku →", with the guides as compact
   cards and a link to `/guides`.
 - The guides page gets the same card and topic chips (without the guides strip).

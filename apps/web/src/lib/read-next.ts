@@ -20,7 +20,7 @@ export interface ReadNextCurrent {
   plSlug: string;
   section: string;
   topic?: string;
-  /** PL slugs from the frontmatter `related` field. Override the automatic picks. */
+  /** Section-qualified PL refs (`blog/<slug>`) from the frontmatter `related` field. */
   related?: readonly string[];
 }
 
@@ -31,6 +31,7 @@ export interface ReadNextPick<T extends ReadNextEntry> {
 
 export const READ_NEXT_COUNT = 3;
 
+/** Section-qualified PL identity, the format of `related` entries: `blog/<slug>`. */
 const entryKey = (e: { section: string; plSlug: string }) => `${e.section}/${e.plSlug}`;
 
 function time(date: string | Date): number {
@@ -41,7 +42,7 @@ function time(date: string | Date): number {
 /**
  * Pick up to `limit` items to read after `current`, in order and without duplicates:
  *
- * 1. `related` slugs, in the listed order (an editor's choice: locale does not reorder them).
+ * 1. `related` refs (`blog/<pl-slug>`, `guides/<pl-slug>`), in the listed order (an editor's choice: locale does not reorder them).
  * 2. Items with translations in the requested locale: same topic first, then newest overall.
  * 3. Items without one (PL fallbacks in EN/UK): same topic first, then newest overall.
  *
@@ -68,8 +69,8 @@ export function selectReadNext<T extends ReadNextEntry>(
     picks.push({ entry, reason });
   };
 
-  for (const slug of current.related ?? []) {
-    const match = candidates.find((c) => c.plSlug === slug);
+  for (const ref of current.related ?? []) {
+    const match = candidates.find((c) => entryKey(c) === ref);
     if (match) {
       add(match, "related");
     }

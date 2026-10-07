@@ -1,4 +1,4 @@
-import { type ContentTopic, isContentTopic } from "./topics";
+import { CONTENT_TOPICS, type ContentTopic, isContentTopic } from "./topics";
 
 type Param = string | string[] | undefined;
 
@@ -19,6 +19,43 @@ export function parseListingFilters(query: { topic?: Param; filter?: Param }): L
     topic: isContentTopic(topic) ? topic : undefined,
     translatedOnly: first(query.filter) === "translated",
   };
+}
+
+/** Parses filters from `useSearchParams()` (or any `URLSearchParams`-like object). */
+export function parseListingFiltersFromParams(params: {
+  get(name: string): string | null;
+}): ListingFilters {
+  return parseListingFilters({
+    topic: params.get("topic") ?? undefined,
+    filter: params.get("filter") ?? undefined,
+  });
+}
+
+export interface ListingItemMeta {
+  topic?: ContentTopic;
+  /** False for PL fallbacks shown in EN/UK. */
+  translated: boolean;
+}
+
+/** Items visible under the filters, order preserved (listings are sorted newest first). */
+export function filterListingItems<T extends ListingItemMeta>(
+  items: readonly T[],
+  filters: Partial<ListingFilters>,
+): T[] {
+  return items.filter(
+    (item) =>
+      (!filters.translatedOnly || item.translated) &&
+      (!filters.topic || item.topic === filters.topic),
+  );
+}
+
+/** Topics that have at least one item once the language filter is applied, in list order. */
+export function availableTopics(
+  items: readonly ListingItemMeta[],
+  filters: Pick<ListingFilters, "translatedOnly">,
+): ContentTopic[] {
+  const visible = filterListingItems(items, { translatedOnly: filters.translatedOnly });
+  return CONTENT_TOPICS.filter((topic) => visible.some((item) => item.topic === topic));
 }
 
 /** Listing URL for a filter combination; the unfiltered view is the bare path. */

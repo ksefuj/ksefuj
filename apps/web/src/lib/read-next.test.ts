@@ -28,18 +28,32 @@ describe("selectReadNext", () => {
       entry("c", { date: "2026-01-15", topic: "deadlines" }),
       entry("d", { date: "2026-01-01" }),
     ];
-    const picks = selectReadNext({ ...current, related: ["c", "b"] }, candidates);
+    const picks = selectReadNext({ ...current, related: ["blog/c", "blog/b"] }, candidates);
     expect(slugs(picks)).toEqual(["c", "b", "a"]);
     expect(picks.map((p) => p.reason)).toEqual(["related", "related", "topic"]);
   });
 
-  it("resolves related slugs across sections and ignores unknown ones", () => {
+  it("resolves section-qualified related refs and ignores unknown or bare ones", () => {
     const candidates = [
       entry("a"),
       entry("guide", { section: "guides", topic: "access", date: "2025-01-01" }),
     ];
-    const picks = selectReadNext({ ...current, related: ["missing", "guide"] }, candidates);
+    const picks = selectReadNext(
+      { ...current, related: ["blog/missing", "a", "guides/guide"] },
+      candidates,
+    );
     expect(slugs(picks)).toEqual(["guide", "a"]);
+    expect(picks.map((p) => p.reason)).toEqual(["related", "topic"]);
+  });
+
+  it("tells apart the same slug in different sections", () => {
+    const candidates = [
+      entry("same", { section: "blog", date: "2026-01-01" }),
+      entry("same", { section: "guides", date: "2026-02-01" }),
+      entry("other", { topic: "errors", date: "2026-03-01" }),
+    ];
+    const picks = selectReadNext({ ...current, related: ["blog/same"] }, candidates);
+    expect(picks[0]).toMatchObject({ reason: "related", entry: { section: "blog" } });
   });
 
   it("fills with same-topic items from blog and guides together, newest first", () => {
@@ -75,7 +89,7 @@ describe("selectReadNext", () => {
 
   it("never returns the current item, even when listed in related", () => {
     const candidates = [entry("me"), entry("a"), entry("b"), entry("c")];
-    const picks = selectReadNext({ ...current, related: ["me"] }, candidates);
+    const picks = selectReadNext({ ...current, related: ["blog/me"] }, candidates);
     expect(slugs(picks)).not.toContain("me");
     expect(picks).toHaveLength(3);
   });
@@ -87,7 +101,7 @@ describe("selectReadNext", () => {
 
   it("does not repeat an item that matches several rules", () => {
     const candidates = [entry("a"), entry("b"), entry("c"), entry("d")];
-    const picks = selectReadNext({ ...current, related: ["a", "a"] }, candidates);
+    const picks = selectReadNext({ ...current, related: ["blog/a", "blog/a"] }, candidates);
     expect(new Set(slugs(picks)).size).toBe(picks.length);
     expect(picks[0].reason).toBe("related");
   });

@@ -20,7 +20,7 @@ const active = "bg-violet-600 text-white border-violet-600";
 const inactive =
   "bg-white text-slate-600 border-slate-200 hover:border-violet-300 hover:text-violet-700";
 
-/** Server-rendered filter chips. Plain links, so filtered views work without client JS. */
+/** Filter chips. Plain links that update the query string; the listing reads it client-side. */
 export function FilterChips({ chips, label }: FilterChipsProps) {
   return (
     <nav aria-label={label}>

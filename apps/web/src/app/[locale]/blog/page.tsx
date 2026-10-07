@@ -1,24 +1,23 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Suspense } from "react";
 import { getTranslations } from "next-intl/server";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SectionContainer } from "@/components/section-container";
 import { ContentCard } from "@/components/content-card";
-import { type FilterChip, FilterChips } from "@/components/filter-chips";
+import { BlogListing, BlogListingFallback, type BlogListingProps } from "@/components/blog-listing";
 import { LanguagePicker } from "../language-picker";
 import { listContentItemsUnified } from "@/lib/content";
-import { CONTENT_TOPICS, isContentTopic } from "@/lib/topics";
-import { buildListingHref, parseListingFilters } from "@/lib/listing-filters";
+import { isContentTopic, topicLabels } from "@/lib/topics";
 
+// No `searchParams` here on purpose: reading them would make the route dynamic. The page is
+// static and renders every item; `?topic=` / `?filter=translated` are applied client-side.
 interface Props {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ filter?: string | string[]; topic?: string | string[] }>;
 }
 
-export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
-  const [{ locale }, query] = await Promise.all([params, searchParams]);
-  const { topic, translatedOnly } = parseListingFilters(query);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
   const tContent = await getTranslations({ locale, namespace: "content.blog" });
 
   const canonical = locale === "pl" ? "/blog" : `/${locale}/blog`;
@@ -28,9 +27,8 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   return {
     title,
     description,
-    // Filtered views are thin duplicates of the main listing: keep them out of the index and
-    // point search engines at the unfiltered page, but let crawlers follow the post links.
-    ...(topic || translatedOnly ? { robots: { index: false, follow: true } } : {}),
+    // Filtered URLs (`?topic=`, `?filter=`) share this static HTML; the canonical below points
+    // them at the bare listing.
     alternates: {
       canonical,
       languages: {
@@ -57,63 +55,69 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   };
 }
 
-export default async function BlogListPage({ params, searchParams }: Props) {
-  const [{ locale }, query] = await Promise.all([params, searchParams]);
-  const { topic: activeTopic, translatedOnly } = parseListingFilters(query);
+export default async function BlogListPage({ params }: Props) {
+  const { locale } = await params;
   const [allPosts, allGuides, t] = await Promise.all([
     listContentItemsUnified(locale, "blog"),
     listContentItemsUnified(locale, "guides"),
     getTranslations({ locale, namespace: "content" }),
   ]);
 
-  const inLocale = <T extends { contentLocale: string }>(items: T[]) =>
-    translatedOnly ? items.filter((i) => i.contentLocale === locale) : items;
-
   const basePath = locale === "pl" ? "/blog" : `/${locale}/blog`;
   const guidesPath = locale === "pl" ? "/guides" : `/${locale}/guides`;
 
-  const localePosts = inLocale(allPosts);
-  const posts = activeTopic
-    ? localePosts.filter((p) => p.frontmatter.topic === activeTopic)
-    : localePosts;
-  const guides = activeTopic ? [] : inLocale(allGuides);
-  const [lead, ...rest] = posts;
-
-  const topicChips: FilterChip[] = [
-    {
-      key: "all",
-      label: t("discovery.allTopics"),
-      href: buildListingHref(basePath, { translatedOnly }),
-      active: !activeTopic,
-      event: "topic_filter_selected",
-      eventProps: { locale, section: "blog", topic: "all" },
-    },
-    ...CONTENT_TOPICS.filter((topic) =>
-      localePosts.some((p) => isContentTopic(p.frontmatter.topic) && p.frontmatter.topic === topic),
-    ).map((topic) => ({
-      key: topic,
-      label: t(`topics.${topic}`),
-      href: buildListingHref(basePath, { topic, translatedOnly }),
-      active: activeTopic === topic,
-      event: "topic_filter_selected",
-      eventProps: { locale, section: "blog", topic },
+  const listing: BlogListingProps = {
+    locale,
+    basePath,
+    guidesPath,
+    posts: allPosts.map((post) => ({
+      key: post.plSlug,
+      topic: isContentTopic(post.frontmatter.topic) ? post.frontmatter.topic : undefined,
+      translated: post.contentLocale === locale,
+      lead: (
+        <ContentCard
+          item={post}
+          locale={locale}
+          section="blog"
+          variant="featured"
+          headingLevel="h2"
+          track={{
+            event: "featured_post_clicked",
+            props: { locale, slug: post.frontmatter.slug },
+          }}
+        />
+      ),
+      card: <ContentCard item={post} locale={locale} section="blog" headingLevel="h2" />,
     })),
-  ];
-
-  const languageChips: FilterChip[] = [
-    {
-      key: "all",
-      label: t("blog.filter.all"),
-      href: buildListingHref(basePath, { topic: activeTopic }),
-      active: !translatedOnly,
+    guides: allGuides.map((guide) => ({
+      key: guide.plSlug,
+      translated: guide.contentLocale === locale,
+      card: (
+        <ContentCard
+          item={guide}
+          locale={locale}
+          section="guides"
+          variant="compact"
+          headingLevel="h3"
+          hideSectionMarker
+          track={{
+            event: "guides_strip_clicked",
+            props: { locale, slug: guide.frontmatter.slug },
+          }}
+        />
+      ),
+    })),
+    labels: {
+      allTopics: t("discovery.allTopics"),
+      topics: topicLabels(t),
+      topicFilter: t("discovery.topicFilterLabel"),
+      languageFilter: t("discovery.languageFilterLabel"),
+      languageAll: t("blog.filter.all"),
+      languageTranslatedOnly: t("blog.filter.translatedOnly"),
+      guidesStrip: t("discovery.guidesStrip"),
+      empty: t("blog.empty"),
     },
-    {
-      key: "translated",
-      label: t("blog.filter.translatedOnly"),
-      href: buildListingHref(basePath, { topic: activeTopic, translatedOnly: true }),
-      active: translatedOnly,
-    },
-  ];
+  };
 
   return (
     <>
@@ -147,72 +151,9 @@ export default async function BlogListPage({ params, searchParams }: Props) {
               <p className="text-lg text-slate-600">{t("blog.description")}</p>
             </div>
 
-            <div className="space-y-3">
-              <FilterChips chips={topicChips} label={t("discovery.topicFilterLabel")} />
-              {locale !== "pl" && (
-                <FilterChips chips={languageChips} label={t("discovery.languageFilterLabel")} />
-              )}
-            </div>
-
-            {!lead ? (
-              <p className="text-slate-500">{t("blog.empty")}</p>
-            ) : (
-              <>
-                <ContentCard
-                  item={lead}
-                  locale={locale}
-                  section="blog"
-                  variant="featured"
-                  headingLevel="h2"
-                  track={{
-                    event: "featured_post_clicked",
-                    props: { locale, slug: lead.frontmatter.slug },
-                  }}
-                />
-
-                {guides.length > 0 && (
-                  <section aria-labelledby="guides-strip-heading" className="space-y-4">
-                    <h2 id="guides-strip-heading" className="text-lg font-bold text-slate-900">
-                      <Link href={guidesPath} className="hover:text-violet-700 transition-colors">
-                        {t("discovery.guidesStrip")} →
-                      </Link>
-                    </h2>
-                    <ul className="-mx-4 flex gap-4 overflow-x-auto px-4 pb-2 snap-x md:mx-0 md:px-0">
-                      {guides.map((guide) => (
-                        <li key={guide.plSlug} className="flex w-64 shrink-0 snap-start">
-                          <ContentCard
-                            item={guide}
-                            locale={locale}
-                            section="guides"
-                            variant="compact"
-                            headingLevel="h3"
-                            hideSectionMarker
-                            track={{
-                              event: "guides_strip_clicked",
-                              props: { locale, slug: guide.frontmatter.slug },
-                            }}
-                          />
-                        </li>
-                      ))}
-                    </ul>
-                  </section>
-                )}
-
-                {rest.length > 0 && (
-                  <div className="grid gap-6 sm:grid-cols-2">
-                    {rest.map((post) => (
-                      <ContentCard
-                        key={post.plSlug}
-                        item={post}
-                        locale={locale}
-                        section="blog"
-                        headingLevel="h2"
-                      />
-                    ))}
-                  </div>
-                )}
-              </>
-            )}
+            <Suspense fallback={<BlogListingFallback {...listing} />}>
+              <BlogListing {...listing} />
+            </Suspense>
           </div>
         </SectionContainer>
       </main>

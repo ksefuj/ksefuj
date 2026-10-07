@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { SiteHeader } from "@/components/site-header";
@@ -5,19 +6,22 @@ import { SiteFooter } from "@/components/site-footer";
 import { SectionContainer } from "@/components/section-container";
 import { LanguagePicker } from "../language-picker";
 import { ContentCard } from "@/components/content-card";
-import { type FilterChip, FilterChips } from "@/components/filter-chips";
+import {
+  GuidesListing,
+  GuidesListingFallback,
+  type GuidesListingProps,
+} from "@/components/guides-listing";
 import { listContentItemsUnified } from "@/lib/content";
-import { CONTENT_TOPICS, isContentTopic } from "@/lib/topics";
-import { buildListingHref, parseListingFilters } from "@/lib/listing-filters";
+import { isContentTopic, topicLabels } from "@/lib/topics";
 
+// No `searchParams` here on purpose: reading them would make the route dynamic. The page is
+// static and renders every guide; `?topic=` is applied client-side.
 interface Props {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ topic?: string | string[] }>;
 }
 
-export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
-  const [{ locale }, query] = await Promise.all([params, searchParams]);
-  const { topic } = parseListingFilters(query);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
   const tContent = await getTranslations({ locale, namespace: "content.guides" });
 
   const canonical = locale === "pl" ? "/guides" : `/${locale}/guides`;
@@ -27,8 +31,7 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   return {
     title,
     description,
-    // Filtered views are thin duplicates of the main listing: noindex, canonical to /guides.
-    ...(topic ? { robots: { index: false, follow: true } } : {}),
+    // `?topic=` URLs share this static HTML; the canonical below points them at /guides.
     alternates: {
       canonical,
       languages: {
@@ -52,39 +55,37 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   };
 }
 
-export default async function GuidesListPage({ params, searchParams }: Props) {
-  const [{ locale }, query] = await Promise.all([params, searchParams]);
-  const { topic: activeTopic } = parseListingFilters(query);
+export default async function GuidesListPage({ params }: Props) {
+  const { locale } = await params;
   const [allGuides, t] = await Promise.all([
     listContentItemsUnified(locale, "guides"),
     getTranslations({ locale, namespace: "content" }),
   ]);
 
-  const basePath = locale === "pl" ? "/guides" : `/${locale}/guides`;
-  const guides = activeTopic
-    ? allGuides.filter((g) => g.frontmatter.topic === activeTopic)
-    : allGuides;
-
-  const topicChips: FilterChip[] = [
-    {
-      key: "all",
-      label: t("discovery.allTopics"),
-      href: basePath,
-      active: !activeTopic,
-      event: "topic_filter_selected",
-      eventProps: { locale, section: "guides", topic: "all" },
-    },
-    ...CONTENT_TOPICS.filter((topic) =>
-      allGuides.some((g) => isContentTopic(g.frontmatter.topic) && g.frontmatter.topic === topic),
-    ).map((topic) => ({
-      key: topic,
-      label: t(`topics.${topic}`),
-      href: buildListingHref(basePath, { topic }),
-      active: activeTopic === topic,
-      event: "topic_filter_selected",
-      eventProps: { locale, section: "guides", topic },
+  const listing: GuidesListingProps = {
+    locale,
+    basePath: locale === "pl" ? "/guides" : `/${locale}/guides`,
+    guides: allGuides.map((guide) => ({
+      key: guide.plSlug,
+      topic: isContentTopic(guide.frontmatter.topic) ? guide.frontmatter.topic : undefined,
+      translated: guide.contentLocale === locale,
+      card: (
+        <ContentCard
+          item={guide}
+          locale={locale}
+          section="guides"
+          headingLevel="h2"
+          hideSectionMarker
+        />
+      ),
     })),
-  ];
+    labels: {
+      allTopics: t("discovery.allTopics"),
+      topics: topicLabels(t),
+      topicFilter: t("discovery.topicFilterLabel"),
+      empty: t("guides.empty"),
+    },
+  };
 
   return (
     <>
@@ -99,24 +100,9 @@ export default async function GuidesListPage({ params, searchParams }: Props) {
               <p className="text-lg text-slate-600">{t("guides.description")}</p>
             </div>
 
-            <FilterChips chips={topicChips} label={t("discovery.topicFilterLabel")} />
-
-            {guides.length === 0 ? (
-              <p className="text-slate-500">{t("guides.empty")}</p>
-            ) : (
-              <div className="grid gap-6 sm:grid-cols-2">
-                {guides.map((guide) => (
-                  <ContentCard
-                    key={guide.plSlug}
-                    item={guide}
-                    locale={locale}
-                    section="guides"
-                    headingLevel="h2"
-                    hideSectionMarker
-                  />
-                ))}
-              </div>
-            )}
+            <Suspense fallback={<GuidesListingFallback {...listing} />}>
+              <GuidesListing {...listing} />
+            </Suspense>
           </div>
         </SectionContainer>
       </main>
