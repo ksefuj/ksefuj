@@ -97,8 +97,10 @@ odroczony.
     bez limitu. Confidence: HIGH dla tekstu; wniosek o braku obowiązku wynika z brzmienia ust. 1.
 14. **Kary w KSeF odroczone** (komunikat MF 16.09.2026, projekt UD477): dotyczy art. 106ni ust. 1-3,
     5-7; nie znaleźliśmy w komunikacie ani w materiałach MF żadnej zmiany terminu dla art. 108g /
-    art. 108a ust. 3. Treści projektu UD477 nie czytaliśmy (rejestr RCL bez dostępnego tekstu przy
-    pobraniu). Confidence: MEDIUM (negatywne ustalenie)
+    art. 108a ust. 3. Tekst projektu UD477 z 22.09.2026 (RCL, dokument798515.docm) zmienia tylko
+    art. 106nd ust. 2 pkt 8, art. 106nh ust. 4 i art. 145e ust. 1 ustawy o VAT oraz art. 106ni ust.
+    1 pkt 2 i art. 23 ustawy z 16.06.2023; art. 108a, art. 108g i art. 17 tej ustawy pozostają bez
+    zmian (sprawdzono 2026-10-07). Confidence: HIGH (wersja projektu z 22.09.2026)
 
 ## Unsettled Questions
 
