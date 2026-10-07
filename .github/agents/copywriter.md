@@ -159,9 +159,10 @@ Workflow for blog posts:
 
 Files: `apps/web/content/{locale}/{section}/{slug}.mdx`. Locales `pl` (default, no URL prefix),
 `en`, `uk`; sections `blog`, `guides`, `docs`, `faq`. Required frontmatter: `title`, `description`,
-`date`, `section`, `locale`, `slug`. Link translations with the `translations` map. Components:
-`<Info>`, `<Warning>`, `<Tip>`, `<Source>`, `<XmlExample copyable>`, `<FieldTable>`/`<Field>` (usage
-in README). Reading time is automatic.
+`date`, `section`, `locale`, `slug`, plus `topic` (one key from the README list) on blog posts and
+guides. Link translations with the `translations` map. Components: `<Info>`, `<Warning>`, `<Tip>`,
+`<Source>`, `<XmlExample copyable>`, `<FieldTable>`/`<Field>` (usage in README). Reading time is
+automatic.
 
 Commit messages for content: `docs(content): add "<short title>" post` for new posts,
 `docs(content): update "<short title>" post` for revisions; header ≤72 characters.

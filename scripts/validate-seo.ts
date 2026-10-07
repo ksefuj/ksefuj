@@ -15,6 +15,7 @@
 /* eslint-disable no-console */
 import { readdirSync, readFileSync, statSync } from "fs";
 import { join, relative } from "path";
+import { CONTENT_TOPICS, isContentTopic } from "../apps/web/src/lib/topics";
 
 interface ValidationError {
   file: string;
@@ -209,6 +210,58 @@ function validateTranslationCrossReferences() {
   }
 }
 
+// Every blog post and guide needs exactly one topic from the closed list, and translations
+// must carry the same topic as their PL source.
+function validateTopics() {
+  console.log("🔍 Checking content topics...\n");
+
+  const contentFiles = getFiles("apps/web/content", /\.mdx$/);
+  const plTopics = new Map<string, unknown>();
+  const entries: Array<{
+    relPath: string;
+    locale: string;
+    section: string;
+    topic: unknown;
+    plSlug?: string;
+  }> = [];
+
+  for (const file of contentFiles) {
+    const match = file.match(/\/content\/(\w+)\/(blog|guides)\/([^/]+)\.mdx$/);
+    if (!match) {
+      continue;
+    }
+    const [, locale, section, slug] = match;
+    const frontmatter = parseFrontmatter(readFileSync(file, "utf-8"));
+    const relPath = relative(process.cwd(), file);
+    const topic = frontmatter.topic;
+
+    if (topic === undefined || topic === "") {
+      addError(relPath, `Missing topic in frontmatter (one of: ${CONTENT_TOPICS.join(", ")})`);
+    } else if (!isContentTopic(topic)) {
+      addError(relPath, `Unknown topic "${String(topic)}" (allowed: ${CONTENT_TOPICS.join(", ")})`);
+    }
+
+    if (locale === "pl") {
+      plTopics.set(`${section}/${slug}`, topic);
+    }
+    const translations = frontmatter.translations as Record<string, string> | undefined;
+    entries.push({ relPath, locale, section, topic, plSlug: translations?.pl });
+  }
+
+  for (const { relPath, locale, section, topic, plSlug } of entries) {
+    if (locale === "pl" || !plSlug || topic === undefined) {
+      continue;
+    }
+    const plTopic = plTopics.get(`${section}/${plSlug}`);
+    if (plTopic !== undefined && plTopic !== topic) {
+      addError(
+        relPath,
+        `Topic "${String(topic)}" differs from PL source topic "${String(plTopic)}"`,
+      );
+    }
+  }
+}
+
 // Check page components for proper metadata generation
 function validatePageComponents() {
   console.log("🔍 Checking page components for SEO metadata...\n");
@@ -278,6 +331,7 @@ function main() {
 
   validateContentFiles();
   validateTranslationCrossReferences();
+  validateTopics();
   validatePageComponents();
   checkSEOFiles();
 
@@ -303,6 +357,9 @@ function main() {
     console.log("   - Ensure all pages have generateMetadata with canonical and alternates");
     console.log("   - Use locale === 'pl' check for canonical URL generation");
     console.log("   - Keep meta descriptions under 160 characters");
+    console.log(
+      "   - Give every blog post and guide a topic from the list in apps/web/src/lib/topics.ts",
+    );
     console.log("\n");
 
     process.exit(1);

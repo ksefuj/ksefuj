@@ -98,6 +98,7 @@ updated: 2026-04-01
 section: blog
 locale: pl
 slug: "wprowadzenie-do-ksef"
+topic: "special-cases"
 tags: ["KSeF", "JDG", "Freelancer"]
 translations:
   en: "introduction-to-ksef"
@@ -109,19 +110,39 @@ seo:
 
 ### Field reference
 
-| Field           | Required | Description                                                                                                                                                                                         |
-| --------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `title`         | Yes      | Page title. Shown as the `<h1>` and in browser tab. Max 49 characters: the template appends " — ksefuj.to" (see `STYLE.md`).                                                                        |
-| `description`   | Yes      | One-sentence summary. Used in search results and social previews. Under 160 characters; state the answer, not a table of contents (see `STYLE.md`).                                                 |
-| `date`          | Yes      | Publication date in `YYYY-MM-DD` format. Used for sorting and display.                                                                                                                              |
-| `updated`       | No       | Last significant update date. Shown in docs as "Last verified". Falls back to `date` if omitted.                                                                                                    |
-| `section`       | Yes      | Must be exactly one of: `blog`, `guides`, `docs`, `faq`. Must match the directory.                                                                                                                  |
-| `locale`        | Yes      | Must be exactly one of: `pl`, `en`, `uk`. Must match the directory.                                                                                                                                 |
-| `slug`          | Yes      | URL-safe identifier. Must match the filename (without `.mdx`). Use hyphens, no spaces, no Polish characters.                                                                                        |
-| `tags`          | No       | List of keyword tags. Displayed as badges on the post.                                                                                                                                              |
-| `translations`  | No       | Maps locale codes to the slug of the same content in that language. Enables the language switcher to link between translations.                                                                     |
-| `seo.canonical` | No       | Canonical URL path (without domain). Defaults to the natural URL if omitted.                                                                                                                        |
-| `seo.ogImage`   | No       | Path to the Open Graph image for social sharing previews. Images are **not generated automatically** — you would need to place the file manually under `apps/web/public/og/`. Safe to omit for now. |
+| Field           | Required           | Description                                                                                                                                                                                         |
+| --------------- | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `title`         | Yes                | Page title. Shown as the `<h1>` and in browser tab. Max 49 characters: the template appends " — ksefuj.to" (see `STYLE.md`).                                                                        |
+| `description`   | Yes                | One-sentence summary. Used in search results and social previews. Under 160 characters; state the answer, not a table of contents (see `STYLE.md`).                                                 |
+| `date`          | Yes                | Publication date in `YYYY-MM-DD` format. Used for sorting and display.                                                                                                                              |
+| `updated`       | No                 | Last significant update date. Shown in docs as "Last verified". Falls back to `date` if omitted.                                                                                                    |
+| `section`       | Yes                | Must be exactly one of: `blog`, `guides`, `docs`, `faq`. Must match the directory.                                                                                                                  |
+| `locale`        | Yes                | Must be exactly one of: `pl`, `en`, `uk`. Must match the directory.                                                                                                                                 |
+| `slug`          | Yes                | URL-safe identifier. Must match the filename (without `.mdx`). Use hyphens, no spaces, no Polish characters.                                                                                        |
+| `topic`         | Yes (blog, guides) | Exactly one subject key from the closed list below. Drives the topic badge, the blog filter chips and the "Read next" picks. `pnpm validate:seo` fails when it is missing or unknown.               |
+| `tags`          | No                 | List of keyword tags. Kept in the files but no longer rendered (the topic replaces them).                                                                                                           |
+| `related`       | No                 | Up to 3 PL slugs (same or other section) that override the automatic "Read next" picks, in the listed order.                                                                                        |
+| `featured`      | No                 | `true` pins the item on the homepage latest-content section.                                                                                                                                        |
+| `translations`  | No                 | Maps locale codes to the slug of the same content in that language. Enables the language switcher to link between translations.                                                                     |
+| `seo.canonical` | No                 | Canonical URL path (without domain). Defaults to the natural URL if omitted.                                                                                                                        |
+| `seo.ogImage`   | No                 | Path to the Open Graph image for social sharing previews. Images are **not generated automatically** — you would need to place the file manually under `apps/web/public/og/`. Safe to omit for now. |
+
+### Topics
+
+Every blog post and guide has exactly one `topic`. Translations use the same topic as their PL
+source. The list is closed: keys are English and stable, labels are i18n strings
+(`content.topics.*`), and the single source of truth in code is `apps/web/src/lib/topics.ts`.
+
+| Key             | PL label            | When to use it                                                  |
+| --------------- | ------------------- | --------------------------------------------------------------- |
+| `deadlines`     | Terminy i start     | Dates, limits, penalties, getting ready for KSeF                |
+| `access`        | Logowanie i dostęp  | Login, tokens, certificates, permissions                        |
+| `invoicing`     | Wystawianie faktur  | Issuing, correcting and handling invoices in KSeF               |
+| `special-cases` | Szczególne sytuacje | Exemptions, JDG, outages, fraud, anything outside the main flow |
+| `errors`        | Błędy i walidacja   | Validation errors, FA(3) schema and strict-XML rules            |
+
+Pick the subject the reader's question is about, not the first tag. A new topic needs a code change
+(the list, labels in all three locales), so do not invent one in a post.
 
 ### Notes on specific fields
 
@@ -235,6 +256,7 @@ date: 2026-04-01
 section: blog
 locale: pl
 slug: "your-slug-here"
+topic: "invoicing" # blog and guides only: one key from the Topics table
 ---
 ```
 

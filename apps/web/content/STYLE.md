@@ -127,3 +127,5 @@ Also:
 4. Is every number, date, and article reference in the research brief, with a source?
 5. Read the last section. Does it recap? Replace it with the next step.
 6. Title 49 characters or fewer, description under 160, both specific.
+7. Blog posts and guides: `topic` set to one key from the list in `README.md` (the build fails
+   without it).
