@@ -80,7 +80,7 @@ Invoices to consumers (B2C), meaning individuals not running a business, are exc
 
 FA(3) is the official XML schema for structured invoices, in force since 1 February 2026. It replaced FA(2), used since September 2023. The Ministry of Finance describes every field in the FA(3) information sheet: what is mandatory, its data type and the permitted values. The schema is public at `https://crd.gov.pl/wzor/2025/06/25/13775/`. Your invoicing software usually generates the XML, but if you use the API integration you need to know FA(3).
 
-KSeF 2.0 has no built-in validator, so you learn about errors only after sending. A rejected invoice does not exist: it gets no KSeF number, which means a payment delay, a correction and a risk with the issue deadline. You can check the XML beforehand in the [ksefuj.to validator](/en), which runs in your browser and does not upload the file. Typical errors are in our article on [common FA(3) validation errors](/en/blog/most-common-fa3-validation-errors).
+KSeF 2.0 has no built-in validator, so you learn about errors only after sending. A rejected invoice does not exist: it gets no KSeF number, which means a payment delay, a correction and a risk with the issue deadline. You can check the XML beforehand in the [ksefuj.to validator](/en/validator), which runs in your browser and does not upload the file. Typical errors are in our article on [common FA(3) validation errors](/en/blog/most-common-fa3-validation-errors).
 
 ## Penalties for invoicing outside KSeF
 
@@ -156,4 +156,4 @@ Details are in our [guides](/en/guides).
 3. **Set up authentication:** a qualified electronic signature, Profil Zaufany (via ePUAP or mObywatel) or an authorisation token for API integrations. Your NIP must have permissions in the system.
 4. **Test in the test environment** at `https://ap-test.ksef.mf.gov.pl/web/`. Invoices with fictitious data have no legal effect.
 
-Other questions are in the [FAQ](/en/faq). If you already have an XML file, check it in the [validator](/en) before the first submission.
+Other questions are in the [FAQ](/en/faq). If you already have an XML file, check it in the [validator](/en/validator) before the first submission.

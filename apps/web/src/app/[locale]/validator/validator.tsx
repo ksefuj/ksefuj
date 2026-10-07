@@ -1,13 +1,15 @@
 "use client";
 
-import { type ChangeEvent, type DragEvent, useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import * as amplitude from "@amplitude/unified";
 import { useTranslations } from "next-intl";
 import type { CurrencyRate, ValidationResult } from "@ksefuj/validator";
 // Subpath import: dependency-free, so it does not drag libxml2-wasm into the initial bundle
 import { rateReferenceCandidates } from "@ksefuj/validator/currency-date";
 import { Badge } from "@/components/badge";
+import { XmlDropZone } from "@/components/xml-drop-zone";
 import { ValidationIssuesList } from "@/components/validation-issues-list";
+import { consumePendingFiles } from "@/lib/file-handoff";
 import { fetchCurrencyRateTable } from "@/lib/nbp";
 import { cn } from "@/lib/utils";
 
@@ -47,12 +49,10 @@ async function readFileText(file: File): Promise<string> {
 export function Validator({ locale }: ValidatorProps) {
   const t = useTranslations("validator");
   const [files, setFiles] = useState<FileValidationResult[]>([]);
-  const [dragging, setDragging] = useState(false);
-  const [dragCounter, setDragCounter] = useState(0);
+  const [skippedCount, setSkippedCount] = useState(0);
   const [validating, setValidating] = useState(false);
   const [expandedFile, setExpandedFile] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const inputRef = useRef<HTMLInputElement>(null);
   const processedCountRef = useRef(0);
 
   // Calculate summary (optimized to avoid heavy computation during validation)
@@ -110,9 +110,7 @@ export function Validator({ locale }: ValidatorProps) {
 
   // File handling
   const handleFiles = useCallback(
-    async (fileList: FileList) => {
-      const xmlFiles = Array.from(fileList).filter((file) => file.name.endsWith(".xml"));
-
+    async (xmlFiles: File[], skipped = 0) => {
       if (xmlFiles.length === 0) {
         return;
       }
@@ -135,6 +133,7 @@ export function Validator({ locale }: ValidatorProps) {
       setValidating(true);
       setCurrentPage(1);
       setExpandedFile(null);
+      setSkippedCount(skipped);
       processedCountRef.current = 0;
 
       // Process files
@@ -275,45 +274,17 @@ export function Validator({ locale }: ValidatorProps) {
     [locale, t],
   );
 
-  // Drag and drop handlers
-  const onDragOver = (e: DragEvent) => {
-    e.preventDefault();
-  };
-
-  const onDragEnter = (e: DragEvent) => {
-    e.preventDefault();
-    setDragCounter((prev) => prev + 1);
-    setDragging(true);
-  };
-
-  const onDragLeave = (e: DragEvent) => {
-    e.preventDefault();
-    setDragCounter((prev) => {
-      const newCounter = prev - 1;
-      if (newCounter === 0) {
-        setDragging(false);
-      }
-      return newCounter;
-    });
-  };
-
-  const onDrop = (e: DragEvent) => {
-    e.preventDefault();
-    setDragging(false);
-    setDragCounter(0);
-    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      handleFiles(e.dataTransfer.files);
+  // Files dropped on the homepage hero arrive through the in-memory hand-off store
+  useEffect(() => {
+    const pending = consumePendingFiles();
+    if (pending) {
+      amplitude.track("validator_handoff_consumed", { locale, fileCount: pending.files.length });
+      void handleFiles(pending.files, pending.skipped);
     }
-  };
+  }, [handleFiles, locale]);
 
-  const onClickUpload = () => {
-    inputRef.current?.click();
-  };
-
-  const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      handleFiles(e.target.files);
-    }
+  const onFilesSelected = (xmlFiles: File[], info: { skipped: number }) => {
+    void handleFiles(xmlFiles, info.skipped);
   };
 
   const handleReset = () => {
@@ -321,10 +292,8 @@ export function Validator({ locale }: ValidatorProps) {
     setValidating(false);
     setExpandedFile(null);
     setCurrentPage(1);
+    setSkippedCount(0);
     processedCountRef.current = 0;
-    if (inputRef.current) {
-      inputRef.current.value = "";
-    }
   };
 
   const toggleFileExpanded = (fileName: string) => {
@@ -406,70 +375,16 @@ export function Validator({ locale }: ValidatorProps) {
   return (
     <div className="w-full max-w-4xl mx-auto">
       {files.length === 0 ? (
-        /* Dropzone */
-        <div
-          onDrop={onDrop}
-          onDragOver={onDragOver}
-          onDragEnter={onDragEnter}
-          onDragLeave={onDragLeave}
-          onClick={onClickUpload}
-          className={cn(
-            "relative rounded-2xl border-2 border-dashed transition-all duration-200 cursor-pointer",
-            "bg-white hover:bg-white/90 hover:shadow-lg",
-            "min-h-[300px] flex items-center justify-center",
-            dragging && "border-violet-400 bg-violet-50/50 scale-[1.01] shadow-lg",
-            !dragging && "border-slate-200 hover:border-violet-300",
-            validating && "opacity-50 cursor-not-allowed",
-          )}
-        >
-          <input
-            ref={inputRef}
-            type="file"
-            accept=".xml"
-            multiple
-            onChange={onFileChange}
-            className="hidden"
-          />
-
-          <div className="text-center space-y-4 p-12">
-            {/* Icon */}
-            <div className="flex justify-center">
-              <div className="w-20 h-20 rounded-2xl bg-violet-50 flex items-center justify-center">
-                <svg
-                  className="w-10 h-10 text-violet-500"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                  />
-                </svg>
-              </div>
-            </div>
-
-            {/* Call to action */}
-            <div className="space-y-2">
-              <h3 className="text-2xl font-bold text-slate-900 font-display">
-                {t("dropzone.callToAction")}
-              </h3>
-              <p className="text-slate-600">
-                {dragging && dragCounter > 0
-                  ? t("dropzone.dropFiles", { count: dragCounter })
-                  : t("dropzone.dragHere")}
-              </p>
-            </div>
-
-            {/* Accepted files */}
-            <p className="text-sm text-slate-400">{t("dropzone.acceptedFiles")}</p>
-          </div>
-        </div>
+        <XmlDropZone onFiles={onFilesSelected} disabled={validating} />
       ) : (
         /* Results */
         <div className="space-y-6">
+          {skippedCount > 0 && (
+            <p role="status" className="text-sm text-amber-700">
+              {t("dropzone.skipped", { count: skippedCount })}
+            </p>
+          )}
+
           {/* Summary Card */}
           <div
             className={cn(

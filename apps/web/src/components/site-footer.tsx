@@ -77,6 +77,11 @@ export function SiteFooter() {
                 </Link>
               </li>
               <li>
+                <Link href={`${p}/validator`} className="hover:text-slate-300 transition-colors">
+                  {t("validator")}
+                </Link>
+              </li>
+              <li>
                 <Link href={`${p}/waluty`} className="hover:text-slate-300 transition-colors">
                   {t("waluty")}
                 </Link>

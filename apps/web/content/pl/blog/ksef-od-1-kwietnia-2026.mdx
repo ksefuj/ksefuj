@@ -79,7 +79,7 @@ Faktury dla konsumentów (B2C), czyli osób fizycznych nieprowadzących działal
 
 FA(3) to oficjalny schemat XML dla faktur ustrukturyzowanych, obowiązujący od 1 lutego 2026 roku. Zastąpił FA(2) używany od września 2023. Ministerstwo Finansów opisało w arkuszu informacyjnym każde pole: co jest obowiązkowe, jakie ma typ i jakie wartości są dopuszczalne. Schemat jest publiczny pod adresem `https://crd.gov.pl/wzor/2025/06/25/13775/`. XML zwykle generuje program do fakturowania, ale przy integracji API FA(3) trzeba znać.
 
-KSeF 2.0 nie ma wbudowanego walidatora, więc o błędach dowiesz się dopiero po wysłaniu faktury. Odrzucona faktura nie istnieje: nie dostaje numeru KSeF, co oznacza opóźnienie płatności, korektę i ryzyko z terminem wystawienia. Plik XML możesz sprawdzić wcześniej w [walidatorze ksefuj.to](/), który działa w przeglądarce i nie wysyła pliku na serwer. Typowe błędy opisujemy w artykule o [najczęstszych błędach walidacji FA(3)](/blog/najczestsze-bledy-walidacji-fa3).
+KSeF 2.0 nie ma wbudowanego walidatora, więc o błędach dowiesz się dopiero po wysłaniu faktury. Odrzucona faktura nie istnieje: nie dostaje numeru KSeF, co oznacza opóźnienie płatności, korektę i ryzyko z terminem wystawienia. Plik XML możesz sprawdzić wcześniej w [walidatorze ksefuj.to](/validator), który działa w przeglądarce i nie wysyła pliku na serwer. Typowe błędy opisujemy w artykule o [najczęstszych błędach walidacji FA(3)](/blog/najczestsze-bledy-walidacji-fa3).
 
 ## Sankcje za fakturę poza KSeF
 
@@ -155,4 +155,4 @@ Szczegóły są w naszych [poradnikach](/guides).
 3. **Skonfiguruj uwierzytelnienie:** kwalifikowany podpis elektroniczny, Profil Zaufany (przez ePUAP lub mObywatel) albo token autoryzacyjny dla integracji API. Twój NIP musi mieć uprawnienia w systemie.
 4. **Przetestuj w środowisku testowym** `https://ap-test.ksef.mf.gov.pl/web/`. Faktury z fikcyjnymi danymi nie mają skutków prawnych.
 
-Odpowiedzi na inne pytania są w [FAQ](/faq). Jeśli masz gotowy plik XML, sprawdź go w [walidatorze](/) przed pierwszą wysyłką.
+Odpowiedzi na inne pytania są w [FAQ](/faq). Jeśli masz gotowy plik XML, sprawdź go w [walidatorze](/validator) przed pierwszą wysyłką.
