@@ -20,7 +20,7 @@ export interface Frontmatter {
   tags?: string[];
   /** Required on blog posts and guides (enforced by `pnpm validate:seo`). One of `CONTENT_TOPICS`. */
   topic?: ContentTopic;
-  /** Up to 3 PL slugs (same or other section) that override the automatic "Read next" picks. */
+  /** Up to 3 `blog/<pl-slug>` or `guides/<pl-slug>` refs that override the automatic "Read next" picks. */
   related?: string[];
   /** Pins the item on the homepage. */
   featured?: boolean;

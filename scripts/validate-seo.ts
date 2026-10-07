@@ -13,8 +13,9 @@
  */
 
 /* eslint-disable no-console */
-import { readdirSync, readFileSync, statSync } from "fs";
+import { existsSync, readdirSync, readFileSync, statSync } from "fs";
 import { join, relative } from "path";
+import matter from "gray-matter";
 import { CONTENT_TOPICS, isContentTopic } from "../apps/web/src/lib/topics";
 
 interface ValidationError {
@@ -27,7 +28,9 @@ const errors: ValidationError[] = [];
 function addError(file: string, error: string) {
   const existing = errors.find((e) => e.file === file);
   if (existing) {
-    existing.errors.push(error);
+    if (!existing.errors.includes(error)) {
+      existing.errors.push(error);
+    }
   } else {
     errors.push({ file, errors: [error] });
   }
@@ -55,61 +58,15 @@ function getFiles(dir: string, pattern: RegExp): string[] {
   return files;
 }
 
-// Parse frontmatter manually (simple version for our needs)
-function parseFrontmatter(content: string): Record<string, unknown> {
-  const match = content.match(/^---\n([\s\S]*?)\n---/);
-  if (!match) {
+// Parse frontmatter with a real YAML parser (same one the web app uses). Invalid YAML is
+// reported as an error instead of crashing the script.
+function parseFrontmatter(content: string, relPath: string): Record<string, unknown> {
+  try {
+    return matter(content).data;
+  } catch (error) {
+    addError(relPath, `Invalid frontmatter YAML: ${(error as Error).message.split("\n")[0]}`);
     return {};
   }
-
-  const frontmatterText = match[1];
-  const data: Record<string, unknown> = {};
-
-  // Simple YAML parsing for our specific needs
-  const lines = frontmatterText.split("\n");
-  let currentKey = "";
-
-  for (const line of lines) {
-    const indent = line.search(/\S/);
-    if (indent === -1) {
-      continue;
-    } // Skip empty lines
-
-    if (indent === 0) {
-      // Top-level key
-      const [key, ...valueParts] = line.split(":").map((s) => s.trim());
-      currentKey = key;
-      const value = valueParts.join(":").trim();
-
-      if (value && !value.startsWith('"') && !value.startsWith("'")) {
-        data[key] = value;
-      } else if (value) {
-        data[key] = value.replace(/^["']|["']$/g, "");
-      }
-    } else if (currentKey === "seo" && line.includes("canonical:")) {
-      // Look for seo.canonical specifically
-      if (!data.seo) {
-        data.seo = {} as Record<string, unknown>;
-      }
-      const value = line
-        .split(":")[1]
-        .trim()
-        .replace(/^["']|["']$/g, "");
-      (data.seo as Record<string, unknown>).canonical = value;
-    } else if (currentKey === "translations" && line.includes(":")) {
-      // Look for translations
-      if (!data.translations) {
-        data.translations = {} as Record<string, unknown>;
-      }
-      const [locale, slug] = line
-        .trim()
-        .split(":")
-        .map((s) => s.trim());
-      (data.translations as Record<string, unknown>)[locale] = slug.replace(/^["']|["']$/g, "");
-    }
-  }
-
-  return data;
 }
 
 // Check MDX files for hardcoded canonical URLs
@@ -120,8 +77,8 @@ function validateContentFiles() {
 
   for (const file of contentFiles) {
     const content = readFileSync(file, "utf-8");
-    const frontmatter = parseFrontmatter(content);
     const relPath = relative(process.cwd(), file);
+    const frontmatter = parseFrontmatter(content, relPath);
 
     // Check for hardcoded canonical URLs
     const seo = frontmatter.seo as Record<string, unknown> | undefined;
@@ -181,8 +138,8 @@ function validateTranslationCrossReferences() {
 
   for (const file of contentFiles) {
     const content = readFileSync(file, "utf-8");
-    const frontmatter = parseFrontmatter(content);
     const relPath = relative(process.cwd(), file);
+    const frontmatter = parseFrontmatter(content, relPath);
 
     const translations = frontmatter.translations as Record<string, string> | undefined;
     if (!translations) {
@@ -210,10 +167,14 @@ function validateTranslationCrossReferences() {
   }
 }
 
-// Every blog post and guide needs exactly one topic from the closed list, and translations
-// must carry the same topic as their PL source.
-function validateTopics() {
-  console.log("🔍 Checking content topics...\n");
+const RELATED_MAX = 3;
+const RELATED_REF = /^(blog|guides)\/([a-z0-9]+(?:-[a-z0-9]+)*)$/;
+
+// Every blog post and guide needs exactly one topic from the closed list, translations must carry
+// the same topic as their PL source and map to a PL source at all (topic and "Read next"
+// self-exclusion are keyed by the PL slug), and `related` must point at existing PL items.
+function validateDiscoveryFrontmatter() {
+  console.log("🔍 Checking content topics and related links...\n");
 
   const contentFiles = getFiles("apps/web/content", /\.mdx$/);
   const plTopics = new Map<string, unknown>();
@@ -231,8 +192,8 @@ function validateTopics() {
       continue;
     }
     const [, locale, section, slug] = match;
-    const frontmatter = parseFrontmatter(readFileSync(file, "utf-8"));
     const relPath = relative(process.cwd(), file);
+    const frontmatter = parseFrontmatter(readFileSync(file, "utf-8"), relPath);
     const topic = frontmatter.topic;
 
     if (topic === undefined || topic === "") {
@@ -241,11 +202,22 @@ function validateTopics() {
       addError(relPath, `Unknown topic "${String(topic)}" (allowed: ${CONTENT_TOPICS.join(", ")})`);
     }
 
+    const translations = frontmatter.translations as Record<string, string> | undefined;
+    const plSlug = locale === "pl" ? slug : translations?.pl;
+
     if (locale === "pl") {
       plTopics.set(`${section}/${slug}`, topic);
+    } else if (!plSlug) {
+      addError(
+        relPath,
+        "Missing translations.pl: blog posts and guides must map to their PL source",
+      );
     }
-    const translations = frontmatter.translations as Record<string, string> | undefined;
-    entries.push({ relPath, locale, section, topic, plSlug: translations?.pl });
+    entries.push({ relPath, locale, section, topic, plSlug: locale === "pl" ? undefined : plSlug });
+
+    if (frontmatter.related !== undefined) {
+      validateRelated(relPath, frontmatter.related, plSlug ? `${section}/${plSlug}` : undefined);
+    }
   }
 
   for (const { relPath, locale, section, topic, plSlug } of entries) {
@@ -258,6 +230,40 @@ function validateTopics() {
         relPath,
         `Topic "${String(topic)}" differs from PL source topic "${String(plTopic)}"`,
       );
+    }
+  }
+}
+
+// `related` entries are section-qualified PL refs (`blog/<slug>`, `guides/<slug>`): slugs are only
+// unique within a section, so a bare slug would be ambiguous.
+function validateRelated(relPath: string, related: unknown, selfRef: string | undefined) {
+  if (!Array.isArray(related)) {
+    addError(relPath, 'related must be a list of "blog/<pl-slug>" or "guides/<pl-slug>" refs');
+    return;
+  }
+  if (related.length > RELATED_MAX) {
+    addError(relPath, `related has ${related.length} entries (max ${RELATED_MAX})`);
+  }
+  const seen = new Set<string>();
+  for (const ref of related) {
+    const parsed = typeof ref === "string" ? ref.match(RELATED_REF) : null;
+    if (!parsed) {
+      addError(
+        relPath,
+        `related entry ${JSON.stringify(ref)} must look like "blog/<pl-slug>" or "guides/<pl-slug>"`,
+      );
+      continue;
+    }
+    if (seen.has(ref as string)) {
+      addError(relPath, `related entry "${String(ref)}" is listed more than once`);
+    }
+    seen.add(ref as string);
+    if (ref === selfRef) {
+      addError(relPath, `related entry "${String(ref)}" points at the item itself`);
+    }
+    const [, section, slug] = parsed;
+    if (!existsSync(join("apps/web/content/pl", section, `${slug}.mdx`))) {
+      addError(relPath, `related entry "${String(ref)}" not found in apps/web/content/pl`);
     }
   }
 }
@@ -331,7 +337,7 @@ function main() {
 
   validateContentFiles();
   validateTranslationCrossReferences();
-  validateTopics();
+  validateDiscoveryFrontmatter();
   validatePageComponents();
   checkSEOFiles();
 
