@@ -21,15 +21,16 @@ translations:
 </Question>
 
 <Question q="What is ZAW-FA?">
-  ZAW-FA is an authorization form for using KSeF on behalf of a taxpayer. It is submitted at the tax
-  office or electronically through e-Urząd Skarbowy and allows you to authorize another person —
-  such as an accountant or accounting firm — to issue and receive invoices in KSeF. The
-  authorization can be scoped: read-only, issue-only, or full access.
+  ZAW-FA is a paper form notifying the tax office of granting or revoking KSeF permissions. It is
+  only needed when the taxpayer is not a natural person and has no qualified seal, or when the
+  signature or seal does not contain a NIP or PESEL. In all other cases permissions are granted
+  electronically.
 </Question>
 
 <Question q="How do I authorize my accountant for KSeF?">
-  You can authorize your accountant by submitting the ZAW-FA form at the tax office or directly in
-  the Taxpayer Application KSeF through the permissions panel. The authorization specifies whether
+  You grant permissions electronically in the Taxpayer Application KSeF 2.0 (permissions panel) or
+  via the API. The ZAW-FA form at the tax office is only needed in exceptional cases, for example
+  when you are not a natural person and have no qualified seal. The authorization specifies whether
   the accountant can only read invoices or also issue them. Your accounting office will usually ask
   you for the appropriate authorization — check with your accountant.
 </Question>
@@ -37,15 +38,15 @@ translations:
 <Question q="What is a KSeF certificate?">
   A KSeF certificate is an electronic identity credential used for authentication in the KSeF API.
   It is downloaded from the MF system and allows software and integrators to log in to KSeF without
-  a Trusted Profile. There are two types: for the taxpayer directly (type 1) and for an authorized
-  entity (type 2).
+  a Trusted Profile. Certificate types are defined by function: type 1 is used for authentication in
+  KSeF, type 2 for issuing invoices in offline mode. One certificate has one type.
 </Question>
 
 <Question q="What is the difference between a type 1 and type 2 certificate?">
-  A type 1 certificate is issued directly to the taxpayer (NIP holder) and carries the broadest
-  permissions in KSeF. A type 2 certificate is intended for entities acting on behalf of the
-  taxpayer — such as accounting firms or ERP systems managing multiple clients. Type 2 always
-  operates within the scope of a specific authorization that must exist in KSeF.
+  They differ by function, not by who holds them. A type 1 certificate (API name: Authentication) is
+  used for authentication in KSeF. A type 2 certificate (API name: Offline) is used for issuing
+  invoices in offline mode. One certificate has one type, so you need two certificates for both
+  purposes.
 </Question>
 
 <Question q="What is an authentication token?">

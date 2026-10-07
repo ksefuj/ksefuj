@@ -548,15 +548,15 @@ context:** ksefuj.to — free KSeF XML validator
 **Fact 10.1 — KSeF obligation starts April 1, 2026 — penalties deferred to January 1, 2027**
 
 - **Fact:** The obligation to issue invoices via KSeF applies from **1 April 2026** for all active
-  VAT taxpayers. However, financial penalties (dodatkowe zobowiązanie podatkowe per Art. 106gc) for
+  VAT taxpayers. However, financial penalties (dodatkowe zobowiązanie podatkowe per Art. 106ni) for
   violations will not be enforced until **1 January 2027**.
-- **Source:** Ustawa o VAT, Art. 145m (obligation); Art. 106gc (penalties); Blog
+- **Source:** Ustawa o VAT, Art. 145m (obligation); Art. 106ni (penalties); Blog
   `ksef-od-1-kwietnia-2026.mdx`, §"Co grozi za fakturę wystawioną poza KSeF"
 - **Verbatim:** "Kary za błędy w KSeF zostały odroczone do 1 stycznia 2027 r. Oznacza to, że od 1
   kwietnia 2026 roku obowiązek wystawiania faktur przez KSeF obowiązuje, ale sankcje za jego
   naruszenie zaczną być egzekwowane dopiero od 2027 roku."
 - **Confidence:** HIGH (obligation date); MEDIUM (penalty deferral — cited from internal blog
-  referencing Art. 106gc; not independently verified against Tier 1 text in this extraction)
+  referencing Art. 106ni; not independently verified against Tier 1 text in this extraction)
 - **Ania-relevant:** ✅ Relieves immediate panic — but the article MUST NOT encourage delay
 - **⚠️ Freshness flag:** Review after 1 January 2027
 
@@ -623,9 +623,9 @@ context:** ksefuj.to — free KSeF XML validator
    step-by-step offline QR instructions without verifying against Podręcznik KSeF 2.0 or the Kody QR
    offline specification.
 
-4. **Exact penalty amounts and types** — Art. 106gc is cited as the penalty framework, but specific
+4. **Exact penalty amounts and types** — Art. 106ni is cited as the penalty framework, but specific
    penalty amounts/percentages are not quoted in any processed source. Do NOT state specific penalty
-   amounts. Direct readers to Art. 106gc and a doradca podatkowy.
+   amounts. Direct readers to Art. 106ni and a doradca podatkowy.
 
 5. **Client notification best practices** — No MF source addresses how to notify clients about the
    KSeF transition. The checklist item is practical advice, not a legal obligation. Frame it as
@@ -663,7 +663,7 @@ For the article's "Źródła" footer:
 
 1. **FAQ MF — KSeF 2.0** — https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20
 2. **Ustawa z dnia 11 marca 2004 r. o podatku od towarów i usług** — Art. 106na, 106nda, 106nf,
-   106gc, 145m — Dz. U. z 2025 r., poz. 775 ze zm. —
+   106ni, 145m — Dz. U. z 2025 r., poz. 775 ze zm. —
    https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775
 3. **Rozporządzenie Ministra Finansów z dnia 7 grudnia 2025 r.** w sprawie wyłączeń z obowiązku
    wystawiania faktur ustrukturyzowanych —
@@ -678,7 +678,7 @@ For the article's "Źródła" footer:
 ## Warning: Common Misconceptions
 
 1. **"Kary zaczynają się od 1 kwietnia"** — WRONG. The obligation starts April 1, 2026, but
-   **penalties are deferred to 1 January 2027** (Art. 106gc framework). However, a rejected or
+   **penalties are deferred to 1 January 2027** (Art. 106ni framework). However, a rejected or
    non-KSeF invoice is still legally invalid from day one — deferred penalties ≠ deferred
    obligation.
 

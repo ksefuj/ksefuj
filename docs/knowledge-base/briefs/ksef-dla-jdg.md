@@ -357,8 +357,8 @@ validator
 - **Verbatim:** "Kary za błędy w KSeF zostały odroczone do 1 stycznia 2027 r. Oznacza to, że od 1
   kwietnia 2026 roku obowiązek wystawiania faktur przez KSeF obowiązuje, ale sankcje za jego
   naruszenie zaczną być egzekwowane dopiero od 2027 roku."
-- **Legal basis:** Art. 106gc, Ustawa o VAT (penalties framework)
-- **Confidence:** MEDIUM (from internal blog citing Art. 106gc; the grace period itself is not
+- **Legal basis:** Art. 106ni, Ustawa o VAT (penalties framework)
+- **Confidence:** MEDIUM (from internal blog citing Art. 106ni; the grace period itself is not
   independently verified against Tier 1 source in this extraction)
 - **Ania-relevant:** ✅ Relieves immediate panic — but the article should NOT encourage delay
 - **⚠️ Freshness flag:** Review after 1 January 2027
@@ -620,7 +620,7 @@ validator
    `podstawy-ksef.mdx` states this date, but the underlying article of the Ustawa o VAT is not
    confirmed in this corpus.
 
-3. **Scope of the penalty grace period** — Art. 106gc is cited for penalties; the grace period until
+3. **Scope of the penalty grace period** — Art. 106ni is cited for penalties; the grace period until
    1 January 2027 is stated in the blog without citing a specific amending act. Verify before
    publishing any penalty amounts or specific grace period details.
 
@@ -645,7 +645,7 @@ validator
 For the article's "Źródła" footer:
 
 1. **FAQ MF — KSeF 2.0** — https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20
-2. **Ustawa z dnia 11 marca 2004 r. o podatku od towarów i usług** — Art. 145m, 106gc, 106na,
+2. **Ustawa z dnia 11 marca 2004 r. o podatku od towarów i usług** — Art. 145m, 106ni, 106na,
    106nda, 106nd, 106nf — Dz. U. z 2025 r., poz. 775 ze zm. —
    https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775
 3. **Rozporządzenie Ministra Finansów z dnia 7 grudnia 2025 r.** w sprawie wyłączeń z obowiązku
@@ -660,7 +660,7 @@ For the article's "Źródła" footer:
 ## Warning: Common Misconceptions
 
 1. **"Od 1 kwietnia kary zaczną być naliczane"** — WRONG. The obligation starts April 1, 2026, but
-   **penalties are deferred to 1 January 2027** (Art. 106gc). However, a rejected invoice is still
+   **penalties are deferred to 1 January 2027** (Art. 106ni). However, a rejected invoice is still
    legally non-existent from day one — this is not a safe excuse for non-compliance.
 
 2. **"Jestem na zwolnieniu z VAT, więc mnie to nie dotyczy wcale"** — PARTIALLY WRONG. VAT-exempt

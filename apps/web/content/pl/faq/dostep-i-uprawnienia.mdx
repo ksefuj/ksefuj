@@ -21,31 +21,31 @@ translations:
 </Question>
 
 <Question q="Co to jest ZAW-FA?">
-  ZAW-FA to formularz upoważnienia do korzystania z KSeF w imieniu podatnika. Składa się go w
-  urzędzie skarbowym lub elektronicznie przez e-Urząd Skarbowy i pozwala upoważnić inną osobę — np.
-  księgowego lub biuro rachunkowe — do wystawiania i odbierania faktur w KSeF. Upoważnienie może być
-  ograniczone zakresowo: tylko odczyt, tylko wystawianie lub pełny dostęp.
+  ZAW-FA to papierowy formularz zawiadomienia o nadaniu lub odebraniu uprawnień w KSeF, składany w
+  urzędzie skarbowym. Jest potrzebny tylko wtedy, gdy podatnik nie jest osobą fizyczną i nie ma
+  pieczęci kwalifikowanej albo gdy jego podpis lub pieczęć nie zawierają numeru NIP lub PESEL. W
+  pozostałych przypadkach uprawnienia nadaje się elektronicznie.
 </Question>
 
 <Question q="Jak upoważnić księgowego do KSeF?">
-  Możesz upoważnić księgowego przez złożenie formularza ZAW-FA w urzędzie skarbowym lub bezpośrednio
-  w Aplikacji Podatnika KSeF przez panel uprawnień. Uprawnienie określa, czy księgowy może tylko
-  odczytywać faktury, czy też je wystawiać. Biuro rachunkowe zazwyczaj samo prosi klientów o
-  stosowne upoważnienie — dopytaj swojego księgowego.
+  Uprawnienia nadajesz elektronicznie w Aplikacji Podatnika KSeF 2.0 (panel uprawnień) albo przez
+  API. Formularz ZAW-FA w urzędzie skarbowym jest potrzebny tylko w wyjątkowych sytuacjach, np. gdy
+  nie jesteś osobą fizyczną i nie masz pieczęci kwalifikowanej. Uprawnienie określa, czy księgowy
+  może tylko odczytywać faktury, czy też je wystawiać. Biuro rachunkowe zazwyczaj samo prosi
+  klientów o stosowne upoważnienie — dopytaj swojego księgowego.
 </Question>
 
 <Question q="Co to jest certyfikat KSeF?">
   Certyfikat KSeF to elektroniczne poświadczenie tożsamości używane do uwierzytelniania w API KSeF.
   Jest pobierany z systemu MF i pozwala programom i integratorom logować się do KSeF bez Profilu
-  Zaufanego. Wyróżniamy dwa typy certyfikatów: dla podatnika (typ 1) i dla podmiotu upoważnionego
-  (typ 2).
+  Zaufanego. Typy certyfikatów wynikają z ich funkcji: typ 1 służy do uwierzytelniania w KSeF, typ 2
+  do wystawiania faktur w trybie offline. Jeden certyfikat ma jeden typ.
 </Question>
 
 <Question q="Czym się różni certyfikat typ 1 od typ 2?">
-  Certyfikat typ 1 jest wydawany bezpośrednio dla podatnika (właściciela NIP) i ma najszersze
-  uprawnienia w KSeF. Certyfikat typ 2 jest przeznaczony dla podmiotów działających w imieniu
-  podatnika — np. biur rachunkowych czy systemów ERP obsługujących wielu klientów. Typ 2 zawsze
-  działa w kontekście konkretnego upoważnienia, które musi istnieć w KSeF.
+  Różnią się funkcją, a nie tym, kto je posiada. Certyfikat typ 1 (w API: Authentication) służy do
+  uwierzytelniania w KSeF. Certyfikat typ 2 (w API: Offline) służy do wystawiania faktur w trybie
+  offline. Jeden certyfikat ma jeden typ, więc do obu zastosowań potrzebne są dwa certyfikaty.
 </Question>
 
 <Question q="Co to jest token uwierzytelniający?">

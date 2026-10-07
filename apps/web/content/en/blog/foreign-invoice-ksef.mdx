@@ -1,7 +1,8 @@
 ---
-title: "Foreign invoices in KSeF — how to get it right"
-description: "Invoicing a foreign client through KSeF — EU buyers, non-EU buyers, reverse charge. Ready-to-use XML examples and exact fields to fill in."
+title: "Invoicing a foreign buyer in KSeF"
+description: "EU buyer: KodUE + NrVatUE, not NIP. Non-EU: KodKraju + NrID. Plus the np I, np II, 0 WDT and 0 EX rates and ready-to-use XML examples."
 date: 2026-03-30
+updated: 2026-10-07
 section: blog
 locale: en
 slug: "foreign-invoice-ksef"
@@ -22,37 +23,30 @@ sources:
     url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
   - label: "VIES — VAT number verification"
     url: "https://ec.europa.eu/taxation_customs/vies/"
+  - label: "FA(3) information brochure, p. 92"
+    url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
 ---
 
-In two days — 1 April 2026 — [KSeF becomes mandatory](/en/blog/ksef-from-april-1-2026) for all active VAT taxpayers in Poland. If you have clients abroad, the obligation applies to you just the same. An invoice for a buyer in Berlin, Amsterdam, or New York must go through KSeF — even if that buyer has no Polish NIP (tax identification number) and will never log in to the system.
+An invoice to a foreign buyer goes through KSeF (Poland's National e-Invoicing System) just like a domestic one, even if the buyer has no Polish NIP and will never log in. In the buyer's data you never put a foreign number in the NIP field: for EU companies use `KodUE` + `NrVatUE`, for everyone else `KodKraju` + `NrID`, and when there is no number, `BrakID`.
 
-A foreign buyer has no access to KSeF. You need to send them a readable copy of the invoice separately — by email, by post, however you did it before. It's extra work, but there's no way around it. This article walks you through the correct way to fill in a foreign buyer's details, choose the right VAT rate, and avoid having your invoice rejected.
-
-If your invoicing software handles foreign counterparties — most of these fields will be filled in automatically. But if something goes wrong, or you want to understand why a particular invoice was rejected — you'll find the specifics here.
-
----
+The buyer won't receive the invoice from KSeF, so send them a readable copy (a PDF with the QR code) by email or post. Below: the fields for each buyer type, VAT rates and annotations. KSeF has been [mandatory since 1 April 2026](/en/blog/ksef-from-april-1-2026) for all active VAT taxpayers.
 
 ## EU buyer with a VAT-EU number
 
-This is the most common scenario for freelancers and small businesses: you're invoicing a company in the European Union that holds an active EU VAT number.
+In the Podmiot2 block (the buyer) use the pair `KodUE` + `NrVatUE`, **not NIP**. A foreign number in the NIP field gets the invoice rejected.
 
-In the buyer section (Podmiot2 in the FA(3) schema) you must use the pair of fields `KodUE` + `NrVatUE` — **not NIP**. The NIP field is reserved exclusively for Polish tax identification numbers. A foreign VAT number entered in the NIP field will cause KSeF to reject the invoice.
+- **`KodUE`**: two-letter EU country prefix (`DE`, `NL`, `FR`)
+- **`NrVatUE`**: the VAT number **without the country prefix** (`123456789`, not `DE123456789`)
+- **`Nazwa`**: the buyer's full company name
 
-### Which fields to fill in
-
-- **`KodUE`** — two-letter EU country prefix (e.g. `DE` for Germany, `NL` for the Netherlands, `FR` for France)
-- **`NrVatUE`** — the buyer's VAT number **without the country prefix** (the number only — no leading "DE")
-- **`Nazwa`** — the buyer's full company name
-
-For the buyer's address, provide `KodKraju` (same country code as `KodUE`), `AdresL1` (street and number), and `AdresL2` (postcode and city).
+In the address give `KodKraju` (the same code as in `KodUE`; required), `AdresL1` (street and number) and `AdresL2` (postcode and city).
 
 <Tip>
-  Before you issue the invoice, verify the buyer's EU VAT number in VIES — the European Commission's
-  official database. An inactive number means trouble when settling intra-Community supplies of
-  goods (WDT) or services.
+  Check the number in the European Commission's VIES system before issuing the invoice. An inactive
+  number causes problems with settling WDT (intra-EU supply of goods) or intra-EU services.
 </Tip>
 
-Example — invoice for a company in Germany:
+Example, an invoice to a German company:
 
 <XmlExample copyable>
   ```xml
@@ -73,17 +67,13 @@ Example — invoice for a company in Germany:
   ```
 </XmlExample>
 
-`JST` and `GV` are mandatory fields in every Podmiot2 block in FA(3). For foreign counterparties, always set the value to `2` ("not applicable"). Omitting these fields will trigger a validation error.
+`JST` and `GV` are mandatory in every Podmiot2 block. For foreign buyers enter `2` ("not applicable"), otherwise the invoice fails validation.
 
 <Source href="https://ec.europa.eu/taxation_customs/vies/" label="VIES — VAT number verification" />
 
----
-
 ## EU buyer without a VAT number
 
-Not every EU counterparty has a VAT-EU number. A private individual, a flat-rate freelancer, a company not registered for VAT — in these cases you simply don't have a number to enter.
-
-Instead of `KodUE` + `NrVatUE`, use the field `BrakID` with the value `1`. This means: "the buyer has no tax identification number." The `Nazwa` field remains mandatory.
+A private individual, a freelancer on a flat-rate scheme or a company not registered for VAT has no number to enter. Instead of `KodUE` + `NrVatUE` use `BrakID` = `1` (the buyer has no identification number). `Nazwa` stays mandatory.
 
 <XmlExample copyable>
   ```xml
@@ -104,27 +94,20 @@ Instead of `KodUE` + `NrVatUE`, use the field `BrakID` with the value `1`. This 
 </XmlExample>
 
 <Warning>
-  If your EU buyer doesn't have a VAT-EU number, you cannot apply the `0 WDT` rate on goods or the
-  `np II` rate on intra-Community services. The VAT treatment may be different — consult your
-  accountant about the specific case.
+  Without a VAT-EU number you can't apply the `0 WDT` rate to goods or `np II` to intra-EU services.
+  Taxation rules may differ in that case, so discuss it with your accountant.
 </Warning>
-
----
 
 ## Non-EU buyer
 
-A client in the US, the UK (post-Brexit), Switzerland, Canada — this is a separate category. You don't use `KodUE` or `NrVatUE`, because those fields apply exclusively to EU buyers.
+A client from the USA, Switzerland, Canada or the UK (not in the EU since Brexit) has no `KodUE` or `NrVatUE`. You have two options.
 
-For a non-EU buyer you have two identification options.
+**The buyer has a foreign tax identifier.** Use `KodKraju` + `NrID` in the `DaneIdentyfikacyjne` block. They are two separate sibling elements, not nested.
 
-### Buyer has a foreign tax ID
+- **`KodKraju`**: ISO country code (`US`, `GB`, `CH`, `NO`)
+- **`NrID`**: the foreign identification number (EIN in the US, UTR in the UK, UID in Switzerland)
 
-Use the pair `KodKraju` + `NrID` inside the `DaneIdentyfikacyjne` block. These are two separate, sibling XML elements — not nested inside each other.
-
-- **`KodKraju`** — two-letter ISO country code (e.g. `US`, `GB`, `CH`, `NO`)
-- **`NrID`** — the foreign tax identification number (e.g. EIN in the US, UTR in the UK, UID in Switzerland)
-
-Example — invoice for a company in the US:
+`KodKraju` appears twice: in `DaneIdentyfikacyjne` (tax identification) and in `Adres` (registered address). Both are required.
 
 <XmlExample copyable>
   ```xml
@@ -145,11 +128,7 @@ Example — invoice for a company in the US:
   ```
 </XmlExample>
 
-Note that `KodKraju` appears twice — once in `DaneIdentyfikacyjne` (tax identification context) and once in `Adres` (registered address). These are two separate fields in different sections, and both are required.
-
-### Buyer has no tax ID
-
-Same approach as for an EU buyer without a number — use `BrakID` with the value `1`:
+**The buyer has no identifier.** As with an EU buyer without a number, use `BrakID` = `1`:
 
 <XmlExample copyable>
   ```xml
@@ -160,143 +139,59 @@ Same approach as for an EU buyer without a number — use `BrakID` with the valu
   ```
 </XmlExample>
 
-<Info>
-  The United Kingdom is no longer an EU member state. A UK-based counterparty is a non-EU buyer —
-  use `KodKraju` = `GB` and `NrID`, not `KodUE` + `NrVatUE`.
-</Info>
-
----
-
 ## VAT rates on foreign invoices
 
-This is where mistakes happen most easily. The VAT rate on a foreign invoice depends on **what** you're selling (goods or services) and **to whom** (EU buyer or non-EU buyer).
+The rate depends on **what** you sell (goods or services) and **to whom** (EU or non-EU buyer).
 
-| Transaction type              | Rate (P_12) | Net amount field | When to use                                                                                           |
-| :---------------------------- | :---------- | :--------------- | :---------------------------------------------------------------------------------------------------- |
-| WDT — goods to the EU         | `0 WDT`     | `P_13_6_2`       | Sale of goods to a buyer with a VAT-EU number                                                         |
-| Export of goods               | `0 EX`      | `P_13_6_3`       | Sale of goods to a non-EU buyer                                                                       |
-| Services to EU businesses     | `np II`     | `P_13_9`         | Services under Art. 100 ust. 1 pkt 4 of the VAT Act — the buyer accounts for VAT in their own country |
-| Services to non-EU businesses | `np I`      | `P_13_8`         | Services outside Polish territory (Art. 28b) — the buyer accounts for VAT                             |
+| Transaction type              | Rate (P_12) | Net amount field | When to use                                                                                                        |
+| :---------------------------- | :---------- | :--------------- | :----------------------------------------------------------------------------------------------------------------- |
+| WDT — goods to the EU         | `0 WDT`     | `P_13_6_2`       | Goods sold to a buyer with a VAT-EU number                                                                         |
+| Export of goods               | `0 EX`      | `P_13_6_3`       | Goods sold to a non-EU buyer                                                                                       |
+| Services to EU businesses     | `np II`     | `P_13_9`         | Services under Art. 100(1)(4) of the VAT Act (Art. 28b, B2B to an EU taxpayer); the buyer accounts for VAT at home |
+| Services to non-EU businesses | `np I`      | `P_13_8`         | Supply of goods or services outside Poland, other than `np II` services and OSS                                    |
 
-### What does this look like in practice?
+<Source
+  href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  label="FA(3) information brochure, p. 92: np I and np II rates"
+/>
 
-Building a website for a German client who has a VAT-EU number? → It's a service, the buyer accounts for VAT locally, rate: **`np II`**.
-
-Building a website for a US client? → It's a service outside the EU, rate: **`np I`**.
-
-Shipping a physical product to a client in the Netherlands (with a VAT-EU number)? → That's an intra-Community supply of goods (WDT), rate: **`0 WDT`**.
-
-Shipping a physical product to a client in the UK? → That's an export of goods, rate: **`0 EX`**.
+In practice: a website built for a German client with a VAT-EU number is a service, rate `np II`. The same website for a US client is `np I`. Goods shipped to a Dutch company with a VAT-EU number are a WDT (`0 WDT`), and goods shipped to a UK client are an export (`0 EX`).
 
 <Warning>
-  The rate `oo` (domestic reverse charge) **never** applies to foreign counterparties. For EU and
-  non-EU buyers, use `np I` or `np II`. Using `oo` for a foreign buyer is one of the most common
-  mistakes — and a reason for rejection.
+  The `oo` rate (domestic reverse charge) **never** applies to foreign buyers. It is one of the most
+  common reasons for rejection; for foreign buyers use `np I` or `np II`.
 </Warning>
 
-Rate values in FA(3) are **case-sensitive and space-sensitive**. Correct: `np I`, `np II`, `0 WDT`, `0 EX`. Wrong: `NP I`, `npI`, `0WDT`.
+Rate values in FA(3) are case- and space-sensitive. Correct: `np I`, `np II`, `0 WDT`, `0 EX`. Incorrect: `NP I`, `npI`, `0WDT`.
 
 <Source
   href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
-  label="Polish VAT Act — Art. 28b, place of supply of services"
+  label="VAT Act — Art. 28b, place of supply of services"
 />
 
----
+## Annotations: P_18 and P_18A
 
-## Annotations — what to change for a foreign invoice
+All eight fields of the Adnotacje block are mandatory, even when the value is "not applicable". Two of them are easy to mix up and both matter for foreign invoices:
 
-The Adnotacje (annotations) block in FA(3) contains mandatory declaration fields. Two of them are directly relevant to foreign invoices — and easy to confuse with each other:
+| Field   | Value | Meaning                                                                                      |
+| :------ | :---- | :------------------------------------------------------------------------------------------- |
+| `P_18`  | `1`   | Reverse charge — the buyer accounts for VAT (services at `np I` or `np II`)                  |
+| `P_18`  | `2`   | No reverse charge (e.g. WDT at `0 WDT`, export at `0 EX`)                                    |
+| `P_18A` | `1`   | Split payment (MPP) — amount over PLN 15,000 and goods/services from Annex 15 to the VAT Act |
+| `P_18A` | `2`   | No MPP — the default for foreign transactions                                                |
 
-| Field   | Value | Meaning                                                                                                                |
-| :------ | :---- | :--------------------------------------------------------------------------------------------------------------------- |
-| `P_18`  | `1`   | Reverse charge — the buyer accounts for VAT (services at the `np I` or `np II` rate)                                   |
-| `P_18`  | `2`   | No reverse charge (e.g. WDT at `0 WDT`, exports at `0 EX`)                                                             |
-| `P_18A` | `1`   | Split payment mechanism (MPP) — amount exceeds 15,000 PLN and the goods/services are listed in Annex 15 of the VAT Act |
-| `P_18A` | `2`   | No MPP — the default for foreign transactions                                                                          |
-
-**`P_18` is reverse charge. `P_18A` is split payment (MPP).** These are two entirely different concepts — don't confuse them. MPP applies to domestic payments to a VAT account and has no bearing on foreign transactions.
-
-For most foreign invoices for services: **`P_18` = `1`**, **`P_18A` = `2`**.
-
-For WDT and export of goods: **`P_18` = `2`**, **`P_18A` = `2`**.
-
-<Info>
-  All eight fields in the Adnotacje block are mandatory — even when their value is "not applicable"
-  (value `2` or the relevant negative marker). Omitting any of them will cause a validation error.
-  We've covered the full Adnotacje structure in the article on [most common FA(3) validation
-  errors](/en/blog/most-common-fa3-validation-errors).
-</Info>
+`P_18` is reverse charge, `P_18A` is split payment (MPP), which applies to domestic payments and not to foreign transactions. For services: `P_18` = `1`, `P_18A` = `2`. For WDT and export of goods: `P_18` = `2`, `P_18A` = `2`. We describe the full Adnotacje structure in the article on [the most common FA(3) validation errors](/en/blog/most-common-fa3-validation-errors).
 
 <Source
   href="https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
-  label="FA(3) Information Sheet — §9.6 Annotations"
+  label="FA(3) Information Sheet — §9.6 Adnotacje"
 />
 
----
+## Invoices in a foreign currency
 
-## Foreign-currency invoices and foreign buyers
+You can issue the invoice in any currency (EUR, USD, GBP, CHF); `KodWaluty` takes ISO 4217 codes, and you give net and gross amounts in that currency. One exception: the **VAT amount must be in PLN**, converted at the [NBP average rate](/waluty) from the last business day before the tax point. At `np I`, `np II`, `0 WDT` and `0 EX` the VAT is zero, so no conversion is needed.
 
-You can issue a foreign invoice in any currency — EUR, USD, GBP, CHF. The `KodWaluty` field in FA(3) accepts standard ISO 4217 currency codes. Net and gross amounts are stated in the chosen currency.
+If you're unsure about the buyer fields in your XML file, check them in the [ksefuj.to validator](/) before sending to KSeF. The file never leaves your browser.
 
-There is one exception: **the VAT amount must be expressed in PLN** — converted at the [NBP (National Bank of Poland) mid-rate](/waluty) from the last business day before the tax point. For rates `np I`, `np II`, `0 WDT`, and `0 EX` the VAT amount is zero — so no conversion is needed. That covers the vast majority of foreign invoices.
-
-<Tip>
-  Need the exact NBP rate for your invoice date? The [NBP rate calculator](/waluty) looks it up
-  instantly — enter the date and get the correct mid-rate to use.
-</Tip>
-
----
-
-## Common pitfalls
-
-These are the mistakes that come up again and again on foreign-buyer invoices:
-
-- **Foreign VAT number in the NIP field** — NIP is exclusively a Polish tax ID. For an EU buyer, use `KodUE` + `NrVatUE`; for a non-EU buyer, use `KodKraju` + `NrID`. Putting a foreign number in the NIP field → invoice rejected.
-
-- **Country prefix in the VAT number** — the `NrVatUE` field takes the number only, **without** the `DE`, `NL`, `FR` prefix. The prefix goes separately in the `KodUE` field. Entering `DE123456789` in `NrVatUE` is an error.
-
-- **Missing `KodKraju` in the address** — the `KodKraju` field inside the `Adres` block is required. Without it, the invoice won't pass validation.
-
-- **Forgetting to send a copy to the buyer** — KSeF will not deliver the invoice to a foreign counterparty. You must send a readable copy yourself (a PDF with a QR verification code) by email or post. Without it, the buyer doesn't know the invoice exists.
-
-- **Confusing WDT with export of services** — WDT applies only to goods shipped within the EU (rate `0 WDT`). Services for an EU counterparty are a different category (rate `np II`). Different rates, different net amount fields, different `P_18` value.
-
-- **Using the `oo` rate for a foreign buyer** — `oo` is domestic reverse charge and applies exclusively to transactions within Poland. For foreign counterparties, the correct rate is `np I` or `np II`.
-
-- **Treating the UK as an EU country** — since Brexit, the UK is not in the European Union. A UK counterparty requires `KodKraju` + `NrID`, not `KodUE` + `NrVatUE`.
-
-<Tip>
-  Drop your XML file into the validator at [ksefuj.to](/) before submitting to KSeF — it checks
-  foreign-buyer fields for free. Your file never leaves your browser.
-</Tip>
-
----
-
-## TL;DR
-
-- An invoice for a foreign counterparty **must** go through KSeF — same as a domestic one.
-- A foreign buyer has no access to KSeF — send them a readable copy separately (PDF with QR).
-- EU buyer with a VAT-EU number → `KodUE` + `NrVatUE` (not NIP).
-- EU buyer without a VAT number → `BrakID` = `1`.
-- Non-EU buyer with a tax ID → `KodKraju` + `NrID`.
-- Non-EU buyer without a tax ID → `BrakID` = `1`.
-- Services to EU businesses → rate `np II`, `P_18` = `1`.
-- Services to non-EU businesses → rate `np I`, `P_18` = `1`.
-- WDT (goods to the EU) → rate `0 WDT`, `P_18` = `2`.
-- Export of goods → rate `0 EX`, `P_18` = `2`.
-- **Never** use the `oo` rate for foreign counterparties.
-- Verify the buyer's EU VAT number in [VIES](https://ec.europa.eu/taxation_customs/vies/) before issuing the invoice.
-
----
-
-<Source
-  href="https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
-  label="FA(3) Information Sheet — Ministry of Finance"
-/>
 <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20" label="FAQ MF — KSeF 2.0" />
 <Source href="https://ksef.podatki.gov.pl/" label="MF Tax Explanations — 28.01.2026" />
-<Source
-  href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
-  label="Polish VAT Act"
-/>
-<Source href="https://ec.europa.eu/taxation_customs/vies/" label="VIES — VAT number verification" />
