@@ -75,9 +75,9 @@ const STRETCH_X = 1.5;
 const EQUALISE = 1;
 /** Target contour spacing (px) at the median slope; sets the level count. */
 const TARGET_SPACING = 16;
-/** The steepest slope may be at most this multiple of the median, so min spacing >= target / this. */
 /** Contours never come closer than this (px) at the 99.9th percentile slope. */
 const HARD_MIN_SPACING = 9.5;
+/** The steepest slope may be at most this multiple of the median, so min spacing >= target / this. */
 const MAX_SLOPE_RATIO = 1.6;
 const MAX_RELAX_ROUNDS = 80;
 const RELAX_BLUR_RADIUS = 4;
@@ -443,7 +443,6 @@ function smoothPath(points: Point[]): string {
   return d;
 }
 
-/** Complete SVG document with violet contour lines on a violet-50 panel. */
 /** Contour spacing statistics of the field behind a key, for tests and tuning. */
 export function topographyStats(key: string, width: number, height: number): FieldStats {
   return buildField(key, Math.ceil(width / CELL) + 1, Math.ceil(height / CELL) + 1).stats;
