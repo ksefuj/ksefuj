@@ -70,9 +70,11 @@ KSeF nie wysyła.
 
 **6. Nabywca w międzyczasie**
 
-- Nabywca z krajowym NIP otrzymuje fakturę wyłącznie w KSeF (106nda ust. 3; Tabela). Przed nadaniem
-  numeru sprzedawca może wydać dobrowolne „potwierdzenie transakcji" z dwoma kodami QR (cz. II pkt
-  1.6.6, s. 22-26), niebędące fakturą.
+- Nabywca z krajowym NIP otrzymuje fakturę wyłącznie w KSeF (106nda ust. 3; Tabela). Uwaga: art.
+  106nh ust. 4 odsyła tylko do art. 106nda ust. 4-15; dla niedostępności zasadę podaje Tabela, a
+  odesłanie do ust. 3 dodaje projekt UD477 (art. 1 pkt 2; uzasadnienie: „błąd legislacyjny"). Przed
+  nadaniem numeru sprzedawca może wydać dobrowolne „potwierdzenie transakcji" z dwoma kodami QR (cz.
+  II pkt 1.6.6, s. 22-26), niebędące fakturą.
 - Nabywca z art. 106gb ust. 4 (konsument, zagraniczny, bez NIP, art. 113a) dostaje fakturę w
   uzgodniony sposób z dwoma kodami (OFFLINE i CERTYFIKAT); po nadaniu numeru wystarczy jeden kod z
   numerem.

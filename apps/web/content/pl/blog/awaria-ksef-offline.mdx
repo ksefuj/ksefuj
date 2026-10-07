@@ -55,7 +55,7 @@ Wybór trybu zależy od tego, kto i co ogłosił, a nie od tego, że „coś nie
 | Awaria KSeF                              | tryb awaryjny, art. 106nf | jak wyżej                                                         | 7 dni roboczych od dnia końca awarii podanego w komunikacie o jej końcu | MF w BIP i w oprogramowaniu interfejsowym (ust. 1) |
 | Awaria całkowita                         | art. 106ng                | papier lub faktura elektroniczna, bez wymogu FA(3) i bez kodów QR | faktury nie wysyłasz do KSeF                                            | MF w mediach, gdy BIP jest niemożliwy (ust. 3)     |
 
-Dwa zastrzeżenia do tabeli. Ustawa nie definiuje „dnia roboczego", więc nie zakładaj, że sobota się liczy: wystawiasz we wtorek, wysyłasz najpóźniej w środę. Drugie dotyczy okna 7 dni: jeśli w jego trakcie MF ogłosi kolejną awarię, termin liczy się na nowo (art. 106nf ust. 5), a komunikat o awarii całkowitej wyłącza to okno (ust. 7).
+Dwa zastrzeżenia do tabeli. Ustawa o VAT nie definiuje „dnia roboczego", a MF nie wyjaśniło, czy jest nim sobota. Przykład bez tej wątpliwości: wystawiasz we wtorek, wysyłasz najpóźniej w środę. Drugie dotyczy okna 7 dni: jeśli w jego trakcie MF ogłosi kolejną awarię, termin liczy się na nowo (art. 106nf ust. 5), a komunikat o awarii całkowitej wyłącza to okno (ust. 7).
 
 <Source
   href="https://ksef.podatki.gov.pl/media/xp2dhszg/tabela-tryby-wystawiania-faktur-24022026.pdf"
@@ -81,7 +81,7 @@ W trybie awaryjnym i podczas niedostępności robisz to samo co w offline24, ale
 
 Faktura offline24 wystawiona tuż przed ogłoszeniem awarii podlega art. 106nha. Jeśli ogłoszono zwykłą awarię (art. 106ne ust. 1), stosuje się terminy z art. 106nf. Jeśli ogłoszono awarię całkowitą (ust. 3), takiej faktury do KSeF nie wysyłasz.
 
-Awaria całkowita jest wyjątkiem. Faktury z tego okresu nie trafiają do KSeF, a w pliku JPK oznacza się je BFK. Faktura offline24 lub z niedostępności ma w JPK znacznik DI tylko wtedy, gdy w dniu składania pliku nie ma jeszcze numeru KSeF. Gdy numer już jest, ujmujesz ją z numerem (NrKSeF), a wcześniejsze DI poprawiasz na numer. Faktury z trybu awaryjnego (art. 106nf) dostają znacznik OFF.
+Awaria całkowita jest wyjątkiem. Faktury z tego okresu nie trafiają do KSeF, a w pliku JPK oznacza się je BFK. Faktura offline24 lub z niedostępności ma w JPK znacznik DI tylko wtedy, gdy w dniu składania pliku nie ma jeszcze numeru KSeF. Gdy numer już jest, ujmujesz ją z numerem (NrKSeF), a wcześniejsze DI poprawiasz na numer. Faktura z trybu awaryjnego (art. 106nf), która w dniu składania pliku nie ma numeru KSeF, dostaje znacznik OFF.
 
 <Source
   href="https://www.podatki.gov.pl/media/wgbkrejs/broszura-jpk_vat-z-deklaracj%C4%85-od-1-lutego-2026-r.pdf"
@@ -90,9 +90,9 @@ Awaria całkowita jest wyjątkiem. Faktury z tego okresu nie trafiają do KSeF, 
 
 ## Skąd wiedzieć, że to awaria
 
-Ustawa wskazuje BIP i oprogramowanie interfejsowe (awaria), BIP (niedostępność) oraz środki masowego przekazu (awaria całkowita). MF udostępnia też Latarnię, publiczne API bez autoryzacji ze statusem AVAILABLE, MAINTENANCE, FAILURE lub TOTAL_FAILURE. Nie znaleźliśmy dokumentu MF, który nazywałby Latarnię „oprogramowaniem interfejsowym" z ustawy, więc traktuj ją jako pomoc, a nie jako podstawę prawną.
+Ustawa wskazuje BIP i oprogramowanie interfejsowe (awaria), BIP (niedostępność) oraz środki społecznego przekazu (awaria całkowita). MF udostępnia też Latarnię, publiczne API bez autoryzacji ze statusem AVAILABLE, MAINTENANCE, FAILURE lub TOTAL_FAILURE. Nie znaleźliśmy dokumentu MF, który nazywałby Latarnię „oprogramowaniem interfejsowym" z ustawy, więc traktuj ją jako pomoc, a nie jako podstawę prawną.
 
-Na stronie „Komunikaty techniczne" MF publikuje też komunikaty serwisowe, na przykład o utrudnieniach w Aplikacji Podatnika. Art. 106ne tej strony nie wymienia, więc taki komunikat sam nie przesądza o awarii w rozumieniu ustawy. Gdy masz wątpliwości, wystaw w offline24, bo ten tryb nie wymaga ogłoszenia.
+Na stronie „Komunikaty techniczne" MF publikuje też komunikaty serwisowe, na przykład o utrudnieniach w Aplikacji Podatnika. Art. 106ne tej strony nie wymienia, a MF nie wyjaśniło, czy taki komunikat jest ogłoszeniem awarii w rozumieniu ustawy. Gdy masz wątpliwości, wystaw w offline24, bo ten tryb nie wymaga ogłoszenia.
 
 <Source href="https://github.com/CIRFMF/ksef-latarnia" label="Latarnia KSeF, repozytorium MF" />
 <Source
@@ -104,11 +104,11 @@ Na stronie „Komunikaty techniczne" MF publikuje też komunikaty serwisowe, na 
 
 Ustawa tego nie reguluje, wynika to z Podręcznika KSeF 2.0, cz. II. Jeśli weryfikacja pliku wypadnie negatywnie, faktura nie dostaje numeru KSeF i według MF „nie została wystawiona". Sprawdzasz błąd, poprawiasz dane i wysyłasz ponownie. Nie edytujesz i nie usuwasz faktury w KSeF, a błąd na przyjętej fakturze poprawia się fakturą korygującą ([jak ją wystawić](/blog/faktura-korygujaca-ksef)). KSeF nie sprawdza arytmetyki, więc rachunek sprawdź przed wysyłką.
 
-Nie ma natomiast jednoznacznej wykładni, jaki skutek ma odrzucenie, które zobaczysz po terminie z art. 106nda ust. 2. Nie wysyłaj w ostatniej minucie: wyślij zaraz po powrocie systemu, żeby zostawić zapas na poprawkę.
+MF nie wyjaśniło natomiast, jaki skutek ma odrzucenie, które zobaczysz po terminie z art. 106nda ust. 2. Nie wysyłaj w ostatniej minucie: wyślij zaraz po powrocie systemu, żeby zostawić zapas na poprawkę.
 
 ## Co dostaje nabywca w międzyczasie
 
-W offline24 i podczas niedostępności nabywca z krajowym NIP dostaje fakturę wyłącznie w KSeF (art. 106nda ust. 3, art. 106nh ust. 4). Zanim fakturę przyjmie system, możesz mu wydać dobrowolne „potwierdzenie transakcji" z dwoma kodami QR. To nie jest faktura. W trybie awaryjnym każdy nabywca dostaje fakturę w sposób z nim uzgodniony (art. 106nf ust. 2), z kodami jak w offline24, jeśli nie idzie przez KSeF (ust. 3).
+W offline24 i podczas niedostępności nabywca z krajowym NIP dostaje fakturę wyłącznie w KSeF (art. 106nda ust. 3). Dla niedostępności podaje to tabela MF, bo art. 106nh ust. 4 nie odsyła do ust. 3. To odesłanie dopisuje dopiero projekt UD477. Zanim fakturę przyjmie system, możesz mu wydać dobrowolne „potwierdzenie transakcji" z dwoma kodami QR. To nie jest faktura. W trybie awaryjnym każdy nabywca dostaje fakturę w sposób z nim uzgodniony (art. 106nf ust. 2), z kodami jak w offline24, jeśli nie idzie przez KSeF (ust. 3).
 
 Konsument, podmiot zagraniczny lub nabywca bez NIP (art. 106gb ust. 4) dostaje fakturę w uzgodniony sposób, z kodami OFFLINE i CERTYFIKAT. Po nadaniu numeru KSeF wystarczy jeden kod z tym numerem.
 

@@ -55,7 +55,7 @@ Which mode you use depends on who announced what, not on the fact that "somethin
 | KSeF outage                       | emergency mode, art. 106nf | as above                                                | 7 working days from the end of the outage stated in the end notice | MF in the BIP and interface software (para. 1)            |
 | Total failure                     | art. 106ng                 | paper or electronic invoice, no FA(3) rule, no QR codes | you do not send the invoice to KSeF                                | MF in the mass media when the BIP is impossible (para. 3) |
 
-Two caveats. The Act does not define a "working day", so do not assume a Saturday counts: issue on Tuesday, send by Wednesday. The second concerns the 7-day window: if MF announces another outage during it, the deadline is counted afresh (art. 106nf para. 5), and a total-failure notice switches the window off (para. 7).
+Two caveats. The VAT Act does not define a "working day", and MF has not said whether Saturday is one. An example without that doubt: issue on Tuesday, send by Wednesday. The second concerns the 7-day window: if MF announces another outage during it, the deadline is counted afresh (art. 106nf para. 5), and a total-failure notice switches the window off (para. 7).
 
 <Source
   href="https://ksef.podatki.gov.pl/media/xp2dhszg/tabela-tryby-wystawiania-faktur-24022026.pdf"
@@ -81,7 +81,7 @@ In emergency mode and during unavailability you do the same as in offline24, but
 
 An offline24 invoice issued just before an outage is announced falls under art. 106nha. If an ordinary outage was announced (art. 106ne para. 1), the art. 106nf deadlines apply. If a total failure was announced (para. 3), you do not send that invoice to KSeF.
 
-Total failure is the exception. Invoices from that period do not go to KSeF, and in the JPK file they are marked BFK. An offline24 or unavailability invoice carries the DI marker in the JPK file only if it has no KSeF number on the day you file. If it already has one, you report it with the number (NrKSeF) and correct an earlier DI to the number. Emergency-mode invoices (art. 106nf) get the OFF marker.
+Total failure is the exception. Invoices from that period do not go to KSeF, and in the JPK file they are marked BFK. An offline24 or unavailability invoice carries the DI marker in the JPK file only if it has no KSeF number on the day you file. If it already has one, you report it with the number (NrKSeF) and correct an earlier DI to the number. An emergency-mode invoice (art. 106nf) that has no KSeF number on the day you file gets the OFF marker.
 
 <Source
   href="https://www.podatki.gov.pl/media/wgbkrejs/broszura-jpk_vat-z-deklaracj%C4%85-od-1-lutego-2026-r.pdf"
@@ -92,7 +92,7 @@ Total failure is the exception. Invoices from that period do not go to KSeF, and
 
 The Act points to the BIP and the interface software (outage), the BIP (unavailability) and the mass media (total failure). MF also runs Latarnia, a public API without authorisation that returns AVAILABLE, MAINTENANCE, FAILURE or TOTAL_FAILURE. We found no MF document that calls Latarnia the Act's "interface software", so treat it as an aid, not as a legal basis.
 
-MF also publishes service notices on its "technical notices" page, for example about disruption in the Aplikacja Podatnika. Art. 106ne does not name that page, so such a notice does not by itself decide that there is an outage within the meaning of the Act. If in doubt, issue in offline24, because that mode needs no announcement.
+MF also publishes service notices on its "technical notices" page, for example about disruption in the Aplikacja Podatnika. Art. 106ne does not name that page, and MF has not said whether such a notice counts as announcing an outage within the meaning of the Act. If in doubt, issue in offline24, because that mode needs no announcement.
 
 <Source href="https://github.com/CIRFMF/ksef-latarnia" label="KSeF Latarnia, MF repository" />
 <Source
@@ -104,11 +104,11 @@ MF also publishes service notices on its "technical notices" page, for example a
 
 The Act does not regulate this; it follows from the KSeF 2.0 Handbook, part II. If file verification fails, the invoice gets no KSeF number and, in MF's words, "has not been issued". You check the error, fix the data and send again. You cannot edit or delete an invoice in KSeF, and an error on an accepted invoice is fixed with a corrective invoice ([how to issue one](/en/blog/corrective-invoice-ksef)). KSeF does not check arithmetic, so check the sums before sending.
 
-There is no clear interpretation of what follows if the rejection reaches you after the art. 106nda para. 2 deadline. Do not send at the last minute: send as soon as the system is back, so you keep time for a fix.
+MF has not explained what follows if the rejection reaches you after the art. 106nda para. 2 deadline. Do not send at the last minute: send as soon as the system is back, so you keep time for a fix.
 
 ## What the buyer gets in the meantime
 
-In offline24 and during unavailability a buyer with a Polish NIP receives the invoice only in KSeF (art. 106nda para. 3, art. 106nh para. 4). Before the system accepts it, you may give them a voluntary "transaction confirmation" with two QR codes. It is not an invoice. In emergency mode every buyer receives the invoice in the agreed way (art. 106nf para. 2), with the codes as in offline24 if it does not go through KSeF (para. 3).
+In offline24 and during unavailability a buyer with a Polish NIP receives the invoice only in KSeF (art. 106nda para. 3). For unavailability this comes from the MF table, because art. 106nh para. 4 does not refer to para. 3. Draft UD477 is what adds that reference. Before the system accepts it, you may give them a voluntary "transaction confirmation" with two QR codes. It is not an invoice. In emergency mode every buyer receives the invoice in the agreed way (art. 106nf para. 2), with the codes as in offline24 if it does not go through KSeF (para. 3).
 
 A consumer, a foreign buyer or a buyer without a NIP (art. 106gb para. 4) receives the invoice in the agreed way, with the OFFLINE and CERTYFIKAT codes. Once the KSeF number is assigned, one code with that number is enough.
 
