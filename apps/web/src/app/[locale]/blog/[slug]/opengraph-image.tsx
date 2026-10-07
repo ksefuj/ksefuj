@@ -1,8 +1,10 @@
-import { ImageResponse } from "next/og";
-import { getContentItemWithFallback } from "@/lib/content";
-import { contentType, ogLayout, size } from "@/lib/og-image";
+import { getArticleCard } from "@/lib/og-card";
+import { articleParams } from "@/lib/og-static-params";
+import { contentType, ogResponse, size } from "@/lib/og-image";
 
 export { size, contentType };
+
+export const generateStaticParams = articleParams("blog");
 
 interface Props {
   params: Promise<{ locale: string; slug: string }>;
@@ -10,8 +12,11 @@ interface Props {
 
 export default async function Image({ params }: Props) {
   const { locale, slug } = await params;
-  const result = await getContentItemWithFallback(locale, "blog", slug);
+  const result = await getArticleCard(locale, "blog", slug);
 
-  const title = result?.item.frontmatter.title ?? "ksefuj.to";
-  return new ImageResponse(ogLayout({ title }), size);
+  return ogResponse({
+    title: result?.title ?? "ksefuj.to",
+    patternKey: result?.patternKey ?? slug,
+    topicLabel: result?.topicLabel,
+  });
 }
