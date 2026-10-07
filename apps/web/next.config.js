@@ -27,7 +27,7 @@ const nextConfig = {
   // @vercel/nft cannot trace dynamic readFileSync(join(process.cwd(), ...)) paths,
   // so we must declare the file explicitly.
   outputFileTracingIncludes: {
-    "/**": ["./public/logo-og.svg"],
+    "/**": ["./public/logo-og.svg", "./assets/fonts/*.ttf"],
   },
   async redirects() {
     return [

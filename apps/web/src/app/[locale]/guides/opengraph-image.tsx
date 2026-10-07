@@ -1,8 +1,10 @@
-import { ImageResponse } from "next/og";
 import { getTranslations } from "next-intl/server";
-import { contentType, ogLayout, size } from "@/lib/og-image";
+import { localeParams } from "@/lib/og-static-params";
+import { contentType, ogResponse, size } from "@/lib/og-image";
 
 export { size, contentType };
+
+export const generateStaticParams = localeParams;
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -12,5 +14,5 @@ export default async function Image({ params }: Props) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "content.guides" });
 
-  return new ImageResponse(ogLayout({ title: t("ogImageTitle") }), size);
+  return ogResponse({ title: t("ogImageTitle"), patternKey: "guides" });
 }
