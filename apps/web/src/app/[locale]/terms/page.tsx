@@ -86,7 +86,7 @@ export default async function TermsPage({ params }: Props) {
 
           <div className="mt-12 pt-8 border-t border-slate-200">
             <Link
-              href={`/${locale}`}
+              href={locale === "pl" ? "/" : `/${locale}`}
               className="text-violet-600 hover:text-violet-700 transition-colors text-sm"
             >
               ← ksefuj.to

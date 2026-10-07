@@ -91,7 +91,7 @@ const content: Record<string, { title: string; paragraphs: ReactNode[] }> = {
         itself is the right one, though, nobody checks: a correctly formatted but completely wrong
         number sails through without a word. A wrong rate will not stop the invoice from being
         accepted, but it can lead to an <strong>incorrect VAT settlement</strong>. The{" "}
-        <Link href="/">ksefuj.to</Link> validator checks this value as an extra layer of control —
+        <Link href="/en">ksefuj.to</Link> validator checks this value as an extra layer of control —
         it compares it against the NBP rate from the day that actually applies to your invoice,
         before the invoice reaches the tax office.
       </>,
@@ -139,7 +139,7 @@ const content: Record<string, { title: string; paragraphs: ReactNode[] }> = {
         сам курс — цього вже ніхто не перевіряє: правильно записане, але геть хибне число пройде без
         жодного слова. Помилковий курс не блокує прийняття рахунку-фактури до системи, але може
         призвести до <strong>неправильного розрахунку ПДВ</strong>. Валідатор{" "}
-        <Link href="/">ksefuj.to</Link> перевіряє це значення як додатковий рівень контролю —
+        <Link href="/uk">ksefuj.to</Link> перевіряє це значення як додатковий рівень контролю —
         порівнює його з курсом NBP за день, який справді стосується твого рахунку, ще до того, як
         рахунок потрапить до податкової.
       </>,

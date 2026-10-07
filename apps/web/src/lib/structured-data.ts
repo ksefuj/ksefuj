@@ -8,6 +8,10 @@ const PUBLISHER = {
   url: BASE_URL,
 } as const;
 
+function absoluteUrl(urlOrPath: string): string {
+  return urlOrPath.startsWith("http") ? urlOrPath : `${BASE_URL}${urlOrPath}`;
+}
+
 /**
  * Generate BlogPosting JSON-LD structured data for blog posts.
  */
@@ -24,7 +28,10 @@ export function buildArticleSchema(
     datePublished: frontmatter.date,
     dateModified: frontmatter.updated ?? frontmatter.date,
     url: `${BASE_URL}${urlPath}`,
-    image: `${BASE_URL}${urlPath}/opengraph-image`,
+    mainEntityOfPage: { "@type": "WebPage", "@id": `${BASE_URL}${urlPath}` },
+    image: frontmatter.seo?.ogImage
+      ? absoluteUrl(frontmatter.seo.ogImage)
+      : `${BASE_URL}${urlPath}/opengraph-image`,
     inLanguage: locale,
     author: PUBLISHER,
     publisher: PUBLISHER,
@@ -61,24 +68,46 @@ export function buildWebApplicationSchema(
 }
 
 /**
- * Generate HowTo JSON-LD structured data for guides.
+ * Generate Article JSON-LD structured data for guides.
+ * (HowTo needs explicit step markup that our free-form MDX guides don't expose.)
  */
-export function buildHowToSchema(
+export function buildGuideSchema(
   frontmatter: Frontmatter,
   urlPath: string,
   locale: string,
 ): Record<string, unknown> {
   return {
     "@context": "https://schema.org",
-    "@type": "HowTo",
-    name: frontmatter.title,
+    "@type": "Article",
+    headline: frontmatter.title,
     description: frontmatter.description,
+    datePublished: frontmatter.date,
+    dateModified: frontmatter.updated ?? frontmatter.date,
     url: `${BASE_URL}${urlPath}`,
-    image: `${BASE_URL}${urlPath}/opengraph-image`,
+    mainEntityOfPage: { "@type": "WebPage", "@id": `${BASE_URL}${urlPath}` },
+    image: frontmatter.seo?.ogImage
+      ? absoluteUrl(frontmatter.seo.ogImage)
+      : `${BASE_URL}${urlPath}/opengraph-image`,
     inLanguage: locale,
     author: PUBLISHER,
     publisher: PUBLISHER,
-    datePublished: frontmatter.date,
-    dateModified: frontmatter.updated ?? frontmatter.date,
+  };
+}
+
+/**
+ * Generate BreadcrumbList JSON-LD. Items are ordered root to leaf; paths are site-relative.
+ */
+export function buildBreadcrumbSchema(
+  items: { name: string; path: string }[],
+): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: `${BASE_URL}${item.path}`,
+    })),
   };
 }

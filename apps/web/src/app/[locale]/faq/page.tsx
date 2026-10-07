@@ -27,13 +27,10 @@ function extractFaqItems(content: string): Array<{ question: string; answer: str
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const [tMeta, tContent] = await Promise.all([
-    getTranslations({ locale, namespace: "meta" }),
-    getTranslations({ locale, namespace: "content.faq" }),
-  ]);
+  const tContent = await getTranslations({ locale, namespace: "content.faq" });
 
   const canonical = locale === "pl" ? "/faq" : `/${locale}/faq`;
-  const title = `${tContent("title")} — ${tMeta("title")}`;
+  const title = `${tContent("title")} — ksefuj.to`;
   const description = tContent("metaDescription");
 
   return {
