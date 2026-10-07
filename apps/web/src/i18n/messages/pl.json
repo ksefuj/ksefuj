@@ -214,10 +214,9 @@
       "ogImageTitle": "Poradniki — krok po kroku przez KSeF"
     },
     "topics": {
-      "deadlines": "Terminy i start",
-      "access": "Logowanie i dostęp",
-      "invoicing": "Wystawianie faktur",
-      "special-cases": "Szczególne sytuacje",
+      "deadlines": "Obowiązek, terminy i kary",
+      "access": "Logowanie i uprawnienia",
+      "invoicing": "Wystawianie i odbieranie faktur",
       "errors": "Błędy i walidacja"
     },
     "layout": {

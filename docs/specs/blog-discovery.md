@@ -27,27 +27,29 @@ Non-goals: pagination (not needed under ~40 items), search, comments, analytics 
 Add a required `topic` field to the frontmatter of every blog post and guide. One topic per item,
 from a closed list. Keys are English and stable; labels are i18n strings.
 
-| Key             | PL label            | EN label                      | UK label             |
-| --------------- | ------------------- | ----------------------------- | -------------------- |
-| `deadlines`     | Terminy i start     | Deadlines and getting started | Терміни і старт      |
-| `access`        | Logowanie i dostęp  | Login and access              | Вхід і доступ        |
-| `invoicing`     | Wystawianie faktur  | Issuing invoices              | Виставлення рахунків |
-| `special-cases` | Szczególne sytuacje | Special situations            | Особливі ситуації    |
-| `errors`        | Błędy i walidacja   | Errors and validation         | Помилки і валідація  |
+| Key         | PL label                        | EN label                             | UK label                         |
+| ----------- | ------------------------------- | ------------------------------------ | -------------------------------- |
+| `deadlines` | Obowiązek, terminy i kary       | Obligations, deadlines and penalties | Обов'язок, терміни і штрафи      |
+| `access`    | Logowanie i uprawnienia         | Login and permissions                | Вхід і повноваження              |
+| `invoicing` | Wystawianie i odbieranie faktur | Issuing and receiving invoices       | Виставлення й отримання рахунків |
+| `errors`    | Błędy i walidacja               | Errors and validation                | Помилки і валідація              |
+
+Aligned with MF FAQ categories (Zasady obowiązywania, Uprawnienia i autoryzacja, Wystawianie i
+otrzymywanie faktur); add `korekty` or `offline` once either has 3+ posts.
 
 EN/UK labels may be refined by the localizer; keys may not change.
 
 Assignment (PL slug; translations take the same topic as their PL source):
 
 - `deadlines`: blog/ksef-od-1-kwietnia-2026, blog/ksef-ruszyl, blog/ksef-checklist-przygotowanie,
-  blog/ksef-limit-10000-zl, blog/koniec-limitu-10000-zl, blog/kary-ksef-2027-2028
+  blog/ksef-limit-10000-zl, blog/koniec-limitu-10000-zl, blog/kary-ksef-2027-2028,
+  blog/zwolniony-z-vat-ksef, blog/ksef-dla-jdg
 - `access`: blog/certyfikaty-vs-tokeny-ksef, blog/tokeny-ksef-po-2026, guides/logowanie-ksef,
   guides/uprawnienia-ksef-ksiegowa
 - `invoicing`: blog/faktura-korygujaca-ksef, blog/faktura-zagraniczna-ksef,
   blog/faktura-z-kasy-fiskalnej-ksef-2027, blog/numer-ksef-w-przelewie,
-  guides/aplikacja-podatnika-ksef-pierwsza-faktura, guides/pierwsza-faktura-fa3
-- `special-cases`: blog/zwolniony-z-vat-ksef, blog/ksef-dla-jdg, blog/falszywe-faktury-ksef,
-  guides/awaria-ksef-offline
+  guides/aplikacja-podatnika-ksef-pierwsza-faktura, guides/pierwsza-faktura-fa3,
+  blog/falszywe-faktury-ksef, guides/awaria-ksef-offline
 - `errors`: blog/najczestsze-bledy-walidacji-fa3, blog/ksef-scisla-walidacja-xml,
   blog/fa2-vs-fa3-ksef
 

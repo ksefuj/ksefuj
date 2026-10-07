@@ -214,10 +214,9 @@
       "ogImageTitle": "Guides — step by step through KSeF"
     },
     "topics": {
-      "deadlines": "Deadlines and getting started",
-      "access": "Login and access",
-      "invoicing": "Issuing invoices",
-      "special-cases": "Special situations",
+      "deadlines": "Obligations, deadlines and penalties",
+      "access": "Login and permissions",
+      "invoicing": "Issuing and receiving invoices",
       "errors": "Errors and validation"
     },
     "layout": {

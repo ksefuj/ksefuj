@@ -3,13 +3,7 @@
  * Keys are stable English identifiers; labels live in i18n under `content.topics.<key>`.
  * Imported by `scripts/validate-seo.ts`, so keep this file free of runtime dependencies.
  */
-export const CONTENT_TOPICS = [
-  "deadlines",
-  "access",
-  "invoicing",
-  "special-cases",
-  "errors",
-] as const;
+export const CONTENT_TOPICS = ["deadlines", "access", "invoicing", "errors"] as const;
 
 export type ContentTopic = (typeof CONTENT_TOPICS)[number];
 

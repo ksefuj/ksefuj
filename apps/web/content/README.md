@@ -98,7 +98,7 @@ updated: 2026-04-01
 section: blog
 locale: pl
 slug: "wprowadzenie-do-ksef"
-topic: "special-cases"
+topic: "invoicing"
 tags: ["KSeF", "JDG", "Freelancer"]
 translations:
   en: "introduction-to-ksef"
@@ -133,13 +133,14 @@ Every blog post and guide has exactly one `topic`. Translations use the same top
 source. The list is closed: keys are English and stable, labels are i18n strings
 (`content.topics.*`), and the single source of truth in code is `apps/web/src/lib/topics.ts`.
 
-| Key             | PL label            | When to use it                                                  |
-| --------------- | ------------------- | --------------------------------------------------------------- |
-| `deadlines`     | Terminy i start     | Dates, limits, penalties, getting ready for KSeF                |
-| `access`        | Logowanie i dostęp  | Login, tokens, certificates, permissions                        |
-| `invoicing`     | Wystawianie faktur  | Issuing, correcting and handling invoices in KSeF               |
-| `special-cases` | Szczególne sytuacje | Exemptions, JDG, outages, fraud, anything outside the main flow |
-| `errors`        | Błędy i walidacja   | Validation errors, FA(3) schema and strict-XML rules            |
+| Key         | PL label                        | When to use it                                                         |
+| ----------- | ------------------------------- | ---------------------------------------------------------------------- |
+| `deadlines` | Obowiązek, terminy i kary       | Who must use KSeF and when: dates, limits, penalties, exemptions, JDG  |
+| `access`    | Logowanie i uprawnienia         | Login, tokens, certificates, permissions                               |
+| `invoicing` | Wystawianie i odbieranie faktur | Issuing, receiving and correcting invoices, outages and offline, fraud |
+| `errors`    | Błędy i walidacja               | Validation errors, FA(3) schema and strict-XML rules                   |
+
+Aligned with MF FAQ categories; add `korekty` or `offline` once either has 3+ posts.
 
 Pick the subject the reader's question is about, not the first tag. A new topic needs a code change
 (the list, labels in all three locales), so do not invent one in a post.
