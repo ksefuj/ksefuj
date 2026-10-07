@@ -1077,12 +1077,15 @@ function buildDigest(date: string, health: HealthData, gsc: GscData): string {
     "Mobile usability / rich result issues",
     insp.flatMap((i) => {
       const out: string[] = [];
-      if (i.mobileUsability?.verdict && i.mobileUsability.verdict !== "PASS") {
+      // Only FAIL/PARTIAL are findings. Google retired the mobile usability report in Dec 2023, so
+      // that verdict now comes back VERDICT_UNSPECIFIED for every URL; NEUTRAL means nothing to test.
+      const failed = (v?: string) => v === "FAIL" || v === "PARTIAL";
+      if (failed(i.mobileUsability?.verdict)) {
         out.push(
           `${i.url}: mobile usability ${i.mobileUsability.verdict} ${JSON.stringify(i.mobileUsability.issues ?? [])}`,
         );
       }
-      if (i.richResults?.verdict && i.richResults.verdict !== "PASS") {
+      if (failed(i.richResults?.verdict)) {
         out.push(`${i.url}: rich results ${i.richResults.verdict}`);
       }
       return out;
