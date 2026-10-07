@@ -1,18 +1,23 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SectionContainer } from "@/components/section-container";
 import { LanguagePicker } from "../language-picker";
-import { buildContentPath, listContentItemsUnified } from "@/lib/content";
+import { ContentCard } from "@/components/content-card";
+import { type FilterChip, FilterChips } from "@/components/filter-chips";
+import { listContentItemsUnified } from "@/lib/content";
+import { CONTENT_TOPICS, isContentTopic } from "@/lib/topics";
+import { buildListingHref, parseListingFilters } from "@/lib/listing-filters";
 
 interface Props {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{ topic?: string | string[] }>;
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { locale } = await params;
+export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
+  const [{ locale }, query] = await Promise.all([params, searchParams]);
+  const { topic } = parseListingFilters(query);
   const tContent = await getTranslations({ locale, namespace: "content.guides" });
 
   const canonical = locale === "pl" ? "/guides" : `/${locale}/guides`;
@@ -22,6 +27,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title,
     description,
+    // Filtered views are thin duplicates of the main listing: noindex, canonical to /guides.
+    ...(topic ? { robots: { index: false, follow: true } } : {}),
     alternates: {
       canonical,
       languages: {
@@ -45,19 +52,46 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function GuidesListPage({ params }: Props) {
-  const { locale } = await params;
-  const [guides, t] = await Promise.all([
+export default async function GuidesListPage({ params, searchParams }: Props) {
+  const [{ locale }, query] = await Promise.all([params, searchParams]);
+  const { topic: activeTopic } = parseListingFilters(query);
+  const [allGuides, t] = await Promise.all([
     listContentItemsUnified(locale, "guides"),
     getTranslations({ locale, namespace: "content" }),
   ]);
+
+  const basePath = locale === "pl" ? "/guides" : `/${locale}/guides`;
+  const guides = activeTopic
+    ? allGuides.filter((g) => g.frontmatter.topic === activeTopic)
+    : allGuides;
+
+  const topicChips: FilterChip[] = [
+    {
+      key: "all",
+      label: t("discovery.allTopics"),
+      href: basePath,
+      active: !activeTopic,
+      event: "topic_filter_selected",
+      eventProps: { locale, section: "guides", topic: "all" },
+    },
+    ...CONTENT_TOPICS.filter((topic) =>
+      allGuides.some((g) => isContentTopic(g.frontmatter.topic) && g.frontmatter.topic === topic),
+    ).map((topic) => ({
+      key: topic,
+      label: t(`topics.${topic}`),
+      href: buildListingHref(basePath, { topic }),
+      active: activeTopic === topic,
+      event: "topic_filter_selected",
+      eventProps: { locale, section: "guides", topic },
+    })),
+  ];
 
   return (
     <>
       <SiteHeader locale={locale} languagePicker={<LanguagePicker currentLocale={locale} />} />
       <main className="min-h-screen">
         <SectionContainer>
-          <div className="space-y-12">
+          <div className="space-y-10">
             <div className="space-y-3">
               <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900">
                 {t("guides.title")}
@@ -65,32 +99,22 @@ export default async function GuidesListPage({ params }: Props) {
               <p className="text-lg text-slate-600">{t("guides.description")}</p>
             </div>
 
+            <FilterChips chips={topicChips} label={t("discovery.topicFilterLabel")} />
+
             {guides.length === 0 ? (
               <p className="text-slate-500">{t("guides.empty")}</p>
             ) : (
               <div className="grid gap-6 sm:grid-cols-2">
-                {guides.map((guide) => {
-                  const href = buildContentPath(locale, "guides", guide.frontmatter.slug);
-                  return (
-                    <Link
-                      key={guide.frontmatter.slug}
-                      href={href}
-                      className="group block rounded-2xl border border-slate-200 bg-white p-6 hover:border-violet-200 hover:shadow-md transition-all"
-                    >
-                      <div className="flex flex-wrap items-center gap-2 mb-3">
-                        <span className="text-xs text-slate-400">
-                          {t("blog.readingTime", { minutes: guide.readingTime })}
-                        </span>
-                      </div>
-                      <h2 className="text-xl font-bold text-slate-900 group-hover:text-violet-700 transition-colors leading-snug mb-2">
-                        {guide.frontmatter.title}
-                      </h2>
-                      <p className="text-sm text-slate-600 line-clamp-2">
-                        {guide.frontmatter.description}
-                      </p>
-                    </Link>
-                  );
-                })}
+                {guides.map((guide) => (
+                  <ContentCard
+                    key={guide.plSlug}
+                    item={guide}
+                    locale={locale}
+                    section="guides"
+                    headingLevel="h2"
+                    hideSectionMarker
+                  />
+                ))}
               </div>
             )}
           </div>

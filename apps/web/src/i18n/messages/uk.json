@@ -219,6 +219,14 @@
       "invoicing": "Виставлення й отримання рахунків",
       "errors": "Помилки і валідація"
     },
+    "discovery": {
+      "readNext": "Читай далі",
+      "topicFilterLabel": "Фільтр за темою",
+      "allTopics": "Усі теми",
+      "guide": "Порадник",
+      "guidesStrip": "Покрокові порадники",
+      "languageFilterLabel": "Фільтр за мовою"
+    },
     "layout": {
       "backToBlog": "Блог",
       "backToDocs": "Документація",

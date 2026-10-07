@@ -3,8 +3,11 @@ import { getTranslations } from "next-intl/server";
 import { TableOfContents } from "@/components/table-of-contents";
 import { ContributeFooter } from "@/components/contribute-footer";
 import { ShareButton } from "@/components/share-button";
+import { Badge } from "@/components/badge";
+import { ReadNext } from "@/components/read-next";
 import { BackLink } from "./back-link";
 import type { Frontmatter } from "@/lib/content";
+import { isContentTopic } from "@/lib/topics";
 
 interface GuideLayoutProps {
   frontmatter: Frontmatter;
@@ -51,6 +54,11 @@ export async function GuideLayout({
       <div className="lg:grid lg:grid-cols-[1fr_220px] lg:gap-12">
         <article>
           <header className="mb-8 space-y-4">
+            {isContentTopic(frontmatter.topic) && (
+              <div className="flex flex-wrap items-center gap-2">
+                <Badge variant="info">{t(`topics.${frontmatter.topic}`)}</Badge>
+              </div>
+            )}
             <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 leading-tight">
               {frontmatter.title}
             </h1>
@@ -86,6 +94,8 @@ export async function GuideLayout({
               </ul>
             </div>
           )}
+
+          <ReadNext locale={locale} section="guides" frontmatter={frontmatter} />
 
           <ContributeFooter
             locale={locale}

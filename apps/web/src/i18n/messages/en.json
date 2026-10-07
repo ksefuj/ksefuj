@@ -219,6 +219,14 @@
       "invoicing": "Issuing and receiving invoices",
       "errors": "Errors and validation"
     },
+    "discovery": {
+      "readNext": "Read next",
+      "topicFilterLabel": "Filter by topic",
+      "allTopics": "All topics",
+      "guide": "Guide",
+      "guidesStrip": "Step-by-step guides",
+      "languageFilterLabel": "Filter by language"
+    },
     "layout": {
       "backToBlog": "Blog",
       "backToDocs": "Documentation",

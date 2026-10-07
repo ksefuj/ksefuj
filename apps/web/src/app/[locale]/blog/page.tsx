@@ -1,24 +1,24 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SectionContainer } from "@/components/section-container";
-import { Badge } from "@/components/badge";
+import { ContentCard } from "@/components/content-card";
+import { type FilterChip, FilterChips } from "@/components/filter-chips";
 import { LanguagePicker } from "../language-picker";
-import { buildContentPath, listContentItemsUnified } from "@/lib/content";
-import { BlogFilter } from "./blog-filter";
-
-const FILTER_TRANSLATED = "translated" as const;
+import { listContentItemsUnified } from "@/lib/content";
+import { CONTENT_TOPICS, isContentTopic } from "@/lib/topics";
+import { buildListingHref, parseListingFilters } from "@/lib/listing-filters";
 
 interface Props {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ filter?: string }>;
+  searchParams: Promise<{ filter?: string | string[]; topic?: string | string[] }>;
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { locale } = await params;
+export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
+  const [{ locale }, query] = await Promise.all([params, searchParams]);
+  const { topic, translatedOnly } = parseListingFilters(query);
   const tContent = await getTranslations({ locale, namespace: "content.blog" });
 
   const canonical = locale === "pl" ? "/blog" : `/${locale}/blog`;
@@ -28,6 +28,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title,
     description,
+    // Filtered views are thin duplicates of the main listing: keep them out of the index and
+    // point search engines at the unfiltered page, but let crawlers follow the post links.
+    ...(topic || translatedOnly ? { robots: { index: false, follow: true } } : {}),
     alternates: {
       canonical,
       languages: {
@@ -55,31 +58,69 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function BlogListPage({ params, searchParams }: Props) {
-  const [{ locale }, { filter }] = await Promise.all([params, searchParams]);
-  const [allPosts, t] = await Promise.all([
+  const [{ locale }, query] = await Promise.all([params, searchParams]);
+  const { topic: activeTopic, translatedOnly } = parseListingFilters(query);
+  const [allPosts, allGuides, t] = await Promise.all([
     listContentItemsUnified(locale, "blog"),
+    listContentItemsUnified(locale, "guides"),
     getTranslations({ locale, namespace: "content" }),
   ]);
 
-  const activeFilter = filter === FILTER_TRANSLATED ? FILTER_TRANSLATED : "all";
-  const posts =
-    activeFilter === FILTER_TRANSLATED
-      ? allPosts.filter((p) => p.contentLocale === locale)
-      : allPosts;
+  const inLocale = <T extends { contentLocale: string }>(items: T[]) =>
+    translatedOnly ? items.filter((i) => i.contentLocale === locale) : items;
 
-  const dateFormatted = (dateStr: string) =>
-    new Date(dateStr).toLocaleDateString(locale, {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
+  const basePath = locale === "pl" ? "/blog" : `/${locale}/blog`;
+  const guidesPath = locale === "pl" ? "/guides" : `/${locale}/guides`;
+
+  const localePosts = inLocale(allPosts);
+  const posts = activeTopic
+    ? localePosts.filter((p) => p.frontmatter.topic === activeTopic)
+    : localePosts;
+  const guides = activeTopic ? [] : inLocale(allGuides);
+  const [lead, ...rest] = posts;
+
+  const topicChips: FilterChip[] = [
+    {
+      key: "all",
+      label: t("discovery.allTopics"),
+      href: buildListingHref(basePath, { translatedOnly }),
+      active: !activeTopic,
+      event: "topic_filter_selected",
+      eventProps: { locale, section: "blog", topic: "all" },
+    },
+    ...CONTENT_TOPICS.filter((topic) =>
+      localePosts.some((p) => isContentTopic(p.frontmatter.topic) && p.frontmatter.topic === topic),
+    ).map((topic) => ({
+      key: topic,
+      label: t(`topics.${topic}`),
+      href: buildListingHref(basePath, { topic, translatedOnly }),
+      active: activeTopic === topic,
+      event: "topic_filter_selected",
+      eventProps: { locale, section: "blog", topic },
+    })),
+  ];
+
+  const languageChips: FilterChip[] = [
+    {
+      key: "all",
+      label: t("blog.filter.all"),
+      href: buildListingHref(basePath, { topic: activeTopic }),
+      active: !translatedOnly,
+    },
+    {
+      key: "translated",
+      label: t("blog.filter.translatedOnly"),
+      href: buildListingHref(basePath, { topic: activeTopic, translatedOnly: true }),
+      active: translatedOnly,
+    },
+  ];
 
   return (
     <>
       <SiteHeader locale={locale} languagePicker={<LanguagePicker currentLocale={locale} />} />
       <main className="min-h-screen">
         <SectionContainer>
-          <div className="space-y-12">
+          <div className="space-y-10">
             <div className="space-y-3">
               <div className="flex items-center gap-3">
                 <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900">
@@ -106,56 +147,71 @@ export default async function BlogListPage({ params, searchParams }: Props) {
               <p className="text-lg text-slate-600">{t("blog.description")}</p>
             </div>
 
-            {locale !== "pl" && (
-              <Suspense>
-                <BlogFilter
-                  labelAll={t("blog.filter.all")}
-                  labelTranslatedOnly={t("blog.filter.translatedOnly")}
-                />
-              </Suspense>
-            )}
+            <div className="space-y-3">
+              <FilterChips chips={topicChips} label={t("discovery.topicFilterLabel")} />
+              {locale !== "pl" && (
+                <FilterChips chips={languageChips} label={t("discovery.languageFilterLabel")} />
+              )}
+            </div>
 
-            {posts.length === 0 ? (
+            {!lead ? (
               <p className="text-slate-500">{t("blog.empty")}</p>
             ) : (
-              <div className="grid gap-6 sm:grid-cols-2">
-                {posts.map((post) => {
-                  const href = buildContentPath(post.contentLocale, "blog", post.frontmatter.slug);
-                  return (
-                    <Link
-                      key={post.frontmatter.slug}
-                      href={href}
-                      className="group block rounded-2xl border border-slate-200 bg-white p-6 hover:border-violet-200 hover:shadow-md transition-all"
-                    >
-                      <div className="flex flex-wrap gap-2 mb-3">
-                        {post.frontmatter.tags?.slice(0, 3).map((tag) => (
-                          <Badge key={tag} variant="info">
-                            {tag}
-                          </Badge>
-                        ))}
-                        {post.contentLocale !== locale && (
-                          <Badge variant="neutral" className="ml-auto">
-                            {t("blog.languageBadge")}
-                          </Badge>
-                        )}
-                      </div>
-                      <h2 className="text-xl font-bold text-slate-900 group-hover:text-violet-700 transition-colors leading-snug mb-2">
-                        {post.frontmatter.title}
-                      </h2>
-                      <p className="text-sm text-slate-600 line-clamp-2 mb-4">
-                        {post.frontmatter.description}
-                      </p>
-                      <div className="flex items-center gap-2 text-xs text-slate-400">
-                        <time dateTime={post.frontmatter.date}>
-                          {dateFormatted(post.frontmatter.date)}
-                        </time>
-                        <span aria-hidden>·</span>
-                        <span>{t("blog.readingTime", { minutes: post.readingTime })}</span>
-                      </div>
-                    </Link>
-                  );
-                })}
-              </div>
+              <>
+                <ContentCard
+                  item={lead}
+                  locale={locale}
+                  section="blog"
+                  variant="featured"
+                  headingLevel="h2"
+                  track={{
+                    event: "featured_post_clicked",
+                    props: { locale, slug: lead.frontmatter.slug },
+                  }}
+                />
+
+                {guides.length > 0 && (
+                  <section aria-labelledby="guides-strip-heading" className="space-y-4">
+                    <h2 id="guides-strip-heading" className="text-lg font-bold text-slate-900">
+                      <Link href={guidesPath} className="hover:text-violet-700 transition-colors">
+                        {t("discovery.guidesStrip")} →
+                      </Link>
+                    </h2>
+                    <ul className="-mx-4 flex gap-4 overflow-x-auto px-4 pb-2 snap-x md:mx-0 md:px-0">
+                      {guides.map((guide) => (
+                        <li key={guide.plSlug} className="flex w-64 shrink-0 snap-start">
+                          <ContentCard
+                            item={guide}
+                            locale={locale}
+                            section="guides"
+                            variant="compact"
+                            headingLevel="h3"
+                            hideSectionMarker
+                            track={{
+                              event: "guides_strip_clicked",
+                              props: { locale, slug: guide.frontmatter.slug },
+                            }}
+                          />
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                )}
+
+                {rest.length > 0 && (
+                  <div className="grid gap-6 sm:grid-cols-2">
+                    {rest.map((post) => (
+                      <ContentCard
+                        key={post.plSlug}
+                        item={post}
+                        locale={locale}
+                        section="blog"
+                        headingLevel="h2"
+                      />
+                    ))}
+                  </div>
+                )}
+              </>
             )}
           </div>
         </SectionContainer>
