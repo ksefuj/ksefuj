@@ -13,7 +13,8 @@
       "validating": "Validating...",
       "validatingDetails": "Checking schema conformance...",
       "acceptedFiles": "Accepted: .xml (KSeF FA3 invoices)",
-      "callToAction": "ksef it!"
+      "callToAction": "ksef it!",
+      "skipped": "Skipped {count, plural, =1 {# file} other {# files}}. We can only check files ending in .xml."
     },
     "summary": {
       "allValid": "Validation completed successfully",
@@ -164,7 +165,8 @@
     "faq": "FAQ",
     "docs": "Docs",
     "guides": "Guides",
-    "waluty": "Exchange rates"
+    "waluty": "Exchange rates",
+    "validator": "Validator"
   },
   "translationBanner": {
     "body": "This article isn't available in your language yet. You're reading the {language} original.",
@@ -285,7 +287,8 @@
     "ksefPortal": "KSeF Portal",
     "privacyPolicy": "Privacy Policy",
     "termsOfUse": "Terms of Use",
-    "copyright": "© 2026 ksefuj. All code is public on GitHub."
+    "copyright": "© 2026 ksefuj. All code is public on GitHub.",
+    "validator": "Validator"
   },
   "terms": {
     "meta": {
@@ -654,5 +657,19 @@
         "answer": "Yes — ksefuj.to is a completely free, open-source KSeF FA(3) invoice validator. It checks XML compliance with the XSD schema and verifies business rules that meet official Ministry of Finance requirements. It runs entirely in your browser (your data never leaves your computer), and is also available as an npm package (@ksefuj/validator) and CLI tool. No limits, no registration, no fees."
       }
     ]
+  },
+  "validatorPage": {
+    "title": "Check your invoice before sending it to KSeF",
+    "intro": "Drop the XML file of your invoice and we'll show you what to fix before KSeF rejects it. We check it against the official schema, business rules and NBP exchange rates.",
+    "privacy": "Your file never leaves your browser. We neither send nor store it.",
+    "metaTitle": "Free KSeF FA(3) invoice validator — ksefuj.to",
+    "metaDescription": "Check your KSeF FA(3) invoice XML online. Free, no sign-up. Your file never leaves your browser.",
+    "ogImageTitle": "Free KSeF FA(3) invoice validator"
+  },
+  "heroDropZone": {
+    "title": "Drop your invoice XML file here",
+    "hint": "or click to choose it from your computer",
+    "privacy": "Your file never leaves your browser.",
+    "openValidator": "Open the validator"
   }
 }

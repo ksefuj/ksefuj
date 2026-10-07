@@ -13,7 +13,8 @@
       "validating": "Walidacja...",
       "validatingDetails": "Sprawdzanie zgodności ze schematem...",
       "acceptedFiles": "Akceptowane: .xml (faktury KSeF FA3)",
-      "callToAction": "ksefuj to!"
+      "callToAction": "ksefuj to!",
+      "skipped": "Pominięto {count, plural, one {# plik} few {# pliki} many {# plików} other {# plików}}. Możemy sprawdzić tylko pliki z rozszerzeniem .xml."
     },
     "summary": {
       "allValid": "Walidacja zakończona pomyślnie",
@@ -164,7 +165,8 @@
     "faq": "FAQ",
     "docs": "Dokumentacja",
     "guides": "Poradniki",
-    "waluty": "Kursy walut"
+    "waluty": "Kursy walut",
+    "validator": "Walidator"
   },
   "translationBanner": {
     "body": "Ten artykuł nie jest jeszcze dostępny w Twoim języku. Czytasz oryginalną wersję w języku {language}.",
@@ -285,7 +287,8 @@
     "ksefPortal": "Portal KSeF",
     "privacyPolicy": "Polityka prywatności",
     "termsOfUse": "Warunki użytkowania",
-    "copyright": "© 2026 ksefuj. Cały kod jest publiczny na GitHub."
+    "copyright": "© 2026 ksefuj. Cały kod jest publiczny na GitHub.",
+    "validator": "Walidator"
   },
   "terms": {
     "meta": {
@@ -654,5 +657,19 @@
         "answer": "Tak — ksefuj.to to w pełni darmowy, open-source’owy walidator faktur KSeF FA(3). Sprawdza zgodność XML ze schematem XSD oraz weryfikuje reguły biznesowe zgodne z oficjalnymi wymaganiami Ministerstwa Finansów. Działa w całości w przeglądarce (dane nie opuszczają komputera), jest dostępny też jako pakiet npm (@ksefuj/validator) i narzędzie CLI. Bez limitów, bez rejestracji, bez opłat."
       }
     ]
+  },
+  "validatorPage": {
+    "title": "Sprawdź fakturę przed wysyłką do KSeF",
+    "intro": "Wrzuć plik XML z fakturą, a pokażemy, co trzeba poprawić, zanim KSeF ją odrzuci. Sprawdzamy zgodność ze schematem, reguły biznesowe i kursy NBP.",
+    "privacy": "Plik nie opuszcza Twojej przeglądarki. Nie wysyłamy go ani nie zapisujemy.",
+    "metaTitle": "Darmowy walidator faktur KSeF FA(3) — ksefuj.to",
+    "metaDescription": "Sprawdź plik XML faktury KSeF FA(3) online. Za darmo, bez rejestracji. Plik nie opuszcza Twojej przeglądarki.",
+    "ogImageTitle": "Darmowy walidator faktur KSeF FA(3)"
+  },
+  "heroDropZone": {
+    "title": "Wrzuć plik XML z fakturą",
+    "hint": "albo kliknij i wybierz go z dysku",
+    "privacy": "Plik nie opuszcza Twojej przeglądarki.",
+    "openValidator": "Otwórz walidator"
   }
 }
