@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const tContent = await getTranslations({ locale, namespace: "content.blog" });
 
   const canonical = locale === "pl" ? "/blog" : `/${locale}/blog`;
-  const title = `${tContent("title")} — ksefuj.to`;
+  const title = `${tContent("metaTitle")} — ksefuj.to`;
   const description = tContent("metaDescription");
 
   return {
