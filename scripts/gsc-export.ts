@@ -1073,19 +1073,20 @@ function buildDigest(date: string, health: HealthData, gsc: GscData): string {
       .filter((s) => Number(s.errors ?? 0) > 0 || Number(s.warnings ?? 0) > 0)
       .map((s) => `${s.path}: ${s.errors} errors, ${s.warnings} warnings`),
   );
+  // Only FAIL and PARTIAL verdicts are findings, for mobile usability and rich results alike.
+  // NEUTRAL means there was nothing to test. Google retired the mobile usability report in Dec 2023,
+  // so that verdict now comes back VERDICT_UNSPECIFIED for every URL.
+  const isFindingVerdict = (v?: string) => v === "FAIL" || v === "PARTIAL";
   section(
     "Mobile usability / rich result issues",
     insp.flatMap((i) => {
       const out: string[] = [];
-      // Only FAIL/PARTIAL are findings. Google retired the mobile usability report in Dec 2023, so
-      // that verdict now comes back VERDICT_UNSPECIFIED for every URL; NEUTRAL means nothing to test.
-      const failed = (v?: string) => v === "FAIL" || v === "PARTIAL";
-      if (failed(i.mobileUsability?.verdict)) {
+      if (isFindingVerdict(i.mobileUsability?.verdict)) {
         out.push(
           `${i.url}: mobile usability ${i.mobileUsability.verdict} ${JSON.stringify(i.mobileUsability.issues ?? [])}`,
         );
       }
-      if (failed(i.richResults?.verdict)) {
+      if (isFindingVerdict(i.richResults?.verdict)) {
         out.push(`${i.url}: rich results ${i.richResults.verdict}`);
       }
       return out;
