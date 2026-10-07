@@ -1,12 +1,21 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
-import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SectionContainer } from "@/components/section-container";
 import { LanguagePicker } from "../language-picker";
-import { buildContentPath, listContentItemsUnified } from "@/lib/content";
+import { ContentCard } from "@/components/content-card";
+import {
+  GuidesListing,
+  GuidesListingFallback,
+  type GuidesListingProps,
+} from "@/components/guides-listing";
+import { listContentItemsUnified } from "@/lib/content";
+import { isContentTopic, topicLabels } from "@/lib/topics";
 
+// No `searchParams` here on purpose: reading them would make the route dynamic. The page is
+// static and renders every guide; `?topic=` is applied client-side.
 interface Props {
   params: Promise<{ locale: string }>;
 }
@@ -22,6 +31,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title,
     description,
+    // `?topic=` URLs share this static HTML; the canonical below points them at /guides.
     alternates: {
       canonical,
       languages: {
@@ -47,17 +57,42 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function GuidesListPage({ params }: Props) {
   const { locale } = await params;
-  const [guides, t] = await Promise.all([
+  const [allGuides, t] = await Promise.all([
     listContentItemsUnified(locale, "guides"),
     getTranslations({ locale, namespace: "content" }),
   ]);
+
+  const listing: GuidesListingProps = {
+    locale,
+    basePath: locale === "pl" ? "/guides" : `/${locale}/guides`,
+    guides: allGuides.map((guide) => ({
+      key: guide.plSlug,
+      topic: isContentTopic(guide.frontmatter.topic) ? guide.frontmatter.topic : undefined,
+      translated: guide.contentLocale === locale,
+      card: (
+        <ContentCard
+          item={guide}
+          locale={locale}
+          section="guides"
+          headingLevel="h2"
+          hideSectionMarker
+        />
+      ),
+    })),
+    labels: {
+      allTopics: t("discovery.allTopics"),
+      topics: topicLabels(t),
+      topicFilter: t("discovery.topicFilterLabel"),
+      empty: t("guides.empty"),
+    },
+  };
 
   return (
     <>
       <SiteHeader locale={locale} languagePicker={<LanguagePicker currentLocale={locale} />} />
       <main className="min-h-screen">
         <SectionContainer>
-          <div className="space-y-12">
+          <div className="space-y-10">
             <div className="space-y-3">
               <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900">
                 {t("guides.title")}
@@ -65,34 +100,9 @@ export default async function GuidesListPage({ params }: Props) {
               <p className="text-lg text-slate-600">{t("guides.description")}</p>
             </div>
 
-            {guides.length === 0 ? (
-              <p className="text-slate-500">{t("guides.empty")}</p>
-            ) : (
-              <div className="grid gap-6 sm:grid-cols-2">
-                {guides.map((guide) => {
-                  const href = buildContentPath(locale, "guides", guide.frontmatter.slug);
-                  return (
-                    <Link
-                      key={guide.frontmatter.slug}
-                      href={href}
-                      className="group block rounded-2xl border border-slate-200 bg-white p-6 hover:border-violet-200 hover:shadow-md transition-all"
-                    >
-                      <div className="flex flex-wrap items-center gap-2 mb-3">
-                        <span className="text-xs text-slate-400">
-                          {t("blog.readingTime", { minutes: guide.readingTime })}
-                        </span>
-                      </div>
-                      <h2 className="text-xl font-bold text-slate-900 group-hover:text-violet-700 transition-colors leading-snug mb-2">
-                        {guide.frontmatter.title}
-                      </h2>
-                      <p className="text-sm text-slate-600 line-clamp-2">
-                        {guide.frontmatter.description}
-                      </p>
-                    </Link>
-                  );
-                })}
-              </div>
-            )}
+            <Suspense fallback={<GuidesListingFallback {...listing} />}>
+              <GuidesListing {...listing} />
+            </Suspense>
           </div>
         </SectionContainer>
       </main>

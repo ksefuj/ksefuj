@@ -10,3 +10,13 @@ export type ContentTopic = (typeof CONTENT_TOPICS)[number];
 export function isContentTopic(value: unknown): value is ContentTopic {
   return typeof value === "string" && (CONTENT_TOPICS as readonly string[]).includes(value);
 }
+
+/** Translated labels for every topic, from a `getTranslations({ namespace: "content" })` result. */
+export function topicLabels(
+  t: (key: `topics.${ContentTopic}`) => string,
+): Record<ContentTopic, string> {
+  return Object.fromEntries(CONTENT_TOPICS.map((topic) => [topic, t(`topics.${topic}`)])) as Record<
+    ContentTopic,
+    string
+  >;
+}

@@ -221,6 +221,14 @@
       "invoicing": "Wystawianie i odbieranie faktur",
       "errors": "Błędy i walidacja"
     },
+    "discovery": {
+      "readNext": "Czytaj dalej",
+      "topicFilterLabel": "Filtruj po temacie",
+      "allTopics": "Wszystkie tematy",
+      "guide": "Poradnik",
+      "guidesStrip": "Poradniki krok po kroku",
+      "languageFilterLabel": "Filtruj po języku"
+    },
     "layout": {
       "backToBlog": "Blog",
       "backToDocs": "Dokumentacja",

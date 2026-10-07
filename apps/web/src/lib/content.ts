@@ -42,6 +42,8 @@ export interface ContentItem {
 export interface ContentItemWithLocale extends ContentItem {
   /** The actual language of the content returned (may differ from the requested locale). */
   contentLocale: string;
+  /** Slug of the Polish source item, the stable identity shared by all translations. */
+  plSlug: string;
 }
 
 /** Estimate reading time from word count (~180 wpm for Polish) */
@@ -121,7 +123,7 @@ export async function listContentItemsUnified(
   const results: ContentItemWithLocale[] = await Promise.all(
     plItems.map(async (plItem): Promise<ContentItemWithLocale> => {
       if (locale === "pl") {
-        return { ...plItem, contentLocale: "pl" };
+        return { ...plItem, contentLocale: "pl", plSlug: plItem.frontmatter.slug };
       }
 
       const translatedSlug = plItem.frontmatter.translations?.[locale as "pl" | "en" | "uk"];
@@ -129,11 +131,11 @@ export async function listContentItemsUnified(
       if (translatedSlug) {
         const translated = await getContentItem(locale, section, translatedSlug);
         if (translated) {
-          return { ...translated, contentLocale: locale };
+          return { ...translated, contentLocale: locale, plSlug: plItem.frontmatter.slug };
         }
       }
 
-      return { ...plItem, contentLocale: "pl" };
+      return { ...plItem, contentLocale: "pl", plSlug: plItem.frontmatter.slug };
     }),
   );
 
