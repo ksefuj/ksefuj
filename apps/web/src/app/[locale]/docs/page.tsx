@@ -13,7 +13,10 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const tContent = await getTranslations({ locale, namespace: "content.docs" });
+  const [tContent, docs] = await Promise.all([
+    getTranslations({ locale, namespace: "content.docs" }),
+    listContentItems(locale, "docs"),
+  ]);
 
   return {
     title: `${tContent("metaTitle")} — ksefuj.to`,
@@ -21,6 +24,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: {
       canonical: locale === "pl" ? "/docs" : `/${locale}/docs`,
     },
+    // Hidden from search engines until real docs exist; re-enables automatically.
+    robots: docs.length === 0 ? { index: false, follow: true } : undefined,
   };
 }
 

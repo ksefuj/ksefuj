@@ -20,17 +20,14 @@ const localePrefixes =
 const contentSections: Record<string, Array<{ section: string; urlPrefix: string }>> = {
   pl: [
     { section: "blog", urlPrefix: "/blog" },
-    { section: "docs", urlPrefix: "/docs" },
     { section: "guides", urlPrefix: "/guides" },
   ],
   en: [
     { section: "blog", urlPrefix: "/en/blog" },
-    { section: "docs", urlPrefix: "/en/docs" },
     { section: "guides", urlPrefix: "/en/guides" },
   ],
   uk: [
     { section: "blog", urlPrefix: "/uk/blog" },
-    { section: "docs", urlPrefix: "/uk/docs" },
     { section: "guides", urlPrefix: "/uk/guides" },
   ],
 };
@@ -50,21 +47,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
-  // Content listing pages (blog, docs, guides, faq)
+  // Content listing pages (blog, guides, faq; docs are added below when non-empty)
   const contentListingPages = [
     { path: "/blog", priority: 0.8 },
-    { path: "/docs", priority: 0.8 },
     { path: "/guides", priority: 0.8 },
     { path: "/faq", priority: 0.7 },
     { path: "/en/blog", priority: 0.7 },
-    { path: "/en/docs", priority: 0.7 },
     { path: "/en/guides", priority: 0.7 },
     { path: "/en/faq", priority: 0.7 },
     { path: "/uk/blog", priority: 0.7 },
-    { path: "/uk/docs", priority: 0.7 },
     { path: "/uk/guides", priority: 0.7 },
     { path: "/uk/faq", priority: 0.6 },
   ];
+
+  // The docs listing is only exposed once docs content exists (it is noindex while empty).
+  for (const locale of routing.locales) {
+    if ((await listContentItems(locale, "docs")).length > 0) {
+      const prefix = locale === routing.defaultLocale ? "" : `/${locale}`;
+      contentListingPages.push({ path: `${prefix}/docs`, priority: 0.7 });
+    }
+  }
 
   for (const { path, priority } of contentListingPages) {
     entries.push({
@@ -76,7 +78,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Dynamic content pages
   for (const [locale, sections] of Object.entries(contentSections)) {
-    for (const { section, urlPrefix } of sections) {
+    const docsPrefix = locale === routing.defaultLocale ? "/docs" : `/${locale}/docs`;
+    for (const { section, urlPrefix } of [
+      ...sections,
+      { section: "docs", urlPrefix: docsPrefix },
+    ]) {
       const items = await listContentItems(locale, section);
       for (const item of items) {
         entries.push({
