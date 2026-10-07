@@ -7,6 +7,24 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+
+- Exchange rate validation for advance invoices, which previously had none. `Fa/KursWalutyZ` and
+  `ZaliczkaCzesciowa/KursWalutyZW` are now checked against the NBP Table A mid-rate, keyed to the
+  date the payment was received (Art. 19a ust. 8) — `ZaliczkaCzesciowa/P_6Z` for a per-payment rate,
+  `Fa/P_6` for the invoice-level one. Art. 31a ust. 2 still applies: an advance invoice may be
+  issued up to 60 days before the payment arrives (Art. 106i ust. 7), and the reference date is then
+  `P_1`. A foreign-currency `ZAL` carries no `FaWiersz`, so no rate on it was reachable by any check
+  before
+- Unlike `FaWiersz/KursWaluty`, exactly one rate is accepted here: an advance has a determinate tax
+  point, so there is no Art. 19a ust. 5 ambiguity to widen for, and Art. 31a ust. 1a is keyed to
+  that same invoice-issuance effect. `Fa/KursWalutyZ` is skipped when several payments carry
+  different dates and no `Fa/P_6` fixes one, and `KursWalutyZK` is never checked — it records the
+  rate adopted for the invoice being corrected (Art. 31b ust. 1), not a fresh conversion
+- `resolveRateReference` and `rateReferenceCandidates`, exported from the package root and from the
+  dependency-free `@ksefuj/validator/currency-date` subpath, so rate-fetching clients can select the
+  same reference date the validator checks against
+
 ### Fixed
 
 - `CURRENCY_RATE_MISMATCH` no longer keys the NBP rate to `P_1` alone. Art. 31a ust. 1 keys it to
@@ -29,12 +47,6 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - `CURRENCY_RATE_MISMATCH` now says "NBP Table A mid-rate" rather than implying the invoice is
   simply wrong: a taxpayer may lawfully have elected ECB rates (Art. 31a ust. 1) or income-tax
   conversion rules (Art. 31a ust. 2a), neither of which FA(3) records
-
-### Added
-
-- `resolveRateReference` and `rateReferenceCandidates`, exported from the package root and from the
-  dependency-free `@ksefuj/validator/currency-date` subpath, so rate-fetching clients can select the
-  same reference date the validator checks against
 
 ## [0.3.0] — 2026-03-31
 

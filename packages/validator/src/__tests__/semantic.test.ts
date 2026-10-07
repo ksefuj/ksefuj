@@ -1383,6 +1383,195 @@ describe("Semantic Validation", () => {
     });
   });
 
+  describe("Advance Invoice Currency Rates (Art. 19a ust. 8)", () => {
+    /**
+     * Advance invoices carry no FaWiersz — the rate lives in Fa/KursWalutyZ, and in
+     * ZaliczkaCzesciowa/KursWalutyZW when several payments are documented (§9.5, §9.8).
+     */
+    const advanceInvoice = (body: string) =>
+      wrapInFaktura(`
+        <Podmiot1>
+          <DaneIdentyfikacyjne><NIP>1234567890</NIP><Nazwa>Test</Nazwa></DaneIdentyfikacyjne>
+          <Adres><KodKraju>PL</KodKraju><AdresL1>Test</AdresL1></Adres>
+        </Podmiot1>
+        <Podmiot2>
+          <DaneIdentyfikacyjne><NIP>9876543210</NIP><Nazwa>Test</Nazwa></DaneIdentyfikacyjne>
+          <Adres><KodKraju>PL</KodKraju><AdresL1>Test</AdresL1></Adres>
+          <JST>2</JST>
+          <GV>2</GV>
+        </Podmiot2>
+        <Fa>
+          <KodWaluty>USD</KodWaluty>
+          <P_1>2026-08-05</P_1>
+          <P_2>ZAL/001/08/2026</P_2>
+          ${body}
+          <Adnotacje>
+            <P_16>2</P_16><P_17>2</P_17><P_18>2</P_18><P_18A>2</P_18A>
+            <Zwolnienie><P_19N>1</P_19N></Zwolnienie>
+            <NoweSrodkiTransportu><P_22N>1</P_22N></NoweSrodkiTransportu>
+            <P_23>2</P_23>
+            <PMarzy><P_PMarzyN>1</P_PMarzyN></PMarzy>
+          </Adnotacje>
+          <RodzajFaktury>ZAL</RodzajFaktury>
+        </Fa>
+      `);
+
+    const usdRates: CurrencyRate[] = [
+      { currency: "USD", date: "2026-07-17", mid: 3.74 },
+      { currency: "USD", date: "2026-07-20", mid: 3.7455 },
+      { currency: "USD", date: "2026-07-30", mid: 3.7644 },
+      { currency: "USD", date: "2026-08-04", mid: 3.7911 },
+    ];
+
+    it("should accept KursWalutyZ keyed to the payment receipt date in P_6", () => {
+      // Payment received 2026-07-31 → rate from the last business day before it
+      const xml = advanceInvoice(
+        "<P_6>2026-07-31</P_6><P_15>123.00</P_15><KursWalutyZ>3.7644</KursWalutyZ>",
+      );
+      const result = validateXml(xml, { USD: usdRates });
+      expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_MISMATCH")).toBe(false);
+    });
+
+    it("should flag KursWalutyZ keyed to the issue date instead of the payment", () => {
+      // Art. 19a ust. 8 fixes the tax point at receipt of payment, so unlike
+      // FaWiersz/KursWaluty the issue-date rate is not an accepted alternative here
+      const xml = advanceInvoice(
+        "<P_6>2026-07-31</P_6><P_15>123.00</P_15><KursWalutyZ>3.7911</KursWalutyZ>",
+      );
+      const result = validateXml(xml, { USD: usdRates });
+      const issue = result.issues.find((i) => i.code.code === "CURRENCY_RATE_MISMATCH");
+      expect(issue).toBeDefined();
+      expect(issue!.context.location.element).toBe("KursWalutyZ");
+      expect(issue!.context.location.xpath).toBe("/Faktura/Fa/KursWalutyZ");
+      expect(issue!.context.expectedValues).toEqual(["3.7644"]);
+      expect(issue!.fixSuggestions[0].content).toBe("3.7644");
+    });
+
+    it("should key each KursWalutyZW to its own payment date", () => {
+      const xml = advanceInvoice(`<P_15>246.00</P_15>
+        <ZaliczkaCzesciowa>
+          <P_6Z>2026-07-20</P_6Z><P_15Z>123.00</P_15Z><KursWalutyZW>3.7400</KursWalutyZW>
+        </ZaliczkaCzesciowa>
+        <ZaliczkaCzesciowa>
+          <P_6Z>2026-07-31</P_6Z><P_15Z>123.00</P_15Z><KursWalutyZW>3.7644</KursWalutyZW>
+        </ZaliczkaCzesciowa>`);
+      const result = validateXml(xml, { USD: usdRates });
+      expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_MISMATCH")).toBe(false);
+    });
+
+    it("should flag the payment whose rate is wrong and name its date", () => {
+      const xml = advanceInvoice(`<P_15>246.00</P_15>
+        <ZaliczkaCzesciowa>
+          <P_6Z>2026-07-20</P_6Z><P_15Z>123.00</P_15Z><KursWalutyZW>3.7400</KursWalutyZW>
+        </ZaliczkaCzesciowa>
+        <ZaliczkaCzesciowa>
+          <P_6Z>2026-07-31</P_6Z><P_15Z>123.00</P_15Z><KursWalutyZW>3.7911</KursWalutyZW>
+        </ZaliczkaCzesciowa>`);
+      const result = validateXml(xml, { USD: usdRates });
+      const found = result.issues.filter((i) => i.code.code === "CURRENCY_RATE_MISMATCH");
+      expect(found).toHaveLength(1);
+      expect(found[0].context.location.xpath).toBe(
+        "/Faktura/Fa/ZaliczkaCzesciowa[P_6Z='2026-07-31']/KursWalutyZW",
+      );
+      expect(found[0].message).toContain("2026-07-31");
+      expect(found[0].context.expectedValues).toEqual(["3.7644"]);
+    });
+
+    it("should use the single documented payment as the tax point for KursWalutyZ", () => {
+      const xml = advanceInvoice(`<P_15>123.00</P_15><KursWalutyZ>3.7644</KursWalutyZ>
+        <ZaliczkaCzesciowa>
+          <P_6Z>2026-07-31</P_6Z><P_15Z>123.00</P_15Z>
+        </ZaliczkaCzesciowa>`);
+      const result = validateXml(xml, { USD: usdRates });
+      expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_MISMATCH")).toBe(false);
+    });
+
+    it("should leave KursWalutyZ alone when several payments have different dates", () => {
+      // Without P_6 the invoice-level rate has no single tax point to check against
+      const xml = advanceInvoice(`<P_15>246.00</P_15><KursWalutyZ>1.0000</KursWalutyZ>
+        <ZaliczkaCzesciowa>
+          <P_6Z>2026-07-20</P_6Z><P_15Z>123.00</P_15Z>
+        </ZaliczkaCzesciowa>
+        <ZaliczkaCzesciowa>
+          <P_6Z>2026-07-31</P_6Z><P_15Z>123.00</P_15Z>
+        </ZaliczkaCzesciowa>`);
+      const result = validateXml(xml, { USD: usdRates });
+      expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_MISMATCH")).toBe(false);
+    });
+
+    it("should fall back to P_1 when the advance invoice records no payment date", () => {
+      const xml = advanceInvoice("<P_15>123.00</P_15><KursWalutyZ>3.7911</KursWalutyZ>");
+      const result = validateXml(xml, { USD: usdRates });
+      expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_MISMATCH")).toBe(false);
+    });
+
+    it("should use the issue date when the advance invoice precedes the payment", () => {
+      // Art. 106i ust. 7 allows invoicing up to 60 days ahead of the payment, and
+      // Art. 31a ust. 2 then puts the reference date back on P_1
+      const xml = advanceInvoice(
+        "<P_6>2026-09-30</P_6><P_15>123.00</P_15><KursWalutyZ>3.7911</KursWalutyZ>",
+      );
+      const result = validateXml(xml, { USD: usdRates });
+      expect(result.issues.some((i) => i.code.code === "CURRENCY_RATE_MISMATCH")).toBe(false);
+    });
+
+    it("should flag the payment-date rate when the invoice precedes the payment", () => {
+      const xml = advanceInvoice(
+        "<P_6>2026-09-30</P_6><P_15>123.00</P_15><KursWalutyZ>3.7644</KursWalutyZ>",
+      );
+      const result = validateXml(xml, { USD: usdRates });
+      const issue = result.issues.find((i) => i.code.code === "CURRENCY_RATE_MISMATCH");
+      expect(issue).toBeDefined();
+      expect(issue!.context.expectedValues).toEqual(["3.7911"]);
+    });
+
+    it("should locate a payment by position when P_6Z is missing", () => {
+      // P_6Z is mandatory in the schema, but semantics also run on XSD-invalid documents
+      const xml = advanceInvoice(`<P_15>123.00</P_15>
+        <ZaliczkaCzesciowa>
+          <P_15Z>123.00</P_15Z><KursWalutyZW>1.0000</KursWalutyZW>
+        </ZaliczkaCzesciowa>`);
+      const result = validateXml(xml, { USD: usdRates });
+      const issue = result.issues.find((i) => i.code.code === "CURRENCY_RATE_MISMATCH");
+      expect(issue).toBeDefined();
+      expect(issue!.context.location.xpath).toBe("/Faktura/Fa/ZaliczkaCzesciowa[1]/KursWalutyZW");
+      expect(issue!.context.location.xpath).not.toContain("null");
+    });
+
+    it("should not name KursWaluty when an advance rate is unverifiable", () => {
+      // The invoice has no FaWiersz at all, so naming that field would be wrong
+      const xml = advanceInvoice(
+        "<P_6>2026-07-31</P_6><P_15>123.00</P_15><KursWalutyZ>3.7644</KursWalutyZ>",
+      );
+      const result = validateXml(xml, { USD: null });
+      const issue = result.issues.find((i) => i.code.code === "CURRENCY_RATE_UNVERIFIABLE");
+      expect(issue).toBeDefined();
+      expect(issue!.message).not.toContain("KursWaluty");
+    });
+
+    it("should report UNVERIFIABLE once when the rate table cannot answer", () => {
+      const xml = advanceInvoice(`<P_15>246.00</P_15><KursWalutyZ>3.7644</KursWalutyZ>
+        <ZaliczkaCzesciowa>
+          <P_6Z>2026-07-31</P_6Z><P_15Z>123.00</P_15Z><KursWalutyZW>3.7644</KursWalutyZW>
+        </ZaliczkaCzesciowa>`);
+      const result = validateXml(xml, { USD: null });
+      expect(
+        result.issues.filter((i) => i.code.code === "CURRENCY_RATE_UNVERIFIABLE"),
+      ).toHaveLength(1);
+    });
+
+    it("should not check KursWalutyZK — Art. 31b ust. 1 keeps the original rate", () => {
+      // KOR_ZAL is skipped wholesale, but the pre-correction rate is never a target anyway
+      const xml = advanceInvoice(
+        "<P_6>2026-07-31</P_6><P_15>123.00</P_15><P_15ZK>100.00</P_15ZK><KursWalutyZK>1.0000</KursWalutyZK><KursWalutyZ>3.7644</KursWalutyZ>",
+      );
+      const result = validateXml(xml, { USD: usdRates });
+      const found = result.issues.filter((i) => i.code.code === "CURRENCY_RATE_MISMATCH");
+      expect(found.every((i) => i.context.location.element !== "KursWalutyZK")).toBe(true);
+      expect(found).toHaveLength(0);
+    });
+  });
+
   describe("Rule Coverage", () => {
     it("should have all 43 rules implemented", () => {
       expect(semanticRules).toHaveLength(35); // Some rules are grouped (ADNOTACJE_MANDATORY_FIELDS covers 8 rules)
