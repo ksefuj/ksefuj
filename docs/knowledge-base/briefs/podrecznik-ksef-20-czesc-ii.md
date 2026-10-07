@@ -4,6 +4,14 @@
 
 ---
 
+> **Freshness: 2026-10-07 update.**
+>
+> - Newer edition exists: Podrecznik KSeF 2.0 cz. II of 2026-08-06
+>   (https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf);
+>   changes judged minor (legal-basis citations, section 6.3) in a non-line-by-line check. This
+>   extract is still the 2026-02-01 edition; it also predates the 240 000 zl art. 113 threshold. See
+>   `mf-faq-podreczniki-2026.md`.
+
 ## 1. Faktura ustrukturyzowana
 
 ### 1.1. Definicje faktury

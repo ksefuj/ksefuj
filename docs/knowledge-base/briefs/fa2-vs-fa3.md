@@ -7,6 +7,15 @@ update, what to add, what's gone. **Tool context:** ksefuj.to — free KSeF XML 
 
 ---
 
+> **Freshness: 2026-10-07 update.**
+>
+> - Test environment: https://ap-test.ksef.mf.gov.pl/web/ (AP) and
+>   https://api-test.ksef.mf.gov.pl/docs/v2 (API) return 200 on 2026-10-07; `web2te-ksef.mf.gov.pl`
+>   does not resolve and must not be cited.
+> - FA(3) schema on crd.gov.pl unchanged on 2026-10-07 (bundled XSDs identical). The
+>   information-sheet file in Aug 2026 has 173 pages (repo: March 2026, 174); no changelog entry
+>   found; a human diff is advised. Strict XML rules: `api-ksef-zmiany-cirfmf.md`.
+
 ## Source Corpus Used
 
 | Source                                                               | Tier     | File / URL                                          | Status  |

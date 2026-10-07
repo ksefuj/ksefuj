@@ -8,6 +8,19 @@ ksefuj.to — free KSeF XML validator
 
 ---
 
+> **Freshness: 2026-10-07 update.**
+>
+> - VAT-exempt (art. 113, threshold 240 000 zl from 2026-01-01) taxpayers are in KSeF on the same
+>   stages as everyone (MF FAQ KSeF 2.0 Q10); see corrections inline.
+> - Penalty article is art. 106ni (not 106gc); applies from 2027-01-01 in the law in force (Dz.U.
+>   2026 poz. 1263) but MF announced on 2026-09-16 a deferral to the end of 2027 and draft UD477
+>   moves art. 106ni ust. 1-3, 5-7 to 2028-01-01 (not yet enacted). See `sankcje-ksef-ud477.md`.
+> - MF FAQ "Najczestsze pytania" Q12-Q14 (modified 2026-04-29): consumer invoices and cash-register
+>   sales to consumers do not count toward the 10 000 zl limit; once exceeded the KSeF obligation
+>   applies from that invoice on, later months below the limit do not matter. Legal-basis page
+>   (modified 2026-05-29): also until end of 2026 cash-register invoices and receipts with NIP up to
+>   450 zl. See `mf-faq-podreczniki-2026.md`.
+
 ## Source Corpus Used
 
 | Source                                                       | Tier                    | File / URL                                                         | Status                                                                                               |
@@ -101,21 +114,22 @@ See **Critical Discrepancy** section.
 
 ---
 
-**Fact 1.3 — This applies only to czynni podatnicy VAT (active VAT taxpayers)**
+**Fact 1.3 — The 10 000 zł rule applies to any taxpayer (CORRECTED 2026-10-07)**
 
-- **Fact:** The 10,000 PLN exemption is a transitional provision for **czynni podatnicy VAT** —
-  i.e., taxpayers registered for VAT who file VAT-7 or VAT-7K returns. Taxpayers already exempt from
-  VAT (zwolnienie podmiotowe — annual turnover below 200,000 PLN, or zwolnienie przedmiotowe —
-  exempt activity by law) are entirely outside the KSeF mandate as of 1 April 2026 and therefore do
-  not need the 10,000 PLN exemption at all.
+- **Fact:** **CORRECTED 2026-10-07:** The 10 000 zł rule (art. 145m) applies to any taxpayer until
+  31.12.2026, including VAT-exempt (art. 113) taxpayers. VAT-exempt taxpayers are NOT outside KSeF:
+  they follow the same stages as everyone (MF FAQ KSeF 2.0, Q10: „każdy podatnik (czynny i
+  zwolniony)…"). The art. 113 threshold is 240 000 zł from 1.01.2026 (not 200 000 zł; VAT Act, Dz.U.
+  2026 poz. 1263). Only art. 113a (EU SME scheme) is excluded, via art. 106ga ust. 2 pkt 6,
+  alongside the other art. 106ga ust. 2 cases and the regulation Dz.U. 2025 poz. 1740 §2. The text
+  below is the OLD (wrong) claim from the blog.
 - **Source:** Blog `ksef-od-1-kwietnia-2026.mdx`, §"Kogo dotyczy obowiązek" and §"Wyjątek: bardzo
   małe obroty"; blog `ksef-dla-jdg.mdx`, §"Czy dotyczy mnie KSeF"
 - **Verbatim (PL):** "Obowiązek korzystania z KSeF mają **czynni podatnicy VAT** [...] **Nie
   dotyczy** (na razie) podatników VAT zwolnionych."
 - **Confidence:** HIGH
-- **Implication:** A JDG on zwolnienie z VAT (below 200k/year threshold) does NOT need the 10,000
-  PLN exemption — they are already excluded. The 10,000 PLN provision is only relevant to a JDG who
-  IS registered for VAT but has very small sales.
+- **Implication:** A JDG on zwolnienie z VAT is in KSeF and CAN use the 10 000 zł rule until
+  31.12.2026.
 
 ---
 
@@ -190,7 +204,7 @@ See **Critical Discrepancy** section.
 - **Sources for Position B:** NONE found in this corpus. The task brief references it without citing
   a specific source document. The Act text is inaccessible in this environment.
 - **Why Position B cannot be dismissed:** Polish tax thresholds frequently use the prior-year
-  backward-looking mechanism (e.g., the 200,000 PLN VAT exemption under Art. 113 also uses prior
+  backward-looking mechanism (e.g., the 240 000 PLN VAT exemption under Art. 113 also uses prior
   year turnover to determine eligibility at the start of a new year). A phase-in rule in Art. 145m
   that uses the prior-year invoice value would be structurally consistent with how Polish tax law
   typically stages compliance obligations. However, this is analytical inference — NOT a factual
@@ -317,7 +331,8 @@ See **Critical Discrepancy** section.
 
 - **Fact:** Foundations and associations that are czynni podatnicy VAT are subject to KSeF from 1
   April 2026 for their VAT invoices, regardless of the 10,000 PLN threshold. Organizations
-  conducting exclusively VAT-exempt activities join KSeF from 1 January 2027.
+  conducting exclusively VAT-exempt activities: the "1 January 2027" date in the FAQ quote below is
+  NOT supported (MF FAQ KSeF 2.0 Q10: exempt taxpayers are in scope now; corrected 2026-10-07).
 - **Source:** FAQ `limity-i-wylaczenia.mdx`, §"Czy fundacja lub stowarzyszenie musi korzystać z
   KSeF"
 - **Verbatim (PL):** "Jeśli tak — od 1 kwietnia 2026 roku musi stosować KSeF dla swoich faktur VAT.
@@ -386,7 +401,7 @@ See **Critical Discrepancy** section.
 
 4. **Whether the threshold uses gross (brutto) or net (netto) sales value.** None of the accessible
    sources specify whether the 10,000 PLN is calculated on gross amounts (with VAT) or net amounts
-   (without VAT). Given that the 200,000 PLN VAT exemption under Art. 113 uses net values, the same
+   (without VAT). Given that the 240 000 PLN VAT exemption under Art. 113 uses net values, the same
    might apply here — but this is inference, not a sourced fact.
 
 5. **Ryczałt ewidencjonowany (PIT) + VAT status.** The corpus is silent on whether a JDG on ryczałt
@@ -439,11 +454,10 @@ For the article's "Źródła" footer:
    implement KSeF by 1 January 2027 at the latest. Preparation takes time — software selection,
    testing, authentication setup. Starting in December 2026 is too late.
 
-5. **"Limit 10 000 zł to tak samo jak limit 200 000 zł na zwolnienie z VAT"** — WRONG (probably).
-   The 200,000 PLN threshold for VAT subjective exemption (Art. 113) applies to taxpayers NOT
-   registered for VAT. The 10,000 PLN KSeF threshold applies to taxpayers who ARE registered as
-   czynni podatnicy VAT but have very small sales. These are separate provisions for separate groups
-   of taxpayers.
+5. **"Limit 10 000 zł to tak samo jak limit 200 000 zł na zwolnienie z VAT"** — WRONG. The VAT
+   subjective exemption threshold (Art. 113) is 240 000 zł from 1.01.2026 (not 200 000 zł) and is a
+   different provision. The 10 000 zł KSeF rule (art. 145m) applies to any taxpayer, VAT-exempt
+   included, until 31.12.2026 (corrected 2026-10-07).
 
 6. **"Jeśli wystawię mniej faktur, zostanę poniżej limitu"** — WRONG per corpus interpretation. The
    FAQ explicitly states the limit is NOT based on the sum of invoices issued ("nie suma
@@ -465,7 +479,7 @@ For the article's "Źródła" footer:
 | Penalty grace period until 1 January 2027                                                               | Review on 1 January 2027                                         | HIGH     |
 | Threshold rules "były kilkakrotnie nowelizowane" — current version is Dz. U. z 2025 r., poz. 775 ze zm. | Review after any new amending act is published in Dziennik Ustaw | HIGH     |
 | All czynni podatnicy VAT mandatory from 1 April 2026                                                    | Past date — verify compliance state                              | MEDIUM   |
-| VAT-exempt entities join from 1 January 2027                                                            | Review after 1 January 2027                                      | HIGH     |
+| ~~VAT-exempt entities join from 1 January 2027~~ (wrong; in scope now, corrected 2026-10-07)            | Done                                                             | HIGH     |
 
 ---
 

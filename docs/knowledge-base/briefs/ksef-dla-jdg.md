@@ -7,6 +7,23 @@ validator
 
 ---
 
+> **Freshness: 2026-10-07 update.**
+>
+> - Penalty article is art. 106ni (not 106gc); applies from 2027-01-01 in the law in force (Dz.U.
+>   2026 poz. 1263) but MF announced on 2026-09-16 a deferral to the end of 2027 and draft UD477
+>   moves art. 106ni ust. 1-3, 5-7 to 2028-01-01 (not yet enacted). See `sankcje-ksef-ud477.md`.
+> - Tokens: regulation text ends them 2026-12-31, but MF decided to keep them (cz. I of the manual,
+>   ed. 2026-08-06) and the API team says tokens issued by 31.12.2026 stay valid to 2027-11-30
+>   (issue #834). See `rozporzadzenie-ksef-i-tokeny.md`.
+> - Test environment: https://ap-test.ksef.mf.gov.pl/web/ (AP) and
+>   https://api-test.ksef.mf.gov.pl/docs/v2 (API) return 200 on 2026-10-07; `web2te-ksef.mf.gov.pl`
+>   does not resolve and must not be cited.
+> - VAT-exempt (art. 113, threshold 240 000 zl from 2026-01-01) taxpayers are in KSeF on the same
+>   stages as everyone (MF FAQ KSeF 2.0 Q10); see corrections inline.
+> - 10 000 zl rule (art. 145m) ends 2026-12-31 in the law in force; the draft UD477 reasoning says
+>   no 10k exemption from 2027-01-01. MF FAQ "Najczestsze pytania" (2026-04-29) Q12-Q14 clarify what
+>   counts toward the limit (only invoices that must be issued in KSeF).
+
 ## Source Corpus Used
 
 | Source                                                               | Tier     | File / URL                                                         | Status                          |
@@ -59,33 +76,37 @@ validator
 
 ---
 
-**Fact 1.3 — VAT-exempt JDG is currently excluded**
+**Fact 1.3 — VAT-exempt JDG is NOT excluded (CORRECTED 2026-10-07)**
 
-- **Fact:** JDG taxpayers using the subjective VAT exemption (zwolnienie podmiotowe) — i.e., those
-  with annual turnover below **200,000 PLN** who have not registered for VAT — do **not** have a
-  mandatory KSeF obligation as of April 1, 2026.
+- **Fact:** **CORRECTED 2026-10-07:** VAT-exempt taxpayers (art. 113 VAT Act: zwolnienie podmiotowe;
+  also przedmiotowe) follow the same KSeF stages as every other taxpayer. The art. 113 threshold is
+  **240 000 zł** from 1.01.2026 (not 200 000 zł; VAT Act, Dz.U. 2026 poz. 1263). MF FAQ KSeF 2.0,
+  Q10: „każdy podatnik (czynny i zwolniony)…". The 10 000 zł rule (art. 145m) applies to any
+  taxpayer until 31.12.2026. Only art. 113a (EU SME scheme) is excluded, via art. 106ga ust. 2 pkt
+  6, alongside the other art. 106ga ust. 2 cases and the regulation Dz.U. 2025 poz. 1740 §2. The
+  blog quote below is the OUTDATED claim, kept only to flag which posts to fix.
 - **Source:** Ustawa o VAT, Art. 113 (zwolnienie podmiotowe), cross-referenced by blog
   `ksef-od-1-kwietnia-2026.mdx`, §"Kogo dotyczy obowiązek"
 - **Verbatim:** "Podatnicy zwolnieni z VAT (zarówno podmiotowo — ze względu na limit 200 000 PLN
   obrotu — jak i przedmiotowo) na razie nie mają obowiązku korzystania z KSeF."
-- **Confidence:** HIGH
-- **Ania-relevant:** ✅ Many JDG freelancers are on zwolnienie — they need to know they are excluded
-  for now
-- **Caveat:** The blog explicitly adds: "Obowiązek ten może zostać na nich rozszerzony w
-  przyszłości, ale na dziś nie ma konkretnego terminu." This caveat should be preserved.
+- **Confidence:** the blog claim is WRONG; the correction is HIGH (law + MF FAQ, see Fact above)
+- **Ania-relevant:** ✅ Many JDG freelancers are on zwolnienie — they must NOT assume they are
+  excluded; same stages as everyone, 10 000 zł monthly rule until 31.12.2026
+- **Caveat:** Do not repeat "Obowiązek ten może zostać na nich rozszerzony…" — it is outdated.
 
 ---
 
-**Fact 1.4 — VAT-exempt taxpayers have a future date: 1 January 2027**
+**Fact 1.4 — "VAT-exempt join 1 January 2027" is NOT supported (CORRECTED 2026-10-07)**
 
-- **Fact:** Taxpayers conducting exclusively VAT-exempt activities are scheduled to join the KSeF
-  system from **1 January 2027**.
+- **Fact:** No separate 2027 entry date for VAT-exempt taxpayers was found in the law or MF FAQ
+  (Q10: „każdy podatnik (czynny i zwolniony)…"). The 1 January 2027 date relates to the end of the
+  10 000 zł rule (31.12.2026), not to a later entry for exempt taxpayers. The claim below comes from
+  an internal FAQ and is unverified/outdated.
 - **Source:** FAQ: `podstawy-ksef.mdx` (internal output) citing applicable statutory timeline
 - **Verbatim:** "Organizacje prowadzące wyłącznie działalność zwolnioną z VAT dołączają do systemu
   od 1 stycznia 2027 roku."
-- **Confidence:** MEDIUM (cited from internal output; direct statutory article not verified against
-  Tier 1 source in this extraction)
-- **Ania-relevant:** ✅ Ania may be zwolniona now — she needs to know this is coming
+- **Confidence:** LOW (internal output; contradicted by MF FAQ Q10)
+- **Ania-relevant:** ✅ Ania, even if zwolniona, is in KSeF now
 
 ---
 
@@ -536,14 +557,15 @@ validator
 
 **FAQ 7.1 — "Jestem na zwolnieniu z VAT — czy mnie to dotyczy?"**
 
-- **Answer:** Not yet as of 1 April 2026. VAT-exempt JDG (below 200,000 PLN/year turnover, not
-  registered for VAT) are not covered by the April 1, 2026 mandate. However, the obligation is
-  expected to be extended to VAT-exempt taxpayers in the future (current planning: January 1, 2027
-  for fully exempt activities).
-- **Source:** Ustawa o VAT, Art. 145m; blog `ksef-od-1-kwietnia-2026.mdx`, §"Kogo dotyczy obowiązek"
-- **Confidence:** HIGH (status as of extraction date)
-- **⚠️ Freshness flag:** Monitor for legislative changes extending the obligation to VAT-exempt
-  entities
+- **Answer (CORRECTED 2026-10-07):** Yes. VAT-exempt taxpayers (art. 113; threshold 240 000 zł from
+  1.01.2026) are covered by KSeF on the same stages as everyone (MF FAQ KSeF 2.0, Q10: „każdy
+  podatnik (czynny i zwolniony)…"). The 10 000 zł monthly rule (art. 145m) applies to any taxpayer
+  until 31.12.2026. Excluded: art. 113a (EU SME scheme), art. 106ga ust. 2 cases, Dz.U. 2025 poz.
+  1740 §2.
+- **Source:** Ustawa o VAT, Art. 145m, 106ga ust. 2; MF FAQ KSeF 2.0 Q10
+- **Confidence:** HIGH
+- **⚠️ Freshness flag:** Freshness: 2026-10-07; blog `ksef-od-1-kwietnia-2026.mdx` still carries the
+  old claim
 
 ---
 
@@ -616,9 +638,8 @@ validator
    extraction. Do not cite a specific article without verification at ksef.podatki.gov.pl or a Tier
    1 source reading.
 
-2. **Exact statutory article for the 1 January 2027 date for VAT-exempt entities** — The FAQ
-   `podstawy-ksef.mdx` states this date, but the underlying article of the Ustawa o VAT is not
-   confirmed in this corpus.
+2. **~~Exact statutory article for the 1 January 2027 date for VAT-exempt entities~~** — RESOLVED
+   2026-10-07: no such separate date exists; exempt taxpayers are in scope now (see Fact 1.3).
 
 3. **Scope of the penalty grace period** — Art. 106ni is cited for penalties; the grace period until
    1 January 2027 is stated in the blog without citing a specific amending act. Verify before
@@ -663,10 +684,10 @@ For the article's "Źródła" footer:
    **penalties are deferred to 1 January 2027** (Art. 106ni). However, a rejected invoice is still
    legally non-existent from day one — this is not a safe excuse for non-compliance.
 
-2. **"Jestem na zwolnieniu z VAT, więc mnie to nie dotyczy wcale"** — PARTIALLY WRONG. VAT-exempt
-   taxpayers are excluded from the April 1, 2026 mandate, but the extension of the obligation to
-   VAT-exempt entities is planned (currently: January 1, 2027). Do not use this as a reason to
-   ignore KSeF entirely.
+2. **"Jestem na zwolnieniu z VAT, więc mnie to nie dotyczy wcale"** — WRONG (corrected 2026-10-07).
+   VAT-exempt taxpayers (art. 113, threshold 240 000 zł from 1.01.2026) follow the same KSeF stages
+   as everyone (MF FAQ KSeF 2.0 Q10). Only art. 113a (EU SME scheme) and the art. 106ga ust. 2 cases
+   are excluded.
 
 3. **"Wyślę fakturę mailem jako PDF jak zawsze"** — WRONG after April 1, 2026 for B2B. PDF is not a
    legally valid invoice in B2B contexts once KSeF is mandatory. The legal document is the XML
@@ -691,14 +712,14 @@ For the article's "Źródła" footer:
 
 ## Freshness Tracker (date-sensitive claims)
 
-| Claim                                                                     | Expires / Review trigger                                         | Priority |
-| ------------------------------------------------------------------------- | ---------------------------------------------------------------- | -------- |
-| 10,000 PLN monthly exemption valid until 31 Dec 2026                      | Review on 1 January 2027                                         | HIGH     |
-| VAT-exempt entity obligation: 1 January 2027                              | Review after any new legislative amendment                       | HIGH     |
-| Penalty grace period: 1 January 2027                                      | Review on 1 January 2027                                         | HIGH     |
-| Test environment URL: `https://web2te-ksef.mf.gov.pl/`                    | Verify before publication and after any MF infrastructure change | MEDIUM   |
-| Commercial software list (Fakturownia, inFakt, wFirma, Comarch, Symfonia) | Review if any major provider drops KSeF support                  | LOW      |
-| e-mikrofirma "limited KSeF support" claim                                 | Review after any MF update to the tool                           | MEDIUM   |
+| Claim                                                                                   | Expires / Review trigger                                         | Priority |
+| --------------------------------------------------------------------------------------- | ---------------------------------------------------------------- | -------- |
+| 10,000 PLN monthly exemption valid until 31 Dec 2026                                    | Review on 1 January 2027                                         | HIGH     |
+| ~~VAT-exempt entity obligation: 1 January 2027~~ (wrong; exempt taxpayers in scope now) | Corrected 2026-10-07                                             | HIGH     |
+| Penalty grace period: 1 January 2027                                                    | Review on 1 January 2027                                         | HIGH     |
+| Test environment URL: `https://web2te-ksef.mf.gov.pl/`                                  | Verify before publication and after any MF infrastructure change | MEDIUM   |
+| Commercial software list (Fakturownia, inFakt, wFirma, Comarch, Symfonia)               | Review if any major provider drops KSeF support                  | LOW      |
+| e-mikrofirma "limited KSeF support" claim                                               | Review after any MF update to the tool                           | MEDIUM   |
 
 ---
 

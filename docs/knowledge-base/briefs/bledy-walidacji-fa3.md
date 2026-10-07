@@ -8,6 +8,12 @@ validator
 
 ---
 
+> **Freshness: 2026-10-07 update.**
+>
+> - KSeF applies strict XML rules on top of the XSD (no processing instructions, no BOM, UTF-8
+>   only); PROD enforcement from 2026-10-19; error `21184` and 410 Gone are new API behaviours. See
+>   `api-ksef-zmiany-cirfmf.md`. FA(3) XSD on crd.gov.pl unchanged on 2026-10-07.
+
 ## Source Corpus Used
 
 | Source                                                               | Tier     | File / URL                                          | Status  |
