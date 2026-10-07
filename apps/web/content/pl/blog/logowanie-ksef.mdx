@@ -1,0 +1,211 @@
+---
+title: "Logowanie do KSeF: Profil Zaufany i podpis"
+description: "Do KSeF zalogujesz się Profilem Zaufanym przez login.gov.pl albo podpisem kwalifikowanym. Token i certyfikat KSeF są dla programów, nie dla Ciebie."
+date: 2026-10-07
+section: blog
+locale: pl
+slug: "logowanie-ksef"
+tags: ["KSeF", "JDG"]
+sources:
+  - label: "Podręcznik KSeF 2.0, cz. I (06.08.2026)"
+    url: "https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  - label: "Podręcznik użytkownika Aplikacji Podatnika KSeF 2.0 (06.08.2026)"
+    url: "https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
+  - label: "Rozporządzenie w sprawie KSeF, Dz.U. 2025 poz. 1815"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2025/1815"
+  - label: "Rozporządzenie zmieniające, Dz.U. 2026 poz. 169"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/169"
+  - label: "FAQ MF: KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
+  - label: "FAQ MF: najczęstsze pytania"
+    url: "https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
+  - label: "MF: komunikaty techniczne KSeF"
+    url: "https://ksef.podatki.gov.pl/komunikaty-techniczne/"
+  - label: "CIRFMF ksef-docs: uwierzytelnianie"
+    url: "https://github.com/CIRFMF/ksef-docs/blob/main/uwierzytelnianie.md"
+  - label: "CIRFMF ksef-api: zgłoszenie 834 (tokeny po 2026)"
+    url: "https://github.com/CIRFMF/ksef-api/issues/834"
+translations:
+  pl: "logowanie-ksef"
+  en: "ksef-login"
+  uk: "vkhid-do-ksef"
+---
+
+Tak, do KSeF zalogujesz się Profilem Zaufanym: w Aplikacji Podatnika KSeF 2.0 wybierasz „Zaloguj
+przez login.gov.pl”, a tam Profil Zaufany, mObywatel, bankowość elektroniczną albo e-dowód. Drugi
+przycisk, „Zaloguj certyfikatem”, jest dla osób i firm z kwalifikowanym podpisem lub pieczęcią.
+
+Stan prawny na 7 października 2026.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
+  label="Podręcznik Aplikacji Podatnika KSeF 2.0, rozdz. 4.1"
+/>
+
+## Jak wygląda logowanie
+
+Aplikacja Podatnika działa pod adresem [ap.ksef.mf.gov.pl](https://ap.ksef.mf.gov.pl). Po wybraniu
+sposobu logowania aplikacja pyta, w czyim imieniu chcesz działać. Wybierasz typ identyfikatora (NIP,
+identyfikator wewnętrzny albo identyfikator złożony z numerem VAT-UE), wpisujesz go i klikasz
+„Przejdź dalej”.
+
+Ania prowadzi JDG jako graficzka. Loguje się Profilem Zaufanym, wybiera NIP i wpisuje **swój własny
+NIP**. Gdyby obsługiwała też faktury innej firmy, w tym samym kroku wpisałaby jej NIP. Do tego
+potrzebne są uprawnienia w kontekście tej firmy.
+
+<Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20" label="FAQ MF: KSeF 2.0" />
+<Source
+  href="https://github.com/CIRFMF/ksef-docs/blob/main/uwierzytelnianie.md"
+  label="CIRFMF: uwierzytelnianie"
+/>
+
+## JDG: wchodzisz od razu, bez ZAW-FA
+
+Jeśli prowadzisz jednoosobową działalność, KSeF sam przypisuje Ci uprawnienia właścicielskie do
+Twojego NIP. Obejmują wystawianie faktur, dostęp do faktur, nadawanie uprawnień innym (np. biuru
+rachunkowemu), historię sesji i podgląd uprawnień. Nie da się ich odebrać. Możesz wejść od razu
+Profilem Zaufanym albo podpisem kwalifikowanym.
+
+**JDG nie składa zawiadomienia ZAW-FA.** Jedyny wyjątek to rejestracja Twojego własnego podpisu
+kwalifikowanego, który nie zawiera NIP ani PESEL (o tym niżej).
+
+Po zalogowaniu zobaczysz faktury wystawione na Twój NIP. Jeśli trafi się wśród nich faktura od firmy,
+której nie znasz, sprawdź, [jak rozpoznać fałszywą fakturę w KSeF](/blog/falszywe-faktury-ksef).
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. I, s. 57"
+/>
+
+## Spółka: pieczęć kwalifikowana albo osoba wskazana w ZAW-FA
+
+Tomasz jest prezesem spółki z o.o. Jego Profil Zaufany sam w sobie nie otworzy mu faktur spółki, bo
+spółka nie jest osobą fizyczną i nie dostaje uprawnień automatycznie. Ma dwie drogi:
+
+- **Pieczęć kwalifikowana spółki.** Logowanie przyciskiem „Zaloguj certyfikatem”.
+- **Zawiadomienie ZAW-FA.** Spółka wskazuje w nim dokładnie jedną osobę fizyczną, która nie musi
+  figurować w KRS. Ta osoba dostaje m.in. zarządzanie uprawnieniami, wystawianie faktur i dostęp do
+  nich, a kolejne osoby dodaje już elektronicznie.
+
+ZAW-FA(3) złożysz na papierze, przez e-Urząd Skarbowy (Dokumenty → Złóż dokument) albo przez
+e-Doręczenia. Złożenie przez ePUAP nie jest skuteczne od 1 stycznia 2026. Uprawnienia zaczynają działać,
+gdy urząd skarbowy wprowadzi dane do systemu, więc nie zostawiaj tego na dzień wystawienia faktury.
+Gdy już działają, osoba wskazana w ZAW-FA loguje się swoim sposobem (przez login.gov.pl albo
+podpisem kwalifikowanym) i w kroku z identyfikatorem wpisuje NIP spółki.
+
+<Source
+  href="https://api.sejm.gov.pl/eli/acts/DU/2025/1815"
+  label="Dz.U. 2025 poz. 1815, § 5 ust. 1"
+/>
+<Source
+  href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. I, s. 58-61"
+/>
+
+## Podpis kwalifikowany bez NIP i PESEL
+
+Podpis kwalifikowany z NIP albo PESEL w certyfikacie działa od razu. Jeśli certyfikat nie ma żadnego
+z nich, KSeF nie wie, czyj to podpis, i trzeba zgłosić jego **odcisk palca** (skrót SHA-256, 64 znaki
+szesnastkowe). W Aplikacji Podatnika służy do tego funkcja „Pobierz odcisk palca”: podpisujesz plik
+certyfikatem i wybierasz „Przekaż plik”.
+
+Kto zgłasza odcisk, zależy od tego, czyj to podpis:
+
+- **Twój własny, a prowadzisz JDG:** rejestrujesz go zawiadomieniem ZAW-FA (to ten wyjątek z
+  sekcji o JDG).
+- **Osoby, której nadajesz uprawnienia:** wpisujesz odcisk przy nadawaniu uprawnień, z
+  identyfikatorem „Brak”, datą urodzenia i dokumentem tożsamości tej osoby.
+
+Po odnowieniu albo wymianie takiego podpisu uprawnienia trzeba zarejestrować ponownie. Nie trzeba,
+jeśli nowy certyfikat ma już NIP lub PESEL.
+
+<Source
+  href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
+  label="FAQ MF: najczęstsze pytania, pyt. 19"
+/>
+
+### JDG prowadzona przez obywatela Ukrainy
+
+Ołena, obywatelka Ukrainy, prowadzi w Polsce JDG. **Logowania eID z innych państw UE Aplikacja
+Podatnika nie obsługuje.** eID spoza UE (np. Diia) podręcznik nie wymienia wśród sposobów logowania,
+a osobnych wskazówek MF dla obywateli Ukrainy nie znaleźliśmy.
+Ołena ma więc te same dwie drogi co każdy: login.gov.pl albo podpis kwalifikowany. Jeśli jej podpis
+nie zawiera NIP ani PESEL, zgłasza odcisk palca zawiadomieniem ZAW-FA, jak każda JDG. Czy dana osoba
+może założyć Profil Zaufany lub mObywatel, dokumenty KSeF nie rozstrzygają.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
+  label="Podręcznik Aplikacji Podatnika KSeF 2.0, s. 13-17"
+/>
+
+## Token i certyfikat KSeF: dla programów, nie dla Ciebie
+
+Tokenem ani certyfikatem KSeF nie zalogujesz się do Aplikacji Podatnika. Służą programom do
+fakturowania, które łączą się z KSeF przez API. Program uwierzytelnia się podpisanym żądaniem (XAdES)
+albo tokenem KSeF. Certyfikat KSeF generuje się po uwierzytelnieniu przez
+login.gov.pl, podpisem albo pieczęcią kwalifikowaną i jest ważny najwyżej 2 lata. Po uwierzytelnieniu
+tokenem certyfikatu KSeF wygenerować się nie da.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. I, s. 42"
+/>
+<Source
+  href="https://github.com/CIRFMF/ksef-docs/blob/main/uwierzytelnianie.md"
+  label="CIRFMF: uwierzytelnianie"
+/>
+
+### Co z tokenami po 31 grudnia 2026
+
+Nie jest to przesądzone. Rozporządzenie pozwala używać tokenów do 31 grudnia 2026 (§ 13 ust. 1 pkt 1).
+Ministerstwo w podręczniku z 6 sierpnia 2026 zapowiada, że tokeny zostają „na czas nieokreślony”, a
+rozporządzenie „zostanie odpowiednio znowelizowane”. Do 7 października 2026 nowelizacja się nie
+ukazała. Zespół API CIRF MF napisał 10 września 2026 na GitHubie, że tokeny wydane do 31 grudnia 2026
+będą działać, ale najdłużej do 30 listopada 2027. To zapowiedź, nie przepis.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. I, s. 26"
+/>
+
+Jeśli Twój program łączy się z KSeF tokenem, nic nie musisz robić dziś. Zapytaj dostawcę programu,
+jak przygotowuje się na koniec 2026 roku.
+
+<Source href="https://api.sejm.gov.pl/eli/acts/DU/2025/1815" label="Dz.U. 2025 poz. 1815, § 13" />
+<Source
+  href="https://github.com/CIRFMF/ksef-api/issues/834"
+  label="CIRFMF ksef-api, zgłoszenie 834"
+/>
+
+## Czy Profil Zaufany nadal działa w KSeF?
+
+Tak, przez login.gov.pl. Nowelizacja rozporządzenia (Dz.U. 2026 poz. 169) zmieniła dwie daty:
+przejściowa podstawa dla samodzielnego podpisu zaufanego skończyła się 13 lutego 2026, a od 14 lutego
+2026 obowiązuje stała podstawa logowania przez węzeł krajowy, czyli login.gov.pl, gdzie Profil
+Zaufany jest jednym ze środków. FAQ KSeF 2.0 nadal wymienia Profil Zaufany wśród sposobów logowania
+do Aplikacji Podatnika.
+
+Otwarte pozostaje, czy KSeF technicznie przyjmuje jeszcze samodzielny podpis zaufany, np. do
+podpisania pliku w integracji przez API. Dokumentacja techniczna MF wciąż go wymienia, a MF tego nie
+rozstrzygnęło.
+
+<Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/169" label="Dz.U. 2026 poz. 169" />
+
+## Gdy Profil Zaufany nie działa
+
+MF ogłasza awarie na stronie z komunikatami technicznymi. W 2026 były tam m.in. awarie Profilu
+Zaufanego 5 i 11 maja oraz utrudnienia w Aplikacji Podatnika 25 września. Zajrzyj tam najpierw, żeby
+wiedzieć, czy problem leży po Twojej stronie.
+
+Jeśli niedostępny jest tylko Profil Zaufany, na tym samym ekranie login.gov.pl wybierz mObywatel,
+bankowość elektroniczną albo e-dowód. Logowanie podpisem lub pieczęcią kwalifikowaną idzie osobnym
+przyciskiem „Zaloguj certyfikatem”. Gdy nie działa sama Aplikacja Podatnika, zmiana sposobu
+logowania nie pomoże.
+
+<Source
+  href="https://ksef.podatki.gov.pl/komunikaty-techniczne/"
+  label="MF: komunikaty techniczne"
+/>
+
+Jeśli prowadzisz JDG i logujesz się pierwszy raz, resztę minimum znajdziesz w
+[poradniku KSeF dla JDG](/blog/ksef-dla-jdg).

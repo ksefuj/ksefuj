@@ -1,0 +1,213 @@
+---
+title: "KSeF login: Profil Zaufany or qualified signature"
+description: "Log in to KSeF with Profil Zaufany via login.gov.pl or a qualified signature. KSeF tokens and certificates are for invoicing software, not for you."
+date: 2026-10-07
+section: blog
+locale: en
+slug: "ksef-login"
+tags: ["KSeF", "JDG"]
+sources:
+  - label: "KSeF 2.0 Manual, Part I (06.08.2026)"
+    url: "https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  - label: "KSeF 2.0 Taxpayer Application user manual (06.08.2026)"
+    url: "https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
+  - label: "KSeF Regulation, Dz.U. 2025 poz. 1815"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2025/1815"
+  - label: "Amending regulation, Dz.U. 2026 poz. 169"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/169"
+  - label: "MF FAQ: KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
+  - label: "MF FAQ: most common questions"
+    url: "https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
+  - label: "MF: KSeF technical notices"
+    url: "https://ksef.podatki.gov.pl/komunikaty-techniczne/"
+  - label: "CIRFMF ksef-docs: authentication"
+    url: "https://github.com/CIRFMF/ksef-docs/blob/main/uwierzytelnianie.md"
+  - label: "CIRFMF ksef-api: issue 834 (tokens after 2026)"
+    url: "https://github.com/CIRFMF/ksef-api/issues/834"
+translations:
+  pl: "logowanie-ksef"
+  en: "ksef-login"
+  uk: "vkhid-do-ksef"
+---
+
+You log in to KSeF (Krajowy System e-Faktur, Poland's National e-Invoicing System) with Profil
+Zaufany or a qualified electronic signature: in the KSeF 2.0 Taxpayer Application, choose "Zaloguj
+przez login.gov.pl" (Log in via login.gov.pl), then Profil Zaufany, mObywatel, online banking or
+e-dowód. The second button, "Zaloguj certyfikatem" (Log in with a certificate), is for people and
+companies with a qualified signature or seal.
+
+Profil Zaufany (Trusted Profile) is the free Polish government e-ID; mObywatel is the government
+mobile app and e-dowód is the Polish ID card with a chip. Legal status as of 7 October 2026.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
+  label="KSeF 2.0 Taxpayer Application manual, ch. 4.1"
+/>
+
+## What the login looks like
+
+The Taxpayer Application (Aplikacja Podatnika) runs at
+[ap.ksef.mf.gov.pl](https://ap.ksef.mf.gov.pl). After you pick a login method, it asks on whose
+behalf you want to act. You choose the identifier type (NIP, internal identifier, or a composite
+identifier with an EU VAT number), enter it and click "Przejdź dalej" (Continue).
+
+Ania is a freelance graphic designer running a JDG (jednoosobowa działalność gospodarcza, a Polish
+sole trader business). She logs in with Profil Zaufany, chooses NIP and enters **her own NIP**. If
+she also handled invoices for another company, she would enter that company's NIP at the same step.
+That requires permissions in the context of that company.
+
+<Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20" label="MF FAQ: KSeF 2.0" />
+<Source
+  href="https://github.com/CIRFMF/ksef-docs/blob/main/uwierzytelnianie.md"
+  label="CIRFMF: authentication"
+/>
+
+## Sole traders: straight in, no ZAW-FA
+
+If you run a sole trader business, KSeF assigns you owner permissions for your NIP automatically.
+They cover issuing invoices, access to invoices, granting permissions to others (for example, your
+accounting office), session history and viewing permissions. They cannot be revoked. You can log in
+straight away with Profil Zaufany or a qualified signature.
+
+**A sole trader does not file the ZAW-FA notification.** ZAW-FA is the form a taxpayer files with
+the tax office to designate who may use KSeF. The only exception for a sole trader is registering
+your own qualified signature when it contains neither a NIP nor a PESEL (the Polish personal ID
+number); more on that below.
+
+After logging in you will see invoices issued to your NIP. If one comes from a company you don't
+know, check [how to spot a fake invoice in KSeF](/en/blog/fake-invoices-ksef).
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  label="KSeF 2.0 Manual, Part I, p. 57"
+/>
+
+## Companies: qualified seal or the person named in ZAW-FA
+
+Tomasz is the president of a limited liability company (spółka z o.o.). His Profil Zaufany alone
+will not open the company's invoices, because a company is not a natural person and gets no
+permissions automatically. He has two routes:
+
+- **The company's qualified seal.** Log in with the "Zaloguj certyfikatem" button.
+- **A ZAW-FA notification.** In it the company names exactly one natural person, who does not have
+  to be listed in the KRS (National Court Register). That person gets, among other things,
+  permission management, invoice issuing and access to invoices, and adds further people
+  electronically.
+
+You can file ZAW-FA(3) on paper, through e-Urząd Skarbowy (Dokumenty → Złóż dokument, i.e.
+Documents → Submit document) or through e-Doręczenia (the Polish e-delivery service). Filing through
+ePUAP has not been effective since 1 January 2026. Permissions start working once the tax office
+enters the data into the system, so don't leave it until the day you need to issue an invoice. Once
+they work, the person named in ZAW-FA logs in with their own method (via login.gov.pl or a qualified
+signature) and enters the company's NIP at the identifier step.
+
+<Source href="https://api.sejm.gov.pl/eli/acts/DU/2025/1815" label="Dz.U. 2025 poz. 1815, § 5(1)" />
+<Source
+  href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  label="KSeF 2.0 Manual, Part I, pp. 58-61"
+/>
+
+## Qualified signature without a NIP or PESEL
+
+A qualified signature with a NIP or PESEL in the certificate works immediately. If the certificate
+has neither, KSeF can't tell whose signature it is, and you have to register its **fingerprint** (a
+SHA-256 hash, 64 hexadecimal characters). In the Taxpayer Application you use the "Pobierz odcisk
+palca" (Get fingerprint) function: sign a file with the certificate and choose "Przekaż plik"
+(Upload file).
+
+Who registers the fingerprint depends on whose signature it is:
+
+- **Your own, and you run a sole trader business:** you register it with a ZAW-FA notification (the
+  exception from the sole trader section).
+- **Someone you are granting permissions to:** you enter the fingerprint when granting permissions,
+  with the identifier set to "Brak" (None), plus that person's date of birth and identity document.
+
+After such a signature is renewed or replaced, the permissions have to be registered again. That
+isn't needed if the new certificate already contains a NIP or PESEL.
+
+<Source
+  href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
+  label="MF FAQ: most common questions, Q19"
+/>
+
+### Sole trader businesses run by Ukrainian citizens
+
+Olena, a Ukrainian citizen, runs a JDG in Poland. **The Taxpayer Application does not support login
+with eIDs from other EU countries.** The manual does not list non-EU eIDs (such as Diia) among the
+login methods, and we found no separate MF guidance for Ukrainian citizens. Olena therefore has the
+same two routes as everyone else: login.gov.pl or a qualified signature. If her signature contains
+neither a NIP nor a PESEL, she registers the fingerprint with a ZAW-FA notification, like any sole
+trader. The KSeF documents do not settle whether a given person can set up Profil Zaufany or
+mObywatel.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
+  label="KSeF 2.0 Taxpayer Application manual, pp. 13-17"
+/>
+
+## KSeF token and certificate: for software, not for you
+
+You cannot log in to the Taxpayer Application with a KSeF token or a KSeF certificate. They are for
+invoicing software that connects to KSeF through the API. The software authenticates with a signed
+request (XAdES) or a KSeF token. A KSeF certificate is generated after authenticating via
+login.gov.pl or with a qualified signature or seal, and is valid for at most 2 years. A KSeF
+certificate cannot be generated after authenticating with a token.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  label="KSeF 2.0 Manual, Part I, p. 42"
+/>
+<Source
+  href="https://github.com/CIRFMF/ksef-docs/blob/main/uwierzytelnianie.md"
+  label="CIRFMF: authentication"
+/>
+
+### What happens to tokens after 31 December 2026
+
+This isn't settled. The regulation allows tokens to be used until 31 December 2026 (§ 13(1)(1)). In
+its manual of 6 August 2026 the Ministry of Finance says tokens will stay "indefinitely" and the
+regulation "will be amended accordingly". As of 7 October 2026 the amendment has not been
+published. On 10 September 2026 the CIRF MF API team wrote on GitHub that tokens issued by 31
+December 2026 will keep working, but no later than 30 November 2027. That is an announcement, not
+law.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  label="KSeF 2.0 Manual, Part I, p. 26"
+/>
+
+If your software connects to KSeF with a token, you don't need to do anything today. Ask your
+software vendor how they are preparing for the end of 2026.
+
+<Source href="https://api.sejm.gov.pl/eli/acts/DU/2025/1815" label="Dz.U. 2025 poz. 1815, § 13" />
+<Source href="https://github.com/CIRFMF/ksef-api/issues/834" label="CIRFMF ksef-api, issue 834" />
+
+## Does Profil Zaufany still work in KSeF?
+
+Yes, via login.gov.pl. The amending regulation (Dz.U. 2026 poz. 169) changed two dates: the
+transitional legal basis for a standalone trusted signature (podpis zaufany) ended on 13 February
+2026, and since 14 February 2026 there has been a permanent basis for logging in through the
+national node, i.e. login.gov.pl, where Profil Zaufany is one of the methods. The KSeF 2.0 FAQ still
+lists Profil Zaufany among the ways to log in to the Taxpayer Application.
+
+It remains open whether KSeF still technically accepts a standalone trusted signature, for example
+to sign a file in an API integration. The MF technical documentation still lists it, and the
+Ministry has not settled the question.
+
+<Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/169" label="Dz.U. 2026 poz. 169" />
+
+## When Profil Zaufany doesn't work
+
+The Ministry of Finance announces outages on its technical notices page. In 2026 these included
+Profil Zaufany outages on 5 and 11 May and disruptions to the Taxpayer Application on 25 September.
+Check there first to see whether the problem is on your side.
+
+If only Profil Zaufany is unavailable, pick mObywatel, online banking or e-dowód on the same
+login.gov.pl screen. Login with a qualified signature or seal goes through the separate "Zaloguj
+certyfikatem" button. If the Taxpayer Application itself is down, switching login method won't help.
+
+<Source href="https://ksef.podatki.gov.pl/komunikaty-techniczne/" label="MF: technical notices" />
+
+If you run a sole trader business and are logging in for the first time, the rest of the minimum is
+in our [KSeF guide for sole traders](/en/blog/ksef-for-sole-traders).

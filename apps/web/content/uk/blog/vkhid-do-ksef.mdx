@@ -1,0 +1,218 @@
+---
+title: "Вхід до KSeF: Profil Zaufany чи підпис"
+description: "До KSeF входиш через Profil Zaufany на login.gov.pl або кваліфікованим підписом. Токен і сертифікат KSeF потрібні програмам, а не тобі."
+date: 2026-10-07
+section: blog
+locale: uk
+slug: "vkhid-do-ksef"
+tags: ["KSeF", "JDG"]
+sources:
+  - label: "Посібник KSeF 2.0, ч. I (06.08.2026)"
+    url: "https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  - label: "Посібник користувача Aplikacja Podatnika KSeF 2.0 (06.08.2026)"
+    url: "https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
+  - label: "Розпорядження про KSeF, Dz.U. 2025 poz. 1815"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2025/1815"
+  - label: "Розпорядження про зміни, Dz.U. 2026 poz. 169"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/169"
+  - label: "FAQ МФ: KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
+  - label: "FAQ МФ: найчастіші запитання"
+    url: "https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
+  - label: "МФ: технічні повідомлення KSeF"
+    url: "https://ksef.podatki.gov.pl/komunikaty-techniczne/"
+  - label: "CIRFMF ksef-docs: автентифікація"
+    url: "https://github.com/CIRFMF/ksef-docs/blob/main/uwierzytelnianie.md"
+  - label: "CIRFMF ksef-api: звернення 834 (токени після 2026)"
+    url: "https://github.com/CIRFMF/ksef-api/issues/834"
+translations:
+  pl: "logowanie-ksef"
+  en: "ksef-login"
+  uk: "vkhid-do-ksef"
+---
+
+До KSeF можна увійти через Profil Zaufany: в Aplikacja Podatnika KSeF 2.0 (застосунок для платників
+податків) обираєш «Zaloguj przez login.gov.pl» («Увійти через login.gov.pl»), а там Profil Zaufany,
+mObywatel, онлайн-банкінг або e-dowód. Друга кнопка, «Zaloguj certyfikatem» («Увійти
+сертифікатом»), для людей і фірм, які мають кваліфікований електронний підпис або печатку.
+
+Profil Zaufany (довірений профіль) є безкоштовною польською державною електронною ідентифікацією,
+mObywatel є державним мобільним застосунком, а e-dowód є польською ID-карткою з чипом. Правовий стан
+на 7 жовтня 2026 року.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
+  label="Посібник Aplikacja Podatnika KSeF 2.0, розд. 4.1"
+/>
+
+## Як виглядає вхід
+
+Aplikacja Podatnika працює за адресою [ap.ksef.mf.gov.pl](https://ap.ksef.mf.gov.pl). Після вибору
+способу входу застосунок питає, від чийого імені ти хочеш діяти. Обираєш тип ідентифікатора (NIP,
+внутрішній ідентифікатор або складений ідентифікатор із номером VAT-UE), вводиш його й натискаєш
+«Przejdź dalej» («Далі»).
+
+Аня веде JDG (jednoosobowa działalność gospodarcza, польський аналог ФОП) як графічна дизайнерка.
+Вона входить через Profil Zaufany, обирає NIP і вводить **свій власний NIP**. Якби вона обслуговувала
+ще й рахунки іншої фірми, на цьому ж кроці ввела б NIP тієї фірми. Для цього потрібні повноваження в
+контексті цієї фірми.
+
+<Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20" label="FAQ МФ: KSeF 2.0" />
+<Source
+  href="https://github.com/CIRFMF/ksef-docs/blob/main/uwierzytelnianie.md"
+  label="CIRFMF: автентифікація"
+/>
+
+## JDG: входиш одразу, без ZAW-FA
+
+Якщо ти ведеш JDG, KSeF сам надає тобі повноваження власника для твого NIP. Вони охоплюють
+виставлення рахунків, доступ до рахунків, надання повноважень іншим (наприклад, бухгалтерському
+бюро), історію сесій і перегляд повноважень. Відібрати їх неможливо. Увійти можеш одразу через
+Profil Zaufany або кваліфікованим підписом.
+
+**JDG не подає повідомлення ZAW-FA.** ZAW-FA є формою, якою платник повідомляє податкову, хто може
+працювати в KSeF від його імені. Єдиний виняток для JDG: реєстрація твого власного кваліфікованого
+підпису, який не містить ні NIP, ні PESEL (польського персонального номера). Про це нижче.
+
+Після входу побачиш рахунки, виставлені на твій NIP. Якщо серед них трапиться рахунок від незнайомої
+фірми, подивись, [як розпізнати фальшивий рахунок у KSeF](/uk/blog/falshyvi-rakhunky-ksef).
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  label="Посібник KSeF 2.0, ч. I, с. 57"
+/>
+
+## Спілка: кваліфікована печатка або особа, вказана в ZAW-FA
+
+Томаш очолює правління spółka z o.o. (польський аналог ТОВ). Його Profil Zaufany сам по собі не
+відкриє йому рахунків спілки, бо спілка не фізична особа й не отримує повноважень автоматично. Є два
+шляхи:
+
+- **Кваліфікована печатка спілки.** Вхід кнопкою «Zaloguj certyfikatem».
+- **Повідомлення ZAW-FA.** У ньому спілка вказує рівно одну фізичну особу, яка не мусить бути
+  внесена до KRS (Національного судового реєстру). Ця особа отримує, зокрема, керування
+  повноваженнями, виставлення рахунків і доступ до них, а наступних людей додає вже електронно.
+
+ZAW-FA(3) можна подати на папері, через e-Urząd Skarbowy (Dokumenty → Złóż dokument, тобто
+«Документи → Подати документ») або через e-Doręczenia (польська система електронного вручення).
+Подання через ePUAP не має сили з 1 січня 2026 року. Повноваження починають діяти, коли податкова
+(urząd skarbowy) внесе дані до системи, тож не відкладай це на день виставлення рахунку. Коли вони
+вже діють, особа з ZAW-FA входить своїм способом (через login.gov.pl або кваліфікованим підписом) і
+на кроці з ідентифікатором вводить NIP спілки.
+
+<Source
+  href="https://api.sejm.gov.pl/eli/acts/DU/2025/1815"
+  label="Dz.U. 2025 poz. 1815, § 5 ust. 1"
+/>
+<Source
+  href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  label="Посібник KSeF 2.0, ч. I, с. 58-61"
+/>
+
+## Кваліфікований підпис без NIP і PESEL
+
+Кваліфікований підпис, у сертифікаті якого є NIP або PESEL, працює одразу. Якщо в сертифікаті немає
+жодного з них, KSeF не знає, чий це підпис, і треба зареєструвати його **відбиток** (хеш SHA-256, 64
+шістнадцяткові символи). В Aplikacja Podatnika для цього є функція «Pobierz odcisk palca» («Отримати
+відбиток»): підписуєш файл сертифікатом і обираєш «Przekaż plik» («Передати файл»).
+
+Хто реєструє відбиток, залежить від того, чий це підпис:
+
+- **Твій власний, і ти ведеш JDG:** реєструєш його повідомленням ZAW-FA (це той самий виняток із
+  розділу про JDG).
+- **Особи, якій ти надаєш повноваження:** вводиш відбиток під час надання повноважень, з
+  ідентифікатором «Brak» («Немає»), датою народження й документом, що посвідчує особу.
+
+Після поновлення або заміни такого підпису повноваження треба зареєструвати знову. Не треба, якщо
+новий сертифікат уже містить NIP або PESEL.
+
+<Source
+  href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
+  label="FAQ МФ: найчастіші запитання, пит. 19"
+/>
+
+### JDG громадянина України
+
+Олена, громадянка України, веде JDG у Польщі. **Входу через eID інших країн ЄС Aplikacja Podatnika не
+підтримує.** eID з-поза ЄС (наприклад, «Дія») посібник серед способів входу не згадує, а окремих
+роз'яснень МФ для громадян України ми не знайшли. Тож в Олени ті самі два шляхи, що й у всіх:
+login.gov.pl або кваліфікований підпис. Якщо її підпис не містить ні NIP, ні PESEL, вона реєструє
+відбиток повідомленням ZAW-FA, як будь-яка JDG. Чи може конкретна людина створити Profil Zaufany або
+mObywatel, документи KSeF не визначають.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
+  label="Посібник Aplikacja Podatnika KSeF 2.0, с. 13-17"
+/>
+
+## Токен і сертифікат KSeF: для програм, а не для тебе
+
+Токеном чи сертифікатом KSeF в Aplikacja Podatnika не увійдеш. Вони потрібні програмам для
+виставлення рахунків, які з'єднуються з KSeF через API. Програма автентифікується підписаним запитом
+(XAdES) або токеном KSeF. Сертифікат KSeF генерують після автентифікації через login.gov.pl,
+кваліфікованим підписом або печаткою, і він дійсний щонайбільше 2 роки. Після автентифікації токеном
+згенерувати сертифікат KSeF неможливо.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  label="Посібник KSeF 2.0, ч. I, с. 42"
+/>
+<Source
+  href="https://github.com/CIRFMF/ksef-docs/blob/main/uwierzytelnianie.md"
+  label="CIRFMF: автентифікація"
+/>
+
+### Що буде з токенами після 31 грудня 2026
+
+Це не вирішено. Розпорядження дозволяє використовувати токени до 31 грудня 2026 року (§ 13 ust. 1
+pkt 1). Міністерство фінансів у посібнику від 6 серпня 2026 року обіцяє, що токени залишаться
+«безстроково», а розпорядження «буде відповідно змінено». Станом на 7 жовтня 2026 року зміни не
+опубліковано. Команда API CIRF MF написала 10 вересня 2026 року на GitHub, що токени, видані до 31
+грудня 2026 року, працюватимуть, але не довше ніж до 30 листопада 2027 року. Це анонс, а не норма
+права.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  label="Посібник KSeF 2.0, ч. I, с. 26"
+/>
+
+Якщо твоя програма з'єднується з KSeF токеном, сьогодні нічого робити не треба. Запитай
+постачальника програми, як він готується до кінця 2026 року.
+
+<Source href="https://api.sejm.gov.pl/eli/acts/DU/2025/1815" label="Dz.U. 2025 poz. 1815, § 13" />
+<Source
+  href="https://github.com/CIRFMF/ksef-api/issues/834"
+  label="CIRFMF ksef-api, звернення 834"
+/>
+
+## Чи Profil Zaufany досі працює в KSeF?
+
+Так, через login.gov.pl. Розпорядження про зміни (Dz.U. 2026 poz. 169) змінило дві дати: перехідна
+підстава для самостійного довіреного підпису (podpis zaufany) закінчилася 13 лютого 2026 року, а з
+14 лютого 2026 року діє постійна підстава для входу через національний вузол, тобто login.gov.pl, де
+Profil Zaufany є одним із засобів. FAQ KSeF 2.0 і далі називає Profil Zaufany серед способів входу
+до Aplikacja Podatnika.
+
+Відкритим лишається питання, чи KSeF технічно ще приймає самостійний довірений підпис, наприклад
+для підписання файлу в інтеграції через API. Технічна документація МФ досі його згадує, а
+міністерство цього не вирішило.
+
+<Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/169" label="Dz.U. 2026 poz. 169" />
+
+## Коли Profil Zaufany не працює
+
+МФ публікує інформацію про збої на сторінці технічних повідомлень. У 2026 році там були, зокрема,
+збої Profil Zaufany 5 і 11 травня та перебої в Aplikacja Podatnika 25 вересня. Спершу заглянь туди,
+щоб знати, чи проблема на твоєму боці.
+
+Якщо недоступний лише Profil Zaufany, на тому ж екрані login.gov.pl обери mObywatel, онлайн-банкінг
+або e-dowód. Вхід кваліфікованим підписом або печаткою йде окремою кнопкою «Zaloguj certyfikatem».
+Коли не працює сам застосунок Aplikacja Podatnika, зміна способу входу не допоможе.
+
+<Source
+  href="https://ksef.podatki.gov.pl/komunikaty-techniczne/"
+  label="МФ: технічні повідомлення"
+/>
+
+Якщо ти ведеш JDG і входиш уперше, решту необхідного мінімуму знайдеш у
+[посібнику KSeF для ФОП](/uk/blog/ksef-dlya-fop).
