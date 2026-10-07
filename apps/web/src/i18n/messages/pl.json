@@ -548,6 +548,11 @@
         }
       ]
     },
+    "latestPosts": {
+      "title": "Najnowsze z bloga",
+      "allPosts": "Wszystkie wpisy",
+      "guides": "Poradniki"
+    },
     "newsletter": {
       "title": "Newsletter o KSeF",
       "subtitle": "Praktyczna wiedza o e-fakturach: walidator, pułapki i wszystko, co musisz wiedzieć — bez urzędniczego żargonu",

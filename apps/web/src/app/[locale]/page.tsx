@@ -9,6 +9,7 @@ import { FeaturesSection } from "./sections/features-section";
 import { ValidationLayersSection } from "./sections/validation-layers-section";
 import { ComparisonSection } from "./sections/comparison-section";
 import { ComingSoonSection } from "./sections/coming-soon-section";
+import { LatestPostsSection } from "./sections/latest-posts-section";
 import { NewsletterSection } from "./sections/newsletter-section";
 import { GettingStartedSection } from "./sections/getting-started-section";
 import { OpenSourceSection } from "./sections/open-source-section";
@@ -220,6 +221,14 @@ export default async function Home({ params }: Props) {
             icon: COMING_SOON_FEATURES[i].icon,
             badgeVariant: COMING_SOON_FEATURES[i].badgeVariant,
           }))}
+        />
+
+        {/* Latest Posts Section */}
+        <LatestPostsSection
+          locale={locale}
+          title={t("landing.latestPosts.title")}
+          allPostsLabel={t("landing.latestPosts.allPosts")}
+          guidesLabel={t("landing.latestPosts.guides")}
         />
 
         {/* Newsletter Section */}
