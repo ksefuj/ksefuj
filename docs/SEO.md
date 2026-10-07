@@ -196,7 +196,7 @@ Data branch layout (never touches `main`, no shared history with it):
 gsc/
 ├── YYYY-MM-DD.json   # full raw data per day (kept for 90 days)
 ├── latest.json       # copy of the newest snapshot
-└── latest.md         # digest: totals, Problems (by severity), Opportunities
+└── latest.md         # digest: totals, Problems (by category), Opportunities
 ```
 
 Run locally (without the env vars the GSC sections are skipped, the health crawl still runs):
