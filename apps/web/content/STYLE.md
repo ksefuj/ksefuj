@@ -100,7 +100,8 @@ Never write these. They are the patterns that make text read as generated:
 Also:
 
 - **Voice:** we („piszemy", „sprawdziliśmy") for the site, Ty for the reader. Never first person
-  singular („omówię").
+  singular („omówię"). In Ukrainian the reader is informal ти (твій, singular imperatives), matching
+  the UI; ви only inside quoted third-party speech.
 - **Headings** state what the section says or the question it answers, in the reader's words. Not
   „Co to jest ten limit" for a section that explains how it's calculated.
 - **Bold** marks the one phrase per section a skimming reader must not miss. If half a paragraph is
