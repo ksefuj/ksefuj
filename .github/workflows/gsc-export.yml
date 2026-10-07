@@ -1,0 +1,87 @@
+name: GSC Export
+
+on:
+  schedule:
+    - cron: "30 2 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gsc-export
+  cancel-in-progress: false
+
+env:
+  HUSKY: "0"
+
+jobs:
+  export:
+    name: Export Search Console data
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "pnpm"
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Run export
+        env:
+          GSC_SERVICE_ACCOUNT_JSON: ${{ secrets.GSC_SERVICE_ACCOUNT_JSON }}
+          GSC_SITE_URL: ${{ secrets.GSC_SITE_URL || vars.GSC_SITE_URL }}
+        run: pnpm exec tsx scripts/gsc-export.ts --out "$RUNNER_TEMP/gsc-out"
+
+      - name: Publish to gsc-data branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+          OUT_DIR: ${{ runner.temp }}/gsc-out
+        run: |
+          set -euo pipefail
+          DATE="$(date -u +%F)"
+          REMOTE="https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          WORK="$RUNNER_TEMP/gsc-data"
+
+          rm -rf "$WORK"
+          mkdir -p "$WORK"
+          cd "$WORK"
+          git init -q
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote add origin "$REMOTE"
+
+          if git ls-remote --exit-code --heads origin gsc-data >/dev/null 2>&1; then
+            git fetch -q --depth=1 origin gsc-data
+            git checkout -q -b gsc-data FETCH_HEAD
+          else
+            # First run: create an orphan branch with no shared history with main.
+            git checkout -q --orphan gsc-data
+          fi
+
+          mkdir -p gsc
+          cp "$OUT_DIR"/*.json "$OUT_DIR"/latest.md gsc/
+
+          # Keep 90 days of dated snapshots.
+          CUTOFF="$(date -u -d '90 days ago' +%F)"
+          for f in gsc/????-??-??.json; do
+            [ -e "$f" ] || continue
+            d="$(basename "$f" .json)"
+            if [[ "$d" < "$CUTOFF" ]]; then
+              git rm -q -f "$f"
+            fi
+          done
+
+          git add -A gsc
+          if git diff --cached --quiet; then
+            echo "No changes to publish"
+            exit 0
+          fi
+          git commit --no-verify -q -m "chore(ci): gsc export ${DATE}"
+          git push origin gsc-data

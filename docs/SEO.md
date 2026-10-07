@@ -180,6 +180,43 @@ After deployment, verify in Google Search Console:
 3. Monitor Core Web Vitals
 4. Review Mobile Usability
 
+## Search Console automation
+
+A daily GitHub Action (`.github/workflows/gsc-export.yml`, 02:30 UTC, also runnable manually) runs
+`scripts/gsc-export.ts`. It exports Google Search Console data (search analytics by
+page/query/date/country/device, sitemap status, URL Inspection for every sitemap URL) and runs a
+Google-free health crawl of every sitemap URL (status, redirects, title/description, canonical,
+robots, hreflang reciprocity, h1 count, broken internal links, robots.txt vs sitemap). The result is
+published to the orphan `gsc-data` branch so a cloud routine without Google credentials can read it.
+Problems found are data, not failures: the job only fails on auth/config errors.
+
+Data branch layout (never touches `main`, no shared history with it):
+
+```
+gsc/
+├── YYYY-MM-DD.json   # full raw data per day (kept for 90 days)
+├── latest.json       # copy of the newest snapshot
+└── latest.md         # digest: totals, Problems (by category), Opportunities
+```
+
+Run locally (without the env vars the GSC sections are skipped, the health crawl still runs):
+
+```bash
+pnpm exec tsx scripts/gsc-export.ts --out gsc-out
+```
+
+### Setup (one-time, human)
+
+1. Create a Google Cloud project (or reuse one).
+2. Enable the "Google Search Console API" for it.
+3. Create a service account and download a JSON key for it.
+4. In Search Console, open Settings > Users and permissions for the property and add the service
+   account email as a user (Full or Restricted).
+5. In the GitHub repo add the secret `GSC_SERVICE_ACCOUNT_JSON` (the full JSON key) and a secret or
+   variable `GSC_SITE_URL` (e.g. `sc-domain:ksefuj.to` or `https://ksefuj.to/`).
+6. Run the "GSC Export" workflow manually once (Actions > GSC Export > Run workflow); it creates the
+   `gsc-data` branch on first run.
+
 ## Best Practices
 
 1. **Never hardcode canonical URLs** in content files

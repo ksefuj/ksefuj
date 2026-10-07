@@ -13,25 +13,25 @@ const localePrefixes =
     ? routing.locales.map((locale) => (locale === routing.defaultLocale ? "" : `/${locale}`))
     : routing.locales.map((locale) => `/${locale}`);
 
-/** Map locale to the content sections it has, with their URL path prefix */
+/**
+ * Map locale to the content sections it has, with their URL path prefix.
+ * FAQ is excluded: its MDX files are categories rendered on the single /faq page, not routes.
+ */
 const contentSections: Record<string, Array<{ section: string; urlPrefix: string }>> = {
   pl: [
     { section: "blog", urlPrefix: "/blog" },
     { section: "docs", urlPrefix: "/docs" },
     { section: "guides", urlPrefix: "/guides" },
-    { section: "faq", urlPrefix: "/faq" },
   ],
   en: [
     { section: "blog", urlPrefix: "/en/blog" },
     { section: "docs", urlPrefix: "/en/docs" },
     { section: "guides", urlPrefix: "/en/guides" },
-    { section: "faq", urlPrefix: "/en/faq" },
   ],
   uk: [
     { section: "blog", urlPrefix: "/uk/blog" },
     { section: "docs", urlPrefix: "/uk/docs" },
     { section: "guides", urlPrefix: "/uk/guides" },
-    { section: "faq", urlPrefix: "/uk/faq" },
   ],
 };
 
