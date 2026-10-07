@@ -98,8 +98,9 @@ next block and homepage section. Replaces the two inline card implementations.
 ## 4. Blog page
 
 - **Lead:** the newest post as a `featured` card above the grid.
-- **Topic filter:** chips „Wszystkie · Terminy i start · …" driven by `?topic=<key>`; combines with
-  the existing `?filter=translated` on EN/UK. Chips are real links that update the query string.
+- **Topic filter:** chips „Wszystkie · Obowiązek, terminy i kary · …" driven by `?topic=<key>`;
+  combines with the existing `?filter=translated` on EN/UK. Chips are real links that update the
+  query string.
 - **Static rendering:** `/[locale]/blog` and `/[locale]/guides` stay statically generated, so the
   pages must not read `searchParams` on the server (that would make every request dynamic). The
   server renders the full list (all topics, all items, PL fallbacks included); a small client
