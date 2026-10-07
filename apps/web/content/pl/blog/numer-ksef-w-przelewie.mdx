@@ -1,0 +1,92 @@
+---
+title: "Numer KSeF w przelewie: od kiedy i co wpisać"
+description: "Od 1 stycznia 2027 r. płacąc za fakturę z KSeF innemu czynnemu podatnikowi VAT, wpisujesz w tytule numer KSeF. Przy kilku fakturach: identyfikator zbiorczy."
+date: 2026-10-07
+section: blog
+locale: pl
+slug: "numer-ksef-w-przelewie"
+tags: ["KSeF", "VAT", "Faktura"]
+sources:
+  - label: "Ustawa o VAT, tekst jednolity Dz.U. 2026 poz. 1263 (art. 108a, art. 108g, art. 17 ustawy z 16.06.2023)"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  - label: "MF: Numer KSeF i zbiorczy identyfikator"
+    url: "https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/numer-ksef-i-zbiorczy-identyfikator/"
+  - label: "MF: Podstawy prawne oraz kluczowe terminy"
+    url: "https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/podstawy-prawne-oraz-kluczowe-terminy/"
+  - label: "MF: FAQ KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/"
+  - label: "Podręcznik KSeF 2.0, cz. II, pkt 4.1.4 i 4.1.5"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "CIRFMF/ksef-api: struktura numeru KSeF"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/numer-ksef.md"
+  - label: "MF: przedłużenie odroczenia kar do końca 2027 r."
+    url: "https://www.gov.pl/web/finanse/przedluzenie-odroczenia-kar-za-bledy-w-stosowaniu-ksef-do-konca-2027-r"
+  - label: "MF: najczęstsze pytania o KSeF (pyt. 7)"
+    url: "https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
+  - label: "Projekt UD477 (RCL)"
+    url: "https://legislacja.rcl.gov.pl/projekt/12414954"
+translations:
+  pl: "numer-ksef-w-przelewie"
+  en: "ksef-number-in-bank-transfer"
+  uk: "nomer-ksef-u-perekazi"
+---
+
+Od **1 stycznia 2027 r.** czynny podatnik VAT, który płaci przelewem za fakturę z KSeF innemu czynnemu podatnikowi VAT, musi wpisać w tytule przelewu numer KSeF tej faktury. Za kilka faktur jednego sprzedawcy w jednym przelewie wpisuje się identyfikator zbiorczy nadany przez KSeF. Do końca 2026 r. obowiązek jest odroczony, a liczy się data płatności, nie data faktury.
+
+Stan prawny na 7 października 2026.
+
+<Source
+  href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  label="Ustawa o VAT, art. 108g i art. 17 ustawy z 16.06.2023 (Dz.U. 2026 poz. 1263)"
+/>
+
+## Kogo dotyczy obowiązek z art. 108g
+
+Art. 108g obejmuje płatności, w których spełnione są trzy warunki naraz:
+
+- płaci **nabywca zarejestrowany jako podatnik VAT czynny**, a odbiorca przelewu też jest czynnym podatnikiem VAT (status odbiorcy sprawdza się w wykazie podatników z art. 96b na dzień płatności),
+- płatność dotyczy faktur ustrukturyzowanych oraz faktur wystawionych w trybach offline24 i offline przy niedostępności KSeF,
+- zapłata idzie poleceniem przelewu lub innym instrumentem płatniczym, w którym można podać tytuł.
+
+Obowiązek ma też podmiot trzeci, który płaci za faktury wystawione nabywcy. Przy poleceniu zapłaty numer podaje wystawca faktury, nie nabywca. Kto nie jest czynnym podatnikiem VAT (nabywca lub odbiorca), jest poza zakresem. Ania, jeśli jest zwolniona z VAT, nie ma obowiązku z art. 108g jako płatnik. Jeśli jest czynnym podatnikiem VAT i płaci w styczniu 2027 r. fakturę z KSeF od drukarni, która też jest czynnym podatnikiem, wpisuje numer w tytule.
+
+W tekście jednolitym przy art. 108g nie ma kary ani dodatkowego zobowiązania.
+
+## Skąd wziąć numer KSeF
+
+Numer ma 35 znaków, na przykład `5265877635-20250826-0100001AF629-AF` (przykład z dokumentacji MF): NIP sprzedawcy, data przyjęcia faktury, 12 znaków szesnastkowych i suma kontrolna. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/numer-ksef.md" label="CIRFMF/ksef-api" />
+
+Numeru nie ma w pliku XML i nie jest to numer z pola P_2: KSeF zwraca go w UPO. <Source href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/" label="MF: najczęstsze pytania, pyt. 7" /> Sprzedawca nie musi go wysyłać kontrahentowi, bo faktura pojawia się u odbiorcy w systemie automatycznie. <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/" label="FAQ MF" />
+
+## Jeden przelew za kilka faktur
+
+Zbiorczy identyfikator to numer agregujący co najmniej dwie faktury ustrukturyzowane jednego sprzedawcy. Żeby go uzyskać, deklaruje się listę numerów KSeF. Może to zrobić wystawca albo odbiorca, w Aplikacji Podatnika albo w programie połączonym z API KSeF. KSeF pozwala też sprawdzić, jakie numery obejmuje dany identyfikator. Ma 35 znaków, a MF podaje wzór `9999999999-IZ202602-FFFFFFFFFFFF-FF`. <Source href="https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/numer-ksef-i-zbiorczy-identyfikator/" label="MF: Numer KSeF i zbiorczy identyfikator" />
+
+Pani Krystyna w styczniu 2027 r. płaci za klienta trzy faktury tego samego dostawcy. MF przewiduje wtedy identyfikator zbiorczy: Pani Krystyna deklaruje w KSeF trzy numery, dostaje identyfikator i wpisuje go w tytule jednego przelewu. Limitu liczby faktur w jednym identyfikatorze nie podajemy, bo źródła, które sprawdziliśmy, go nie wskazują.
+
+## Split payment: co zmienia art. 108a
+
+Przy podzielonej płatności (MPP) numer KSeF trafia do komunikatu przelewu, obok kwoty VAT, kwoty brutto i NIP dostawcy (art. 108a ust. 3 pkt 3). W przypadku faktury spoza KSeF wpisuje się numer faktury. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, s. 73-74" /> Termin jest ten sam: płatności od 1 stycznia 2027 r. <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/" label="FAQ MF" />
+
+MPP pozostaje dobrowolny (art. 108a ust. 1). Jest obowiązkowy m.in. dla towarów i usług z załącznika nr 15 przy fakturze powyżej 15 000 zł (ust. 1a).
+
+Przy kilku fakturach jednego dostawcy z okresu od jednego dnia do miesiąca MPP działa inaczej niż dotąd. Dla faktur ustrukturyzowanych komunikat obejmuje dowolne z nich, nie wszystkie z okresu, a zamiast numeru faktury wpisuje się identyfikator zbiorczy (ust. 3a, 3b pkt 1a i 3c pkt 2). Dla faktur spoza KSeF zostaje reguła „wszystkie z okresu" i wpisanie okresu.
+
+## Faktury poza KSeF
+
+- **Offline24 i offline przy niedostępności.** Art. 108g je obejmuje. Wyjątek: faktury, które nie zostały wprowadzone do KSeF z powodu ogłoszonej awarii (ust. 4).
+- **Faktury z awarii KSeF (art. 106nf).** Ust. 1 ich nie wymienia, a MF potwierdza, że obowiązek ich nie dotyczy. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, s. 75" />
+- **Faktury papierowe i elektroniczne spoza KSeF w ramach [limitu 10 000 zł](/blog/ksef-limit-10000-zl).** Można je wystawiać do 31 grudnia 2026 r. (art. 145m). Nie mają numeru KSeF, a ust. 1 wymienia tylko faktury ustrukturyzowane i dwa tryby offline, więc z brzmienia przepisu wynika, że ich nie obejmuje. Osobnego opisu tego przypadku w materiałach MF nie znaleźliśmy. Od 2027 r. limitu nie ma.
+
+## Odroczenie kar a termin dla przelewów
+
+MF zapowiedziało 16 września 2026 r. przedłużenie odroczenia kar za błędy w KSeF do końca 2027 r. <Source href="https://www.gov.pl/web/finanse/przedluzenie-odroczenia-kar-za-bledy-w-stosowaniu-ksef-do-konca-2027-r" label="MF: przedłużenie odroczenia kar do końca 2027 r." /> Projekt UD477, który to wdraża, nie jest jeszcze prawem: miałby stosować art. 106ni ust. 1-3 i 5-7 dopiero od 1 stycznia 2028 r. <Source href="https://legislacja.rcl.gov.pl/projekt/12414954" label="Projekt UD477 (RCL)" /> Art. 106ni dotyczy kar za wystawianie i wysyłanie faktur, nie płatności. Projekt (wersja z 22 września 2026 r.) nie zmienia art. 108g ani art. 108a, więc te przepisy zostają na 1 stycznia 2027 r. Strona MF o podstawach prawnych nadal mówi o odroczeniu „do końca 2026 r." <Source href="https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/podstawy-prawne-oraz-kluczowe-terminy/" label="MF: Podstawy prawne oraz kluczowe terminy" />
+
+<Warning>
+  Nie ustaliliśmy, co wpisać przy fakturze offline, której sprzedawca jeszcze nie wysłał do KSeF,
+  gdy nie ma ogłoszonej awarii: numeru nie ma, a wyjątek z ust. 4 dotyczy tylko awarii. Źródła nie
+  rozstrzygają też, jak oznaczyć jeden przelew z fakturami ustrukturyzowanymi i spoza KSeF, ani jak
+  banki pokażą pole na numer o długości 35 znaków.
+</Warning>
+
+Przed styczniem 2027 r. zapytaj dostawcę programu księgowego, czy pokaże numer KSeF przy fakturze zakupowej i wygeneruje identyfikator zbiorczy. Resztę przygotowań porządkuje [lista przygotowań do KSeF](/blog/ksef-checklist-przygotowanie), a zasady dla jednoosobowych firm opisuje [KSeF dla JDG](/blog/ksef-dla-jdg).
