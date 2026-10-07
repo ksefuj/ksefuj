@@ -14,7 +14,7 @@
       "validatingDetails": "Sprawdzanie zgodności ze schematem...",
       "acceptedFiles": "Akceptowane: .xml (faktury KSeF FA3)",
       "callToAction": "ksefuj to!",
-      "skipped": "Pominięto {count, plural, one {# plik} few {# pliki} many {# plików} other {# plików}}. Możemy sprawdzić tylko pliki z rozszerzeniem .xml."
+      "skipped": "Pominięto {count, plural, one {# plik} few {# pliki} many {# plików} other {# plików}}. Sprawdzamy tylko pliki XML."
     },
     "summary": {
       "allValid": "Walidacja zakończona pomyślnie",
@@ -660,16 +660,16 @@
   },
   "validatorPage": {
     "title": "Sprawdź fakturę przed wysyłką do KSeF",
-    "intro": "Wrzuć plik XML z fakturą, a pokażemy, co trzeba poprawić, zanim KSeF ją odrzuci. Sprawdzamy zgodność ze schematem, reguły biznesowe i kursy NBP.",
-    "privacy": "Plik nie opuszcza Twojej przeglądarki. Nie wysyłamy go ani nie zapisujemy.",
-    "metaTitle": "Darmowy walidator faktur KSeF FA(3) — ksefuj.to",
-    "metaDescription": "Sprawdź plik XML faktury KSeF FA(3) online. Za darmo, bez rejestracji. Plik nie opuszcza Twojej przeglądarki.",
-    "ogImageTitle": "Darmowy walidator faktur KSeF FA(3)"
+    "intro": "Wrzuć plik XML z fakturą, a pokażemy, co trzeba poprawić. Sprawdzamy, czy faktura spełnia oficjalne wymagania MF i czy zgadzają się kwoty oraz kurs NBP.",
+    "privacy": "Twój plik nie opuszcza przeglądarki.",
+    "metaTitle": "Walidator XML faktur KSeF FA(3) online — ksefuj.to",
+    "metaDescription": "Sprawdź plik XML faktury KSeF FA(3) przed wysyłką: wymagania MF, kwoty i kurs NBP. Za darmo, bez rejestracji. Twój plik nie opuszcza przeglądarki.",
+    "ogImageTitle": "Sprawdź fakturę przed wysyłką do KSeF"
   },
   "heroDropZone": {
     "title": "Wrzuć plik XML z fakturą",
     "hint": "albo kliknij i wybierz go z dysku",
-    "privacy": "Plik nie opuszcza Twojej przeglądarki.",
+    "privacy": "Twój plik nie opuszcza przeglądarki.",
     "openValidator": "Otwórz walidator"
   }
 }

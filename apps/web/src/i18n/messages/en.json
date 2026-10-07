@@ -14,7 +14,7 @@
       "validatingDetails": "Checking schema conformance...",
       "acceptedFiles": "Accepted: .xml (KSeF FA3 invoices)",
       "callToAction": "ksef it!",
-      "skipped": "Skipped {count, plural, =1 {# file} other {# files}}. We can only check files ending in .xml."
+      "skipped": "Skipped {count, plural, one {# file} other {# files}}. We only check XML files."
     },
     "summary": {
       "allValid": "Validation completed successfully",
@@ -660,11 +660,11 @@
   },
   "validatorPage": {
     "title": "Check your invoice before sending it to KSeF",
-    "intro": "Drop the XML file of your invoice and we'll show you what to fix before KSeF rejects it. We check it against the official schema, business rules and NBP exchange rates.",
-    "privacy": "Your file never leaves your browser. We neither send nor store it.",
-    "metaTitle": "Free KSeF FA(3) invoice validator — ksefuj.to",
-    "metaDescription": "Check your KSeF FA(3) invoice XML online. Free, no sign-up. Your file never leaves your browser.",
-    "ogImageTitle": "Free KSeF FA(3) invoice validator"
+    "intro": "Drop in your invoice XML file and we'll show you what to fix. We check that the invoice meets the official Ministry of Finance requirements and that the amounts and NBP exchange rate are right.",
+    "privacy": "Your file never leaves your browser.",
+    "metaTitle": "KSeF FA(3) invoice XML validator online — ksefuj.to",
+    "metaDescription": "Check your KSeF FA(3) invoice XML before sending it: MF requirements, amounts and NBP rate. Free, no sign-up. Your file never leaves your browser.",
+    "ogImageTitle": "Check your invoice before sending it to KSeF"
   },
   "heroDropZone": {
     "title": "Drop your invoice XML file here",
