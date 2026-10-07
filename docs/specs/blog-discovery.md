@@ -58,8 +58,9 @@ Rules:
   `apps/web/content/README.md`, which must document the field and the list.
 - `tags` stay in the files but are no longer rendered. The topic replaces them on cards and in the
   post header. Do not delete tags in this work.
-- Optional `related: [slug, slug]` (max 3, PL slugs, same or other section) overrides the automatic
-  picks in §2.
+- Optional `related: ["blog/<pl-slug>", "guides/<pl-slug>"]` (max 3 section-qualified PL refs, same
+  or other section) overrides the automatic picks in §2. Qualified because slugs are only unique
+  within a section; `pnpm validate:seo` checks that each ref exists and is not the item.
 - Optional `featured: true` pins an item on the homepage (§4).
 - Add `topic`, `related` and `featured` to the `Frontmatter` type in `apps/web/src/lib/content.ts`.
 
