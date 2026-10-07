@@ -97,6 +97,14 @@ what is not yet settled.
 - [ ] **UPDATE** `ksef-checklist-przygotowanie` — refresh as a December 2026 checklist (after the
       penalties update above).
 
+## Scheduled maintenance
+
+Dated chores, not for the daily routine's "first unchecked item" pick.
+
+- [ ] **2027-01-02:** remove `featured: true` from `koniec-limitu-10000-zl` and
+      `kary-ksef-2027-2028` (pinned on the homepage for the run-up to 1 January 2027), and pin
+      whatever matters most then.
+
 ## Done
 
 - [x] **UPDATE** penalties postponed to 2028: done in the rewrite of all existing posts (branch
