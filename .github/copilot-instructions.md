@@ -43,7 +43,8 @@ Issues verdicts: ✅ CONFIRMED / ⚠️ UNVERIFIABLE / ❌ CONTRADICTED with sev
 - `apps/web/src/i18n/messages/*.json` — locale files (PL/EN/UK must always be updated together)
 - Landing page components, feature cards, hero copy
 - Error message text (first line must pass the Ania test — plain language, no XML element names)
-- Blog posts, guides, FAQ entries, or any MDX content
+- Blog posts, guides, FAQ entries, or any MDX content (prose rules live in
+  `apps/web/content/STYLE.md`; mechanics in `apps/web/content/README.md`)
 
 **What it does:** Ensures copy targets all three audiences (Ania = freelancer, Pani Krystyna =
 accountant, Marek = developer), follows brand voice, and maintains locale parity across PL/EN/UK.
@@ -96,7 +97,10 @@ ksefuj/
   `FaWiersz`, `NrWierszaFa`, etc.) — they match the official schema.
 - **User-facing strings:** always in i18n locale files, never hardcoded. Polish is canonical.
 - **Commit style:** conventional commits — scopes: `validator`, `web`, `i18n`, `semantic`, `xsd`,
-  `deps`, `ci`, `config`, `skill`
+  `deps`, `ci`, `config`, `skill`. Allowed types: feat, fix, docs, style, refactor, perf, test,
+  build, ci, chore, revert (`content` is a scope, not a type). Blog/guide commits:
+  `docs(content): add "<short title>" post` or `docs(content): update "<short title>" post`, header
+  ≤72 characters.
 - **Never commit a planning or status message.** Commits like `"Initial plan"`, `"Starting work"`,
   `"WIP"`, or any message that describes intent rather than a code change are forbidden. Every
   commit must describe an actual code change in the form `type(scope): description`. If you have

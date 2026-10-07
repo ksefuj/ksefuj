@@ -83,8 +83,8 @@ developers who want programmatic access.
   large Ukrainian community in Poland, many of whom run sole proprietorships (JDG) and need KSeF
   tools.
 - **Error messages from validator**: Available in PL, EN, UK. Polish is default.
-- **Blog/SEO content**: Polish-first (this is the SEO target), English and Ukrainian versions are
-  nice-to-have.
+- **Blog/SEO content** (prose rules: `apps/web/content/STYLE.md`): Polish-first (this is the SEO
+  target), English and Ukrainian versions are nice-to-have.
 - **Code**: Always in English. Variable names, function names, comments, commit messages — all
   English. The only exceptions are direct references to FA(3) XML element names that are inherently
   Polish (e.g., `Podmiot1`, `FaWiersz`, `Adnotacje`, `NrWierszaFa`). These should be used as-is
@@ -306,4 +306,8 @@ pnpm update-schemas   # Downloads latest schemas from crd.gov.pl
 - ESM (type: "module")
 - All code in English (variables, functions, comments, commits)
 - Exception: FA(3) XML element names stay as-is (Podmiot1, FaWiersz, etc.)
+- Commits: conventional commits; commitlint allows only feat/fix/docs/style/refactor/perf/test/
+  build/ci/chore/revert (`content` is a scope, not a type). Posts:
+  `docs(content): add "<short title>" post` / `docs(content): update "<short title>" post`, header
+  ≤72 chars
 - User-facing strings via i18n (Polish default, English and Ukrainian supported)
