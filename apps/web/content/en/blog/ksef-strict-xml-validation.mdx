@@ -78,8 +78,6 @@ Until 19 October, production does not reject such files but may return an `X-Sys
 
 On TEST, a file with such an instruction or character is rejected rather than just flagged. The `X-Test-System-Warning` request header lets you force any text to come back in `X-System-Warning` there, but it only tests whether your code handles the header, not the file itself.
 
-{/* Requires validator PR #86 merged first */}
-
 You can also check files yourself: look for `<?` after the declaration at the start of the file, a BOM at the very beginning, and characters from the list in text fields. Drop a file into [ksefuj.to](/) to check whether it contains such elements. Our validator flags processing instructions, a BOM, encodings other than UTF-8 and discouraged characters, and the file never leaves your browser.
 
 ## How to fix it
