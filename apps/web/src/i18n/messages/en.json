@@ -6,6 +6,11 @@
     "ogDescription": "Free KSeF invoice validator. Your file never leaves the browser.",
     "ogImageTitle": "Free KSeF FA(3) invoice validator"
   },
+  "notFound": {
+    "title": "Page not found",
+    "description": "This page does not exist or has been moved.",
+    "home": "← Back to the home page"
+  },
   "validator": {
     "dropzone": {
       "dragHere": "Drop XML files here",

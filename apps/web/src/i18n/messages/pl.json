@@ -6,6 +6,11 @@
     "ogDescription": "Darmowy walidator faktur KSeF. Twój plik nie opuszcza przeglądarki.",
     "ogImageTitle": "Darmowy walidator faktur KSeF FA(3)"
   },
+  "notFound": {
+    "title": "Nie znaleziono strony",
+    "description": "Ta strona nie istnieje albo została przeniesiona.",
+    "home": "← Wróć na stronę główną"
+  },
   "validator": {
     "dropzone": {
       "dragHere": "Przeciągnij pliki XML tutaj",

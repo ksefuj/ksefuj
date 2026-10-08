@@ -281,7 +281,8 @@ function validatePageComponents() {
     // Check if generateMetadata function exists
     if (!content.includes("generateMetadata")) {
       // Some pages might not need it (like dynamic routes)
-      if (!file.includes("[slug]")) {
+      // The [...rest] catch-all only calls notFound(), so it has no metadata to set.
+      if (!file.includes("[slug]") && !file.includes("[...rest]")) {
         addError(relPath, "Missing generateMetadata function");
       }
       continue;
@@ -353,9 +354,13 @@ function validateInternalLinks() {
   for (const file of getFiles(contentRoot, /\.mdx$/)) {
     const relPath = relative(process.cwd(), file);
     const fileLocale = relPath.split("/")[3];
-    const body = matter(readFileSync(file, "utf-8")).content;
+    // Ignore fenced code blocks and inline code: they show example links, not real ones.
+    const body = matter(readFileSync(file, "utf-8"))
+      .content.replace(/^[ \t]*(```|~~~)[\s\S]*?^[ \t]*\1[^\n]*$/gm, "")
+      .replace(/`[^`\n]*`/g, "");
     const targets = [
-      ...[...body.matchAll(/\]\((\/[^)\s]*)\)/g)].map((m) => m[1]),
+      ...[...body.matchAll(/\]\((\/[^)\s]*)[^)]*\)/g)].map((m) => m[1]),
+      ...[...body.matchAll(/^[ \t]{0,3}\[[^\]]+\]:[ \t]*(\/\S*)/gm)].map((m) => m[1]),
       ...[...body.matchAll(/href=["'](\/[^"']*)["']/g)].map((m) => m[1]),
     ];
 
