@@ -125,7 +125,7 @@ export function BlogListingView({
                   {labels.guidesStrip} →
                 </Link>
               </h2>
-              <ul className="-mx-4 flex gap-4 overflow-x-auto px-4 pb-2 snap-x md:mx-0 md:px-0">
+              <ul className="-mx-4 -mt-2 flex gap-4 overflow-x-auto px-4 pt-2 pb-3 snap-x scroll-px-4 md:-mx-2 md:px-2 md:scroll-px-2">
                 {visibleGuides.map((guide) => (
                   <li key={guide.key} className="flex w-64 shrink-0 snap-start">
                     {guide.card}
