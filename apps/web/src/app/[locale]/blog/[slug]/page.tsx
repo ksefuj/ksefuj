@@ -1,5 +1,6 @@
 import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
+import { withSiteSuffix } from "@/lib/page-title";
 import { getTranslations } from "next-intl/server";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
@@ -44,7 +45,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const ogLocale = ogLocaleMap[locale] ?? "pl_PL";
 
   return {
-    title: `${item.frontmatter.title} — ksefuj.to`,
+    title: withSiteSuffix(item.frontmatter.title),
     description: item.frontmatter.description,
     alternates: {
       canonical,

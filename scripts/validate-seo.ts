@@ -330,6 +330,78 @@ function checkSEOFiles() {
   }
 }
 
+// Check internal links in MDX bodies: no /pl prefix, locale prefix matches the file, and
+// blog/guides/docs/faq targets exist in that locale.
+function validateInternalLinks() {
+  console.log("🔍 Checking internal links in content...\n");
+
+  const contentRoot = "apps/web/content";
+  const staticRoutes = new Set(["", "/validator", "/waluty", "/privacy", "/terms"]);
+  const sections = ["blog", "guides", "docs", "faq"];
+  const locales = ["pl", "en", "uk"];
+  const slugsFor = (locale: string, section: string): Set<string> => {
+    const dir = join(contentRoot, locale, section);
+    return new Set(
+      existsSync(dir)
+        ? readdirSync(dir)
+            .filter((f) => f.endsWith(".mdx"))
+            .map((f) => f.replace(/\.mdx$/, ""))
+        : [],
+    );
+  };
+
+  for (const file of getFiles(contentRoot, /\.mdx$/)) {
+    const relPath = relative(process.cwd(), file);
+    const fileLocale = relPath.split("/")[3];
+    const body = matter(readFileSync(file, "utf-8")).content;
+    const targets = [
+      ...[...body.matchAll(/\]\((\/[^)\s]*)\)/g)].map((m) => m[1]),
+      ...[...body.matchAll(/href=["'](\/[^"']*)["']/g)].map((m) => m[1]),
+    ];
+
+    for (const target of targets) {
+      const path = target.split(/[?#]/)[0].replace(/\/$/, "");
+      const first = path.split("/")[1];
+      if (first === "pl") {
+        addError(relPath, `Internal link "${target}" uses a /pl prefix (Polish has no prefix)`);
+        continue;
+      }
+      const linkLocale = locales.includes(first) ? first : "pl";
+      const rest = locales.includes(first) ? path.slice(first.length + 1) : path;
+      const [, section, slug, ...extra] = rest.split("/");
+
+      if (sections.includes(section) && slug) {
+        // Content link. Cross-locale links are fine only when deliberate: the file's own locale
+        // lacks the slug (e.g. a UK article linking to a Polish-only article).
+        const inLinkLocale = slugsFor(linkLocale, section).has(slug);
+        if (extra.length > 0 || !inLinkLocale) {
+          addError(
+            relPath,
+            `Internal link "${target}" points to a ${section} slug that does not exist in ${linkLocale}`,
+          );
+        } else if (linkLocale !== fileLocale && slugsFor(fileLocale, section).has(slug)) {
+          addError(
+            relPath,
+            `Internal link "${target}" points to the ${linkLocale} locale from a ${fileLocale} file`,
+          );
+        }
+      } else if (linkLocale !== fileLocale) {
+        addError(
+          relPath,
+          `Internal link "${target}" points to the ${linkLocale} locale from a ${fileLocale} file`,
+        );
+      } else if (
+        !staticRoutes.has(rest) &&
+        !sections.includes(section) &&
+        !rest.startsWith("/api") &&
+        !/\.\w+$/.test(rest)
+      ) {
+        addError(relPath, `Internal link "${target}" does not match any known route`);
+      }
+    }
+  }
+}
+
 // Main validation
 function main() {
   console.log("🚀 Starting SEO validation...\n");
@@ -338,6 +410,7 @@ function main() {
   validateContentFiles();
   validateTranslationCrossReferences();
   validateDiscoveryFrontmatter();
+  validateInternalLinks();
   validatePageComponents();
   checkSEOFiles();
 
