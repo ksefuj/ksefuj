@@ -9,7 +9,11 @@ sheet from the Ministry of Finance.
 
 The file `docs/fa3-information-sheet.md` is the **constitutional reference** for all semantic
 validation rules. It is a structured conversion of the official Ministry of Finance "Information
-sheet on the FA(3) logical structure" (March 2026 edition, 174 pages).
+sheet on the FA(3) logical structure" (English March 2026 edition, 174 pages; its text matches the
+current August 2026 edition, see `docs/knowledge-base/briefs/broszura-fa3-wydania.md` at the repo
+root). Current MF files: PL
+`https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf`,
+EN `https://ksef.podatki.gov.pl/media/f2hnwjk2/information-sheet-on-the-fa-3-logical-structure.pdf`.
 
 For operational KSeF rules (corrective invoices, invoice types, Podmiot3 roles, identification,
 storage), see `docs/knowledge-base/briefs/podrecznik-ksef-20-czesc-ii.md` at the repo root.

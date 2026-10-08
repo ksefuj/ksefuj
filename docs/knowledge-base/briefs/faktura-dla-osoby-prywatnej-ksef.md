@@ -283,7 +283,8 @@ All URLs below already appear in the KB or a published post (location noted).
   https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/ (`mf-faq-podreczniki-2026.md`; posts)
 - Broszura FA(3), Podmiot2/DaneIdentyfikacyjne (BrakID):
   https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf
-  (`mf-faq-podreczniki-2026.md` fact 4; posts). Posts also use an older `/media/0ivha0ua/` link.
+  (`mf-faq-podreczniki-2026.md` fact 4; posts). Posts now use the same current link
+  (`broszura-fa3-wydania.md`).
 
 ## Warning: Common Misconceptions
 

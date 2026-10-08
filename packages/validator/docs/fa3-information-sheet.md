@@ -1,10 +1,14 @@
 # FA(3) Information Sheet — Validator Source of Truth
 
-> **Source:** Ministry of Finance, Warsaw, March 2026 **Document:** "Structured invoice —
-> Information sheet on the FA(3) logical structure" **Status:** CONSTITUTIONAL — This document is
-> the absolute authority for all validator rules. **Changelog:** September 2025 (Art. 106gba
-> adaptation), November 2025 (KSeF number 36→35 chars in example 14), March 2026 (LinkDoPlatnosci
-> example link removed)
+> **Source:** Ministry of Finance, Warsaw, English March 2026 edition (174 pages); its text matches
+> the current August 2026 edition (EN:
+> https://ksef.podatki.gov.pl/media/f2hnwjk2/information-sheet-on-the-fa-3-logical-structure.pdf,
+> PL:
+> https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf)
+> **Document:** "Structured invoice — Information sheet on the FA(3) logical structure" **Status:**
+> CONSTITUTIONAL — This document is the absolute authority for all validator rules. **Changelog:**
+> September 2025 (Art. 106gba adaptation), November 2025 (KSeF number 36→35 chars in example 14),
+> March 2026 (LinkDoPlatnosci example link removed)
 
 ---
 

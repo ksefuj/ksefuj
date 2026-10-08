@@ -9,8 +9,8 @@ slug: "faktura-korygujaca-ksef"
 topic: "invoicing"
 tags: ["KSeF", "Faktura", "VAT"]
 sources:
-  - label: "Broszura informacyjna FA(3), marzec 2026"
-    url: "https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "Broszura informacyjna FA(3), sierpień 2026"
+    url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
   - label: "FAQ MF — KSeF 2.0"
     url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
   - label: "Schemat XSD FA(3)"
@@ -67,7 +67,7 @@ Podajesz datę wystawienia oryginału (`DataWystFaKorygowanej`), jego numer (`Nr
 | Oryginał przeszedł przez KSeF  | `NrKSeF` = `1` + pole `NrKSeFFaKorygowanej` z numerem KSeF oryginału |
 | Oryginał wystawiony przed KSeF | `NrKSeFN` = `1` (bez `NrKSeFFaKorygowanej`)                          |
 
-Podanie obu pól naraz kończy się odrzuceniem faktury. Numer KSeF ma postać `NIP-DATA-XXXXXX-YYYYYY-ZZ`; kopiuj go, zamiast przepisywać, bo przy literówce system nie powiąże korekty z oryginałem. W przykładzie oryginał przeszedł przez KSeF, więc ustawiamy `NrKSeF` = `1` i podajemy jego numer.
+Podanie obu pól naraz kończy się odrzuceniem faktury. Numer KSeF ma postać `NIP-DATA-XXXXXXXXXXXX-ZZ`; kopiuj go, zamiast przepisywać, bo przy literówce system nie powiąże korekty z oryginałem. W przykładzie oryginał przeszedł przez KSeF, więc ustawiamy `NrKSeF` = `1` i podajemy jego numer.
 
 ### Krok 5: kwoty jako różnica
 
@@ -162,7 +162,7 @@ Korekta Ani Kowalskiej (FV/001/04/2026, −500 zł netto, 23% VAT):
         <DataWystFaKorygowanej>2026-04-01</DataWystFaKorygowanej>
         <NrFaKorygowanej>FV/001/04/2026</NrFaKorygowanej>
         <NrKSeF>1</NrKSeF>
-        <NrKSeFFaKorygowanej>5214567890-20260401-000001-000001-01</NrKSeFFaKorygowanej>
+        <NrKSeFFaKorygowanej>5214567890-20260401-000001000001-49</NrKSeFFaKorygowanej>
       </DaneFaKorygowanej>
       <FaWiersz>
         <NrWierszaFa>1</NrWierszaFa>

@@ -36,10 +36,10 @@ sheet (Aug 2026 file) has no new changelog entry.
    Confidence: MEDIUM (diff summarised by the research pass, not line-by-line)
 4. **FA(3) information sheet**
    (https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf):
-   file in August 2026 has 173 pages (repo conversion: March 2026, 174 pages); no new changelog
-   entry found. Action: a human should diff the PDF against
-   `packages/validator/docs/fa3-information- sheet.md` before the next semantic-rule change.
-   Confidence: MEDIUM
+   file in August 2026 has 173 pages (repo conversion: English March 2026 edition, 174 pages); no
+   new changelog entry. Diff done: no content changes between March and August 2026 (the 173 vs 174
+   difference is PL vs EN pagination); see `broszura-fa3-wydania.md`. No action on
+   `packages/validator/docs/fa3-information-sheet.md`. Confidence: MEDIUM
 5. **Technical notices** (https://ksef.podatki.gov.pl/komunikaty-techniczne/): profil zaufany
    outages 2026-05-05/11, 27.08 maintenance; node certificate change 2026-07-03; TEST/Demo
    maintenance 2026-06-17/22; business-event model consultation 2026-04-23; Aplikacja Podatnika

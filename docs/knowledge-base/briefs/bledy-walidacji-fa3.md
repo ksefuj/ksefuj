@@ -1099,8 +1099,8 @@ These are additional errors the Copywriter may want to mention briefly or in a "
 
 For the article's "Źródła" footer:
 
-1. **Broszura informacyjna FA(3)** — Ministerstwo Finansów, marzec 2026 —
-   https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf
+1. **Broszura informacyjna FA(3)** — Ministerstwo Finansów, sierpień 2026 —
+   https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf
 2. **FA(3) XSD Schema** — https://crd.gov.pl/wzor/2025/06/25/13775/
 3. **Ustawa z dnia 11 marca 2004 r. o podatku od towarów i usług** — Dz. U. z 2025 r., poz. 775 ze
    zm. — https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775

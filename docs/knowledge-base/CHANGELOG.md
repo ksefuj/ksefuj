@@ -48,8 +48,8 @@ validator, none).
   otherwise.
 - FA(3) broszura (Aug 2026 file, 173 pp.) vs repo conversion (March 2026, 174 pp.), no changelog
   entry:
-  https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf.
-  Impact: validator (needs human diff), none confirmed.
+  https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf
+  Diff done 2026-10-08: no content changes, see `briefs/broszura-fa3-wydania.md`. Impact: none.
 - Technical notices (Profil Zaufany outages May 2026, node certificate change 2026-07-03, AP prod
   difficulties 2026-09-25): https://ksef.podatki.gov.pl/komunikaty-techniczne/. Impact: none.
 - Legal-basis page modified 2026-05-29:

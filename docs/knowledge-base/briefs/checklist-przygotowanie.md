@@ -683,8 +683,8 @@ For the article's "Źródła" footer:
 3. **Rozporządzenie Ministra Finansów z dnia 7 grudnia 2025 r.** w sprawie wyłączeń z obowiązku
    wystawiania faktur ustrukturyzowanych —
    https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250001740
-4. **Broszura informacyjna FA(3)** — Ministerstwo Finansów, marzec 2026 —
-   https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf
+4. **Broszura informacyjna FA(3)** — Ministerstwo Finansów, sierpień 2026 —
+   https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf
 5. **Aplikacja Podatnika KSeF 2.0** — https://ap.ksef.mf.gov.pl/
 6. **Środowisko testowe KSeF 2.0** — https://ap-test.ksef.mf.gov.pl/web/
 
