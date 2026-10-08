@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { withSiteSuffix } from "@/lib/page-title";
 import { getTranslations } from "next-intl/server";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
@@ -17,7 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const canonical = locale === "pl" ? "/terms" : `/${locale}/terms`;
 
   return {
-    title: t("title"),
+    title: withSiteSuffix(t("title")),
     description: t("description"),
     alternates: {
       canonical,

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { withSiteSuffix } from "@/lib/page-title";
 import { Suspense } from "react";
 import { getTranslations } from "next-intl/server";
 import { SiteHeader } from "@/components/site-header";
@@ -21,7 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const tContent = await getTranslations({ locale, namespace: "content.blog" });
 
   const canonical = locale === "pl" ? "/blog" : `/${locale}/blog`;
-  const title = `${tContent("metaTitle")} — ksefuj.to`;
+  const title = withSiteSuffix(tContent("metaTitle"));
   const description = tContent("metaDescription");
 
   return {

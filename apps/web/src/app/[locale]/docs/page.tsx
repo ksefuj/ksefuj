@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { withSiteSuffix } from "@/lib/page-title";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { SiteHeader } from "@/components/site-header";
@@ -19,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   ]);
 
   return {
-    title: `${tContent("metaTitle")} — ksefuj.to`,
+    title: withSiteSuffix(tContent("metaTitle")),
     description: tContent("metaDescription"),
     alternates: {
       canonical: locale === "pl" ? "/docs" : `/${locale}/docs`,

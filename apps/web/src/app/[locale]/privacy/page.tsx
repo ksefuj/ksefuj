@@ -1,4 +1,5 @@
 import { SiteHeader } from "@/components/site-header";
+import { withSiteSuffix } from "@/lib/page-title";
 import { SiteFooter } from "@/components/site-footer";
 import { SectionContainer } from "@/components/section-container";
 import { LanguagePicker } from "../language-picker";
@@ -17,7 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const canonical = locale === "pl" ? "/privacy" : `/${locale}/privacy`;
 
   return {
-    title: t("metaTitle"),
+    title: withSiteSuffix(t("metaTitle")),
     description: t("metaDescription"),
     alternates: {
       canonical,
