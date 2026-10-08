@@ -185,6 +185,8 @@ function invalidValue(issue: ValidationIssue, t: Translate): XsdIssueText {
   const hasValue = actual !== undefined && String(actual) !== "";
   const field = element ? code(element) : t("xsd.thisElement");
   const value = hasValue ? code(actual) : "";
+  const rawLength = metadata?.actualLength;
+  const actualLength = typeof rawLength === "number" ? rawLength : undefined;
   const limit = facetLimit(str(metadata?.originalMessage));
   const hint = hintFor(typeName, element);
   const fixFor = (fallback: string) =>
@@ -196,6 +198,17 @@ function invalidValue(issue: ValidationIssue, t: Translate): XsdIssueText {
   if (facet === "content") {
     message = t("xsd.value.content", { element: field });
     fix = t("xsd.fix.generic.content");
+  } else if (
+    (facet === "maxLength" || facet === "minLength" || facet === "length") &&
+    !hasValue &&
+    actualLength !== undefined &&
+    actualLength > 0 &&
+    limit !== undefined
+  ) {
+    // libxml2 does not quote the value for length facets, only its length
+    const key = { maxLength: "tooLong", minLength: "tooShort", length: "wrongLength" }[facet];
+    message = t(`xsd.value.${key}`, { element: field, actual: actualLength, limit });
+    fix = fixFor(facet);
   } else if (!hasValue) {
     message = t("xsd.value.empty", { element: field });
     fix = hint ? t(`xsd.fix.${hint}`) : t("xsd.fix.generic.empty");

@@ -195,7 +195,10 @@
         "minInclusive": "The value {value} in {element} is too small. Minimum value: {limit}.",
         "maxInclusive": "The value {value} in {element} is too large. Maximum value: {limit}.",
         "minExclusive": "The value {value} in {element} is too small. It must be greater than {limit}.",
-        "maxExclusive": "The value {value} in {element} is too large. It must be less than {limit}."
+        "maxExclusive": "The value {value} in {element} is too large. It must be less than {limit}.",
+        "tooLong": "{element} is too long ({actual} characters). Maximum number of characters: {limit}.",
+        "tooShort": "{element} is too short ({actual} characters). Minimum number of characters: {limit}.",
+        "wrongLength": "{element} has the wrong length ({actual} characters). Required number of characters: {limit}."
       },
       "fix": {
         "rename": "Correct the element name so it matches the FA(3) schema.",

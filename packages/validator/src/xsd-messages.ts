@@ -22,6 +22,8 @@ export interface ParsedXsdMessage {
   /** Local names of elements (or enumeration members) the schema expected */
   readonly expected?: readonly string[];
   readonly actualValue?: string;
+  /** Length libxml2 reports for length facets, which do not quote the value itself */
+  readonly actualLength?: number;
   /** XSD facet ('pattern', 'enumeration', 'maxLength', ...), 'type' or 'content' */
   readonly facet?: string;
   /** Local name of the XSD type, when libxml2 reports a named one */
@@ -79,6 +81,44 @@ function canonicalFacet(raw: string): string {
   return FACETS.find((f) => f.toLowerCase() === raw.toLowerCase()) ?? raw;
 }
 
+/**
+ * What libxml2 prints right after the quoted value, per facet. The value comes from the user's
+ * file and may itself contain quotes or text like "' is ", so the value is cut at the LAST
+ * occurrence of the facet's own tail rather than at the first thing that looks like one.
+ */
+const VALUE_TAILS: Record<string, readonly string[]> = {
+  pattern: ["' is not accepted by the pattern '"],
+  enumeration: ["' is not an element of the set {"],
+  maxLength: ["' has a length of '"],
+  minLength: ["' has a length of '"],
+  length: ["' has a length of '"],
+  fractionDigits: ["' has more fractional digits than are allowed ('"],
+  totalDigits: ["' has more digits than are allowed ('"],
+  minInclusive: ["' is less than the minimum value allowed ('"],
+  maxInclusive: ["' is greater than the maximum value allowed ('"],
+  minExclusive: ["' must be greater than '"],
+  maxExclusive: ["' must be less than '"],
+};
+
+const VALUE_PREFIX = /the value '/i;
+
+/** The value libxml2 quoted in a facet message, or undefined when it quotes none. */
+function parseFacetValue(message: string, facet: string): string | undefined {
+  const start = VALUE_PREFIX.exec(message);
+  if (!start) {
+    return undefined;
+  }
+  const from = start.index + start[0].length;
+  const lower = message.toLowerCase();
+  const tails = VALUE_TAILS[facet];
+  if (tails) {
+    const end = Math.max(...tails.map((tail) => lower.lastIndexOf(tail, message.length)));
+    return end >= from ? message.slice(from, end) : undefined;
+  }
+  // Facets without a known tail (e.g. whiteSpace): first plausible tail
+  return /^(.*?)' (?:is|has|does|must|not)\b/is.exec(message.slice(from))?.[1];
+}
+
 export function parseXsdMessage(message: string): ParsedXsdMessage {
   const elementMatch = /^\s*element '([^']*)'/i.exec(message);
   const rawElement = elementMatch?.[1];
@@ -122,13 +162,16 @@ export function parseXsdMessage(message: string): ParsedXsdMessage {
   const facetMatch = /\[facet '([^']*)'\]/i.exec(message);
   if (facetMatch) {
     const facet = canonicalFacet(facetMatch[1]);
-    const actualValue = /the value '(.*?)' (?:is|has|does|must|not)\b/is.exec(message)?.[1];
+    const actualValue = parseFacetValue(message, facet);
+    const lengthText = /has a length of '(\d+)'/i.exec(message)?.[1];
+    const actualLength = lengthText !== undefined ? Number(lengthText) : undefined;
     const expected = facet === "enumeration" ? parseEnumerationMembers(message) : undefined;
     return {
       code: "INVALID_ELEMENT_VALUE",
       ...base,
       facet,
       ...(actualValue !== undefined ? { actualValue } : {}),
+      ...(actualLength !== undefined ? { actualLength } : {}),
       ...(expected ? { expected } : {}),
     };
   }

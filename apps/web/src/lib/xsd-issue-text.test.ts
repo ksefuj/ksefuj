@@ -250,40 +250,73 @@ describe("buildXsdIssueText", () => {
       expect(result.fix).toBe("Wybierz jedną z dozwolonych wartości.");
     });
 
-    it("maxLength / minLength / length read the limit from the libxml2 message", () => {
-      const max = buildXsdIssueText(
+    // Real libxml2 output: length facets quote no value, only the length
+    const lengthIssue = (facet: string, element: string, actualLength: number, message: string) =>
+      issue(
+        "INVALID_ELEMENT_VALUE",
+        { element, lineNumber: 9 },
+        { metadata: { facet, actualLength } },
+        `Element '${NS}${element}': [facet '${facet}'] ${message}`,
+      );
+
+    it("maxLength without a quoted value reports the actual length and the limit", () => {
+      const over = lengthIssue(
+        "maxLength",
+        "P_7",
+        600,
+        "The value has a length of '600'; this exceeds the allowed maximum length of '512'.",
+      );
+      expect(buildXsdIssueText(over, translator("en"))).toEqual({
+        message: "`P_7` is too long (600 characters). Maximum number of characters: 512. (line 9)",
+        fix: "Shorten the value.",
+      });
+    });
+
+    it("minLength with length 0 is an empty field, not a length complaint", () => {
+      const empty = lengthIssue(
+        "minLength",
+        "P_7",
+        0,
+        "The value has a length of '0'; this underruns the allowed minimum length of '1'.",
+      );
+      expect(buildXsdIssueText(empty, t)!.message).toBe(
+        "Pole `P_7` jest puste, a musi mieć wartość. (linia 9)",
+      );
+    });
+
+    it("minLength and exact length with a non-zero length say how far off it is", () => {
+      const short = lengthIssue(
+        "minLength",
+        "X",
+        1,
+        "The value has a length of '1'; this underruns the allowed minimum length of '2'.",
+      );
+      expect(buildXsdIssueText(short, translator("en"))!.message).toContain(
+        "too short (1 characters). Minimum number of characters: 2.",
+      );
+      const exact = lengthIssue(
+        "length",
+        "KodUE",
+        3,
+        "The value has a length of '3'; this differs from the allowed length of '2'.",
+      );
+      expect(buildXsdIssueText(exact, translator("en"))!.message).toContain(
+        "wrong length (3 characters). Required number of characters: 2.",
+      );
+    });
+
+    it("a length facet that does quote the value keeps using the value wording", () => {
+      const quoted = buildXsdIssueText(
         invalid(
           "maxLength",
           { element: "P_2" },
-          "x".repeat(5),
+          "xxxxx",
           "Element 'P_2': [facet 'maxLength'] The value 'xxxxx' has a length of '5'; this exceeds the allowed maximum length of '3'.",
         ),
         t,
       )!;
-      expect(max.message).toContain("za długa");
-      expect(max.message).toContain("Maksymalna liczba znaków: 3.");
-
-      const min = buildXsdIssueText(
-        invalid(
-          "minLength",
-          { element: "Nazwa" },
-          "",
-          "Element 'Nazwa': [facet 'minLength'] The value has a length of '0'; this underruns the allowed minimum length of '1'.",
-        ),
-        t,
-      )!;
-      expect(min.message).toBe("Pole `Nazwa` jest puste, a musi mieć wartość.");
-
-      const exact = buildXsdIssueText(
-        invalid(
-          "length",
-          { element: "KodUE" },
-          "P",
-          "Element 'KodUE': [facet 'length'] The value 'P' has a length of '1'; this differs from the allowed length of '2'.",
-        ),
-        t,
-      )!;
-      expect(exact.message).toContain("Wymagana liczba znaków: 2.");
+      expect(quoted.message).toContain("`xxxxx`");
+      expect(quoted.message).toContain("Maksymalna liczba znaków: 3.");
     });
 
     it("fractionDigits, totalDigits and range facets", () => {

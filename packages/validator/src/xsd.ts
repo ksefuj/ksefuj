@@ -180,6 +180,9 @@ function mapXsdMessageToIssue(
   if (parsed.facet !== undefined) {
     metadata.facet = parsed.facet;
   }
+  if (parsed.actualLength !== undefined) {
+    metadata.actualLength = parsed.actualLength;
+  }
   if (parsed.typeName !== undefined) {
     metadata.typeName = parsed.typeName;
   }

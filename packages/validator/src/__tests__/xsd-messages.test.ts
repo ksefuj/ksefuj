@@ -94,6 +94,65 @@ describe("parseXsdMessage", () => {
     });
   });
 
+  it("length facets quote no value: reads the length, leaves actualValue undefined", () => {
+    const over = parseXsdMessage(
+      `Element '${NS}P_7': [facet 'maxLength'] The value has a length of '600'; this exceeds the allowed maximum length of '512'.`,
+    );
+    expect(over).toMatchObject({ facet: "maxLength", element: "P_7", actualLength: 600 });
+    expect(over.actualValue).toBeUndefined();
+
+    const under = parseXsdMessage(
+      `Element '${NS}P_7': [facet 'minLength'] The value has a length of '0'; this underruns the allowed minimum length of '1'.`,
+    );
+    expect(under).toMatchObject({ facet: "minLength", actualLength: 0 });
+    expect(under.actualValue).toBeUndefined();
+  });
+
+  it("still reads a quoted value from length facet messages that include one", () => {
+    const parsed = parseXsdMessage(
+      `Element '${NS}X': [facet 'length'] The value 'abc' has a length of '3'; this differs from the allowed length of '2'.`,
+    );
+    expect(parsed).toMatchObject({ facet: "length", actualValue: "abc", actualLength: 3 });
+  });
+
+  it.each([
+    [
+      "pattern",
+      "12'x is y",
+      `Element '${NS}NIP': [facet 'pattern'] The value '12'x is y' is not accepted by the pattern '[1-9]\\d{9}'.`,
+    ],
+    [
+      "enumeration",
+      "P' is 'L",
+      `Element '${NS}KodKraju': [facet 'enumeration'] The value 'P' is 'L' is not an element of the set {'AF', 'PL'}.`,
+    ],
+    [
+      "maxInclusive",
+      "9' is greater than 5",
+      `Element '${NS}X': [facet 'maxInclusive'] The value '9' is greater than 5' is greater than the maximum value allowed ('5').`,
+    ],
+    [
+      "fractionDigits",
+      "1.2' has more digits than x",
+      `Element '${NS}X': [facet 'fractionDigits'] The value '1.2' has more digits than x' has more fractional digits than are allowed ('2').`,
+    ],
+    [
+      "pattern",
+      "it's not",
+      `Element '${NS}X': [facet 'pattern'] The value 'it's not' is not accepted by the pattern 'a'.`,
+    ],
+  ])("%s: keeps tricky values intact (%s)", (_facet, value, message) => {
+    expect(parseXsdMessage(message).actualValue).toBe(value);
+  });
+
+  it("keeps an empty value empty", () => {
+    expect(
+      parseXsdMessage(
+        `Element '${NS}NIP': [facet 'pattern'] The value '' is not accepted by the pattern 'x'.`,
+      ).actualValue,
+    ).toBe("");
+  });
+
   it.each([
     [
       "maxLength",
