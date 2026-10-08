@@ -938,6 +938,71 @@ describe("Semantic Validation", () => {
       expect(elements).toEqual(["P_14_1", "P_15"]);
     });
 
+    function lines(count: number, net: string, rate = "23", extra = "") {
+      return Array.from(
+        { length: count },
+        (_, i) => `<FaWiersz>
+          <NrWierszaFa>${i + 1}</NrWierszaFa>
+          <P_7>Item</P_7><P_8B>1</P_8B><P_9A>${net}</P_9A>
+          <P_11>${net}</P_11><P_12>${rate}</P_12>${extra}
+        </FaWiersz>`,
+      ).join("");
+    }
+
+    it("accepts per-line rounded tax that drifts several grosze from the invoice-level value", () => {
+      // 100 lines of 0.10 at 23%: per line round(0.023) = 0.02 -> 2.00, invoice level 10.00 × 23% = 2.30
+      const xml = invoiceWith(
+        `<P_13_1>10.00</P_13_1><P_14_1>2.00</P_14_1><P_15>12.00</P_15>`,
+        lines(100, "0.10"),
+      );
+      expect(codes(xml)).not.toContain("TAX_CALCULATION_MISMATCH");
+    });
+
+    it("accepts the sum of P_11Vat, and per-line tax derived from P_11A", () => {
+      const withVat = invoiceWith(
+        `<P_13_1>10.00</P_13_1><P_14_1>2.00</P_14_1><P_15>12.00</P_15>`,
+        lines(100, "0.10", "23", "<P_11Vat>0.02</P_11Vat>"),
+      );
+      expect(codes(withVat)).not.toContain("TAX_CALCULATION_MISMATCH");
+
+      const grossLines = Array.from(
+        { length: 10 },
+        (_, i) => `<FaWiersz><NrWierszaFa>${i + 1}</NrWierszaFa><P_7>I</P_7>
+          <P_11A>0.50</P_11A><P_12>23</P_12></FaWiersz>`,
+      ).join("");
+      // per line: 0.50 - round(0.50 / 1.23) = 0.50 - 0.41 = 0.09 -> 0.90 in total
+      const xml = invoiceWith(
+        `<P_13_1>4.10</P_13_1><P_14_1>0.90</P_14_1><P_15>5.00</P_15>`,
+        grossLines,
+      );
+      expect(codes(xml)).not.toContain("TAX_CALCULATION_MISMATCH");
+    });
+
+    it("still flags tax matching neither the invoice-level nor the per-line total", () => {
+      const xml = invoiceWith(
+        `<P_13_1>10.00</P_13_1><P_14_1>5.00</P_14_1><P_15>15.00</P_15>`,
+        lines(100, "0.10"),
+      );
+      expect(codes(xml)).toContain("TAX_CALCULATION_MISMATCH");
+    });
+
+    it("does not report REVERSE_CHARGE_CONSISTENCY for an advance invoice with P_18=1 and no lines", () => {
+      const xml = invoiceWith(`<P_15>100.00</P_15>`).replace("<P_18>2</P_18>", "<P_18>1</P_18>");
+      expect(codes(xml)).not.toContain("REVERSE_CHARGE_CONSISTENCY");
+    });
+
+    it("reads P_12Z from ZamowienieWiersz for reverse charge on advance invoices", () => {
+      const zamowienie = (rate: string) => `<Zamowienie>
+          <WartoscZamowienia>100.00</WartoscZamowienia>
+          <ZamowienieWiersz><NrWierszaZam>1</NrWierszaZam><P_11NettoZ>100.00</P_11NettoZ>
+          <P_12Z>${rate}</P_12Z></ZamowienieWiersz></Zamowienie>`;
+      const base = invoiceWith(`<P_15>100.00</P_15>`).replace("<P_18>2</P_18>", "<P_18>1</P_18>");
+      const withRc = base.replace("<RodzajFaktury>", `${zamowienie("oo")}<RodzajFaktury>`);
+      const without = base.replace("<RodzajFaktury>", `${zamowienie("23")}<RodzajFaktury>`);
+      expect(codes(withRc)).not.toContain("REVERSE_CHARGE_CONSISTENCY");
+      expect(codes(without)).toContain("REVERSE_CHARGE_CONSISTENCY");
+    });
+
     it("detects a wrong P_15 total", () => {
       const xml = invoiceWith(`
         <P_13_1>100.00</P_13_1><P_14_1>23.00</P_14_1>

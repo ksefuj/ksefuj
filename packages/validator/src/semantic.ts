@@ -1108,13 +1108,18 @@ function checkReverseChargeConsistency(doc: XmlDocument): ValidationIssue[] {
     });
   }
 
-  // If P_18 = "1", at least one FaWiersz should have reverse charge rate
+  // If P_18 = "1", at least one line should have a reverse charge rate. Regular invoices keep
+  // their lines in FaWiersz/P_12; advance invoices (ZAL, KOR_ZAL) have no FaWiersz and carry them
+  // in Fa/Zamowienie/ZamowienieWiersz/P_12Z (XSD, §9.7). An invoice with no lines at all (e.g.
+  // ROZ or ZAL without Zamowienie) has nothing to cross-check, so the rule stays silent.
   if (p18 === "1") {
+    const hasLines = exists(doc, "//ns:FaWiersz") || exists(doc, "//ns:ZamowienieWiersz");
     const hasReverseChargeRate = exists(
       doc,
-      "//ns:FaWiersz[ns:P_12='np I' or ns:P_12='np II' or ns:P_12='oo']",
+      "//ns:FaWiersz[ns:P_12='np I' or ns:P_12='np II' or ns:P_12='oo']" +
+        " | //ns:ZamowienieWiersz[ns:P_12Z='np I' or ns:P_12Z='np II' or ns:P_12Z='oo']",
     );
-    if (!hasReverseChargeRate) {
+    if (hasLines && !hasReverseChargeRate) {
       const errorDef = ERROR_CODES.REVERSE_CHARGE_CONSISTENCY;
       issues.push({
         code: errorDef.code,
@@ -1784,6 +1789,40 @@ function toGrosze(amount: number): number {
   return roundHalfAwayFromZero(amount * 100);
 }
 
+/**
+ * Per-line tax total in grosze for the lines whose P_12 is one of `rates` (Art. 106e ust. 10).
+ * Per line: P_11Vat when present, else round(P_11 × rate), else P_11A − round(P_11A / (1 + rate)).
+ * Returns null when there are no such lines or any of them lacks a usable amount.
+ */
+function perLineTaxGrosze(doc: XmlDocument, rates: number[]): number | null {
+  let total = 0;
+  let count = 0;
+  for (const wiersz of els(doc, "//ns:FaWiersz")) {
+    const p12 = text(wiersz, "string(ns:P_12)");
+    const rate = rates.find((r) => String(r) === p12);
+    if (rate === undefined) {
+      continue;
+    }
+    const vat = text(wiersz, "string(ns:P_11Vat)");
+    const net = text(wiersz, "string(ns:P_11)");
+    const gross = text(wiersz, "string(ns:P_11A)");
+    let lineTax: number;
+    if (vat && !Number.isNaN(parseFloat(vat))) {
+      lineTax = toGrosze(parseFloat(vat));
+    } else if (net && !Number.isNaN(parseFloat(net))) {
+      lineTax = roundHalfAwayFromZero((toGrosze(parseFloat(net)) * rate) / 100);
+    } else if (gross && !Number.isNaN(parseFloat(gross))) {
+      const grossGrosze = toGrosze(parseFloat(gross));
+      lineTax = grossGrosze - roundHalfAwayFromZero((grossGrosze * 100) / (100 + rate));
+    } else {
+      return null;
+    }
+    total += lineTax;
+    count++;
+  }
+  return count > 0 ? total : null;
+}
+
 function checkTaxCalculations(doc: XmlDocument): ValidationIssue[] {
   // Rule 39: TAX_CALCULATION_MISMATCH - Validate arithmetic consistency of tax calculations
   const issues: ValidationIssue[] = [];
@@ -1826,8 +1865,12 @@ function checkTaxCalculations(doc: XmlDocument): ValidationIssue[] {
       roundHalfAwayFromZero((toGrosze(baseValue) * rate) / 100),
     );
     const expected = expectedGrosze.map((value) => value / 100);
-    // Allow 1 grosz tolerance
-    if (expectedGrosze.every((value) => Math.abs(taxGrosze - value) > 1)) {
+    // Allow 1 grosz tolerance, per method. Method 1: invoice-level (P_13_x × rate). Method 2: tax
+    // computed per line and summed (Art. 106e ust. 10, P_11Vat, §9.3), which can drift by several
+    // grosze from method 1 on invoices with many lines.
+    const perLineGrosze = perLineTaxGrosze(doc, rates);
+    const matchesPerLine = perLineGrosze !== null && Math.abs(taxGrosze - perLineGrosze) <= 1;
+    if (!matchesPerLine && expectedGrosze.every((value) => Math.abs(taxGrosze - value) > 1)) {
       const errorDef = ERROR_CODES.TAX_CALCULATION_MISMATCH;
       const rateLabel = rates.map((rate) => `${rate}%`).join(" or ");
       issues.push({
