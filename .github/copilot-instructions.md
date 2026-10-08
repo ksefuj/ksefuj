@@ -25,7 +25,6 @@ general judgment for domain-specific review.
 **Invoke when a PR touches:**
 
 - `packages/validator/src/semantic.ts` or any validation rule logic
-- `skills/ksef-fa3/` — XML examples and generation guidance must be spec-correct
 - Any content making KSeF/MF/tax claims: blog posts, guides, FAQ, landing copy about deadlines,
   penalties, or invoice requirements
 - Error messages that describe a legal or schema requirement
@@ -74,9 +73,8 @@ ksefuj/
 │   └── src/schemas/        ← bundled FA(3) XSD schemas
 │   └── docs/
 │       └── fa3-information-sheet.md  ← THE constitutional reference
-├── apps/web/               ← Next.js 15 app (ksefuj.to)
-│   └── src/i18n/messages/  ← pl.json, en.json, uk.json
-└── skills/ksef-fa3/        ← Claude skill for XML generation
+└── apps/web/               ← Next.js 15 app (ksefuj.to)
+    └── src/i18n/messages/  ← pl.json, en.json, uk.json
 ```
 
 **Privacy-first:** everything runs client-side. XML data never leaves the browser.
@@ -111,7 +109,6 @@ ksefuj/
 | Area                                 | Agent(s) to invoke                                     |
 | ------------------------------------ | ------------------------------------------------------ |
 | `packages/validator/src/semantic.ts` | `constitutional-judge`                                 |
-| `skills/ksef-fa3/`                   | `constitutional-judge`                                 |
 | `apps/web/src/i18n/messages/`        | `copywriter`                                           |
 | Landing page / UI copy               | `copywriter` + `constitutional-judge` (if KSeF claims) |
 | Blog / MDX content                   | `copywriter` + `constitutional-judge` (always)         |

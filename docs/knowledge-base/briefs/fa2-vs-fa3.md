@@ -327,7 +327,8 @@ by KSeF 2.0.
   `https://crd.gov.pl/wzor/2025/06/25/13775/` (official MF publication)
 - KSeF 2.0 test environment: `https://web2te-ksef.mf.gov.pl/` (fictitious data, no legal effect)
 - **Source for test URL:** KB brief `ksef-dla-jdg.md`, Fact 5.1; CLAUDE.md project reference;
-  `skills/ksef-fa3/SKILL.md` — Confidence: HIGH (consistent across multiple internal references)
+  `ksefuj/skills: skills/ksef-fa3/SKILL.md` — Confidence: HIGH (consistent across multiple internal
+  references)
 - ⚠️ **Freshness flag:** `https://web2te-ksef.mf.gov.pl/` — verify URL is still active before
   publication (infrastructure URLs can change)
 
@@ -341,7 +342,7 @@ by KSeF 2.0.
   `https://web2te-ksef.mf.gov.pl/`. Invoices submitted there use fictitious data and have no legal
   effect.
 - **Source:** Multiple internal references confirming the same URL: `CLAUDE.md` p. 212,
-  `skills/ksef-fa3/SKILL.md` line 31, KB brief `ksef-dla-jdg.md` Fact 5.1
+  `ksefuj/skills: skills/ksef-fa3/SKILL.md` line 31, KB brief `ksef-dla-jdg.md` Fact 5.1
 - **Confidence:** HIGH (consistent across all references)
 - ⚠️ **Freshness flag:** URL to verify before each publication
 

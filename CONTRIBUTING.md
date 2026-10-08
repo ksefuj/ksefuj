@@ -273,7 +273,6 @@ ksefuj/
 │   └── web/                 # Next.js web app
 ├── packages/
 │   └── validator/           # Core validation library
-├── skills/                  # Claude AI skills
 ├── .github/
 │   ├── workflows/          # CI/CD
 │   └── PULL_REQUEST_TEMPLATE.md

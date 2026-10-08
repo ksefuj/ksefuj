@@ -34,13 +34,12 @@ ksefuj/
 │   ├── src/semantic.ts     ← business rule checks
 │   ├── src/cli.ts          ← CLI entry point
 │   └── src/schemas/fa3.xsd ← official MF schema
-├── apps/web/               ← Next.js app (ksefuj.to)
-│   ├── src/app/
-│   │   └── [locale]/       ← i18n routing (PL/EN/UK)
-│   │       ├── page.tsx    ← localized landing page
-│   │       └── validator.tsx ← drag & drop validator
-│   └── src/i18n/           ← translations and config
-└── skills/ksef-fa3/        ← Claude skill for invoice generation
+└── apps/web/               ← Next.js app (ksefuj.to)
+    ├── src/app/
+    │   └── [locale]/       ← i18n routing (PL/EN/UK)
+    │       ├── page.tsx    ← localized landing page
+    │       └── validator.tsx ← drag & drop validator
+    └── src/i18n/           ← translations and config
 ```
 
 ## Package Manager
@@ -277,17 +276,11 @@ Everything should be client-side wherever possible:
 
 ## Claude Skills
 
-The `skills/ksef-fa3/` directory contains a Claude Project skill for generating KSeF FA(3) XML from
-invoice data (PDF, text, etc.). It covers all transaction scenarios: domestic, reverse charge
-(EU/non-EU), WDT, export, VAT exemption, margin procedure.
-
-The `skills/ksef-korekta/` directory contains an interactive wizard skill for generating corrective
-invoices (KOR, KOR_ZAL, KOR_ROZ). It accepts a faulty invoice, asks targeted questions to fill gaps,
-and produces complete corrective XML — including the two-document flow for wrong-buyer-NIP
-scenarios.
-
-Skill files are also packaged as `.skill` files for distribution via GitHub Releases and MCP
-marketplace.
+The Claude skills (`ksef-invoice` for FA(3) XML generation, `ksef-correction` for corrective
+invoices) live in [ksefuj/skills](https://github.com/ksefuj/skills). They bundle extracts of the
+canonical sources in this repo (`packages/validator/docs/fa3-information-sheet.md`,
+`docs/knowledge-base/briefs/podrecznik-ksef-20-czesc-ii.md`) and link back here, so moving or
+renaming those files breaks links there.
 
 ## Development
 

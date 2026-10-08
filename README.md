@@ -97,10 +97,8 @@ ksefuj/
 │       └── src/schemas/ ← Bundled XSD schemas from Ministry of Finance
 ├── apps/
 │   └── web/             ← ksefuj.to (Next.js app)
-├── scripts/
-│   └── update-schemas.ts ← Schema maintenance tool
-└── skills/
-    └── ksef-fa3/        ← Claude skill for invoice generation
+└── scripts/
+    └── update-schemas.ts ← Schema maintenance tool
 ```
 
 ## What the Validator Checks
@@ -151,12 +149,13 @@ Ministry of Finance:
 
 ## Claude Skills
 
-The `skills/` directory contains skills for Claude Projects:
+Claude skills live in [ksefuj/skills](https://github.com/ksefuj/skills):
 
-- **ksef-fa3** — generates FA(3) XML invoices from input data (PDF, text, form)
+- **ksef-invoice** — generates FA(3) XML invoices from input data (PDF, text, form)
+- **ksef-correction** — interactive wizard for corrective invoices (KOR, KOR_ZAL, KOR_ROZ)
 
-Installation: download the `.skill` file from [Releases](https://github.com/ksefuj/ksefuj/releases)
-and add to your Claude Project.
+Install in Claude Code with `/plugin marketplace add ksefuj/skills`, or download the `.skill` files
+from [Releases](https://github.com/ksefuj/skills/releases).
 
 ## Development
 
