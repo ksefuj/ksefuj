@@ -75,7 +75,10 @@
       "useCountryCode": "Use country code \"PL\" instead of \"POL\" for Poland.",
       "among": "among",
       "options": "options",
-      "expected": "expected:"
+      "expected": "expected:",
+      "fixLabel": "How to fix",
+      "technicalMessage": "Technical message",
+      "moreAboutError": "More about this error"
     },
     "issues": {
       "ELEMENT_NOT_ALLOWED": "Element `{element}` not allowed here",
@@ -137,7 +140,9 @@
       "XML_BOM_PRESENT": "The file is saved in a way KSeF will not accept from 19 October 2026 — save it again as UTF-8 without BOM. The file starts with a BOM marker (bytes `EF BB BF`). Source: [Weryfikacja faktury](https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md)",
       "XML_ENCODING_NOT_UTF8": "The file uses the wrong character encoding — KSeF requires UTF-8 and will reject anything else from 19 October 2026. The XML declaration names encoding `{encoding}` at line {line}, column {column}. Source: [Weryfikacja faktury](https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md)",
       "XML_DISCOURAGED_CHARACTER_MORE": "…and {count} more such characters in the file ({total} in total). Remove all of them.",
-      "XML_PROCESSING_INSTRUCTION_MORE": "…and {count} more such instructions in the file ({total} in total). Remove all of them."
+      "XML_PROCESSING_INSTRUCTION_MORE": "…and {count} more such instructions in the file ({total} in total). Remove all of them.",
+      "UNEXPECTED_ELEMENT": "Element `{element}` is in the wrong place or shouldn't be here",
+      "WRONG_NAMESPACE": "The invoice doesn't have the correct FA(3) namespace"
     },
     "errors": {
       "field": "field",
@@ -160,6 +165,69 @@
     },
     "expectedValues": {
       "maxDecimalPlaces": "Max {count, plural, one {# decimal place} other {# decimal places}}"
+    },
+    "xsd": {
+      "listMore": "{list} and {count} more",
+      "atLine": "(line {line})",
+      "thisElement": "(unknown element)",
+      "unexpected": "{element} is in the wrong place or shouldn't be here.",
+      "unexpectedUnnamed": "An element is in the wrong place or shouldn't be here.",
+      "expectedHere": "Expected here: {expected}.",
+      "didYouMean": "Did you mean {suggestion}?",
+      "missing": "{element} is missing a required element: {expected}.",
+      "missingNoExpected": "{element} is missing a required element.",
+      "missingAttribute": "{element} is missing the required attribute {attribute}.",
+      "attributeNotAllowed": "The attribute {attribute} is not allowed on {element}.",
+      "elementNotAllowed": "{element} is not allowed here.",
+      "wrongNamespace": "The file doesn't have the FA(3) namespace, so KSeF won't recognise it. The start of the invoice must look like this: {example}",
+      "value": {
+        "empty": "{element} is empty, but it needs a value.",
+        "content": "{element} can't contain text, only other elements.",
+        "invalid": "The value {value} in {element} is not valid.",
+        "type": "The value {value} in {element} is not valid for this field.",
+        "pattern": "The value {value} in {element} has the wrong format.",
+        "enumeration": "The value {value} in {element} is not one of the allowed values. Allowed: {allowed}.",
+        "maxLength": "The value {value} in {element} is too long. Maximum number of characters: {limit}.",
+        "minLength": "The value {value} in {element} is too short. Minimum number of characters: {limit}.",
+        "length": "The value {value} in {element} has the wrong length. Required number of characters: {limit}.",
+        "fractionDigits": "The value {value} in {element} has too many decimal places. Maximum: {limit}.",
+        "totalDigits": "The value {value} in {element} has too many digits. Maximum number of digits: {limit}.",
+        "minInclusive": "The value {value} in {element} is too small. Minimum value: {limit}.",
+        "maxInclusive": "The value {value} in {element} is too large. Maximum value: {limit}.",
+        "minExclusive": "The value {value} in {element} is too small. It must be greater than {limit}.",
+        "maxExclusive": "The value {value} in {element} is too large. It must be less than {limit}."
+      },
+      "fix": {
+        "rename": "Correct the element name so it matches the FA(3) schema.",
+        "order": "Invoice elements must appear in a strict order. Move this element to the right place, or remove it if you don't need it.",
+        "add": "Add the missing element or attribute.",
+        "namespace": "Add the `xmlns` attribute to the `Faktura` element and save the file again.",
+        "remove": "Remove it or move it to the right element.",
+        "amount": "Use a dot as the decimal separator, at most 2 decimal places, and no spaces or thousands separators, e.g. `1230.50`.",
+        "unitPrice": "Use a dot as the decimal separator, at most 8 decimal places, and no spaces or thousands separators, e.g. `75.1234`.",
+        "date": "Use the format YYYY-MM-DD, e.g. `2026-02-15`, and make sure the date exists in the calendar.",
+        "dateTime": "Use the format YYYY-MM-DDThh:mm:ssZ, e.g. `2026-02-01T10:30:00Z`.",
+        "nip": "A NIP is 10 digits, with no dashes, spaces or country prefix (e.g. PL).",
+        "quantity": "Use a dot as the decimal separator and at most 6 decimal places.",
+        "countryCode": "Use the two-letter country code, e.g. `PL` instead of `POL`.",
+        "generic": {
+          "pattern": "Check that the value has the required format, without extra spaces or characters.",
+          "enumeration": "Pick one of the allowed values.",
+          "maxLength": "Shorten the value.",
+          "minLength": "Fill in the value.",
+          "length": "Correct the length of the value.",
+          "fractionDigits": "Round the value to the allowed number of decimal places.",
+          "totalDigits": "Reduce the number of digits.",
+          "minInclusive": "Enter a value within the allowed range.",
+          "maxInclusive": "Enter a value within the allowed range.",
+          "minExclusive": "Enter a value within the allowed range.",
+          "maxExclusive": "Enter a value within the allowed range.",
+          "type": "Check that the value has the format this field requires.",
+          "other": "Check that the value has the format this field requires.",
+          "empty": "Fill in this field, or remove the empty element if it isn't required.",
+          "content": "Remove the text from this element or move it to the right field."
+        }
+      }
     }
   },
   "languagePicker": {
@@ -688,7 +756,15 @@
     "privacy": "Your file never leaves your browser.",
     "metaTitle": "KSeF FA(3) invoice XML validator online — ksefuj.to",
     "metaDescription": "Check your KSeF FA(3) invoice XML before sending it: MF requirements, amounts and NBP rate. Free, no sign-up. Your file never leaves your browser.",
-    "ogImageTitle": "Check your invoice before sending it to KSeF"
+    "ogImageTitle": "Check your invoice before sending it to KSeF",
+    "backToValidator": "Validator",
+    "ctaTitle": "Check your invoice",
+    "ctaText": "Drop in your XML file and we'll show you what to fix. Your file never leaves your browser.",
+    "ctaButton": "Open the validator",
+    "commonErrors": {
+      "title": "Common errors",
+      "intro": "What these messages mean and how to fix them."
+    }
   },
   "heroDropZone": {
     "title": "Drop your invoice XML file here",

@@ -268,6 +268,49 @@ function validateRelated(relPath: string, related: unknown, selfRef: string | un
   }
 }
 
+// Validator reference pages (one per issue code) have no topic and no locale fallback: each file
+// must describe itself accurately, list the issue codes it explains and map to itself in
+// `translations` so hreflang alternates include the page's own locale.
+function validateValidatorPages() {
+  console.log("🔍 Checking validator reference pages...\n");
+
+  for (const file of getFiles("apps/web/content", /\.mdx$/)) {
+    const match = file.match(/\/content\/(\w+)\/validator\/([^/]+)\.mdx$/);
+    if (!match) {
+      continue;
+    }
+    const [, locale, slug] = match;
+    const relPath = relative(process.cwd(), file);
+    const frontmatter = parseFrontmatter(readFileSync(file, "utf-8"), relPath);
+
+    if (frontmatter.section !== "validator") {
+      addError(relPath, 'section must be "validator"');
+    }
+    if (frontmatter.locale !== locale) {
+      addError(relPath, `locale must be "${locale}" (matches the directory)`);
+    }
+    if (frontmatter.slug !== slug) {
+      addError(relPath, `slug must be "${slug}" (matches the file name)`);
+    }
+
+    const codes = frontmatter.codes;
+    if (
+      !Array.isArray(codes) ||
+      codes.length === 0 ||
+      !codes.every((c) => typeof c === "string" && /^[A-Z0-9_]+$/.test(c))
+    ) {
+      addError(relPath, "codes must be a non-empty list of issue codes (e.g. UNEXPECTED_ELEMENT)");
+    }
+
+    const translations = frontmatter.translations as Record<string, string> | undefined;
+    if (!translations) {
+      addError(relPath, "Validator page missing translations mapping for hreflang alternates");
+    } else if (translations[locale] !== slug) {
+      addError(relPath, `translations.${locale} must point at the page itself ("${slug}")`);
+    }
+  }
+}
+
 // Check page components for proper metadata generation
 function validatePageComponents() {
   console.log("🔍 Checking page components for SEO metadata...\n");
@@ -416,6 +459,7 @@ function main() {
   validateTranslationCrossReferences();
   validateDiscoveryFrontmatter();
   validateInternalLinks();
+  validateValidatorPages();
   validatePageComponents();
   checkSEOFiles();
 

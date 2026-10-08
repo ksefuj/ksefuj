@@ -1,13 +1,18 @@
 import { useState } from "react";
 import type { ValidationIssue } from "@ksefuj/validator";
-import { useTranslations } from "next-intl";
+import Link from "next/link";
+import * as amplitude from "@amplitude/unified";
+import { useLocale, useTranslations } from "next-intl";
 import { Badge } from "./badge";
 import { MarkdownText } from "@/lib/markdown";
 import { translateValidationIssue } from "@/app/[locale]/validation-utils";
 import { cn } from "@/lib/utils";
+import { buildXsdIssueText } from "@/lib/xsd-issue-text";
 
 interface ValidationIssueProps {
   issue: ValidationIssue;
+  /** Localized path of the reference page for this issue code, when one exists. */
+  helpHref?: string;
 }
 
 // Utility function to extract and format enumeration errors
@@ -185,8 +190,9 @@ export function simplifyErrorMessage(
     .trim();
 }
 
-export function ValidationIssueComponent({ issue }: ValidationIssueProps) {
+export function ValidationIssueComponent({ issue, helpHref }: ValidationIssueProps) {
   const t = useTranslations("validator");
+  const locale = useLocale();
   const [expanded, setExpanded] = useState(false);
 
   // Parse enumeration error if applicable
@@ -212,10 +218,18 @@ export function ValidationIssueComponent({ issue }: ValidationIssueProps) {
   };
 
   // Use appropriate translation method based on error domain
+  // Structured XSD issues get plain-language text; the regex simplifier only handles the rest
+  const xsdText = buildXsdIssueText(issue, t);
   const displayMessage =
-    issue.code.domain === "xsd"
-      ? simplifyErrorMessage(issue.message, t) // For XSD/enumeration errors
-      : translateValidationIssue(issue, t); // For semantic/parse/infrastructure errors
+    xsdText?.message ??
+    (issue.code.domain === "xsd"
+      ? simplifyErrorMessage(issue.message, t) // Unclassified XSD errors
+      : translateValidationIssue(issue, t)); // For semantic/parse/infrastructure errors
+
+  // Raw libxml2 text, kept for the expandable details
+  const rawOriginal = issue.context.metadata?.originalMessage;
+  const fallbackOriginal = typeof rawOriginal === "string" ? rawOriginal : issue.message;
+  const originalMessage = issue.code.domain === "xsd" ? fallbackOriginal : null;
 
   const severityConfig = {
     error: {
@@ -288,7 +302,8 @@ export function ValidationIssueComponent({ issue }: ValidationIssueProps) {
     issue.context.location.lineNumber ||
     issue.context.actualValue ||
     (issue.context.expectedValues && issue.context.expectedValues.length > 0) ||
-    enumerationError,
+    enumerationError ||
+    originalMessage,
   );
 
   return (
@@ -359,6 +374,25 @@ export function ValidationIssueComponent({ issue }: ValidationIssueProps) {
           <p className="text-sm text-slate-700 leading-snug">
             <MarkdownText>{displayMessage}</MarkdownText>
           </p>
+
+          {xsdText?.fix && (
+            <p className="text-sm text-slate-600 leading-snug mt-1">
+              <span className="font-semibold text-slate-700">{t("details.fixLabel")}:</span>{" "}
+              <MarkdownText>{xsdText.fix}</MarkdownText>
+            </p>
+          )}
+
+          {helpHref && (
+            <Link
+              href={helpHref}
+              onClick={() =>
+                amplitude.track("issue_help_clicked", { code: issue.code.code, locale })
+              }
+              className="inline-block mt-1.5 text-xs font-medium text-violet-600 hover:text-violet-700 transition-colors"
+            >
+              {t("details.moreAboutError")} →
+            </Link>
+          )}
 
           {/* Quick Context Summary - more compact */}
           {(issue.context.actualValue ||
@@ -433,6 +467,18 @@ export function ValidationIssueComponent({ issue }: ValidationIssueProps) {
                       </div>
                     )}
                   </div>
+                </div>
+              )}
+
+              {/* Raw libxml2 text */}
+              {originalMessage && (
+                <div>
+                  <h4 className="text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1">
+                    {t("details.technicalMessage")}
+                  </h4>
+                  <code className="block font-mono bg-white/60 px-1.5 py-1 rounded text-xs text-slate-600 break-words whitespace-pre-wrap">
+                    {originalMessage}
+                  </code>
                 </div>
               )}
 

@@ -5,9 +5,15 @@ import { useTranslations } from "next-intl";
 interface ValidationIssuesListProps {
   issues: readonly ValidationIssue[];
   maxDisplayed?: number;
+  /** Issue code to localized reference page path. */
+  helpLinks?: Readonly<Record<string, string>>;
 }
 
-export function ValidationIssuesList({ issues, maxDisplayed = 10 }: ValidationIssuesListProps) {
+export function ValidationIssuesList({
+  issues,
+  maxDisplayed = 10,
+  helpLinks,
+}: ValidationIssuesListProps) {
   const t = useTranslations("validator");
   // Sort issues by severity (errors first, then warnings, then info)
   const sortedIssues = [...issues].sort((a, b) => {
@@ -44,7 +50,11 @@ export function ValidationIssuesList({ issues, maxDisplayed = 10 }: ValidationIs
       {/* Simple list of all issues */}
       <div className="space-y-1.5">
         {issuesToShow.map((issue, index) => (
-          <ValidationIssueComponent key={index} issue={issue} />
+          <ValidationIssueComponent
+            key={index}
+            issue={issue}
+            helpHref={helpLinks?.[issue.code.code]}
+          />
         ))}
       </div>
 

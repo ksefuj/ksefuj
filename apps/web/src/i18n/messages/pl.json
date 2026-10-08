@@ -75,7 +75,10 @@
       "useCountryCode": "Użyj kodu kraju \"PL\" zamiast \"POL\" dla Polski.",
       "among": "spośród",
       "options": "opcji",
-      "expected": "oczekiwane:"
+      "expected": "oczekiwane:",
+      "fixLabel": "Jak naprawić",
+      "technicalMessage": "Komunikat techniczny",
+      "moreAboutError": "Więcej o tym błędzie"
     },
     "issues": {
       "ELEMENT_NOT_ALLOWED": "Element `{element}` nie jest dozwolony w tym miejscu",
@@ -137,7 +140,9 @@
       "XML_BOM_PRESENT": "Plik zapisano w sposób, którego KSeF nie przyjmie od 19 października 2026 — zapisz go ponownie jako UTF-8 bez BOM. Plik zaczyna się od znacznika BOM (bajty `EF BB BF`). Źródło: [Weryfikacja faktury](https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md)",
       "XML_ENCODING_NOT_UTF8": "Plik zapisano w złym kodowaniu znaków — KSeF wymaga UTF-8 i odrzuci inne od 19 października 2026. Deklaracja XML wskazuje kodowanie `{encoding}` w linii {line}, kolumnie {column}. Źródło: [Weryfikacja faktury](https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md)",
       "XML_DISCOURAGED_CHARACTER_MORE": "…i jeszcze {count} takich znaków w pliku (łącznie {total}). Usuń wszystkie niedozwolone znaki.",
-      "XML_PROCESSING_INSTRUCTION_MORE": "…i jeszcze {count} takich instrukcji w pliku (łącznie {total}). Usuń wszystkie."
+      "XML_PROCESSING_INSTRUCTION_MORE": "…i jeszcze {count} takich instrukcji w pliku (łącznie {total}). Usuń wszystkie.",
+      "UNEXPECTED_ELEMENT": "Element `{element}` stoi w złym miejscu albo nie powinno go tu być",
+      "WRONG_NAMESPACE": "Faktura nie ma właściwej przestrzeni nazw FA(3)"
     },
     "errors": {
       "field": "pole",
@@ -160,6 +165,69 @@
     },
     "expectedValues": {
       "maxDecimalPlaces": "Maks. {count, plural, one {# miejsce} few {# miejsca} many {# miejsc} other {# miejsc}} po przecinku"
+    },
+    "xsd": {
+      "listMore": "{list} i jeszcze {count}",
+      "atLine": "(linia {line})",
+      "thisElement": "(nieznany element)",
+      "unexpected": "Element {element} stoi w złym miejscu albo w ogóle nie powinno go tu być.",
+      "unexpectedUnnamed": "Któryś z elementów stoi w złym miejscu albo w ogóle nie powinno go tu być.",
+      "expectedHere": "W tym miejscu oczekujemy: {expected}.",
+      "didYouMean": "Czy chodziło o {suggestion}?",
+      "missing": "W elemencie {element} brakuje wymaganego pola: {expected}.",
+      "missingNoExpected": "W elemencie {element} brakuje wymaganego pola.",
+      "missingAttribute": "Element {element} nie ma wymaganego atrybutu {attribute}.",
+      "attributeNotAllowed": "Atrybut {attribute} nie może występować w elemencie {element}.",
+      "elementNotAllowed": "Element {element} nie może się tu znaleźć.",
+      "wrongNamespace": "Plik nie ma właściwej przestrzeni nazw FA(3), więc KSeF go nie rozpozna. Początek faktury musi wyglądać tak: {example}",
+      "value": {
+        "empty": "Pole {element} jest puste, a musi mieć wartość.",
+        "content": "W elemencie {element} nie może być tekstu, tylko inne elementy.",
+        "invalid": "Wartość {value} w polu {element} jest nieprawidłowa.",
+        "type": "Wartość {value} w polu {element} nie jest poprawna dla tego pola.",
+        "pattern": "Wartość {value} w polu {element} ma nieprawidłowy format.",
+        "enumeration": "Wartość {value} w polu {element} nie jest na liście dozwolonych. Dozwolone: {allowed}.",
+        "maxLength": "Wartość {value} w polu {element} jest za długa. Maksymalna liczba znaków: {limit}.",
+        "minLength": "Wartość {value} w polu {element} jest za krótka. Minimalna liczba znaków: {limit}.",
+        "length": "Wartość {value} w polu {element} ma niewłaściwą długość. Wymagana liczba znaków: {limit}.",
+        "fractionDigits": "Wartość {value} w polu {element} ma za dużo miejsc po przecinku. Maksymalnie: {limit}.",
+        "totalDigits": "Wartość {value} w polu {element} ma za dużo cyfr. Maksymalna liczba cyfr: {limit}.",
+        "minInclusive": "Wartość {value} w polu {element} jest za mała. Minimalna wartość: {limit}.",
+        "maxInclusive": "Wartość {value} w polu {element} jest za duża. Maksymalna wartość: {limit}.",
+        "minExclusive": "Wartość {value} w polu {element} jest za mała. Wartość musi być większa niż {limit}.",
+        "maxExclusive": "Wartość {value} w polu {element} jest za duża. Wartość musi być mniejsza niż {limit}."
+      },
+      "fix": {
+        "rename": "Popraw nazwę elementu, tak aby pasowała do schematu FA(3).",
+        "order": "Elementy faktury muszą występować w ściśle określonej kolejności. Przenieś ten element we właściwe miejsce albo usuń go, jeśli nie jest potrzebny.",
+        "add": "Dodaj brakujący element lub atrybut.",
+        "namespace": "Dodaj atrybut `xmlns` do elementu `Faktura` i zapisz plik ponownie.",
+        "remove": "Usuń go albo przenieś do właściwego elementu.",
+        "amount": "Użyj kropki jako separatora dziesiętnego, maksymalnie 2 miejsc po przecinku, bez spacji i separatorów tysięcy, np. `1230.50`.",
+        "unitPrice": "Użyj kropki jako separatora dziesiętnego, maksymalnie 8 miejsc po przecinku, bez spacji i separatorów tysięcy, np. `75.1234`.",
+        "date": "Użyj formatu RRRR-MM-DD, np. `2026-02-15`, i podaj datę, która naprawdę istnieje w kalendarzu.",
+        "dateTime": "Użyj formatu RRRR-MM-DDThh:mm:ssZ, np. `2026-02-01T10:30:00Z`.",
+        "nip": "NIP to 10 cyfr, bez kresek, spacji i prefiksu kraju (np. PL).",
+        "quantity": "Użyj kropki jako separatora dziesiętnego i maksymalnie 6 miejsc po przecinku.",
+        "countryCode": "Użyj dwuliterowego kodu kraju, np. `PL` zamiast `POL`.",
+        "generic": {
+          "pattern": "Sprawdź, czy wartość ma wymagany format, bez zbędnych spacji i znaków.",
+          "enumeration": "Wybierz jedną z dozwolonych wartości.",
+          "maxLength": "Skróć wartość.",
+          "minLength": "Uzupełnij wartość.",
+          "length": "Popraw długość wartości.",
+          "fractionDigits": "Zaokrąglij wartość do dozwolonej liczby miejsc po przecinku.",
+          "totalDigits": "Skróć liczbę cyfr.",
+          "minInclusive": "Podaj wartość mieszczącą się w dozwolonym zakresie.",
+          "maxInclusive": "Podaj wartość mieszczącą się w dozwolonym zakresie.",
+          "minExclusive": "Podaj wartość mieszczącą się w dozwolonym zakresie.",
+          "maxExclusive": "Podaj wartość mieszczącą się w dozwolonym zakresie.",
+          "type": "Sprawdź, czy wartość ma format wymagany dla tego pola.",
+          "other": "Sprawdź, czy wartość ma format wymagany dla tego pola.",
+          "empty": "Uzupełnij to pole albo usuń pusty element, jeśli nie jest wymagany.",
+          "content": "Usuń tekst z tego elementu albo przenieś go do właściwego pola."
+        }
+      }
     }
   },
   "languagePicker": {
@@ -688,7 +756,15 @@
     "privacy": "Twój plik nie opuszcza przeglądarki.",
     "metaTitle": "Walidator XML faktur KSeF FA(3) online — ksefuj.to",
     "metaDescription": "Sprawdź plik XML faktury KSeF FA(3) przed wysyłką: wymagania MF, kwoty i kurs NBP. Za darmo, bez rejestracji. Twój plik nie opuszcza przeglądarki.",
-    "ogImageTitle": "Sprawdź fakturę przed wysyłką do KSeF"
+    "ogImageTitle": "Sprawdź fakturę przed wysyłką do KSeF",
+    "backToValidator": "Walidator",
+    "ctaTitle": "Sprawdź swoją fakturę",
+    "ctaText": "Wrzuć plik XML, a pokażemy, co trzeba poprawić. Twój plik nie opuszcza przeglądarki.",
+    "ctaButton": "Otwórz walidator",
+    "commonErrors": {
+      "title": "Najczęstsze błędy",
+      "intro": "Wyjaśniamy, skąd biorą się te komunikaty i jak je poprawić."
+    }
   },
   "heroDropZone": {
     "title": "Wrzuć plik XML z fakturą",
