@@ -3,6 +3,7 @@
 import {
   type FormEvent,
   type KeyboardEvent,
+  type ReactNode,
   useCallback,
   useEffect,
   useId,
@@ -50,6 +51,18 @@ interface InvoicePreviewProps {
   /** Open the preview panel right away (the /podglad page). */
   autoOpen?: boolean;
   size?: "sm" | "md";
+  /**
+   * "buttons": labelled buttons above the panel (the /podglad page). "row": icon buttons at the
+   * end of a list row made of `leading` and `trailing`, with the panel below it (validator results).
+   */
+  variant?: "buttons" | "row";
+  /** Row variant: content before the icon buttons, e.g. the file name toggle. */
+  leading?: ReactNode;
+  /** Row variant: content after the icon buttons, e.g. the expand chevron. */
+  trailing?: ReactNode;
+  rowClassName?: string;
+  /** Row variant: wrapper of the note, errors and panel below the row. */
+  bodyClassName?: string;
 }
 
 type Phase = "idle" | "rendering" | "ready";
@@ -98,6 +111,11 @@ export function InvoicePreview({
   issueCount = 0,
   autoOpen = false,
   size = "sm",
+  variant = "buttons",
+  leading,
+  trailing,
+  rowClassName,
+  bodyClassName,
 }: InvoicePreviewProps) {
   const t = useTranslations("invoicePreview");
   const ids = useId();
@@ -352,8 +370,85 @@ export function InvoicePreview({
   const buttonSize = size === "sm" ? "!px-4 !py-2 text-sm" : "";
   const previewLabel = t("actions.previewAria", { fileName });
 
-  return (
-    <div className="space-y-3">
+  const togglePreview = () => {
+    if (open) {
+      close();
+    } else {
+      userOpenedRef.current = true;
+      setOpen(true);
+    }
+  };
+
+  const iconButtonClass =
+    "inline-flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg text-slate-500 transition-colors hover:bg-violet-50 hover:text-violet-600 focus:outline-none focus-visible:ring-4 focus-visible:ring-violet-500/30 disabled:cursor-wait";
+
+  const actions =
+    variant === "row" ? (
+      <div className="flex flex-shrink-0 items-center gap-1">
+        <button
+          ref={previewButtonRef}
+          type="button"
+          className={cn(iconButtonClass, open && "bg-violet-50 text-violet-600")}
+          aria-expanded={open}
+          aria-controls={panelId}
+          aria-label={previewLabel}
+          title={t("actions.preview")}
+          onClick={togglePreview}
+        >
+          <svg
+            aria-hidden
+            className="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1.75}
+              d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+            />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1.75}
+              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+            />
+          </svg>
+        </button>
+        <button
+          type="button"
+          className={iconButtonClass}
+          aria-label={t("actions.downloadAria", { fileName })}
+          title={downloading ? t("actions.preparing") : t("actions.download")}
+          aria-busy={downloading}
+          disabled={downloading}
+          onClick={() => void handleDownload()}
+        >
+          {downloading ? (
+            <span
+              aria-hidden
+              className="h-4 w-4 animate-spin rounded-full border-2 border-violet-600 border-t-transparent"
+            />
+          ) : (
+            <svg
+              aria-hidden
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.75}
+                d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"
+              />
+            </svg>
+          )}
+        </button>
+      </div>
+    ) : (
       <div className="flex flex-wrap items-center gap-2">
         <button
           ref={previewButtonRef}
@@ -362,14 +457,7 @@ export function InvoicePreview({
           aria-expanded={open}
           aria-controls={panelId}
           aria-label={previewLabel}
-          onClick={() => {
-            if (open) {
-              close();
-            } else {
-              userOpenedRef.current = true;
-              setOpen(true);
-            }
-          }}
+          onClick={togglePreview}
         >
           {t("actions.preview")}
         </button>
@@ -383,8 +471,15 @@ export function InvoicePreview({
           {downloading ? t("actions.preparing") : t("actions.download")}
         </button>
       </div>
+    );
 
-      {issueCount > 0 && (
+  // The row variant keeps the "issues found" note out of the list until the panel is opened
+  const showIssueNote = issueCount > 0 && (variant === "buttons" || open);
+  const hasBody = showIssueNote || error !== null || open;
+
+  const body = (
+    <>
+      {showIssueNote && (
         <p className="text-sm text-amber-700">{t("withErrorsNote", { count: issueCount })}</p>
       )}
 
@@ -495,6 +590,26 @@ export function InvoicePreview({
           </div>
         </section>
       )}
+    </>
+  );
+
+  if (variant === "row") {
+    return (
+      <div>
+        <div className={cn("flex items-center", rowClassName)}>
+          {leading}
+          {actions}
+          {trailing}
+        </div>
+        {hasBody && <div className={cn("space-y-3", bodyClassName)}>{body}</div>}
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-3">
+      {actions}
+      {body}
     </div>
   );
 }
