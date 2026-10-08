@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import * as amplitude from "@amplitude/analytics-browser";
 import { useTranslations } from "next-intl";
 import type { CurrencyRate, ValidationResult } from "@ksefuj/validator";
@@ -9,9 +10,17 @@ import { rateReferenceCandidates } from "@ksefuj/validator/currency-date";
 import { Badge } from "@/components/badge";
 import { XmlDropZone } from "@/components/xml-drop-zone";
 import { ValidationIssuesList } from "@/components/validation-issues-list";
+import { isPreviewableResult } from "@/lib/invoice-preview/previewable";
 import { consumePendingFiles } from "@/lib/file-handoff";
 import { fetchCurrencyRateTable } from "@/lib/nbp";
 import { cn } from "@/lib/utils";
+
+// Loaded when the first previewable result appears, so the preview UI stays out of the
+// validator's first-load JavaScript (the PDF engine itself loads only on a click)
+const InvoicePreview = dynamic(
+  () => import("@/components/invoice-preview/invoice-preview").then((m) => m.InvoicePreview),
+  { ssr: false },
+);
 
 interface ValidatorProps {
   locale?: string;
@@ -22,6 +31,8 @@ interface ValidatorProps {
 
 type FileValidationResult = {
   fileName: string;
+  /** The picked file; its exact bytes are read again for the PDF preview (KOD I hashes them). */
+  file: File;
   result: ValidationResult | null;
   error: AppError | null;
   status: "pending" | "validating" | "completed" | "error";
@@ -127,6 +138,7 @@ export function Validator({ locale, issueHelpLinks, issueHelpAnchors }: Validato
       // Initialize file results
       const newFiles: FileValidationResult[] = xmlFiles.map((file) => ({
         fileName: file.name,
+        file,
         result: null,
         error: null,
         status: "pending" as const,
@@ -323,6 +335,20 @@ export function Validator({ locale, issueHelpLinks, issueHelpAnchors }: Validato
     }
     return "validating";
   };
+
+  const expandChevron = (expanded: boolean) => (
+    <svg
+      className={cn(
+        "w-4 h-4 text-slate-400 transition-transform flex-shrink-0",
+        expanded && "rotate-180",
+      )}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+    </svg>
+  );
 
   const getStatusIcon = (status: string) => {
     switch (status) {
@@ -554,52 +580,85 @@ export function Validator({ locale, issueHelpLinks, issueHelpAnchors }: Validato
 
                 return (
                   <div key={file.fileName} className="transition-all">
-                    <button
-                      onClick={() => isExpandable && toggleFileExpanded(file.fileName)}
-                      aria-expanded={isExpandable ? isExpanded : undefined}
-                      className={cn(
-                        "w-full px-4 py-3 flex items-center justify-between hover:bg-slate-50 transition-colors",
-                        isExpandable && "cursor-pointer",
-                        !isExpandable && "cursor-default",
-                      )}
-                    >
-                      <div className="flex items-center gap-3 min-w-0">
-                        {/* Status Icon */}
-                        {getStatusIcon(status)}
-
-                        {/* File Name */}
-                        <span className="text-sm font-medium text-slate-900 truncate">
-                          {file.fileName}
-                        </span>
-
-                        {/* Issue Count */}
-                        {issueCount > 0 && (
-                          <span className="text-xs text-slate-500">
-                            ({t("fileList.issueCount", { count: issueCount })})
+                    {/* PDF preview: any file that parsed as an FA(3) invoice, also with issues */}
+                    {file.status === "completed" && isPreviewableResult(file.result) ? (
+                      <InvoicePreview
+                        fileName={file.fileName}
+                        getBytes={async () => new Uint8Array(await file.file.arrayBuffer())}
+                        locale={locale ?? "pl"}
+                        source="validator"
+                        issueCount={issueCount}
+                        variant="row"
+                        rowClassName="pr-2 hover:bg-slate-50 transition-colors"
+                        bodyClassName="px-4 pb-3 pl-12"
+                        leading={
+                          <button
+                            type="button"
+                            onClick={() => isExpandable && toggleFileExpanded(file.fileName)}
+                            aria-expanded={isExpandable ? isExpanded : undefined}
+                            className={cn(
+                              "flex-1 min-w-0 pl-4 pr-2 py-3 flex items-center gap-3 text-left",
+                              isExpandable ? "cursor-pointer" : "cursor-default",
+                            )}
+                          >
+                            {getStatusIcon(status)}
+                            <span className="text-sm font-medium text-slate-900 truncate">
+                              {file.fileName}
+                            </span>
+                            {issueCount > 0 && (
+                              <span className="text-xs text-slate-500 flex-shrink-0">
+                                ({t("fileList.issueCount", { count: issueCount })})
+                              </span>
+                            )}
+                          </button>
+                        }
+                        trailing={
+                          // Always rendered so the icons line up across rows. Mouse shortcut
+                          // only; the file name button is the accessible toggle.
+                          <span
+                            aria-hidden
+                            onClick={() => isExpandable && toggleFileExpanded(file.fileName)}
+                            className={cn(
+                              "pl-1 pr-2 py-3",
+                              isExpandable ? "cursor-pointer" : "invisible",
+                            )}
+                          >
+                            {expandChevron(isExpanded)}
                           </span>
+                        }
+                      />
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => isExpandable && toggleFileExpanded(file.fileName)}
+                        aria-expanded={isExpandable ? isExpanded : undefined}
+                        className={cn(
+                          "w-full px-4 py-3 flex items-center justify-between hover:bg-slate-50 transition-colors",
+                          isExpandable && "cursor-pointer",
+                          !isExpandable && "cursor-default",
                         )}
-                      </div>
+                      >
+                        <div className="flex items-center gap-3 min-w-0">
+                          {/* Status Icon */}
+                          {getStatusIcon(status)}
 
-                      {/* Expand Icon */}
-                      {isExpandable && (
-                        <svg
-                          className={cn(
-                            "w-4 h-4 text-slate-400 transition-transform flex-shrink-0",
-                            isExpanded && "rotate-180",
+                          {/* File Name */}
+                          <span className="text-sm font-medium text-slate-900 truncate">
+                            {file.fileName}
+                          </span>
+
+                          {/* Issue Count */}
+                          {issueCount > 0 && (
+                            <span className="text-xs text-slate-500">
+                              ({t("fileList.issueCount", { count: issueCount })})
+                            </span>
                           )}
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M19 9l-7 7-7-7"
-                          />
-                        </svg>
-                      )}
-                    </button>
+                        </div>
+
+                        {/* Expand Icon */}
+                        {isExpandable && expandChevron(isExpanded)}
+                      </button>
+                    )}
 
                     {/* Expanded Issues */}
                     {isExpanded && file.result?.issues && (

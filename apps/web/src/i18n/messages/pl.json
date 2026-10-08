@@ -242,7 +242,8 @@
     "docs": "Dokumentacja",
     "guides": "Poradniki",
     "waluty": "Kursy walut",
-    "validator": "Walidator"
+    "validator": "Walidator",
+    "preview": "Podgląd"
   },
   "translationBanner": {
     "body": "Ten artykuł nie jest jeszcze dostępny w Twoim języku. Czytasz oryginalną wersję w języku {language}.",
@@ -378,7 +379,9 @@
     "privacyPolicy": "Polityka prywatności",
     "termsOfUse": "Warunki użytkowania",
     "copyright": "© 2026 ksefuj. Cały kod jest publiczny na GitHub.",
-    "validator": "Walidator"
+    "validator": "Walidator",
+    "preview": "Podgląd faktury",
+    "licenses": "Licencje zewnętrzne"
   },
   "terms": {
     "meta": {
@@ -674,7 +677,7 @@
     "metaTitle": "Polityka prywatności — ksefuj",
     "metaDescription": "Polityka prywatności ksefuj.to — Twoje dane fakturowe nie opuszczają przeglądarki.",
     "title": "Polityka prywatności",
-    "lastUpdated": "Ostatnia aktualizacja: marzec 2026",
+    "lastUpdated": "Ostatnia aktualizacja: październik 2026",
     "intro": "Twoja prywatność jest dla nas ważna. ksefuj jest zaprojektowany tak, aby dane Twoich faktur nigdy nie opuszczały Twojej przeglądarki. Oto co to dokładnie oznacza.",
     "noCollection": {
       "title": "Brak zbierania danych",
@@ -707,6 +710,9 @@
     "contact": {
       "title": "Kontakt",
       "description": "Jeśli masz pytania dotyczące tej polityki prywatności, skontaktuj się z nami pod adresem hej@ksefuj.to."
+    },
+    "invoicePreview": {
+      "description": "Gdy korzystasz z podglądu faktury, liczymy otwarcia podglądu i pobrania PDF. Zapisujemy przy tym tylko język strony i rodzaj faktury (np. podstawowa, korygująca), nigdy treść faktury ani nazwę pliku."
     }
   },
   "structuredData": {
@@ -767,7 +773,9 @@
     "commonErrors": {
       "title": "Najczęstsze błędy",
       "intro": "Wyjaśniamy, skąd biorą się te komunikaty i jak je poprawić."
-    }
+    },
+    "previewLinkText": "Chcesz tylko obejrzeć fakturę albo zapisać ją jako PDF?",
+    "previewLink": "Otwórz podgląd"
   },
   "heroDropZone": {
     "title": "Wrzuć plik XML z fakturą",
@@ -775,5 +783,93 @@
     "privacy": "Twój plik nie opuszcza przeglądarki.",
     "openValidator": "Otwórz walidator",
     "opening": "Otwieram walidator…"
+  },
+  "invoicePreview": {
+    "actions": {
+      "preview": "Podgląd",
+      "previewAria": "Podgląd faktury {fileName}",
+      "download": "Pobierz PDF",
+      "downloadAria": "Pobierz PDF faktury {fileName}",
+      "close": "Zamknij podgląd",
+      "preparing": "Przygotowujemy PDF…"
+    },
+    "ksefNumber": {
+      "label": "Numer KSeF (opcjonalnie)",
+      "hint": "Jeśli faktura jest już w KSeF, wpisz jej numer. Dodamy kod QR do sprawdzenia faktury i zdejmiemy napis „WIZUALIZACJA”.",
+      "placeholder": "np. 5214567890-20260401-000001000001-49",
+      "errors": {
+        "format": "To nie wygląda na numer KSeF. Numer ma 35 znaków i zaczyna się od NIP-u sprzedawcy.",
+        "nipMismatch": "Ten numer KSeF należy do innej firmy. Zaczyna się od NIP-u {ksefNip}, a sprzedawca w pliku ma NIP {sellerNip}.",
+        "missingData": "W pliku brakuje NIP-u sprzedawcy albo daty wystawienia (P_1), więc nie możemy dodać kodu QR. Pokazujemy fakturę bez niego."
+      }
+    },
+    "watermarkBadge": "WIZUALIZACJA",
+    "disclaimer": "To czytelna kopia do druku i wglądu. Fakturą jest plik XML w KSeF.",
+    "watermarkTooltip": "Napis „WIZUALIZACJA” pojawia się, gdy nie podasz numeru KSeF. Bez numeru PDF nie ma kodu QR, którym można sprawdzić fakturę w KSeF.",
+    "withErrorsNote": "{count, plural, one {W pliku jest # rzecz do poprawienia} few {W pliku są # rzeczy do poprawienia} many {W pliku jest # rzeczy do poprawienia} other {W pliku jest # rzeczy do poprawienia}}. Podgląd pokazuje fakturę bez zmian, tak jak jest w pliku.",
+    "mobileHint": "Na telefonie pobierz PDF i otwórz go w przeglądarce lub aplikacji do PDF.",
+    "errors": {
+      "notXml": "To nie jest plik XML. Wrzuć fakturę zapisaną jako .xml.",
+      "notFa3": "Ten plik nie jest fakturą FA(3). Podgląd działa tylko dla faktur w formacie KSeF obowiązującym od 1 lutego 2026.",
+      "renderFailed": "Nie udało się przygotować PDF. Spróbuj jeszcze raz. Jeśli to nie pomoże, napisz do nas: hej@ksefuj.to."
+    }
+  },
+  "previewPage": {
+    "metaTitle": "Podgląd faktury XML KSeF i zapis do PDF — ksefuj.to",
+    "metaDescription": "Otwórz plik XML faktury z KSeF i zapisz go jako PDF w układzie wizualizacji MF. Za darmo, bez rejestracji. Twój plik nie opuszcza przeglądarki.",
+    "ogImageTitle": "Otwórz fakturę XML z KSeF",
+    "title": "Otwórz fakturę XML z KSeF",
+    "intro": "Wrzuć plik XML z fakturą, a pokażemy ją w czytelnej formie, gotowej do druku. Możesz ją też pobrać jako PDF. Układ opieramy na otwartym generatorze wizualizacji Ministerstwa Finansów.",
+    "dropzone": {
+      "title": "Wrzuć plik XML z fakturą",
+      "hint": "albo kliknij i wybierz go z dysku",
+      "dropHere": "Upuść plik tutaj",
+      "acceptedFiles": "Plik .xml z fakturą KSeF FA(3)",
+      "opening": "Otwieramy fakturę…"
+    },
+    "privacy": "Twój plik nie opuszcza przeglądarki. Podgląd i PDF powstają na Twoim urządzeniu.",
+    "howItWorks": {
+      "title": "Jak to działa",
+      "steps": [
+        {
+          "title": "Wrzuć plik XML",
+          "text": "Taki, jaki masz z KSeF, z programu do faktur albo z maila."
+        },
+        {
+          "title": "Zobacz fakturę",
+          "text": "Sprzedawca, nabywca, pozycje i kwoty w układzie znanym z wizualizacji MF."
+        },
+        {
+          "title": "Pobierz PDF",
+          "text": "Znasz numer KSeF? Wpisz go, a dodamy kod QR do sprawdzenia faktury."
+        }
+      ]
+    },
+    "faq": {
+      "title": "Najczęstsze pytania",
+      "items": [
+        {
+          "question": "Czy ten PDF to oryginał faktury?",
+          "answer": "Nie. Fakturą jest plik XML zapisany w KSeF, a PDF to jego czytelna kopia do druku lub wglądu."
+        },
+        {
+          "question": "Czy mój plik trafia na serwer?",
+          "answer": "Nie. Plik otwieramy i zamieniamy na PDF w Twojej przeglądarce. Nie wysyłamy go nigdzie. Liczymy tylko otwarcia podglądu i pobrania PDF, z językiem strony i rodzajem faktury, bez treści faktur i nazw plików."
+        },
+        {
+          "question": "Skąd napis „WIZUALIZACJA” na PDF?",
+          "answer": "Pojawia się, gdy nie podasz numeru KSeF. Bez numeru PDF nie ma kodu QR, którym można sprawdzić fakturę w KSeF. Faktura przekazywana nabywcy poza KSeF musi mieć kod QR, więc PDF bez numeru się do tego nie nadaje. Wpisz numer, a napis zniknie."
+        },
+        {
+          "question": "Do czego służy kod QR?",
+          "answer": "Po zeskanowaniu telefonem otwiera stronę KSeF, która pokazuje, czy faktura jest w systemie. MF nazywa go KOD I. Kod liczymy z zawartości pliku, więc działa tylko dla pliku dokładnie takiego, jaki trafił do KSeF. Numeru nie sprawdzamy w KSeF, więc przepisz go dokładnie. Nie tworzymy kodu z certyfikatem dla faktur offline (KOD II)."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Wystawiasz też faktury?",
+      "text": "Sprawdź plik XML przed wysyłką do KSeF. Pokażemy, co trzeba poprawić.",
+      "button": "Otwórz walidator"
+    }
   }
 }

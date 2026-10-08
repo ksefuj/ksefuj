@@ -84,6 +84,15 @@ export default async function ValidatorPage({ params }: Props) {
               </h1>
               <p className="text-lg text-slate-600 max-w-2xl">{t("intro")}</p>
               <p className="text-sm text-slate-500">{t("privacy")}</p>
+              <p className="text-sm text-slate-500">
+                {t("previewLinkText")}{" "}
+                <Link
+                  href={locale === "pl" ? "/podglad" : `/${locale}/podglad`}
+                  className="font-medium text-violet-600 hover:text-violet-700 underline transition-colors"
+                >
+                  {t("previewLink")}
+                </Link>
+              </p>
             </div>
             <Validator
               locale={locale}

@@ -18,6 +18,10 @@ interface XmlDropZoneProps {
   hint?: string;
   /** Overrides the small caption at the bottom; `null` hides it. */
   note?: string | null;
+  /** Overrides the line shown while a file is dragged over the area. */
+  dropLabel?: string;
+  /** Accept several files (default) or only the first XML file. */
+  multiple?: boolean;
   className?: string;
 }
 
@@ -33,6 +37,8 @@ export function XmlDropZone({
   title,
   hint,
   note,
+  dropLabel,
+  multiple = true,
   className,
 }: XmlDropZoneProps) {
   const t = useTranslations("validator.dropzone");
@@ -49,7 +55,7 @@ export function XmlDropZone({
     setSkipped(rejected.length);
     onSelection?.({ xmlCount: xml.length, skipped: rejected.length });
     if (xml.length > 0) {
-      onFiles(xml, { skipped: rejected.length });
+      onFiles(multiple ? xml : xml.slice(0, 1), { skipped: rejected.length });
     }
   };
 
@@ -137,7 +143,7 @@ export function XmlDropZone({
           ref={inputRef}
           type="file"
           accept=".xml"
-          multiple
+          multiple={multiple}
           tabIndex={-1}
           aria-hidden
           onChange={onFileChange}
@@ -181,7 +187,7 @@ export function XmlDropZone({
             </p>
             <p className="text-slate-600">
               {dragging && dragItemCount > 0
-                ? t("dropFiles", { count: dragItemCount })
+                ? (dropLabel ?? t("dropFiles", { count: dragItemCount }))
                 : (hint ?? t("dragHere"))}
             </p>
           </div>
