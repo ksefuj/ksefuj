@@ -60,8 +60,9 @@ what is not yet settled.
 
 ## Evergreen
 
-- [ ] `faktura-dla-osoby-prywatnej-ksef` — Faktura dla osoby prywatnej a KSeF · „faktura dla osoby
-      prywatnej KSeF" · A · FAQ, 10K
+- [x] `faktura-dla-osoby-prywatnej-ksef` (in review: branch
+      `content/faktura-dla-osoby-prywatnej-ksef`) — Faktura dla osoby prywatnej a KSeF · „faktura
+      dla osoby prywatnej KSeF" · A · FAQ, 10K
 - [ ] `jak-odebrac-fakture-ksef` — Jak odebrać fakturę z KSeF · „jak odebrać fakturę w KSeF" · A ·
       FAQ (art. 106gb ust. 4), P2
 - [ ] `faktura-poza-ksef-odliczenie-vat` — Faktura wystawiona poza KSeF: co z odliczeniem VAT ·

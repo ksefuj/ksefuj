@@ -1,0 +1,104 @@
+---
+title: "Faktura dla osoby prywatnej w KSeF: czy musisz?"
+description: "Nie musisz: faktury dla osób prywatnych są poza obowiązkowym KSeF, także po 2026 r. Możesz je tam wystawić dobrowolnie i przekazać klientowi z kodem QR."
+date: 2026-10-08
+section: blog
+locale: pl
+slug: "faktura-dla-osoby-prywatnej-ksef"
+topic: "invoicing"
+tags: ["KSeF", "JDG", "Faktura"]
+sources:
+  - label: "Ustawa o VAT, tekst jednolity (Dz.U. 2026 poz. 1263), art. 106b, 106ga, 106gb, 145m, 145n"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  - label: "MF: Podręcznik KSeF 2.0, cz. II (06.08.2026)"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "FAQ MF — KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/"
+  - label: "MF: Najczęstsze pytania o KSeF"
+    url: "https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
+  - label: "MF: Broszura informacyjna dotycząca struktury logicznej FA(3)"
+    url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+translations:
+  pl: "faktura-dla-osoby-prywatnej-ksef"
+  en: "invoice-for-private-person-ksef"
+  uk: "rakhunok-dlya-pryvatnoyi-osoby-ksef"
+---
+
+Fakturę dla osoby prywatnej (osoby fizycznej nieprowadzącej działalności gospodarczej) możesz wystawić poza KSeF, bo art. 106ga ust. 2 pkt 4 ustawy o VAT wyłącza ją z obowiązku. Jeśli chcesz, wystawisz ją w KSeF dobrowolnie, ale klient i tak nie znajdzie jej w systemie sam: przekazujesz mu ją w uzgodniony sposób, z kodem QR.
+
+Stan prawny na 8 października 2026.
+
+<Source
+  href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/"
+  label="FAQ MF: „Wystawianie w KSeF faktur na rzecz konsumentów nie jest obowiązkowe”"
+/>
+
+## Poza KSeF: papier albo PDF, jak dotąd
+
+Faktura poza KSeF może być papierowa albo elektroniczna. Elektroniczna nie musi mieć struktury FA(3) ani trafiać do systemu: wystarczy PDF wysłany e-mailem.
+
+Przykład: Kasia jest fotografką na JDG. W październiku robi sesję rodzinną dla pani Marty, która prosi o fakturę na 900 zł. Kasia wystawia ją w swoim programie jako PDF i wysyła mailem. Nic więcej nie musi robić.
+
+Jeśli korzystasz ze zwolnienia z VAT (art. 113), fakturę dla osoby prywatnej wystawiasz tylko na jej żądanie. Szczegóły, w tym termin na zgłoszenie żądania, opisaliśmy w [poście o KSeF dla zwolnionych z VAT](/blog/zwolniony-z-vat-ksef).
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. II, pkt 1.1: faktura elektroniczna może być dowolnym plikiem, np. PDF"
+/>
+
+## Wystawiasz w KSeF: jak klient dostaje fakturę
+
+Dobrowolna faktura konsumencka w KSeF nie trafia do klienta automatycznie. Nabywca dostaje fakturę w systemie na podstawie NIP-u, a osoba prywatna go na fakturze nie ma. Dlatego art. 106gb ust. 4 każe Ci przekazać ją w sposób uzgodniony z klientem (mailem, wydrukiem), a faktura przekazana poza KSeF musi mieć kod QR. Ustawa nie narzuca formy tego uzgodnienia.
+
+Na fakturze wystawionej w KSeF w trybie online jest jeden kod QR, a pod nim numer KSeF (faktura offline, jeszcze bez numeru, ma dwa kody). Klient pobiera z niego fakturę bez logowania, w dwóch krokach:
+
+1. Skanuje kod i widzi podstawowe dane: numer KSeF, NIP sprzedawcy, datę wystawienia. Jeśli faktury nie ma w KSeF, dostaje taką informację.
+2. Wpisuje numer faktury, informację o braku identyfikatora nabywcy i kwotę należności ogółem. Wtedy może pobrać fakturę jako XML albo PDF.
+
+Kilka błędnych prób w drugim kroku blokuje dostęp na jakiś czas. Bez kodu QR klient też może wejść do Aplikacji Podatnika bez logowania i pobrać fakturę, ale musi wtedy wpisać ręcznie także numer KSeF oraz swoje imię i nazwisko.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. II, pkt 5.3–5.7: przekazanie konsumentowi, dostęp przez kod QR i dostęp anonimowy"
+/>
+
+<Info>
+  **Dla developerów.** Dla nabywcy-konsumenta w `Podmiot2/DaneIdentyfikacyjne` wpisujesz `BrakID` =
+  `1` zamiast `NIP`, a `JST` i `GV` w `Podmiot2` dostają wartość `2`. `Nazwa` (imię i nazwisko) w
+  XSD jest opcjonalna, ale według adnotacji schematu tylko dla faktury uproszczonej (art. 106e ust.
+  5 pkt 3), a broszura FA(3) oznacza ją jako obowiązkową. Podręcznik podaje dla konsumenta tylko
+  `BrakID`. Czy można zamiast tego wpisać PESEL w `NrID`, materiały MF, które sprawdziliśmy, nie
+  rozstrzygają.
+</Info>
+
+## Klient podaje NIP: to już faktura dla firmy
+
+Gdy nabywca ma NIP i kupuje na firmę, faktura podlega obowiązkowi KSeF z art. 106ga ust. 1. Do 31 grudnia 2026 r. możesz ją jeszcze wystawić poza systemem, jeśli mieścisz się w limicie 10 000 zł miesięcznie, liczonym z VAT (art. 145m). Faktur dla osób prywatnych nie wliczasz do tego limitu.
+
+NIP wpisany w fakturę w KSeF decyduje, komu system ją udostępni. Błędny NIP przypisze fakturę firmie, do której ten numer należy, więc przepisuj go uważnie.
+
+Kilku sytuacji granicznych materiały MF, które sprawdziliśmy, nie rozstrzygają:
+
+- klient prowadzi JDG, ale kupuje prywatnie i mimo to podaje NIP (albo kupuje na firmę i NIP-u nie podaje): kto decyduje o charakterze zakupu i czy wystarczy jego deklaracja;
+- klient prowadzi działalność nierejestrowaną albo najem prywatny: czy przy zakupie liczy się jako osoba nieprowadząca działalności;
+- klient jest rolnikiem ryczałtowym.
+
+Jeśli często sprzedajesz takim klientom, ustal sposób postępowania z księgową.
+
+<Source
+  href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
+  label="MF, Najczęstsze pytania: do limitu liczą się tylko faktury, które trzeba wystawić w KSeF"
+/>
+
+## Od 2027 r. nic się tu nie zmienia
+
+Wyłączenie z art. 106ga ust. 2 pkt 4 nie ma daty końcowej. Do 31 grudnia 2026 r. obowiązują dwa inne wyjątki: limit 10 000 zł (art. 145m) i faktury z kasy fiskalnej (art. 145n). Co dzieje się po ich wygaśnięciu, opisaliśmy w [poście o końcu limitu 10 000 zł](/blog/koniec-limitu-10000-zl). Faktury dla osób prywatnych możesz w 2027 r. wystawiać poza KSeF tak jak teraz.
+
+<Source
+  href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  label="Ustawa o VAT, art. 106ga, 145m, 145n (Dz.U. 2026 poz. 1263)"
+/>
+
+Wyłączenie obejmuje też fakturę do paragonu dla osoby prywatnej. Jeśli sprzedajesz przez kasę fiskalną, zmiany od 2027 r. dotyczą faktur dla firm; sprawdź je w [poście o fakturze z kasy fiskalnej](/blog/faktura-z-kasy-fiskalnej-ksef-2027).
+
+Jeśli wystawiasz faktury także firmom, policz, czy w tym miesiącu mieścisz się w limicie: [jak liczyć limit 10 000 zł](/blog/ksef-limit-10000-zl).
