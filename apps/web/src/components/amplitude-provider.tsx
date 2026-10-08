@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import * as amplitude from "@amplitude/unified";
+import * as amplitude from "@amplitude/analytics-browser";
 
 let initialized = false;
 
@@ -17,18 +17,15 @@ export function AmplitudeProvider() {
     }
 
     try {
-      amplitude.initAll(apiKey, {
+      // Analytics only: no session replay, experiment or Guides & Surveys SDKs are loaded
+      amplitude.init(apiKey, {
         serverZone: "EU",
-        analytics: {
-          autocapture: {
-            pageViews: true,
-            sessions: true,
-            elementInteractions: false,
-            formInteractions: false,
-          },
-        },
-        sessionReplay: {
-          optOut: true, // Completely disable session replay
+        identityStorage: "localStorage", // no cookies, as stated on the privacy page
+        autocapture: {
+          pageViews: true,
+          sessions: true,
+          elementInteractions: false,
+          formInteractions: false,
         },
       });
       initialized = true;

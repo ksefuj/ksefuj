@@ -1,6 +1,6 @@
 "use client";
 
-import * as amplitude from "@amplitude/unified";
+import * as amplitude from "@amplitude/analytics-browser";
 
 interface SourceProps {
   href: string;

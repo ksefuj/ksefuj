@@ -14,7 +14,7 @@ import {
 } from "react";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import * as amplitude from "@amplitude/unified";
+import * as amplitude from "@amplitude/analytics-browser";
 import {
   fetchNbpRateForInvoice,
   NBP_MIN_INVOICE_DATE,

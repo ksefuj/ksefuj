@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from "../../i18n/routing";
 import { useEffect, useRef, useState, useTransition } from "react";
-import * as amplitude from "@amplitude/unified";
+import * as amplitude from "@amplitude/analytics-browser";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 
