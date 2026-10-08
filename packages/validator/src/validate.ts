@@ -32,7 +32,7 @@ async function getLibxml2Module() {
   return libxml2Module;
 }
 
-const VALIDATOR_VERSION = "0.3.0";
+const VALIDATOR_VERSION = "0.4.0";
 const SCHEMA_VERSION = "FA(3) 2025-06-25";
 
 // Environment detection utility
