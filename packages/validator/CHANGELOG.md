@@ -27,6 +27,25 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- `REVERSE_CHARGE_CONSISTENCY` no longer reports "no line uses np I/np II/oo" on advance invoices
+  (`ZAL`, `KOR_ZAL`) with `P_18 = 1`: their lines live in `Fa/Zamowienie/ZamowienieWiersz/P_12Z`,
+  which is now read alongside `FaWiersz/P_12`. An invoice with no lines at all is not cross-checked
+- `TAX_CALCULATION_MISMATCH` accepts `P_14_1`..`P_14_3` that match the per-line tax method (Art.
+  106e ust. 10): the sum over `FaWiersz` of the same rate group of `P_11Vat`, else
+  `round(P_11 × rate)`, else `P_11A − round(P_11A / (1 + rate))`, in addition to the invoice-level
+  `P_13_x × rate`. Each method has a 1 grosz tolerance; a line without any usable amount disables
+  the per-line alternative for that group
+
+- `TAX_CALCULATION_MISMATCH` (P_15 sum) and `AMOUNT_NO_SEPARATORS` read a non-existent `P_13_6`
+  field; FA(3) has `P_13_6_1`, `P_13_6_2` and `P_13_6_3`, which were never read. Invoices with 0%
+  sales alongside taxed sales got a false P_15 mismatch, and thousand separators in those fields
+  went unnoticed. The non-existent `P_14_5W` was dropped from the field lists too (§9.3, §9.4)
+- `TAX_CALCULATION_MISMATCH` accepts the 22% and 7% rates the information sheet allows in
+  `P_13_1`/`P_14_1` (23% or 22%) and `P_13_2`/`P_14_2` (8% or 7%), within the existing 1 grosz
+  tolerance (§9.3)
+- `TAX_CALCULATION_MISMATCH` no longer fires on an invalid `FaWiersz/P_12`; that case is reported
+  only as `P12_ENUMERATION`
+
 - `CURRENCY_RATE_MISMATCH` no longer keys the NBP rate to `P_1` alone. Art. 31a ust. 1 keys it to
   the last business day before the **tax obligation date**; the issue date only governs when the
   invoice is issued _before_ the tax obligation arises (ust. 2). The tax point is taken from

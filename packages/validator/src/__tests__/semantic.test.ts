@@ -830,6 +830,216 @@ describe("Semantic Validation", () => {
     });
   });
 
+  describe("Tax summary fields (P_13_x / P_14_x / P_15)", () => {
+    function invoiceWith(summary: string, lines = "") {
+      return wrapInFaktura(`
+        <Podmiot1>
+          <DaneIdentyfikacyjne><NIP>1234567890</NIP><Nazwa>Test</Nazwa></DaneIdentyfikacyjne>
+          <Adres><KodKraju>PL</KodKraju><AdresL1>Test</AdresL1></Adres>
+        </Podmiot1>
+        <Podmiot2>
+          <DaneIdentyfikacyjne><NIP>9876543210</NIP><Nazwa>Test</Nazwa></DaneIdentyfikacyjne>
+          <Adres><KodKraju>PL</KodKraju><AdresL1>Test</AdresL1></Adres>
+          <JST>2</JST>
+          <GV>2</GV>
+        </Podmiot2>
+        <Fa>
+          <KodWaluty>PLN</KodWaluty>
+          <P_1>2026-09-15</P_1>
+          <P_2>FV/001/09/2026</P_2>
+          ${summary}
+          <Adnotacje>
+            <P_16>2</P_16><P_17>2</P_17><P_18>2</P_18><P_18A>2</P_18A>
+            <Zwolnienie><P_19N>1</P_19N></Zwolnienie>
+            <NoweSrodkiTransportu><P_22N>1</P_22N></NoweSrodkiTransportu>
+            <P_23>2</P_23>
+            <PMarzy><P_PMarzyN>1</P_PMarzyN></PMarzy>
+          </Adnotacje>
+          <RodzajFaktury>VAT</RodzajFaktury>
+        </Fa>
+        ${lines}
+      `);
+    }
+
+    const codes = (xml: string) => validateXml(xml).issues.map((i) => i.code.code);
+
+    it("sums P_13_6_1 (0%) together with 23% sales into P_15 without a false mismatch", () => {
+      const xml = invoiceWith(`
+        <P_13_1>100.00</P_13_1><P_14_1>23.00</P_14_1>
+        <P_13_6_1>50.00</P_13_6_1>
+        <P_15>173.00</P_15>`);
+      expect(codes(xml)).not.toContain("TAX_CALCULATION_MISMATCH");
+    });
+
+    it("sums P_13_6_2 and P_13_6_3 into P_15", () => {
+      const xml = invoiceWith(`
+        <P_13_6_2>10.00</P_13_6_2><P_13_6_3>20.00</P_13_6_3>
+        <P_15>30.00</P_15>`);
+      expect(codes(xml)).not.toContain("TAX_CALCULATION_MISMATCH");
+    });
+
+    it("detects a P_15 that omits a P_13_6_x amount", () => {
+      const xml = invoiceWith(`
+        <P_13_1>100.00</P_13_1><P_14_1>23.00</P_14_1>
+        <P_13_6_1>50.00</P_13_6_1>
+        <P_15>123.00</P_15>`);
+      expect(codes(xml)).toContain("TAX_CALCULATION_MISMATCH");
+    });
+
+    it("accepts 22% and 7% rates in P_14_1 and P_14_2", () => {
+      const xml = invoiceWith(`
+        <P_13_1>100.00</P_13_1><P_14_1>22.00</P_14_1>
+        <P_13_2>100.00</P_13_2><P_14_2>7.00</P_14_2>
+        <P_15>229.00</P_15>`);
+      expect(codes(xml)).not.toContain("TAX_CALCULATION_MISMATCH");
+    });
+
+    it("still accepts 23%, 8% and 5%", () => {
+      const xml = invoiceWith(`
+        <P_13_1>100.00</P_13_1><P_14_1>23.00</P_14_1>
+        <P_13_2>100.00</P_13_2><P_14_2>8.00</P_14_2>
+        <P_13_3>100.00</P_13_3><P_14_3>5.00</P_14_3>
+        <P_15>336.00</P_15>`);
+      expect(codes(xml)).not.toContain("TAX_CALCULATION_MISMATCH");
+    });
+
+    it("detects wrong tax arithmetic that matches neither allowed rate", () => {
+      const xml = invoiceWith(`
+        <P_13_1>100.00</P_13_1><P_14_1>20.00</P_14_1>
+        <P_13_2>100.00</P_13_2><P_14_2>9.00</P_14_2>
+        <P_13_3>100.00</P_13_3><P_14_3>6.00</P_14_3>
+        <P_15>335.00</P_15>`);
+      const mismatches = validateXml(xml).issues.filter(
+        (i) => i.code.code === "TAX_CALCULATION_MISMATCH",
+      );
+      expect(mismatches.map((i) => i.context.location.element).sort()).toEqual([
+        "P_14_1",
+        "P_14_2",
+        "P_14_3",
+      ]);
+    });
+
+    it("tolerates exactly 1 grosz without float false positives, but flags 2 grosze", () => {
+      // 23.01 - 23.00 and 0.31 - (0.1 + 0.2) are 0.01 plus float noise in plain doubles
+      const within = invoiceWith(`
+        <P_13_1>100.00</P_13_1><P_14_1>23.01</P_14_1>
+        <P_13_6_1>0.10</P_13_6_1><P_13_6_2>0.20</P_13_6_2>
+        <P_15>123.32</P_15>`);
+      expect(codes(within)).not.toContain("TAX_CALCULATION_MISMATCH");
+
+      const beyond = invoiceWith(`
+        <P_13_1>100.00</P_13_1><P_14_1>23.02</P_14_1>
+        <P_13_6_1>0.10</P_13_6_1><P_13_6_2>0.20</P_13_6_2>
+        <P_15>123.34</P_15>`);
+      const elements = validateXml(beyond)
+        .issues.filter((i) => i.code.code === "TAX_CALCULATION_MISMATCH")
+        .map((i) => i.context.location.element)
+        .sort();
+      expect(elements).toEqual(["P_14_1", "P_15"]);
+    });
+
+    function lines(count: number, net: string, rate = "23", extra = "") {
+      return Array.from(
+        { length: count },
+        (_, i) => `<FaWiersz>
+          <NrWierszaFa>${i + 1}</NrWierszaFa>
+          <P_7>Item</P_7><P_8B>1</P_8B><P_9A>${net}</P_9A>
+          <P_11>${net}</P_11><P_12>${rate}</P_12>${extra}
+        </FaWiersz>`,
+      ).join("");
+    }
+
+    it("accepts per-line rounded tax that drifts several grosze from the invoice-level value", () => {
+      // 100 lines of 0.10 at 23%: per line round(0.023) = 0.02 -> 2.00, invoice level 10.00 × 23% = 2.30
+      const xml = invoiceWith(
+        `<P_13_1>10.00</P_13_1><P_14_1>2.00</P_14_1><P_15>12.00</P_15>`,
+        lines(100, "0.10"),
+      );
+      expect(codes(xml)).not.toContain("TAX_CALCULATION_MISMATCH");
+    });
+
+    it("accepts the sum of P_11Vat, and per-line tax derived from P_11A", () => {
+      const withVat = invoiceWith(
+        `<P_13_1>10.00</P_13_1><P_14_1>2.00</P_14_1><P_15>12.00</P_15>`,
+        lines(100, "0.10", "23", "<P_11Vat>0.02</P_11Vat>"),
+      );
+      expect(codes(withVat)).not.toContain("TAX_CALCULATION_MISMATCH");
+
+      const grossLines = Array.from(
+        { length: 10 },
+        (_, i) => `<FaWiersz><NrWierszaFa>${i + 1}</NrWierszaFa><P_7>I</P_7>
+          <P_11A>0.50</P_11A><P_12>23</P_12></FaWiersz>`,
+      ).join("");
+      // per line: 0.50 - round(0.50 / 1.23) = 0.50 - 0.41 = 0.09 -> 0.90 in total
+      const xml = invoiceWith(
+        `<P_13_1>4.10</P_13_1><P_14_1>0.90</P_14_1><P_15>5.00</P_15>`,
+        grossLines,
+      );
+      expect(codes(xml)).not.toContain("TAX_CALCULATION_MISMATCH");
+    });
+
+    it("still flags tax matching neither the invoice-level nor the per-line total", () => {
+      const xml = invoiceWith(
+        `<P_13_1>10.00</P_13_1><P_14_1>5.00</P_14_1><P_15>15.00</P_15>`,
+        lines(100, "0.10"),
+      );
+      expect(codes(xml)).toContain("TAX_CALCULATION_MISMATCH");
+    });
+
+    it("does not report REVERSE_CHARGE_CONSISTENCY for an advance invoice with P_18=1 and no lines", () => {
+      const xml = invoiceWith(`<P_15>100.00</P_15>`).replace("<P_18>2</P_18>", "<P_18>1</P_18>");
+      expect(codes(xml)).not.toContain("REVERSE_CHARGE_CONSISTENCY");
+    });
+
+    it("reads P_12Z from ZamowienieWiersz for reverse charge on advance invoices", () => {
+      const zamowienie = (rate: string) => `<Zamowienie>
+          <WartoscZamowienia>100.00</WartoscZamowienia>
+          <ZamowienieWiersz><NrWierszaZam>1</NrWierszaZam><P_11NettoZ>100.00</P_11NettoZ>
+          <P_12Z>${rate}</P_12Z></ZamowienieWiersz></Zamowienie>`;
+      const base = invoiceWith(`<P_15>100.00</P_15>`).replace("<P_18>2</P_18>", "<P_18>1</P_18>");
+      const withRc = base.replace("<RodzajFaktury>", `${zamowienie("oo")}<RodzajFaktury>`);
+      const without = base.replace("<RodzajFaktury>", `${zamowienie("23")}<RodzajFaktury>`);
+      expect(codes(withRc)).not.toContain("REVERSE_CHARGE_CONSISTENCY");
+      expect(codes(without)).toContain("REVERSE_CHARGE_CONSISTENCY");
+    });
+
+    it("detects a wrong P_15 total", () => {
+      const xml = invoiceWith(`
+        <P_13_1>100.00</P_13_1><P_14_1>23.00</P_14_1>
+        <P_15>999.00</P_15>`);
+      expect(codes(xml)).toContain("TAX_CALCULATION_MISMATCH");
+    });
+
+    it("detects thousand separators in P_13_6_1, P_13_6_2 and P_13_6_3", () => {
+      for (const field of ["P_13_6_1", "P_13_6_2", "P_13_6_3"]) {
+        const xml = invoiceWith(`
+          <${field}>1,000.00</${field}>
+          <P_15>1000.00</P_15>`);
+        const issues = validateXml(xml).issues.filter(
+          (i) => i.code.code === "AMOUNT_NO_SEPARATORS",
+        );
+        expect(issues.map((i) => i.context.location.element)).toContain(field);
+      }
+    });
+
+    it("reports an invalid P_12 only as P12_ENUMERATION", () => {
+      const xml = invoiceWith(
+        `<P_13_1>100.00</P_13_1><P_14_1>23.00</P_14_1><P_15>123.00</P_15>`,
+        `<FaWiersz>
+          <NrWierszaFa>1</NrWierszaFa>
+          <P_7>Item</P_7>
+          <P_8B>1</P_8B>
+          <P_9A>100.00</P_9A>
+          <P_11>100.00</P_11>
+          <P_12>25</P_12>
+        </FaWiersz>`,
+      );
+      const result = codes(xml);
+      expect(result).toContain("P12_ENUMERATION");
+      expect(result).not.toContain("TAX_CALCULATION_MISMATCH");
+    });
+  });
+
   describe("Valid Document Tests", () => {
     it("should pass validation for a complete valid document", () => {
       const xml = wrapInFaktura(`
