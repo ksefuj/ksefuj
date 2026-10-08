@@ -196,9 +196,9 @@
         "maxInclusive": "Wartość {value} w polu {element} jest za duża. Maksymalna wartość: {limit}.",
         "minExclusive": "Wartość {value} w polu {element} jest za mała. Wartość musi być większa niż {limit}.",
         "maxExclusive": "Wartość {value} w polu {element} jest za duża. Wartość musi być mniejsza niż {limit}.",
-        "tooLong": "Pole {element} jest za długie ({actual} znaków). Maksymalna liczba znaków: {limit}.",
-        "tooShort": "Pole {element} jest za krótkie ({actual} znaków). Minimalna liczba znaków: {limit}.",
-        "wrongLength": "Pole {element} ma niewłaściwą długość ({actual} znaków). Wymagana liczba znaków: {limit}."
+        "tooLong": "Pole {element} jest za długie ({actual, plural, one {# znak} few {# znaki} many {# znaków} other {# znaków}}). Maksymalna liczba znaków: {limit}.",
+        "tooShort": "Pole {element} jest za krótkie ({actual, plural, one {# znak} few {# znaki} many {# znaków} other {# znaków}}). Minimalna liczba znaków: {limit}.",
+        "wrongLength": "Pole {element} ma niewłaściwą długość ({actual, plural, one {# znak} few {# znaki} many {# znaków} other {# znaków}}). Wymagana liczba znaków: {limit}."
       },
       "fix": {
         "rename": "Popraw nazwę elementu, to prawdopodobnie literówka.",

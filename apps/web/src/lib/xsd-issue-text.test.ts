@@ -292,7 +292,7 @@ describe("buildXsdIssueText", () => {
         "The value has a length of '1'; this underruns the allowed minimum length of '2'.",
       );
       expect(buildXsdIssueText(short, translator("en"))!.message).toContain(
-        "too short (1 characters). Minimum number of characters: 2.",
+        "too short (1 character). Minimum number of characters: 2.",
       );
       const exact = lengthIssue(
         "length",
@@ -391,7 +391,7 @@ describe("buildXsdIssueText", () => {
       { expectedValues: ["NazwaBanku"] },
     );
     expect(buildXsdIssueText(issueToTest, translator("en"))!.message).toBe(
-      "`NazwaBank` is in the wrong place or shouldn't be here. Expected here: `NazwaBanku`. Did you mean `NazwaBanku`?",
+      "`NazwaBank` is in the wrong place or doesn't belong here at all. Expected at this point: `NazwaBanku`. Did you mean `NazwaBanku`?",
     );
     expect(buildXsdIssueText(issueToTest, translator("uk"))!.message).toContain("`NazwaBanku`");
   });
