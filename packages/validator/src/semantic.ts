@@ -898,7 +898,9 @@ function checkDecimalPrecision(doc: XmlDocument): ValidationIssue[] {
       "P_13_3",
       "P_13_4",
       "P_13_5",
-      "P_13_6",
+      "P_13_6_1",
+      "P_13_6_2",
+      "P_13_6_3",
       "P_13_7",
       "P_13_8",
       "P_13_9",
@@ -913,7 +915,6 @@ function checkDecimalPrecision(doc: XmlDocument): ValidationIssue[] {
       "P_14_2W",
       "P_14_3W",
       "P_14_4W",
-      "P_14_5W",
       "P_15",
       "WartoscZamowienia",
     ],
@@ -1708,7 +1709,9 @@ function checkAmountNoSeparators(doc: XmlDocument): ValidationIssue[] {
     "P_13_3",
     "P_13_4",
     "P_13_5",
-    "P_13_6",
+    "P_13_6_1",
+    "P_13_6_2",
+    "P_13_6_3",
     "P_13_7",
     "P_13_8",
     "P_13_9",
@@ -1723,7 +1726,6 @@ function checkAmountNoSeparators(doc: XmlDocument): ValidationIssue[] {
     "P_14_2W",
     "P_14_3W",
     "P_14_4W",
-    "P_14_5W",
     "P_15",
     "KursWalutyZ",
   ];
@@ -1939,14 +1941,18 @@ function checkTaxCalculations(doc: XmlDocument): ValidationIssue[] {
     const hasP14Fields = p14_1 || p14_2 || p14_3 || p14_4 || p14_5;
 
     // Check for special P_13 fields (6-11)
-    const p13_6 = text(doc, "string(//ns:Fa/ns:P_13_6)");
+    // 0% bases are split by transaction type: domestic, WDT, export
+    const p13_6_1 = text(doc, "string(//ns:Fa/ns:P_13_6_1)");
+    const p13_6_2 = text(doc, "string(//ns:Fa/ns:P_13_6_2)");
+    const p13_6_3 = text(doc, "string(//ns:Fa/ns:P_13_6_3)");
     const p13_7 = text(doc, "string(//ns:Fa/ns:P_13_7)");
     const p13_8 = text(doc, "string(//ns:Fa/ns:P_13_8)");
     const p13_9 = text(doc, "string(//ns:Fa/ns:P_13_9)");
     const p13_10 = text(doc, "string(//ns:Fa/ns:P_13_10)");
     const p13_11 = text(doc, "string(//ns:Fa/ns:P_13_11)");
 
-    const hasSpecialP13Fields = p13_6 || p13_7 || p13_8 || p13_9 || p13_10 || p13_11;
+    const hasSpecialP13Fields =
+      p13_6_1 || p13_6_2 || p13_6_3 || p13_7 || p13_8 || p13_9 || p13_10 || p13_11;
 
     // Only validate totals if we have summary tax fields (not simplified invoice)
     if (hasP13Fields || hasP14Fields || hasSpecialP13Fields) {
@@ -1969,8 +1975,14 @@ function checkTaxCalculations(doc: XmlDocument): ValidationIssue[] {
         expectedTotal += parseFloat(p13_5);
       }
 
-      if (p13_6) {
-        expectedTotal += parseFloat(p13_6);
+      if (p13_6_1) {
+        expectedTotal += parseFloat(p13_6_1);
+      }
+      if (p13_6_2) {
+        expectedTotal += parseFloat(p13_6_2);
+      }
+      if (p13_6_3) {
+        expectedTotal += parseFloat(p13_6_3);
       }
       if (p13_7) {
         expectedTotal += parseFloat(p13_7);

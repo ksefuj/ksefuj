@@ -794,6 +794,56 @@ describe("Semantic Validation", () => {
       const result = validateXml(withBankAccount("491140200400003112074058"));
       expect(result.issues.some((i) => i.code.code === "INVALID_BANK_ACCOUNT_FORMAT")).toBe(true);
     });
+
+    const withTotals = (totals: string) =>
+      wrapInFaktura(`
+        <Podmiot1>
+          <DaneIdentyfikacyjne><NIP>1234567890</NIP><Nazwa>Test</Nazwa></DaneIdentyfikacyjne>
+          <Adres><KodKraju>PL</KodKraju><AdresL1>Test</AdresL1></Adres>
+        </Podmiot1>
+        <Podmiot2>
+          <DaneIdentyfikacyjne><NIP>9876543210</NIP><Nazwa>Test</Nazwa></DaneIdentyfikacyjne>
+          <Adres><KodKraju>PL</KodKraju><AdresL1>Test</AdresL1></Adres>
+          <JST>2</JST><GV>2</GV>
+        </Podmiot2>
+        <Fa>
+          <KodWaluty>PLN</KodWaluty>
+          <P_1>2026-09-15</P_1>
+          <P_2>FV/001/09/2026</P_2>
+          ${totals}
+          <Adnotacje>
+            <P_16>2</P_16><P_17>2</P_17><P_18>2</P_18><P_18A>2</P_18A>
+            <Zwolnienie><P_19N>1</P_19N></Zwolnienie>
+            <NoweSrodkiTransportu><P_22N>1</P_22N></NoweSrodkiTransportu>
+            <P_23>2</P_23>
+            <PMarzy><P_PMarzyN>1</P_PMarzyN></PMarzy>
+          </Adnotacje>
+          <RodzajFaktury>VAT</RodzajFaktury>
+        </Fa>
+      `);
+    const hasTotalsMismatch = (xml: string) =>
+      validateXml(xml).issues.some(
+        (i) =>
+          i.code.code === "TAX_CALCULATION_MISMATCH" && i.context?.location?.element === "P_15",
+      );
+
+    it("should include 0% bases (P_13_6_1..P_13_6_3) in the P_15 total", () => {
+      const xml = withTotals(`
+          <P_13_1>100.00</P_13_1>
+          <P_14_1>23.00</P_14_1>
+          <P_13_6_1>50.00</P_13_6_1>
+          <P_13_6_2>30.00</P_13_6_2>
+          <P_13_6_3>20.00</P_13_6_3>
+          <P_15>223.00</P_15>`);
+      expect(hasTotalsMismatch(xml)).toBe(false);
+    });
+
+    it("should check P_15 on invoices with only 0% bases", () => {
+      const xml = withTotals(`
+          <P_13_6_2>8000.00</P_13_6_2>
+          <P_15>7000.00</P_15>`);
+      expect(hasTotalsMismatch(xml)).toBe(true);
+    });
   });
 
   describe("Group 7: Format Rules", () => {
