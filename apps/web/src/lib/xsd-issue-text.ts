@@ -170,7 +170,11 @@ function requiredMissing(issue: ValidationIssue, t: Translate): XsdIssueText {
   return { message: withLine(message, issue, t), fix: t("xsd.fix.add") };
 }
 
-function hintFor(typeName: string | undefined, element: string | undefined): string | undefined {
+/** Format hint (amount, date, nip, ...) for an invalid value, from its XSD type or element name. */
+export function hintFor(
+  typeName: string | undefined,
+  element: string | undefined,
+): string | undefined {
   return (
     (typeName ? TYPE_HINTS[typeName] : undefined) ?? (element ? ELEMENT_HINTS[element] : undefined)
   );

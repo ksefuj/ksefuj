@@ -17,6 +17,7 @@ interface ValidatorProps {
   locale?: string;
   /** Issue code to localized reference page path (server-built from content frontmatter). */
   issueHelpLinks?: Readonly<Record<string, string>>;
+  issueHelpAnchors?: Readonly<Record<string, Readonly<Record<string, string>>>>;
 }
 
 type FileValidationResult = {
@@ -48,7 +49,7 @@ async function readFileText(file: File): Promise<string> {
   return new TextDecoder("utf-8", { ignoreBOM: true }).decode(await file.arrayBuffer());
 }
 
-export function Validator({ locale, issueHelpLinks }: ValidatorProps) {
+export function Validator({ locale, issueHelpLinks, issueHelpAnchors }: ValidatorProps) {
   const t = useTranslations("validator");
   const [files, setFiles] = useState<FileValidationResult[]>([]);
   const [skippedCount, setSkippedCount] = useState(0);
@@ -608,6 +609,7 @@ export function Validator({ locale, issueHelpLinks }: ValidatorProps) {
                             issues={file.result.issues}
                             maxDisplayed={20}
                             helpLinks={issueHelpLinks}
+                            helpAnchors={issueHelpAnchors}
                           />
                         </div>
                       </div>

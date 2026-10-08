@@ -1,5 +1,6 @@
 import type { ValidationIssue } from "@ksefuj/validator";
 import { ValidationIssue as ValidationIssueComponent } from "./validation-issue";
+import { resolveIssueHelpHref } from "@/lib/issue-anchor";
 import { useTranslations } from "next-intl";
 
 interface ValidationIssuesListProps {
@@ -7,12 +8,15 @@ interface ValidationIssuesListProps {
   maxDisplayed?: number;
   /** Issue code to localized reference page path. */
   helpLinks?: Readonly<Record<string, string>>;
+  /** Issue code to the heading ids its page declares per issue kind. */
+  helpAnchors?: Readonly<Record<string, Readonly<Record<string, string>>>>;
 }
 
 export function ValidationIssuesList({
   issues,
   maxDisplayed = 10,
   helpLinks,
+  helpAnchors,
 }: ValidationIssuesListProps) {
   const t = useTranslations("validator");
   // Sort issues by severity (errors first, then warnings, then info)
@@ -53,7 +57,7 @@ export function ValidationIssuesList({
           <ValidationIssueComponent
             key={index}
             issue={issue}
-            helpHref={helpLinks?.[issue.code.code]}
+            helpHref={resolveIssueHelpHref(issue, helpLinks, helpAnchors)}
           />
         ))}
       </div>

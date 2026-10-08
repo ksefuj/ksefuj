@@ -24,6 +24,11 @@ export interface Frontmatter {
   related?: string[];
   /** Validator reference pages: the issue codes (e.g. `UNEXPECTED_ELEMENT`) this page explains. */
   codes?: string[];
+  /**
+   * Validator reference pages: issue kind key (see `ISSUE_ANCHOR_KEYS`) to the id of the heading in
+   * this file that explains it. Ids are declared per file because headings are translated.
+   */
+  anchors?: Record<string, string>;
   /** Pins the item on the homepage. */
   featured?: boolean;
   sources?: Array<{ label: string; url: string }>;
