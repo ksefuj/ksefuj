@@ -35,6 +35,29 @@ describe("Validator Integration Tests", () => {
     });
   });
 
+  describe("Advance (ZAL) and settlement (ROZ) examples", () => {
+    // ZAL: P_15 is the payment received, with P_13/P_14 derived from it (KP = ZB x SP / (100 + SP)).
+    // ROZ (art. 106f ust. 3): P_13/P_14 and P_15 all refer to the amount left to pay, so
+    // P_15 = sum(P_13_x + P_14_x) holds on both types (Podrecznik KSeF 2.0 part II, 2.7 and 2.14).
+    const officialPath = join(fixturesPath, "official-examples");
+    const advanceFiles = readdirSync(officialPath)
+      .filter((f) => f.endsWith(".xml"))
+      .filter((f) =>
+        /<RodzajFaktury>(ZAL|ROZ)<\/RodzajFaktury>/.test(
+          readFileSync(join(officialPath, f), "utf-8"),
+        ),
+      );
+
+    it("finds the MF ZAL and ROZ examples", () => {
+      expect(advanceFiles.length).toBeGreaterThanOrEqual(3);
+    });
+
+    it.each(advanceFiles)("reports no TAX_CALCULATION_MISMATCH for %s", async (filename) => {
+      const result = await validate(readFileSync(join(officialPath, filename), "utf-8"));
+      expect(result.issues.map((i) => i.code.code)).not.toContain("TAX_CALCULATION_MISMATCH");
+    });
+  });
+
   describe("Error Detection Cases", () => {
     const errorPath = join(fixturesPath, "error-cases");
     const errorFiles = readdirSync(errorPath).filter((f) => f.endsWith(".xml"));
