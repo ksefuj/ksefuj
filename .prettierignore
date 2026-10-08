@@ -25,5 +25,10 @@ coverage/
 # Schemas
 *.xsd
 
+# Vendored upstream code, generated font data and notices (packages/pdf)
+packages/pdf/vendor/
+packages/pdf/src/fonts/roboto-vfs.ts
+THIRD_PARTY_NOTICES.md
+
 # Claude Code settings (user-specific)
 .claude/settings.local.json
