@@ -27,6 +27,16 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- `TAX_CALCULATION_MISMATCH` (P_15 sum) and `AMOUNT_NO_SEPARATORS` read a non-existent `P_13_6`
+  field; FA(3) has `P_13_6_1`, `P_13_6_2` and `P_13_6_3`, which were never read. Invoices with 0%
+  sales alongside taxed sales got a false P_15 mismatch, and thousand separators in those fields
+  went unnoticed. The non-existent `P_14_5W` was dropped from the field lists too (§9.3, §9.4)
+- `TAX_CALCULATION_MISMATCH` accepts the 22% and 7% rates the information sheet allows in
+  `P_13_1`/`P_14_1` (23% or 22%) and `P_13_2`/`P_14_2` (8% or 7%), within the existing 1 grosz
+  tolerance (§9.3)
+- `TAX_CALCULATION_MISMATCH` no longer fires on an invalid `FaWiersz/P_12`; that case is reported
+  only as `P12_ENUMERATION`
+
 - `CURRENCY_RATE_MISMATCH` no longer keys the NBP rate to `P_1` alone. Art. 31a ust. 1 keys it to
   the last business day before the **tax obligation date**; the issue date only governs when the
   invoice is issued _before_ the tax obligation arises (ust. 2). The tax point is taken from
