@@ -27,6 +27,10 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- `TAX_CALCULATION_MISMATCH` now includes 0% bases in the `P_15` total. It read `P_13_6`, which
+  FA(3) does not have (the 0% base is split into `P_13_6_1`, `P_13_6_2` and `P_13_6_3`), so mixed
+  23% + WDT or export invoices got a false mismatch and invoices with only 0% lines were not
+  checked. `DECIMAL_PRECISION` and `AMOUNT_NO_SEPARATORS` now check the three 0% fields too
 - `CURRENCY_RATE_MISMATCH` no longer keys the NBP rate to `P_1` alone. Art. 31a ust. 1 keys it to
   the last business day before the **tax obligation date**; the issue date only governs when the
   invoice is issued _before_ the tax obligation arises (ust. 2). The tax point is taken from
