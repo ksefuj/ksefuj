@@ -1,0 +1,62 @@
+---
+title: "Attribute not allowed in FA(3) invoice XML"
+description: "An invoice element has an attribute the FA(3) schema doesn't allow, such as a currency on an amount or an id on Faktura. Remove it and use the right field."
+date: 2026-10-08
+section: validator
+locale: en
+slug: "attribute-not-allowed-fa3"
+codes: ["ELEMENT_NOT_ALLOWED"]
+sources:
+  - label: "FA(3) XSD schema, attribute declarations"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+  - label: "W3C, Namespaces in XML 1.0"
+    url: "https://www.w3.org/TR/xml-names/"
+translations:
+  pl: "niedozwolony-atrybut-fa3"
+  en: "attribute-not-allowed-fa3"
+  uk: "nedozvolenyy-atrybut-fa3"
+---
+
+## What this error means
+
+An invoice element has an attribute that the FA(3) schema doesn't allow at that point. Remove it, and if it carried information you need, put that information in the field FA(3) provides for it.
+
+An attribute is an addition inside the opening tag, like `waluta="PLN"` in `<P_15 waluta="PLN">`. The message gives the attribute name, the element it's on and the line number.
+
+## Why it's not allowed
+
+In FA(3), data goes in elements, not attributes. The FA(3) XSD schema declares attributes in only two places: `kodSystemowy` and `wersjaSchemy` on `KodFormularza`, and `Typ` in the table column descriptions in `Zalacznik`. Any other attribute on an invoice element is a schema error.
+
+<Source href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd" label="FA(3) XSD schema" />
+
+This rule doesn't cover namespace declarations (`xmlns`, `xmlns:etd`, `xmlns:xsi`). The `xsi:schemaLocation` attribute on the `Faktura` element also passes validation.
+
+## Where it usually comes from
+
+- **A currency on an amount**, for example `currencyID="PLN"`, as in UBL formats. In FA(3) you give the currency once, in `KodWaluty`.
+- **An identifier added by your software**, for example `id` on the `Faktura` element or on an invoice line.
+- **Text language**: `xml:lang="pl"` on a product description.
+- **An extra attribute on `KodFormularza`**, for example `wersja="3"` alongside `kodSystemowy` and `wersjaSchemy`.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ Currency attribute on an amount -->
+  <P_15 currencyID="PLN">2051.00</P_15>
+  <!-- ✅ Amount without the attribute, currency in KodWaluty -->
+  <KodWaluty>PLN</KodWaluty>
+  ...
+  <P_15>2051.00</P_15>
+  <!-- ❌ Identifier added by the generator -->
+  <Faktura id="inv-0142" xmlns="http://crd.gov.pl/wzor/2025/06/25/13775/">
+  <!-- ✅ -->
+  <Faktura xmlns="http://crd.gov.pl/wzor/2025/06/25/13775/">
+  ```
+</XmlExample>
+
+## How to fix it
+
+1. Open the file at the line given in the message and remove the attribute named in it.
+2. Check whether the attribute's value was needed on the invoice. The currency goes in `KodWaluty`, and your own data to display on the invoice can go in `DodatkowyOpis`, as a `Klucz` and `Wartosc` pair.
+3. If your software generates the file, report the bug to the vendor. Otherwise the attribute comes back with every export.
+
+A missing required attribute, such as `KodFormularza` without `wersjaSchemy`, is a separate message, described on the page about [missing fields](/en/validator/missing-required-field-fa3). The attributes on `KodFormularza` also have fixed values: `kodSystemowy="FA (3)"`, with a space before the bracket, and `wersjaSchemy="1-0E"`. Once you've fixed it, [check the invoice again](/en/validator).

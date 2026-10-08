@@ -1,0 +1,185 @@
+---
+title: "Nieprawidłowa wartość pola w fakturze FA(3)"
+description: "Wartość pola ma zły format: kwota z przecinkiem, data 15.02.2026, NIP z kreskami, kod POL zamiast PL. Poprawny zapis każdego typu pola FA(3) w XML."
+date: 2026-10-08
+section: validator
+locale: pl
+slug: "nieprawidlowa-wartosc-pola-fa3"
+codes: ["INVALID_ELEMENT_VALUE"]
+sources:
+  - label: "Schemat XSD FA(3), definicje typów TKwotowy, TKwotowy2, TIlosci, TDataT, TZnakowy i list wartości"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+  - label: "Broszura informacyjna FA(3), ogólne zasady wypełniania pól"
+    url: "https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "Dokumentacja API KSeF 2.0, weryfikacja faktury (suma kontrolna NIP)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md"
+translations:
+  pl: "nieprawidlowa-wartosc-pola-fa3"
+  en: "invalid-field-value-fa3"
+  uk: "nevirne-znachennya-polya-fa3"
+anchors:
+  amount: "format-kwoty"
+  date: "format-daty"
+  nip: "nip"
+  countryCode: "kod-kraju"
+  length: "za-długa-lub-za-krotka-wartosc"
+  fractionDigits: "za-duzo-miejsc-po-przecinku"
+  enumeration: "wartosc-spoza-listy"
+  other: "inny-format"
+---
+
+## Co oznacza ten błąd
+
+Pole jest na swoim miejscu, ale jego wartość nie pasuje do formatu, który wyznacza mu schemat XSD FA(3). Komunikat podaje nazwę pola, wpisaną wartość i to, czego schemat oczekuje, a poniżej opisujemy każdy rodzaj tego błędu.
+
+Każde pole w schemacie ma typ: kwota, data, NIP, kod z listy, tekst o określonej długości. Pusty element, na przykład `<P_1M></P_1M>`, też ma błędną wartość. Jeśli pole jest opcjonalne i nie masz czego w nim wpisać, usuń cały element. Większość pól tekstowych z samymi spacjami schemat również traktuje jak puste.
+
+<Source href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd" label="Schemat XSD FA(3)" />
+
+## Format kwoty
+
+Kwota to same cyfry, opcjonalny minus na początku i kropka przed częścią dziesiętną. Schemat ma trzy typy liczbowe:
+
+- kwoty (`P_11`, `P_13_x`, `P_14_x`, `P_15` i inne, typ `TKwotowy`): najwyżej 2 miejsca po kropce;
+- ceny jednostkowe i rabat (`P_9A`, `P_9B`, `P_10`, typ `TKwotowy2`): najwyżej 8 miejsc;
+- ilość i kurs waluty (`P_8B`, `KursWaluty`, `KursWalutyZ`, typ `TIlosci`): najwyżej 6 miejsc.
+
+Nie przechodzą: spacja lub kropka jako separator tysięcy, przecinek dziesiętny, waluta w polu, zero na początku (`02051.00`) i znak plus. Kwota bez części dziesiętnej, na przykład `2051`, jest poprawna.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ Przecinek, spacja, waluta, zero na początku -->
+  <P_15>2051,00</P_15>
+  <P_15>2 051.00</P_15>
+  <P_15>2051 zł</P_15>
+  <P_15>02051.00</P_15>
+  <!-- ✅ Cyfry i kropka -->
+  <P_15>2051.00</P_15>
+  ```
+</XmlExample>
+
+Spację i przecinek w kwotach wykrywa też osobna reguła, opisana na stronie o [kwotach bez separatorów](/validator/kwoty-bez-separatorow-tysiecy). Jedna poprawka usuwa oba komunikaty.
+
+## Format daty
+
+Daty zapisujesz jako `RRRR-MM-DD`, a dzień musi istnieć w kalendarzu: `2026-02-30` nie przejdzie. Schemat ogranicza też zakres: `P_1`, `P_6` i `P_6A` przyjmują daty od `2006-01-01` do `2050-01-01`, a `DataZaplaty` i `Termin` od `2016-07-01`.
+
+`DataWytworzeniaFa` to jedyne obowiązkowe pole z datą i godziną. Między nimi stoi litera `T`, nie spacja. Broszura podaje przykład w czasie UTC, z literą `Z` na końcu, i tak najprościej ją zapisywać. Schemat przyjmie też zapis bez strefy czasowej albo z przesunięciem, na przykład `+02:00`. Schemat nie przyjmuje w tym polu dat wcześniejszych niż `2025-09-01T00:00:00Z`.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ Polski zapis daty -->
+  <P_1>15.02.2026</P_1>
+  <!-- ❌ Godzina w polu, które przyjmuje tylko datę -->
+  <P_1>2026-02-15T10:00:00</P_1>
+  <!-- ✅ -->
+  <P_1>2026-02-15</P_1>
+  <!-- ❌ Spacja zamiast T, brak sekund -->
+  <DataWytworzeniaFa>2026-02-15 10:00</DataWytworzeniaFa>
+  <!-- ✅ -->
+  <DataWytworzeniaFa>2026-02-15T10:00:00Z</DataWytworzeniaFa>
+  ```
+</XmlExample>
+
+## NIP
+
+W polu `NIP` wpisujesz 10 cyfr, bez kresek, spacji i prefiksu `PL`. Pierwsza cyfra nie może być zerem, a druga i trzecia nie mogą być jednocześnie zerami. Schemat sprawdza tylko zapis. KSeF na produkcji sprawdza też sumę kontrolną NIP sprzedawcy, nabywcy i pozostałych podmiotów; tego nasz walidator nie robi.
+
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md"
+  label="Dokumentacja API KSeF 2.0, weryfikacja faktury"
+/>
+
+Prefiks kraju nie trafia do pola `NIP`. Sprzedawca może go podać osobno w `PrefiksPodatnika` (`Podmiot1`), a nabywca z innego kraju UE ma pola `KodUE` i `NrVatUE` zamiast `NIP`.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ Kreski i prefiks -->
+  <NIP>987-654-32-10</NIP>
+  <NIP>PL9876543210</NIP>
+  <!-- ✅ -->
+  <NIP>9876543210</NIP>
+  ```
+</XmlExample>
+
+## Kod kraju
+
+`KodKraju` w adresie przyjmuje dwuliterowy kod z listy w schemacie, wielkimi literami: `PL`, `DE`, `UA`. Nie przejdą `POL`, `pl` ani `Polska`.
+
+Pole `KodUE` przy numerze VAT UE nabywcy ma osobną, krótszą listę: państwa UE i `XI` dla Irlandii Północnej, a Grecja ma w niej kod `EL`. W adresie Grecja to `GR`, a `EL` w `KodKraju` nie przejdzie.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ Trzy litery, małe litery -->
+  <KodKraju>POL</KodKraju>
+  <KodKraju>pl</KodKraju>
+  <!-- ✅ -->
+  <KodKraju>PL</KodKraju>
+  ```
+</XmlExample>
+
+## Za długa lub za krótka wartość
+
+Pola tekstowe mają limit długości. Numer faktury `P_2` i wiele innych pól tekstowych mieści najwyżej 256 znaków, nazwa w `Nazwa` 512, a numer rachunku `NrRB` od 10 do 34 znaków. Przy tych błędach biblioteka walidacji nie cytuje wartości, więc w komunikacie zobaczysz jej długość i limit, a samą wartość znajdziesz w pliku pod wskazaną linią.
+
+Za krótka wartość to najczęściej pole puste: każde pole tekstowe musi mieć co najmniej jeden znak. Uzupełnij je albo usuń element, jeśli jest opcjonalny. Za długą skróć, na przykład rozwijaną formę prawną w nazwie firmy zamień na skrót.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ Puste pole -->
+  <P_2></P_2>
+  <!-- ✅ -->
+  <P_2>FV/2026/10/014</P_2>
+  ```
+</XmlExample>
+
+## Za dużo miejsc po przecinku
+
+Kwoty mają najwyżej 2 miejsca po kropce, ilości i kursy 6, ceny jednostkowe 8. Ten sam nadmiar pojawia się zwykle na liście dwa razy dla jednego pola (limit miejsc i niezgodny wzorzec zapisu), a do tego jako osobna reguła MF o precyzji. Jedno zaokrąglenie usuwa wszystkie trzy komunikaty.
+
+Po zaokrągleniu sprawdź sumy: zaokrąglone `P_13_x` i `P_14_x` muszą dalej składać się na `P_15`. Rozbieżności wyłapuje [kontrola obliczeń VAT](/validator/blad-kalkulacji-vat-p14-p15).
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ 3 miejsca w kwocie, 9 w cenie -->
+  <P_11>1000.123</P_11>
+  <P_9A>10.123456789</P_9A>
+  <!-- ✅ -->
+  <P_11>1000.12</P_11>
+  <P_9A>10.12345679</P_9A>
+  ```
+</XmlExample>
+
+## Wartość spoza listy
+
+Część pól przyjmuje tylko wartości z zamkniętej listy, a komunikat wymienia dozwolone (przy długich listach, jak kody walut, pokazujemy pierwsze osiem). Liczy się każdy znak, także wielkość liter i spacje. Najczęstsze przypadki:
+
+- `P_12` (stawka VAT): `23`, `8`, `5`, `zw`, `np I` i inne, bez znaku `%`; szczegóły na stronie o [stawce VAT w P_12](/validator/nieprawidlowa-stawka-vat-p12);
+- `RodzajFaktury`: `VAT`, `KOR`, `ZAL`, `ROZ`, `UPR`, `KOR_ZAL`, `KOR_ROZ`;
+- pola tak/nie w `Adnotacje` oraz `JST` i `GV`: `1` albo `2`, nigdy `0`;
+- `WariantFormularza`: tylko `3`;
+- `KodWaluty`: trzyliterowy kod wielkimi literami, `PLN`, nie `zł` ani `pln`.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ -->
+  <P_12>23%</P_12>
+  <RodzajFaktury>FV</RodzajFaktury>
+  <P_16>0</P_16>
+  <!-- ✅ -->
+  <P_12>23</P_12>
+  <RodzajFaktury>VAT</RodzajFaktury>
+  <P_16>2</P_16>
+  ```
+</XmlExample>
+
+## Inny format
+
+Pozostałe przypadki:
+
+- **Pole, które przyjmuje tylko `1`**, na przykład `FP` albo `P_19N`. Nie wpisuj `tak` ani `true`. Jeśli pole Cię nie dotyczy i jest opcjonalne, jak `FP`, usuń cały element.
+- **Tekst w sekcji**, która zawiera tylko inne elementy, na przykład słowo wpisane bezpośrednio w `Adnotacje`. Przenieś go do właściwego pola albo usuń.
+- **Liczba spoza zakresu**, na przykład `NrWierszaFa` równy `0`. Numery wierszy zaczynają się od `1`.
+- **Adres e-mail bez znaku `@`** w `Email`.
+
+Gdy żaden opis nie pasuje, porównaj pole z broszurą FA(3), która podaje format każdego pola. Po poprawce [sprawdź fakturę ponownie](/validator).

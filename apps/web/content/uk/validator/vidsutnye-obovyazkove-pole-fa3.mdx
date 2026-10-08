@@ -1,0 +1,79 @@
+---
+title: "Бракує обов'язкового поля в XML рахунку FA(3)"
+description: "У розділі рахунку бракує обов'язкового поля або атрибута, і повідомлення вказує якого. Показуємо, куди його додати і яких полів бракує найчастіше."
+date: 2026-10-08
+section: validator
+locale: uk
+slug: "vidsutnye-obovyazkove-pole-fa3"
+codes: ["REQUIRED_ELEMENT_MISSING"]
+sources:
+  - label: "Схема XSD FA(3)"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+  - label: "Інформаційна брошура FA(3), опис обов'язкових полів у Naglowek, Podmiot1, Podmiot2, Fa і Adnotacje"
+    url: "https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+translations:
+  pl: "brak-wymaganego-pola-fa3"
+  en: "missing-required-field-fa3"
+  uk: "vidsutnye-obovyazkove-pole-fa3"
+---
+
+## Що означає ця помилка
+
+В одному з розділів рахунку бракує обов'язкового поля або атрибута. Повідомлення називає розділ (наприклад, `Podmiot2`) і поле, якого в ньому немає. Додай його, і файл пройде цей етап перевірки.
+
+Ця помилка з'являється у двох ситуаціях:
+
+- розділ закінчується раніше, ніж з'явилися всі обов'язкові поля, наприклад `Podmiot2` без `GV` або порожній елемент `Zwolnienie`;
+- елемент не має обов'язкового атрибута, наприклад `KodFormularza` без `kodSystemowy` чи `wersjaSchemy`.
+
+Коли поле, якого бракує, мало б стояти всередині розділу, схема повідомляє інше: що наступний елемент [стоїть не на своєму місці](/uk/validator/element-ne-na-svoyemu-mistsi-fa3), зазвичай із пропущеним полем у списку очікуваних.
+
+## Куди додати поле
+
+Схема XSD FA(3) відводить кожному полю стале місце в розділі. Оскільки розділ закінчився зарано, пропущене поле зазвичай дописуєш **у його кінці**, перед закривальним тегом.
+
+Повідомлення може містити кілька назв. Це поля, які могли б стояти в цьому місці, зокрема необов'язкові. Коли в `Podmiot2` бракує `JST` і `GV`, побачиш `IDNabywcy` і `JST`: перше необов'язкове, друге обов'язкове. Схема повідомляє про одне пропущене поле за раз, тож після додавання `JST` побачиш, що бракує `GV`. Наші правила MF показують обидва пропуски одразу, окремими повідомленнями, які ми описали на сторінці про [поля JST і GV](/uk/validator/vidsutni-jst-gv-podmiot2).
+
+<Source href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd" label="Схема XSD FA(3)" />
+
+## Яких полів бракує найчастіше
+
+Обов'язкові за схемою поля, у потрібному порядку:
+
+- `Naglowek`: `KodFormularza` з атрибутами `kodSystemowy="FA (3)"` і `wersjaSchemy="1-0E"`, `WariantFormularza`, `DataWytworzeniaFa`;
+- `Podmiot1`: `DaneIdentyfikacyjne` (з `NIP` і `Nazwa`) та `Adres` (з `KodKraju` і `AdresL1`);
+- `Podmiot2`: `DaneIdentyfikacyjne`, а в кінці `JST` і `GV`;
+- `Fa`: `KodWaluty`, `P_1`, `P_2`, `P_15`, `Adnotacje`, `RodzajFaktury`;
+- `Adnotacje`: усі вісім полів, від `P_16` до `PMarzy`.
+
+`Zwolnienie`, `NoweSrodkiTransportu` і `PMarzy` в `Adnotacje` це розділи з вибором: кожен має містити один із варіантів. На звичайному рахунку з ПДВ, без звільнення, нових транспортних засобів і маржі, у них вписуєш `P_19N`, `P_22N` і `P_PMarzyN` зі значенням `1`.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ Порожній розділ Zwolnienie -->
+  <Zwolnienie></Zwolnienie>
+  <!-- ✅ Рахунок без звільнення від ПДВ -->
+  <Zwolnienie>
+    <P_19N>1</P_19N>
+  </Zwolnienie>
+  <!-- ❌ Немає атрибута wersjaSchemy -->
+  <KodFormularza kodSystemowy="FA (3)">FA</KodFormularza>
+  <!-- ✅ Обидва атрибути -->
+  <KodFormularza kodSystemowy="FA (3)" wersjaSchemy="1-0E">FA</KodFormularza>
+  <!-- ❌ Podmiot2 закінчується без GV -->
+  <Podmiot2>
+    ...
+    <JST>2</JST>
+  </Podmiot2>
+  <!-- ✅ GV у кінці розділу -->
+  <Podmiot2>
+    ...
+    <JST>2</JST>
+    <GV>2</GV>
+  </Podmiot2>
+  ```
+</XmlExample>
+
+Поле, яке є у файлі, але не має значення (`<P_2></P_2>`), це інша помилка: [неправильне значення поля](/uk/validator/nevirne-znachennya-polya-fa3). Відсутність `P_15` описуємо окремо, на сторінці про [загальну суму до оплати](/uk/validator/vidsutnye-p15-suma-do-oplaty).
+
+Для файлів із власного експорту корисно порівняти їх із [мінімальним набором полів FA(3)](/blog/najczestsze-bledy-walidacji-fa3#3-brak-wymaganych-elementow) (польською). Після виправлення [перевір рахунок ще раз](/uk/validator).

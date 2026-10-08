@@ -1,0 +1,64 @@
+---
+title: "Wrong namespace in the invoice: xmlns for FA(3)"
+description: "The Faktura element lacks the FA(3) namespace, so the file isn't recognised as an invoice. Set xmlns to http://crd.gov.pl/wzor/2025/06/25/13775/ exactly."
+date: 2026-10-08
+section: validator
+locale: en
+slug: "wrong-namespace-fa3-invoice"
+codes: ["WRONG_NAMESPACE"]
+sources:
+  - label: "FA(3) XSD schema, target namespace (targetNamespace)"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+  - label: "MF FA(3) information brochure, address of the FA(3) logical structure"
+    url: "https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "KSeF 2.0 API documentation, invoice verification"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md"
+  - label: "W3C, Namespaces in XML 1.0"
+    url: "https://www.w3.org/TR/xml-names/"
+translations:
+  pl: "zly-namespace-faktura-fa3"
+  en: "wrong-namespace-fa3-invoice"
+  uk: "nevirnyy-namespace-rakhunok-fa3"
+---
+
+## What this error means
+
+The `Faktura` element doesn't carry the FA(3) namespace, so the schema doesn't recognise the file as an FA(3) invoice. The `xmlns` attribute on this element must have exactly the value `http://crd.gov.pl/wzor/2025/06/25/13775/`.
+
+The namespace identifies the version of the template. The validator uses it to pick the schema it checks the file against. KSeF (Poland's national e-invoicing system) also checks the invoice against the schema, and since 1 February 2026 the invoice template in force is FA(3). Until the address matches, **the validator checks nothing else**: you get only this one message, on the `Faktura` element. Once it's fixed, the validator checks the whole file, so new errors may appear.
+
+## Where it usually comes from
+
+The address must match character for character. The FA(3) schema declares it as its target namespace (`targetNamespace`). The Ministry of Finance's FA(3) information brochure (broszura) gives the same address with `https://`, but as the page where the ministry publishes the schema; in `xmlns` you use the `http://` version.
+
+<Source href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd" label="FA(3) XSD schema" />
+
+- **The FA(2) namespace**, `http://crd.gov.pl/wzor/2023/06/29/12648/`, from an old template or code written before February 2026.
+- **No `xmlns`.** The element has only the `xmlns:etd` and `xmlns:xsi` declarations and no default namespace. Those two declarations can stay; they do no harm.
+- **A small difference in the address:** `https://` instead of `http://` (for example an address copied from the brochure), a missing trailing slash, swapped digits in the date.
+- **A prefix that isn't used.** The file declares `xmlns:fa="http://crd.gov.pl/wzor/2025/06/25/13775/"`, but the elements have no prefix (`<Faktura>` instead of `<fa:Faktura>`). They then don't belong to that namespace. The schema accepts a prefix used consistently on every element, but the simplest option is to declare a default namespace, with no prefix.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ FA(2) namespace -->
+  <Faktura xmlns="http://crd.gov.pl/wzor/2023/06/29/12648/">
+  <!-- ❌ No default namespace -->
+  <Faktura xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <!-- ❌ https and no trailing slash -->
+  <Faktura xmlns="https://crd.gov.pl/wzor/2025/06/25/13775">
+  <!-- ❌ Prefix declared but not used -->
+  <Faktura xmlns:fa="http://crd.gov.pl/wzor/2025/06/25/13775/">
+  <!-- ✅ FA(3) -->
+  <Faktura xmlns="http://crd.gov.pl/wzor/2025/06/25/13775/">
+  ```
+</XmlExample>
+
+We show this message only when the root element is called `Faktura`. A root element with any other name produces a general schema error.
+
+## How to fix it
+
+1. Open the file and find the opening `<Faktura` tag, usually on the first or second line.
+2. Add or correct the attribute `xmlns="http://crd.gov.pl/wzor/2025/06/25/13775/"`. Copying it is the safest option.
+3. If the file was in FA(2) format, the namespace alone isn't enough: the header and the fields in `Podmiot2` change too. The full list is in our [FA(2) vs FA(3) comparison](/en/blog/fa2-vs-fa3-ksef#migration-checklist).
+
+If your software generates the invoice, the address is usually hard-coded in the export template. Fix it there rather than in every file. Then [check the invoice again](/en/validator).

@@ -1,0 +1,185 @@
+---
+title: "Invalid field value in an FA(3) invoice"
+description: "A field value has the wrong format: an amount with a comma, a 15.02.2026 date, a NIP with dashes, POL instead of PL. The right format for each FA(3) field type."
+date: 2026-10-08
+section: validator
+locale: en
+slug: "invalid-field-value-fa3"
+codes: ["INVALID_ELEMENT_VALUE"]
+anchors:
+  amount: "amount-format"
+  date: "date-format"
+  nip: "nip"
+  countryCode: "country-code"
+  length: "value-too-long-or-too-short"
+  fractionDigits: "too-many-decimal-places"
+  enumeration: "value-not-on-the-list"
+  other: "other-format-problems"
+sources:
+  - label: "FA(3) XSD schema, definitions of the TKwotowy, TKwotowy2, TIlosci, TDataT and TZnakowy types and of the value lists"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+  - label: "MF FA(3) information brochure, general rules for filling in fields"
+    url: "https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "KSeF 2.0 API documentation, invoice verification (NIP checksum)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md"
+translations:
+  pl: "nieprawidlowa-wartosc-pola-fa3"
+  en: "invalid-field-value-fa3"
+  uk: "nevirne-znachennya-polya-fa3"
+---
+
+## What this error means
+
+The field is in the right place, but its value doesn't match the format the FA(3) XSD schema sets for it. The message gives the field name, the value you entered and what the schema expects; each kind of this error is described below.
+
+Every field in the schema has a type: an amount, a date, a NIP (Polish tax identification number), a code from a list, text of a set length. An empty element, such as `<P_1M></P_1M>`, also has an invalid value. If the field is optional and you have nothing to put in it, remove the whole element. The schema also treats most text fields containing only spaces as empty.
+
+<Source href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd" label="FA(3) XSD schema" />
+
+## Amount format
+
+An amount is digits only, with an optional minus sign at the start and a dot before the decimal part. The schema has three numeric types:
+
+- amounts (`P_11`, `P_13_x`, `P_14_x`, `P_15` and others, type `TKwotowy`): at most 2 decimal places;
+- unit prices and discount (`P_9A`, `P_9B`, `P_10`, type `TKwotowy2`): at most 8 places;
+- quantity and exchange rate (`P_8B`, `KursWaluty`, `KursWalutyZ`, type `TIlosci`): at most 6 places.
+
+These fail: a space or a dot as the thousands separator, a decimal comma, a currency in the field, a leading zero (`02051.00`) and a plus sign. An amount with no decimal part, such as `2051`, is valid.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ Comma, space, currency, leading zero -->
+  <P_15>2051,00</P_15>
+  <P_15>2 051.00</P_15>
+  <P_15>2051 zł</P_15>
+  <P_15>02051.00</P_15>
+  <!-- ✅ Digits and a dot -->
+  <P_15>2051.00</P_15>
+  ```
+</XmlExample>
+
+A separate rule also catches spaces and commas in amounts; it's described on the page about [amounts without separators](/en/validator/fa3-amount-format-no-separators). One fix clears both messages.
+
+## Date format
+
+Dates are written as `YYYY-MM-DD`, and the day must exist in the calendar: `2026-02-30` fails. The schema also limits the range: `P_1`, `P_6` and `P_6A` accept dates from `2006-01-01` to `2050-01-01`, and `DataZaplaty` and `Termin` from `2016-07-01`.
+
+`DataWytworzeniaFa` is the only mandatory field with a date and a time. Between them goes the letter `T`, not a space. The Ministry of Finance's FA(3) information brochure (broszura) gives an example in UTC, with a `Z` at the end, and that's the simplest way to write it. The schema also accepts a value with no time zone or with an offset, such as `+02:00`. It doesn't accept dates in this field earlier than `2025-09-01T00:00:00Z`.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ Polish date notation -->
+  <P_1>15.02.2026</P_1>
+  <!-- ❌ Time in a field that only accepts a date -->
+  <P_1>2026-02-15T10:00:00</P_1>
+  <!-- ✅ -->
+  <P_1>2026-02-15</P_1>
+  <!-- ❌ Space instead of T, no seconds -->
+  <DataWytworzeniaFa>2026-02-15 10:00</DataWytworzeniaFa>
+  <!-- ✅ -->
+  <DataWytworzeniaFa>2026-02-15T10:00:00Z</DataWytworzeniaFa>
+  ```
+</XmlExample>
+
+## NIP
+
+The `NIP` field takes 10 digits, with no dashes, spaces or `PL` prefix. The first digit can't be zero, and the second and third can't both be zeros. The schema checks only the format. In production, KSeF also verifies the checksum of the NIP of the seller, the buyer and any other parties; our validator doesn't do that.
+
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md"
+  label="KSeF 2.0 API documentation, invoice verification"
+/>
+
+The country prefix doesn't go in the `NIP` field. The seller can give it separately in `PrefiksPodatnika` (`Podmiot1`), and a buyer from another EU country has the `KodUE` and `NrVatUE` fields instead of `NIP`.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ Dashes and prefix -->
+  <NIP>987-654-32-10</NIP>
+  <NIP>PL9876543210</NIP>
+  <!-- ✅ -->
+  <NIP>9876543210</NIP>
+  ```
+</XmlExample>
+
+## Country code
+
+`KodKraju` in an address takes a two-letter code from the list in the schema, in capitals: `PL`, `DE`, `UA`. `POL`, `pl` and `Polska` all fail.
+
+The `KodUE` field next to the buyer's EU VAT number has a separate, shorter list: the EU member states plus `XI` for Northern Ireland, with Greece listed as `EL`. In an address Greece is `GR`, and `EL` in `KodKraju` fails.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ Three letters, lower case -->
+  <KodKraju>POL</KodKraju>
+  <KodKraju>pl</KodKraju>
+  <!-- ✅ -->
+  <KodKraju>PL</KodKraju>
+  ```
+</XmlExample>
+
+## Value too long or too short
+
+Text fields have a length limit. The invoice number `P_2` and many other text fields hold at most 256 characters, the name in `Nazwa` 512, and the bank account number `NrRB` between 10 and 34 characters. For these errors the validation library doesn't quote the value, so the message shows its length and the limit; you'll find the value itself in the file at the line given.
+
+A value that's too short is usually an empty field: every text field needs at least one character. Fill it in, or remove the element if it's optional. Shorten one that's too long, for example by replacing a spelled-out legal form in a company name with its abbreviation.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ Empty field -->
+  <P_2></P_2>
+  <!-- ✅ -->
+  <P_2>FV/2026/10/014</P_2>
+  ```
+</XmlExample>
+
+## Too many decimal places
+
+Amounts have at most 2 decimal places, quantities and exchange rates 6, unit prices 8. The same excess usually shows up twice on the list for one field (the decimal limit and a mismatched pattern), plus once more as a separate MF precision rule. A single rounding clears all three messages.
+
+After rounding, check the totals: the rounded `P_13_x` and `P_14_x` must still add up to `P_15`. Any mismatch is caught by the [VAT calculation check](/en/validator/vat-calculation-error-p14-p15).
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ 3 places in an amount, 9 in a price -->
+  <P_11>1000.123</P_11>
+  <P_9A>10.123456789</P_9A>
+  <!-- ✅ -->
+  <P_11>1000.12</P_11>
+  <P_9A>10.12345679</P_9A>
+  ```
+</XmlExample>
+
+## Value not on the list
+
+Some fields accept only values from a closed list, and the message lists the allowed ones (for long lists, such as currency codes, we show the first eight). Every character counts, including letter case and spaces. The most common cases:
+
+- `P_12` (VAT rate): `23`, `8`, `5`, `zw`, `np I` and others, without a `%` sign; details on the page about the [VAT rate in P_12](/en/validator/invalid-vat-rate-p12);
+- `RodzajFaktury`: `VAT`, `KOR`, `ZAL`, `ROZ`, `UPR`, `KOR_ZAL`, `KOR_ROZ`;
+- yes/no fields in `Adnotacje`, and `JST` and `GV`: `1` or `2`, never `0`;
+- `WariantFormularza`: only `3`;
+- `KodWaluty`: a three-letter code in capitals, `PLN`, not `zł` or `pln`.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ -->
+  <P_12>23%</P_12>
+  <RodzajFaktury>FV</RodzajFaktury>
+  <P_16>0</P_16>
+  <!-- ✅ -->
+  <P_12>23</P_12>
+  <RodzajFaktury>VAT</RodzajFaktury>
+  <P_16>2</P_16>
+  ```
+</XmlExample>
+
+## Other format problems
+
+The remaining cases:
+
+- **A field that only accepts `1`**, such as `FP` or `P_19N`. Don't enter `tak` or `true`. If the field doesn't apply to you and is optional, like `FP`, remove the whole element.
+- **Text in a section** that contains only other elements, for example a word typed directly inside `Adnotacje`. Move it to the right field or delete it.
+- **A number out of range**, such as `NrWierszaFa` equal to `0`. Line numbers start at `1`.
+- **An email address without an `@` sign** in `Email`.
+
+If none of these fits, compare the field with the FA(3) brochure, which gives the format of every field. Once you've fixed it, [check the invoice again](/en/validator).
