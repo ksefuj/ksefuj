@@ -7,6 +7,7 @@
 
 import type { ValidationAssertion, ValidationIssue } from "./types.js";
 import { ERROR_CODES } from "./error-codes.js";
+import { parseXsdMessage } from "./xsd-messages.js";
 
 // Lazy-loaded libxml2-wasm module
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -166,109 +167,69 @@ class XsdValidatorManager {
 const getValidatorManager = () => XsdValidatorManager.getInstance();
 
 /**
- * Parse XSD validation error message to extract details
+ * Map one raw libxml2 XSD message (plus optional position) to a structured issue
  */
-function parseXsdError(errorMessage: string): {
-  elementName?: string;
-  lineNumber?: number;
-  columnNumber?: number;
-  expectedElements?: string[];
-} {
-  const result: {
-    elementName?: string;
-    lineNumber?: number;
-    columnNumber?: number;
-    expectedElements?: string[];
-  } = {};
+function mapXsdMessageToIssue(
+  message: string,
+  position?: { line?: number; col?: number },
+): ValidationIssue {
+  const parsed = parseXsdMessage(message);
+  const errorDef = ERROR_CODES[parsed.code];
 
-  // Extract line number
-  const lineMatch = errorMessage.match(/line (\d+)/i);
-  if (lineMatch) {
-    result.lineNumber = parseInt(lineMatch[1], 10);
+  const metadata: Record<string, unknown> = { originalMessage: message };
+  if (parsed.facet !== undefined) {
+    metadata.facet = parsed.facet;
+  }
+  if (parsed.typeName !== undefined) {
+    metadata.typeName = parsed.typeName;
+  }
+  if (parsed.attribute !== undefined) {
+    metadata.attribute = parsed.attribute;
   }
 
-  // Extract column number if available
-  const colMatch = errorMessage.match(/column (\d+)/i);
-  if (colMatch) {
-    result.columnNumber = parseInt(colMatch[1], 10);
-  }
-
-  // Extract element name (handle namespaced elements)
-  const elementMatch = errorMessage.match(/Element ['"]?\{[^}]+\}(\w+)['"]?/i);
-  if (elementMatch) {
-    result.elementName = elementMatch[1];
-  } else {
-    // Fallback for non-namespaced elements
-    const simpleElementMatch = errorMessage.match(/Element ['"]?(\w+)['"]?/i);
-    if (simpleElementMatch) {
-      result.elementName = simpleElementMatch[1];
-    }
-  }
-
-  // Extract expected elements for "Element not allowed" errors
-  const expectedMatch = errorMessage.match(/Expected is \((.*?)\)/);
-  if (expectedMatch) {
-    result.expectedElements = expectedMatch[1]
-      .split(/[,|]/)
-      .map((s) => s.trim())
-      .filter((s) => s && s !== "#PCDATA");
-  }
-
-  return result;
-}
-
-/**
- * Map XSD error message to structured issue(s)
- * Can return multiple issues if the error message contains multiple errors
- */
-function mapXsdErrorToIssues(errorMessage: string): ValidationIssue[] {
-  // Split by patterns that indicate separate error messages
-  const errorSentences = errorMessage.split(/\.(?=\s*[A-Z_])/).filter((s) => s.trim());
-
-  // If we have multiple error sentences, create separate issues
-  if (errorSentences.length > 1) {
-    return errorSentences.map((sentence) => mapSingleXsdErrorToIssue(`${sentence.trim()}.`));
-  }
-
-  // Single error
-  return [mapSingleXsdErrorToIssue(errorMessage)];
-}
-
-/**
- * Map a single XSD error message to a structured issue
- */
-function mapSingleXsdErrorToIssue(errorMessage: string): ValidationIssue {
-  const parsed = parseXsdError(errorMessage);
-
-  // Determine error type from message patterns
-  let errorDef;
-
-  if (errorMessage.includes("not allowed")) {
-    errorDef = ERROR_CODES.ELEMENT_NOT_ALLOWED;
-  } else if (errorMessage.includes("missing") || errorMessage.includes("expected")) {
-    errorDef = ERROR_CODES.REQUIRED_ELEMENT_MISSING;
-  } else if (errorMessage.includes("invalid") || errorMessage.includes("does not match")) {
-    errorDef = ERROR_CODES.INVALID_ELEMENT_VALUE;
-  } else {
-    errorDef = ERROR_CODES.SCHEMA_VALIDATION_FAILED;
-  }
+  const line = position?.line;
+  const col = position?.col;
 
   return {
     code: errorDef.code,
     context: {
       location: {
-        element: parsed.elementName,
-        lineNumber: parsed.lineNumber,
-        columnNumber: parsed.columnNumber,
+        element: parsed.element,
+        lineNumber: typeof line === "number" && line > 0 ? line : undefined,
+        columnNumber: typeof col === "number" && col > 0 ? col : undefined,
       },
-      expectedValues: parsed.expectedElements,
-      metadata: {
-        originalMessage: errorMessage,
-      },
+      ...(parsed.actualValue !== undefined ? { actualValue: parsed.actualValue } : {}),
+      expectedValues: parsed.expected,
+      metadata,
     },
-    message: errorMessage,
+    message,
     fixSuggestions: errorDef.fixTemplates,
   };
+}
+
+/**
+ * Fallback for errors that carry no per-error details: split multi-error message text
+ * on sentence boundaries that start a new "Element ..." message.
+ */
+function splitMessage(message: string): string[] {
+  const parts = message.split(/(?<=\.)\s*(?=Element ')/).filter((s) => s.trim());
+  return parts.length > 0 ? parts.map((s) => s.trim()) : [message];
+}
+
+/**
+ * Map a libxml2 XmlValidateError to structured issues, one per reported detail
+ */
+function mapXsdErrorToIssues(error: {
+  message?: string;
+  details?: ReadonlyArray<{ message: string; line?: number; col?: number }>;
+}): ValidationIssue[] {
+  if (error.details && error.details.length > 0) {
+    return error.details.map((d) =>
+      mapXsdMessageToIssue(d.message.trim(), { line: d.line, col: d.col }),
+    );
+  }
+  const message = error.message || "XSD validation failed";
+  return splitMessage(message).map((m) => mapXsdMessageToIssue(m));
 }
 
 /**
@@ -320,10 +281,7 @@ export async function validateXsd(
 
     if (error instanceof libxml2.XmlValidateError) {
       // Parse structured validation error
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const errorMessage = (error as any).message || "XSD validation failed";
-      const xsdIssues = mapXsdErrorToIssues(errorMessage);
-      issues.push(...xsdIssues);
+      issues.push(...mapXsdErrorToIssues(error as Parameters<typeof mapXsdErrorToIssues>[0]));
     } else {
       // Handle parse errors
       const message = error instanceof Error ? error.message : String(error);
