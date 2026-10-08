@@ -1,0 +1,104 @@
+---
+title: "Invoice for a private individual: KSeF or PDF?"
+description: "PDF is fine: invoices to private individuals are outside mandatory KSeF, after 2026 too. You can issue one there voluntarily and send it with a QR code."
+date: 2026-10-08
+section: blog
+locale: en
+slug: "invoice-for-private-person-ksef"
+topic: "invoicing"
+tags: ["KSeF", "JDG", "Invoice"]
+sources:
+  - label: "VAT Act, consolidated text (Dz.U. 2026 item 1263), art. 106b, 106ga, 106gb, 145m, 145n"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  - label: "MF: KSeF 2.0 Handbook, part II (06.08.2026)"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "MF FAQ: KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/"
+  - label: "MF: most frequently asked questions about KSeF"
+    url: "https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
+  - label: "MF: information brochure on the FA(3) logical structure"
+    url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+translations:
+  pl: "faktura-dla-osoby-prywatnej-ksef"
+  en: "invoice-for-private-person-ksef"
+  uk: "rakhunok-dlya-pryvatnoyi-osoby-ksef"
+---
+
+You can issue an invoice to a private individual (a natural person not running a business) outside KSeF (Krajowy System e-Faktur, Poland's national e-invoicing system), because art. 106ga ust. 2 pkt 4 of the VAT Act excludes it from the mandate. If you want, you can issue it in KSeF voluntarily, but the customer won't find it in the system on their own: you hand it over in a way you agree on, with a QR code.
+
+Legal status as of 8 October 2026.
+
+<Source
+  href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/"
+  label="MF FAQ: „Wystawianie w KSeF faktur na rzecz konsumentów nie jest obowiązkowe” (issuing invoices to consumers in KSeF is not mandatory)"
+/>
+
+## Outside KSeF: paper or PDF, as before
+
+An invoice issued outside KSeF can be on paper or electronic. The electronic one doesn't need the FA(3) structure and doesn't go into the system: a PDF sent by email is enough.
+
+Example: Kasia is a photographer running a JDG (jednoosobowa działalność gospodarcza, a Polish sole proprietorship). In October she does a family shoot for Marta, who asks for an invoice for 900 zł. Kasia issues it as a PDF in her invoicing software and emails it. She has nothing else to do.
+
+If you use the VAT exemption (art. 113), you issue an invoice to a private individual only when they ask for one. The details, including the deadline for the request, are in our [post on KSeF for VAT-exempt businesses](/en/blog/vat-exempt-ksef).
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="KSeF 2.0 Handbook, part II, point 1.1: an electronic invoice can be any file, e.g. a PDF"
+/>
+
+## Issuing in KSeF: how the customer gets the invoice
+
+A voluntary consumer invoice in KSeF does not reach the customer automatically. KSeF makes an invoice available to the buyer based on their NIP (Polish tax identification number), and a private individual has none on the invoice. That is why art. 106gb ust. 4 requires you to hand it over in a way agreed with the customer (by email, on paper), and an invoice handed over outside KSeF must carry a QR code. The Act doesn't prescribe the form of that agreement.
+
+An invoice issued in KSeF in online mode has one QR code, with the KSeF number below it (an offline invoice, which has no number yet, has two codes). The customer uses it to download the invoice without logging in, in two steps:
+
+1. They scan the code and see the basic data: KSeF number, seller's NIP, issue date. If the invoice is not in KSeF, they are told so.
+2. They enter the invoice number, the information that the buyer has no identifier, and the total amount due. They can then download the invoice as XML or PDF.
+
+Several failed attempts at the second step block access for a while. Without the QR code, the customer can also open the Aplikacja Podatnika (the MF's Taxpayer Application) without logging in and download the invoice, but then they also have to type in the KSeF number and their first and last name.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="KSeF 2.0 Handbook, part II, points 5.3–5.7: handing over to a consumer, QR code access and anonymous access"
+/>
+
+<Info>
+  **For developers.** For a consumer buyer, put `BrakID` = `1` in `Podmiot2/DaneIdentyfikacyjne`
+  instead of `NIP`, and set `JST` and `GV` in `Podmiot2` to `2`. `Nazwa` (first and last name) is
+  optional in the XSD, but according to the schema annotation only for a simplified invoice (art.
+  106e ust. 5 pkt 3), and the FA(3) brochure marks it as mandatory. The Handbook lists only `BrakID`
+  for a consumer. The MF materials we checked don't settle whether you may put a PESEL in `NrID`
+  instead.
+</Info>
+
+## The customer gives a NIP: now it's a business invoice
+
+When the buyer has a NIP and buys for their business, the invoice falls under the KSeF mandate in art. 106ga ust. 1. Until 31 December 2026 you can still issue it outside the system if you stay within the 10,000 zł monthly limit, counted including VAT (art. 145m). Invoices to private individuals don't count towards that limit.
+
+The NIP on an invoice in KSeF decides who the system makes it available to. A wrong NIP assigns the invoice to the business that number belongs to, so copy it carefully.
+
+The MF materials we checked don't settle a few borderline cases:
+
+- the customer runs a JDG but buys privately and still gives a NIP (or buys for the business and doesn't give one): who decides the nature of the purchase, and whether their declaration is enough;
+- the customer runs unregistered activity (działalność nierejestrowana) or rents out property privately: whether they count as a person not running a business for this purchase;
+- the customer is a flat-rate farmer (rolnik ryczałtowy).
+
+If you often sell to such customers, agree on an approach with your accountant.
+
+<Source
+  href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
+  label="MF, frequently asked questions: only invoices that must be issued in KSeF count towards the limit"
+/>
+
+## Nothing changes here from 2027
+
+The exclusion in art. 106ga ust. 2 pkt 4 has no end date. Two other exceptions apply until 31 December 2026: the 10,000 zł limit (art. 145m) and cash-register invoices (art. 145n). What happens when they expire is covered in our [post on the end of the 10,000 zł limit](/en/blog/end-of-10000-pln-limit). In 2027 you can keep issuing invoices to private individuals outside KSeF just as you do now.
+
+<Source
+  href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  label="VAT Act, art. 106ga, 145m, 145n (Dz.U. 2026 item 1263)"
+/>
+
+The exclusion also covers an invoice issued to a private individual for a till receipt. If you sell through a cash register, the 2027 changes concern invoices to businesses; see our [post on cash-register invoices](/en/blog/cash-register-invoices-ksef-2027).
+
+If you also invoice businesses, check whether you are within the limit this month: [how to count the 10,000 zł limit](/en/blog/ksef-10000-pln-limit).
