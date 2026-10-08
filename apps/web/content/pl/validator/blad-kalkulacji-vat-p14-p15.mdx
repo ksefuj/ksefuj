@@ -1,0 +1,81 @@
+---
+title: "Błąd kalkulacji VAT: P_14 lub P_15 się nie zgadza"
+description: "Podatek nie wynika z kwoty netto i stawki albo P_15 nie jest sumą netto i VAT. KSeF tego nie sprawdzi, a błąd wymaga potem korekty. Jak policzyć i poprawić."
+date: 2026-10-08
+section: validator
+locale: pl
+slug: "blad-kalkulacji-vat-p14-p15"
+codes: ["TAX_CALCULATION_MISMATCH"]
+sources:
+  - label: "Broszura informacyjna FA(3), opisy pól P_13_x, P_14_x, P_15 i P_11Vat"
+    url: "https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "Podręcznik KSeF 2.0, część II, pkt 1.6.1 i 1.6.2"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+translations:
+  pl: "blad-kalkulacji-vat-p14-p15"
+  en: "vat-calculation-error-p14-p15"
+  uk: "pomylka-rozrakhunku-pdv-p14-p15"
+---
+
+## Co oznacza ten błąd
+
+Kwoty w podsumowaniu faktury nie zgadzają się ze sobą: podatek nie wynika z kwoty netto i stawki albo kwota do zapłaty nie jest sumą netto i VAT. KSeF takiej faktury nie odrzuci, bo nie sprawdza obliczeń. Błąd w kwocie VAT trzeba jednak potem poprawić fakturą korygującą.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, część II, pkt 1.6.1 i 1.6.2"
+/>
+
+## Co dokładnie sprawdzamy
+
+Tej reguły nie ma w broszurze MF. To nasze dodatkowe sprawdzenie, oparte na znaczeniu pól z broszury: `P_13_x` to sprzedaż netto w danej stawce, `P_14_x` podatek od niej, a `P_15` kwota należności ogółem. Walidator:
+
+- liczy `P_14_1` z `P_13_1` według stawki 23% lub 22%, `P_14_2` z `P_13_2` według 8% lub 7% i `P_14_3` z `P_13_3` według 5%, z zaokrągleniem do grosza; wystarczy zgodność z jedną ze stawek danej grupy;
+- przyjmuje też podatek policzony od każdego wiersza i zsumowany w danej stawce;
+- porównuje `P_15` z sumą wszystkich kwot netto (`P_13_x`, także `P_13_6_1`–`P_13_6_3` dla stawek 0%) i podatku (`P_14_x`) z podsumowania; podatek przeliczony na złote (`P_14_xW`) do tej sumy nie wchodzi;
+- przy obu sposobach liczenia dopuszcza różnicę do 1 grosza;
+- pomija faktury korygujące (`KOR`, `KOR_ZAL`, `KOR_ROZ`), bo zawierają różnice, nie pełne kwoty.
+
+Stawkę spoza katalogu w `P_12` zgłasza osobny komunikat, opisany na stronie o [nieprawidłowej stawce VAT](/validator/nieprawidlowa-stawka-vat-p12).
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  label="Broszura informacyjna FA(3), opisy pól P_13_x, P_14_x i P_15"
+/>
+
+## Jak to naprawić
+
+1. Dla każdej stawki pomnóż kwotę netto przez stawkę i zaokrąglij do grosza. Ania wystawia fakturę na 4000,00 zł netto w stawce 23%: podatek to 920,00 zł.
+2. Wpisz w `P_15` sumę wszystkich pól `P_13_x` i `P_14_x`. U Ani: 4000,00 + 920,00 = 4920,00 zł.
+3. Jeśli faktura ma kilka stawek, policz każdą osobno i dodaj wszystko do `P_15`.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ W P_15 wpisano kwotę netto zamiast brutto -->
+  <P_13_1>4000.00</P_13_1>
+  <P_14_1>920.00</P_14_1>
+  <P_15>4000.00</P_15>
+  <!-- ❌ Podatek policzony od kwoty brutto -->
+  <P_13_1>4000.00</P_13_1>
+  <P_14_1>1131.60</P_14_1>
+  <P_15>5131.60</P_15>
+  <!-- ✅ 4000.00 × 23% = 920.00; 4000.00 + 920.00 = 4920.00 -->
+  <P_13_1>4000.00</P_13_1>
+  <P_14_1>920.00</P_14_1>
+  <P_15>4920.00</P_15>
+  <!-- ✅ Dwie stawki: 100 + 23 + 200 + 16 = 339 -->
+  <P_13_1>100.00</P_13_1>
+  <P_14_1>23.00</P_14_1>
+  <P_13_2>200.00</P_13_2>
+  <P_14_2>16.00</P_14_2>
+  <P_15>339.00</P_15>
+  ```
+</XmlExample>
+
+## Skąd się bierze najczęściej
+
+- **Podatek liczony od brutto.** 4920,00 × 23% daje 1131,60 zamiast 920,00.
+- **P_15 wypełnione kwotą netto** albo kwotą sprzed rabatu.
+- **Podatek z wierszy nie zgadza się z podsumowaniem.** Art. 106e ust. 10 ustawy o VAT pozwala liczyć podatek od każdego wiersza i sumować wyniki, więc walidator przyjmie `P_14_x` równe sumie zaokrąglonych podatków z wierszy w danej stawce (`P_11` × stawka) albo sumie pól `P_11Vat` (broszura FA(3), opis pola `P_11Vat`). Komunikat pojawi się, gdy `P_14_x` nie zgadza się z żadnym z tych wyliczeń ani z podatkiem od całej podstawy, na przykład po ręcznej zmianie kwoty w podsumowaniu.
+
+Krótszy opis z innym przykładem jest w [przeglądzie najczęstszych błędów FA(3)](/blog/najczestsze-bledy-walidacji-fa3#10-p15-nie-zgadza-sie-z-sumami). Po poprawce [sprawdź fakturę ponownie](/validator).

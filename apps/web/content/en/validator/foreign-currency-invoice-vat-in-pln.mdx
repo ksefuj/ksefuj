@@ -1,0 +1,90 @@
+---
+title: "Foreign-currency invoice without VAT in PLN"
+description: "On an invoice in EUR or USD, amounts stay in that currency, but VAT must also be in PLN, in P_14_1W to P_14_4W. Convert it at the NBP rate and add the fields."
+date: 2026-10-08
+section: validator
+locale: en
+slug: "foreign-currency-invoice-vat-in-pln"
+codes: ["FOREIGN_CURRENCY_TAX_PLN"]
+sources:
+  - label: "MF FA(3) information brochure, descriptions of P_13_x, P_14_x and P_14_xW"
+    url: "https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "Polish VAT Act (ustawa o VAT), Art. 31a and Art. 106e ust. 11"
+    url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
+  - label: "MF FAQ, KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
+  - label: "FA(3) XSD schema"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+translations:
+  pl: "podatek-w-pln-faktura-walutowa"
+  en: "foreign-currency-invoice-vat-in-pln"
+  uk: "podatok-v-pln-valyutnyy-rakhunok"
+---
+
+## What this message means
+
+The invoice is issued in euros, dollars or another currency, but the VAT amount hasn't been converted into Polish złoty. Net and gross amounts stay in the invoice currency; only the tax is additionally given in PLN, in the fields `P_14_1W` to `P_14_4W`. The schema marks these fields as optional, which is why the validator reports this as a warning.
+
+The warning appears when `KodWaluty` is anything other than `PLN` and one of `P_13_1`, `P_13_2`, `P_13_3` or `P_13_4` has no corresponding `P_14_xW`. You'll see the same message in the opposite case: the invoice is in PLN but contains a `P_14_xW` field. Then simply remove it.
+
+## Why the tax must be in złoty
+
+You enter sales and tax amounts in the currency of the invoice, except for the tax converted under Art. 106e ust. 11 of the Polish VAT Act (MF FA(3) information brochure, or broszura, descriptions of `P_13_x` and `P_14_x`). Each rate has a set of three fields: the tax base, the tax, and the tax in PLN for a foreign-currency invoice (`P_14_xW`). The Ministry of Finance puts it this way in its answer to question 19: "only the tax amount in field P_14_xW is converted into złoty in accordance with Art. 106e ust. 11 of the VAT Act" (our translation).
+
+<Source
+  href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
+  label="MF FAQ, KSeF 2.0, question 19"
+/>
+
+The exchange rate follows from Art. 31a of the VAT Act. As a rule, it's the NBP (National Bank of Poland) mid-rate from the last business day before the tax point (ust. 1), or, if you issue the invoice before that day, from the last business day before the issue date (ust. 2). The provision also allows the European Central Bank rate (ust. 1, second sentence) and, under certain conditions, the rate from the business day before the invoice issue date (ust. 1a). The message only concerns the rates with fields `P_13_1`–`P_13_4`: sales at 0%, exempt sales and sales at `oo`, `np I` or `np II` have no `P_14_xW` field.
+
+<Source
+  href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
+  label="Polish VAT Act, Art. 31a and Art. 106e ust. 11"
+/>
+
+## How to fix it
+
+1. Find the NBP mid-rate for the correct day. Our [NBP exchange rate calculator](/en/waluty) suggests both the date and the rate.
+2. Multiply the tax in `P_14_x` by the rate and round to 2 decimal places.
+3. Enter the result in `P_14_xW` directly after the `P_14_x` for the same rate.
+4. Enter the rate you used in `KursWaluty` in the invoice lines, or in `KursWalutyZ` on an advance invoice. The schema doesn't require these fields, but the MF points to them in the same answer to question 19.
+
+Example: a service for 1,000 EUR net at 23%, with an example rate of 4.2618 PLN. The tax in PLN is 230 × 4.2618 = 980.21 PLN.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ EUR invoice without tax in PLN -->
+  <Fa>
+    <KodWaluty>EUR</KodWaluty>
+    ...
+    <P_13_1>1000.00</P_13_1>
+    <P_14_1>230.00</P_14_1>
+    <P_15>1230.00</P_15>
+    ...
+  </Fa>
+  <!-- ✅ Tax converted to PLN, rate in the line -->
+  <Fa>
+    <KodWaluty>EUR</KodWaluty>
+    ...
+    <P_13_1>1000.00</P_13_1>
+    <P_14_1>230.00</P_14_1>
+    <P_14_1W>980.21</P_14_1W>
+    <P_15>1230.00</P_15>
+    ...
+    <FaWiersz>
+      <NrWierszaFa>1</NrWierszaFa>
+      <P_7>Tłumaczenie dokumentacji technicznej</P_7>
+      <P_11>1000.00</P_11>
+      <P_12>23</P_12>
+      <KursWaluty>4.2618</KursWaluty>
+    </FaWiersz>
+  </Fa>
+  ```
+</XmlExample>
+
+`P_15` stays in the invoice currency. If the rate in `KursWaluty` doesn't match the NBP table, the validator reports it in a separate warning.
+
+## Next step
+
+Foreign buyer details and the rates for cross-border transactions are covered in our post on [invoicing a foreign buyer](/en/blog/foreign-invoice-ksef). Other common problems with `P_13_x` and `P_15` are in [the most common FA(3) validation errors](/en/blog/most-common-fa3-validation-errors). Once you've fixed it, [check the invoice again](/en/validator).

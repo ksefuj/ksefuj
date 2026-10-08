@@ -1,0 +1,99 @@
+---
+title: "Missing JST and GV in Podmiot2: what to enter"
+description: "FA(3) requires JST and GV in the buyer's details on every invoice. For an ordinary customer, enter 2 in both. Where they go in the XML, and when to use 1."
+date: 2026-10-08
+section: validator
+locale: en
+slug: "missing-jst-gv-podmiot2"
+codes: ["PODMIOT2_JST_MISSING", "PODMIOT2_GV_MISSING"]
+sources:
+  - label: "MF FA(3) information brochure, description of JST and GV in Podmiot2"
+    url: "https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "FA(3) XSD schema"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+translations:
+  pl: "brak-jst-gv-podmiot2"
+  en: "missing-jst-gv-podmiot2"
+  uk: "vidsutni-jst-gv-podmiot2"
+---
+
+## What this error means
+
+The buyer's details (`Podmiot2`) are missing the `JST` field, the `GV` field, or both. Every FA(3) invoice must have them, and for an ordinary customer you enter `2` in both, meaning "not applicable".
+
+They are two yes/no questions: does the invoice concern a subordinate unit of a local government (JST, jednostka samorządu terytorialnego), and does it concern a member of a VAT group (GV, grupa VAT)? An answer is always required, even when it's "no". A file without these fields doesn't conform to the schema, so KSeF won't accept it.
+
+## Why FA(3) requires it
+
+The Ministry of Finance's FA(3) information brochure (broszura) describes both fields in `Podmiot2` as mandatory: `1` means the invoice concerns a subordinate JST unit or a VAT group member, `2` means it doesn't. The value `1` brings a second requirement: in `Podmiot3` you give that unit's details (NIP or IDWew) with role `8` for a JST unit or `10` for a VAT group member. That way KSeF also makes the invoice available to that unit.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  label="MF FA(3) information brochure, description of JST and GV in Podmiot2"
+/>
+
+Our validator reports this error when `Podmiot2` has no `JST` element (code `PODMIOT2_JST_MISSING`) or no `GV` element (code `PODMIOT2_GV_MISSING`). A value of `1` without a matching `Podmiot3` is a separate message. The XSD schema also requires both fields, so the same omission may appear in the list a second time, as a schema error.
+
+## How to fix it
+
+1. Find the `Podmiot2` section in the file.
+2. Add `JST` and then `GV` at the very end of the section, after `Adres` and any `DaneKontaktowe`, `NrKlienta` or `IDNabywcy` fields. The order is fixed.
+3. Enter `2` in both if you're selling to an ordinary business. Enter `1` only when the invoice really concerns a subordinate JST unit or a VAT group member, and add `Podmiot3` in that case.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ JST and GV missing -->
+  <Podmiot2>
+    <DaneIdentyfikacyjne>
+      <NIP>9876543210</NIP>
+      <Nazwa>Studio Nabywcy sp. z o.o.</Nazwa>
+    </DaneIdentyfikacyjne>
+    <Adres>
+      <KodKraju>PL</KodKraju>
+      <AdresL1>ul. Testowa 1, 00-001 Warszawa</AdresL1>
+    </Adres>
+  </Podmiot2>
+  <!-- ✅ Ordinary customer: JST and GV = 2 -->
+  <Podmiot2>
+    <DaneIdentyfikacyjne>
+      <NIP>9876543210</NIP>
+      <Nazwa>Studio Nabywcy sp. z o.o.</Nazwa>
+    </DaneIdentyfikacyjne>
+    <Adres>
+      <KodKraju>PL</KodKraju>
+      <AdresL1>ul. Testowa 1, 00-001 Warszawa</AdresL1>
+    </Adres>
+    <JST>2</JST>
+    <GV>2</GV>
+  </Podmiot2>
+  ```
+</XmlExample>
+
+When the buyer is a municipality (gmina) and the goods go to one of its schools, set `JST` to `1` and add the school in `Podmiot3`:
+
+<XmlExample copyable>
+  ```xml
+  <Podmiot2>
+    <DaneIdentyfikacyjne>
+      <NIP>1111111111</NIP>
+      <Nazwa>Gmina Przykładowo</Nazwa>
+    </DaneIdentyfikacyjne>
+    ...
+    <JST>1</JST>
+    <GV>2</GV>
+  </Podmiot2>
+  <Podmiot3>
+    <DaneIdentyfikacyjne>
+      <NIP>2222222222</NIP>
+      <Nazwa>Szkoła Podstawowa nr 1 w Przykładowie</Nazwa>
+    </DaneIdentyfikacyjne>
+    <Rola>8</Rola>
+  </Podmiot3>
+  ```
+</XmlExample>
+
+## Where it usually comes from
+
+`JST` and `GV` are new in FA(3). Templates and exports built for FA(2) don't generate them, so the error usually shows up in files from a custom export or from older software that hasn't been fully updated. The other changes between the two versions are in our [comparison of FA(2) and FA(3)](/en/blog/fa2-vs-fa3-ksef).
+
+The same error is briefly covered in our [overview of the most common FA(3) errors](/en/blog/most-common-fa3-validation-errors#7-missing-podmiot2-jst-and-gv). Once you've fixed it, [check the invoice again](/en/validator).

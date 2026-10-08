@@ -1,0 +1,81 @@
+---
+title: "VAT calculation error: P_14 or P_15 is wrong"
+description: "The tax doesn't follow from the net amount and rate, or P_15 isn't net plus VAT. KSeF won't catch it, but you'd have to issue a correction later. How to fix it."
+date: 2026-10-08
+section: validator
+locale: en
+slug: "vat-calculation-error-p14-p15"
+codes: ["TAX_CALCULATION_MISMATCH"]
+sources:
+  - label: "MF FA(3) information brochure, descriptions of P_13_x, P_14_x, P_15 and P_11Vat"
+    url: "https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "KSeF 2.0 manual (Podręcznik KSeF 2.0), part II, sections 1.6.1 and 1.6.2"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+translations:
+  pl: "blad-kalkulacji-vat-p14-p15"
+  en: "vat-calculation-error-p14-p15"
+  uk: "pomylka-rozrakhunku-pdv-p14-p15"
+---
+
+## What this error means
+
+The amounts in the invoice summary don't agree with each other: either the tax doesn't follow from the net amount and the rate, or the total due isn't the sum of net and VAT. KSeF (Krajowy System e-Faktur, Poland's national e-invoicing system) will accept the invoice anyway, because it doesn't check arithmetic. A wrong VAT amount still has to be fixed afterwards with a corrective invoice.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="KSeF 2.0 manual, part II, sections 1.6.1 and 1.6.2"
+/>
+
+## What exactly we check
+
+This rule isn't in the Ministry of Finance's FA(3) information brochure (broszura). It's an extra check of ours, built on what the brochure says the fields mean: `P_13_x` is net sales at a given rate, `P_14_x` is the tax on them, and `P_15` is the total amount due. The validator:
+
+- calculates `P_14_1` from `P_13_1` at 23% or 22%, `P_14_2` from `P_13_2` at 8% or 7%, and `P_14_3` from `P_13_3` at 5%, rounded to the grosz; matching either rate in a group is enough;
+- also accepts tax calculated per line and summed for each rate;
+- compares `P_15` with the sum of all net amounts (`P_13_x`, including `P_13_6_1`–`P_13_6_3` for 0% rates) and tax amounts (`P_14_x`) in the summary; tax converted to PLN (`P_14_xW`) is not part of that sum;
+- allows a difference of up to 0.01 PLN with either calculation method;
+- skips corrective invoices (`KOR`, `KOR_ZAL`, `KOR_ROZ`), because they contain differences rather than full amounts.
+
+A rate outside the catalogue in `P_12` triggers a separate message, covered on the page about an [invalid VAT rate](/en/validator/invalid-vat-rate-p12).
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  label="MF FA(3) information brochure, descriptions of P_13_x, P_14_x and P_15"
+/>
+
+## How to fix it
+
+1. For each rate, multiply the net amount by the rate and round to the grosz. Ania invoices 4,000.00 PLN net at 23%: the tax is 920.00 PLN.
+2. Put the sum of all `P_13_x` and `P_14_x` fields in `P_15`. For Ania: 4,000.00 + 920.00 = 4,920.00 PLN.
+3. If the invoice has several rates, calculate each one separately and add everything up in `P_15`.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ Net amount entered in P_15 instead of gross -->
+  <P_13_1>4000.00</P_13_1>
+  <P_14_1>920.00</P_14_1>
+  <P_15>4000.00</P_15>
+  <!-- ❌ Tax calculated on the gross amount -->
+  <P_13_1>4000.00</P_13_1>
+  <P_14_1>1131.60</P_14_1>
+  <P_15>5131.60</P_15>
+  <!-- ✅ 4000.00 × 23% = 920.00; 4000.00 + 920.00 = 4920.00 -->
+  <P_13_1>4000.00</P_13_1>
+  <P_14_1>920.00</P_14_1>
+  <P_15>4920.00</P_15>
+  <!-- ✅ Two rates: 100 + 23 + 200 + 16 = 339 -->
+  <P_13_1>100.00</P_13_1>
+  <P_14_1>23.00</P_14_1>
+  <P_13_2>200.00</P_13_2>
+  <P_14_2>16.00</P_14_2>
+  <P_15>339.00</P_15>
+  ```
+</XmlExample>
+
+## Where it usually comes from
+
+- **Tax calculated on the gross amount.** 4,920.00 × 23% gives 1,131.60 instead of 920.00.
+- **P_15 filled with the net amount**, or with the amount before a discount.
+- **Line-level tax doesn't match the summary.** Art. 106e ust. 10 of the Polish VAT Act allows tax to be calculated per line and the results summed, so the validator accepts a `P_14_x` equal to the sum of rounded line taxes at that rate (`P_11` × rate) or to the sum of the `P_11Vat` fields (FA(3) brochure, description of `P_11Vat`). The message appears when `P_14_x` matches none of these calculations, nor the tax on the whole base, for example after someone edits an amount in the summary by hand.
+
+A shorter description with a different example is in our [overview of the most common FA(3) errors](/en/blog/most-common-fa3-validation-errors#10-p15-doesnt-match-the-totals). Once you've fixed it, [check the invoice again](/en/validator).

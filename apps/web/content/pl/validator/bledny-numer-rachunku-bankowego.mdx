@@ -1,0 +1,75 @@
+---
+title: "Błędny numer rachunku bankowego na fakturze"
+description: "Polski numer konta ma 26 cyfr, a w formacie IBAN 28 znaków: PL i 26 cyfr. Inna długość to zwykle zgubiona cyfra albo spacje. Wpisz numer bez spacji."
+date: 2026-10-08
+section: validator
+locale: pl
+slug: "bledny-numer-rachunku-bankowego"
+codes: ["INVALID_BANK_ACCOUNT_FORMAT"]
+sources:
+  - label: "Broszura informacyjna FA(3), opis elementu RachunekBankowy i pola NrRB"
+    url: "https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "Schemat XSD FA(3)"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+translations:
+  pl: "bledny-numer-rachunku-bankowego"
+  en: "invalid-bank-account-number-invoice"
+  uk: "nevirnyy-nomer-bankivskogo-rakhunku"
+---
+
+## Co oznacza ten komunikat
+
+Numer konta na fakturze ma złą długość. Polski numer rachunku (NRB) ma 26 cyfr, a w formacie IBAN 28 znaków: „PL” i te same 26 cyfr. Inna długość to prawie zawsze zgubiona lub dopisana cyfra albo spacje między grupami cyfr.
+
+Walidator sprawdza pole `Platnosc/RachunekBankowy/NrRB` (przy kilku rachunkach pierwszy z nich) i zgłasza błąd, gdy:
+
+- numer zaczyna się od `PL` i nie ma dokładnie 28 znaków,
+- numer składa się z samych cyfr i nie ma dokładnie 26 znaków.
+
+Numerów z innym prefiksem kraju (na przykład `DE`) nie sprawdzamy, podobnie jak numerów bez prefiksu, w których są spacje lub myślniki. Nie liczymy też cyfr kontrolnych, więc numer o dobrej długości z przestawionymi cyframi przejdzie. Porównaj go z aplikacją banku.
+
+## Dlaczego to sprawdzamy
+
+Schemat FA(3) wymaga tylko, żeby `NrRB` miał od 10 do 34 znaków (broszura FA(3), opis pola `NrRB`). To sprawdzenie wykracza więc poza wymagania MF: schemat przepuści polski numer z brakującą cyfrą. Zgłaszamy go, bo nabywca przepisze numer z faktury do przelewu, a pomyłka wyjdzie dopiero przy płatności.
+
+Jeśli w fakturze jest element `RachunekBankowy`, pole `NrRB` w nim jest obowiązkowe. Gdy nie chcesz podawać konta, pomiń cały `RachunekBankowy`.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  label="Broszura informacyjna FA(3), opis elementu RachunekBankowy i pola NrRB"
+/>
+
+## Jak to naprawić
+
+1. Skopiuj numer konta z aplikacji banku, nie przepisuj go ręcznie.
+2. Usuń spacje i myślniki.
+3. Zostaw 26 cyfr albo `PL` i 26 cyfr, bez spacji po prefiksie.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ Spacje: z prefiksem PL to 34 znaki zamiast 28 -->
+  <NrRB>PL61 1090 1014 0000 0712 1981 2874</NrRB>
+  <!-- ❌ 25 cyfr, jednej brakuje -->
+  <NrRB>6110901014000007121981287</NrRB>
+  <!-- ✅ Format NRB: 26 cyfr -->
+  <NrRB>61109010140000071219812874</NrRB>
+  <!-- ✅ Format IBAN: PL i 26 cyfr -->
+  <Platnosc>
+    <TerminPlatnosci>
+      <Termin>2026-10-22</Termin>
+    </TerminPlatnosci>
+    <FormaPlatnosci>6</FormaPlatnosci>
+    <RachunekBankowy>
+      <NrRB>PL61109010140000071219812874</NrRB>
+    </RachunekBankowy>
+  </Platnosc>
+  ```
+</XmlExample>
+
+## Skąd się bierze najczęściej
+
+Najczęściej numer został wpisany ręcznie albo skopiowany z PDF razem ze spacjami. Jeśli faktury generuje program, sprawdź numer konta w jego ustawieniach firmy: poprawka tam naprawi wszystkie kolejne faktury.
+
+## Co dalej
+
+Inne pola, na których faktura FA(3) najczęściej się wykłada, opisaliśmy w [najczęstszych błędach walidacji FA(3)](/blog/najczestsze-bledy-walidacji-fa3). Po poprawce [sprawdź fakturę ponownie](/validator).

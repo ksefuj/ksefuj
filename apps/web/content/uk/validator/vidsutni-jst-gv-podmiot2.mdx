@@ -1,0 +1,99 @@
+---
+title: "Немає JST і GV у Podmiot2: що вписати у FA(3)"
+description: "FA(3) вимагає полів JST і GV у даних покупця в кожному рахунку. Для звичайного клієнта впиши 2 в обидва. Показуємо, де їх додати в XML і коли вписати 1."
+date: 2026-10-08
+section: validator
+locale: uk
+slug: "vidsutni-jst-gv-podmiot2"
+codes: ["PODMIOT2_JST_MISSING", "PODMIOT2_GV_MISSING"]
+sources:
+  - label: "Інформаційна брошура FA(3), опис полів JST і GV у Podmiot2"
+    url: "https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "Схема XSD FA(3)"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+translations:
+  pl: "brak-jst-gv-podmiot2"
+  en: "missing-jst-gv-podmiot2"
+  uk: "vidsutni-jst-gv-podmiot2"
+---
+
+## Що означає ця помилка
+
+У даних покупця (`Podmiot2`) немає поля `JST`, поля `GV` або обох. Кожен рахунок FA(3) мусить їх мати, а для звичайного клієнта в обидва вписуєш `2`, тобто «не стосується».
+
+Це два запитання «так/ні»: чи стосується рахунок підпорядкованої одиниці територіального самоврядування (JST, jednostka samorządu terytorialnego) і чи стосується він члена групи ПДВ (GV, grupa VAT). Відповідь потрібна завжди, навіть коли вона «ні». Файл без цих полів не відповідає схемі, тож KSeF його не прийме.
+
+## Чому FA(3) цього вимагає
+
+Брошура MF описує обидва поля в `Podmiot2` як обов'язкові: `1` означає, що рахунок стосується підпорядкованої одиниці JST або члена групи ПДВ, `2`, що не стосується. Значення `1` тягне за собою другу вимогу: у `Podmiot3` вказуєш дані цієї одиниці (NIP або IDWew) з роллю `8` для JST або `10` для члена групи ПДВ. Завдяки цьому рахунок стає доступним у KSeF і цій одиниці.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  label="Інформаційна брошура FA(3), опис полів JST і GV у Podmiot2"
+/>
+
+Наш валідатор повідомляє про цю помилку, коли в `Podmiot2` немає елемента `JST` (код `PODMIOT2_JST_MISSING`) або `GV` (код `PODMIOT2_GV_MISSING`). Значення `1` без відповідного `Podmiot3` дає окреме повідомлення. Схема XSD теж вимагає обох полів, тож та сама відсутність може з'явитися у списку вдруге, як помилка схеми.
+
+## Як це виправити
+
+1. Знайди у файлі розділ `Podmiot2`.
+2. Додай `JST`, а після нього `GV`, у самому кінці розділу, після `Adres` і можливих полів `DaneKontaktowe`, `NrKlienta` чи `IDNabywcy`. Порядок фіксований.
+3. Впиши `2` в обидва, якщо продаєш звичайній фірмі. `1` вписуй лише тоді, коли рахунок справді стосується підпорядкованої одиниці JST або члена групи ПДВ, і тоді додай `Podmiot3`.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ Немає JST і GV -->
+  <Podmiot2>
+    <DaneIdentyfikacyjne>
+      <NIP>9876543210</NIP>
+      <Nazwa>Studio Nabywcy sp. z o.o.</Nazwa>
+    </DaneIdentyfikacyjne>
+    <Adres>
+      <KodKraju>PL</KodKraju>
+      <AdresL1>ul. Testowa 1, 00-001 Warszawa</AdresL1>
+    </Adres>
+  </Podmiot2>
+  <!-- ✅ Звичайний клієнт: JST і GV = 2 -->
+  <Podmiot2>
+    <DaneIdentyfikacyjne>
+      <NIP>9876543210</NIP>
+      <Nazwa>Studio Nabywcy sp. z o.o.</Nazwa>
+    </DaneIdentyfikacyjne>
+    <Adres>
+      <KodKraju>PL</KodKraju>
+      <AdresL1>ul. Testowa 1, 00-001 Warszawa</AdresL1>
+    </Adres>
+    <JST>2</JST>
+    <GV>2</GV>
+  </Podmiot2>
+  ```
+</XmlExample>
+
+Коли покупцем є гміна (gmina, базова одиниця самоврядування), а товар іде до її школи, став `JST` на `1` і додай школу в `Podmiot3`:
+
+<XmlExample copyable>
+  ```xml
+  <Podmiot2>
+    <DaneIdentyfikacyjne>
+      <NIP>1111111111</NIP>
+      <Nazwa>Gmina Przykładowo</Nazwa>
+    </DaneIdentyfikacyjne>
+    ...
+    <JST>1</JST>
+    <GV>2</GV>
+  </Podmiot2>
+  <Podmiot3>
+    <DaneIdentyfikacyjne>
+      <NIP>2222222222</NIP>
+      <Nazwa>Szkoła Podstawowa nr 1 w Przykładowie</Nazwa>
+    </DaneIdentyfikacyjne>
+    <Rola>8</Rola>
+  </Podmiot3>
+  ```
+</XmlExample>
+
+## Звідки береться найчастіше
+
+Поля `JST` і `GV` нові у FA(3). Шаблони й експорти, підготовлені під FA(2), їх не генерують, тож помилка зазвичай з'являється у файлах із власного експорту або зі старішої програми, яку не оновили повністю. Інші зміни між версіями описуємо в [порівнянні FA(2) і FA(3)](/blog/fa2-vs-fa3-ksef) (польською).
+
+Цю саму помилку коротко описано в [огляді найчастіших помилок FA(3)](/blog/najczestsze-bledy-walidacji-fa3#7-brak-podmiot2-jst-i-gv) (польською). Після виправлення [перевір рахунок ще раз](/uk/validator).

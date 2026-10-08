@@ -1,0 +1,84 @@
+---
+title: "Nieprawidłowa stawka VAT w P_12: co wpisać"
+description: "P_12 przyjmuje tylko 14 kodów z katalogu FA(3), np. 23, 0 KR, zw, np I. Bez znaku %, z dokładną spacją i wielkością liter. Pełna lista ze znaczeniem i poprawki."
+date: 2026-10-08
+section: validator
+locale: pl
+slug: "nieprawidlowa-stawka-vat-p12"
+codes: ["P12_ENUMERATION"]
+sources:
+  - label: "Broszura informacyjna FA(3), opis pola P_12 w FaWiersz"
+    url: "https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "Schemat XSD FA(3)"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+translations:
+  pl: "nieprawidlowa-stawka-vat-p12"
+  en: "invalid-vat-rate-p12"
+  uk: "nevirna-stavka-pdv-p12"
+---
+
+## Co oznacza ten błąd
+
+W którymś wierszu faktury pole stawki VAT (`P_12`) ma wartość spoza listy FA(3). Pole przyjmuje tylko gotowe kody, np. `23`, `0 KR` albo `zw`, zapisane dokładnie tak jak w katalogu, bez znaku procentu.
+
+## Dlaczego tak jest
+
+W opisie pola `P_12` w `FaWiersz` broszura MF podaje zamknięty katalog wartości, a schemat XSD przyjmuje tylko te wartości. Wielkość liter i spacje mają znaczenie: `0 KR` to inna wartość niż `0KR`, a `zw` niż `ZW`.
+
+| Wartość    | Znaczenie                                                                                     |
+| ---------- | --------------------------------------------------------------------------------------------- |
+| `23`, `22` | stawka podstawowa                                                                             |
+| `8`, `7`   | pierwsza stawka obniżona                                                                      |
+| `5`        | druga stawka obniżona                                                                         |
+| `4`, `3`   | stawki 4% i 3%                                                                                |
+| `0 KR`     | 0% w kraju, poza WDT i eksportem                                                              |
+| `0 WDT`    | 0% przy wewnątrzwspólnotowej dostawie towarów                                                 |
+| `0 EX`     | 0% przy eksporcie towarów                                                                     |
+| `zw`       | sprzedaż zwolniona z VAT                                                                      |
+| `oo`       | odwrotne obciążenie w obrocie krajowym                                                        |
+| `np I`     | sprzedaż poza krajem, niepodlegająca opodatkowaniu w Polsce (bez art. 100 ust. 1 pkt 4 i OSS) |
+| `np II`    | usługi z art. 100 ust. 1 pkt 4 ustawy o VAT                                                   |
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  label="Broszura informacyjna FA(3), opis pola P_12 w FaWiersz"
+/>
+
+Nasz walidator porównuje `P_12` w każdym wierszu z tą listą znak po znaku i w komunikacie pokazuje wartość, którą znalazł. Puste lub pominięte `P_12` nie uruchamia tego błędu. Broszura dopuszcza brak stawki przy procedurze marży, przy sprzedaży zwolnionej, o której mowa w art. 106b ust. 3 pkt 2 ustawy o VAT, i na fakturze uproszczonej.
+
+## Jak to naprawić
+
+1. Sprawdź w komunikacie, który wiersz i jaką wartość wskazał walidator.
+2. Wybierz kod z tabeli. Przy stawce 0% zawsze podaj wariant: `0 KR`, `0 WDT` albo `0 EX`.
+3. Usuń znak `%`, części dziesiętne i spacje na początku lub końcu.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ Znak procentu -->
+  <P_12>23%</P_12>
+  <!-- ❌ Liczba z częścią dziesiętną -->
+  <P_12>23.00</P_12>
+  <!-- ❌ Samo 0, bez wariantu -->
+  <P_12>0</P_12>
+  <!-- ❌ Wielkie litery -->
+  <P_12>ZW</P_12>
+  <!-- ❌ Brak spacji -->
+  <P_12>npI</P_12>
+  <!-- ✅ Poprawne kody -->
+  <P_12>23</P_12>
+  <P_12>0 KR</P_12>
+  <P_12>zw</P_12>
+  <P_12>np I</P_12>
+  ```
+</XmlExample>
+
+<Warning>
+  `oo` dotyczy tylko odwrotnego obciążenia w kraju. Przy fakturze dla zagranicznego nabywcy, który
+  rozlicza VAT u siebie, broszura wskazuje `np I` lub `np II`. Walidator sprawdza to osobną regułą.
+</Warning>
+
+## Skąd się bierze najczęściej
+
+Program lub arkusz trzyma stawkę jako liczbę albo tekst do wyświetlenia (`23%`, `23.00`, `ZW`) i eksportuje ją do XML bez przełożenia na kod FA(3). Drugie źródło to stawka 0% zapisana jako samo `0`, bez wskazania, czy chodzi o sprzedaż krajową, WDT czy eksport.
+
+Jak dobrać stawkę przy klientach z innych krajów, opisujemy w artykule o [fakturze dla nabywcy z zagranicy](/blog/faktura-zagraniczna-ksef). Krótka wersja tej listy jest w [przeglądzie najczęstszych błędów FA(3)](/blog/najczestsze-bledy-walidacji-fa3#8-zła-stawka-vat-w-p12). Po poprawce [sprawdź fakturę ponownie](/validator).
