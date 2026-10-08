@@ -23,6 +23,7 @@ export default [
       "packages/pdf/vendor/**",
       "packages/pdf/scripts/**",
       "packages/pdf/src/fonts/roboto-vfs.ts",
+      ".claude/worktrees/**",
     ],
   },
   js.configs.recommended,

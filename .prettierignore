@@ -32,3 +32,6 @@ THIRD_PARTY_NOTICES.md
 
 # Claude Code settings (user-specific)
 .claude/settings.local.json
+
+# Agent worktrees (isolated checkouts of other branches)
+.claude/worktrees/
