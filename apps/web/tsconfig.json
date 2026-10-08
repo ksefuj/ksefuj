@@ -11,7 +11,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@shared/*": ["../../packages/pdf/vendor/ksef-pdf-generator/src/shared/*"]
     },
     "allowJs": true,
     "noEmit": true,

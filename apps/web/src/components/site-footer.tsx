@@ -82,6 +82,11 @@ export function SiteFooter() {
                 </Link>
               </li>
               <li>
+                <Link href={`${p}/podglad`} className="hover:text-slate-300 transition-colors">
+                  {t("preview")}
+                </Link>
+              </li>
+              <li>
                 <Link href={`${p}/waluty`} className="hover:text-slate-300 transition-colors">
                   {t("waluty")}
                 </Link>
@@ -107,6 +112,14 @@ export function SiteFooter() {
               </li>
               <li>
                 <span>Apache 2.0</span>
+              </li>
+              <li>
+                <a
+                  href="/third-party-notices.txt"
+                  className="hover:text-slate-300 transition-colors"
+                >
+                  {t("licenses")}
+                </a>
               </li>
             </ul>
             <div className="pt-2 space-y-1 text-sm">

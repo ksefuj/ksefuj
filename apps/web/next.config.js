@@ -40,7 +40,7 @@ const nextConfig = {
       ...movedToGuidesRedirects,
     ];
   },
-  transpilePackages: ["@ksefuj/validator"],
+  transpilePackages: ["@ksefuj/validator", "@ksefuj/pdf"],
   webpack: (config, { isServer }) => {
     // Handle libxml2-wasm for browser usage
     if (!isServer) {

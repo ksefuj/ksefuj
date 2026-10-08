@@ -49,6 +49,7 @@ export function SiteHeader({ locale, languagePicker }: SiteHeaderProps) {
 
   const navLinks = [
     { href: `${p}/validator`, label: t("validator") },
+    { href: `${p}/podglad`, label: t("preview") },
     { href: `${p}/waluty`, label: t("waluty") },
     { href: `${p}/blog`, label: t("blog") },
     { href: `${p}/guides`, label: t("guides") },

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import * as amplitude from "@amplitude/analytics-browser";
 import { useTranslations } from "next-intl";
 import type { CurrencyRate, ValidationResult } from "@ksefuj/validator";
@@ -9,9 +10,17 @@ import { rateReferenceCandidates } from "@ksefuj/validator/currency-date";
 import { Badge } from "@/components/badge";
 import { XmlDropZone } from "@/components/xml-drop-zone";
 import { ValidationIssuesList } from "@/components/validation-issues-list";
+import { isPreviewableResult } from "@/lib/invoice-preview/previewable";
 import { consumePendingFiles } from "@/lib/file-handoff";
 import { fetchCurrencyRateTable } from "@/lib/nbp";
 import { cn } from "@/lib/utils";
+
+// Loaded when the first previewable result appears, so the preview UI stays out of the
+// validator's first-load JavaScript (the PDF engine itself loads only on a click)
+const InvoicePreview = dynamic(
+  () => import("@/components/invoice-preview/invoice-preview").then((m) => m.InvoicePreview),
+  { ssr: false },
+);
 
 interface ValidatorProps {
   locale?: string;
@@ -22,6 +31,8 @@ interface ValidatorProps {
 
 type FileValidationResult = {
   fileName: string;
+  /** The picked file; its exact bytes are read again for the PDF preview (KOD I hashes them). */
+  file: File;
   result: ValidationResult | null;
   error: AppError | null;
   status: "pending" | "validating" | "completed" | "error";
@@ -127,6 +138,7 @@ export function Validator({ locale, issueHelpLinks, issueHelpAnchors }: Validato
       // Initialize file results
       const newFiles: FileValidationResult[] = xmlFiles.map((file) => ({
         fileName: file.name,
+        file,
         result: null,
         error: null,
         status: "pending" as const,
@@ -600,6 +612,19 @@ export function Validator({ locale, issueHelpLinks, issueHelpAnchors }: Validato
                         </svg>
                       )}
                     </button>
+
+                    {/* PDF preview: any file that parsed as an FA(3) invoice, also with issues */}
+                    {file.status === "completed" && isPreviewableResult(file.result) && (
+                      <div className="px-4 pb-3 pl-12">
+                        <InvoicePreview
+                          fileName={file.fileName}
+                          getBytes={async () => new Uint8Array(await file.file.arrayBuffer())}
+                          locale={locale ?? "pl"}
+                          source="validator"
+                          issueCount={issueCount}
+                        />
+                      </div>
+                    )}
 
                     {/* Expanded Issues */}
                     {isExpanded && file.result?.issues && (
