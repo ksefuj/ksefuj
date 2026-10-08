@@ -15,11 +15,11 @@ KSeF FA(3) XML validator with full XSD schema validation and semantic business r
 ## Installation
 
 ```bash
-npm install @ksefuj/validator@0.3.0
+npm install @ksefuj/validator@0.4.0
 # or
-pnpm add @ksefuj/validator@0.3.0
+pnpm add @ksefuj/validator@0.4.0
 # or
-yarn add @ksefuj/validator@0.3.0
+yarn add @ksefuj/validator@0.4.0
 ```
 
 ## Usage

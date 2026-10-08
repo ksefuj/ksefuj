@@ -7,6 +7,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.4.0] — 2026-10-08
+
 ### Added
 
 - Exchange rate validation for advance invoices, which previously had none. `Fa/KursWalutyZ` and
