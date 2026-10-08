@@ -40,6 +40,15 @@ function stripNamespaces(text: string): string {
   return text.replace(NAMESPACE_URI, "");
 }
 
+const XML_NAMESPACE_PREFIX = "{http://www.w3.org/XML/1998/namespace}";
+
+/** Readable attribute name: `xml:lang` for the XML namespace, otherwise the local name. */
+function readableAttribute(name: string): string {
+  return name.startsWith(XML_NAMESPACE_PREFIX)
+    ? `xml:${name.slice(XML_NAMESPACE_PREFIX.length)}`
+    : stripNamespaces(name);
+}
+
 function parseExpected(message: string): string[] | undefined {
   const match = /expected is (?:one of )?\(\s*(.*?)\s*\)/i.exec(message);
   if (!match) {
@@ -123,7 +132,8 @@ export function parseXsdMessage(message: string): ParsedXsdMessage {
   const elementMatch = /^\s*element '([^']*)'/i.exec(message);
   const rawElement = elementMatch?.[1];
   const element = rawElement ? stripNamespaces(rawElement) : undefined;
-  const attribute = /,\s*attribute '([^']*)'/i.exec(message)?.[1];
+  const rawAttribute = /,\s*attribute '([^']*)'/i.exec(message)?.[1];
+  const attribute = rawAttribute !== undefined ? readableAttribute(rawAttribute) : undefined;
   const base = { element, ...(attribute !== undefined ? { attribute } : {}) };
   // Message text after the "Element '...'[, attribute '...']: " prefix
   const body = message.replace(/^\s*element '[^']*'(?:,\s*attribute '[^']*')?:\s*/i, "");
@@ -138,13 +148,15 @@ export function parseXsdMessage(message: string): ParsedXsdMessage {
 
   // (g) Attribute not allowed
   if (/the attribute '[^']*' is not allowed/i.test(message)) {
-    const attr = attribute ?? /the attribute '([^']*)'/i.exec(message)?.[1];
+    const rawAttr = /the attribute '([^']*)'/i.exec(message)?.[1];
+    const attr = attribute ?? (rawAttr !== undefined ? readableAttribute(rawAttr) : undefined);
     return { code: "ELEMENT_NOT_ALLOWED", element, attribute: attr };
   }
 
   // Required attribute missing
   if (/the attribute '[^']*' is required but missing/i.test(message)) {
-    const attr = attribute ?? /the attribute '([^']*)'/i.exec(message)?.[1];
+    const rawAttr = /the attribute '([^']*)'/i.exec(message)?.[1];
+    const attr = attribute ?? (rawAttr !== undefined ? readableAttribute(rawAttr) : undefined);
     return { code: "REQUIRED_ELEMENT_MISSING", element, attribute: attr };
   }
 

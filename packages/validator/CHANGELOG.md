@@ -7,6 +7,17 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.4.1] — 2026-10-08
+
+### Fixed
+
+- A `Faktura` root in no or a wrong namespace (`WRONG_NAMESPACE`), or a root element other than
+  `Faktura`, no longer also runs the semantic layer. It found no FA(3) elements and reported false
+  `PODMIOT2_JST_MISSING`, `PODMIOT2_GV_MISSING`, `P15_MISSING` and similar issues on top of the one
+  real problem. Strict-XML checks still run
+- `metadata.attribute` on XSD issues is now a readable name: `xml:lang` for the XML namespace,
+  otherwise the local name, instead of `{http://www.w3.org/XML/1998/namespace}lang`
+
 ## [0.4.0] — 2026-10-08
 
 ### Added
