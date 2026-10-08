@@ -1,7 +1,4 @@
 import type { ReactNode } from "react";
-import { Inter, JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
-import { SpeedInsights } from "@vercel/speed-insights/next";
-import { AmplitudeProvider } from "@/components/amplitude-provider";
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
@@ -27,51 +24,7 @@ export const metadata: Metadata = {
   },
 };
 
-// Display font - for headings
-const displayFont = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  variable: "--font-display",
-  weight: ["700", "800"],
-  display: "swap",
-});
-
-// Body font - for regular text
-const bodyFont = Inter({
-  subsets: ["latin"],
-  variable: "--font-body",
-  weight: ["400", "500", "600"],
-  display: "swap",
-});
-
-// Monospace font - for code and logo
-const monoFont = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-  weight: ["400", "700"],
-  display: "swap",
-});
-
-interface Props {
-  children: ReactNode;
-  params?: Promise<{ locale?: string }>;
-}
-
-export default async function RootLayout({ children, params }: Props) {
-  // Get locale from params if available (passed from [locale] segment)
-  const resolvedParams = params ? await params : {};
-  const locale = resolvedParams.locale || "pl";
-
-  return (
-    <html
-      lang={locale}
-      className={`${displayFont.variable} ${bodyFont.variable} ${monoFont.variable}`}
-      style={{ backgroundColor: "#FAFAF8" }}
-    >
-      <body className="antialiased min-h-screen bg-[#FAFAF8]">
-        {children}
-        <AmplitudeProvider />
-        <SpeedInsights />
-      </body>
-    </html>
-  );
+export default function RootLayout({ children }: { children: ReactNode }) {
+  // <html> and <body> are rendered by app/[locale]/layout.tsx so `lang` follows the locale.
+  return children;
 }
