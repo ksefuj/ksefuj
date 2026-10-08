@@ -7,8 +7,6 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
-## [0.4.1] — 2026-10-08
-
 ### Fixed
 
 - A `Faktura` root in no or a wrong namespace (`WRONG_NAMESPACE`), or a root element other than
