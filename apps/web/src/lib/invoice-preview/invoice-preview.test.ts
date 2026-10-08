@@ -9,6 +9,7 @@ import {
   normalizeKsefNumber,
 } from "./ksef-input";
 import { INLINE_PREVIEW_QUERY, supportsInlinePreview } from "./inline-preview";
+import { analyticsInvoiceType } from "./analytics";
 import { pdfFileNameFromInvoiceNumber } from "./pdf-filename";
 import { isPreviewableResult } from "./previewable";
 
@@ -98,6 +99,19 @@ describe("KSeF number input state machine", () => {
     expect(ksefInputStatus(state, isValid)).toBe("valid");
   });
 
+  it("reports missing invoice data and ignored numbers without rendering them again", () => {
+    let state = type(initialKsefInputState, VALID);
+    state = ksefInputReducer(state, { type: "missingData", number: VALID });
+    expect(ksefInputStatus(state, isValid)).toBe("missingData");
+    expect(effectiveKsefNumber(state, isValid)).toBeUndefined();
+    state = ksefInputReducer(type(initialKsefInputState, VALID), {
+      type: "ignored",
+      number: VALID,
+    });
+    expect(ksefInputStatus(state, isValid)).toBe("invalid");
+    expect(effectiveKsefNumber(state, isValid)).toBeUndefined();
+  });
+
   it("resets", () => {
     const state = ksefInputReducer(type(initialKsefInputState, "x"), { type: "reset" });
     expect(state).toEqual(initialKsefInputState);
@@ -163,5 +177,20 @@ describe("isPreviewableResult", () => {
   it("rejects a missing result", () => {
     expect(isPreviewableResult(null)).toBe(false);
     expect(isPreviewableResult(undefined)).toBe(false);
+  });
+});
+
+describe("analyticsInvoiceType", () => {
+  it("passes the known RodzajFaktury values", () => {
+    for (const type of ["VAT", "KOR", "ZAL", "ROZ", "UPR", "KOR_ZAL", "KOR_ROZ"]) {
+      expect(analyticsInvoiceType(type)).toBe(type);
+    }
+  });
+
+  it("maps anything else to other", () => {
+    expect(analyticsInvoiceType("Jan Kowalski 12345")).toBe("other");
+    expect(analyticsInvoiceType("vat")).toBe("other");
+    expect(analyticsInvoiceType("")).toBe("other");
+    expect(analyticsInvoiceType(undefined)).toBe("other");
   });
 });

@@ -26,6 +26,7 @@ import {
   type KsefMismatch,
   ksefNumberNip,
 } from "@/lib/invoice-preview/ksef-input";
+import { analyticsInvoiceType } from "@/lib/invoice-preview/analytics";
 import { pdfFileNameFromInvoiceNumber } from "@/lib/invoice-preview/pdf-filename";
 import { saveBlob } from "@/lib/invoice-preview/save-blob";
 
@@ -66,8 +67,7 @@ interface Produced {
 
 type Outcome =
   | ({ ok: true } & Produced)
-  | { ok: false; error: ErrorKind; mismatch?: undefined }
-  | { ok: false; mismatch: KsefMismatch; error?: undefined };
+  | { ok: false; error?: ErrorKind; mismatch?: KsefMismatch; missingData?: boolean };
 
 const inputClass =
   "w-full rounded-xl border bg-white px-4 py-2.5 text-base text-slate-900 placeholder:text-slate-400 transition-colors focus:outline-none focus:ring-2";
@@ -130,14 +130,19 @@ export function InvoicePreview({
     null,
   );
   const openedTrackedRef = useRef(false);
+  // Focus moves into the panel only when the user opened it, not for autoOpen on page load
+  const userOpenedRef = useRef(false);
 
   useEffect(() => {
     latest.current = { getBytes, locale, source };
   });
 
+  // Until the module is loaded a typed number is neither valid nor invalid: it stays "typing"
+  // and is evaluated as soon as the module arrives (loaded on panel open and on input focus).
   const isValid = pdf ? pdf.isValidKsefNumber : () => false;
-  const status = ksefInputStatus(ksef, isValid);
-  const effectiveNumber = effectiveKsefNumber(ksef, isValid);
+  const typedEarly = pdf === null && ksef.raw.trim() !== "";
+  const status = typedEarly ? "typing" : ksefInputStatus(ksef, isValid);
+  const effectiveNumber = typedEarly ? undefined : effectiveKsefNumber(ksef, isValid);
 
   const invalidate = useCallback(() => {
     seqRef.current++;
@@ -174,6 +179,9 @@ export function InvoicePreview({
         };
       }
       if (mod && e instanceof mod.UnsupportedInvoiceError) {
+        if (e.reason === "missing-data" && ksefNumber) {
+          return { ok: false, missingData: true };
+        }
         return { ok: false, error: e.reason === "not-xml" ? "notXml" : "notFa3" };
       }
       return { ok: false, error: "renderFailed" };
@@ -183,7 +191,8 @@ export function InvoicePreview({
   const track = useCallback((event: string, invoiceType: string, hasKsefNumber: boolean) => {
     amplitude.track(event, {
       locale: latest.current.locale,
-      invoiceType,
+      // Only allowlisted values: the raw RodzajFaktury comes from the file
+      invoiceType: analyticsInvoiceType(invoiceType),
       source: latest.current.source,
       hasKsefNumber,
     });
@@ -204,6 +213,10 @@ export function InvoicePreview({
         lastRef.current = { ...outcome, ksefNumber };
         setRendered({ url: urlRef.current as string, hasQr: outcome.result.hasQr });
         setPhase("ready");
+        if (ksefNumber && outcome.result.ksefNumberIgnored) {
+          // Client validation should make this impossible; show the format error if it happens
+          dispatchKsef({ type: "ignored", number: ksefNumber });
+        }
         if (!openedTrackedRef.current) {
           openedTrackedRef.current = true;
           track("invoice_preview_opened", outcome.result.invoiceType, Boolean(ksefNumber));
@@ -211,12 +224,15 @@ export function InvoicePreview({
       } else if (outcome.mismatch) {
         // The effective number becomes undefined, which re-renders the plain visualisation
         dispatchKsef({ type: "mismatch", mismatch: outcome.mismatch });
+      } else if (outcome.missingData && ksefNumber) {
+        // Same: re-renders without the number, the message explains why there is no QR code
+        dispatchKsef({ type: "missingData", number: ksefNumber });
       } else {
         setUrl(null);
         lastRef.current = null;
         setRendered(null);
         setPhase("idle");
-        setError(outcome.error);
+        setError(outcome.error ?? "renderFailed");
       }
     },
     [produce, setUrl, track],
@@ -235,8 +251,15 @@ export function InvoicePreview({
 
   // Move focus into the panel when it opens
   useEffect(() => {
-    if (open) {
+    if (open && userOpenedRef.current) {
       panelRef.current?.focus();
+    }
+  }, [open]);
+
+  // Load the module early so a number typed right away can be validated
+  useEffect(() => {
+    if (open) {
+      void loadPdf().then(setPdf);
     }
   }, [open]);
 
@@ -262,6 +285,7 @@ export function InvoicePreview({
     setRendered(null);
     setPhase("idle");
     setError(null);
+    userOpenedRef.current = false;
     setOpen(false);
     previewButtonRef.current?.focus();
   };
@@ -281,10 +305,16 @@ export function InvoicePreview({
         } else if (outcome.mismatch) {
           // Show the message next to the field
           dispatchKsef({ type: "mismatch", mismatch: outcome.mismatch });
+          userOpenedRef.current = true;
+          setOpen(true);
+          return;
+        } else if (outcome.missingData && effectiveNumber) {
+          dispatchKsef({ type: "missingData", number: effectiveNumber });
+          userOpenedRef.current = true;
           setOpen(true);
           return;
         } else {
-          setError(outcome.error);
+          setError(outcome.error ?? "renderFailed");
           return;
         }
       }
@@ -315,6 +345,8 @@ export function InvoicePreview({
       ksefNip: ksef.mismatch.ksefNip,
       sellerNip: ksef.mismatch.sellerNip ?? "—",
     });
+  } else if (status === "missingData") {
+    ksefError = t("ksefNumber.errors.missingData");
   }
 
   const buttonSize = size === "sm" ? "!px-4 !py-2 text-sm" : "";
@@ -330,7 +362,14 @@ export function InvoicePreview({
           aria-expanded={open}
           aria-controls={panelId}
           aria-label={previewLabel}
-          onClick={() => (open ? close() : setOpen(true))}
+          onClick={() => {
+            if (open) {
+              close();
+            } else {
+              userOpenedRef.current = true;
+              setOpen(true);
+            }
+          }}
         >
           {t("actions.preview")}
         </button>
@@ -408,6 +447,7 @@ export function InvoicePreview({
               aria-invalid={ksefError !== null}
               aria-describedby={ksefError ? `${hintId} ${errorId}` : hintId}
               onChange={(e) => dispatchKsef({ type: "change", raw: e.target.value })}
+              onFocus={() => void loadPdf().then(setPdf)}
               onBlur={() => dispatchKsef({ type: "blur" })}
               className={cn(
                 inputClass,

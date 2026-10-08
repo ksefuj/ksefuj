@@ -12,6 +12,8 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
+      // Needed by the vendored generator inside @ksefuj/pdf (typecheck and the webpack bundle);
+      // nothing in apps/web/src imports it.
       "@shared/*": ["../../packages/pdf/vendor/ksef-pdf-generator/src/shared/*"]
     },
     "allowJs": true,

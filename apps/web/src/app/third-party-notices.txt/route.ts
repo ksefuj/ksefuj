@@ -9,7 +9,8 @@ export const dynamic = "force-static";
  * `pnpm --filter @ksefuj/pdf gen:notices`; it is read at build time and served as plain text.
  */
 export async function GET() {
-  // `next build` runs with apps/web as the working directory
+  // `next build` runs with apps/web as the working directory. Read at build time (force-static),
+  // so it relies on the build having the whole repo checked out, which Vercel does by default.
   const notices = await readFile(join(process.cwd(), "../../THIRD_PARTY_NOTICES.md"), "utf8");
   return new Response(notices, {
     headers: { "Content-Type": "text/plain; charset=utf-8" },

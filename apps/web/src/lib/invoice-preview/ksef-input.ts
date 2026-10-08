@@ -8,8 +8,10 @@
  * - `invalid`: not a valid number after blur or submit
  * - `valid`: a well-formed number with a correct checksum
  * - `mismatch`: well-formed, but the renderer found it belongs to another seller NIP
+ * - `missingData`: the invoice has no seller NIP or P_1, so no QR code can be made
+ * A number the renderer reported as ignored counts as `invalid`.
  */
-export type KsefInputStatus = "empty" | "typing" | "invalid" | "valid" | "mismatch";
+export type KsefInputStatus = "empty" | "typing" | "invalid" | "valid" | "mismatch" | "missingData";
 
 export interface KsefMismatch {
   /** The normalised number the mismatch was reported for. */
@@ -22,6 +24,10 @@ export interface KsefInputState {
   raw: string;
   touched: boolean;
   mismatch: KsefMismatch | null;
+  /** Normalised number rejected because the invoice lacks the data for a QR code. */
+  missingData: string | null;
+  /** Normalised number the renderer ignored (should not happen after client validation). */
+  ignored: string | null;
 }
 
 export type KsefInputAction =
@@ -29,9 +35,17 @@ export type KsefInputAction =
   | { type: "blur" }
   | { type: "submit" }
   | { type: "mismatch"; mismatch: KsefMismatch }
+  | { type: "missingData"; number: string }
+  | { type: "ignored"; number: string }
   | { type: "reset" };
 
-export const initialKsefInputState: KsefInputState = { raw: "", touched: false, mismatch: null };
+export const initialKsefInputState: KsefInputState = {
+  raw: "",
+  touched: false,
+  mismatch: null,
+  missingData: null,
+  ignored: null,
+};
 
 /** Trims, drops inner whitespace (copy-paste artefacts) and upper-cases (hex digits are upper case). */
 export function normalizeKsefNumber(raw: string): string {
@@ -47,12 +61,16 @@ export function ksefNumberNip(normalized: string): string {
 export function ksefInputReducer(state: KsefInputState, action: KsefInputAction): KsefInputState {
   switch (action.type) {
     case "change":
-      return { raw: action.raw, touched: state.touched, mismatch: null };
+      return { ...initialKsefInputState, raw: action.raw, touched: state.touched };
     case "blur":
     case "submit":
       return state.touched ? state : { ...state, touched: true };
     case "mismatch":
       return { ...state, mismatch: action.mismatch };
+    case "missingData":
+      return { ...state, missingData: action.number };
+    case "ignored":
+      return { ...state, ignored: action.number };
     case "reset":
       return initialKsefInputState;
   }
@@ -67,7 +85,13 @@ export function ksefInputStatus(
     return "empty";
   }
   if (isValid(normalized)) {
-    return state.mismatch?.number === normalized ? "mismatch" : "valid";
+    if (state.mismatch?.number === normalized) {
+      return "mismatch";
+    }
+    if (state.missingData === normalized) {
+      return "missingData";
+    }
+    return state.ignored === normalized ? "invalid" : "valid";
   }
   return state.touched ? "invalid" : "typing";
 }

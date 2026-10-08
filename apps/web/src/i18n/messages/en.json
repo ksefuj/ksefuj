@@ -774,7 +774,8 @@
       "title": "Most common errors",
       "intro": "Where these messages come from and how to fix them."
     },
-    "previewLink": "See an invoice as a PDF"
+    "previewLinkText": "Just want to look at an invoice or save it as a PDF?",
+    "previewLink": "Open the preview"
   },
   "heroDropZone": {
     "title": "Drop your invoice XML file here",
@@ -798,7 +799,8 @@
       "placeholder": "e.g. 5214567890-20260401-000001000001-49",
       "errors": {
         "format": "This does not look like a KSeF number. It has 35 characters and starts with the seller's NIP.",
-        "nipMismatch": "This KSeF number belongs to a different company. It starts with NIP {ksefNip}, but the seller in the file has NIP {sellerNip}."
+        "nipMismatch": "This KSeF number belongs to a different company. It starts with NIP {ksefNip}, but the seller in the file has NIP {sellerNip}.",
+        "missingData": "The file has no seller NIP or issue date (P_1), so we cannot add a QR code. We show the invoice without it."
       }
     },
     "watermarkBadge": "WIZUALIZACJA",

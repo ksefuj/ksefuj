@@ -243,7 +243,7 @@
     "guides": "Poradniki",
     "waluty": "Kursy walut",
     "validator": "Walidator",
-    "preview": "Podgląd faktury"
+    "preview": "Podgląd"
   },
   "translationBanner": {
     "body": "Ten artykuł nie jest jeszcze dostępny w Twoim języku. Czytasz oryginalną wersję w języku {language}.",
@@ -381,7 +381,7 @@
     "copyright": "© 2026 ksefuj. Cały kod jest publiczny na GitHub.",
     "validator": "Walidator",
     "preview": "Podgląd faktury",
-    "licenses": "Licencje"
+    "licenses": "Licencje zewnętrzne"
   },
   "terms": {
     "meta": {
@@ -774,7 +774,8 @@
       "title": "Najczęstsze błędy",
       "intro": "Wyjaśniamy, skąd biorą się te komunikaty i jak je poprawić."
     },
-    "previewLink": "Zobacz fakturę jako PDF"
+    "previewLinkText": "Chcesz tylko obejrzeć fakturę albo zapisać ją jako PDF?",
+    "previewLink": "Otwórz podgląd"
   },
   "heroDropZone": {
     "title": "Wrzuć plik XML z fakturą",
@@ -798,7 +799,8 @@
       "placeholder": "np. 5214567890-20260401-000001000001-49",
       "errors": {
         "format": "To nie wygląda na numer KSeF. Numer ma 35 znaków i zaczyna się od NIP-u sprzedawcy.",
-        "nipMismatch": "Ten numer KSeF należy do innej firmy. Zaczyna się od NIP-u {ksefNip}, a sprzedawca w pliku ma NIP {sellerNip}."
+        "nipMismatch": "Ten numer KSeF należy do innej firmy. Zaczyna się od NIP-u {ksefNip}, a sprzedawca w pliku ma NIP {sellerNip}.",
+        "missingData": "W pliku brakuje NIP-u sprzedawcy albo daty wystawienia (P_1), więc nie możemy dodać kodu QR. Pokazujemy fakturę bez niego."
       }
     },
     "watermarkBadge": "WIZUALIZACJA",
