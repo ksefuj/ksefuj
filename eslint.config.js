@@ -14,7 +14,6 @@ export default [
       "**/dist/**",
       "**/build/**",
       "**/coverage/**",
-      "**/skills/**",
       "*.config.js",
       "*.config.mjs",
       ".husky/**",
