@@ -832,8 +832,8 @@ If filled, minimum required data: (`RodzajTransportu` OR `TransportInny`+`OpisIn
 | `LadunekInny`            | Choice      | "1" = other/mixed cargo                                                                                                                                                                                                                                          |
 | `OpisInnegoLadunku`      | Conditional | Description of other cargo (max 50 chars)                                                                                                                                                                                                                        |
 | `JednostkaOpakowania`    | Optional    | Packing unit description (e.g. "1 carton/ 30 pieces")                                                                                                                                                                                                            |
-| `DataGodzRozpTransportu` | Optional    | Transport start datetime (YYYY-MM-DDTHH:MM:SSZ)                                                                                                                                                                                                                  |
-| `DataGodzZakTransportu`  | Optional    | Transport end datetime (YYYY-MM-DDTHH:MM:SSZ)                                                                                                                                                                                                                    |
+| `DataGodzRozpTransportu` | Optional    | Transport start datetime (YYYY-MM-DDTHH:MM:SS)                                                                                                                                                                                                                   |
+| `DataGodzZakTransportu`  | Optional    | Transport end datetime (YYYY-MM-DDTHH:MM:SS)                                                                                                                                                                                                                     |
 | `WysylkaZ`               | Optional    | Shipment origin address                                                                                                                                                                                                                                          |
 | `WysylkaPrzez`           | Optional    | Intermediate address (max 20 occurrences)                                                                                                                                                                                                                        |
 | `WysylkaDo`              | Optional    | Destination address                                                                                                                                                                                                                                              |
@@ -1037,8 +1037,11 @@ The attachment serves to present **tax-related data only**. It should only conta
 12. **Attachment abuse:** Non-tax data in Zalacznik → revocation of attachment rights
 13. **No thousand separators:** Amount fields must be pure digit sequences with "." decimal
 14. **UTF-8 required** for Polish diacritical characters
-15. **DateTime format:** YYYY-MM-DDTHH:MM:SSZ for DataWytworzeniaFa, DataGodzRozpTransportu,
-    DataGodzZakTransportu
+15. **DateTime format:** `YYYY-MM-DDTHH:MM:SS` (`xsd:dateTime`) for DataWytworzeniaFa,
+    DataGodzRozpTransportu, DataGodzZakTransportu. Append `Z` when giving UTC (§2.9); the XSD also
+    accepts no time zone or an offset such as `+02:00`. XSD range: DataWytworzeniaFa from
+    `2025-09-01T00:00:00Z`, transport fields (`TDataCzas`) from `2021-10-01T00:00:00Z`, both to
+    `2050-01-01T23:59:59Z`
 16. **ZnacznikZaplatyCzesciowej:** May appear only ONCE in the entire invoice
 17. **Transport minimum data:** (RodzajTransportu OR TransportInny+OpisInnegoTransportu) AND
     (OpisLadunku OR LadunekInny+OpisInnegoLadunku)

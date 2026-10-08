@@ -414,8 +414,10 @@ for a complete example.
 **What it is:**
 
 - **Fact:** Date fields must use format `YYYY-MM-DD`. The single datetime field `DataWytworzeniaFa`
-  uses format `YYYY-MM-DDTHH:MM:SSZ` where `Z` (Zulu) suffix denotes UTC.
-- **Source:** FA(3) Information Sheet, §2.8 (dates), §2.9 (datetime)
+  uses format `YYYY-MM-DDTHH:MM:SS` (XSD type `xsd:dateTime`). A `Z` (Zulu) suffix marks UTC; the
+  XSD also accepts a value without a time zone or with an offset such as `+02:00`.
+- **Source:** FA(3) Information Sheet, §2.8 (dates), §2.9 (datetime); FA(3) XSD
+  (`DataWytworzeniaFa`: `etd:TDataCzas` = `xsd:dateTime`, `minInclusive 2025-09-01T00:00:00Z`)
 - **Verbatim (§2.8):** "Dates must be given in the format YYYY-MM-DD (e.g. 2026-02-01)."
 - **Verbatim (§2.9):** "Format: YYYY-MM-DDTHH:MM:SS (e.g. 2026-02-01T09:30:47Z, where T denotes
   'Time'). When providing universal time (UTC), the letter Z (Zulu) must be appended at the end."
@@ -429,7 +431,7 @@ for a complete example.
 - `P_22A` (vehicle service date)
 - `DataZaplaty` (payment date)
 
-**Fields that use datetime format (`YYYY-MM-DDTHH:MM:SSZ`):**
+**Fields that use datetime format (`YYYY-MM-DDTHH:MM:SS`):**
 
 - `DataWytworzeniaFa` (invoice generation datetime) — **the only mandatory datetime field**
 - `DataGodzRozpTransportu`, `DataGodzZakTransportu` (transport datetimes, optional)
@@ -437,11 +439,10 @@ for a complete example.
 **Common mistake patterns:**
 
 1. Using Polish date format: `15.09.2026` or `15-09-2026` instead of `2026-09-15`
-2. Missing the `Z` suffix on datetime: `2026-09-15T10:00:00` instead of `2026-09-15T10:00:00Z`
-3. Adding timezone offset instead of Z: `2026-09-15T10:00:00+02:00` — use UTC with `Z`
-4. Using a datetime format for a date field: `<P_1>2026-09-15T10:00:00Z</P_1>` — `P_1` expects date
+2. A `DataWytworzeniaFa` earlier than `2025-09-01T00:00:00Z` (XSD `minInclusive`)
+3. Using a datetime format for a date field: `<P_1>2026-09-15T10:00:00Z</P_1>` — `P_1` expects date
    only
-5. Single-digit months/days without zero padding: `2026-9-5` instead of `2026-09-05`
+4. Single-digit months/days without zero padding: `2026-9-5` instead of `2026-09-05`
 
 **Fix:**
 
@@ -455,18 +456,13 @@ for a complete example.
 <!-- ✅ CORRECT — date field -->
 <P_1>2026-09-15</P_1>
 
-<!-- ❌ WRONG — missing Z suffix -->
-<DataWytworzeniaFa>2026-09-15T10:00:00</DataWytworzeniaFa>
-
-<!-- ❌ WRONG — timezone offset instead of Z -->
-<DataWytworzeniaFa>2026-09-15T10:00:00+02:00</DataWytworzeniaFa>
-
-<!-- ✅ CORRECT — datetime with Z suffix -->
+<!-- ✅ CORRECT — datetime in UTC with Z suffix (the broszura's example form) -->
 <DataWytworzeniaFa>2026-09-15T10:00:00Z</DataWytworzeniaFa>
 ```
 
-- **Source (Appendix D, rule #15):** "DateTime format: YYYY-MM-DDTHH:MM:SSZ for DataWytworzeniaFa,
-  DataGodzRozpTransportu, DataGodzZakTransportu"
+- **Source (Appendix D, rule #15, corrected 2026-10-08 to match §2.9 and the XSD):** "DateTime
+  format: `YYYY-MM-DDTHH:MM:SS` (`xsd:dateTime`) for DataWytworzeniaFa, DataGodzRozpTransportu,
+  DataGodzZakTransportu. Append `Z` when giving UTC (§2.9)"
 - **Confidence:** HIGH
 
 ---
