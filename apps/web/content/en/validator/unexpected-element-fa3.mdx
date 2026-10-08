@@ -1,0 +1,74 @@
+---
+title: "Element in the wrong place in FA(3) invoice XML"
+description: 'An element is out of order, has a typo in its name or doesn''t exist in FA(3). How to read the "Expected at this point" hint and fix the XML file.'
+date: 2026-10-08
+section: validator
+locale: en
+slug: "unexpected-element-fa3"
+codes: ["UNEXPECTED_ELEMENT"]
+sources:
+  - label: "FA(3) XSD schema"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+  - label: "MF FA(3) information brochure, structure and order of elements"
+    url: "https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+translations:
+  pl: "element-w-zlym-miejscu-fa3"
+  en: "unexpected-element-fa3"
+  uk: "element-ne-na-svoyemu-mistsi-fa3"
+---
+
+## What this error means
+
+The FA(3) schema didn't expect this element at this point in the file. The element is in the wrong order, has a typo in its name or doesn't exist in FA(3) at all.
+
+You get the same message when **a mandatory field is missing before the reported element**. If `Fa` has no `P_2`, the schema reports the element that comes right after that spot (for example `P_6`), because that's where it was waiting for `P_2`.
+
+## Why the order matters
+
+The FA(3) XSD schema defines the contents of each section as a sequence (`xs:sequence`): elements must appear in a fixed order. You can leave out optional fields, but the ones you include have to sit in their place. `Fa` starts with `KodWaluty`, `P_1`, `P_1M` and `P_2`, and `Podmiot2` ends with the `JST` and `GV` fields, after `NrKlienta` and `IDNabywcy`. Element names are case-sensitive, so `Nip` is not `NIP`.
+
+<Source href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd" label="FA(3) XSD schema" />
+
+## How to read the hint
+
+With the error you see the element name, the line number and an "Expected at this point" list. These are the elements the schema would accept there instead of the one reported.
+
+- **One name on the list**, for example `P_1` when `P_2` is reported. Either the reported element comes too early, or the listed field is missing before it. Look for that field further down the section: if it's there, swap the elements; if it isn't, add it.
+- **Several names.** These are the elements that may appear here, optional ones included. For long sequences, such as the rate summary in `Fa`, the list can already be cut short in the message from libxml2, the library we use for schema validation, and may not include the field that's actually missing. In that case, compare the section with the order in the schema.
+- **"Did you mean…?"** The name differs from an expected one by one or two letters, so it's almost certainly a typo: `Nazw` instead of `Nazwa`, `NazwaBank` instead of `NazwaBanku`. We don't suggest anything for names that differ only by a number, because `P_13_1` and `P_13_2` are different fields.
+
+## How to fix it
+
+1. Open the file at the line given in the message.
+2. Compare the element name with the expected list and fix the typo or the letter case.
+3. If the name is correct, move the element to the right place or add the missing field before it.
+4. Remove any element the FA(3) schema doesn't know at all (a custom field from your software, a leftover from another format). Extra information on the invoice goes in `DodatkowyOpis`, as a `Klucz` and `Wartosc` pair.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ P_2 before P_1 -->
+  <Fa>
+    <KodWaluty>PLN</KodWaluty>
+    <P_2>FV/2026/10/014</P_2>
+    <P_1>2026-10-08</P_1>
+    ...
+  </Fa>
+  <!-- ✅ Order from the schema -->
+  <Fa>
+    <KodWaluty>PLN</KodWaluty>
+    <P_1>2026-10-08</P_1>
+    <P_2>FV/2026/10/014</P_2>
+    ...
+  </Fa>
+  <!-- ❌ GTU code as the element name -->
+  <GTU_12>1</GTU_12>
+  <!-- ✅ GTU code as the value of the GTU element -->
+  <GTU>GTU_12</GTU>
+  ```
+</XmlExample>
+
+## New errors may appear after the fix
+
+After the first ordering error, the schema doesn't check the rest of that section or the sections nested in it. If you swap `P_1` and `P_2` in `Fa`, and further down in `Adnotacje` you have `P_16` with the value `0`, you'll only see the error for that value once the order is fixed. Our MF rules run independently of the schema, so their messages, for example about a comma in `P_15`, show up straight away. Keep checking the file until the list is empty.
+
+A file built from an old FA(2) template stops earlier, at the [namespace in the `Faktura` element](/en/validator/wrong-namespace-fa3-invoice). We describe the order of the main sections in our [overview of the most common FA(3) errors](/en/blog/most-common-fa3-validation-errors#2-wrong-element-order). Once you've fixed it, [check the invoice again](/en/validator).

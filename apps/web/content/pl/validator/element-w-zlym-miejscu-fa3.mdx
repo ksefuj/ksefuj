@@ -1,0 +1,74 @@
+---
+title: "Element w złym miejscu w XML faktury FA(3)"
+description: "Element stoi w złej kolejności, ma literówkę w nazwie albo nie istnieje w FA(3). Jak czytać podpowiedź „W tym miejscu oczekujemy” i poprawić plik."
+date: 2026-10-08
+section: validator
+locale: pl
+slug: "element-w-zlym-miejscu-fa3"
+codes: ["UNEXPECTED_ELEMENT"]
+sources:
+  - label: "Schemat XSD FA(3)"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+  - label: "Broszura informacyjna FA(3), opis struktury i kolejności elementów"
+    url: "https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+translations:
+  pl: "element-w-zlym-miejscu-fa3"
+  en: "unexpected-element-fa3"
+  uk: "element-ne-na-svoyemu-mistsi-fa3"
+---
+
+## Co oznacza ten błąd
+
+Schemat FA(3) nie spodziewał się tego elementu w tym miejscu pliku. Element stoi w złej kolejności, ma literówkę w nazwie albo w ogóle nie istnieje w FA(3).
+
+Ten sam komunikat dostaniesz, gdy **przed zgłoszonym elementem brakuje pola obowiązkowego**. Jeśli w `Fa` nie ma `P_2`, schemat zgłosi element, który stoi zaraz za tym miejscem (na przykład `P_6`), bo tam czekał na `P_2`.
+
+## Dlaczego kolejność ma znaczenie
+
+Schemat XSD FA(3) opisuje zawartość sekcji jako sekwencję (`xs:sequence`): elementy muszą wystąpić w ustalonej kolejności. Pola opcjonalne możesz pominąć, ale te, które wpisujesz, stoją na swoim miejscu. `Fa` zaczyna się od `KodWaluty`, `P_1`, `P_1M` i `P_2`, a `Podmiot2` kończy się polami `JST` i `GV`, po `NrKlienta` i `IDNabywcy`. Nazwy elementów rozróżniają wielkość liter, więc `Nip` to nie `NIP`.
+
+<Source href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd" label="Schemat XSD FA(3)" />
+
+## Jak czytać podpowiedź
+
+Przy błędzie widzisz nazwę elementu, numer linii i listę „W tym miejscu oczekujemy”. To elementy, które schemat przyjąłby w tym miejscu zamiast zgłoszonego.
+
+- **Jedna nazwa na liście**, na przykład `P_1` przy zgłoszonym `P_2`. Albo zgłoszony element jest za wcześnie, albo przed nim brakuje wymienionego pola. Poszukaj tego pola niżej w sekcji: jeśli jest, przestaw elementy, jeśli go nie ma, dodaj je.
+- **Kilka nazw.** To elementy, które mogą tu stać, także opcjonalne. Przy długich sekwencjach, takich jak podsumowanie stawek w `Fa`, lista bywa ucięta już w komunikacie biblioteki libxml2, której używamy do walidacji schematu, i może nie zawierać pola, którego faktycznie brakuje. Wtedy porównaj sekcję z kolejnością w schemacie.
+- **„Czy chodziło o…?”** Nazwa różni się od oczekiwanej o jedną lub dwie litery, więc to prawie na pewno literówka: `Nazw` zamiast `Nazwa`, `NazwaBank` zamiast `NazwaBanku`. Nie podpowiadamy przy nazwach różniących się tylko numerem, bo `P_13_1` i `P_13_2` to różne pola.
+
+## Jak to naprawić
+
+1. Otwórz plik w linii podanej w komunikacie.
+2. Porównaj nazwę elementu z listą oczekiwanych i popraw literówkę albo wielkość liter.
+3. Jeśli nazwa jest poprawna, przenieś element na właściwe miejsce albo dodaj brakujące pole przed nim.
+4. Element, którego schemat FA(3) w ogóle nie zna (własne pole programu, pozostałość z innego formatu), usuń. Dodatkowe informacje na fakturze zapisuje się w `DodatkowyOpis`, jako parę `Klucz` i `Wartosc`.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ P_2 przed P_1 -->
+  <Fa>
+    <KodWaluty>PLN</KodWaluty>
+    <P_2>FV/2026/10/014</P_2>
+    <P_1>2026-10-08</P_1>
+    ...
+  </Fa>
+  <!-- ✅ Kolejność ze schematu -->
+  <Fa>
+    <KodWaluty>PLN</KodWaluty>
+    <P_1>2026-10-08</P_1>
+    <P_2>FV/2026/10/014</P_2>
+    ...
+  </Fa>
+  <!-- ❌ Kod GTU jako nazwa elementu -->
+  <GTU_12>1</GTU_12>
+  <!-- ✅ Kod GTU jako wartość elementu GTU -->
+  <GTU>GTU_12</GTU>
+  ```
+</XmlExample>
+
+## Po poprawce mogą pojawić się nowe błędy
+
+Po pierwszym błędzie kolejności schemat nie sprawdza dalszej części tej sekcji ani sekcji w niej zagnieżdżonych. Jeśli w `Fa` przestawisz `P_1` i `P_2`, a niżej w `Adnotacje` wpiszesz `P_16` z wartością `0`, błąd tej wartości zobaczysz dopiero po poprawieniu kolejności. Nasze reguły MF działają niezależnie od schematu, więc ich komunikaty, na przykład o przecinku w `P_15`, widzisz od razu. Sprawdzaj plik, aż lista będzie pusta.
+
+Plik ze starego szablonu FA(2) zatrzyma się wcześniej, na [przestrzeni nazw w elemencie `Faktura`](/validator/zly-namespace-faktura-fa3). Kolejność głównych sekcji opisujemy w [przeglądzie najczęstszych błędów FA(3)](/blog/najczestsze-bledy-walidacji-fa3#2-zła-kolejnosc-elementow). Po poprawce [sprawdź fakturę ponownie](/validator).

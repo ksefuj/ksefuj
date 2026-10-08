@@ -1,0 +1,79 @@
+---
+title: "Brak wymaganego pola w XML faktury FA(3)"
+description: "W sekcji faktury brakuje obowiązkowego pola albo atrybutu, a komunikat wskazuje którego. Pokazujemy, gdzie je dodać i których pól brakuje najczęściej."
+date: 2026-10-08
+section: validator
+locale: pl
+slug: "brak-wymaganego-pola-fa3"
+codes: ["REQUIRED_ELEMENT_MISSING"]
+sources:
+  - label: "Schemat XSD FA(3)"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+  - label: "Broszura informacyjna FA(3), opis pól obowiązkowych w Naglowek, Podmiot1, Podmiot2, Fa i Adnotacje"
+    url: "https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+translations:
+  pl: "brak-wymaganego-pola-fa3"
+  en: "missing-required-field-fa3"
+  uk: "vidsutnye-obovyazkove-pole-fa3"
+---
+
+## Co oznacza ten błąd
+
+W jednej z sekcji faktury brakuje obowiązkowego pola albo atrybutu. Komunikat podaje nazwę sekcji (na przykład `Podmiot2`) i pole, którego w niej zabrakło. Dodaj je, a plik przejdzie ten etap walidacji.
+
+Pokazujemy ten błąd w dwóch sytuacjach:
+
+- sekcja kończy się, zanim pojawiły się wszystkie wymagane pola, na przykład `Podmiot2` bez `GV` albo pusty element `Zwolnienie`;
+- element nie ma wymaganego atrybutu, na przykład `KodFormularza` bez `kodSystemowy` lub `wersjaSchemy`.
+
+Gdy brakujące pole powinno stać w środku sekcji, schemat zgłasza coś innego: następny element jako [stojący w złym miejscu](/validator/element-w-zlym-miejscu-fa3), zwykle z brakującym polem na liście oczekiwanych.
+
+## Gdzie dodać brakujące pole
+
+Schemat XSD FA(3) wyznacza każdemu polu stałe miejsce w sekcji. Skoro sekcja skończyła się za wcześnie, brakujące pole zwykle dopisujesz **na jej końcu**, przed znacznikiem zamykającym.
+
+Komunikat może wymieniać kilka nazw. To pola, które mogłyby stać w tym miejscu, także opcjonalne. Gdy w `Podmiot2` brakuje `JST` i `GV`, zobaczysz `IDNabywcy` i `JST`: pierwsze jest opcjonalne, drugie wymagane. Schemat zgłasza jedno brakujące pole naraz, więc po dodaniu `JST` zobaczysz brak `GV`. Nasze reguły MF zgłaszają oba braki od razu, jako osobne komunikaty opisane na stronie o [polach JST i GV](/validator/brak-jst-gv-podmiot2).
+
+<Source href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd" label="Schemat XSD FA(3)" />
+
+## Których pól brakuje najczęściej
+
+Pola obowiązkowe według schematu, w wymaganej kolejności:
+
+- `Naglowek`: `KodFormularza` z atrybutami `kodSystemowy="FA (3)"` i `wersjaSchemy="1-0E"`, `WariantFormularza`, `DataWytworzeniaFa`;
+- `Podmiot1`: `DaneIdentyfikacyjne` (z `NIP` i `Nazwa`) i `Adres` (z `KodKraju` i `AdresL1`);
+- `Podmiot2`: `DaneIdentyfikacyjne`, a na końcu `JST` i `GV`;
+- `Fa`: `KodWaluty`, `P_1`, `P_2`, `P_15`, `Adnotacje`, `RodzajFaktury`;
+- `Adnotacje`: wszystkie osiem pól, od `P_16` do `PMarzy`.
+
+`Zwolnienie`, `NoweSrodkiTransportu` i `PMarzy` w `Adnotacje` to sekcje z wyborem: każda musi zawierać jedną z opcji. Na zwykłej fakturze z VAT, bez zwolnienia, nowych środków transportu i marży, wpisujesz w nich `P_19N`, `P_22N` i `P_PMarzyN` z wartością `1`.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ Pusta sekcja Zwolnienie -->
+  <Zwolnienie></Zwolnienie>
+  <!-- ✅ Faktura bez zwolnienia z VAT -->
+  <Zwolnienie>
+    <P_19N>1</P_19N>
+  </Zwolnienie>
+  <!-- ❌ Brak atrybutu wersjaSchemy -->
+  <KodFormularza kodSystemowy="FA (3)">FA</KodFormularza>
+  <!-- ✅ Oba atrybuty -->
+  <KodFormularza kodSystemowy="FA (3)" wersjaSchemy="1-0E">FA</KodFormularza>
+  <!-- ❌ Podmiot2 kończy się bez GV -->
+  <Podmiot2>
+    ...
+    <JST>2</JST>
+  </Podmiot2>
+  <!-- ✅ GV na końcu sekcji -->
+  <Podmiot2>
+    ...
+    <JST>2</JST>
+    <GV>2</GV>
+  </Podmiot2>
+  ```
+</XmlExample>
+
+Pole, które jest w pliku, ale nie ma wartości (`<P_2></P_2>`), to inny błąd: [nieprawidłowa wartość pola](/validator/nieprawidlowa-wartosc-pola-fa3). Brak `P_15` opisujemy osobno, na stronie o [kwocie należności ogółem](/validator/brak-p15-kwota-naleznosci-ogolem).
+
+Przy plikach z własnego eksportu przydaje się porównanie z [minimalnym zestawem pól FA(3)](/blog/najczestsze-bledy-walidacji-fa3#3-brak-wymaganych-elementow). Po poprawce [sprawdź fakturę ponownie](/validator).

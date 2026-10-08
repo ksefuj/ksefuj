@@ -16,6 +16,8 @@
 import { existsSync, readdirSync, readFileSync, statSync } from "fs";
 import { join, relative } from "path";
 import matter from "gray-matter";
+import { extractHeadings } from "../apps/web/src/lib/content";
+import { checkIssueAnchors } from "../apps/web/src/lib/issue-anchor";
 import { CONTENT_TOPICS, isContentTopic } from "../apps/web/src/lib/topics";
 
 interface ValidationError {
@@ -281,7 +283,8 @@ function validateValidatorPages() {
     }
     const [, locale, slug] = match;
     const relPath = relative(process.cwd(), file);
-    const frontmatter = parseFrontmatter(readFileSync(file, "utf-8"), relPath);
+    const raw = readFileSync(file, "utf-8");
+    const frontmatter = parseFrontmatter(raw, relPath);
 
     if (frontmatter.section !== "validator") {
       addError(relPath, 'section must be "validator"');
@@ -300,6 +303,21 @@ function validateValidatorPages() {
       !codes.every((c) => typeof c === "string" && /^[A-Z0-9_]+$/.test(c))
     ) {
       addError(relPath, "codes must be a non-empty list of issue codes (e.g. UNEXPECTED_ELEMENT)");
+    }
+
+    // Anchors deep-link INVALID_ELEMENT_VALUE-style issues to a section; ids are per file because
+    // headings are translated, so each must match a heading as the page renders it.
+    // Malformed YAML was already reported by parseFrontmatter; skip the body then.
+    let body = "";
+    try {
+      body = matter(raw).content;
+    } catch {
+      // reported above
+    }
+    const headingIds = extractHeadings(body).map((h) => h.id);
+    const pageCodes = Array.isArray(codes) ? codes.filter((c) => typeof c === "string") : [];
+    for (const problem of checkIssueAnchors(frontmatter.anchors, pageCodes, headingIds)) {
+      addError(relPath, problem);
     }
 
     const translations = frontmatter.translations as Record<string, string> | undefined;

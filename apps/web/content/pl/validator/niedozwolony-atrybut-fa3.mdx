@@ -1,0 +1,62 @@
+---
+title: "Niedozwolony atrybut w XML faktury FA(3)"
+description: "Element faktury ma atrybut, którego schemat FA(3) nie przewiduje, na przykład walutę przy kwocie albo id w Faktura. Usuń go i wpisz daną we właściwe pole."
+date: 2026-10-08
+section: validator
+locale: pl
+slug: "niedozwolony-atrybut-fa3"
+codes: ["ELEMENT_NOT_ALLOWED"]
+sources:
+  - label: "Schemat XSD FA(3), deklaracje atrybutów"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+  - label: "W3C, Namespaces in XML 1.0"
+    url: "https://www.w3.org/TR/xml-names/"
+translations:
+  pl: "niedozwolony-atrybut-fa3"
+  en: "attribute-not-allowed-fa3"
+  uk: "nedozvolenyy-atrybut-fa3"
+---
+
+## Co oznacza ten błąd
+
+Element faktury ma atrybut, którego schemat FA(3) w tym miejscu nie przewiduje. Usuń go, a jeśli niósł potrzebną informację, wpisz ją w pole, które FA(3) do tego przeznacza.
+
+Atrybut to dopisek w znaczniku otwierającym, jak `waluta="PLN"` w `<P_15 waluta="PLN">`. Komunikat podaje nazwę atrybutu, element, w którym stoi, i numer linii.
+
+## Dlaczego tak jest
+
+W FA(3) dane zapisuje się w elementach, nie w atrybutach. Schemat XSD FA(3) deklaruje atrybuty tylko w dwóch miejscach: `kodSystemowy` i `wersjaSchemy` w `KodFormularza` oraz `Typ` w opisie kolumn tabeli w `Zalacznik`. Każdy inny atrybut przy elemencie faktury jest błędem schematu.
+
+<Source href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd" label="Schemat XSD FA(3)" />
+
+Ta zasada nie dotyczy deklaracji przestrzeni nazw (`xmlns`, `xmlns:etd`, `xmlns:xsi`). Atrybut `xsi:schemaLocation` w elemencie `Faktura` też przechodzi walidację.
+
+## Skąd się bierze najczęściej
+
+- **Waluta przy kwocie**, na przykład `currencyID="PLN"`, jak w formatach UBL. W FA(3) walutę podajesz raz, w `KodWaluty`.
+- **Identyfikator dodany przez program**, na przykład `id` w elemencie `Faktura` albo przy wierszu faktury.
+- **Język tekstu**: `xml:lang="pl"` przy opisie towaru.
+- **Dodatkowy atrybut w `KodFormularza`**, na przykład `wersja="3"` obok `kodSystemowy` i `wersjaSchemy`.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ Atrybut waluty przy kwocie -->
+  <P_15 currencyID="PLN">2051.00</P_15>
+  <!-- ✅ Kwota bez atrybutu, waluta w KodWaluty -->
+  <KodWaluty>PLN</KodWaluty>
+  ...
+  <P_15>2051.00</P_15>
+  <!-- ❌ Identyfikator dodany przez generator -->
+  <Faktura id="inv-0142" xmlns="http://crd.gov.pl/wzor/2025/06/25/13775/">
+  <!-- ✅ -->
+  <Faktura xmlns="http://crd.gov.pl/wzor/2025/06/25/13775/">
+  ```
+</XmlExample>
+
+## Jak to naprawić
+
+1. Otwórz plik w linii podanej w komunikacie i usuń atrybut z nazwą ze zgłoszenia.
+2. Sprawdź, czy wartość atrybutu była na fakturze potrzebna. Waluta trafia do `KodWaluty`, a własne dane do wyświetlenia na fakturze możesz zapisać w `DodatkowyOpis`, jako parę `Klucz` i `Wartosc`.
+3. Jeśli plik generuje program, zgłoś błąd dostawcy. Atrybut wróci przy każdym kolejnym eksporcie.
+
+Brakujący wymagany atrybut, na przykład `KodFormularza` bez `wersjaSchemy`, to osobny komunikat, opisany na stronie o [brakujących polach](/validator/brak-wymaganego-pola-fa3). Atrybuty w `KodFormularza` mają też stałe wartości: `kodSystemowy="FA (3)"`, ze spacją przed nawiasem, i `wersjaSchemy="1-0E"`. Po poprawce [sprawdź fakturę ponownie](/validator).

@@ -236,6 +236,20 @@ describe("parseXsdMessage", () => {
     });
   });
 
+  it("strips the XML namespace from attribute names to xml:lang", () => {
+    const parsed = parseXsdMessage(
+      `Element '${NS}Faktura', attribute '{http://www.w3.org/XML/1998/namespace}lang': The attribute '{http://www.w3.org/XML/1998/namespace}lang' is not allowed.`,
+    );
+    expect(parsed).toMatchObject({ code: "ELEMENT_NOT_ALLOWED", attribute: "xml:lang" });
+  });
+
+  it("strips other namespaces from attribute names to the local name", () => {
+    const parsed = parseXsdMessage(
+      `Element '${NS}Faktura', attribute '{urn:other}foo': The attribute '{urn:other}foo' is not allowed.`,
+    );
+    expect(parsed.attribute).toBe("foo");
+  });
+
   it("classifies stray text in element-only content as INVALID_ELEMENT_VALUE (content)", () => {
     const parsed = parseXsdMessage(
       `Element '${NS}Fa': Character content other than whitespace is not allowed because the content type is 'element-only'.`,
@@ -333,5 +347,26 @@ describe("XSD error codes registry", () => {
     expect(ERROR_CODES.WRONG_NAMESPACE.code.domain).toBe("xsd");
     expect(ERROR_CODES.UNEXPECTED_ELEMENT.code.severity).toBe("error");
     expect(ERROR_CODES.WRONG_NAMESPACE.code.severity).toBe("error");
+  });
+});
+
+describe("root rejection skips the semantic layer", () => {
+  const fixture = (name: string) =>
+    readFileSync(
+      join(dirname(fileURLToPath(import.meta.url)), "../../../../test-fixtures/error-cases", name),
+      "utf-8",
+    );
+
+  it("reports only WRONG_NAMESPACE for a Faktura without namespace", async () => {
+    const result = await validate(fixture("18-missing-namespace.xml"));
+    expect(result.issues.map((i) => i.code.code)).toEqual(["WRONG_NAMESPACE"]);
+    expect(result.valid).toBe(false);
+  });
+
+  it("reports no semantic issues for a non-Faktura root", async () => {
+    const result = await validate('<?xml version="1.0" encoding="UTF-8"?><Foo><Bar/></Foo>');
+    expect(result.issues.length).toBeGreaterThan(0);
+    expect(result.issues.every((i) => i.code.domain !== "semantic")).toBe(true);
+    expect(result.issues[0].code.code).toBe("SCHEMA_VALIDATION_FAILED");
   });
 });

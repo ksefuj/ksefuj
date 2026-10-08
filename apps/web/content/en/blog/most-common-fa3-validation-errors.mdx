@@ -2,7 +2,7 @@
 title: "12 most common FA(3) validation errors"
 description: "Wrong namespace, element order, NIP, dates, P_12, Adnotacje: the 12 most common FA(3) errors with the cause and a copy-ready XML fix for each."
 date: 2026-03-26
-updated: 2026-10-07
+updated: 2026-10-08
 section: blog
 locale: en
 slug: "most-common-fa3-validation-errors"
@@ -21,7 +21,7 @@ translationOf: "najczestsze-bledy-walidacji-fa3"
 
 An FA(3) invoice most often fails validation because of a wrong namespace, element order, missing fields, NIP and date formats, too many decimal places, a `P_12` rate, or incomplete `Adnotacje`. Each of the 12 errors below has a cause and XML you can copy.
 
-Validation messages are opaque. Instead of "missing delivery date" you get `cvc-complex-type.2.4.b: element P_6 not found`. If your invoicing software generates the XML itself, it should catch most of these. The explanations help when you integrate with KSeF (Krajowy System e-Faktur, Poland's national e-invoicing system) through the API, write a custom exporter, or want to know why an invoice was rejected. The examples are based on the FA(3) schema in force since 1 February 2026.
+Validation messages are opaque. Instead of "missing invoice number" you get something like `Element 'P_6': This element is not expected. Expected is ( P_2 ).` If your invoicing software generates the XML itself, it should catch most of these. The explanations help when you integrate with KSeF (Krajowy System e-Faktur, Poland's national e-invoicing system) through the API, write a custom exporter, or want to know why an invoice was rejected. The examples are based on the FA(3) schema in force since 1 February 2026.
 
 <Source
   href="https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
@@ -30,7 +30,7 @@ Validation messages are opaque. Instead of "missing delivery date" you get `cvc-
 
 ## 1. Missing or wrong namespace
 
-The `<Faktura>` element must carry the FA(3) namespace. Without it the validator recognises no element and reports an error on every one. The usual causes are a template from the internet that uses FA(2), an omitted `xmlns` attribute, or a typo in the URI (`2025/06/25/13775` is easy to get wrong). A namespace from templates predating February 2026 is almost certainly outdated, because FA(2) stopped applying on 31 January 2026.
+The `<Faktura>` element must carry the FA(3) namespace. Without it the validator does not recognise the file as an FA(3) invoice: it reports a single error on `Faktura` and checks nothing else in the file. The usual causes are a template from the internet that uses FA(2), an omitted `xmlns` attribute, or a typo in the URI (`2025/06/25/13775` is easy to get wrong). A namespace from templates predating February 2026 is almost certainly outdated, because FA(2) stopped applying on 31 January 2026.
 
 <XmlExample copyable>
   ```xml
@@ -103,7 +103,7 @@ FA(3) has dozens of mandatory fields at different levels, and the validator name
 
 ## 4. Wrong NIP format
 
-The schema requires exactly 10 digits with no separators. `123-456-78-90` and `PL 1234567890` are both wrong. The `PL` prefix goes in a separate field (`PrefiksPodatnika` in `Podmiot1`, `KodUE` in `Podmiot2`).
+The schema requires exactly 10 digits with no separators. `123-456-78-90` and `PL 1234567890` are both wrong. The `PL` prefix never goes in the `NIP` field. The seller gives it separately in `PrefiksPodatnika` (`Podmiot1`) when it is required (e.g. for an intra-Community supply). A Polish buyer in `Podmiot2` is identified by `NIP` alone; `KodUE` and `NrVatUE` are for the EU VAT number of a buyer from another member state.
 
 <XmlExample copyable>
   ```xml
@@ -123,7 +123,7 @@ The schema requires exactly 10 digits with no separators. `123-456-78-90` and `P
 
 ## 5. Wrong date format
 
-The Polish `15.09.2026` instead of `2026-09-15` is the most common slip. The second is mixing up date fields (`P_1`) with the date-time field (`DataWytworzeniaFa`). Date fields (`P_1`, `P_6`, `P_6A` and others) take `YYYY-MM-DD`. `DataWytworzeniaFa` needs `YYYY-MM-DDTHH:MM:SSZ` with the `Z` (UTC) suffix.
+The Polish `15.09.2026` instead of `2026-09-15` is the most common slip. The second is mixing up date fields (`P_1`) with the date-time field (`DataWytworzeniaFa`). Date fields (`P_1`, `P_6`, `P_6A` and others) take `YYYY-MM-DD`. `DataWytworzeniaFa` takes `YYYY-MM-DDTHH:MM:SS`. The MF information sheet gives an example in UTC, with `Z` at the end, but the schema also accepts a value without a time zone or with an offset (`+02:00`).
 
 <XmlExample copyable>
   ```xml
@@ -133,11 +133,9 @@ The Polish `15.09.2026` instead of `2026-09-15` is the most common slip. The sec
   <P_1>2026-09-15T10:00:00Z</P_1>
   <!-- ✅ Correct date -->
   <P_1>2026-09-15</P_1>
-  <!-- ❌ Missing Z suffix -->
-  <DataWytworzeniaFa>2026-09-15T10:00:00</DataWytworzeniaFa>
-  <!-- ❌ Timezone offset instead of Z (the MF information sheet requires Z) -->
-  <DataWytworzeniaFa>2026-09-15T10:00:00+02:00</DataWytworzeniaFa>
-  <!-- ✅ Date and time with Z (UTC) -->
+  <!-- ❌ Space instead of T, no seconds -->
+  <DataWytworzeniaFa>2026-09-15 10:00</DataWytworzeniaFa>
+  <!-- ✅ Date and time in UTC, with Z at the end -->
   <DataWytworzeniaFa>2026-09-15T10:00:00Z</DataWytworzeniaFa>
   ```
 </XmlExample>

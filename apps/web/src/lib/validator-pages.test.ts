@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 import type { ContentItem } from "./content";
-import { buildIssueHelpLinks } from "./validator-pages";
+import { buildIssueHelpAnchors, buildIssueHelpLinks } from "./validator-pages";
 
-function page(slug: string, codes?: string[]): ContentItem {
+function page(slug: string, codes?: string[], anchors?: Record<string, string>): ContentItem {
   return {
     frontmatter: {
       title: slug,
@@ -12,6 +12,7 @@ function page(slug: string, codes?: string[]): ContentItem {
       locale: "pl",
       slug,
       codes,
+      anchors,
     },
     content: "",
     readingTime: 1,
@@ -32,6 +33,29 @@ describe("buildIssueHelpLinks", () => {
   it("keeps the first page when two claim the same code", () => {
     expect(buildIssueHelpLinks("pl", [page("a", ["X"]), page("b", ["X"])])).toEqual({
       X: "/validator/a",
+    });
+  });
+});
+
+describe("anchors", () => {
+  const items = [
+    page("a", ["X"], { amount: "kwoty" }),
+    page("b", ["X", "Y"], { date: "daty" }),
+    page("c", ["Z"]),
+  ];
+
+  it("leaves hrefs unchanged", () => {
+    expect(buildIssueHelpLinks("pl", items)).toEqual({
+      X: "/validator/a",
+      Y: "/validator/b",
+      Z: "/validator/c",
+    });
+  });
+
+  it("maps codes to the anchors of the page that owns their href", () => {
+    expect(buildIssueHelpAnchors(items)).toEqual({
+      X: { amount: "kwoty" },
+      Y: { date: "daty" },
     });
   });
 });

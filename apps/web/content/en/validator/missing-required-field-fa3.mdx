@@ -1,0 +1,79 @@
+---
+title: "Missing required field in FA(3) invoice XML"
+description: "A section of the invoice lacks a mandatory field or attribute, and the message names it. Where to add it, and which FA(3) fields go missing most often."
+date: 2026-10-08
+section: validator
+locale: en
+slug: "missing-required-field-fa3"
+codes: ["REQUIRED_ELEMENT_MISSING"]
+sources:
+  - label: "FA(3) XSD schema"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+  - label: "MF FA(3) information brochure, mandatory fields in Naglowek, Podmiot1, Podmiot2, Fa and Adnotacje"
+    url: "https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+translations:
+  pl: "brak-wymaganego-pola-fa3"
+  en: "missing-required-field-fa3"
+  uk: "vidsutnye-obovyazkove-pole-fa3"
+---
+
+## What this error means
+
+One of the sections of the invoice is missing a mandatory field or attribute. The message gives the name of the section (for example `Podmiot2`) and the field that's missing from it. Add it and the file passes this stage of validation.
+
+We show this error in two situations:
+
+- the section ends before all the required fields have appeared, for example `Podmiot2` without `GV`, or an empty `Zwolnienie` element;
+- an element lacks a required attribute, for example `KodFormularza` without `kodSystemowy` or `wersjaSchemy`.
+
+When the missing field belongs in the middle of a section, the schema reports something else: the next element, as [being in the wrong place](/en/validator/unexpected-element-fa3), usually with the missing field on the list of expected ones.
+
+## Where to add the missing field
+
+The FA(3) XSD schema gives every field a fixed place in its section. Since the section ended too early, you usually add the missing field **at its end**, before the closing tag.
+
+The message may list several names. These are the fields that could appear at this point, optional ones included. When `Podmiot2` is missing `JST` and `GV`, you'll see `IDNabywcy` and `JST`: the first is optional, the second required. The schema reports one missing field at a time, so after you add `JST` you'll see that `GV` is missing. Our MF rules report both gaps at once, as separate messages described on the page about the [JST and GV fields](/en/validator/missing-jst-gv-podmiot2).
+
+<Source href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd" label="FA(3) XSD schema" />
+
+## Which fields go missing most often
+
+Mandatory fields according to the schema, in the required order:
+
+- `Naglowek`: `KodFormularza` with the attributes `kodSystemowy="FA (3)"` and `wersjaSchemy="1-0E"`, `WariantFormularza`, `DataWytworzeniaFa`;
+- `Podmiot1`: `DaneIdentyfikacyjne` (with `NIP` and `Nazwa`) and `Adres` (with `KodKraju` and `AdresL1`);
+- `Podmiot2`: `DaneIdentyfikacyjne`, and `JST` and `GV` at the end;
+- `Fa`: `KodWaluty`, `P_1`, `P_2`, `P_15`, `Adnotacje`, `RodzajFaktury`;
+- `Adnotacje`: all eight fields, from `P_16` to `PMarzy`.
+
+`Zwolnienie`, `NoweSrodkiTransportu` and `PMarzy` in `Adnotacje` are choice sections: each must contain one of the options. On a standard VAT invoice, with no exemption, no new means of transport and no margin scheme, you put `P_19N`, `P_22N` and `P_PMarzyN` in them, each with the value `1`.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ Empty Zwolnienie section -->
+  <Zwolnienie></Zwolnienie>
+  <!-- ✅ Invoice without a VAT exemption -->
+  <Zwolnienie>
+    <P_19N>1</P_19N>
+  </Zwolnienie>
+  <!-- ❌ wersjaSchemy attribute missing -->
+  <KodFormularza kodSystemowy="FA (3)">FA</KodFormularza>
+  <!-- ✅ Both attributes -->
+  <KodFormularza kodSystemowy="FA (3)" wersjaSchemy="1-0E">FA</KodFormularza>
+  <!-- ❌ Podmiot2 ends without GV -->
+  <Podmiot2>
+    ...
+    <JST>2</JST>
+  </Podmiot2>
+  <!-- ✅ GV at the end of the section -->
+  <Podmiot2>
+    ...
+    <JST>2</JST>
+    <GV>2</GV>
+  </Podmiot2>
+  ```
+</XmlExample>
+
+A field that is in the file but has no value (`<P_2></P_2>`) is a different error: an [invalid field value](/en/validator/invalid-field-value-fa3). A missing `P_15` has its own page, about the [total amount due](/en/validator/missing-p15-total-amount-due).
+
+For files from a custom export, it helps to compare against the [minimum set of FA(3) fields](/en/blog/most-common-fa3-validation-errors#3-missing-required-elements). Once you've fixed it, [check the invoice again](/en/validator).

@@ -135,6 +135,19 @@ class XmlParser {
   }
 }
 
+/** XSD issue saying the document root cannot be matched to the FA(3) schema at all. */
+function isRootRejection(issue: ValidationIssue): boolean {
+  if (issue.code.code === "WRONG_NAMESPACE") {
+    return true;
+  }
+  const original = issue.context.metadata?.originalMessage;
+  return (
+    issue.code.code === "SCHEMA_VALIDATION_FAILED" &&
+    typeof original === "string" &&
+    /no matching global declaration available for the validation root/i.test(original)
+  );
+}
+
 // Main validation orchestrator
 class ValidationOrchestrator {
   private readonly startTime: number;
@@ -205,8 +218,17 @@ class ValidationOrchestrator {
       }
     }
 
+    // The semantic layer reads FA(3) elements by namespace. When the root is not an FA(3)
+    // `Faktura` (no or wrong namespace, or another root element) it finds none and would report
+    // false "missing" issues, so it is skipped, like for malformed XML.
+    const rootRejected = issues.some(isRootRejection);
+
     // Step 3: Semantic validation (if enabled)
-    if (this.enableSemantic && (!this.maxIssues || issues.length < this.maxIssues)) {
+    if (
+      this.enableSemantic &&
+      !rootRejected &&
+      (!this.maxIssues || issues.length < this.maxIssues)
+    ) {
       try {
         // Lazy load libxml2-wasm for semantic validation
         const libxml2 = await getLibxml2Module();

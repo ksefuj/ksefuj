@@ -2,7 +2,7 @@
 title: "12 najczęstszych błędów walidacji FA(3)"
 description: "Zły namespace, kolejność elementów, NIP, daty, P_12, Adnotacje: 12 najczęstszych błędów FA(3) z przyczyną i poprawką w XML do skopiowania."
 date: 2026-03-26
-updated: 2026-10-07
+updated: 2026-10-08
 section: blog
 locale: pl
 slug: "najczestsze-bledy-walidacji-fa3"
@@ -20,7 +20,7 @@ translations:
 
 Faktura FA(3) najczęściej wpada na walidacji przez zły namespace, kolejność elementów, brakujące pola, format NIP i dat, nadmiarowe miejsca po przecinku, stawkę w `P_12` albo niekompletne `Adnotacje`. Każdy z 12 błędów poniżej ma przyczynę i poprawkę w XML do skopiowania.
 
-Komunikaty walidacji bywają hermetyczne. Zamiast „brakuje daty dostawy" zobaczysz `cvc-complex-type.2.4.b: element P_6 not found`. Jeśli program do fakturowania generuje XML sam, większość tych błędów wyłapie za Ciebie. Te opisy przydadzą się, gdy integrujesz KSeF przez API, piszesz własny eksport albo chcesz zrozumieć, dlaczego faktura wróciła. Przykłady opierają się na schemacie FA(3) obowiązującym od 1 lutego 2026 roku.
+Komunikaty walidacji bywają hermetyczne. Zamiast „brakuje numeru faktury" zobaczysz na przykład `Element 'P_6': This element is not expected. Expected is ( P_2 ).` Jeśli program do fakturowania generuje XML sam, większość tych błędów wyłapie za Ciebie. Te opisy przydadzą się, gdy integrujesz KSeF przez API, piszesz własny eksport albo chcesz zrozumieć, dlaczego faktura wróciła. Przykłady opierają się na schemacie FA(3) obowiązującym od 1 lutego 2026 roku.
 
 <Source
   href="https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
@@ -29,7 +29,7 @@ Komunikaty walidacji bywają hermetyczne. Zamiast „brakuje daty dostawy" zobac
 
 ## 1. Brak lub zły namespace
 
-Element `<Faktura>` musi zawierać namespace FA(3). Bez niego walidator nie rozpozna żadnego elementu i zgłosi błąd przy każdym z nich. Przyczyna to zwykle szablon z internetu z FA(2), pominięty atrybut `xmlns` albo literówka w adresie (`2025/06/25/13775` łatwo przekręcić). Namespace z szablonów sprzed lutego 2026 jest prawie na pewno nieaktualny, bo FA(2) przestał obowiązywać 31 stycznia 2026.
+Element `<Faktura>` musi zawierać namespace FA(3). Bez niego walidator nie rozpozna pliku jako faktury FA(3): zgłosi jeden błąd przy elemencie `Faktura` i nie sprawdzi reszty pliku. Przyczyna to zwykle szablon z internetu z FA(2), pominięty atrybut `xmlns` albo literówka w adresie (`2025/06/25/13775` łatwo przekręcić). Namespace z szablonów sprzed lutego 2026 jest prawie na pewno nieaktualny, bo FA(2) przestał obowiązywać 31 stycznia 2026.
 
 <XmlExample copyable>
   ```xml
@@ -102,7 +102,7 @@ FA(3) ma kilkadziesiąt pól obowiązkowych na różnych poziomach, a walidator 
 
 ## 4. Zły format NIP
 
-Schemat wymaga dokładnie 10 cyfr bez separatorów. Zapisy `123-456-78-90` i `PL 1234567890` są błędne. Prefiks `PL` trafia do osobnego pola (`PrefiksPodatnika` w `Podmiot1`, `KodUE` w `Podmiot2`).
+Schemat wymaga dokładnie 10 cyfr bez separatorów. Zapisy `123-456-78-90` i `PL 1234567890` są błędne. Prefiks `PL` nie trafia do pola `NIP`. Sprzedawca podaje go osobno w `PrefiksPodatnika` (`Podmiot1`), gdy jest wymagany (np. przy WDT). Polskiego nabywcę w `Podmiot2` identyfikuje sam `NIP`; pola `KodUE` i `NrVatUE` służą do numeru VAT UE nabywcy z innego kraju.
 
 <XmlExample copyable>
   ```xml
@@ -122,7 +122,7 @@ Schemat wymaga dokładnie 10 cyfr bez separatorów. Zapisy `123-456-78-90` i `PL
 
 ## 5. Zły format daty
 
-Polskie `15.09.2026` zamiast `2026-09-15` to najczęstsza pomyłka. Druga: pomylenie pól daty (`P_1`) z polem daty i czasu (`DataWytworzeniaFa`). Pola daty (`P_1`, `P_6`, `P_6A` i inne) przyjmują `RRRR-MM-DD`. `DataWytworzeniaFa` wymaga `RRRR-MM-DDTHH:MM:SSZ` z sufiksem `Z` (UTC).
+Polskie `15.09.2026` zamiast `2026-09-15` to najczęstsza pomyłka. Druga: pomylenie pól daty (`P_1`) z polem daty i czasu (`DataWytworzeniaFa`). Pola daty (`P_1`, `P_6`, `P_6A` i inne) przyjmują `RRRR-MM-DD`. `DataWytworzeniaFa` przyjmuje `RRRR-MM-DDTHH:MM:SS`. Broszura podaje przykład w czasie UTC, z literą `Z` na końcu, ale schemat przyjmie też zapis bez strefy czasowej albo z przesunięciem (`+02:00`).
 
 <XmlExample copyable>
   ```xml
@@ -132,11 +132,9 @@ Polskie `15.09.2026` zamiast `2026-09-15` to najczęstsza pomyłka. Druga: pomyl
   <P_1>2026-09-15T10:00:00Z</P_1>
   <!-- ✅ Poprawna data -->
   <P_1>2026-09-15</P_1>
-  <!-- ❌ Brak sufiksu Z -->
-  <DataWytworzeniaFa>2026-09-15T10:00:00</DataWytworzeniaFa>
-  <!-- ❌ Offset strefy czasowej zamiast Z (broszura MF wymaga Z) -->
-  <DataWytworzeniaFa>2026-09-15T10:00:00+02:00</DataWytworzeniaFa>
-  <!-- ✅ Data i czas z Z (UTC) -->
+  <!-- ❌ Spacja zamiast T, brak sekund -->
+  <DataWytworzeniaFa>2026-09-15 10:00</DataWytworzeniaFa>
+  <!-- ✅ Data i czas w UTC, z Z na końcu -->
   <DataWytworzeniaFa>2026-09-15T10:00:00Z</DataWytworzeniaFa>
   ```
 </XmlExample>

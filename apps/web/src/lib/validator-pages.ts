@@ -33,3 +33,33 @@ export function buildIssueHelpLinks(
 export async function getIssueHelpLinks(locale: string): Promise<Record<string, string>> {
   return buildIssueHelpLinks(locale, await listValidatorPages(locale));
 }
+
+/**
+ * Map issue code to the heading ids its page declares per issue kind (`anchors` frontmatter).
+ * Same first-page-wins rule as `buildIssueHelpLinks`, so a code's href and anchors always come
+ * from the same page.
+ */
+export function buildIssueHelpAnchors(
+  items: readonly ContentItem[],
+): Record<string, Record<string, string>> {
+  const anchors: Record<string, Record<string, string>> = {};
+  const claimed = new Set<string>();
+  for (const { frontmatter } of items) {
+    for (const code of frontmatter.codes ?? []) {
+      if (claimed.has(code)) {
+        continue;
+      }
+      claimed.add(code);
+      if (frontmatter.anchors && Object.keys(frontmatter.anchors).length > 0) {
+        anchors[code] = frontmatter.anchors;
+      }
+    }
+  }
+  return anchors;
+}
+
+export async function getIssueHelpAnchors(
+  locale: string,
+): Promise<Record<string, Record<string, string>>> {
+  return buildIssueHelpAnchors(await listValidatorPages(locale));
+}
