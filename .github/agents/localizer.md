@@ -136,8 +136,8 @@ Recommendation: Option [N] because [reason]
 
 Wait for human approval before writing these titles to files. This applies to landing page, feature
 card, and hero titles. For blog/guide/FAQ titles and descriptions, adapt them yourself following
-STYLE.md section 2 (under 60 / 160 characters, specific, localised, never copied from PL); no human
-gate.
+STYLE.md section 2 (titles max 49 characters, since the template appends " — ksefuj.to";
+descriptions under 160; specific, localised, never copied from PL); no human gate.
 
 ### 3. Factual Claims Stay Identical
 
