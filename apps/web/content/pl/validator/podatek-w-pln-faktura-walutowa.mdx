@@ -1,0 +1,90 @@
+---
+title: "Faktura w walucie obcej bez podatku w PLN"
+description: "Na fakturze w EUR czy USD kwoty są w walucie, ale VAT musi być też w złotych, w polach P_14_1W do P_14_4W. Przelicz podatek po kursie NBP i dopisz te pola."
+date: 2026-10-08
+section: validator
+locale: pl
+slug: "podatek-w-pln-faktura-walutowa"
+codes: ["FOREIGN_CURRENCY_TAX_PLN"]
+sources:
+  - label: "Broszura informacyjna FA(3), opisy pól P_13_x, P_14_x i P_14_xW"
+    url: "https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "Ustawa o VAT, art. 31a i art. 106e ust. 11"
+    url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
+  - label: "FAQ MF, KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
+  - label: "Schemat XSD FA(3)"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+translations:
+  pl: "podatek-w-pln-faktura-walutowa"
+  en: "foreign-currency-invoice-vat-in-pln"
+  uk: "podatok-v-pln-valyutnyy-rakhunok"
+---
+
+## Co oznacza ten komunikat
+
+Faktura jest wystawiona w euro, dolarach albo innej walucie, ale kwota VAT nie została przeliczona na złote. Kwoty netto i brutto zostają w walucie faktury, a sam podatek podajesz dodatkowo w PLN, w polach `P_14_1W` do `P_14_4W`. Schemat oznacza te pola jako opcjonalne, dlatego walidator zgłasza to jako ostrzeżenie.
+
+Ostrzeżenie pojawia się, gdy `KodWaluty` jest inny niż `PLN`, a przy którymś z pól `P_13_1`, `P_13_2`, `P_13_3` lub `P_13_4` brakuje odpowiadającego mu `P_14_xW`. Ten sam komunikat zobaczysz w odwrotnej sytuacji: faktura jest w PLN, a zawiera pole `P_14_xW`. Wtedy po prostu je usuń.
+
+## Dlaczego podatek musi być w złotych
+
+Kwoty sprzedaży i podatku wpisujesz w walucie, w której wystawiasz fakturę, z wyjątkiem podatku przeliczanego zgodnie z art. 106e ust. 11 ustawy o VAT (broszura FA(3), opisy pól `P_13_x` i `P_14_x`). Każdej stawce odpowiada trójka pól: podstawa, podatek i podatek w PLN dla faktury w walucie obcej (`P_14_xW`). MF ujmuje to w odpowiedzi na pytanie 19: „jedynie kwota podatku w polu P_14_xW przeliczona jest na złotówki zgodnie z art. 106e ust. 11 ustawy o VAT”.
+
+<Source
+  href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
+  label="FAQ MF, KSeF 2.0, pytanie 19"
+/>
+
+Kurs wynika z art. 31a ustawy o VAT. Co do zasady to średni kurs NBP z ostatniego dnia roboczego przed dniem powstania obowiązku podatkowego (ust. 1), a gdy wystawiasz fakturę przed tym dniem, z ostatniego dnia roboczego przed dniem jej wystawienia (ust. 2). Przepis dopuszcza też kurs Europejskiego Banku Centralnego (ust. 1 zdanie drugie) i, pod pewnymi warunkami, kurs z dnia roboczego przed datą wystawienia faktury (ust. 1a). Komunikat dotyczy tylko stawek z polami `P_13_1`–`P_13_4`: sprzedaż w stawkach 0%, zwolniona oraz ze stawką `oo`, `np I` lub `np II` nie ma pola `P_14_xW`.
+
+<Source
+  href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
+  label="Ustawa o VAT, art. 31a i art. 106e ust. 11"
+/>
+
+## Jak to naprawić
+
+1. Znajdź kurs średni NBP z właściwego dnia. Datę i kurs podpowie [kalkulator kursu NBP](/waluty).
+2. Pomnóż podatek z `P_14_x` przez kurs i zaokrąglij do 2 miejsc po przecinku.
+3. Wpisz wynik w `P_14_xW` bezpośrednio po `P_14_x` tej samej stawki.
+4. Wpisz użyty kurs w `KursWaluty` w wierszach faktury, a na fakturze zaliczkowej w `KursWalutyZ`. Schemat tych pól nie wymaga, ale MF wskazuje je w tej samej odpowiedzi na pytanie 19.
+
+Przykład: usługa za 1000 EUR netto ze stawką 23%, przykładowy kurs 4,2618 zł. Podatek w PLN to 230 × 4,2618 = 980,21 zł.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ Faktura w EUR bez podatku w PLN -->
+  <Fa>
+    <KodWaluty>EUR</KodWaluty>
+    ...
+    <P_13_1>1000.00</P_13_1>
+    <P_14_1>230.00</P_14_1>
+    <P_15>1230.00</P_15>
+    ...
+  </Fa>
+  <!-- ✅ Podatek przeliczony na PLN, kurs w wierszu -->
+  <Fa>
+    <KodWaluty>EUR</KodWaluty>
+    ...
+    <P_13_1>1000.00</P_13_1>
+    <P_14_1>230.00</P_14_1>
+    <P_14_1W>980.21</P_14_1W>
+    <P_15>1230.00</P_15>
+    ...
+    <FaWiersz>
+      <NrWierszaFa>1</NrWierszaFa>
+      <P_7>Tłumaczenie dokumentacji technicznej</P_7>
+      <P_11>1000.00</P_11>
+      <P_12>23</P_12>
+      <KursWaluty>4.2618</KursWaluty>
+    </FaWiersz>
+  </Fa>
+  ```
+</XmlExample>
+
+`P_15` zostaje w walucie faktury. Jeśli kurs w `KursWaluty` nie zgadza się z tabelą NBP, walidator zgłosi to osobnym ostrzeżeniem.
+
+## Co dalej
+
+Dane nabywcy zagranicznego i stawki dla transakcji z zagranicą opisaliśmy w artykule o [fakturze dla nabywcy z zagranicy](/blog/faktura-zagraniczna-ksef). Inne częste problemy z polami `P_13_x` i `P_15` znajdziesz w [najczęstszych błędach walidacji FA(3)](/blog/najczestsze-bledy-walidacji-fa3). Po poprawce [sprawdź fakturę ponownie](/validator).

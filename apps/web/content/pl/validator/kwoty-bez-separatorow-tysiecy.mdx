@@ -1,0 +1,68 @@
+---
+title: "Spacja lub przecinek w kwocie faktury FA(3)"
+description: "Kwoty w FA(3) zapisuje się samymi cyframi z kropką jako separatorem dziesiętnym: 1234.56, nie 1 234,56. Które pola sprawdzamy i jak szybko poprawić plik."
+date: 2026-10-08
+section: validator
+locale: pl
+slug: "kwoty-bez-separatorow-tysiecy"
+codes: ["AMOUNT_NO_SEPARATORS"]
+sources:
+  - label: "Broszura informacyjna FA(3), ogólne zasady wypełniania pól kwotowych"
+    url: "https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "Schemat XSD FA(3)"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+translations:
+  pl: "kwoty-bez-separatorow-tysiecy"
+  en: "fa3-amount-format-no-separators"
+  uk: "sumy-bez-rozdilyuvachiv-tysyach"
+---
+
+## Co oznacza ten błąd
+
+Któraś kwota na fakturze ma spację, przecinek albo inny znak poza cyframi. W FA(3) kwotę zapisuje się samymi cyframi, a część dziesiętną oddziela kropką: `1234.56`, nie `1 234,56`.
+
+## Dlaczego tak jest
+
+Broszura MF wymaga, by pola kwotowe były ciągiem cyfr bez separatorów tysięcy (bez spacji), a jedynym dopuszczalnym separatorem dziesiętnym była kropka. Kwotę ujemną poprzedza się znakiem minus. Schemat XSD definiuje te pola jako liczby, więc zapis ze spacją lub przecinkiem nie przejdzie też walidacji schematu.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  label="Broszura informacyjna FA(3), ogólne zasady wypełniania pól kwotowych"
+/>
+
+Nasz walidator zgłasza ten błąd, gdy pole zawiera cokolwiek poza cyframi, kropką i minusem albo ma więcej niż jedną kropkę. Sprawdzamy:
+
+- w podsumowaniu `Fa`: `P_13_x` (także `P_13_6_1`–`P_13_6_3`), `P_14_x`, `P_14_xW`, `P_15` i `KursWalutyZ`;
+- w każdym wierszu `FaWiersz`: `P_8B` (ilość), `P_9A` i `P_9B` (ceny jednostkowe), `P_10` (rabat), `P_11`, `P_11A`, `P_11Vat` i `KursWaluty`.
+
+W szczegółach błędu zobaczysz nazwę pola, a przy wierszach także numer pozycji.
+
+## Jak to naprawić
+
+1. Usuń wszystkie spacje z kwoty, także tę między tysiącami.
+2. Zamień przecinek dziesiętny na kropkę.
+3. Usuń walutę, znak procentu i inne dopiski. Walutę podajesz raz, w `KodWaluty`.
+4. Jeśli kwota ma kropkę jako separator tysięcy (`1.234,56`), usuń ją przed zamianą przecinka. Zostanie `1234.56`.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ Spacja jako separator tysięcy -->
+  <P_15>4 920.00</P_15>
+  <!-- ❌ Przecinek dziesiętny -->
+  <P_15>4920,00</P_15>
+  <!-- ❌ Kropka tysięcy i przecinek dziesiętny -->
+  <P_15>4.920,00</P_15>
+  <!-- ❌ Waluta w polu kwoty -->
+  <P_15>4920.00 zł</P_15>
+  <!-- ✅ Same cyfry, kropka dziesiętna -->
+  <P_15>4920.00</P_15>
+  <!-- ✅ Kwota ujemna, np. w wierszu korekty -->
+  <P_11>-150.00</P_11>
+  ```
+</XmlExample>
+
+## Skąd się bierze najczęściej
+
+Zwykle winne jest formatowanie liczb. Arkusz kalkulacyjny lub program z polskimi ustawieniami regionalnymi pokazuje kwoty jako `4 920,00`, a eksport zapisuje do XML tekst sformatowany do wyświetlenia zamiast surowej liczby. Bywa to spacja niełamliwa, której nie widać w edytorze. Drugie źródło to kwoty przepisane ręcznie z PDF albo z wydruku.
+
+Liczba miejsc po przecinku to osobna reguła: kwoty mają najwyżej 2, ilości 6, ceny jednostkowe 8. Opisujemy ją w [przeglądzie najczęstszych błędów FA(3)](/blog/najczestsze-bledy-walidacji-fa3#6-zbyt-wiele-miejsc-po-przecinku). Po poprawce [sprawdź fakturę ponownie](/validator).

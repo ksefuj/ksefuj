@@ -1,0 +1,86 @@
+---
+title: "Brak P_15: kwota należności ogółem w FA(3)"
+description: "P_15 to kwota należności ogółem, obowiązkowa na każdej fakturze FA(3), także zaliczkowej i korygującej. Co w nim wpisać, gdzie je umieścić i jak naprawić błąd."
+date: 2026-10-08
+section: validator
+locale: pl
+slug: "brak-p15-kwota-naleznosci-ogolem"
+codes: ["P15_MISSING"]
+sources:
+  - label: "Broszura informacyjna FA(3), opis pola P_15"
+    url: "https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "Schemat XSD FA(3)"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+translations:
+  pl: "brak-p15-kwota-naleznosci-ogolem"
+  en: "missing-p15-total-amount-due"
+  uk: "vidsutnye-p15-suma-do-oplaty"
+---
+
+## Co oznacza ten błąd
+
+W fakturze brakuje pola `P_15`, czyli kwoty należności ogółem. To kwota, którą klient ma zapłacić, i musi się znaleźć na każdej fakturze FA(3). Bez niej plik jest niezgodny ze schematem, więc KSeF go nie przyjmie.
+
+## Dlaczego tak jest
+
+W opisie pola `P_15` broszura MF oznacza je jako obowiązkowe. Pola `P_13_x` i `P_14_x` wypełniasz tylko dla stawek, które występują na fakturze, a `P_15` zawsze.
+
+Znaczenie pola zależy od rodzaju faktury:
+
+| Rodzaj faktury                                | Co wpisujesz w `P_15`                    |
+| --------------------------------------------- | ---------------------------------------- |
+| zwykła (`VAT`)                                | kwotę należności ogółem                  |
+| zaliczkowa (`ZAL`)                            | kwotę zapłaty, którą dokumentuje faktura |
+| rozliczeniowa (art. 106f ust. 3 ustawy o VAT) | kwotę pozostałą do zapłaty               |
+| korygująca (`KOR`)                            | korektę kwoty z faktury korygowanej      |
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  label="Broszura informacyjna FA(3), opis pola P_15"
+/>
+
+Nasz walidator sprawdza, czy element `P_15` istnieje w `Fa`. Schemat XSD wymaga go tak samo, więc ten brak może pojawić się na liście drugi raz, jako błąd schematu.
+
+## Jak to naprawić
+
+1. Policz kwotę: suma wszystkich kwot netto (`P_13_x`) i podatku (`P_14_x`) z podsumowania. Przy fakturze zaliczkowej, rozliczeniowej lub korygującej wpisz kwotę z tabeli wyżej.
+2. Dodaj `P_15` w `Fa` zaraz po ostatnim polu `P_13_x` lub `P_14_x`, a przed `KursWalutyZ` (jeśli go używasz) i `Adnotacje`. Kolejność jest stała.
+3. Zapisz kwotę cyframi, z kropką i najwyżej dwoma miejscami po przecinku, np. `4920.00`.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ Brak P_15 -->
+  <Fa>
+    <KodWaluty>PLN</KodWaluty>
+    <P_1>2026-10-08</P_1>
+    <P_2>FV/10/2026</P_2>
+    <P_6>2026-10-08</P_6>
+    <P_13_1>4000.00</P_13_1>
+    <P_14_1>920.00</P_14_1>
+    <Adnotacje>...</Adnotacje>
+    <RodzajFaktury>VAT</RodzajFaktury>
+    ...
+  </Fa>
+  <!-- ✅ P_15 po polach podsumowania, przed Adnotacje -->
+  <Fa>
+    <KodWaluty>PLN</KodWaluty>
+    <P_1>2026-10-08</P_1>
+    <P_2>FV/10/2026</P_2>
+    <P_6>2026-10-08</P_6>
+    <P_13_1>4000.00</P_13_1>
+    <P_14_1>920.00</P_14_1>
+    <P_15>4920.00</P_15>
+    <Adnotacje>...</Adnotacje>
+    <RodzajFaktury>VAT</RodzajFaktury>
+    ...
+  </Fa>
+  ```
+</XmlExample>
+
+## Skąd się bierze najczęściej
+
+- **Literówka w nazwie elementu**, np. `P15` albo `p_15`. Dla walidatora to inne pole, więc `P_15` nadal brakuje.
+- **Ręczna edycja pliku**, przy której pole zostało usunięte razem z sąsiednimi kwotami.
+- **Własny eksport**, który wypełnia `P_15` tylko dla zwykłych faktur, a pomija je przy zaliczkowych lub korygujących.
+
+Gdy `P_15` już jest, ale nie zgadza się z sumą kwot, walidator zgłosi [błąd kalkulacji VAT](/validator/blad-kalkulacji-vat-p14-p15). Listę pozostałych pól obowiązkowych znajdziesz w [przeglądzie najczęstszych błędów FA(3)](/blog/najczestsze-bledy-walidacji-fa3#3-brak-wymaganych-elementow). Po poprawce [sprawdź fakturę ponownie](/validator).

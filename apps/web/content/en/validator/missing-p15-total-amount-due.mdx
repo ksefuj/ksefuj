@@ -1,0 +1,86 @@
+---
+title: "Missing P_15: total amount due in FA(3)"
+description: "P_15 is the total amount due, mandatory on every FA(3) invoice, including advance and corrective ones. What goes in it, where it sits and how to fix the error."
+date: 2026-10-08
+section: validator
+locale: en
+slug: "missing-p15-total-amount-due"
+codes: ["P15_MISSING"]
+sources:
+  - label: "MF FA(3) information brochure, description of P_15"
+    url: "https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "FA(3) XSD schema"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+translations:
+  pl: "brak-p15-kwota-naleznosci-ogolem"
+  en: "missing-p15-total-amount-due"
+  uk: "vidsutnye-p15-suma-do-oplaty"
+---
+
+## What this error means
+
+The invoice has no `P_15` field, the total amount due. That's the amount the customer has to pay, and it must appear on every FA(3) invoice. Without it the file doesn't conform to the schema, so KSeF (Poland's national e-invoicing system) won't accept it.
+
+## Why it's required
+
+In its description of `P_15`, the Ministry of Finance's FA(3) information brochure (broszura) marks the field as mandatory. You fill in `P_13_x` and `P_14_x` only for the rates that appear on the invoice, but `P_15` always.
+
+What the field means depends on the type of invoice:
+
+| Invoice type                                       | What goes in `P_15`                    |
+| -------------------------------------------------- | -------------------------------------- |
+| standard (`VAT`)                                   | the total amount due                   |
+| advance (`ZAL`)                                    | the payment the invoice documents      |
+| final settlement (Art. 106f ust. 3 of the VAT Act) | the amount still to be paid            |
+| corrective (`KOR`)                                 | the correction to the corrected amount |
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  label="MF FA(3) information brochure, description of P_15"
+/>
+
+Our validator checks whether a `P_15` element exists in `Fa`. The XSD schema requires it too, so the omission may appear in the list a second time, as a schema error.
+
+## How to fix it
+
+1. Work out the amount: the sum of all net amounts (`P_13_x`) and tax (`P_14_x`) in the summary. For an advance, final settlement or corrective invoice, use the amount from the table above.
+2. Add `P_15` in `Fa` straight after the last `P_13_x` or `P_14_x` field, and before `KursWalutyZ` (if you use it) and `Adnotacje`. The order is fixed.
+3. Write the amount in digits, with a dot and at most two decimal places, e.g. `4920.00`.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ P_15 missing -->
+  <Fa>
+    <KodWaluty>PLN</KodWaluty>
+    <P_1>2026-10-08</P_1>
+    <P_2>FV/10/2026</P_2>
+    <P_6>2026-10-08</P_6>
+    <P_13_1>4000.00</P_13_1>
+    <P_14_1>920.00</P_14_1>
+    <Adnotacje>...</Adnotacje>
+    <RodzajFaktury>VAT</RodzajFaktury>
+    ...
+  </Fa>
+  <!-- ✅ P_15 after the summary fields, before Adnotacje -->
+  <Fa>
+    <KodWaluty>PLN</KodWaluty>
+    <P_1>2026-10-08</P_1>
+    <P_2>FV/10/2026</P_2>
+    <P_6>2026-10-08</P_6>
+    <P_13_1>4000.00</P_13_1>
+    <P_14_1>920.00</P_14_1>
+    <P_15>4920.00</P_15>
+    <Adnotacje>...</Adnotacje>
+    <RodzajFaktury>VAT</RodzajFaktury>
+    ...
+  </Fa>
+  ```
+</XmlExample>
+
+## Where it usually comes from
+
+- **A typo in the element name**, such as `P15` or `p_15`. To the validator that's a different field, so `P_15` is still missing.
+- **Manual editing**, where the field was deleted along with the neighbouring amounts.
+- **A custom export** that fills in `P_15` only for standard invoices and leaves it out of advance or corrective ones.
+
+If `P_15` is there but doesn't match the sum of the amounts, the validator reports a [VAT calculation error](/en/validator/vat-calculation-error-p14-p15). The other mandatory fields are listed in our [overview of the most common FA(3) errors](/en/blog/most-common-fa3-validation-errors#3-missing-required-elements). Once you've fixed it, [check the invoice again](/en/validator).

@@ -1,0 +1,76 @@
+---
+title: "XML nie jest poprawnie sformatowany: co poprawić"
+description: "Plik nie jest poprawnym XML: brakuje znacznika zamykającego, znaczniki są pomieszane albo w tekście jest znak &. Bez poprawki nic więcej nie sprawdzimy."
+date: 2026-10-08
+section: validator
+locale: pl
+slug: "xml-nie-jest-poprawnie-sformatowany"
+codes: ["MALFORMED_XML"]
+sources:
+  - label: "Broszura informacyjna FA(3), ogólne informacje o formacie pliku i kodowaniu"
+    url: "https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "W3C, Extensible Markup Language (XML) 1.0"
+    url: "https://www.w3.org/TR/xml/"
+translations:
+  pl: "xml-nie-jest-poprawnie-sformatowany"
+  en: "malformed-xml-invoice"
+  uk: "xml-nekorektno-sformovanyy"
+---
+
+## Co oznacza ten komunikat
+
+Plik nie jest poprawnym dokumentem XML, więc nie da się go odczytać jako faktury. Najczęściej brakuje znacznika zamykającego, znaczniki są zamknięte w złej kolejności albo w nazwie firmy jest znak `&` zapisany wprost. **Walidator zatrzymuje się na tym kroku**, więc innych błędów w pliku nie zobaczysz, dopóki tego nie poprawisz.
+
+## Dlaczego tak jest
+
+Faktura ustrukturyzowana to plik XML, a XML ma ścisłe zasady zapisu, opisane w specyfikacji W3C. Każdy otwarty znacznik musi zostać zamknięty, znaczniki nie mogą na siebie zachodzić, cały plik ma jeden element główny (`Faktura`), a znaki `<` i `&` w tekście zapisuje się jako `&lt;` i `&amp;`. Plik, który łamie którąś z tych zasad, odrzuci każdy program czytający XML, nie tylko KSeF.
+
+<Source href="https://www.w3.org/TR/xml/" label="W3C, Extensible Markup Language (XML) 1.0" />
+
+## Skąd się bierze najczęściej
+
+- Znak `&` w nazwie firmy lub opisie towaru, na przykład „Kowalski & Syn”.
+- Brak znacznika zamykającego po ręcznej edycji pliku.
+- Literówka w nazwie znacznika zamykającego. Wielkość liter ma znaczenie: `<Nazwa>` nie zamyka się przez `</nazwa>`.
+- Pusta linia lub spacja przed deklaracją `<?xml ...?>` na początku pliku.
+- Niewidoczne znaki sterujące wklejone z PDF lub Worda.
+- Plik ucięty przy eksporcie albo inny plik (na przykład PDF) z rozszerzeniem `.xml`.
+
+Kodowanie znaków zwykle daje inny objaw: zniekształcone polskie litery albo osobny komunikat o kodowaniu innym niż UTF-8, którego wymaga broszura. Te reguły opisaliśmy w artykule o [ścisłej walidacji XML w KSeF](/blog/ksef-scisla-walidacja-xml).
+
+## Jak to naprawić
+
+1. Otwórz plik w edytorze, który koloruje XML (na przykład VS Code). Nasz komunikat nie wskazuje wiersza, więc szukaj miejsca, w którym kolorowanie się urywa albo przestaje pasować do znaczników.
+2. Sprawdź też kilka wierszy wyżej: błąd bywa tam, gdzie zaczyna się niezamknięty znacznik.
+3. Popraw zapis i wrzuć plik ponownie.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ Znak & zapisany wprost -->
+  <Nazwa>Kowalski & Syn sp. z o.o.</Nazwa>
+  <!-- ✅ Znak & jako &amp; -->
+  <Nazwa>Kowalski &amp; Syn sp. z o.o.</Nazwa>
+  <!-- ❌ Brak znacznika zamykającego P_7 -->
+  <FaWiersz>
+    <NrWierszaFa>1</NrWierszaFa>
+    <P_7>Sesja zdjęciowa
+    <P_8A>szt.</P_8A>
+  </FaWiersz>
+  <!-- ✅ P_7 zamknięte -->
+  <FaWiersz>
+    <NrWierszaFa>1</NrWierszaFa>
+    <P_7>Sesja zdjęciowa</P_7>
+    <P_8A>szt.</P_8A>
+  </FaWiersz>
+  <!-- ❌ Znaczniki zamknięte w złej kolejności -->
+  <Adres><KodKraju>PL</Adres></KodKraju>
+  <!-- ✅ Najpierw zamyka się znacznik otwarty jako ostatni -->
+  <Adres><KodKraju>PL</KodKraju></Adres>
+  ```
+</XmlExample>
+
+Jeśli plik wygenerował program do faktur, nie poprawiaj go ręcznie przy każdej fakturze. Zgłoś błąd dostawcy programu albo popraw dane źródłowe, na przykład nazwę kontrahenta.
+
+## Co dalej
+
+Gdy plik da się już odczytać, walidator sprawdzi go ze schematem FA(3). Najczęstsze błędy na tym etapie opisaliśmy w [najczęstszych błędach walidacji FA(3)](/blog/najczestsze-bledy-walidacji-fa3). Po poprawce [sprawdź fakturę ponownie](/validator).

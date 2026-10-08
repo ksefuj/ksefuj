@@ -13,7 +13,7 @@ export interface Frontmatter {
   description: string;
   date: string;
   updated?: string;
-  section: "blog" | "docs" | "guides" | "faq";
+  section: "blog" | "docs" | "guides" | "faq" | "validator";
   locale: "pl" | "en" | "uk";
   slug: string;
   /** Tags stay in the files but are no longer rendered; `topic` replaces them in the UI. */
@@ -22,6 +22,8 @@ export interface Frontmatter {
   topic?: ContentTopic;
   /** Up to 3 `blog/<pl-slug>` or `guides/<pl-slug>` refs that override the automatic "Read next" picks. */
   related?: string[];
+  /** Validator reference pages: the issue codes (e.g. `UNEXPECTED_ELEMENT`) this page explains. */
+  codes?: string[];
   /** Pins the item on the homepage. */
   featured?: boolean;
   sources?: Array<{ label: string; url: string }>;

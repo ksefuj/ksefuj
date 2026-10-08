@@ -26,7 +26,7 @@ describe("Validator Integration Tests", () => {
       const result = await validate(xmlContent);
 
       // Official examples should be valid or have only warnings
-      expect(result.valid || result.issues.every((i) => i.severity === "warning")).toBe(true);
+      expect(result.valid || result.issues.every((i) => i.code.severity === "warning")).toBe(true);
 
       if (!result.valid) {
         // eslint-disable-next-line no-console

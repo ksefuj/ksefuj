@@ -1,0 +1,99 @@
+---
+title: "Brak JST i GV w Podmiot2: co wpisać w FA(3)"
+description: "FA(3) wymaga pól JST i GV w danych nabywcy na każdej fakturze. Dla zwykłego klienta wpisz 2 w obu. Pokazujemy, gdzie je dodać w XML i kiedy wpisać 1."
+date: 2026-10-08
+section: validator
+locale: pl
+slug: "brak-jst-gv-podmiot2"
+codes: ["PODMIOT2_JST_MISSING", "PODMIOT2_GV_MISSING"]
+sources:
+  - label: "Broszura informacyjna FA(3), opis pól JST i GV w Podmiot2"
+    url: "https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "Schemat XSD FA(3)"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+translations:
+  pl: "brak-jst-gv-podmiot2"
+  en: "missing-jst-gv-podmiot2"
+  uk: "vidsutni-jst-gv-podmiot2"
+---
+
+## Co oznacza ten błąd
+
+W danych nabywcy (`Podmiot2`) brakuje pola `JST`, pola `GV` albo obu. Każda faktura FA(3) musi je mieć, a dla zwykłego klienta w obu wpisujesz `2`, czyli „nie dotyczy”.
+
+To dwa pytania tak/nie: czy faktura dotyczy jednostki podrzędnej samorządu (JST) i czy dotyczy członka grupy VAT (GV). Odpowiedź jest wymagana zawsze, także gdy brzmi „nie”. Plik bez tych pól jest niezgodny ze schematem, więc KSeF go nie przyjmie.
+
+## Dlaczego FA(3) tego wymaga
+
+Broszura MF opisuje oba pola w `Podmiot2` jako obowiązkowe: `1` oznacza, że faktura dotyczy jednostki podrzędnej JST albo członka grupy VAT, `2`, że nie dotyczy. Wartość `1` pociąga za sobą drugi wymóg: w `Podmiot3` podajesz dane tej jednostki (NIP lub IDWew) z rolą `8` dla JST albo `10` dla członka grupy VAT. Dzięki temu faktura jest udostępniana w KSeF także tej jednostce.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  label="Broszura informacyjna FA(3), opis pól JST i GV w Podmiot2"
+/>
+
+Nasz walidator zgłasza ten błąd, gdy w `Podmiot2` nie ma elementu `JST` (kod `PODMIOT2_JST_MISSING`) lub `GV` (kod `PODMIOT2_GV_MISSING`). Wartość `1` bez pasującego `Podmiot3` to osobny komunikat. Schemat XSD też wymaga obu pól, więc ten sam brak może pojawić się na liście drugi raz, jako błąd schematu.
+
+## Jak to naprawić
+
+1. Znajdź w pliku sekcję `Podmiot2`.
+2. Dodaj `JST`, a po nim `GV`, na samym końcu sekcji, po `Adres` i ewentualnych polach `DaneKontaktowe`, `NrKlienta` czy `IDNabywcy`. Kolejność jest stała.
+3. Wpisz `2` w obu, jeśli sprzedajesz zwykłej firmie. `1` wpisz tylko wtedy, gdy faktura rzeczywiście dotyczy jednostki podrzędnej JST lub członka grupy VAT, i dodaj wtedy `Podmiot3`.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ Brak JST i GV -->
+  <Podmiot2>
+    <DaneIdentyfikacyjne>
+      <NIP>9876543210</NIP>
+      <Nazwa>Studio Nabywcy sp. z o.o.</Nazwa>
+    </DaneIdentyfikacyjne>
+    <Adres>
+      <KodKraju>PL</KodKraju>
+      <AdresL1>ul. Testowa 1, 00-001 Warszawa</AdresL1>
+    </Adres>
+  </Podmiot2>
+  <!-- ✅ Zwykły klient: JST i GV = 2 -->
+  <Podmiot2>
+    <DaneIdentyfikacyjne>
+      <NIP>9876543210</NIP>
+      <Nazwa>Studio Nabywcy sp. z o.o.</Nazwa>
+    </DaneIdentyfikacyjne>
+    <Adres>
+      <KodKraju>PL</KodKraju>
+      <AdresL1>ul. Testowa 1, 00-001 Warszawa</AdresL1>
+    </Adres>
+    <JST>2</JST>
+    <GV>2</GV>
+  </Podmiot2>
+  ```
+</XmlExample>
+
+Gdy nabywcą jest gmina, a towar trafia do jej szkoły, ustawiasz `JST` na `1` i dodajesz szkołę w `Podmiot3`:
+
+<XmlExample copyable>
+  ```xml
+  <Podmiot2>
+    <DaneIdentyfikacyjne>
+      <NIP>1111111111</NIP>
+      <Nazwa>Gmina Przykładowo</Nazwa>
+    </DaneIdentyfikacyjne>
+    ...
+    <JST>1</JST>
+    <GV>2</GV>
+  </Podmiot2>
+  <Podmiot3>
+    <DaneIdentyfikacyjne>
+      <NIP>2222222222</NIP>
+      <Nazwa>Szkoła Podstawowa nr 1 w Przykładowie</Nazwa>
+    </DaneIdentyfikacyjne>
+    <Rola>8</Rola>
+  </Podmiot3>
+  ```
+</XmlExample>
+
+## Skąd się bierze najczęściej
+
+Pola `JST` i `GV` są nowe w FA(3). Szablony i eksporty przygotowane pod FA(2) ich nie generują, więc błąd pojawia się zwykle w plikach z własnego eksportu albo ze starszego programu, który nie przeszedł pełnej aktualizacji. Pozostałe zmiany między wersjami opisujemy w [porównaniu FA(2) i FA(3)](/blog/fa2-vs-fa3-ksef).
+
+Ten sam błąd jest krótko opisany w [przeglądzie najczęstszych błędów FA(3)](/blog/najczestsze-bledy-walidacji-fa3#7-brak-podmiot2-jst-i-gv). Po poprawce [sprawdź fakturę ponownie](/validator).

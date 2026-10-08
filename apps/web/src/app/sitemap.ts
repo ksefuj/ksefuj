@@ -21,14 +21,17 @@ const contentSections: Record<string, Array<{ section: string; urlPrefix: string
   pl: [
     { section: "blog", urlPrefix: "/blog" },
     { section: "guides", urlPrefix: "/guides" },
+    { section: "validator", urlPrefix: "/validator" },
   ],
   en: [
     { section: "blog", urlPrefix: "/en/blog" },
     { section: "guides", urlPrefix: "/en/guides" },
+    { section: "validator", urlPrefix: "/en/validator" },
   ],
   uk: [
     { section: "blog", urlPrefix: "/uk/blog" },
     { section: "guides", urlPrefix: "/uk/guides" },
+    { section: "validator", urlPrefix: "/uk/validator" },
   ],
 };
 

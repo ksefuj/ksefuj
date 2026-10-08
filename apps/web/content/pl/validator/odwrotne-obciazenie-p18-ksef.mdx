@@ -1,0 +1,85 @@
+---
+title: "Odwrotne obciążenie: P_18 niezgodne ze stawką"
+description: "Faktura ma kwoty z odwrotnym obciążeniem, a P_18 = 2, albo P_18 = 1 bez stawki np I, np II lub oo w wierszach. Sprawdź, kto rozlicza VAT, i ujednolij pola."
+date: 2026-10-08
+section: validator
+locale: pl
+slug: "odwrotne-obciazenie-p18-ksef"
+codes: ["REVERSE_CHARGE_CONSISTENCY"]
+sources:
+  - label: "Broszura informacyjna FA(3), opisy pól P_18, P_12, P_13_8, P_13_9 i P_13_10"
+    url: "https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "Schemat XSD FA(3)"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+translations:
+  pl: "odwrotne-obciazenie-p18-ksef"
+  en: "reverse-charge-p18-ksef"
+  uk: "zvorotne-opodatkuvannya-p18-ksef"
+---
+
+## Co oznacza ten komunikat
+
+Dwie części faktury mówią co innego o odwrotnym obciążeniu, czyli o tym, czy VAT rozlicza nabywca. Albo w podsumowaniu jest sprzedaż poza krajem lub w krajowym odwrotnym obciążeniu, a znacznik „odwrotne obciążenie” jest wyłączony, albo znacznik jest włączony, a żadna pozycja nie ma pasującej stawki. Schemat FA(3) nie wiąże tych pól ze sobą, dlatego to ostrzeżenie, a nie błąd blokujący.
+
+Walidator zgłasza je w dwóch sytuacjach:
+
+- w `Fa` jest `P_13_8` (sprzedaż poza terytorium kraju) lub `P_13_10` (krajowe odwrotne obciążenie), a `Adnotacje/P_18` nie ma wartości `1`;
+- `P_18` ma wartość `1`, ale żaden wiersz faktury nie ma stawki `np I`, `np II` ani `oo` (w `FaWiersz` w polu `P_12`, a w fakturze zaliczkowej w `ZamowienieWiersz` w polu `P_12Z`).
+
+## Dlaczego te pola muszą się zgadzać
+
+`P_18` to adnotacja „odwrotne obciążenie”. Według opisu w schemacie wpisujesz `1`, gdy do rozliczenia podatku od wartości dodanej lub podatku o podobnym charakterze jest obowiązany nabywca, a `2` w przeciwnym razie (broszura FA(3), opis pola `P_18` w `Adnotacje`). Stawki w wierszach opisują to samo z drugiej strony (opis pola `P_12`): `oo` to krajowe odwrotne obciążenie, `np I` to sprzedaż poza krajem, `np II` to usługi z art. 100 ust. 1 pkt 4 ustawy o VAT. Kwoty z tych wierszy trafiają do `P_13_8`, `P_13_9` i `P_13_10`.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  label="Broszura informacyjna FA(3), opisy pól P_18, P_12, P_13_8, P_13_9 i P_13_10"
+/>
+
+Opis `P_13_8` nie zależy jednak od tego, kto rozlicza podatek: pole obejmuje sprzedaż poza terytorium kraju z wyłączeniem kwot z `P_13_5` i `P_13_9`, a broszura podaje jako przykład usługi, których miejsce opodatkowania ustala się według art. 28e ustawy o VAT. Jeśli przy takiej sprzedaży podatek rozliczasz Ty, a nie nabywca, `P_18` = `2` jest zgodne z opisem pola i ostrzeżenie możesz pominąć. Przy `P_13_10` tak nie będzie, bo to sprzedaż, przy której podatnikiem jest nabywca. Jeśli nie wiesz, który przypadek dotyczy Twojej faktury, zapytaj księgową.
+
+## Jak to naprawić
+
+1. Ustal, czy VAT od tej sprzedaży rozlicza nabywca.
+2. Jeśli tak, ustaw `P_18` na `1` i sprawdź, czy wiersze mają stawkę `np I`, `np II` lub `oo`.
+3. Jeśli nie, ustaw `P_18` na `2`, a w wierszach zostaw stawkę, która naprawdę obowiązuje (na przykład `23` albo `0 WDT`).
+
+Przykład: usługa dla firmy spoza UE, która rozlicza podatek u siebie.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ Kwota w P_13_8, a P_18 = 2 -->
+  <Fa>
+    <KodWaluty>PLN</KodWaluty>
+    <P_1>2026-10-08</P_1>
+    <P_2>FV/10/2026</P_2>
+    <P_13_8>4000.00</P_13_8>
+    <P_15>4000.00</P_15>
+    <Adnotacje>
+      <P_16>2</P_16>
+      <P_17>2</P_17>
+      <P_18>2</P_18>
+      ...
+    </Adnotacje>
+    <RodzajFaktury>VAT</RodzajFaktury>
+    <FaWiersz>
+      <NrWierszaFa>1</NrWierszaFa>
+      <P_7>Projekt identyfikacji wizualnej</P_7>
+      <P_11>4000.00</P_11>
+      <P_12>np I</P_12>
+    </FaWiersz>
+  </Fa>
+  <!-- ✅ P_18 = 1, zgodnie ze stawką np I w wierszu -->
+  <Adnotacje>
+    <P_16>2</P_16>
+    <P_17>2</P_17>
+    <P_18>1</P_18>
+    ...
+  </Adnotacje>
+  ```
+</XmlExample>
+
+Odwrotna sytuacja to `P_18` = `1` przy wierszach ze zwykłą stawką, na przykład `23`. Skoro podatek naliczasz Ty, ustaw `P_18` na `2`. Jeśli VAT naprawdę rozlicza nabywca, popraw stawki w wierszach.
+
+## Co dalej
+
+Pola nabywcy zagranicznego i dobór stawek `np I`, `np II`, `0 WDT` i `0 EX` opisaliśmy w artykule o [fakturze dla nabywcy z zagranicy](/blog/faktura-zagraniczna-ksef), a pełny blok `Adnotacje` w [najczęstszych błędach walidacji FA(3)](/blog/najczestsze-bledy-walidacji-fa3). Po poprawce [sprawdź fakturę ponownie](/validator).

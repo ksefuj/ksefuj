@@ -1,0 +1,85 @@
+---
+title: "Invalid VAT rate in P_12: allowed values"
+description: "P_12 accepts only the 14 codes in the FA(3) catalogue, e.g. 23, 0 KR, zw, np I. No % sign, exact spaces and letter case. The full list, meanings and fixes."
+date: 2026-10-08
+section: validator
+locale: en
+slug: "invalid-vat-rate-p12"
+codes: ["P12_ENUMERATION"]
+sources:
+  - label: "MF FA(3) information brochure, description of P_12 in FaWiersz"
+    url: "https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "FA(3) XSD schema"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+translations:
+  pl: "nieprawidlowa-stawka-vat-p12"
+  en: "invalid-vat-rate-p12"
+  uk: "nevirna-stavka-pdv-p12"
+---
+
+## What this error means
+
+The VAT rate field (`P_12`) in one of the invoice lines has a value that isn't on the FA(3) list. The field accepts only predefined codes, such as `23`, `0 KR` or `zw`, written exactly as in the catalogue and without a percent sign.
+
+## Why it's required
+
+In its description of `P_12` in `FaWiersz`, the Ministry of Finance's FA(3) information brochure (broszura) gives a closed catalogue of values, and the XSD schema accepts only those. Letter case and spaces matter: `0 KR` is a different value from `0KR`, and `zw` from `ZW`.
+
+| Value      | Meaning                                                                                |
+| ---------- | -------------------------------------------------------------------------------------- |
+| `23`, `22` | standard rate                                                                          |
+| `8`, `7`   | first reduced rate                                                                     |
+| `5`        | second reduced rate                                                                    |
+| `4`, `3`   | 4% and 3% rates                                                                        |
+| `0 KR`     | 0% domestic, other than intra-EU supply (WDT) and export                               |
+| `0 WDT`    | 0% on an intra-Community supply of goods (WDT)                                         |
+| `0 EX`     | 0% on an export of goods                                                               |
+| `zw`       | VAT-exempt sale                                                                        |
+| `oo`       | domestic reverse charge                                                                |
+| `np I`     | supply outside Poland, not taxable in Poland (excluding Art. 100 ust. 1 pkt 4 and OSS) |
+| `np II`    | services under Art. 100 ust. 1 pkt 4 of the VAT Act                                    |
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  label="MF FA(3) information brochure, description of P_12 in FaWiersz"
+/>
+
+Our validator compares `P_12` in every line against this list character by character and shows the value it found in the message. An empty or omitted `P_12` doesn't trigger this error. The brochure allows the rate to be left out under the margin scheme, for exempt sales referred to in Art. 106b ust. 3 pkt 2 of the VAT Act, and on a simplified invoice.
+
+## How to fix it
+
+1. Check the message for the line and value the validator flagged.
+2. Pick a code from the table. For a 0% rate, always give the variant: `0 KR`, `0 WDT` or `0 EX`.
+3. Remove the `%` sign, any decimals, and leading or trailing spaces.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ Percent sign -->
+  <P_12>23%</P_12>
+  <!-- ❌ Number with decimals -->
+  <P_12>23.00</P_12>
+  <!-- ❌ Bare 0, no variant -->
+  <P_12>0</P_12>
+  <!-- ❌ Uppercase -->
+  <P_12>ZW</P_12>
+  <!-- ❌ Missing space -->
+  <P_12>npI</P_12>
+  <!-- ✅ Valid codes -->
+  <P_12>23</P_12>
+  <P_12>0 KR</P_12>
+  <P_12>zw</P_12>
+  <P_12>np I</P_12>
+  ```
+</XmlExample>
+
+<Warning>
+  `oo` applies only to domestic reverse charge. On an invoice for a foreign buyer who accounts for
+  VAT in their own country, the brochure points to `np I` or `np II`. The validator checks this with
+  a separate rule.
+</Warning>
+
+## Where it usually comes from
+
+The program or spreadsheet stores the rate as a number or as display text (`23%`, `23.00`, `ZW`) and exports it to XML without mapping it to an FA(3) code. The other source is a 0% rate written as a bare `0`, with no indication of whether it's a domestic sale, WDT or export.
+
+How to choose the rate for customers in other countries is explained in our post on [invoicing a foreign buyer](/en/blog/foreign-invoice-ksef). A short version of this list is in the [overview of the most common FA(3) errors](/en/blog/most-common-fa3-validation-errors#8-wrong-vat-rate-in-p12). Once you've fixed it, [check the invoice again](/en/validator).

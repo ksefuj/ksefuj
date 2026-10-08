@@ -1,0 +1,68 @@
+---
+title: "Space or comma in an FA(3) invoice amount"
+description: "FA(3) amounts are digits only, with a dot as the decimal separator: 1234.56, not 1 234,56 or 1,234.56. Which fields we check and how to fix the file quickly."
+date: 2026-10-08
+section: validator
+locale: en
+slug: "fa3-amount-format-no-separators"
+codes: ["AMOUNT_NO_SEPARATORS"]
+sources:
+  - label: "MF FA(3) information brochure, general rules for amount fields"
+    url: "https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "FA(3) XSD schema"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+translations:
+  pl: "kwoty-bez-separatorow-tysiecy"
+  en: "fa3-amount-format-no-separators"
+  uk: "sumy-bez-rozdilyuvachiv-tysyach"
+---
+
+## What this error means
+
+One of the amounts on the invoice contains a space, a comma or some other character that isn't a digit. In FA(3) an amount is written in digits only, with a dot before the decimal part: `1234.56`, not `1 234,56`.
+
+## Why it's required
+
+The Ministry of Finance's FA(3) information brochure (broszura) requires amount fields to be a string of digits with no thousands separators (no spaces), and the dot to be the only permitted decimal separator. A negative amount takes a minus sign in front. The XSD schema defines these fields as numbers, so a value with a space or a comma also fails schema validation.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  label="MF FA(3) information brochure, general rules for amount fields"
+/>
+
+Our validator reports this error when a field contains anything other than digits, a dot and a minus sign, or has more than one dot. We check:
+
+- in the `Fa` summary: `P_13_x` (including `P_13_6_1`–`P_13_6_3`), `P_14_x`, `P_14_xW`, `P_15` and `KursWalutyZ`;
+- in every `FaWiersz` line: `P_8B` (quantity), `P_9A` and `P_9B` (unit prices), `P_10` (discount), `P_11`, `P_11A`, `P_11Vat` and `KursWaluty`.
+
+The error details show the field name and, for lines, the line number too.
+
+## How to fix it
+
+1. Remove every space from the amount, including the one between thousands.
+2. Replace a decimal comma with a dot.
+3. Remove the currency, percent signs and any other additions. You give the currency once, in `KodWaluty`.
+4. If the amount uses a dot as the thousands separator (`1.234,56`), remove it before replacing the comma, so you end up with `1234.56`. The same goes for English-style `1,234.56`: drop the comma.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ Space as thousands separator -->
+  <P_15>4 920.00</P_15>
+  <!-- ❌ Decimal comma -->
+  <P_15>4920,00</P_15>
+  <!-- ❌ Dot for thousands and decimal comma -->
+  <P_15>4.920,00</P_15>
+  <!-- ❌ Currency in the amount field -->
+  <P_15>4920.00 zł</P_15>
+  <!-- ✅ Digits only, decimal dot -->
+  <P_15>4920.00</P_15>
+  <!-- ✅ Negative amount, e.g. in a correction line -->
+  <P_11>-150.00</P_11>
+  ```
+</XmlExample>
+
+## Where it usually comes from
+
+Number formatting is usually to blame. A spreadsheet or program with Polish regional settings displays amounts as `4 920,00`, and the export writes the display-formatted text into the XML instead of the raw number. Sometimes it's a non-breaking space you can't see in the editor. The other source is amounts copied by hand from a PDF or a printout.
+
+The number of decimal places is a separate rule: amounts have at most 2, quantities 6, unit prices 8. It's covered in our [overview of the most common FA(3) errors](/en/blog/most-common-fa3-validation-errors#6-too-many-decimal-places). Once you've fixed it, [check the invoice again](/en/validator).

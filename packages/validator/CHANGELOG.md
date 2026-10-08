@@ -11,6 +11,14 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- XSD issues are now built from the structured `XmlValidateError.details` instead of regex-splitting
+  the message text, and a new pure parser (`src/xsd-messages.ts`, `parseXsdMessage`) classifies each
+  libxml2 message. New codes `UNEXPECTED_ELEMENT` (wrong order or typo in an element name) and
+  `WRONG_NAMESPACE` (`Faktura` without, or with a wrong, FA(3) namespace). `location.lineNumber` and
+  `columnNumber` are now populated for XSD issues; `location.element` and `expectedValues` hold
+  local names without namespace URIs; `actualValue` and `metadata.facet` / `typeName` / `attribute`
+  are set where libxml2 reports them
+
 - Exchange rate validation for advance invoices, which previously had none. `Fa/KursWalutyZ` and
   `ZaliczkaCzesciowa/KursWalutyZW` are now checked against the NBP Table A mid-rate, keyed to the
   date the payment was received (Art. 19a ust. 8) — `ZaliczkaCzesciowa/P_6Z` for a per-payment rate,
@@ -48,6 +56,9 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - `TAX_CALCULATION_MISMATCH` no longer fires on an invalid `FaWiersz/P_12`; that case is reported
   only as `P12_ENUMERATION`
 
+- XSD errors are no longer almost all reported as `SCHEMA_VALIDATION_FAILED`: invalid values now map
+  to `INVALID_ELEMENT_VALUE` and missing children to `REQUIRED_ELEMENT_MISSING` (previously "not
+  expected" was misreported as `REQUIRED_ELEMENT_MISSING`)
 - `CURRENCY_RATE_MISMATCH` no longer keys the NBP rate to `P_1` alone. Art. 31a ust. 1 keys it to
   the last business day before the **tax obligation date**; the issue date only governs when the
   invoice is issued _before_ the tax obligation arises (ust. 2). The tax point is taken from
@@ -94,6 +105,10 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [0.2.1] — 2026-03-31
 
 ### Fixed
+
+- XSD errors are no longer almost all reported as `SCHEMA_VALIDATION_FAILED`: invalid values now map
+  to `INVALID_ELEMENT_VALUE` and missing children to `REQUIRED_ELEMENT_MISSING` (previously "not
+  expected" was misreported as `REQUIRED_ELEMENT_MISSING`)
 
 - Corrected Polish IBAN length check (Rule 40): `NrRB` in IBAN format must be **28** characters
   (`PL` + 26 digits), not 26; bare NRB format (26 digits without prefix) remains valid

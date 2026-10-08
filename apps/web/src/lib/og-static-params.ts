@@ -10,7 +10,7 @@ export function localeParams() {
  * Static params for article OG routes: every (locale, slug) pair the sibling page generates.
  * Returns the locale explicitly because metadata routes do not receive the parent's params.
  */
-export function articleParams(section: "blog" | "guides" | "docs") {
+export function articleParams(section: "blog" | "guides" | "docs" | "validator") {
   return async () => {
     const pairs = await Promise.all(
       routing.locales.map(async (locale) =>

@@ -2,7 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { getContentItem, getContentItemWithFallback } from "@/lib/content";
 import { isContentTopic } from "@/lib/topics";
 
-type Section = "blog" | "guides" | "docs";
+type Section = "blog" | "guides" | "docs" | "validator";
 
 /** Title, pattern key and topic badge for an article OG card; null when the item is missing. */
 export async function getArticleCard(

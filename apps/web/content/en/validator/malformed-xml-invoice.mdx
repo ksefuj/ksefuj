@@ -1,0 +1,76 @@
+---
+title: "XML is not well-formed: how to fix the invoice"
+description: "The file isn't valid XML: a closing tag is missing, tags are mismatched, or there's a raw & in the text. Until you fix it, we can't check anything else."
+date: 2026-10-08
+section: validator
+locale: en
+slug: "malformed-xml-invoice"
+codes: ["MALFORMED_XML"]
+sources:
+  - label: "MF FA(3) information brochure, general information on file format and encoding"
+    url: "https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "W3C, Extensible Markup Language (XML) 1.0"
+    url: "https://www.w3.org/TR/xml/"
+translations:
+  pl: "xml-nie-jest-poprawnie-sformatowany"
+  en: "malformed-xml-invoice"
+  uk: "xml-nekorektno-sformovanyy"
+---
+
+## What this message means
+
+The file isn't a well-formed XML document, so it can't be read as an invoice. Most often a closing tag is missing, tags are closed in the wrong order, or a company name contains a raw `&` character. **The validator stops at this step**, so you won't see any other errors in the file until you fix this one.
+
+## Why it happens
+
+A structured invoice is an XML file, and XML has strict syntax rules, set out in the W3C specification. Every opened tag must be closed, tags can't overlap, the whole file has a single root element (`Faktura`), and the characters `<` and `&` in text are written as `&lt;` and `&amp;`. A file that breaks any of these rules will be rejected by every program that reads XML, not just KSeF.
+
+<Source href="https://www.w3.org/TR/xml/" label="W3C, Extensible Markup Language (XML) 1.0" />
+
+## Where it usually comes from
+
+- An `&` in a company name or product description, such as "Kowalski & Syn".
+- A missing closing tag after the file was edited by hand.
+- A typo in a closing tag's name. Case matters: `<Nazwa>` isn't closed by `</nazwa>`.
+- A blank line or space before the `<?xml ...?>` declaration at the start of the file.
+- Invisible control characters pasted in from a PDF or Word.
+- A file truncated during export, or a different file (a PDF, say) with an `.xml` extension.
+
+Character encoding problems usually look different: garbled Polish letters, or a separate message about an encoding other than UTF-8, which the Ministry of Finance's FA(3) information brochure (broszura) requires. Those rules are covered in our post on [strict XML validation in KSeF](/en/blog/ksef-strict-xml-validation).
+
+## How to fix it
+
+1. Open the file in an editor with XML syntax highlighting (such as VS Code). Our message doesn't point to a line, so look for the place where the highlighting breaks off or stops matching the tags.
+2. Check a few lines above it too: the error is often where an unclosed tag begins.
+3. Correct it and upload the file again.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ Raw & character -->
+  <Nazwa>Kowalski & Syn sp. z o.o.</Nazwa>
+  <!-- ✅ & written as &amp; -->
+  <Nazwa>Kowalski &amp; Syn sp. z o.o.</Nazwa>
+  <!-- ❌ P_7 has no closing tag -->
+  <FaWiersz>
+    <NrWierszaFa>1</NrWierszaFa>
+    <P_7>Sesja zdjęciowa
+    <P_8A>szt.</P_8A>
+  </FaWiersz>
+  <!-- ✅ P_7 closed -->
+  <FaWiersz>
+    <NrWierszaFa>1</NrWierszaFa>
+    <P_7>Sesja zdjęciowa</P_7>
+    <P_8A>szt.</P_8A>
+  </FaWiersz>
+  <!-- ❌ Tags closed in the wrong order -->
+  <Adres><KodKraju>PL</Adres></KodKraju>
+  <!-- ✅ The last tag opened is closed first -->
+  <Adres><KodKraju>PL</KodKraju></Adres>
+  ```
+</XmlExample>
+
+If your invoicing software generated the file, don't fix it by hand for every invoice. Report the bug to the software vendor, or correct the source data, such as the customer's name.
+
+## Next step
+
+Once the file can be read, the validator checks it against the FA(3) schema. The most common errors at that stage are covered in [the most common FA(3) validation errors](/en/blog/most-common-fa3-validation-errors). Once you've fixed it, [check the invoice again](/en/validator).

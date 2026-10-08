@@ -1,0 +1,75 @@
+---
+title: "Invalid bank account number on an FA(3) invoice"
+description: "A Polish account number has 26 digits; as an IBAN it's 28 characters: PL plus 26 digits. Any other length is a lost digit or spaces. Enter it without spaces."
+date: 2026-10-08
+section: validator
+locale: en
+slug: "invalid-bank-account-number-invoice"
+codes: ["INVALID_BANK_ACCOUNT_FORMAT"]
+sources:
+  - label: "MF FA(3) information brochure, description of RachunekBankowy and NrRB"
+    url: "https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "FA(3) XSD schema"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+translations:
+  pl: "bledny-numer-rachunku-bankowego"
+  en: "invalid-bank-account-number-invoice"
+  uk: "nevirnyy-nomer-bankivskogo-rakhunku"
+---
+
+## What this message means
+
+The account number on the invoice has the wrong length. A Polish account number (NRB) has 26 digits, and in IBAN format it's 28 characters: "PL" followed by the same 26 digits. Any other length almost always means a digit was dropped or added, or there are spaces between the groups of digits.
+
+The validator checks `Platnosc/RachunekBankowy/NrRB` (the first one if there are several accounts) and reports an error when:
+
+- the number starts with `PL` and isn't exactly 28 characters long,
+- the number is all digits and isn't exactly 26 characters long.
+
+We don't check numbers with another country prefix (such as `DE`), nor numbers without a prefix that contain spaces or hyphens. We also don't verify the check digits, so a number of the right length with two digits swapped will pass. Compare it against your banking app.
+
+## Why we check it
+
+The FA(3) schema only requires `NrRB` to be between 10 and 34 characters (MF information brochure, or broszura, description of `NrRB`). This check therefore goes beyond what the Ministry of Finance requires: the schema will let through a Polish number with a missing digit. We flag it because the buyer copies the number from the invoice into their bank transfer, and the mistake only surfaces when they try to pay.
+
+If the invoice contains a `RachunekBankowy` element, the `NrRB` field inside it is mandatory. If you don't want to give an account number, leave out `RachunekBankowy` entirely.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  label="MF FA(3) information brochure, description of RachunekBankowy and NrRB"
+/>
+
+## How to fix it
+
+1. Copy the account number from your banking app rather than typing it.
+2. Remove spaces and hyphens.
+3. Keep either 26 digits or `PL` plus 26 digits, with no space after the prefix.
+
+<XmlExample copyable>
+  ```xml
+  <!-- ❌ Spaces: with the PL prefix that's 34 characters instead of 28 -->
+  <NrRB>PL61 1090 1014 0000 0712 1981 2874</NrRB>
+  <!-- ❌ 25 digits, one missing -->
+  <NrRB>6110901014000007121981287</NrRB>
+  <!-- ✅ NRB format: 26 digits -->
+  <NrRB>61109010140000071219812874</NrRB>
+  <!-- ✅ IBAN format: PL plus 26 digits -->
+  <Platnosc>
+    <TerminPlatnosci>
+      <Termin>2026-10-22</Termin>
+    </TerminPlatnosci>
+    <FormaPlatnosci>6</FormaPlatnosci>
+    <RachunekBankowy>
+      <NrRB>PL61109010140000071219812874</NrRB>
+    </RachunekBankowy>
+  </Platnosc>
+  ```
+</XmlExample>
+
+## Where it usually comes from
+
+Usually the number was typed by hand or copied from a PDF along with its spaces. If your invoicing software generates the files, check the account number in its company settings: fixing it there fixes every invoice that follows.
+
+## Next step
+
+Other fields where FA(3) invoices most often fail are covered in [the most common FA(3) validation errors](/en/blog/most-common-fa3-validation-errors). Once you've fixed it, [check the invoice again](/en/validator).

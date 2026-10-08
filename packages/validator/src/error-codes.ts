@@ -4,9 +4,9 @@
  * Comprehensive catalog of all validation errors, warnings, and issues
  * that can be detected in KSeF FA(3) XML documents.
  *
- * All 38 semantic validation error codes are included, each with detailed
- * descriptions, common causes, and fix suggestions based on the official
- * FA(3) information sheet from the Ministry of Finance.
+ * Covers XSD, parse, infrastructure and semantic codes, each with detailed
+ * descriptions, common causes, and fix suggestions (semantic codes are based
+ * on the official FA(3) information sheet from the Ministry of Finance).
  */
 
 import type { ErrorCodeDefinition, FixSuggestion } from "./types.js";
@@ -31,6 +31,40 @@ export const XSD_ERRORS = {
     fixTemplates: [],
   },
 
+  UNEXPECTED_ELEMENT: {
+    code: {
+      domain: "xsd",
+      category: "schema",
+      code: "UNEXPECTED_ELEMENT",
+      severity: "error",
+    },
+    description: "Element is not expected at this position in the FA(3) structure",
+    commonCauses: [
+      "Elements in the wrong order (the schema uses a strict sequence)",
+      "Typo in the element name",
+      "Element placed under the wrong parent",
+      "Element not defined in FA(3)",
+    ],
+    fixTemplates: [],
+  },
+
+  WRONG_NAMESPACE: {
+    code: {
+      domain: "xsd",
+      category: "schema",
+      code: "WRONG_NAMESPACE",
+      severity: "error",
+    },
+    description:
+      "Root element Faktura is missing the FA(3) namespace or declares a different one (expected http://crd.gov.pl/wzor/2025/06/25/13775/)",
+    commonCauses: [
+      "Missing xmlns attribute on <Faktura>",
+      "Namespace of an older schema version (FA(2))",
+      "Typo in the namespace URI",
+    ],
+    fixTemplates: [],
+  },
+
   ELEMENT_NOT_ALLOWED: {
     code: {
       domain: "xsd",
@@ -38,7 +72,7 @@ export const XSD_ERRORS = {
       code: "ELEMENT_NOT_ALLOWED",
       severity: "error",
     },
-    description: "Element not allowed at this location",
+    description: "Element or attribute not allowed at this location",
     commonCauses: ["Element in wrong parent", "Typo in element name", "Wrong element order"],
     fixTemplates: [],
   },
