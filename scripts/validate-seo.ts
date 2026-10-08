@@ -307,7 +307,14 @@ function validateValidatorPages() {
 
     // Anchors deep-link INVALID_ELEMENT_VALUE-style issues to a section; ids are per file because
     // headings are translated, so each must match a heading as the page renders it.
-    const headingIds = extractHeadings(matter(raw).content).map((h) => h.id);
+    // Malformed YAML was already reported by parseFrontmatter; skip the body then.
+    let body = "";
+    try {
+      body = matter(raw).content;
+    } catch {
+      // reported above
+    }
+    const headingIds = extractHeadings(body).map((h) => h.id);
     const pageCodes = Array.isArray(codes) ? codes.filter((c) => typeof c === "string") : [];
     for (const problem of checkIssueAnchors(frontmatter.anchors, pageCodes, headingIds)) {
       addError(relPath, problem);

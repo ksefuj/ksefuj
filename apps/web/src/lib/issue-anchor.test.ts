@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
 import type { ValidationIssue } from "@ksefuj/validator";
+import { parseXsdMessage } from "../../../../packages/validator/src/xsd-messages";
+import { buildXsdIssueText } from "./xsd-issue-text";
+import { createTranslator } from "next-intl";
+import pl from "../i18n/messages/pl.json";
 import { extractHeadings } from "./content";
 import { checkIssueAnchors, issueAnchorKey, resolveIssueHelpHref } from "./issue-anchor";
 
@@ -96,5 +100,75 @@ describe("checkIssueAnchors", () => {
   it("flags a malformed anchors value", () => {
     expect(checkIssueAnchors(["daty"], codes, ids)).toHaveLength(1);
     expect(checkIssueAnchors("daty", codes, ids)).toHaveLength(1);
+  });
+});
+
+describe("real libxml2 messages", () => {
+  const NS = "{http://crd.gov.pl/wzor/2025/06/25/13775/}";
+  const t = createTranslator({ locale: "pl", messages: pl, namespace: "validator" });
+
+  /** Same mapping xsd.ts applies to a raw libxml2 message. */
+  function fromMessage(message: string): ValidationIssue {
+    const parsed = parseXsdMessage(message);
+    const metadata: Record<string, unknown> = { originalMessage: message };
+    if (parsed.facet) {
+      metadata.facet = parsed.facet;
+    }
+    if (parsed.typeName) {
+      metadata.typeName = parsed.typeName;
+    }
+    return {
+      code: { domain: "xsd", category: "schema", code: parsed.code, severity: "error" },
+      context: {
+        location: { element: parsed.element },
+        ...(parsed.actualValue !== undefined ? { actualValue: parsed.actualValue } : {}),
+        metadata,
+      },
+      message,
+      fixSuggestions: [],
+    };
+  }
+
+  const AMOUNT_PATTERN = "-?([1-9]\\d{0,15}|0)(\\.\\d{1,2})?";
+  const cases: Array<[string, string, string]> = [
+    [
+      "P_15 02051.00 (pattern, no type name)",
+      `Element '${NS}P_15': [facet 'pattern'] The value '02051.00' is not accepted by the pattern '${AMOUNT_PATTERN}'.`,
+      "amount",
+    ],
+    [
+      "P_13_1 with 3 decimals (pattern)",
+      `Element '${NS}P_13_1': [facet 'pattern'] The value '1666.666' is not accepted by the pattern '${AMOUNT_PATTERN}'.`,
+      "amount",
+    ],
+    [
+      "P_13_1 with 3 decimals (fractionDigits)",
+      `Element '${NS}P_13_1': [facet 'fractionDigits'] The value '1666.666' has more fractional digits than are allowed ('2').`,
+      "fractionDigits",
+    ],
+    [
+      "P_1 bad date",
+      `Element '${NS}P_1': '15.02.2026' is not a valid value of the atomic type '${NS}TDataT'.`,
+      "date",
+    ],
+    [
+      "NIP pattern",
+      `Element '${NS}NIP': [facet 'pattern'] The value '99-99' is not accepted by the pattern '[1-9]((\\d[1-9])|([1-9]\\d))\\d{7}'.`,
+      "nip",
+    ],
+  ];
+
+  it.each(cases)("%s", (_name, message, key) => {
+    expect(issueAnchorKey(fromMessage(message))).toBe(key);
+  });
+
+  it("gives the P_15 pattern error the amount fix text", () => {
+    const text = buildXsdIssueText(fromMessage(cases[0][1]), t as never);
+    expect(text?.fix).toBe(pl.validator.xsd.fix.amount);
+  });
+
+  it("gives the NIP pattern error the NIP fix text", () => {
+    const text = buildXsdIssueText(fromMessage(cases[4][1]), t as never);
+    expect(text?.fix).toBe(pl.validator.xsd.fix.nip);
   });
 });

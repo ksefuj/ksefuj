@@ -55,6 +55,26 @@ const ELEMENT_HINTS: Record<string, string> = {
   DataWytworzeniaFa: "dateTime",
 };
 
+/**
+ * XSD type by its pattern, for pattern-facet messages: libxml2 reports the failing pattern but not
+ * the type name when the pattern sits directly on the element's type. Keep in sync with the
+ * `xsd:pattern` values in the bundled schemat.xsd.
+ */
+const TYPE_BY_PATTERN: Record<string, string> = {
+  "-?([1-9]\\d{0,15}|0)(\\.\\d{1,2})?": "TKwotowy",
+  "-?([1-9]\\d{0,13}|0)(\\.\\d{1,8})?": "TKwotowy2",
+  "-?([1-9]\\d{0,15}|0)(\\.\\d{1,6})?": "TIlosci",
+  "[1-9]((\\d[1-9])|([1-9]\\d))\\d{7}": "TNrNIP",
+  "((\\d{4})-(\\d{2})-(\\d{2}))": "TData",
+};
+
+function typeFromPattern(originalMessage: string | undefined): string | undefined {
+  const pattern = originalMessage
+    ? /accepted by the pattern '(.*)'\./s.exec(originalMessage)?.[1]
+    : undefined;
+  return pattern ? TYPE_BY_PATTERN[pattern] : undefined;
+}
+
 /** Values come from the user's file and end up inside inline-code markdown. */
 function code(value: unknown): string {
   return `\`${String(value).replace(/`/g, "'")}\``;
@@ -174,9 +194,12 @@ function requiredMissing(issue: ValidationIssue, t: Translate): XsdIssueText {
 export function hintFor(
   typeName: string | undefined,
   element: string | undefined,
+  originalMessage?: string,
 ): string | undefined {
   return (
-    (typeName ? TYPE_HINTS[typeName] : undefined) ?? (element ? ELEMENT_HINTS[element] : undefined)
+    (typeName ? TYPE_HINTS[typeName] : undefined) ??
+    (element ? ELEMENT_HINTS[element] : undefined) ??
+    TYPE_HINTS[typeFromPattern(originalMessage) ?? ""]
   );
 }
 
@@ -192,7 +215,7 @@ function invalidValue(issue: ValidationIssue, t: Translate): XsdIssueText {
   const rawLength = metadata?.actualLength;
   const actualLength = typeof rawLength === "number" ? rawLength : undefined;
   const limit = facetLimit(str(metadata?.originalMessage));
-  const hint = hintFor(typeName, element);
+  const hint = hintFor(typeName, element, str(metadata?.originalMessage));
   const fixFor = (fallback: string) =>
     hint ? t(`xsd.fix.${hint}`) : t(`xsd.fix.generic.${fallback}`);
 

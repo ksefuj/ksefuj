@@ -44,7 +44,11 @@ export function issueAnchorKey(issue: ValidationIssue): string | undefined {
     return undefined;
   }
   const metadata = issue.context.metadata;
-  const hint = hintFor(str(metadata?.typeName), issue.context.location.element);
+  const hint = hintFor(
+    str(metadata?.typeName),
+    issue.context.location.element,
+    str(metadata?.originalMessage),
+  );
   const fromHint = hint ? HINT_ANCHORS[hint] : undefined;
   if (fromHint) {
     return fromHint;
