@@ -10,8 +10,8 @@ topic: "invoicing"
 translationOf: "faktura-korygujaca-ksef"
 tags: ["KSeF", "Рахунок", "VAT"]
 sources:
-  - label: "Інформаційна брошура FA(3), березень 2026"
-    url: "https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "Інформаційна брошура FA(3), серпень 2026"
+    url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
   - label: "FAQ MF — KSeF 2.0"
     url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
   - label: "Схема XSD FA(3)"
@@ -68,7 +68,7 @@ translations:
 | Оригінал пройшов через KSeF | `NrKSeF` = `1` + поле `NrKSeFFaKorygowanej` з номером KSeF оригіналу |
 | Оригінал виставлено до KSeF | `NrKSeFN` = `1` (без `NrKSeFFaKorygowanej`)                          |
 
-Якщо вказати обидва поля одночасно, рахунок буде відхилено. Номер KSeF має формат `NIP-DATA-XXXXXX-YYYYYY-ZZ`; копіюй його, а не переписуй, бо з помилкою система не зв'яже корекцію з оригіналом. У прикладі оригінал пройшов через KSeF, тому ставимо `NrKSeF` = `1` і вказуємо його номер.
+Якщо вказати обидва поля одночасно, рахунок буде відхилено. Номер KSeF має формат `NIP-DATA-XXXXXXXXXXXX-ZZ`; копіюй його, а не переписуй, бо з помилкою система не зв'яже корекцію з оригіналом. У прикладі оригінал пройшов через KSeF, тому ставимо `NrKSeF` = `1` і вказуємо його номер.
 
 ### Крок 5: суми як різниця
 
@@ -163,7 +163,7 @@ translations:
         <DataWystFaKorygowanej>2026-04-01</DataWystFaKorygowanej>
         <NrFaKorygowanej>FV/001/04/2026</NrFaKorygowanej>
         <NrKSeF>1</NrKSeF>
-        <NrKSeFFaKorygowanej>5214567890-20260401-000001-000001-01</NrKSeFFaKorygowanej>
+        <NrKSeFFaKorygowanej>5214567890-20260401-000001000001-01</NrKSeFFaKorygowanej>
       </DaneFaKorygowanej>
       <FaWiersz>
         <NrWierszaFa>1</NrWierszaFa>

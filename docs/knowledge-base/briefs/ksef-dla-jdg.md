@@ -435,12 +435,15 @@ validator
 
 **Fact 5.3 — KSeF number technical format**
 
-- **Fact:** The KSeF number is a string of up to 35 characters (note: an earlier version of the
-  FA(3) spec showed 36 characters — corrected to 35 in the November 2025 update). It is referenced
-  in XML as `NrKSeFZ` or `NrKSeFFaKorygowanej` depending on context.
-- **Source:** FA(3) Information Sheet, changelog note: "November 2025 (KSeF number 36→35 chars in
-  example 14)"; §9.7
-- **Verbatim:** "November 2025 (KSeF number 36→35 chars in example 14)"
+- **Fact:** The KSeF number is a string of 35 characters: NIP (10), date YYYYMMDD (8), 12 hex
+  characters, 2 hex check characters, with hyphens between the parts. It is referenced in XML as
+  `NrKSeFZ` or `NrKSeFFaKorygowanej` depending on context. The Information Sheet's example 14 (pp.
+  70-71 in the PL edition) showed a 36-character number in editions up to September 2025; the MF
+  change log lists the correction under November 2025 (see `broszura-fa3-wydania.md`).
+- **Source:** FA(3) Information Sheet, change log (PL, last page): "Zmiana numeru KSeF z
+  36-znakowego na 35-znakowy w przykładzie nr 14." (November 2025); §9.7. Our conversion renders it
+  as "November 2025 (KSeF number 36→35 chars in example 14)".
+- **Verbatim (MF):** "Zmiana numeru KSeF z 36-znakowego na 35-znakowy w przykładzie nr 14."
 - **Confidence:** HIGH
 - **Ania-relevant:** ❌ (too technical; relevant only to developers / validators)
 
@@ -672,8 +675,8 @@ For the article's "Źródła" footer:
 3. **Rozporządzenie Ministra Finansów z dnia 7 grudnia 2025 r.** w sprawie wyłączeń z obowiązku
    wystawiania faktur ustrukturyzowanych —
    https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250001740
-4. **Broszura informacyjna FA(3)** — Ministerstwo Finansów, marzec 2026 —
-   https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf
+4. **Broszura informacyjna FA(3)** — Ministerstwo Finansów, sierpień 2026 —
+   https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf
 5. **Aplikacja Podatnika KSeF 2.0** — https://ap.ksef.mf.gov.pl/
 
 ---

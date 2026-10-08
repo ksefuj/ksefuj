@@ -10,8 +10,8 @@ topic: "invoicing"
 translationOf: "faktura-korygujaca-ksef"
 tags: ["KSeF", "Invoice", "VAT"]
 sources:
-  - label: "FA(3) Information Sheet, March 2026"
-    url: "https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "FA(3) Information Sheet, August 2026"
+    url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
   - label: "FAQ MF — KSeF 2.0"
     url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
   - label: "FA(3) XSD Schema"
@@ -68,7 +68,7 @@ You give the original's issue date (`DataWystFaKorygowanej`), its number (`NrFaK
 | Original went through KSeF  | `NrKSeF` = `1` + field `NrKSeFFaKorygowanej` with the original KSeF number |
 | Original issued before KSeF | `NrKSeFN` = `1` (no `NrKSeFFaKorygowanej`)                                 |
 
-Setting both fields at once gets the invoice rejected. A KSeF number looks like `NIP-DATE-XXXXXX-YYYYYY-ZZ`; copy it rather than retyping, because a typo stops the system linking the correction to the original. In the example the original went through KSeF, so we set `NrKSeF` = `1` and give its number.
+Setting both fields at once gets the invoice rejected. A KSeF number looks like `NIP-DATE-XXXXXXXXXXXX-ZZ`; copy it rather than retyping, because a typo stops the system linking the correction to the original. In the example the original went through KSeF, so we set `NrKSeF` = `1` and give its number.
 
 ### Step 5: amounts as a difference
 
@@ -163,7 +163,7 @@ Ania Kowalska's correction (FV/001/04/2026, −500 zł net, 23% VAT):
         <DataWystFaKorygowanej>2026-04-01</DataWystFaKorygowanej>
         <NrFaKorygowanej>FV/001/04/2026</NrFaKorygowanej>
         <NrKSeF>1</NrKSeF>
-        <NrKSeFFaKorygowanej>5214567890-20260401-000001-000001-01</NrKSeFFaKorygowanej>
+        <NrKSeFFaKorygowanej>5214567890-20260401-000001000001-01</NrKSeFFaKorygowanej>
       </DaneFaKorygowanej>
       <FaWiersz>
         <NrWierszaFa>1</NrWierszaFa>

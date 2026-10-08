@@ -13,7 +13,7 @@ translations:
 tags: ["KSeF", "FA(3)", "Validation", "XML"]
 sources:
   - label: "FA(3) Information Sheet (MF)"
-    url: "https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+    url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
   - label: "FA(3) XSD Schema"
     url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
 translationOf: "najczestsze-bledy-walidacji-fa3"
@@ -24,7 +24,7 @@ An FA(3) invoice most often fails validation because of a wrong namespace, eleme
 Validation messages are opaque. Instead of "missing invoice number" you get something like `Element 'P_6': This element is not expected. Expected is ( P_2 ).` If your invoicing software generates the XML itself, it should catch most of these. The explanations help when you integrate with KSeF (Krajowy System e-Faktur, Poland's national e-invoicing system) through the API, write a custom exporter, or want to know why an invoice was rejected. The examples are based on the FA(3) schema in force since 1 February 2026.
 
 <Source
-  href="https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
   label="FA(3) Information Sheet — Ministry of Finance"
 />
 
@@ -235,7 +235,7 @@ Allowed: `23`, `22`, `8`, `7`, `5`, `4`, `3`, `0 KR`, `0 WDT`, `0 EX`, `zw`, `oo
 The value `oo` (reverse charge) applies only to domestic transactions. For invoices to foreign buyers who account for VAT in their own country, use `np I` or `np II`.
 
 <Source
-  href="https://ksef.podatki.gov.pl/media/0ivha0ua/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
   label="MF FA(3) information brochure, description of field P_12 and its values"
 />
 
