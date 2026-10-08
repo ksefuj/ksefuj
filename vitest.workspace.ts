@@ -10,6 +10,8 @@ export default defineWorkspace([
       exclude: ["test/fixtures.test.ts"], // Moved to integration
     },
   },
+  // Own config: needs the @shared alias of the vendored generator.
+  "./packages/pdf/vitest.config.ts",
   {
     test: {
       name: "web",

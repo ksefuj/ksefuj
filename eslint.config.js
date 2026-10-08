@@ -19,6 +19,10 @@ export default [
       ".husky/**",
       "pnpm-lock.yaml",
       ".claude/settings.local.json",
+      // Vendored upstream code and generated font data (type-checked, not linted).
+      "packages/pdf/vendor/**",
+      "packages/pdf/scripts/**",
+      "packages/pdf/src/fonts/roboto-vfs.ts",
     ],
   },
   js.configs.recommended,
