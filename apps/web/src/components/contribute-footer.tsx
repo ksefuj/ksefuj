@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import * as amplitude from "@amplitude/unified";
+import * as amplitude from "@amplitude/analytics-browser";
 
 interface ContributeFooterProps {
   locale: string;

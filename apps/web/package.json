@@ -15,7 +15,7 @@
     "test:coverage": "vitest --coverage --run"
   },
   "dependencies": {
-    "@amplitude/unified": "^1.0.14",
+    "@amplitude/analytics-browser": "^2.47.3",
     "@ksefuj/validator": "workspace:*",
     "@shikijs/rehype": "^4.0.2",
     "@vercel/kv": "^3.0.0",

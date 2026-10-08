@@ -1,6 +1,6 @@
 "use client";
 
-import * as amplitude from "@amplitude/unified";
+import * as amplitude from "@amplitude/analytics-browser";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 import { XmlDropZone } from "@/components/xml-drop-zone";

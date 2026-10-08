@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import * as amplitude from "@amplitude/unified";
+import * as amplitude from "@amplitude/analytics-browser";
 import { useTranslations } from "next-intl";
 import type { CurrencyRate, ValidationResult } from "@ksefuj/validator";
 // Subpath import: dependency-free, so it does not drag libxml2-wasm into the initial bundle

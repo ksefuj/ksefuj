@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import * as amplitude from "@amplitude/unified";
+import * as amplitude from "@amplitude/analytics-browser";
 
 const REPO = "https://github.com/ksefuj/ksefuj";
 
