@@ -243,7 +243,7 @@
     "guides": "Guides",
     "waluty": "Exchange rates",
     "validator": "Validator",
-    "preview": "Invoice preview"
+    "preview": "Preview"
   },
   "translationBanner": {
     "body": "This article isn't available in your language yet. You're reading the {language} original.",
@@ -381,7 +381,7 @@
     "copyright": "© 2026 ksefuj. All code is public on GitHub.",
     "validator": "Validator",
     "preview": "Invoice preview",
-    "licenses": "Licenses"
+    "licenses": "Third-party licences"
   },
   "terms": {
     "meta": {
@@ -712,7 +712,7 @@
       "description": "If you have questions about this privacy policy, contact us at hej@ksefuj.to."
     },
     "invoicePreview": {
-      "description": "When you use the invoice preview, we count how often the preview is opened and a PDF is downloaded. We only record the page language and the invoice type (for example standard or corrective), never the invoice content or the file name."
+      "description": "When you use the invoice preview, we count how many times a preview is opened and a PDF is downloaded. With each count we record only the page language and the invoice type (such as standard or corrective), never the invoice content or the file name."
     }
   },
   "structuredData": {
@@ -774,7 +774,7 @@
       "title": "Most common errors",
       "intro": "Where these messages come from and how to fix them."
     },
-    "previewLinkText": "Just want to look at an invoice or save it as a PDF?",
+    "previewLinkText": "Just want to view an invoice or save it as a PDF?",
     "previewLink": "Open the preview"
   },
   "heroDropZone": {
@@ -789,60 +789,60 @@
       "preview": "Preview",
       "previewAria": "Preview invoice {fileName}",
       "download": "Download PDF",
-      "downloadAria": "Download PDF of invoice {fileName}",
+      "downloadAria": "Download invoice {fileName} as a PDF",
       "close": "Close preview",
       "preparing": "Preparing your PDF…"
     },
     "ksefNumber": {
       "label": "KSeF number (optional)",
-      "hint": "If the invoice is already in KSeF, enter its number. We will add a QR code for checking the invoice and remove the \"WIZUALIZACJA\" (visualisation) mark.",
+      "hint": "If the invoice is already in KSeF, enter its KSeF number. We'll add a QR code for verifying the invoice and remove the “WIZUALIZACJA” (visualisation) watermark.",
       "placeholder": "e.g. 5214567890-20260401-000001000001-49",
       "errors": {
-        "format": "This does not look like a KSeF number. It has 35 characters and starts with the seller's NIP.",
-        "nipMismatch": "This KSeF number belongs to a different company. It starts with NIP {ksefNip}, but the seller in the file has NIP {sellerNip}.",
-        "missingData": "The file has no seller NIP or issue date (P_1), so we cannot add a QR code. We show the invoice without it."
+        "format": "That doesn't look like a KSeF number. It's 35 characters long and starts with the seller's NIP (Polish tax ID).",
+        "nipMismatch": "This KSeF number belongs to a different business. It starts with NIP {ksefNip}, but the seller in the file has NIP {sellerNip}.",
+        "missingData": "The file is missing the seller's NIP or the issue date (P_1), so we can't add a QR code. We're showing the invoice without one."
       }
     },
     "watermarkBadge": "WIZUALIZACJA",
-    "pdfLanguageNote": "The labels inside the PDF are in Polish for now.",
-    "disclaimer": "This is a readable copy for printing and reference. The invoice itself is the XML file in KSeF.",
-    "watermarkTooltip": "The \"WIZUALIZACJA\" (visualisation) mark appears when you do not enter a KSeF number. Without a number the PDF has no QR code to check the invoice in KSeF.",
-    "withErrorsNote": "{count, plural, one {The file has # thing to fix} other {The file has # things to fix}}. The preview shows the invoice exactly as it is in the file.",
-    "mobileHint": "On a phone, download the PDF and open it in your browser or a PDF app.",
+    "pdfLanguageNote": "Good to know: for now, the headings and labels in the PDF are in Polish.",
+    "disclaimer": "This is a readable copy for printing and reference. The actual invoice is the XML file in KSeF.",
+    "watermarkTooltip": "The “WIZUALIZACJA” (visualisation) watermark appears when you don't enter a KSeF number. Without the number, the PDF has no QR code for verifying the invoice in KSeF.",
+    "withErrorsNote": "{count, plural, one {The file has # issue to fix} other {The file has # issues to fix}}. The preview shows the invoice unchanged, exactly as it is in the file.",
+    "mobileHint": "On a phone? Download the PDF and open it in your browser or a PDF app.",
     "errors": {
-      "notXml": "This is not an XML file. Upload an invoice saved as .xml.",
-      "notFa3": "This file is not an FA(3) invoice. The preview only works for invoices in the KSeF format in force since 1 February 2026.",
-      "renderFailed": "We could not prepare the PDF. Please try again. If that does not help, write to us: hej@ksefuj.to."
+      "notXml": "This isn't an XML file. Drop in an invoice saved as .xml.",
+      "notFa3": "This file isn't an FA(3) invoice. The preview only works for invoices in the KSeF format in force since 1 February 2026.",
+      "renderFailed": "We couldn't prepare the PDF. Try again, and if that doesn't help, email us at hej@ksefuj.to."
     }
   },
   "previewPage": {
-    "metaTitle": "KSeF XML invoice preview and PDF export — ksefuj.to",
-    "metaDescription": "Open a KSeF invoice XML file and save it as a PDF in the Ministry of Finance visualisation layout. Free, no sign-up. Your file never leaves the browser.",
-    "ogImageTitle": "Open a KSeF XML invoice",
-    "title": "Open a KSeF XML invoice",
-    "intro": "Drop an invoice XML file and we will show it in a readable form, ready to print. You can also download it as a PDF. The layout is based on the open-source visualisation generator of the Ministry of Finance.",
+    "metaTitle": "Open KSeF invoice XML and convert it to PDF — ksefuj.to",
+    "metaDescription": "Open a KSeF FA(3) invoice XML as a readable invoice and save it as a PDF in the Ministry of Finance layout. Free, no sign-up. Your file stays in your browser.",
+    "ogImageTitle": "Open your KSeF invoice XML",
+    "title": "Open your KSeF invoice XML",
+    "intro": "Drop in an invoice XML file and we'll show it as a readable invoice, ready to print. You can also download it as a PDF. The layout is based on the Ministry of Finance's open-source visualisation generator.",
     "dropzone": {
-      "title": "Drop your invoice XML file",
-      "hint": "or click to choose it from your disk",
+      "title": "Drop your invoice XML file here",
+      "hint": "or click to pick it from your computer",
       "dropHere": "Drop the file here",
-      "acceptedFiles": "A .xml file with a KSeF FA(3) invoice",
+      "acceptedFiles": "A KSeF FA(3) invoice in .xml format",
       "opening": "Opening your invoice…"
     },
-    "privacy": "Your file never leaves the browser. The preview and the PDF are created on your device.",
+    "privacy": "Your file never leaves your browser. The preview and the PDF are created on your device.",
     "howItWorks": {
       "title": "How it works",
       "steps": [
         {
-          "title": "Drop the XML file",
-          "text": "The one you have from KSeF, your invoicing software or an email."
+          "title": "Drop in the XML file",
+          "text": "Straight from KSeF, your invoicing software or an email."
         },
         {
           "title": "See the invoice",
-          "text": "Seller, buyer, line items and amounts in the layout known from the MF visualisation."
+          "text": "Seller, buyer, line items and amounts, laid out like the Ministry of Finance visualisation."
         },
         {
           "title": "Download the PDF",
-          "text": "Know the KSeF number? Enter it and we will add a QR code for checking the invoice."
+          "text": "Know the KSeF number? Enter it and we'll add a QR code for verifying the invoice."
         }
       ]
     },
@@ -854,22 +854,22 @@
           "answer": "No. The invoice is the XML file stored in KSeF. The PDF is a readable copy for printing or reference."
         },
         {
-          "question": "Does my file go to a server?",
-          "answer": "No. We open the file and turn it into a PDF in your browser. We do not send it anywhere. We only count how often the preview is opened and a PDF is downloaded, together with the page language and the invoice type, without invoice content or file names."
+          "question": "Is my file uploaded to a server?",
+          "answer": "No. We open the file and turn it into a PDF in your browser, and we don't send it anywhere. We only count how often a preview is opened and a PDF is downloaded, along with the page language and the invoice type. No invoice content, no file names."
         },
         {
-          "question": "Why does the PDF say \"WIZUALIZACJA\"?",
-          "answer": "It appears when you do not enter a KSeF number. Without a number the PDF has no QR code to check the invoice in KSeF. An invoice handed to the buyer outside KSeF must carry a QR code, so a PDF without a number is not suitable for that. Enter the number and the mark disappears."
+          "question": "Why does the PDF say “WIZUALIZACJA”?",
+          "answer": "The word means “visualisation” and appears when you don't enter a KSeF number. Without the number, the PDF has no QR code for verifying the invoice in KSeF. An invoice given to a buyer outside KSeF must carry a QR code, so a PDF without the number won't do for that. Enter the number and the watermark disappears."
         },
         {
           "question": "What is the QR code for?",
-          "answer": "Scanned with a phone, it opens a KSeF page that shows whether the invoice is in the system. The MF calls it KOD I. We calculate it from the file contents, so it only works for exactly the file that went into KSeF. We do not check the number in KSeF, so copy it carefully. We do not create the certificate code for offline invoices (KOD II)."
+          "answer": "Scan it with a phone and it opens a KSeF page showing whether the invoice is in the system. The Ministry of Finance calls it KOD I. We generate the code from the file's contents, so it only works if your file is exactly the one that went into KSeF. We don't check the number against KSeF, so copy it carefully. We don't generate the certificate-based code for offline invoices (KOD II)."
         }
       ]
     },
     "cta": {
-      "title": "Do you issue invoices too?",
-      "text": "Check the XML file before sending it to KSeF. We will show what needs fixing.",
+      "title": "Issuing invoices too?",
+      "text": "Check your XML file before you send it to KSeF. We'll show you what needs fixing.",
       "button": "Open the validator"
     }
   }
