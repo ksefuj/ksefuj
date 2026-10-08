@@ -318,7 +318,7 @@ By contributing, you agree that your contributions will be licensed under the Ap
 
 ## 🤝 Code of Conduct
 
-Please read our [Code of Conduct](CODE_OF_CONDUCT.md) before contributing.
+Please read our [Code of Conduct](https://github.com/ksefuj/.github/blob/main/CODE_OF_CONDUCT.md) before contributing.
 
 ## 💡 Tips for AI Assistants
 
