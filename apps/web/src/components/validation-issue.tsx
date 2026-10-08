@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { ValidationIssue } from "@ksefuj/validator";
 import Link from "next/link";
-import * as amplitude from "@amplitude/unified";
+import * as amplitude from "@amplitude/analytics-browser";
 import { useLocale, useTranslations } from "next-intl";
 import { Badge } from "./badge";
 import { MarkdownText } from "@/lib/markdown";

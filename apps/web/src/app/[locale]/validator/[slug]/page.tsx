@@ -14,10 +14,9 @@ import {
 import { articleParams } from "@/lib/og-static-params";
 import { compileMDXContent } from "@/lib/compile-mdx";
 import { buildArticleSchema, buildBreadcrumbSchema } from "@/lib/structured-data";
+import { withSiteSuffix } from "@/lib/page-title";
 
 const SECTION = "validator";
-const SITE_SUFFIX = " — ksefuj.to";
-const MAX_TITLE_LENGTH = 60;
 
 interface Props {
   params: Promise<{ locale: string; slug: string }>;
@@ -37,10 +36,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const path = buildContentPath(locale, SECTION, slug);
   const hreflang = buildHreflangAlternates(SECTION, frontmatter.translations);
   const ogLocaleMap: Record<string, string> = { en: "en_US", uk: "uk_UA" };
-  const withSuffix = `${frontmatter.title}${SITE_SUFFIX}`;
 
   return {
-    title: withSuffix.length <= MAX_TITLE_LENGTH ? withSuffix : frontmatter.title,
+    title: withSiteSuffix(frontmatter.title),
     description: frontmatter.description,
     alternates: {
       canonical: path,

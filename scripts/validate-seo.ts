@@ -381,7 +381,7 @@ function validateInternalLinks() {
 
   const contentRoot = "apps/web/content";
   const staticRoutes = new Set(["", "/validator", "/waluty", "/privacy", "/terms"]);
-  const sections = ["blog", "guides", "docs", "faq"];
+  const sections = ["blog", "guides", "docs", "faq", "validator"];
   const locales = ["pl", "en", "uk"];
   const slugsFor = (locale: string, section: string): Set<string> => {
     const dir = join(contentRoot, locale, section);
