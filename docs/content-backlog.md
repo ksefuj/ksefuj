@@ -19,6 +19,12 @@ what is not yet settled.
 
 ## Next up
 
+- [ ] **UPDATE** `ksef-dla-jdg` + `ksef-od-1-kwietnia-2026` (all locales) — the consumer (B2C)
+      exclusion is cited as art. 106nd ust. 3 + rozporządzenie MF z 7.12.2025; the KB gives art.
+      106ga ust. 2 pkt 4 as its basis. Fix the citation (keep the regulation only for the exclusions
+      it actually covers), mention that issuing B2C invoices in KSeF is voluntary, link
+      `faktura-dla-osoby-prywatnej-ksef` · brief
+      `docs/knowledge-base/briefs/faktura-dla-osoby-prywatnej-ksef.md`
 - [x] `ksef-scisla-walidacja-xml-19-10` (in review: branch `content/ksef-scisla-walidacja-xml`) —
       KSeF od 19.10.2026 odrzuci XML z instrukcjami przetwarzania i niezalecanymi znakami · „KSeF
       błąd xml-002" · M, K · 2026-10-19 · CIRFMF ksef-api release 2.4.0 changelog and issue #718
