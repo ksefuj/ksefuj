@@ -205,7 +205,8 @@ word.
 2. **"Mandatory from February 2026"**: only for large companies (>200M PLN revenue) on Feb 1; April
    1, 2026 for everyone else.
 3. **FA(2) field names in FA(3) context.** FA(3) changed several elements.
-4. **Confusing `OkresFa` and `P_6`**: different purposes (see the ksef-fa3 skill).
+4. **Confusing `OkresFa` and `P_6`**: different purposes (see the ksef-invoice skill
+   (ksefuj/skills)).
 5. **Wrong penalty amounts or legal basis.** Penalties changed several times in the legislative
    process; cite only the final enacted version.
 6. **"Offline mode has no time limit"**: there are specific windows.
@@ -227,7 +228,7 @@ messages.
 - Researcher → extracts → you (fast-path to citations; primary sources remain final)
 - Copywriter → PL content → you (full review)
 - Localizer → EN/UK → you (Mode 4 delta check)
-- ksef-fa3 skill → XML generation rules → you (verify they match the spec)
+- ksef-invoice skill (ksefuj/skills) → XML generation rules → you (verify they match the spec)
 - Dev → validator rules → you (verify against the constitutional reference)
 
 You ONLY read official sources, compare claims, issue verdicts with evidence, and flag problems by

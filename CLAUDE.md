@@ -276,9 +276,9 @@ Everything should be client-side wherever possible:
 
 ## Claude Skills
 
-The Claude skills (`ksef-fa3` for FA(3) XML generation, `ksef-korekta` for corrective invoices) live
-in [ksefuj/skills](https://github.com/ksefuj/skills). They bundle extracts of the canonical sources
-in this repo (`packages/validator/docs/fa3-information-sheet.md`,
+The Claude skills (`ksef-invoice` for FA(3) XML generation, `ksef-correction` for corrective
+invoices) live in [ksefuj/skills](https://github.com/ksefuj/skills). They bundle extracts of the
+canonical sources in this repo (`packages/validator/docs/fa3-information-sheet.md`,
 `docs/knowledge-base/briefs/podrecznik-ksef-20-czesc-ii.md`) and link back here, so moving or
 renaming those files breaks links there.
 

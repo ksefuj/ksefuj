@@ -151,8 +151,8 @@ Ministry of Finance:
 
 Claude skills live in [ksefuj/skills](https://github.com/ksefuj/skills):
 
-- **ksef-fa3** — generates FA(3) XML invoices from input data (PDF, text, form)
-- **ksef-korekta** — interactive wizard for corrective invoices (KOR, KOR_ZAL, KOR_ROZ)
+- **ksef-invoice** — generates FA(3) XML invoices from input data (PDF, text, form)
+- **ksef-correction** — interactive wizard for corrective invoices (KOR, KOR_ZAL, KOR_ROZ)
 
 Install in Claude Code with `/plugin marketplace add ksefuj/skills`, or download the `.skill` files
 from [Releases](https://github.com/ksefuj/skills/releases).
