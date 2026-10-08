@@ -44,6 +44,8 @@ Every patch is marked `// ksefuj patch:` in the code. Keep this list in sync.
 | 9 | `src/lib-public/generators/FA3/Wiersze.ts` | For KOR_ROZ a paragraph "Kwota pozostała do zapłaty przed korektą: {P_15ZK}" is rendered above the corrected remaining amount. | Same as 8. |
 | 10 | `src/lib-public/i18n/i18n-init.ts` | Only the PL resource is registered; `en.ts` is not vendored. | The upstream EN resource is a placeholder (1 of 997 keys translated); the adapter fixes the language to PL. |
 | 11 | `src/shared/generators/common/functions.ts` | `import packageInfo from '../../../../package.json'` replaced by a constant `{ version: '1.1.40' }`. | We do not vendor upstream's `package.json`. Update the constant on upgrade. |
+| 12 | `src/lib-public/generators/FA3/Platnosc.ts` | `link` of `LinkDoPlatnosci` is the raw URL string. | Upstream passed `formatText()`'s object, which pdfmake wrote as the annotation `/URI ([object Object])`. |
+| 13 | `src/shared/generators/common/functions.ts` | `formatDateTime` (used for `OkresFa` P_6_Od/P_6_Do) and `formatDateTimePl` format date-only values (`YYYY-MM-DD`) from their components; `formatDateTime` and `formatTime` read date-times in Europe/Warsaw (as `formatDateTimePl` already did) instead of the local zone. | `new Date("2026-02-01")` is UTC midnight and the local getters showed 31.01.2026 west of UTC; output depended on the viewer's time zone. Covered by `test/dates.test.ts`, run under three zones. |
 
 Known gaps (not patched): KOR_ZAL without a `Zamowienie` element shows neither `P_15` nor
 `P_15ZK` (upstream behaviour; all three KOR_ZAL MF examples have one). Cosmetic

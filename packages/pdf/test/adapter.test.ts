@@ -138,6 +138,32 @@ describe("KSeF number and KOD I", () => {
     expect(r.doc.watermark).toMatchObject({ text: "WIZUALIZACJA" });
   });
 
+  it("reports ksefNumberIgnored only for a passed but invalid number", async () => {
+    expect((await render(example1())).ksefNumberIgnored).toBe(false);
+    expect((await render(example1(), { ksefNumber: KSEF_NUMBER })).ksefNumberIgnored).toBe(false);
+    const bad = await render(example1(), { ksefNumber: "not-a-number" });
+    expect(bad.ksefNumberIgnored).toBe(true);
+    expect(bad.hasQr).toBe(false);
+  });
+
+  it("missing seller NIP or P_1: same 'missing-data' error from render and buildKodIUrl", async () => {
+    const original = new TextDecoder().decode(example1());
+    const noNip = encode(original.replace("<NIP>9999999999</NIP>", ""));
+    const noDate = encode(original.replace(/<P_1>[^<]*<\/P_1>/, ""));
+    for (const bytes of [noNip, noDate]) {
+      const fromRender = await renderInvoicePdf(bytes, { ksefNumber: KSEF_NUMBER }).catch(
+        (e: unknown) => e,
+      );
+      const fromBuild = await buildKodIUrl(bytes).catch((e: unknown) => e);
+      for (const error of [fromRender, fromBuild]) {
+        expect(error).toBeInstanceOf(UnsupportedInvoiceError);
+        expect((error as UnsupportedInvoiceError).reason).toBe("missing-data");
+      }
+    }
+    // Without a KSeF number the same invoices still render (no QR needed).
+    expect((await renderInvoicePdf(noNip)).hasQr).toBe(false);
+  });
+
   it("throws KsefNumberMismatchError when the NIP prefix differs from the seller", async () => {
     await expect(
       renderInvoicePdf(example1(), { ksefNumber: OTHER_SELLER_KSEF_NUMBER }),

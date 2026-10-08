@@ -15,22 +15,55 @@ export function translateMap(value: FP2 | string | undefined, map: Record<string
   return i18n.t(map[valueToTranslate]);
 }
 
+// ksefuj patch: helpers for the time-zone independent date formatting below.
+const DATE_ONLY = /^(\d{4})-(\d{2})-(\d{2})$/;
+const WARSAW_PARTS = new Intl.DateTimeFormat('en-GB', {
+  timeZone: 'Europe/Warsaw',
+  hourCycle: 'h23',
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+  hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit',
+});
+
+function warsawParts(date: Date): Record<'year' | 'month' | 'day' | 'hours' | 'minutes' | 'seconds', string> {
+  const parts: Record<string, string> = {};
+
+  for (const part of WARSAW_PARTS.formatToParts(date)) {
+    parts[part.type] = part.value;
+  }
+  return {
+    year: parts.year,
+    month: parts.month,
+    day: parts.day,
+    hours: parts.hour,
+    minutes: parts.minute,
+    seconds: parts.second,
+  };
+}
+
 export function formatDateTime(data?: string, withoutSeconds?: boolean, withoutTime?: boolean): string {
   if (!data) {
     return '';
   }
+  // ksefuj patch: date-only values are formatted from their components (new Date() parses them as
+  // UTC midnight and the local getters below shifted them a day west of UTC), and date-times are
+  // read in Europe/Warsaw like formatDateTimePl, so the output does not depend on the viewer's TZ.
+  const dateOnly = DATE_ONLY.exec(data);
+
+  if (dateOnly && withoutTime) {
+    return `${dateOnly[3]}.${dateOnly[2]}.${dateOnly[1]}`;
+  }
+
   const dateTime: Date = new Date(data);
 
   if (isNaN(dateTime.getTime())) {
     return data;
   }
 
-  const year: number = dateTime.getFullYear();
-  const month: string = (dateTime.getMonth() + 1).toString().padStart(2, '0');
-  const day: string = dateTime.getDate().toString().padStart(2, '0');
-  const hours: string = dateTime.getHours().toString().padStart(2, '0');
-  const minutes: string = dateTime.getMinutes().toString().padStart(2, '0');
-  const seconds: string = dateTime.getSeconds().toString().padStart(2, '0');
+  const { year, month, day, hours, minutes, seconds } = warsawParts(dateTime);
 
   if (withoutTime) {
     return `${day}.${month}.${year}`;
@@ -50,6 +83,12 @@ export function formatDateTimePl(value: string, withTime?: boolean, withSeconds?
 
   if (!value) {
     return '';
+  }
+  // ksefuj patch: date-only values are formatted from their components (no Date round trip).
+  const dateOnly = DATE_ONLY.exec(value);
+
+  if (dateOnly && !withTime) {
+    return `${dateOnly[3]}.${dateOnly[2]}.${dateOnly[1]}`;
   }
   const date = new Date(value);
 
@@ -84,9 +123,8 @@ export function formatTime(data?: string, withoutSeconds?: boolean): string {
     return data;
   }
 
-  const hours: string = dateTime.getHours().toString().padStart(2, '0');
-  const minutes: string = dateTime.getMinutes().toString().padStart(2, '0');
-  const seconds: string = dateTime.getSeconds().toString().padStart(2, '0');
+  // ksefuj patch: Europe/Warsaw instead of the local time zone (see formatDateTime).
+  const { hours, minutes, seconds } = warsawParts(dateTime);
 
   if (withoutSeconds) {
     return `${hours}:${minutes}`;

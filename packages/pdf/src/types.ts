@@ -17,4 +17,6 @@ export interface RenderResult {
   /** RodzajFaktury of the invoice (VAT, ZAL, ROZ, UPR, KOR, KOR_ZAL, KOR_ROZ). */
   invoiceType: string;
   hasQr: boolean;
+  /** True when a `ksefNumber` was passed but failed `isValidKsefNumber` (so it was not used). */
+  ksefNumberIgnored: boolean;
 }

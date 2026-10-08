@@ -8,9 +8,11 @@ export type { QrEnvironment, RenderOptions, RenderResult } from "./types";
  * Renders an FA(3) invoice (XML bytes) to a PDF visualisation, entirely in the caller's runtime.
  * No network access. The generator and the fonts are loaded lazily on the first call.
  *
- * Throws UnsupportedInvoiceError ("not-xml" | "not-fa3") for input that is not an FA(3) invoice and
+ * Throws UnsupportedInvoiceError ("not-xml" | "not-fa3") for input that is not an FA(3) invoice,
+ * ("missing-data") when a valid `ksefNumber` is given but the invoice has no seller NIP or P_1, and
  * KsefNumberMismatchError when `ksefNumber` is valid but belongs to a different seller NIP.
- * An invalid `ksefNumber` is ignored (no number, no QR, watermark on by default).
+ * An invalid `ksefNumber` is ignored (no number, no QR, watermark on by default) and reported as
+ * `ksefNumberIgnored: true` in the result.
  */
 export async function renderInvoicePdf(
   xml: Uint8Array | ArrayBuffer,

@@ -8,8 +8,8 @@ describe("isValidKsefNumber", () => {
   it("accepts 5214567890-20260401-000001000001-49", () => {
     expect(isValidKsefNumber("5214567890-20260401-000001000001-49")).toBe(true);
   });
-  it("handles the 36-character layout with a hyphen in the technical part", () => {
-    expect(isValidKsefNumber("5214567890-20260401-000001-000001-49")).toBe(true);
+  it("rejects the 36-character layout (the MF document only defines 35 characters)", () => {
+    expect(isValidKsefNumber("5214567890-20260401-000001-000001-49")).toBe(false);
     expect(isValidKsefNumber("5214567890-20260401-000001-000001-01")).toBe(false);
   });
   it("rejects a wrong checksum", () => {

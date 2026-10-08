@@ -33,7 +33,7 @@ export async function composeKodIUrl(
 ): Promise<string> {
   const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(isoDate);
   if (!match) {
-    throw new UnsupportedInvoiceError("not-fa3");
+    throw new UnsupportedInvoiceError("missing-data");
   }
   const date = `${match[3]}-${match[2]}-${match[1]}`;
   return `${QR_HOSTS[env]}/invoice/${nip}/${date}/${await invoiceHashBase64Url(xml)}`;
@@ -45,15 +45,15 @@ export async function composeKodIUrl(
  * Format per CIRFMF/ksef-docs `kody-qr.md`, section "1. KOD I - Weryfikacja i pobieranie faktury":
  * `{host}/invoice/{seller NIP}/{P_1 as DD-MM-YYYY}/{SHA-256 of the invoice file, Base64URL}`.
  * The hash is computed over the exact bytes passed in, so pass the same bytes that are (or will
- * be) sent to KSeF. Throws UnsupportedInvoiceError when the XML is not an FA(3) invoice or has no
- * seller NIP / issue date.
+ * be) sent to KSeF. Throws UnsupportedInvoiceError: "not-xml" / "not-fa3" for other input,
+ * "missing-data" when the invoice has no seller NIP or issue date.
  */
 export async function buildKodIUrl(xml: Uint8Array, env: QrEnvironment = "prod"): Promise<string> {
   const invoice = parseInvoice(xml);
   const nip = sellerNip(invoice);
   const date = issueDate(invoice);
   if (!nip || !date) {
-    throw new UnsupportedInvoiceError("not-fa3");
+    throw new UnsupportedInvoiceError("missing-data");
   }
   return composeKodIUrl(xml, nip, date, env);
 }

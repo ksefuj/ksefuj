@@ -165,7 +165,9 @@ export function generatePlatnosc(platnosc: Platnosc | undefined): Content {
     table.push(formatText(i18n.t('invoice.payment.moneylessLink'), FormatTyp.Label));
     table.push({
       text: formatText(platnosc.LinkDoPlatnosci._text, FormatTyp.Link),
-      link: formatText(platnosc.LinkDoPlatnosci._text, FormatTyp.Link),
+      // ksefuj patch: upstream passed formatText()'s object here, giving the PDF annotation
+      // /URI ([object Object]); pdfmake needs the raw URL string.
+      link: platnosc.LinkDoPlatnosci._text,
     } as ContentText);
   }
   if (platnosc.IPKSeF?._text) {

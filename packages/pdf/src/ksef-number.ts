@@ -21,19 +21,19 @@ function crc8(data: string): number {
 
 /**
  * True when the value matches the TNumerKSeF pattern of the FA(3) schema and its checksum is
- * correct. Per CIRFMF/ksef-api faktury/numer-ksef.md the number is 35 characters; the last two
- * (hex CRC-8) cover the first 32 characters, i.e. "NIP-RRRRMMDD-FFFFFFFFFFFF" including hyphens.
- * The XSD also allows a hyphen inside the 12-character technical part (36 characters); it is
- * dropped before the checksum is computed.
+ * correct. Per CIRFMF/ksef-api faktury/numer-ksef.md the number "zawsze ma długość 35 znaków": the
+ * last two (hex CRC-8) cover the first 32 characters, i.e. "NIP-RRRRMMDD-FFFFFFFFFFFF" including
+ * the hyphens. The document is silent about the 36-character form the XSD pattern also allows
+ * (a hyphen inside the 12-character technical part), so the checksum is only defined, and the
+ * number only accepted, in the 35-character layout; the 36-character form is rejected.
  */
 export function isValidKsefNumber(value: string): boolean {
-  if (!KSEF_NUMBER_PATTERN.test(value)) {
+  if (value.length !== 35 || !KSEF_NUMBER_PATTERN.test(value)) {
     return false;
   }
-  // Prefix (10) + "-" + date (8) + "-" = 20 characters, then 6 hex, optional "-", 6 hex.
-  const data = value.slice(0, -3).replace(/^(.{20}[0-9A-F]{6})-/, "$1");
+  const data = value.slice(0, 32);
   const checksum = value.slice(-2);
-  return data.length === 32 && crc8(data).toString(16).toUpperCase().padStart(2, "0") === checksum;
+  return crc8(data).toString(16).toUpperCase().padStart(2, "0") === checksum;
 }
 
 /** The identifier prefix of a (valid) KSeF number, i.e. everything before the first dash. */

@@ -12,7 +12,7 @@
   "scripts": {
     "build": "tsc --noEmit",
     "typecheck": "tsc --noEmit",
-    "test": "vitest --run",
+    "test": "vitest --run && TZ=America/New_York vitest --run test/dates.test.ts && TZ=Pacific/Auckland vitest --run test/dates.test.ts",
     "test:watch": "vitest watch",
     "test:coverage": "vitest --coverage --run",
     "gen:fonts": "node scripts/gen-fonts.mjs",

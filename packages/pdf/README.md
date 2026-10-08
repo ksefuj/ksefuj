@@ -30,9 +30,10 @@ export interface RenderResult {
   blob: Blob;
   invoiceType: string; // RodzajFaktury
   hasQr: boolean;
+  ksefNumberIgnored: boolean; // a ksefNumber was passed but failed isValidKsefNumber
 }
 export class UnsupportedInvoiceError extends Error {
-  readonly reason: "not-xml" | "not-fa3";
+  readonly reason: "not-xml" | "not-fa3" | "missing-data";
 }
 export async function renderInvoicePdf(
   xml: Uint8Array | ArrayBuffer,
@@ -46,8 +47,10 @@ Also exported: `KsefNumberMismatchError` (typed error, no fields).
 
 - **FA(3) detection**: the root element must be `Faktura` in the namespace
   `http://crd.gov.pl/wzor/2025/06/25/13775/`. Anything else throws
-  `UnsupportedInvoiceError("not-fa3")`, unparsable input `("not-xml")`. The generator does not
-  validate (no XSD, no semantic rules): validate with `@ksefuj/validator` first.
+  `UnsupportedInvoiceError("not-fa3")`, unparsable input `("not-xml")`. An FA(3) invoice without
+  `Podmiot1/DaneIdentyfikacyjne/NIP` or `Fa/P_1` throws `("missing-data")` from `buildKodIUrl` and
+  from `renderInvoicePdf` when a valid `ksefNumber` asks for a QR. The generator does not validate
+  (no XSD, no semantic rules): validate with `@ksefuj/validator` first.
 - **KSeF number and KOD I**: when `ksefNumber` is given and valid, it is printed in the header and a
   KOD I QR code is added
   (`https://qr.ksef.mf.gov.pl/invoice/{NIP}/{DD-MM-YYYY}/{SHA-256 Base64URL}`; hosts
@@ -55,11 +58,13 @@ Also exported: `KsefNumberMismatchError` (typed error, no fields).
   CIRFMF/ksef-docs `kody-qr.md`). The hash covers the exact bytes passed in. If the NIP prefix of
   the number differs from `Podmiot1/DaneIdentyfikacyjne/NIP`, `KsefNumberMismatchError` is thrown
   rather than rendering a wrong QR. An invalid `ksefNumber` (pattern or checksum) is ignored: no
-  number, no QR, watermark on by default. KOD II (offline certificate) is never generated.
+  number, no QR, watermark on by default, and the result has `ksefNumberIgnored: true` so the UI can
+  tell the user. KOD II (offline certificate) is never generated.
 - **`isValidKsefNumber`**: the `TNumerKSeF` pattern of the FA(3) schema plus the CRC-8 checksum
   (polynomial 0x07, initial value 0x00, over the first 32 characters) from CIRFMF/ksef-api
-  `faktury/numer-ksef.md`. Handles the 35-character layout and the 36-character layout with the
-  optional hyphen the XSD allows.
+  `faktury/numer-ksef.md`. Only the 35-character layout the document defines is accepted; the
+  36-character form the XSD pattern also allows (hyphen inside the technical part) is rejected
+  because the document does not say how its checksum is computed.
 - **Watermark**: default on without a valid `ksefNumber`, off with one; `watermark` overrides.
 - **Language**: fixed to Polish in v1. i18next is global state, so renders are serialised.
 
@@ -106,7 +111,9 @@ must expose that file (for example from `apps/web/public`) when it ships this pa
 ## Development
 
 ```bash
-pnpm --filter @ksefuj/pdf test        # 26 MF examples, patches, QR rules, pdf.js text extraction
+pnpm --filter @ksefuj/pdf test        # 26 MF examples, patches, QR rules, pdf.js text extraction;
+                                      # then the date tests again under TZ=America/New_York and
+                                      # TZ=Pacific/Auckland
 pnpm --filter @ksefuj/pdf typecheck
 pnpm --filter @ksefuj/pdf size
 pnpm --filter @ksefuj/pdf gen:fonts   # regenerate src/fonts/roboto-vfs.ts from pdfmake

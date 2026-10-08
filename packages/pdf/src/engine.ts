@@ -3,7 +3,7 @@
 import i18next from "i18next";
 import pdfMake from "pdfmake/build/pdfmake";
 import type { TDocumentDefinitions } from "pdfmake/interfaces";
-import { KsefNumberMismatchError } from "./errors";
+import { KsefNumberMismatchError, UnsupportedInvoiceError } from "./errors";
 import { loadRobotoVfs, ROBOTO_FONTS } from "./fonts";
 import { composeKodIUrl } from "./kod-i";
 import { isValidKsefNumber, ksefNumberPrefix } from "./ksef-number";
@@ -26,10 +26,17 @@ export function setDocDefinitionObserver(
 let fontsReady: Promise<void> | undefined;
 
 function ensureFonts(): Promise<void> {
-  fontsReady ??= loadRobotoVfs().then((vfs) => {
-    pdfMake.addVirtualFileSystem(vfs);
-    pdfMake.addFonts(ROBOTO_FONTS);
-  });
+  fontsReady ??= loadRobotoVfs().then(
+    (vfs) => {
+      pdfMake.addVirtualFileSystem(vfs);
+      pdfMake.addFonts(ROBOTO_FONTS);
+    },
+    (error: unknown) => {
+      // Do not cache a failed load (e.g. a dropped chunk request): the next render retries.
+      fontsReady = undefined;
+      throw error;
+    },
+  );
   return fontsReady;
 }
 
@@ -51,12 +58,17 @@ async function render(xml: Uint8Array, options: RenderOptions): Promise<RenderRe
 
   const candidate = options.ksefNumber?.trim();
   const ksefNumber = candidate && isValidKsefNumber(candidate) ? candidate : undefined;
+  const ksefNumberIgnored = Boolean(candidate) && ksefNumber === undefined;
 
   let qrCode: string | undefined;
   if (ksefNumber) {
     const nip = sellerNip(invoice);
     const date = issueDate(invoice);
-    if (!nip || !date || ksefNumberPrefix(ksefNumber) !== nip) {
+    if (!nip || !date) {
+      // Same error as buildKodIUrl for an invoice without the data KOD I needs.
+      throw new UnsupportedInvoiceError("missing-data");
+    }
+    if (ksefNumberPrefix(ksefNumber) !== nip) {
       throw new KsefNumberMismatchError();
     }
     // Only KOD I. KOD II needs the issuer's offline certificate, which we never ask for.
@@ -81,5 +93,6 @@ async function render(xml: Uint8Array, options: RenderOptions): Promise<RenderRe
     blob,
     invoiceType: invoice.Fa?.RodzajFaktury?._text ?? "",
     hasQr: qrCode !== undefined,
+    ksefNumberIgnored,
   };
 }
