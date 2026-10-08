@@ -1776,6 +1776,14 @@ const P13_FIELDS = [
 const P14_FIELDS = ["P_14_1", "P_14_2", "P_14_3", "P_14_4", "P_14_5"];
 const P14W_FIELDS = ["P_14_1W", "P_14_2W", "P_14_3W", "P_14_4W"];
 
+function roundHalfAwayFromZero(value: number): number {
+  return Math.sign(value) * Math.round(Math.abs(value));
+}
+
+function toGrosze(amount: number): number {
+  return roundHalfAwayFromZero(amount * 100);
+}
+
 function checkTaxCalculations(doc: XmlDocument): ValidationIssue[] {
   // Rule 39: TAX_CALCULATION_MISMATCH - Validate arithmetic consistency of tax calculations
   const issues: ValidationIssue[] = [];
@@ -1812,9 +1820,14 @@ function checkTaxCalculations(doc: XmlDocument): ValidationIssue[] {
     if (Number.isNaN(baseValue) || Number.isNaN(taxValue)) {
       continue;
     }
-    const expected = rates.map((rate) => Math.round(baseValue * rate) / 100);
-    // Allow 1 cent tolerance
-    if (expected.every((value) => Math.abs(taxValue - value) > 0.01)) {
+    // Compare in integer grosze to avoid float noise on exact 1-grosz differences
+    const taxGrosze = toGrosze(taxValue);
+    const expectedGrosze = rates.map((rate) =>
+      roundHalfAwayFromZero((toGrosze(baseValue) * rate) / 100),
+    );
+    const expected = expectedGrosze.map((value) => value / 100);
+    // Allow 1 grosz tolerance
+    if (expectedGrosze.every((value) => Math.abs(taxGrosze - value) > 1)) {
       const errorDef = ERROR_CODES.TAX_CALCULATION_MISMATCH;
       const rateLabel = rates.map((rate) => `${rate}%`).join(" or ");
       issues.push({
@@ -1848,11 +1861,11 @@ function checkTaxCalculations(doc: XmlDocument): ValidationIssue[] {
     // numbers are reported by AMOUNT_NO_SEPARATORS, so skip the sum rather than mis-parse them.
     const isPlainDecimal = (value: string) => /^-?\d+(\.\d+)?$/.test(value);
     if (present.length > 0 && present.every(isPlainDecimal) && isPlainDecimal(p15)) {
-      const expectedTotal = present.reduce((sum, value) => sum + parseFloat(value), 0);
-      const actualTotal = parseFloat(p15);
+      const expectedGrosze = present.reduce((sum, value) => sum + toGrosze(parseFloat(value)), 0);
+      const expectedTotal = expectedGrosze / 100;
 
-      if (Math.abs(actualTotal - expectedTotal) > 0.01) {
-        // Allow 1 cent tolerance
+      if (Math.abs(toGrosze(parseFloat(p15)) - expectedGrosze) > 1) {
+        // Allow 1 grosz tolerance, compared as integers
         const errorDef = ERROR_CODES.TAX_CALCULATION_MISMATCH;
         issues.push({
           code: errorDef.code,

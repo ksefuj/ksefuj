@@ -919,6 +919,25 @@ describe("Semantic Validation", () => {
       ]);
     });
 
+    it("tolerates exactly 1 grosz without float false positives, but flags 2 grosze", () => {
+      // 23.01 - 23.00 and 0.31 - (0.1 + 0.2) are 0.01 plus float noise in plain doubles
+      const within = invoiceWith(`
+        <P_13_1>100.00</P_13_1><P_14_1>23.01</P_14_1>
+        <P_13_6_1>0.10</P_13_6_1><P_13_6_2>0.20</P_13_6_2>
+        <P_15>123.32</P_15>`);
+      expect(codes(within)).not.toContain("TAX_CALCULATION_MISMATCH");
+
+      const beyond = invoiceWith(`
+        <P_13_1>100.00</P_13_1><P_14_1>23.02</P_14_1>
+        <P_13_6_1>0.10</P_13_6_1><P_13_6_2>0.20</P_13_6_2>
+        <P_15>123.34</P_15>`);
+      const elements = validateXml(beyond)
+        .issues.filter((i) => i.code.code === "TAX_CALCULATION_MISMATCH")
+        .map((i) => i.context.location.element)
+        .sort();
+      expect(elements).toEqual(["P_14_1", "P_15"]);
+    });
+
     it("detects a wrong P_15 total", () => {
       const xml = invoiceWith(`
         <P_13_1>100.00</P_13_1><P_14_1>23.00</P_14_1>
