@@ -238,9 +238,10 @@ function checkFile(file: string): FileReport {
   const warnings: string[] = [];
   const title = frontmatterValue(frontmatter, "title");
   const description = frontmatterValue(frontmatter, "description");
-  // The page template appends " — ksefuj.to" (11 chars); Google truncates at ~60.
-  if (title && title.length > 49) {
-    warnings.push(`title is ${title.length} chars (limit 49)`);
+  // The page template appends " — ksefuj.to" (12 chars) only when the result fits in 60
+  // (see apps/web/src/lib/page-title.ts); longer titles lose the brand suffix.
+  if (title && title.length > 48) {
+    warnings.push(`title is ${title.length} chars (limit 48)`);
   }
   if (description && description.length > 160) {
     warnings.push(`description is ${description.length} chars (limit 160)`);
