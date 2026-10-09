@@ -2,7 +2,7 @@
 title: "KSeF from 1 April 2026: who must use it"
 description: "From 1 April 2026 you issue B2B invoices in KSeF, VAT-exempt taxpayers included. Until the end of 2026 the exception is sales up to 10,000 PLN a month."
 date: 2026-03-25
-updated: 2026-10-07
+updated: 2026-10-09
 section: blog
 locale: en
 slug: "ksef-from-april-1-2026"
@@ -18,7 +18,7 @@ sources:
     url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
   - label: "VAT Act Art. 106a–106s, 108a, 108g, 145m"
     url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
-  - label: "VAT Act consolidated text, Journal of Laws 2026, item 1263 (Art. 106ni, 145m, 145n)"
+  - label: "VAT Act consolidated text, Journal of Laws 2026, item 1263 (Art. 106ga, 106gb, 106ni, 145m, 145n)"
     url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
   - label: "MF announcement: penalty deferral extended to end of 2027"
     url: "https://www.gov.pl/web/finanse/przedluzenie-odroczenia-kar-za-bledy-w-stosowaniu-ksef-do-konca-2027-r"
@@ -26,13 +26,15 @@ sources:
     url: "https://legislacja.rcl.gov.pl/projekt/12414954"
   - label: "KSeF 2.0 Handbook, Part I"
     url: "https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
-  - label: "MF Regulation of 7.12.2025 (exclusions)"
+  - label: "MF regulation on cases with no structured invoice obligation (Journal of Laws 2025, item 1740)"
     url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250001740"
+  - label: "MF: KSeF legal basis and key dates"
+    url: "https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/podstawy-prawne-oraz-kluczowe-terminy/"
   - label: "FA(3) Information Sheet"
     url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
 ---
 
-From 1 April 2026 every taxpayer who issues B2B invoices, active VAT payer or VAT-exempt, issues them through KSeF (Krajowy System e-Faktur, Poland's National e-Invoicing System). The exceptions are invoices to consumers and, until the end of 2026, sales up to 10,000 PLN a month. Legal position as of 7 October 2026.
+From 1 April 2026 every taxpayer who issues B2B invoices, active VAT payer or VAT-exempt, issues them through KSeF (Krajowy System e-Faktur, Poland's National e-Invoicing System). The exceptions are invoices to consumers and, until the end of 2026, sales up to 10,000 PLN a month. Legal position as of 9 October 2026.
 
 ## What KSeF is
 
@@ -77,7 +79,7 @@ If your monthly sales do not exceed 10,000 PLN, you can issue invoices outside K
 3. KSeF assigns the invoice a KSeF number.
 4. The customer receives the invoice from their KSeF account or through an integration.
 
-Invoices to consumers (B2C), meaning individuals not running a business, are excluded from KSeF. You can still issue them on paper or as a PDF.
+Invoices to consumers (B2C), meaning individuals not running a business, fall outside the KSeF obligation. You can issue them on paper, as a PDF or voluntarily in KSeF. The details are in our article on [invoices for private individuals](/en/blog/invoice-for-private-person-ksef).
 
 FA(3) is the official XML schema for structured invoices, in force since 1 February 2026. It replaced FA(2), used since September 2023. The Ministry of Finance describes every field in the FA(3) information sheet: what is mandatory, its data type and the permitted values. The schema is public at `https://crd.gov.pl/wzor/2025/06/25/13775/`. Your invoicing software usually generates the XML, but if you use the API integration you need to know FA(3).
 
@@ -118,20 +120,23 @@ If you issue an invoice in emergency mode but deliver it to KSeF within the requ
 
 ## Invoices excluded from KSeF
 
-The exclusions come from Art. 106nd(3) and Art. 145n of the VAT Act and the Minister of Finance regulation of 7 December 2025. They include invoices:
+The exclusions come from Art. 106ga(2) and Art. 145n of the VAT Act and the MF regulation (Journal of Laws 2025, item 1740). They include, among others:
 
-- to **consumers (B2C)**,
-- issued by **flat-rate farmers**,
-- **cash register invoices and receipts with a NIP** up to 450 PLN (or 100 EUR), until 31 December 2026 (Art. 145n of the VAT Act). From 1 January 2027 a cash register can no longer issue invoices, and a receipt with a NIP stops counting as a simplified invoice,
-- consular and diplomatic,
-- issued by entities with no seat or fixed place of business in Poland,
-- for supplies and services outside Poland. Here the invoice must still be created in KSeF, but the foreign buyer receives it outside the system, in an agreed way (e.g. a PDF with a QR code). This covers intra-Community supplies (WDT) and exports, among others.
+- permanently (Art. 106ga(2)): invoices from sellers with no seat or fixed place of business in Poland (points 1 and 2), invoices under special procedures (point 3), invoices to **individuals not running a business** (point 4) and invoices from taxpayers using the Art. 113a exemption (point 6),
+- permanently (MF regulation, § 2): among others, invoices for toll motorway travel and single tickets for passenger transport,
+- **cash register invoices and receipts with a NIP** up to 450 PLN (or 100 EUR), until 31 December 2026 (Art. 145n of the VAT Act). From 1 January 2027 a cash register can no longer issue invoices, and a receipt with a NIP stops counting as a simplified invoice.
 
-The regulation sets out the current exceptions. Before excluding a specific invoice from KSeF, check it at the source or ask a tax adviser.
+VAT RR invoices, issued when buying agricultural produce from a flat-rate farmer, can be issued in KSeF voluntarily from 1 April 2026. <Source href="https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/podstawy-prawne-oraz-kluczowe-terminy/" label="MF: KSeF legal basis and key dates" />
+
+An invoice to a foreign business without a Polish NIP is not excluded: you issue it in KSeF and hand it over in an agreed way, e.g. as a PDF with a QR code (Art. 106gb(4)). We cover this in our article on [foreign invoices in KSeF](/en/blog/foreign-invoice-ksef). Before excluding a specific invoice from KSeF, check the provision at the source or ask a tax adviser.
 
 <Source
+  href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
+  label="Art. 106ga and 106gb of the VAT Act — exclusions and handing over the invoice"
+/>
+<Source
   href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250001740"
-  label="MF regulation of 7.12.2025 (exclusions)"
+  label="MF regulation on cases with no structured invoice obligation (Journal of Laws 2025, item 1740)"
 />
 <Source
   href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
@@ -139,7 +144,7 @@ The regulation sets out the current exceptions. Before excluding a specific invo
 />
 <Source
   href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
-  label="KSeF 2.0 Handbook, Part I, p. 14"
+  label="KSeF 2.0 Handbook, Part I, p. 14 (cash registers and receipts with a NIP from 2027)"
 />
 
 ## KSeF modes

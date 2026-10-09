@@ -2,7 +2,7 @@
 title: "KSeF od 1 kwietnia 2026: kogo dotyczy, co robić"
 description: "Od 1 kwietnia 2026 faktury B2B wystawiasz w KSeF, także jako zwolniony z VAT. Do końca 2026 r. wyjątek: sprzedaż do 10 000 zł miesięcznie."
 date: 2026-03-25
-updated: 2026-10-07
+updated: 2026-10-09
 section: blog
 locale: pl
 slug: "ksef-od-1-kwietnia-2026"
@@ -13,7 +13,7 @@ sources:
     url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
   - label: "Ustawa o VAT art. 106a–106s, 108a, 108g, 145m"
     url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
-  - label: "Ustawa o VAT, t.j. Dz. U. 2026 poz. 1263 (art. 106ni, 145m, 145n)"
+  - label: "Ustawa o VAT, t.j. Dz. U. 2026 poz. 1263 (art. 106ga, 106gb, 106ni, 145m, 145n)"
     url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
   - label: "Zapowiedź MF: przedłużenie odroczenia kar do końca 2027 r."
     url: "https://www.gov.pl/web/finanse/przedluzenie-odroczenia-kar-za-bledy-w-stosowaniu-ksef-do-konca-2027-r"
@@ -21,8 +21,10 @@ sources:
     url: "https://legislacja.rcl.gov.pl/projekt/12414954"
   - label: "Podręcznik KSeF 2.0, cz. I"
     url: "https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
-  - label: "Rozporządzenie MF z 7.12.2025 (wyłączenia)"
+  - label: "Rozporządzenie MF w sprawie przypadków bez obowiązku faktur ustrukturyzowanych (Dz.U. 2025 poz. 1740)"
     url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250001740"
+  - label: "MF: podstawy prawne i terminy KSeF"
+    url: "https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/podstawy-prawne-oraz-kluczowe-terminy/"
   - label: "Broszura FA(3)"
     url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
 translations:
@@ -31,7 +33,7 @@ translations:
   uk: "ksef-z-1-kvitnya-2026"
 ---
 
-Od 1 kwietnia 2026 roku każdy podatnik wystawiający faktury B2B, czynny albo zwolniony z VAT, robi to przez KSeF, czyli Krajowy System e-Faktur. Wyjątki to faktury dla konsumentów i, do końca 2026 r., sprzedaż do 10 000 zł miesięcznie. Stan prawny na 7 października 2026.
+Od 1 kwietnia 2026 roku każdy podatnik wystawiający faktury B2B, czynny albo zwolniony z VAT, robi to przez KSeF, czyli Krajowy System e-Faktur. Wyjątki to faktury dla konsumentów i, do końca 2026 r., sprzedaż do 10 000 zł miesięcznie. Stan prawny na 9 października 2026.
 
 ## Co to jest KSeF
 
@@ -76,7 +78,7 @@ Jeśli miesięczna sprzedaż nie przekracza 10 000 PLN, możesz wystawiać faktu
 3. KSeF nadaje fakturze numer KSeF.
 4. Kontrahent odbiera fakturę ze swojego konta w KSeF albo przez integrację.
 
-Faktury dla konsumentów (B2C), czyli osób fizycznych nieprowadzących działalności, są wyłączone z KSeF. Nadal możesz je wystawiać na papierze lub jako PDF.
+Faktury dla konsumentów (B2C), czyli osób fizycznych nieprowadzących działalności, nie są objęte obowiązkiem KSeF. Możesz je wystawiać na papierze, jako PDF albo dobrowolnie w KSeF. Szczegóły są w artykule o [fakturze dla osoby prywatnej](/blog/faktura-dla-osoby-prywatnej-ksef).
 
 FA(3) to oficjalny schemat XML dla faktur ustrukturyzowanych, obowiązujący od 1 lutego 2026 roku. Zastąpił FA(2) używany od września 2023. Ministerstwo Finansów opisało w arkuszu informacyjnym każde pole: co jest obowiązkowe, jakie ma typ i jakie wartości są dopuszczalne. Schemat jest publiczny pod adresem `https://crd.gov.pl/wzor/2025/06/25/13775/`. XML zwykle generuje program do fakturowania, ale przy integracji API FA(3) trzeba znać.
 
@@ -117,20 +119,23 @@ Jeśli wystawisz fakturę w trybie awaryjnym, ale przekażesz ją do KSeF w wyma
 
 ## Faktury wyłączone z KSeF
 
-Wyłączenia wynikają z art. 106nd ust. 3 i art. 145n ustawy o VAT oraz z rozporządzenia Ministra Finansów z 7 grudnia 2025 r. Obejmują m.in. faktury:
+Wyłączenia wynikają z art. 106ga ust. 2 i art. 145n ustawy o VAT oraz z rozporządzenia MF (Dz.U. 2025 poz. 1740). Obejmują m.in.:
 
-- dla **konsumentów (B2C)**,
-- wystawiane przez **rolników ryczałtowych**,
-- **faktury z kas rejestrujących i paragony z NIP-em** do 450 zł (lub 100 EUR), do 31 grudnia 2026 r. (art. 145n ustawy o VAT). Od 1 stycznia 2027 r. kasa nie wystawi już faktury, a paragon z NIP-em przestaje być fakturą uproszczoną,
-- konsularne i dyplomatyczne,
-- wystawiane przez podmioty bez siedziby i stałego miejsca prowadzenia działalności w Polsce,
-- dotyczące dostaw i usług poza terytorium Polski. Tu faktura nadal musi powstać w KSeF, ale nabywca zagraniczny dostaje ją poza systemem, w uzgodniony sposób (np. PDF z kodem QR). Dotyczy to m.in. WDT i eksportu.
+- na stałe (art. 106ga ust. 2): faktury sprzedawców bez siedziby i stałego miejsca prowadzenia działalności w Polsce (pkt 1 i 2), faktury w procedurach szczególnych (pkt 3), faktury dla **osób fizycznych nieprowadzących działalności** (pkt 4) i faktury podatników korzystających ze zwolnienia z art. 113a (pkt 6),
+- na stałe (rozporządzenie MF, § 2): m.in. faktury za przejazd płatną autostradą i bilety jednorazowe na przewóz osób,
+- **faktury z kas rejestrujących oraz paragony z NIP-em** do 450 zł (lub 100 EUR), do 31 grudnia 2026 r. (art. 145n ustawy o VAT). Od 1 stycznia 2027 r. kasa nie wystawi już faktury, a paragon z NIP-em przestaje być fakturą uproszczoną.
 
-Rozporządzenie precyzuje aktualne wyjątki. Zanim wyłączysz konkretną fakturę z KSeF, sprawdź je w źródle albo zapytaj doradcę podatkowego.
+Faktury VAT RR, wystawiane przy zakupie produktów rolnych od rolnika ryczałtowego, od 1 kwietnia 2026 r. możesz wystawiać w KSeF dobrowolnie. <Source href="https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/podstawy-prawne-oraz-kluczowe-terminy/" label="MF: podstawy prawne i terminy KSeF" />
+
+Faktura dla zagranicznej firmy bez polskiego NIP-u nie jest wyłączona: wystawiasz ją w KSeF i przekazujesz w uzgodniony sposób, np. jako PDF z kodem QR (art. 106gb ust. 4). Opisujemy to w artykule o [fakturze zagranicznej w KSeF](/blog/faktura-zagraniczna-ksef). Zanim wyłączysz konkretną fakturę z KSeF, sprawdź przepis w źródle albo zapytaj doradcę podatkowego.
 
 <Source
+  href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
+  label="Art. 106ga i 106gb ustawy o VAT — wyłączenia i przekazanie faktury"
+/>
+<Source
   href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250001740"
-  label="Rozporządzenie MF z 7.12.2025 (wyłączenia)"
+  label="Rozporządzenie MF w sprawie przypadków bez obowiązku faktur ustrukturyzowanych (Dz.U. 2025 poz. 1740)"
 />
 <Source
   href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
@@ -138,7 +143,7 @@ Rozporządzenie precyzuje aktualne wyjątki. Zanim wyłączysz konkretną faktur
 />
 <Source
   href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
-  label="Podręcznik KSeF 2.0, cz. I, s. 14"
+  label="Podręcznik KSeF 2.0, cz. I, s. 14 (kasy rejestrujące i paragony z NIP od 2027 r.)"
 />
 
 ## Tryby pracy KSeF
