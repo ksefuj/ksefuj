@@ -40,8 +40,9 @@ Search Console shows thousands of impressions per post and a click-through rate 
 and description are the cheapest thing to improve.
 
 - **Title** = the query plus the specific thing the post delivers. Use a number, date, or outcome
-  when there is one: „Limit 10 000 zł w KSeF: jak go liczyć". Keep it at 49 characters or fewer: the
-  page template appends „ — ksefuj.to" (11 characters) and Google truncates at about 60.
+  when there is one: „Limit 10 000 zł w KSeF: jak go liczyć". Keep it at 48 characters or fewer: the
+  page template appends „ — ksefuj.to" (12 characters) only when the result fits in 60, and Google
+  truncates at about 60. A 49-character title is shown without the brand.
 - **Description** (under 160 characters) = the answer in short form, not a table of contents. Bad:
   „Jak liczyć, od kiedy obowiązuje, kto jest zwolniony. Konkretne przykłady." Good: „Limit liczy się
   miesięcznie, od kwot brutto, tylko z faktur B2B. Po przekroczeniu nie ma powrotu do PDF."
@@ -126,6 +127,6 @@ Also:
 3. For each callout and FAQ entry: is this already said in the body? Delete if yes.
 4. Is every number, date, and article reference in the research brief, with a source?
 5. Read the last section. Does it recap? Replace it with the next step.
-6. Title 49 characters or fewer, description under 160, both specific.
+6. Title 48 characters or fewer, description under 160, both specific.
 7. Blog posts and guides: `topic` set to one key from the list in `README.md` (the build fails
    without it).

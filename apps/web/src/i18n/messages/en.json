@@ -324,7 +324,7 @@
     "waluty": {
       "title": "NBP exchange rate for invoices",
       "description": "Find the NBP mid-rate that applies to your foreign-currency invoice. Usually it is the sale date that counts, not the issue date — the calculator keeps track of that for you.",
-      "metaDescription": "Which NBP rate applies to a foreign-currency invoice? The calculator takes the rate from the last business day before the sale date — or before the issue date, if the invoice comes first (Art. 31a of the Polish VAT Act).",
+      "metaDescription": "Which NBP rate goes on a foreign-currency invoice? The one from the last business day before the sale date, or before the issue date if the invoice is earlier.",
       "ogImageTitle": "NBP exchange rate for invoices — Art. 31a VAT",
       "currency": "Currency",
       "currencyPlaceholder": "Select currency",
