@@ -324,7 +324,7 @@
     "waluty": {
       "title": "Kurs NBP do faktury walutowej VAT",
       "description": "Znajdź kurs średni NBP dla swojej faktury w obcej walucie. Zwykle liczy się dzień sprzedaży, a nie dzień wystawienia — kalkulator pilnuje tego za Ciebie.",
-      "metaDescription": "Jaki kurs NBP zastosować na fakturze w obcej walucie? Kalkulator bierze kurs z ostatniego dnia roboczego przed datą sprzedaży — albo przed datą wystawienia, jeśli faktura jest wcześniejsza (art. 31a ustawy o VAT).",
+      "metaDescription": "Jaki kurs NBP na fakturze walutowej? Z ostatniego dnia roboczego przed datą sprzedaży, a gdy faktura jest wcześniejsza — przed datą jej wystawienia (art. 31a).",
       "ogImageTitle": "Kurs NBP do faktury — art. 31a VAT",
       "currency": "Waluta",
       "currencyPlaceholder": "Wybierz walutę",

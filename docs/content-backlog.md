@@ -27,8 +27,16 @@ what is not yet settled.
       the cz. III source points at the homepage; the VAT Act source is Dz.U. 2025 poz. 775 instead
       of 2026 poz. 1263 (source:
       https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf,
-      pkt 1.7, 5.1, 6.3)
-- [ ] **UPDATE** `ksef-dla-jdg` + `ksef-od-1-kwietnia-2026` (all locales) — the consumer (B2C)
+      pkt 1.7, 5.1, 6.3). Note: cz. III (6.08.2026) pkt 7 now documents reporting via „Zgłoszenie
+      nadużycia" in Aplikacja Podatnika; hiding (pkt 8) is still announced only
+- [ ] **UPDATE** `faktura-zagraniczna-ksef` (all locales): says „KSeF jest obowiązkowy dla
+      wszystkich czynnych podatników VAT"; VAT-exempt taxpayers are covered too from 1.04.2026
+      (source: https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/)
+- [ ] **UPDATE** FAQ `limity-i-wylaczenia` (all locales): says rolnicy ryczałtowi „co do zasady są
+      wyłączeni z obowiązku KSeF"; unsupported. MF lists only VAT RR invoices (issued by the buyer)
+      as optional in KSeF from 1.04.2026 (source:
+      https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/podstawy-prawne-oraz-kluczowe-terminy/)
+- [x] **UPDATE** `ksef-dla-jdg` + `ksef-od-1-kwietnia-2026` (all locales) — the consumer (B2C)
       exclusion is cited as art. 106nd ust. 3 + rozporządzenie MF z 7.12.2025; the KB gives art.
       106ga ust. 2 pkt 4 as its basis. Fix the citation (keep the regulation only for the exclusions
       it actually covers), mention that issuing B2C invoices in KSeF is voluntary, link

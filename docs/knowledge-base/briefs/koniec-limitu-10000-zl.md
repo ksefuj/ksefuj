@@ -17,8 +17,9 @@ faktur, a paragon z NIP przestaje być fakturą uproszczoną (Podręcznik KSeF 2
   ust. 2 pkt 4).
 - Podatnik korzystający ze zwolnienia z art. 113a (procedura SME UE) jest wyłączony na stałe (art.
   106ga ust. 2 pkt 6).
-- Sprzedawcy bez siedziby ani stałego miejsca działalności w Polsce (art. 106ga ust. 2 pkt 1 i 2) i
-  inne przypadki z rozporządzenia wydanego na podstawie art. 106s: faktury poza KSeF.
+- Sprzedawcy bez siedziby ani stałego miejsca działalności w Polsce (art. 106ga ust. 2 pkt 1) oraz
+  sprzedawcy ze stałym miejscem w Polsce, które nie uczestniczy w dostawie (pkt 2), i inne przypadki
+  z rozporządzenia wydanego na podstawie art. 106s: faktury poza KSeF.
 - Kary z art. 106ni: według ustawy od 2027-01-01, ale MF zapowiada odroczenie (patrz Unsettled).
 
 ## Key Facts (ready to use)
