@@ -1,0 +1,123 @@
+---
+title: "Receiving invoices in KSeF: nothing to accept"
+description: "An invoice with your NIP reaches you in KSeF on its own, with nothing to accept. It counts as received on the day KSeF assigns its number."
+date: 2026-10-10
+section: guides
+locale: en
+slug: "receiving-invoices-in-ksef"
+topic: "invoicing"
+tags: ["KSeF", "JDG", "Invoice", "VAT"]
+sources:
+  - label: "KSeF 2.0 Manual, part II: issuing and receiving invoices (ed. 6 Aug 2026) (PL)"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "KSeF 2.0 Manual, part I: getting started with KSeF (ed. 6 Aug 2026) (PL)"
+    url: "https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  - label: "KSeF 2.0 Taxpayer Application user manual (ed. 6 Aug 2026) (PL)"
+    url: "https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
+  - label: "VAT Act, consolidated text (Dz.U. 2026 item 1263) (PL)"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  - label: "Ministry of Finance: KSeF FAQ (PL)"
+    url: "https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
+  - label: "Ministry of Finance: KSeF 2.0 questions and answers (PL)"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/"
+  - label: "Ministry of Finance: below 10,000 PLN (PL)"
+    url: "https://ksef.podatki.gov.pl/ponizej-10-000-zl/"
+  - label: "Ministry of Finance: KSeF number and collective identifier (PL)"
+    url: "https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/numer-ksef-i-zbiorczy-identyfikator/"
+  - label: "Ministry of Finance: KSeF mobile app (PL)"
+    url: "https://ksef.podatki.gov.pl/aplikacja-podatnika-ksef-i-inne-narzedzia/aplikacja-mobilna-ksef/"
+  - label: "FA(3) logical structure information brochure (PL)"
+    url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+translations:
+  pl: "jak-odebrac-fakture-ksef"
+  en: "receiving-invoices-in-ksef"
+  uk: "yak-otrymaty-rakhunok-v-ksef"
+---
+
+You receive invoices in KSeF (Krajowy System e-Faktur, Poland's National e-Invoicing System) automatically: if the seller put your NIP in the buyer's NIP field, the invoice is available on your side the moment KSeF assigns its number, and you have nothing to accept. You view and download it in the free KSeF Taxpayer Application (Aplikacja Podatnika KSeF), in software connected to KSeF, or through your accountant, and the invoice counts as received on the day its KSeF number was assigned.
+
+Legal state as of 10 October 2026. The application and the official documents are in Polish, so Polish labels are given with a translation.
+
+## Invoices arrive on their own, with no acceptance
+
+Since 1 February 2026, Art. 106na ust. 2 of the VAT Act, which required the buyer's consent, has been repealed. You also cannot refuse to receive invoices in KSeF. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, part II, sections 5 and 6.1" />
+
+One field decides whether the invoice reaches you: your NIP (Polish tax identification number) must be in the buyer's NIP field (`Podmiot2`). If the seller enters it as an EU VAT number or another identifier, the invoice will not reach you in KSeF. <Source href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf" label="FA(3) brochure, §6.2" /> An invoice with a wrong NIP goes to the business that holds that NIP. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, part II, section 1.6.4" /> So when a seller asks for your invoice details, give them your business NIP, not just the name and address.
+
+If you appear on an invoice as a third party (`Podmiot3`, for example because you pay on someone's behalf or are an additional buyer), you see only the invoices that name you. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, part II, section 5.2" />
+
+## Receiving starts 1 February 2026, even under the 10,000 PLN limit
+
+**Receiving invoices in KSeF has applied since 1 February 2026**, even if you only have to issue invoices in KSeF from 1 April 2026 or from 1 January 2027. The deferral covers issuing only. You do not need software integrated with KSeF to receive. <Source href="https://ksef.podatki.gov.pl/ponizej-10-000-zl/" label="MF: below 10,000 PLN, Q4" /> What to do before the 10,000 PLN limit ends is covered in our post on [the end of the limit](/en/blog/end-of-10000-pln-limit).
+
+The Ministry of Finance describes the obligation to receive in general terms, with no exception for VAT-exempt businesses. Buyer access depends on the NIP in the buyer field, so purchase invoices appear in KSeF for VAT-exempt businesses too. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, part II, sections 5 and 6.1" />
+
+## Where to view and download a purchase invoice
+
+There are three routes, and you can combine them.
+
+**Free Ministry tools.** The Taxpayer Application (ap.ksef.mf.gov.pl) lets you issue and receive invoices and view and download UPO (the official receipt confirmation). You can also receive invoices in the KSeF mobile app and in e-mikrofirma in e-Urząd Skarbowy, the tax office's online portal. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, part II, section 3.1" /> You log in to the Taxpayer Application through login.gov.pl (Profil Zaufany, mObywatel, online banking, e-Dowód) or with a qualified certificate, and choose your own NIP as the context. <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Taxpayer Application manual, ch. 4.1, pp. 13-15" /> As a sole trader (JDG, jednoosobowa działalność gospodarcza) you hold owner permissions from the start, including access to invoices. <Source href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf" label="KSeF 2.0 Manual, part I, p. 57" />
+
+In the invoice list you tick the ones you want, click "Pobierz" (Download) and choose a format. You can download 1 to 10 invoices at a time (several come as a ZIP file), and each file is named after its KSeF number. <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Taxpayer Application manual, pp. 116-117" /> You can download an invoice as many times as you like, and the seller does not know whether you have done so. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, part II, section 6.5" />
+
+**Accounting or invoicing software.** Software connected to KSeF through the API fetches purchase invoices for you. It authenticates with a signature, a token or a KSeF certificate; note that a token or KSeF certificate will not log you in to the Taxpayer Application.
+
+**Your accountant or accounting office.** You grant the "przeglądanie faktur" (viewing invoices) permission, which the system itself calls "dostęp do faktur" (access to invoices). An office that only does your books does not need the permission to issue invoices. <Source href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/" label="MF FAQ, Q17" /> We walk through it in the guide on [giving your accountant KSeF access](/en/guides/ksef-accountant-access).
+
+## KSeF will not notify you of a new invoice
+
+KSeF does not send notifications about new invoices. Software has to poll for new documents itself; notifications may be a feature of a particular program, not of the Ministry's system. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, part II, section 6.4" /> If you use only the Taxpayer Application, check it yourself, for example once a week and before closing the month.
+
+## The receipt date is the day the KSeF number is assigned
+
+An invoice from KSeF counts as received on the day KSeF assigned its number (Art. 106na ust. 3 of the VAT Act). When you open or download it does not matter. The seller sees the same date in the UPO. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, part II, sections 4.2 and 5.1" />
+
+If you are an active VAT payer, this date affects your input VAT deduction. The right to deduct arises in the period in which the tax obligation arises, but no earlier than the period in which you received the invoice (Art. 86 ust. 10b pkt 1). The Ministry mentions this in the manual for invoices issued outside KSeF and in offline24 mode. For an ordinary KSeF invoice it follows from combining that provision with Art. 106na ust. 3; that is our reading, but the Ministry has not stated it directly. If you are VAT-exempt, you have no deduction and the date matters less to you.
+
+## Invoices that will not come through KSeF
+
+Some invoices will still reach you by email or on paper. In that case the receipt date is the day you actually received the invoice. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, part II, section 1.7" />
+
+- **Private purchases.** When you buy without giving a NIP, you are a consumer and the seller does not have to issue the invoice in KSeF (Art. 106ga ust. 2 pkt 4). If they issue it in KSeF anyway, they pass it to you in an agreed way, with a QR code. If they issue it outside KSeF, you get an ordinary paper or PDF invoice with no code. The rules do not clearly settle when a sole trader is buying privately and when for the business, or whether giving a NIP alone decides it.
+- **Sellers who may issue outside KSeF until 31 December 2026:** under the 10,000 PLN limit (Art. 145m) or from a cash register (Art. 145n). Also foreign sellers with no registered office or fixed establishment in Poland (Art. 106ga ust. 2 pkt 1-2).
+
+If a seller should have issued the invoice in KSeF and did not, you keep the right to deduct as long as you meet the conditions of Art. 86 and Art. 88 does not apply. You do not have to check whether the supplier was allowed to issue outside KSeF, but you are expected to exercise due diligence. The Ministry calls a missing KSeF invoice a "formal irregularity" (uchybienie formalne) and foresees no automatic consequences for the buyer. <Source href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/" label="MF FAQ, Q1, Q2 and Q4" />
+
+**Offline24 mode.** A seller may issue an invoice in offline24 mode without giving a reason and must send it to KSeF by the next working day at the latest. As a buyer with a Polish NIP you receive it only through KSeF, and the receipt date is the day the number is assigned (Art. 106nda ust. 2, 3 and 11). Before the invoice reaches KSeF, the seller may give you a "potwierdzenie transakcji" (transaction confirmation) with two QR codes. It is not a tax document. If the seller nonetheless hands you the invoice itself outside KSeF before sending it, you deduct VAT from the day you actually received it, although the Ministry considers this practice by the seller incorrect. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, part II, sections 1.6.6 and 1.8" />
+
+<Warning>
+  During a KSeF outage (emergency mode, Art. 106nf) the seller gives you the invoice outside KSeF
+  with two QR codes and sends it to KSeF within 7 working days of the end of the outage. During a
+  total outage (Art. 106ng) invoices are not sent to KSeF at all. The Ministry materials we checked
+  do not say what the receipt date is then for a buyer with a Polish NIP. Unavailability of KSeF
+  (Art. 106nh) is different: Art. 106nh ust. 4 refers to the offline24 rules, so the receipt date is
+  the day the KSeF number is assigned.
+</Warning>
+
+## Checking an invoice with a QR code on a PDF or printout
+
+A KSeF invoice shown outside the system carries a QR code. An invoice issued online has one code, with the KSeF number below it. An offline invoice that does not yet have a number has two codes, labelled "OFFLINE" and "CERTYFIKAT" (certificate). <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, part II, section 5.4" />
+
+Scanning the first code shows the basic data: KSeF number, seller's NIP, issue date, date the number was assigned, mode and a compliance note. If the invoice is not in KSeF, you see that instead. In a second step you enter the invoice number, the buyer's identifier and the total amount due, and then download the XML or PDF without logging in. After several wrong attempts, access is blocked for a while. The "CERTYFIKAT" code checks whether the issuer's certificate is active and whether the issuer holds the right permissions. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, part II, sections 5.5-5.7" />
+
+Without a QR code you can use anonymous access in the Taxpayer Application: enter the KSeF number, the invoice number, the buyer's NIP and name, and the total amount due. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, part II, section 5.7" />
+
+A PDF from the seller may carry a logo or be in another language, but it must not contradict the data in the XML file in KSeF. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, part II, section 1.6.5" />
+
+## The KSeF number and bank transfers
+
+The KSeF number has 35 characters and is not in the invoice XML file, because the system assigns it. The seller does not have to send it to you, since the invoice appears on your side automatically. <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/" label="KSeF 2.0 FAQ" /> From 1 January 2027, an active VAT payer paying another active VAT payer by bank transfer for an e-invoice must put the KSeF number or a collective identifier in the transfer title (Art. 108g). <Source href="https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/numer-ksef-i-zbiorczy-identyfikator/" label="MF: KSeF number and collective identifier" /> Details are in our post on [the KSeF number in bank transfers](/en/blog/ksef-number-in-bank-transfer).
+
+## How long KSeF keeps invoices
+
+KSeF stores invoices for 10 years from the end of the year in which they were issued. An invoice sent on 5 February 2026 stays in KSeF until 31 December 2036. During that time you do not have to store invoices yourself (Art. 112 and 112a do not apply) or deliver them to the tax office, because the tax administration has access to them. If your tax liability becomes time-barred later than that, download the invoices before the period ends and keep them outside KSeF. Invoices cannot be deleted from KSeF. <Source href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/" label="MF FAQ, Q21" /> <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, part II, sections 7 and 1.6.3" />
+
+## A wrong or suspicious invoice
+
+KSeF has no option to approve or reject invoices; disputes are settled outside the system. **Only the seller can fix a wrong invoice, by issuing a corrective invoice.** An invoice cannot be edited, cancelled or deleted, and correction notes (noty korygujące, issued by the buyer) no longer exist since 1 February 2026. If the seller invoiced the wrong buyer, they correct the invoice to zero and issue a new one. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, part II, sections 1.6.2-1.6.4 and 6.3" /> How a correction works is explained in our post on [corrective invoices in KSeF](/en/blog/corrective-invoice-ksef).
+
+If an invoice turns up in KSeF from a company you do not work with, contact the seller. The Ministry has announced an option for buyers to hide such an invoice and report it as fake. We have not yet confirmed in Ministry documents when it will work or how exactly, nor what tax consequences such an invoice has for you. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, part II, section 6.3" />
+
+## What to do now
+
+Log in to the Taxpayer Application with your NIP and check whether invoices from your regular suppliers are there. If one is missing, ask the seller to check that your NIP is in the buyer's NIP field.
