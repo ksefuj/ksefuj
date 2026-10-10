@@ -19,6 +19,16 @@ what is not yet settled.
 
 ## Next up
 
+- [ ] **UPDATE** `falszywe-faktury-ksef`: says the right to deduct arises in the period the invoice
+      is entered in the records (art. 86 ust. 10); the KB gives the tax-point period, not earlier
+      than the period of receipt (art. 86 ust. 10b pkt 1), with receipt = KSeF number date (art.
+      106na ust. 3). Also unbacked: the 1.04.2026 start of hiding/reporting fake invoices and the
+      reporting mechanics (Podręcznik cz. II pkt 6.3 only says „kilka miesięcy po uruchomieniu");
+      the cz. III source points at the homepage; the VAT Act source is Dz.U. 2025 poz. 775 instead
+      of 2026 poz. 1263 (source:
+      https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf,
+      pkt 1.7, 5.1, 6.3). Note: cz. III (6.08.2026) pkt 7 now documents reporting via „Zgłoszenie
+      nadużycia" in Aplikacja Podatnika; hiding (pkt 8) is still announced only
 - [ ] **UPDATE** `faktura-zagraniczna-ksef` (all locales): says „KSeF jest obowiązkowy dla
       wszystkich czynnych podatników VAT"; VAT-exempt taxpayers are covered too from 1.04.2026
       (source: https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/)
@@ -76,8 +86,8 @@ what is not yet settled.
 - [x] `faktura-dla-osoby-prywatnej-ksef` (in review: branch
       `content/faktura-dla-osoby-prywatnej-ksef`) — Faktura dla osoby prywatnej a KSeF · „faktura
       dla osoby prywatnej KSeF" · A · FAQ, 10K
-- [ ] `jak-odebrac-fakture-ksef` — Jak odebrać fakturę z KSeF · „jak odebrać fakturę w KSeF" · A ·
-      FAQ (art. 106gb ust. 4), P2
+- [x] `jak-odebrac-fakture-ksef` (in review: branch `content/jak-odebrac-fakture-ksef`) — Jak
+      odebrać fakturę z KSeF · „jak odebrać fakturę w KSeF" · A · FAQ (art. 106gb ust. 4), P2
 - [ ] `faktura-poza-ksef-odliczenie-vat` — Faktura wystawiona poza KSeF: co z odliczeniem VAT ·
       „faktura poza KSeF odliczenie VAT" · K · FAQ
 - [ ] `pusta-faktura-pdf-xml` — PDF inny niż XML: ryzyko pustej faktury · „pusta faktura KSeF" · K,

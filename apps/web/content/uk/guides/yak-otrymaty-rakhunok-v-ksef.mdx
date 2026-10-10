@@ -1,0 +1,129 @@
+---
+title: "Як отримати рахунок у KSeF: нічого не приймаєш"
+description: "Рахунок із твоїм NIP приходить у KSeF сам, без підтвердження з твого боку. Датою отримання вважається день, коли KSeF присвоїв йому номер."
+date: 2026-10-10
+section: guides
+locale: uk
+slug: "yak-otrymaty-rakhunok-v-ksef"
+topic: "invoicing"
+tags: ["KSeF", "JDG", "Faktura", "VAT"]
+sources:
+  - label: "Посібник KSeF 2.0, ч. II: виставлення й отримання рахунків (вид. 6.08.2026) (PL)"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "Посібник KSeF 2.0, ч. I: початок роботи з KSeF (вид. 6.08.2026) (PL)"
+    url: "https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  - label: "Посібник KSeF 2.0, ч. III: додаткові функції KSeF (вид. 6.08.2026) (PL)"
+    url: "https://ksef.podatki.gov.pl/media/3ikdk3qm/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06082026.pdf"
+  - label: "Посібник користувача Aplikacja Podatnika KSeF 2.0 (вид. 6.08.2026) (PL)"
+    url: "https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
+  - label: "Закон про ПДВ, консолідований текст (Dz.U. 2026 poz. 1263) (PL)"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  - label: "Мінфін: Najczęstsze pytania o KSeF (PL)"
+    url: "https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
+  - label: "Мінфін: питання й відповіді KSeF 2.0 (PL)"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/"
+  - label: "Мінфін: Poniżej 10 000 zł (PL)"
+    url: "https://ksef.podatki.gov.pl/ponizej-10-000-zl/"
+  - label: "Мінфін: номер KSeF і збірний ідентифікатор (PL)"
+    url: "https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/numer-ksef-i-zbiorczy-identyfikator/"
+  - label: "Мінфін: мобільний застосунок KSeF (PL)"
+    url: "https://ksef.podatki.gov.pl/aplikacja-podatnika-ksef-i-inne-narzedzia/aplikacja-mobilna-ksef/"
+  - label: "Інформаційна брошура про логічну структуру FA(3) (PL)"
+    url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+translations:
+  pl: "jak-odebrac-fakture-ksef"
+  en: "receiving-invoices-in-ksef"
+  uk: "yak-otrymaty-rakhunok-v-ksef"
+---
+
+Рахунки в KSeF ти отримуєш автоматично: якщо продавець вписав твій NIP у поле NIP покупця, рахунок доступний з твого боку в момент, коли KSeF присвоює йому номер, і нічого підтверджувати не треба. Переглядаєш і завантажуєш його в безкоштовному застосунку Aplikacja Podatnika KSeF, у програмі, підключеній до KSeF, або через бухгалтера, а датою отримання вважається день присвоєння номера KSeF.
+
+Правовий стан на 10 жовтня 2026 року. Застосунок і офіційні документи польською, тому польські назви подано з перекладом.
+
+## Рахунок приходить сам, без підтвердження
+
+З 1 лютого 2026 року скасовано ст. 106na ust. 2 закону про ПДВ, який вимагав згоди покупця. Відмовитися від отримання рахунків у KSeF теж не можна. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 5 і 6.1" />
+
+Чи дійде рахунок до тебе, вирішує одне поле: твій NIP (польський податковий номер) має стояти в полі NIP покупця (`Podmiot2`). Якщо продавець впише його в поле номера VAT UE чи іншого ідентифікатора, рахунок до тебе в KSeF не потрапить. <Source href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf" label="Брошура FA(3), §6.2" /> Рахунок із помилковим NIP отримує фірма, якій цей NIP належить. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 1.6.4" /> Тому, коли даєш продавцю дані для рахунку, називай NIP фірми, а не лише назву й адресу.
+
+Якщо ти в рахунку третя сторона (`Podmiot3`, наприклад платиш за когось або є додатковим покупцем), бачиш лише ті рахунки, у яких тебе вказано. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 5.2" />
+
+## Отримуєш з 1 лютого 2026, навіть у межах ліміту 10 000 zł
+
+**Отримувати рахунки в KSeF треба з 1 лютого 2026 року**, навіть якщо сам виставляєш у KSeF лише з 1 квітня 2026 або з 1 січня 2027. Відстрочка стосується тільки виставлення. Програма, інтегрована з KSeF, для цього не потрібна. <Source href="https://ksef.podatki.gov.pl/ponizej-10-000-zl/" label="Мінфін: Poniżej 10 000 zł, пит. 4" /> Що зробити до кінця ліміту 10 000 zł, ми пишемо в статті про [кінець ліміту](/uk/blog/kinets-limitu-10000-zl).
+
+Обов'язок отримувати рахунки Мінфін описує загально, без винятку для звільнених від ПДВ. Доступ покупця залежить від NIP у полі покупця, тож рахунки на закупівлю з'являються в KSeF і у фірм, звільнених від ПДВ. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 5 і 6.1" />
+
+## Де переглянути й завантажити рахунок на закупівлю
+
+Є три шляхи, і їх можна поєднувати.
+
+**Безкоштовні інструменти Мінфіну.** Aplikacja Podatnika KSeF (ap.ksef.mf.gov.pl) слугує для виставлення й отримання рахунків, перегляду й завантаження UPO (urzędowe poświadczenie odbioru, офіційне підтвердження отримання). Отримувати рахунки можна також у мобільному застосунку KSeF (Aplikacja Mobilna KSeF) і в e-mikrofirma в e-Urząd Skarbowy, онлайн-кабінеті податкової. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 3.1" /> В Aplikacja Podatnika входиш через login.gov.pl (Profil Zaufany, mObywatel, інтернет-банкінг, e-Dowód) або кваліфікованим сертифікатом і як контекст обираєш свій NIP. <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Посібник Aplikacja Podatnika, розд. 4.1, с. 13-15" /> Як JDG (jednoosobowa działalność gospodarcza, польський відповідник ФОП) ти одразу маєш права власника, зокрема доступ до рахунків. <Source href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. I, с. 57" />
+
+У списку рахунків позначаєш потрібні, натискаєш «Pobierz» (Завантажити) і обираєш формат. За один раз можна завантажити від 1 до 10 рахунків (кілька приходять у ZIP-файлі), а кожен файл названо номером KSeF. <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Посібник Aplikacja Podatnika, с. 116-117" /> Завантажувати рахунок можна скільки завгодно разів, а продавець не знає, чи ти вже це зробив. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 6.5" />
+
+**Бухгалтерська або фактурна програма.** Програма, підключена до KSeF через API, завантажує рахунки на закупівлю за тебе. Вона з'єднується з KSeF підписом, токеном або сертифікатом KSeF; токеном і сертифікатом KSeF в Aplikacja Podatnika натомість не зайти. <Source href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. I, п. 2.4.8 і 2.5.1" />
+
+**Бухгалтер або бухгалтерське бюро.** Ти надаєш право «przeglądanie faktur» (перегляд рахунків; у самій системі воно називається «dostęp do faktur»). Бюро, яке лише веде облік, права на виставлення не потребує. <Source href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/" label="FAQ Мінфіну, пит. 17" /> Увесь шлях ми описуємо в інструкції [як дати бухгалтеру доступ до KSeF](/uk/guides/dostup-do-ksef-dlya-bukhgaltera).
+
+## KSeF не повідомить про новий рахунок
+
+KSeF не надсилає сповіщень про нові рахунки. Програма має сама перевіряти, чи щось прийшло, а сповіщення може пропонувати конкретна програма, не система Мінфіну. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 6.4" /> Якщо користуєшся лише Aplikacja Podatnika, заглядай туди сам, наприклад раз на тиждень і перед закриттям місяця.
+
+## Дата отримання: день присвоєння номера KSeF
+
+Датою отримання рахунку з KSeF є день, коли KSeF присвоїв йому номер (ст. 106na ust. 3 закону про ПДВ). Коли ти його відкриєш чи завантажиш, значення не має. Ту саму дату продавець бачить в UPO. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 4.2 і 5.1" />
+
+Якщо ти активний платник ПДВ, ця дата впливає на відрахування. Право на відрахування виникає в періоді виникнення податкового зобов'язання, але не раніше ніж у періоді отримання рахунку (ст. 86 ust. 10b pkt 1). Мінфін пише про це в посібнику щодо рахунків поза KSeF і в режимі offline24. Для звичайного рахунку з KSeF це випливає з поєднання цього припису зі ст. 106na ust. 3; так ми його читаємо, але прямо Мінфін цього не сформулював. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 1.7-1.8" /> Якщо ти звільнений від ПДВ, відрахування в тебе немає і дата для тебе менш важлива.
+
+## Рахунки, які не прийдуть через KSeF
+
+Частину рахунків ти й далі отримуватимеш електронною поштою або на папері. Тоді датою отримання є день, коли ти фактично отримав рахунок. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 1.7" />
+
+- **Приватні покупки.** Коли ти купуєш як приватна особа, а не для потреб фірми, продавець не зобов'язаний виставляти рахунок у KSeF (ст. 106ga ust. 2 pkt 4: покупець є фізичною особою, яка не веде господарської діяльності). Якщо виставить його в KSeF, передасть тобі погодженим способом, з QR-кодом. Якщо поза KSeF, отримаєш звичайний паперовий рахунок або PDF без коду. Приписи чітко не визначають, коли власник JDG купує приватно, а коли для фірми, і чи вирішує це саме лише вказання або невказання NIP.
+- **Продавці, які до 31 грудня 2026 можуть виставляти поза KSeF:** у межах ліміту 10 000 zł (ст. 145m) або з касового апарата (ст. 145n). А також іноземні продавці без місцезнаходження й постійного місця діяльності в Польщі (ст. 106ga ust. 2 pkt 1-2).
+
+Якщо продавець мав виставити рахунок у KSeF, а не зробив цього, право на відрахування ти зберігаєш, якщо виконуєш умови ст. 86 і не застосовується ст. 88. Перевіряти, чи міг постачальник виставити рахунок поза KSeF, ти не мусиш, але від тебе очікують належної обачності. Відсутність рахунку в KSeF Мінфін називає «uchybienie formalne» (формальне порушення) і не передбачає через це автоматичних наслідків для покупця. <Source href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/" label="FAQ Мінфіну, пит. 1, 2 і 4" />
+
+**Режим offline24.** Продавець може виставити рахунок у режимі offline24 без пояснення причин (ст. 106nda ust. 1) і надіслати його до KSeF не пізніше наступного робочого дня. Як покупець із польським NIP ти отримуєш його лише в KSeF, а датою отримання є день присвоєння номера (ст. 106nda ust. 2, 3 і 11). Поки рахунок не потрапив до KSeF, продавець може дати тобі «potwierdzenie transakcji» (підтвердження транзакції) з двома QR-кодами. Це не податковий документ. Якщо ж він усе-таки передасть тобі сам рахунок поза KSeF ще до надсилання, ПДВ відраховуєш від дня фактичного отримання, хоча Мінфін вважає такі дії продавця неправильними. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 1.6.6 і 1.8" />
+
+<Warning>
+  Під час аварії KSeF (аварійний режим, ст. 106nf) продавець видає тобі рахунок поза KSeF із двома
+  QR-кодами й надсилає його до KSeF протягом 7 робочих днів від кінця аварії. При повній аварії (ст.
+  106ng) рахунки до KSeF не надсилають. Датою отримання такого рахунку є день, коли ти його фактично
+  отримав, а якщо це пізніше за присвоєння номера KSeF, то день присвоєння номера (ст. 106nf ust.
+  10). Для покупців зі ст. 106gb ust. 4 (зокрема приватних осіб і іноземних), з якими погоджено
+  інший спосіб передачі, враховується день фактичного отримання. При недоступності KSeF (ст. 106nh)
+  інакше: ст. 106nh ust. 4 відсилає до ст. 106nda ust. 4-15, тож датою отримання є день присвоєння
+  номера KSeF (ust. 11).
+</Warning>
+
+## Як перевірити рахунок за QR-кодом на PDF чи роздруківці
+
+Рахунок із KSeF, показаний поза системою, має QR-код. На рахунку, виставленому онлайн, один код, а під ним номер KSeF. На офлайн-рахунку, який ще не має номера, два коди з підписами «OFFLINE» і «CERTYFIKAT» (сертифікат). <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 5.4" />
+
+Відсканувавши перший код, бачиш основні дані: номер KSeF, NIP продавця, дату виставлення, дату присвоєння номера, режим і інформацію про відповідність. Якщо рахунку в KSeF немає, побачиш про це повідомлення. На другому кроці вводиш номер рахунку, ідентифікатор покупця й загальну суму до сплати, а тоді завантажуєш XML або PDF без входу в систему. Після кількох невдалих спроб доступ ненадовго блокується. Код «CERTYFIKAT» перевіряє, чи сертифікат виставника активний і чи має виставник відповідні права. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 5.5-5.7" />
+
+Без QR-коду скористайся анонімним доступом в Aplikacja Podatnika: вводиш номер KSeF, номер рахунку, NIP і назву покупця та загальну суму до сплати. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 5.7" />
+
+PDF від продавця може мати логотип або бути іншою мовою, але не може суперечити даним із XML-файлу в KSeF. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 1.6.5" />
+
+## Номер KSeF і переказ
+
+Номер KSeF має 35 символів, і в XML-файлі рахунку його немає, бо його присвоює система. Продавець не мусить надсилати його тобі, бо рахунок з'являється в тебе автоматично. <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/" label="FAQ KSeF 2.0" /> З 1 січня 2027 року активний платник ПДВ, який платить переказом за електронний рахунок іншому активному платнику ПДВ, вписує в призначення платежу номер KSeF або збірний ідентифікатор (ст. 108g). <Source href="https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/numer-ksef-i-zbiorczy-identyfikator/" label="Мінфін: номер KSeF і збірний ідентифікатор" /> Подробиці є в статті про [номер KSeF у переказі](/uk/blog/nomer-ksef-u-perekazi).
+
+## Скільки KSeF зберігає рахунки
+
+KSeF зберігає рахунки 10 років від кінця року, у якому їх виставили. Рахунок, надісланий 5 лютого 2026, буде в KSeF до 31 грудня 2036. У цей час тобі не треба зберігати рахунки в себе (ст. 112 і 112a не застосовуються) чи подавати їх до податкової, бо адміністрація має до них доступ. Якщо твоє податкове зобов'язання спливає за давністю пізніше, завантаж рахунки до кінця цього строку й зберігай їх поза KSeF. Видалити рахунки з KSeF не можна. <Source href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/" label="FAQ Мінфіну, пит. 21" /> <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 7 і 1.6.3" />
+
+## Помилковий або підозрілий рахунок
+
+У KSeF немає опції підтвердити чи відхилити рахунок, а спори вирішують поза системою. **Помилковий рахунок виправляє лише продавець, коригувальним рахунком.** Рахунок не можна відредагувати, анулювати чи видалити, а коригувальні ноти (noty korygujące) з 1 лютого 2026 не діють. Якщо продавець виставив рахунок не тому покупцю, він коригує його до нуля й виставляє новий. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 1.6.2-1.6.4 і 6.3" /> Як виглядає корекція, ми пишемо в статті про [коригувальний рахунок у KSeF](/uk/blog/koryguvalna-faktura-ksef).
+
+Якщо в KSeF з'явився рахунок від фірми, з якою ти не співпрацюєш, спершу зв'яжися з продавцем: це може бути звичайна помилка в NIP, яку продавець виправляє коригуванням до нуля. Якщо підозрюєш підробку, повідом про неї в Aplikacja Podatnika кнопкою «Zgłoszenie nadużycia» (повідомлення про зловживання); повідомлення йдуть до KAS. Рахунок, виставлений помилково, як фальшивий не повідомляють. <Source href="https://ksef.podatki.gov.pl/media/3ikdk3qm/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. III, п. 7" />
+
+Мінфін також анонсував приховування рахунків, але цієї функції ще немає. Прихований рахунок не зникає з KSeF, а продавець про це не отримує повідомлення. Податкових наслідків повідомлення чи приховування рахунку Мінфін не описує. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 6.3" /> <Source href="https://ksef.podatki.gov.pl/media/3ikdk3qm/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. III, п. 8" />
+
+## Що зробити зараз
+
+Увійди в Aplikacja Podatnika зі своїм NIP і перевір, чи є там рахунки від постійних постачальників. Якщо якогось бракує, попроси продавця перевірити, чи стоїть твій NIP у полі NIP покупця.
