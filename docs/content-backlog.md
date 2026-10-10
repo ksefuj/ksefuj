@@ -19,6 +19,15 @@ what is not yet settled.
 
 ## Next up
 
+- [ ] **UPDATE** `falszywe-faktury-ksef`: says the right to deduct arises in the period the invoice
+      is entered in the records (art. 86 ust. 10); the KB gives the tax-point period, not earlier
+      than the period of receipt (art. 86 ust. 10b pkt 1), with receipt = KSeF number date (art.
+      106na ust. 3). Also unbacked: the 1.04.2026 start of hiding/reporting fake invoices and the
+      reporting mechanics (Podręcznik cz. II pkt 6.3 only says „kilka miesięcy po uruchomieniu");
+      the cz. III source points at the homepage; the VAT Act source is Dz.U. 2025 poz. 775 instead
+      of 2026 poz. 1263 (source:
+      https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf,
+      pkt 1.7, 5.1, 6.3)
 - [ ] **UPDATE** `ksef-dla-jdg` + `ksef-od-1-kwietnia-2026` (all locales) — the consumer (B2C)
       exclusion is cited as art. 106nd ust. 3 + rozporządzenie MF z 7.12.2025; the KB gives art.
       106ga ust. 2 pkt 4 as its basis. Fix the citation (keep the regulation only for the exclusions
@@ -69,8 +78,8 @@ what is not yet settled.
 - [x] `faktura-dla-osoby-prywatnej-ksef` (in review: branch
       `content/faktura-dla-osoby-prywatnej-ksef`) — Faktura dla osoby prywatnej a KSeF · „faktura
       dla osoby prywatnej KSeF" · A · FAQ, 10K
-- [ ] `jak-odebrac-fakture-ksef` — Jak odebrać fakturę z KSeF · „jak odebrać fakturę w KSeF" · A ·
-      FAQ (art. 106gb ust. 4), P2
+- [x] `jak-odebrac-fakture-ksef` (in review: branch `content/jak-odebrac-fakture-ksef`) — Jak
+      odebrać fakturę z KSeF · „jak odebrać fakturę w KSeF" · A · FAQ (art. 106gb ust. 4), P2
 - [ ] `faktura-poza-ksef-odliczenie-vat` — Faktura wystawiona poza KSeF: co z odliczeniem VAT ·
       „faktura poza KSeF odliczenie VAT" · K · FAQ
 - [ ] `pusta-faktura-pdf-xml` — PDF inny niż XML: ryzyko pustej faktury · „pusta faktura KSeF" · K,

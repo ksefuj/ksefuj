@@ -41,8 +41,8 @@ II pkt 3.1, 5.2, 6.2; cz. I s. 20).
   1.7). Fakty 17–19.
 - **Tryb offline24 / niedostępność / awaria:** przy offline24 data otrzymania to data nadania numeru
   KSeF (art. 106nda ust. 11), przy fakturze otrzymanej poza KSeF przed wysłaniem — data faktycznego
-  otrzymania (cz. II pkt 1.8). Dla trybu awaryjnego i awarii całkowitej KB nie podaje daty
-  otrzymania. Fakty 20–22.
+  otrzymania (cz. II pkt 1.8). Przy niedostępności (art. 106nh ust. 4 → 106nda ust. 11) też data
+  numeru KSeF. Dla trybu awaryjnego i awarii całkowitej KB nie podaje daty otrzymania. Fakty 20–22.
 - **Rola na fakturze:** nabywca (Podmiot2) vs podmiot trzeci (Podmiot3, dostęp tylko do faktur, w
   których jest wskazany). Fakt 13.
 - **Data:** numer KSeF w tytule przelewu (art. 108g) od 1.01.2027; limit 10 000 zł i art. 145n do
@@ -250,8 +250,12 @@ II pkt 3.1, 5.2, 6.2; cz. I s. 20).
     KSeF.
     - Source: cz. II pkt 1.6.6; `awaria-ksef-offline.md` fakt 3. Confidence: HIGH.
     - **NOT IN KB:** the date of receipt for a domestic NIP buyer of an awaria (106nf) or awaria
-      całkowita (106ng) invoice, and for niedostępność (106nh; UD477 adds a cross-reference to
-      106nda ust. 3, `awaria-ksef-offline.md` fakt 6). Do not state.
+      całkowita (106ng) invoice. Do not state.
+    - **Niedostępność (art. 106nh):** art. 106nh ust. 4 applies art. 106nda ust. 4–15 „odpowiednio",
+      so ust. 11 (receipt = date the KSeF number is assigned) applies. Statute text quoted in
+      `kurs-waluty-art-31a.md` (Dz.U. 2025 poz. 1203); current wording confirmed in
+      `sankcje-ksef-ud477.md` (UD477 widens the range to ust. 3–15). Found by the constitutional
+      judge on 2026-10-10. Confidence: HIGH.
 
 ### F. Przechowywanie i moc prawna kopii
 
@@ -318,8 +322,8 @@ II pkt 3.1, 5.2, 6.2; cz. I s. 20).
 - AP menu names / filters for received invoices; PDF in the logged-in „Pobierz" list (fact 9).
 - How receiving works in the mobile app and how one logs in to it (fact 7).
 - Payment terms vs KSeF receipt date (fact 4): not in KB.
-- Receipt date of awaria (106nf), awaria całkowita (106ng) and niedostępność (106nh) invoices for a
-  domestic NIP buyer (fact 22).
+- Receipt date of awaria (106nf) and awaria całkowita (106ng) invoices for a domestic NIP buyer
+  (fact 22). Niedostępność (106nh) is settled: ust. 4 → art. 106nda ust. 11.
 - Legal weight of a PDF/visualisation vs XML for a KSeF buyer (fact 24).
 - Ukrycie / zgłoszenie scamu: availability and mechanics (cz. III not extracted) (fact 26).
 - JDG buying privately vs for the business, and its effect on KSeF delivery (fact 16).
