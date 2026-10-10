@@ -16,6 +16,8 @@ sources:
     url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
   - label: "Podręcznik KSeF 2.0, cz. I: rozpoczęcie korzystania z KSeF (wyd. 6.08.2026)"
     url: "https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  - label: "Podręcznik KSeF 2.0, cz. III: dodatkowe funkcjonalności KSeF (wyd. 6.08.2026)"
+    url: "https://ksef.podatki.gov.pl/media/3ikdk3qm/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06082026.pdf"
   - label: "Podręcznik użytkownika Aplikacji Podatnika KSeF 2.0 (wyd. 6.08.2026)"
     url: "https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
   - label: "Ustawa o VAT, tekst jednolity (Dz.U. 2026 poz. 1263)"
@@ -64,7 +66,7 @@ Masz trzy drogi i możesz je łączyć.
 
 Na liście faktur zaznaczasz te, które chcesz zapisać, klikasz „Pobierz” i wybierasz format. Za jednym razem pobierzesz od 1 do 10 faktur (kilka przychodzi w pliku ZIP), a każdy plik nosi nazwę numeru KSeF. <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Podręcznik AP, s. 116-117" /> Fakturę możesz pobierać wielokrotnie, a sprzedawca nie wie, czy już to zrobiłaś. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 6.5" />
 
-**Program księgowy lub fakturowy.** Program połączony z KSeF przez API pobiera faktury zakupowe za Ciebie. Łączy się z KSeF podpisem, tokenem albo certyfikatem KSeF; tokenem i certyfikatem KSeF nie zalogujesz się natomiast do Aplikacji Podatnika. <Source href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. I, pkt 42" />
+**Program księgowy lub fakturowy.** Program połączony z KSeF przez API pobiera faktury zakupowe za Ciebie. Łączy się z KSeF podpisem, tokenem albo certyfikatem KSeF; tokenem i certyfikatem KSeF nie zalogujesz się natomiast do Aplikacji Podatnika. <Source href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. I, pkt 2.4.8 i 2.5.1" />
 
 **Księgowa lub biuro rachunkowe.** Nadajesz uprawnienie „przeglądanie faktur” (w systemie nazywa się „dostęp do faktur”). Biuro, które tylko księguje, nie potrzebuje uprawnienia do wystawiania. <Source href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/" label="FAQ MF, pyt. 17" /> Całą ścieżkę opisujemy w przewodniku [jak dać księgowej dostęp do KSeF](/guides/uprawnienia-ksef-ksiegowa).
 
@@ -87,7 +89,7 @@ Część faktur nadal dostaniesz mailem albo na papierze. Wtedy datą otrzymania
 
 Gdy sprzedawca powinien był wystawić fakturę w KSeF, a tego nie zrobił, prawo do odliczenia zachowujesz, jeśli spełniasz warunki z art. 86 i nie zachodzi art. 88. Nie musisz sprawdzać, czy dostawca mógł wystawić fakturę poza KSeF, ale obowiązuje Cię należyta staranność. MF nazywa brak faktury w KSeF „uchybieniem formalnym” i nie przewiduje z tego powodu automatycznych skutków dla nabywcy. <Source href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/" label="FAQ MF, pyt. 1, 2 i 4" />
 
-**Tryb offline24.** Sprzedawca może wystawić fakturę w trybie offline24 bez podawania powodu i wysłać ją do KSeF najpóźniej następnego dnia roboczego. Jako nabywca z polskim NIP dostajesz ją wyłącznie w KSeF, a datą otrzymania jest dzień nadania numeru (art. 106nda ust. 2, 3 i 11). Zanim faktura trafi do KSeF, sprzedawca może dać Ci „potwierdzenie transakcji” z dwoma kodami QR. To nie jest dokument podatkowy. Jeśli mimo to wręczy Ci samą fakturę poza KSeF przed jej wysłaniem, odliczasz VAT od dnia faktycznego otrzymania, choć MF uznaje takie działanie sprzedawcy za nieprawidłowe. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 1.6.6 i 1.8" />
+**Tryb offline24.** Sprzedawca może wystawić fakturę w trybie offline24 bez podawania powodu (art. 106nda ust. 1) i wysłać ją do KSeF najpóźniej następnego dnia roboczego. Jako nabywca z polskim NIP dostajesz ją wyłącznie w KSeF, a datą otrzymania jest dzień nadania numeru (art. 106nda ust. 2, 3 i 11). Zanim faktura trafi do KSeF, sprzedawca może dać Ci „potwierdzenie transakcji” z dwoma kodami QR. To nie jest dokument podatkowy. Jeśli mimo to wręczy Ci samą fakturę poza KSeF przed jej wysłaniem, odliczasz VAT od dnia faktycznego otrzymania, choć MF uznaje takie działanie sprzedawcy za nieprawidłowe. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 1.6.6 i 1.8" />
 
 <Warning>
   Przy awarii KSeF (art. 106nf) sprzedawca wydaje Ci fakturę poza KSeF z dwoma kodami QR i wysyła ją
@@ -121,7 +123,9 @@ KSeF przechowuje faktury przez 10 lat od końca roku, w którym je wystawiono. F
 
 KSeF nie ma opcji zatwierdzania ani odrzucania faktur, a spory rozstrzyga się poza systemem. **Błędną fakturę poprawia tylko sprzedawca, fakturą korygującą.** Faktury nie da się edytować, anulować ani usunąć, a noty korygujące od 1 lutego 2026 nie funkcjonują. Gdy sprzedawca wystawił fakturę na złego nabywcę, koryguje ją do zera i wystawia nową. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 1.6.2-1.6.4 i 6.3" /> Jak wygląda korekta, piszemy w poście o [fakturze korygującej w KSeF](/blog/faktura-korygujaca-ksef).
 
-Jeśli w KSeF pojawi się faktura od firmy, z którą nie współpracujesz, skontaktuj się ze sprzedawcą. MF zapowiedziało dla nabywców opcję ukrycia faktury i zgłoszenia jej jako fałszywej. Od kiedy działa i jak dokładnie, nie potwierdziliśmy jeszcze w dokumentach MF, podobnie jak skutków podatkowych takiej faktury dla Ciebie. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 6.3" />
+Jeśli w KSeF pojawi się faktura od firmy, z którą nie współpracujesz, najpierw skontaktuj się ze sprzedawcą: to może być zwykła pomyłka w NIP, którą sprzedawca naprawia korektą do zera. Jeśli podejrzewasz fałszerstwo, zgłoś je w Aplikacji Podatnika przyciskiem „Zgłoszenie nadużycia”; zgłoszenia trafiają do KAS. Faktury wystawionej przez pomyłkę nie zgłaszasz jako fałszywej. <Source href="https://ksef.podatki.gov.pl/media/3ikdk3qm/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. III, pkt 7" />
+
+MF zapowiedziało też ukrywanie faktur, ale tej funkcji jeszcze nie ma. Ukryta faktura nie znika z KSeF, a sprzedawca nie dostaje o tym informacji. Skutków podatkowych zgłoszenia ani ukrycia faktury MF nie opisuje. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 6.3" /> <Source href="https://ksef.podatki.gov.pl/media/3ikdk3qm/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. III, pkt 8" />
 
 ## Co zrobić teraz
 
