@@ -64,7 +64,7 @@ Masz trzy drogi i możesz je łączyć.
 
 Na liście faktur zaznaczasz te, które chcesz zapisać, klikasz „Pobierz” i wybierasz format. Za jednym razem pobierzesz od 1 do 10 faktur (kilka przychodzi w pliku ZIP), a każdy plik nosi nazwę numeru KSeF. <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Podręcznik AP, s. 116-117" /> Fakturę możesz pobierać wielokrotnie, a sprzedawca nie wie, czy już to zrobiłaś. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 6.5" />
 
-**Program księgowy lub fakturowy.** Program połączony z KSeF przez API pobiera faktury zakupowe za Ciebie. Łączy się z KSeF podpisem, tokenem albo certyfikatem KSeF; tokenem i certyfikatem KSeF nie zalogujesz się natomiast do Aplikacji Podatnika.
+**Program księgowy lub fakturowy.** Program połączony z KSeF przez API pobiera faktury zakupowe za Ciebie. Łączy się z KSeF podpisem, tokenem albo certyfikatem KSeF; tokenem i certyfikatem KSeF nie zalogujesz się natomiast do Aplikacji Podatnika. <Source href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. I, pkt 42" />
 
 **Księgowa lub biuro rachunkowe.** Nadajesz uprawnienie „przeglądanie faktur” (w systemie nazywa się „dostęp do faktur”). Biuro, które tylko księguje, nie potrzebuje uprawnienia do wystawiania. <Source href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/" label="FAQ MF, pyt. 17" /> Całą ścieżkę opisujemy w przewodniku [jak dać księgowej dostęp do KSeF](/guides/uprawnienia-ksef-ksiegowa).
 
@@ -76,13 +76,13 @@ KSeF nie wysyła powiadomień o nowych fakturach. Program musi sam sprawdzać, c
 
 Datą otrzymania faktury z KSeF jest dzień, w którym KSeF nadał jej numer (art. 106na ust. 3 ustawy o VAT). Nie ma znaczenia, kiedy ją otworzysz ani pobierzesz. Tę samą datę sprzedawca widzi w UPO. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 4.2 i 5.1" />
 
-Jeśli jesteś czynną podatniczką VAT, ta data wpływa na odliczenie. Prawo do odliczenia powstaje w okresie powstania obowiązku podatkowego, ale nie wcześniej niż w okresie otrzymania faktury (art. 86 ust. 10b pkt 1). MF pisze o tym w podręczniku przy fakturach spoza KSeF i w trybie offline24. Dla zwykłej faktury z KSeF wynika to z połączenia tego przepisu z art. 106na ust. 3; tak to czytamy, ale wprost MF tego nie ujęło. Jeśli jesteś zwolniona z VAT, odliczenia nie masz i data jest dla Ciebie mniej ważna.
+Jeśli jesteś czynną podatniczką VAT, ta data wpływa na odliczenie. Prawo do odliczenia powstaje w okresie powstania obowiązku podatkowego, ale nie wcześniej niż w okresie otrzymania faktury (art. 86 ust. 10b pkt 1). MF pisze o tym w podręczniku przy fakturach spoza KSeF i w trybie offline24. Dla zwykłej faktury z KSeF wynika to z połączenia tego przepisu z art. 106na ust. 3; tak to czytamy, ale wprost MF tego nie ujęło. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 1.7-1.8" /> Jeśli jesteś zwolniona z VAT, odliczenia nie masz i data jest dla Ciebie mniej ważna.
 
 ## Faktury, które nie przyjdą przez KSeF
 
 Część faktur nadal dostaniesz mailem albo na papierze. Wtedy datą otrzymania jest dzień, w którym faktycznie ją dostałaś. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 1.7" />
 
-- **Zakupy prywatne.** Kupując bez NIP, jesteś konsumentem i sprzedawca nie musi wystawiać faktury w KSeF (art. 106ga ust. 2 pkt 4). Jeśli wystawi ją w KSeF, przekaże Ci ją w uzgodniony sposób, z kodem QR. Jeśli poza KSeF, dostaniesz zwykłą fakturę papierową lub PDF bez kodu. Przepisy nie rozstrzygają jasno, kiedy właścicielka JDG kupuje prywatnie, a kiedy dla firmy, ani czy decyduje o tym samo podanie NIP.
+- **Zakupy prywatne.** Kupując jako osoba prywatna, a nie na potrzeby firmy, sprzedawca nie musi wystawiać faktury w KSeF (art. 106ga ust. 2 pkt 4: nabywca to osoba fizyczna nieprowadząca działalności gospodarczej). Jeśli wystawi ją w KSeF, przekaże Ci ją w uzgodniony sposób, z kodem QR. Jeśli poza KSeF, dostaniesz zwykłą fakturę papierową lub PDF bez kodu. Przepisy nie rozstrzygają jasno, kiedy właścicielka JDG kupuje prywatnie, a kiedy dla firmy, ani czy o tym decyduje samo podanie albo niepodanie NIP.
 - **Sprzedawcy, którzy do 31 grudnia 2026 mogą wystawiać poza KSeF:** w limicie 10 000 zł (art. 145m) albo z kasy fiskalnej (art. 145n). Do tego sprzedawcy zagraniczni bez siedziby i stałego miejsca prowadzenia działalności w Polsce (art. 106ga ust. 2 pkt 1-2).
 
 Gdy sprzedawca powinien był wystawić fakturę w KSeF, a tego nie zrobił, prawo do odliczenia zachowujesz, jeśli spełniasz warunki z art. 86 i nie zachodzi art. 88. Nie musisz sprawdzać, czy dostawca mógł wystawić fakturę poza KSeF, ale obowiązuje Cię należyta staranność. MF nazywa brak faktury w KSeF „uchybieniem formalnym” i nie przewiduje z tego powodu automatycznych skutków dla nabywcy. <Source href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/" label="FAQ MF, pyt. 1, 2 i 4" />
@@ -92,9 +92,11 @@ Gdy sprzedawca powinien był wystawić fakturę w KSeF, a tego nie zrobił, praw
 <Warning>
   Przy awarii KSeF (art. 106nf) sprzedawca wydaje Ci fakturę poza KSeF z dwoma kodami QR i wysyła ją
   do KSeF w ciągu 7 dni roboczych od końca awarii. Przy awarii całkowitej (art. 106ng) faktur do
-  KSeF się nie wysyła. W materiałach MF, które sprawdziliśmy, nie ma odpowiedzi, jaka jest wtedy
-  data otrzymania dla nabywcy z polskim NIP. Przy niedostępności KSeF (art. 106nh) jest inaczej:
-  art. 106nh ust. 4 odsyła do zasad offline24, więc datą otrzymania jest dzień nadania numeru KSeF.
+  KSeF się nie wysyła. Datą otrzymania takiej faktury jest dzień jej faktycznego otrzymania, a jeśli
+  to później niż nadanie numeru KSeF, dzień nadania numeru (art. 106nf ust. 10). Dla nabywców z art.
+  106gb ust. 4 (m.in. osób prywatnych i zagranicznych), z którymi uzgodniono inny sposób, liczy się
+  dzień faktycznego otrzymania. Przy niedostępności KSeF (art. 106nh) jest inaczej: art. 106nh ust.
+  4 odsyła do art. 106nda ust. 4-15, więc datą otrzymania jest dzień nadania numeru KSeF (ust. 11).
 </Warning>
 
 ## Jak sprawdzić fakturę z kodem QR na PDF lub wydruku
