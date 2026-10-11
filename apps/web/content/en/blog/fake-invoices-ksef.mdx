@@ -1,8 +1,8 @@
 ---
 title: "Fake invoice in KSeF: what to do"
-description: "An invoice from an unknown company in KSeF creates no duty to pay or deduct VAT until you book it. Check their NIP on the VAT register and report it in the app."
+description: "You can't reject a fake invoice in KSeF. Don't pay it, check the NIP on the Biała Lista and report it with the “Zgłoszenie nadużycia” button."
 date: 2026-04-03
-updated: 2026-10-07
+updated: 2026-10-11
 section: blog
 locale: en
 slug: "fake-invoices-ksef"
@@ -15,48 +15,70 @@ translations:
   en: "fake-invoices-ksef"
   uk: "falshyvi-rakhunky-ksef"
 sources:
-  - label: "FAQ MF — KSeF 2.0"
-    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
-  - label: "KSeF 2.0 Manual, Part III"
-    url: "https://ksef.podatki.gov.pl/"
+  - label: "KSeF 2.0 Manual, Part III (06.08.2026), sections 7 and 8"
+    url: "https://ksef.podatki.gov.pl/media/3ikdk3qm/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06082026.pdf"
+  - label: "KSeF 2.0 Manual, Part II (06.08.2026), sections 1.7, 5, 5.1, 6.3 and 6.4"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "Polish VAT Act (Dz.U. 2026 poz. 1263), Art. 86(10b)(1), Art. 106na(3)"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  - label: "MF, KSeF frequently asked questions, question 1"
+    url: "https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
   - label: "Polish VAT Taxpayer Register (Biała Lista)"
     url: "https://www.podatki.gov.pl/wykaz-podatnikow-vat-wyszukiwarka"
-  - label: "Art. 86(10) and Art. 88(3a)(4) Polish VAT Act"
-    url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
 ---
 
-An invoice from an unknown company in KSeF (Krajowy System e-Faktur, Poland's National e-Invoicing System) doesn't oblige you to pay or create any tax consequences. Those arise only when you book it, so don't pay, check the seller on the Biała Lista (the VAT taxpayer register) and report the abuse in the Aplikacja Podatnika.
+You can't reject a fake invoice in KSeF (Krajowy System e-Faktur, Poland's National e-Invoicing System), because the system has no such option. Don't pay it or deduct VAT from it, check the seller on the Biała Lista (the VAT taxpayer register), and if you suspect fraud, report the invoice in the Aplikacja Podatnika with the "Zgłoszenie nadużycia" ("report abuse") button.
 
 ## Why a stranger's invoice lands in your account
 
-KSeF assigns an invoice to the recipient based on the NIP (tax identification number) the issuer enters, and there is no "accept" step on your side. Your NIP is public (CEIDG for sole traders, KRS for companies), so some dishonest actors simply use it. We cover the wider obligation in our [KSeF compendium](/en/blog/ksef-from-april-1-2026).
+KSeF assigns an invoice to the recipient based on the NIP (tax identification number) the issuer enters in the buyer field, and there is no "accept" step on your side. You see the invoice on the recipient's side like any other ([how to receive an invoice in KSeF](/en/guides/receiving-invoices-in-ksef)). Your NIP is public (CEIDG for sole traders, KRS for companies), so a dishonest business can simply type it in.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="KSeF 2.0 Manual, Part II, sections 5 and 6.3"
+/>
 
 ## Wrong NIP or fraud
 
-**Mistake.** The issuer transposed digits and entered your NIP instead of the right recipient's. Contact the seller and ask for a zeroing correction and a new invoice with the correct NIP. We describe what that correction looks like in the article on the [corrective invoice in KSeF](/en/blog/corrective-invoice-ksef).
+**Mistake.** The issuer transposed digits and entered your NIP instead of the right recipient's. Contact the seller and ask for a [zeroing correction](/en/blog/corrective-invoice-ksef) and a new invoice with the correct NIP.
 
 **Fraud.** Warning signs (our practical pointers, not an official MF checklist):
 
 - you don't know the company and have never dealt with it,
-- the service description means nothing to you, or reads like machine translation,
+- the service description means nothing to you, and the text reads like machine translation,
 - the phone rings out and email bounces,
 - the payment deadline is absurdly short (three or five days),
-- the seller isn't on the Biała Lista (Wykaz Podatników VAT) or its status is "inactive".
+- the seller isn't on the Biała Lista (Wykaz Podatników VAT); that is a reason to check further, since not every seller is listed (see step 2).
 
 ## What to do, step by step
 
 ### 1. Don't pay and don't book it
 
-An invoice visible in KSeF doesn't oblige you to pay or to deduct VAT. Under Art. 86(10) of the VAT Act, the right to deduct arises in the period in which the invoice is entered in your records, not when it appears in KSeF. Art. 88(3a)(4) excludes deducting VAT on invoices documenting transactions that never took place.
+KSeF has no option to approve or reject invoices; disputes are settled outside the system. **If the transaction never happened, don't pay the invoice, don't book it and don't deduct VAT from it.** That is our advice: whether the invoice goes into your records is a decision for you and your accountant, not something its appearance in KSeF settles.
 
 <Source
-  href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
-  label="Art. 86(10) and Art. 88(3a)(4) Polish VAT Act"
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="KSeF 2.0 Manual, Part II, section 6.3"
+/>
+
+You receive an invoice from KSeF on the day it is assigned its KSeF number (Art. 106na(3) of the VAT Act). The right to deduct VAT arises in the period in which the tax obligation arose, but no earlier than the period in which you received the invoice (Art. 86(10b)(1)). The deduction itself also requires meeting the conditions of Art. 86 and the absence of any exclusion under Art. 88.
+
+<Source
+  href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  label="Polish VAT Act, Art. 86(10b)(1), Art. 106na(3)"
+/>
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="KSeF 2.0 Manual, Part II, sections 1.7 and 5.1"
+/>
+<Source
+  href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
+  label="MF, KSeF FAQ, question 1"
 />
 
 ### 2. Check the seller on the Biała Lista
 
-Enter the NIP from the invoice in the [Wykaz Podatników VAT](https://www.podatki.gov.pl/wykaz-podatnikow-vat-wyszukiwarka). An active entry with details matching the invoice suggests an honest mistake, so get in touch. No entry, an "inactive" status or mismatched details is a strong sign of fraud: don't contact the seller and go to step 3.
+Enter the NIP from the invoice in the [Wykaz Podatników VAT](https://www.podatki.gov.pl/wykaz-podatnikow-vat-wyszukiwarka). In our view, an entry with details matching the invoice points towards a mistake, although it doesn't rule out a fraudster using a real company's details. In that case write to the seller, ideally using contact details from CEIDG, KRS or the company's website rather than from the invoice, and ask for a correction. Details that don't match the invoice are a strong sign of fraud: don't wait for the seller to reply and go to step 3. A missing entry proves nothing by itself, because the register lists only taxpayers registered for VAT (plus those refused registration or removed). A seller exempt under art. 113 who never registered isn't there, yet has also invoiced in KSeF since 1 April 2026. Check such a seller in CEIDG or KRS and contact them.
 
 <Source
   href="https://www.podatki.gov.pl/wykaz-podatnikow-vat-wyszukiwarka"
@@ -65,39 +87,44 @@ Enter the NIP from the invoice in the [Wykaz Podatników VAT](https://www.podatk
 
 ### 3. Report the abuse in the Aplikacja Podatnika
 
-Since 1 April 2026 the Aplikacja Podatnika KSeF (the taxpayer portal) has a simplified way to report suspicious invoices, with no letters to the tax office:
+Log in to the Aplikacja Podatnika KSeF (the taxpayer web app) at [ap.ksef.mf.gov.pl](https://ap.ksef.mf.gov.pl/) and use the "Zgłoszenie nadużycia" ("report abuse") button. Reports go to KAS (Krajowa Administracja Skarbowa, the National Revenue Administration). Because of tax secrecy, KAS doesn't tell the reporter how the check went or what the result was. Don't report an invoice issued by mistake as fake; a correction from the seller is enough there.
 
-1. Log in at [ap.ksef.mf.gov.pl](https://ap.ksef.mf.gov.pl/).
-2. Find the invoice in your inbox.
-3. Use the "report abuse" option on the document.
-4. Add a short reason, for example "I don't know this company and I didn't order this service".
+<Source
+  href="https://ksef.podatki.gov.pl/media/3ikdk3qm/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06082026.pdf"
+  label="KSeF 2.0 Manual, Part III, section 7 (incl. 7.4)"
+/>
 
-According to the KSeF 2.0 Manual and the MF FAQ:
+MF has also announced a way to hide invoices, but according to the Manual of 6 August 2026 that feature isn't available yet. A hidden invoice won't disappear from KSeF, and the seller won't be told. According to MF, reporting and hiding an invoice create no new obligations for the taxpayer.
 
-- **one report covers one invoice**, so three suspicious invoices mean three reports,
-- **only the buyer named on the invoice can report**,
-- **KAS (the National Revenue Administration) reviews reports but doesn't tell you the outcome**,
-- the report is a technical tool of the application; from the MF information available, the VAT Act doesn't regulate it as a separate procedure,
-- **you can withdraw a report** if the seller gets in touch and issues a correction.
+<Source
+  href="https://ksef.podatki.gov.pl/media/3ikdk3qm/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06082026.pdf"
+  label="KSeF 2.0 Manual, Part III, sections 7.2 and 8.2"
+/>
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="KSeF 2.0 Manual, Part II, section 6.3"
+/>
 
 <Tip>
-  A report in the app doesn't replace a complaint to law enforcement. If you suspect a crime,
-  consult a lawyer or tax adviser.
+  Don't assume a report in the app replaces a criminal complaint. If you suspect someone is
+  impersonating your business or committing VAT fraud, consult a lawyer or tax adviser.
 </Tip>
-
-<Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20" label="FAQ MF — KSeF 2.0" />
-<Source href="https://ksef.podatki.gov.pl/" label="KSeF 2.0 Manual, Part III" />
 
 ### 4. Tell your accountant
 
-Your accounting firm sees your invoices but doesn't know your contracts. With automatic KSeF import, a suspicious invoice can be booked in routine work, especially at month-end. Tell them plainly: "This invoice is suspicious, please don't book it until this is resolved". If it already reached the records, ask them to remove it before the period closes, and ask whether their software can flag invoices from unknown counterparties before import.
+Your accounting firm sees your invoices but doesn't know your contracts. With automatic KSeF import, a suspicious invoice can be booked in routine work, especially at month-end. Tell them plainly: "This invoice is suspicious, please don't book it until this is resolved". If it has already reached the records, ask them to take it out before the period closes, and ask whether their software can flag invoices from unknown counterparties before import.
 
 ## Reducing the risk
 
-Nothing fully stops someone entering your NIP on a fake invoice. Two habits help: check KSeF every few days instead of once a month, and agree with your accountant that an invoice from a new company needs your confirmation first.
+Nothing fully protects you from a fraudster entering your NIP. KSeF doesn't send notifications about new invoices, so two habits help: check KSeF every few days instead of once a month, and agree with your accountant that an invoice from a new company needs your confirmation first.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="KSeF 2.0 Manual, Part II, section 6.4"
+/>
 
 ## Phishing that impersonates KSeF
 
-Since [mandatory KSeF went live](/en/blog/ksef-launched), emails impersonating the Ministry of Finance or KSeF have circulated, with "login" links and requests for your details. Don't click links in emails about KSeF. Go to [ksef.podatki.gov.pl](https://ksef.podatki.gov.pl/) by typing it or from a bookmark; official notifications never require you to click a confirmation link.
+Also watch out for emails that may impersonate the Ministry of Finance or KSeF, with "login" links and requests for your details (general caution, not a report of any particular wave of scams). Our advice: don't click links in messages about KSeF. Go to [ksef.podatki.gov.pl](https://ksef.podatki.gov.pl/) and the Aplikacja Podatnika by typing the address or from a bookmark.
 
 If the stranger's invoice turned out to be a plain NIP mistake, the next step is the [zeroing correction](/en/blog/corrective-invoice-ksef#zero-value-correction-when-the-buyers-nip-is-wrong).

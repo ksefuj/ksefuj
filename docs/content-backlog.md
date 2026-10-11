@@ -19,13 +19,13 @@ what is not yet settled.
 
 ## Next up
 
-- [ ] **UPDATE** `falszywe-faktury-ksef`: says the right to deduct arises in the period the invoice
-      is entered in the records (art. 86 ust. 10); the KB gives the tax-point period, not earlier
-      than the period of receipt (art. 86 ust. 10b pkt 1), with receipt = KSeF number date (art.
-      106na ust. 3). Also unbacked: the 1.04.2026 start of hiding/reporting fake invoices and the
-      reporting mechanics (Podręcznik cz. II pkt 6.3 only says „kilka miesięcy po uruchomieniu");
-      the cz. III source points at the homepage; the VAT Act source is Dz.U. 2025 poz. 775 instead
-      of 2026 poz. 1263 (source:
+- [x] **UPDATE** `falszywe-faktury-ksef` (in review: branch `content/falszywe-faktury-ksef`): said
+      the right to deduct arises in the period the invoice is entered in the records (art. 86 ust.
+      10); the KB gives the tax-point period, not earlier than the period of receipt (art. 86 ust.
+      10b pkt 1), with receipt = KSeF number date (art. 106na ust. 3). Also unbacked: the 1.04.2026
+      start of hiding/reporting fake invoices and the reporting mechanics (Podręcznik cz. II pkt 6.3
+      only says „kilka miesięcy po uruchomieniu"); the cz. III source points at the homepage; the
+      VAT Act source is Dz.U. 2025 poz. 775 instead of 2026 poz. 1263 (source:
       https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf,
       pkt 1.7, 5.1, 6.3). Note: cz. III (6.08.2026) pkt 7 now documents reporting via „Zgłoszenie
       nadużycia" in Aplikacja Podatnika; hiding (pkt 8) is still announced only
