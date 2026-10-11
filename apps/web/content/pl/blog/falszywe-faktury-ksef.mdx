@@ -1,8 +1,8 @@
 ---
 title: "Fałszywa faktura w KSeF: co zrobić"
-description: "Faktura od nieznanej firmy w KSeF nie obliguje do zapłaty ani VAT, dopóki jej nie zaksięgujesz. Sprawdź NIP na Białej Liście i zgłoś ją w aplikacji."
+description: "Fałszywej faktury w KSeF nie odrzucisz. Nie płać jej, sprawdź NIP na Białej Liście, a oszustwo zgłoś przyciskiem „Zgłoszenie nadużycia” w Aplikacji Podatnika."
 date: 2026-04-03
-updated: 2026-10-07
+updated: 2026-10-11
 section: blog
 locale: pl
 slug: "falszywe-faktury-ksef"
@@ -15,21 +15,28 @@ translations:
   en: "fake-invoices-ksef"
   uk: "falshyvi-rakhunky-ksef"
 sources:
-  - label: "FAQ MF — KSeF 2.0"
-    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
-  - label: "Podręcznik KSeF 2.0 cz. III"
-    url: "https://ksef.podatki.gov.pl/"
+  - label: "Podręcznik KSeF 2.0, cz. III (06.08.2026), pkt 7 i 8"
+    url: "https://ksef.podatki.gov.pl/media/3ikdk3qm/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06082026.pdf"
+  - label: "Podręcznik KSeF 2.0, cz. II (06.08.2026), pkt 1.7, 5, 5.1, 6.3 i 6.4"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "Ustawa o VAT (Dz.U. 2026 poz. 1263), art. 86 ust. 10b pkt 1, art. 106na ust. 3"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  - label: "MF, Najczęstsze pytania o KSeF, pyt. 1"
+    url: "https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
   - label: "Biała Lista podatników VAT"
     url: "https://www.podatki.gov.pl/wykaz-podatnikow-vat-wyszukiwarka"
-  - label: "Art. 86 ust. 10 i art. 88 ust. 3a pkt 4 ustawy o VAT"
-    url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
 ---
 
-Sama faktura od nieznanej firmy w KSeF nie obliguje Cię do zapłaty ani do żadnych rozliczeń podatkowych. Skutki powstają dopiero, gdy ją zaksięgujesz, więc nie płać, sprawdź sprzedawcę na Białej Liście i zgłoś nadużycie w Aplikacji Podatnika.
+Fałszywej faktury w KSeF nie da się odrzucić, bo system nie ma takiej opcji. Nie płać jej i nie odliczaj z niej VAT, sprawdź sprzedawcę na Białej Liście, a jeśli podejrzewasz oszustwo, zgłoś fakturę w Aplikacji Podatnika przyciskiem „Zgłoszenie nadużycia”.
 
 ## Dlaczego obca faktura trafia na Twoje konto
 
-KSeF przypisuje fakturę odbiorcy na podstawie NIP-u wpisanego przez wystawcę i nie ma tu żadnej „akceptacji” po Twojej stronie. Twój NIP jest publiczny (CEIDG dla JDG, KRS dla spółek), więc część nieuczciwych podmiotów po prostu go wykorzystuje. Szerszy kontekst obowiązku opisaliśmy w [kompendium o KSeF](/blog/ksef-od-1-kwietnia-2026).
+KSeF przypisuje fakturę odbiorcy na podstawie NIP-u wpisanego przez wystawcę w polu nabywcy i nie ma tu żadnej „akceptacji” po Twojej stronie. Jak to działa od strony odbiorcy, opisaliśmy w przewodniku [jak odebrać fakturę w KSeF](/guides/jak-odebrac-fakture-ksef). Twój NIP jest publiczny (CEIDG dla JDG, KRS dla spółek), więc nieuczciwa firma może go po prostu wpisać.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. II, pkt 5 i 6.3"
+/>
 
 ## Pomyłka w NIP-ie czy oszustwo
 
@@ -41,22 +48,37 @@ KSeF przypisuje fakturę odbiorcy na podstawie NIP-u wpisanego przez wystawcę i
 - opis usługi nic Ci nie mówi, a tekst wygląda na tłumaczony automatycznie,
 - telefon milczy, a e-mail wraca z błędem,
 - termin płatności jest absurdalnie krótki (trzy, pięć dni),
-- sprzedawcy nie ma w Wykazie Podatników VAT (Białej Liście) albo ma status „nieaktywny”.
+- sprzedawcy nie znajdziesz w Wykazie Podatników VAT (Białej Liście).
 
 ## Co robić krok po kroku
 
 ### 1. Nie płać i nie księguj
 
-Faktura widoczna w KSeF nie zobowiązuje Cię do zapłaty ani do odliczenia VAT. Zgodnie z art. 86 ust. 10 ustawy o VAT prawo do odliczenia powstaje w rozliczeniu za okres, w którym fakturę ujęto w ewidencji, a nie gdy pojawiła się w KSeF. Art. 88 ust. 3a pkt 4 wyklucza odliczenie VAT z faktur dokumentujących transakcje, które nie miały miejsca.
+KSeF nie ma opcji zatwierdzania ani odrzucania faktur, a spory rozstrzyga się poza systemem. **Faktury za transakcję, która się nie odbyła, nie płać, nie księguj i nie odliczaj z niej VAT.** To nasza rada: o tym, czy fakturę ująć w ewidencji, decydujesz Ty z księgowym, a nie sam fakt, że pojawiła się w KSeF.
 
 <Source
-  href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
-  label="Art. 86 ust. 10 i art. 88 ust. 3a pkt 4 ustawy o VAT"
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. II, pkt 6.3"
+/>
+
+Fakturę z KSeF otrzymujesz w dniu nadania jej numeru KSeF (art. 106na ust. 3 ustawy o VAT). Prawo do odliczenia VAT powstaje w okresie, w którym powstał obowiązek podatkowy, ale nie wcześniej niż w okresie otrzymania faktury (art. 86 ust. 10b pkt 1). Samo odliczenie wymaga spełnienia przesłanek z art. 86 i braku przesłanek negatywnych z art. 88.
+
+<Source
+  href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  label="Ustawa o VAT, art. 86 ust. 10b pkt 1, art. 106na ust. 3"
+/>
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. II, pkt 1.7 i 5.1"
+/>
+<Source
+  href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
+  label="MF, Najczęstsze pytania, pyt. 1"
 />
 
 ### 2. Sprawdź sprzedawcę na Białej Liście
 
-Wpisz NIP z faktury w [Wykazie Podatników VAT](https://www.podatki.gov.pl/wykaz-podatnikow-vat-wyszukiwarka). Aktywny wpis i dane zgodne z fakturą oznaczają, że to prawdopodobnie zwykła pomyłka i warto się skontaktować. Brak wpisu, status „nieaktywny” albo niezgodne dane to mocny sygnał oszustwa: nie kontaktuj się ze sprzedawcą i przejdź do kroku 3.
+Wpisz NIP z faktury w [Wykazie Podatników VAT](https://www.podatki.gov.pl/wykaz-podatnikow-vat-wyszukiwarka). Naszym zdaniem wpis z danymi zgodnymi z fakturą przemawia raczej za pomyłką, choć nie wyklucza oszusta, który podał dane prawdziwej firmy. Wtedy napisz do sprzedawcy, najlepiej na kontakt z CEIDG, KRS lub strony firmy, nie z faktury, i poproś o korektę. Brak wpisu albo dane niezgodne z fakturą to mocny sygnał oszustwa: nie czekaj na odpowiedź sprzedawcy i przejdź do kroku 3.
 
 <Source
   href="https://www.podatki.gov.pl/wykaz-podatnikow-vat-wyszukiwarka"
@@ -65,28 +87,29 @@ Wpisz NIP z faktury w [Wykazie Podatników VAT](https://www.podatki.gov.pl/wykaz
 
 ### 3. Zgłoś nadużycie w Aplikacji Podatnika
 
-Od 1 kwietnia 2026 Aplikacja Podatnika KSeF ma uproszczone zgłaszanie podejrzanych faktur, bez pism do urzędu:
+Zaloguj się do Aplikacji Podatnika KSeF na [ap.ksef.mf.gov.pl](https://ap.ksef.mf.gov.pl/) i użyj przycisku „Zgłoszenie nadużycia”. Zgłoszenia trafiają do Krajowej Administracji Skarbowej. Faktury wystawionej przez pomyłkę nie zgłaszasz jako fałszywej; tu wystarczy korekta od sprzedawcy.
 
-1. Zaloguj się na [ap.ksef.mf.gov.pl](https://ap.ksef.mf.gov.pl/).
-2. Znajdź fakturę w skrzynce odbiorczej.
-3. Użyj opcji zgłoszenia nadużycia przy dokumencie.
-4. Krótko uzasadnij, np. „Nie znam tej firmy i nie zamawiałem tej usługi”.
+<Source
+  href="https://ksef.podatki.gov.pl/media/3ikdk3qm/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. III, pkt 7"
+/>
 
-Według Podręcznika KSeF 2.0 i FAQ Ministerstwa Finansów:
+MF zapowiedziało też ukrywanie faktur, ale według Podręcznika z 6 sierpnia 2026 tej funkcji jeszcze nie ma. Ukryta faktura nie zniknie z KSeF, a sprzedawca nie dostanie o tym informacji. Skutków podatkowych zgłoszenia ani ukrycia faktury MF nie opisuje.
 
-- **jedno zgłoszenie dotyczy jednej faktury**, więc trzy podejrzane faktury to trzy zgłoszenia,
-- **zgłosić może tylko nabywca** wskazany na fakturze,
-- **KAS analizuje zgłoszenia, ale nie informuje o wyniku**,
-- zgłoszenie to narzędzie techniczne aplikacji; z dostępnych informacji MF wynika, że ustawa o VAT nie reguluje go jako odrębnej procedury,
-- **zgłoszenie możesz wycofać**, jeśli sprzedawca się odezwie i wystawi korektę.
+<Source
+  href="https://ksef.podatki.gov.pl/media/3ikdk3qm/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. III, pkt 8"
+/>
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. II, pkt 6.3"
+/>
 
 <Tip>
-  Zgłoszenie w aplikacji nie zastępuje zawiadomienia organów ścigania. Jeśli podejrzewasz
-  przestępstwo, skonsultuj się z prawnikiem lub doradcą podatkowym.
+  Nie zakładaj, że zgłoszenie w aplikacji wystarczy zamiast zawiadomienia o przestępstwie. Jeśli
+  podejrzewasz, że ktoś podszywa się pod Twoją firmę lub wyłudza VAT, skonsultuj się z prawnikiem
+  lub doradcą podatkowym.
 </Tip>
-
-<Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20" label="FAQ MF — KSeF 2.0" />
-<Source href="https://ksef.podatki.gov.pl/" label="Podręcznik KSeF 2.0 cz. III" />
 
 ### 4. Powiedz księgowemu
 
@@ -94,10 +117,15 @@ Biuro rachunkowe widzi Twoje faktury, ale nie zna Twoich umów. Przy automatyczn
 
 ## Jak ograniczyć ryzyko
 
-Przed oszustem, który wpisze Twój NIP, nie ma pełnej ochrony. Pomagają dwa nawyki: zaglądaj do KSeF co kilka dni zamiast raz w miesiącu oraz ustal z księgowym regułę, że faktura od nowej firmy wymaga Twojego potwierdzenia.
+Przed oszustem, który wpisze Twój NIP, nie ma pełnej ochrony. KSeF nie wysyła powiadomień o nowych fakturach, więc pomagają dwa nawyki: zaglądaj do KSeF co kilka dni zamiast raz w miesiącu oraz ustal z księgowym regułę, że faktura od nowej firmy wymaga Twojego potwierdzenia.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. II, pkt 6.4"
+/>
 
 ## Phishing podszywający się pod KSeF
 
-Od startu [obowiązkowego KSeF](/blog/ksef-ruszyl) krążą e-maile podszywające się pod Ministerstwo Finansów lub KSeF, z linkami do „logowania” i prośbą o dane. Nie klikaj linków w wiadomościach o KSeF. Wchodź na [ksef.podatki.gov.pl](https://ksef.podatki.gov.pl/) ręcznie lub z zakładki; oficjalne powiadomienia nie wymagają klikania linków potwierdzających.
+Uważaj też na e-maile, które po starcie [obowiązkowego KSeF](/blog/ksef-ruszyl) podszywają się pod Ministerstwo Finansów lub KSeF, z linkami do „logowania” i prośbą o dane. Nasza rada: nie klikaj linków w wiadomościach o KSeF, tylko wchodź na [ksef.podatki.gov.pl](https://ksef.podatki.gov.pl/) i do Aplikacji Podatnika ręcznie lub z zakładki.
 
 Jeśli obca faktura okazała się zwykłą pomyłką w NIP-ie, następny krok to [korekta zerująca](/blog/faktura-korygujaca-ksef#korekta-do-zera-gdy-nip-nabywcy-jest-pomylony).
