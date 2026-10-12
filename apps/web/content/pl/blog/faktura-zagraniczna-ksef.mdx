@@ -2,7 +2,7 @@
 title: "Faktura dla nabywcy z zagranicy w KSeF"
 description: "Nabywca z UE: KodUE + NrVatUE, nie NIP. Spoza UE: KodKraju + NrID. Do tego stawki np I, np II, 0 WDT, 0 EX i gotowe przykłady XML."
 date: 2026-03-30
-updated: 2026-10-07
+updated: 2026-10-12
 section: blog
 locale: pl
 slug: "faktura-zagraniczna-ksef"
@@ -16,7 +16,7 @@ sources:
   - label: "Objaśnienia podatkowe MF 28.01.2026"
     url: "https://ksef.podatki.gov.pl/"
   - label: "Ustawa o VAT art. 28b"
-    url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
+    url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
   - label: "VIES — weryfikacja numeru VAT-UE"
     url: "https://ec.europa.eu/taxation_customs/vies/"
   - label: "Broszura informacyjna FA(3), s. 92"
@@ -29,7 +29,7 @@ translations:
 
 Faktura dla zagranicznego kontrahenta trafia do KSeF tak samo jak krajowa, nawet jeśli nabywca nie ma polskiego NIP-u i nigdy nie zaloguje się do systemu. W danych nabywcy nie wpisujesz obcego numeru w pole NIP: dla firm z UE używasz `KodUE` + `NrVatUE`, dla pozostałych `KodKraju` + `NrID`, a gdy numeru brak, `BrakID`.
 
-Nabywca nie dostanie faktury z KSeF, więc wyślij mu czytelną kopię (PDF z kodem QR) mailem lub pocztą. Poniżej pola dla każdego typu nabywcy, stawki VAT i adnotacje. Od [1 kwietnia 2026 KSeF jest obowiązkowy](/blog/ksef-od-1-kwietnia-2026) dla wszystkich czynnych podatników VAT.
+Nabywca nie dostanie faktury z KSeF, więc wyślij mu czytelną kopię (PDF z kodem QR) mailem lub pocztą. Poniżej pola dla każdego typu nabywcy, stawki VAT i adnotacje. Od [1 kwietnia 2026](/blog/ksef-od-1-kwietnia-2026) faktury w KSeF wystawiają wszyscy podatnicy, czynni i zwolnieni z VAT (największe firmy od 1 lutego). Do końca 2026 r. fakturę możesz jeszcze wystawić poza KSeF, jeśli Twoja sprzedaż na fakturach w danym miesiącu nie przekracza [10 000 zł brutto](/blog/ksef-limit-10000-zl).
 
 ## Nabywca z UE z numerem VAT-UE
 
@@ -76,7 +76,7 @@ Przykład, faktura dla firmy z Niemiec:
 
 ## Nabywca z UE bez numeru VAT
 
-Osoba prywatna, freelancer na ryczałcie albo firma niezarejestrowana do VAT nie ma numeru, który mógłbyś wpisać. Zamiast `KodUE` + `NrVatUE` użyj `BrakID` = `1` (nabywca nie posiada numeru identyfikacyjnego). `Nazwa` pozostaje obowiązkowa.
+Osoba prywatna, freelancer na ryczałcie albo firma niezarejestrowana do VAT nie ma numeru, który mógłbyś wpisać. Zamiast `KodUE` + `NrVatUE` użyj `BrakID` = `1` (nabywca nie posiada numeru identyfikacyjnego). `Nazwa` pozostaje obowiązkowa. Faktura dla osoby prywatnej (konsumenta) nie musi trafić do KSeF (art. 106ga ust. 2 pkt 4 ustawy o VAT); możesz ją tam wystawić dobrowolnie, szczegóły w artykule o [fakturze dla osoby prywatnej](/blog/faktura-dla-osoby-prywatnej-ksef).
 
 <XmlExample copyable>
   ```xml
@@ -170,7 +170,7 @@ W praktyce: strona internetowa dla klienta z Niemiec z numerem VAT-UE to usługa
 Wartości stawek w FA(3) są wrażliwe na wielkość liter i spacje. Poprawnie: `np I`, `np II`, `0 WDT`, `0 EX`. Niepoprawnie: `NP I`, `npI`, `0WDT`.
 
 <Source
-  href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
+  href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
   label="Ustawa o VAT — art. 28b, miejsce świadczenia usług"
 />
 
