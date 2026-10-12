@@ -2,7 +2,7 @@
 title: "Invoicing a foreign buyer in KSeF"
 description: "EU buyer: KodUE + NrVatUE, not NIP. Non-EU: KodKraju + NrID. Plus the np I, np II, 0 WDT and 0 EX rates and ready-to-use XML examples."
 date: 2026-03-30
-updated: 2026-10-07
+updated: 2026-10-12
 section: blog
 locale: en
 slug: "foreign-invoice-ksef"
@@ -21,7 +21,7 @@ sources:
   - label: "MF Tax Explanations 28.01.2026"
     url: "https://ksef.podatki.gov.pl/"
   - label: "Polish VAT Act Art. 28b"
-    url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
+    url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
   - label: "VIES — VAT number verification"
     url: "https://ec.europa.eu/taxation_customs/vies/"
   - label: "FA(3) information brochure, p. 92"
@@ -30,7 +30,7 @@ sources:
 
 An invoice to a foreign buyer goes through KSeF (Poland's National e-Invoicing System) just like a domestic one, even if the buyer has no Polish NIP and will never log in. In the buyer's data you never put a foreign number in the NIP field: for EU companies use `KodUE` + `NrVatUE`, for everyone else `KodKraju` + `NrID`, and when there is no number, `BrakID`.
 
-The buyer won't receive the invoice from KSeF, so send them a readable copy (a PDF with the QR code) by email or post. Below: the fields for each buyer type, VAT rates and annotations. KSeF has been [mandatory since 1 April 2026](/en/blog/ksef-from-april-1-2026) for all active VAT taxpayers.
+The buyer won't receive the invoice from KSeF, so send them a readable copy (a PDF with the QR code) by email or post. Below: the fields for each buyer type, VAT rates and annotations. Since [1 April 2026](/en/blog/ksef-from-april-1-2026) every taxpayer issues invoices in KSeF, VAT-registered and VAT-exempt alike (the largest companies since 1 February). Until the end of 2026 you may still issue an invoice outside KSeF if your invoiced sales in that month stay at or below [10,000 PLN gross](/en/blog/ksef-10000-pln-limit).
 
 ## EU buyer with a VAT-EU number
 
@@ -74,7 +74,7 @@ Example, an invoice to a German company:
 
 ## EU buyer without a VAT number
 
-A private individual, a freelancer on a flat-rate scheme or a company not registered for VAT has no number to enter. Instead of `KodUE` + `NrVatUE` use `BrakID` = `1` (the buyer has no identification number). `Nazwa` stays mandatory.
+A private individual, a freelancer on a flat-rate scheme or a company not registered for VAT has no number to enter. Instead of `KodUE` + `NrVatUE` use `BrakID` = `1` (the buyer has no identification number). `Nazwa` stays mandatory. An invoice for a private person (a consumer) doesn't have to go through KSeF (art. 106ga(2)(4) of the VAT Act); you may issue it there voluntarily, see our post on [invoices for private persons](/en/blog/invoice-for-private-person-ksef).
 
 <XmlExample copyable>
   ```xml
@@ -166,7 +166,7 @@ In practice: a website built for a German client with a VAT-EU number is a servi
 Rate values in FA(3) are case- and space-sensitive. Correct: `np I`, `np II`, `0 WDT`, `0 EX`. Incorrect: `NP I`, `npI`, `0WDT`.
 
 <Source
-  href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
+  href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
   label="VAT Act — Art. 28b, place of supply of services"
 />
 

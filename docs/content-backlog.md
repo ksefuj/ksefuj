@@ -29,9 +29,10 @@ what is not yet settled.
       https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf,
       pkt 1.7, 5.1, 6.3). Note: cz. III (6.08.2026) pkt 7 now documents reporting via „Zgłoszenie
       nadużycia" in Aplikacja Podatnika; hiding (pkt 8) is still announced only
-- [ ] **UPDATE** `faktura-zagraniczna-ksef` (all locales): says „KSeF jest obowiązkowy dla
-      wszystkich czynnych podatników VAT"; VAT-exempt taxpayers are covered too from 1.04.2026
-      (source: https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/)
+- [x] **UPDATE** `faktura-zagraniczna-ksef` (in review: branch `content/faktura-zagraniczna-ksef`)
+      (all locales): says „KSeF jest obowiązkowy dla wszystkich czynnych podatników VAT"; VAT-exempt
+      taxpayers are covered too from 1.04.2026 (source:
+      https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/)
 - [ ] **UPDATE** FAQ `limity-i-wylaczenia` (all locales): says rolnicy ryczałtowi „co do zasady są
       wyłączeni z obowiązku KSeF"; unsupported. MF lists only VAT RR invoices (issued by the buyer)
       as optional in KSeF from 1.04.2026 (source:
