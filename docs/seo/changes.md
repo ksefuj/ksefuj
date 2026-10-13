@@ -5,6 +5,29 @@ effect. Record the date, the page, what changed (old -> new for titles and descr
 metric that motivated it. After 28 days, add a **Results** line comparing current CTR/position with
 the baseline.
 
+## 2026-10-13
+
+Digest: `gsc-data` 2026-10-12 (GSC 2026-09-12 to 2026-10-09: 70 clicks, 8,869 impressions, CTR
+0.79%, avg position 6.4). No title or description changes: every page in the low-CTR list
+(`/en/blog/corrective-invoice-ksef`, `/en/blog/fa2-vs-fa3-ksef`,
+`/blog/najczestsze-bledy-walidacji-fa3`, `/blog/faktura-korygujaca-ksef`,
+`/en/blog/certificates-vs-tokens-ksef`, `/en/guides/first-fa3-invoice`, `/blog/fa2-vs-fa3-ksef`) has
+frontmatter `updated` within the last 28 days.
+
+- **Pages:** `/blog/najczestsze-bledy-walidacji-fa3`, `/en/blog/most-common-fa3-validation-errors`
+  - **Change:** body only (title and description unchanged). Added a „Więcej o tym błędzie" / "More
+    about this error" link at the end of 9 of the 12 sections to the matching `/validator/<slug>`
+    reference page (namespace, element order, missing field, NIP, date, decimals, JST/GV, P_12,
+    P_14/P_15), and a line in „Co dalej" / "Next step" linking the malformed-XML and bank-account
+    pages.
+  - **Motivation:** no blog post or guide linked to any validator issue page; the health crawl found
+    only 1 internal link (from `/validator`) to `/validator/bledny-numer-rachunku-bankowego` and
+    `/validator/xml-nie-jest-poprawnie-sformatowany`, both "URL is unknown to Google", and 2 to
+    `/en/validator/missing-jst-gv-podmiot2` (also unknown). The source posts are indexed and among
+    the top pages: PL 638 impr, 9 clicks, pos 6.9; EN 631 impr, 10 clicks, pos 4.5.
+  - **Baseline to compare:** URL Inspection state of the three validator pages above; validator
+    pages had 1-5 impressions each in this period.
+
 ## 2026-10-09
 
 Digest: `gsc-data` 2026-10-08 (GSC 2026-09-08 to 2026-10-05: 73 clicks, 9,833 impressions, CTR
