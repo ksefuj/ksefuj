@@ -46,6 +46,8 @@ Element `<Faktura>` musi zawierać namespace FA(3). Bez niego walidator nie rozp
   ```
 </XmlExample>
 
+Więcej o tym błędzie: [Zły namespace w fakturze: xmlns dla FA(3)](/validator/zly-namespace-faktura-fa3).
+
 ## 2. Zła kolejność elementów
 
 Schemat używa `xs:sequence`, więc kolejność elementów jest obowiązkowa. Przestawione `Podmiot2` przed `Podmiot1` odrzuca cały plik. Program zwykle trzyma kolejność, ale ręczne edycje i własne eksporty ją psują.
@@ -72,6 +74,8 @@ Na najwyższym poziomie: `Naglowek` → `Podmiot1` → `Podmiot2` → [`Podmiot3
 </XmlExample>
 
 Ta sama zasada dotyczy wnętrza `Naglowek` (`KodFormularza` → `WariantFormularza` → `DataWytworzeniaFa`), `Podmiot1`, `Podmiot2` i `Fa`. Pełną kolejność podaje [schemat XSD FA(3)](https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd).
+
+Więcej o tym błędzie: [Element w złym miejscu w XML faktury FA(3)](/validator/element-w-zlym-miejscu-fa3).
 
 ## 3. Brak wymaganych elementów
 
@@ -100,6 +104,8 @@ FA(3) ma kilkadziesiąt pól obowiązkowych na różnych poziomach, a walidator 
   ```
 </XmlExample>
 
+Więcej o tym błędzie: [Brak wymaganego pola w XML faktury FA(3)](/validator/brak-wymaganego-pola-fa3).
+
 ## 4. Zły format NIP
 
 Schemat wymaga dokładnie 10 cyfr bez separatorów. Zapisy `123-456-78-90` i `PL 1234567890` są błędne. Prefiks `PL` nie trafia do pola `NIP`. Sprzedawca podaje go osobno w `PrefiksPodatnika` (`Podmiot1`), gdy jest wymagany (np. przy WDT). Polskiego nabywcę w `Podmiot2` identyfikuje sam `NIP`; pola `KodUE` i `NrVatUE` służą do numeru VAT UE nabywcy z innego kraju.
@@ -120,6 +126,8 @@ Schemat wymaga dokładnie 10 cyfr bez separatorów. Zapisy `123-456-78-90` i `PL
   ani `NrID`. W złym polu faktura nie zostanie poprawnie doręczona w KSeF.
 </Warning>
 
+Więcej o tym błędzie: [Nieprawidłowa wartość pola: NIP](/validator/nieprawidlowa-wartosc-pola-fa3#nip).
+
 ## 5. Zły format daty
 
 Polskie `15.09.2026` zamiast `2026-09-15` to najczęstsza pomyłka. Druga: pomylenie pól daty (`P_1`) z polem daty i czasu (`DataWytworzeniaFa`). Pola daty (`P_1`, `P_6`, `P_6A` i inne) przyjmują `RRRR-MM-DD`. `DataWytworzeniaFa` przyjmuje `RRRR-MM-DDTHH:MM:SS`. Broszura podaje przykład w czasie UTC, z literą `Z` na końcu, ale schemat przyjmie też zapis bez strefy czasowej albo z przesunięciem (`+02:00`).
@@ -138,6 +146,8 @@ Polskie `15.09.2026` zamiast `2026-09-15` to najczęstsza pomyłka. Druga: pomyl
   <DataWytworzeniaFa>2026-09-15T10:00:00Z</DataWytworzeniaFa>
   ```
 </XmlExample>
+
+Więcej o tym błędzie: [Nieprawidłowa wartość pola: format daty](/validator/nieprawidlowa-wartosc-pola-fa3#format-daty).
 
 ## 6. Zbyt wiele miejsc po przecinku
 
@@ -167,6 +177,8 @@ Separator dziesiętny to zawsze kropka. Przecinek ani spacja jako separator tysi
   <P_15>1234.56</P_15>
   ```
 </XmlExample>
+
+Więcej o tym błędzie: [Nieprawidłowa wartość pola: za dużo miejsc po przecinku](/validator/nieprawidlowa-wartosc-pola-fa3#za-duzo-miejsc-po-przecinku).
 
 ## 7. Brak Podmiot2, JST i GV
 
@@ -204,6 +216,8 @@ W FA(2) pól `JST` i `GV` nie było, więc eksport oparty na starym szablonie ic
   ```
 </XmlExample>
 
+Więcej o tym błędzie: [Brak JST i GV w Podmiot2: co wpisać w FA(3)](/validator/brak-jst-gv-podmiot2).
+
 ## 8. Zła stawka VAT w P_12
 
 `P_12` przyjmuje tylko wartości z katalogu FA(3), wrażliwe na wielkość liter i spacje. Samo `0` nie istnieje, trzeba podać wariant (`0 KR`, `0 WDT`, `0 EX`), spacja w `0 KR` jest obowiązkowa, a `zw` pisze się małymi literami.
@@ -237,6 +251,8 @@ Wartość `oo` (odwrotne obciążenie) dotyczy wyłącznie transakcji krajowych.
   href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
   label="Broszura informacyjna FA(3), opis pola P_12 (stawki podatku)"
 />
+
+Więcej o tym błędzie: [Nieprawidłowa stawka VAT w P_12: co wpisać](/validator/nieprawidlowa-stawka-vat-p12).
 
 ## 9. Zła identyfikacja zagranicznego nabywcy
 
@@ -296,6 +312,8 @@ Formuła: **P_15 = suma wszystkich P_13_x + suma wszystkich P_14_x**, czyli P_13
 </XmlExample>
 
 Walidator [ksefuj.to](/validator) toleruje różnicę do 1 grosza (0.01) przy porównywaniu sum.
+
+Więcej o tym błędzie: [Błąd kalkulacji VAT: P_14 lub P_15 się nie zgadza](/validator/blad-kalkulacji-vat-p14-p15).
 
 ## 11. Niekompletne Adnotacje
 
@@ -383,6 +401,8 @@ W `Fa` pole **P_6 i element OkresFa wykluczają się** (`xs:choice` w XSD). Zaka
 ## Co dalej
 
 Plik z błędem możesz wrzucić na [ksefuj.to](/validator), a walidator wskaże każdy z powyższych problemów po polsku; plik nie opuszcza przeglądarki. Jeśli dopiero zaczynasz, zacznij od [poradnika po pierwszej fakturze](/guides/pierwsza-faktura-fa3), a przy migracji ze starego formatu od [różnic FA(2) i FA(3)](/blog/fa2-vs-fa3-ksef).
+
+Błędy spoza tej listy też mają osobne opisy, np. [XML nie jest poprawnie sformatowany](/validator/xml-nie-jest-poprawnie-sformatowany) albo [błędny numer rachunku bankowego](/validator/bledny-numer-rachunku-bankowego).
 
 <Source
   href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
