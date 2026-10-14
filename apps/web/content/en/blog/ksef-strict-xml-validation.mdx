@@ -81,6 +81,8 @@ On TEST, a file with such an instruction or character is rejected rather than ju
 
 You can also check files yourself: look for `<?` after the declaration at the start of the file, a BOM at the very beginning, and characters from the list in text fields. Drop a file into [ksefuj.to](/en/validator) to check whether it contains such elements. Our validator flags processing instructions, a BOM, encodings other than UTF-8 and discouraged characters, and the file never leaves your browser.
 
+If the validator instead reports that the file is not valid XML at all (for example a closing tag is missing or there's a raw `&` in the text), that's a different error. See [XML is not well-formed](/en/validator/malformed-xml-invoice).
+
 ## How to fix it
 
 - **Processing instructions:** remove `<?xml-stylesheet ...?>` and any other `<?...?>` instruction from the generated file. Keep any visualisation outside the invoice file.
