@@ -1,0 +1,130 @@
+---
+title: "PDF inny niż XML w KSeF: co jest fakturą"
+description: "W KSeF fakturą jest XML z numerem KSeF, a PDF według MF ma być z nim spójny. Czy rozbieżny PDF to „pusta faktura”, MF nie wyjaśniło. Błąd XML naprawia korekta."
+date: 2026-10-15
+section: blog
+locale: pl
+slug: "pusta-faktura-pdf-xml"
+topic: "invoicing"
+tags: ["KSeF", "Faktura", "VAT"]
+translations:
+  pl: "pusta-faktura-pdf-xml"
+  en: "pdf-different-from-xml-ksef"
+  uk: "pdf-ne-zbigayetsya-z-xml-ksef"
+related:
+  - blog/faktura-korygujaca-ksef
+  - guides/jak-odebrac-fakture-ksef
+  - blog/falszywe-faktury-ksef
+sources:
+  - label: "Podręcznik KSeF 2.0, cz. II (06.08.2026), pkt 1.1, 1.6.1–1.6.6, 1.8, 2.13, 3.2.3, 4.1, 5.1–5.7, 6.2, 6.3"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "Ustawa o VAT (Dz.U. 2026 poz. 1263), art. 106gb, 106na, 108, 145m, 145n"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  - label: "MF, Pytania i odpowiedzi KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/"
+  - label: "Podręcznik użytkownika Aplikacji Podatnika KSeF 2.0 (06.08.2026), s. 21"
+    url: "https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
+  - label: "MF, oficjalny generator wizualizacji faktur (GitHub)"
+    url: "https://github.com/CIRFMF/ksef-pdf-generator"
+---
+
+Gdy wystawiasz fakturę w KSeF, fakturą jest plik XML FA(3), któremu system nadał numer KSeF, a PDF wysłany kontrahentowi mailem jest jego wizualizacją, która według MF musi być spójna z XML i nie może mu przeczyć. W materiałach MF, które przejrzeliśmy, nie ma natomiast odpowiedzi, czy PDF różniący się od XML to „pusta faktura”, który dokument przeważa przy rozbieżności ani jaki skutek podatkowy ma taka niezgodność.
+
+Stan prawny na 15 października 2026.
+
+## Co jest fakturą, a co wizualizacją
+
+Podręcznik KSeF definiuje fakturę ustrukturyzowaną jako fakturę wystawioną przy użyciu KSeF wraz z przydzielonym numerem, w formacie XML. Sam numer KSeF nie jest częścią pliku: struktura FA(3) nie ma na niego pola, system zwraca go w UPO. Dlatego numer i kod QR widzisz na wydruku, ale nie w XML.
+
+Fakturę przekazaną poza systemem (np. PDF w mailu albo wydruk) MF opisuje jako fakturę „wydaną w sposób uzgodniony lub użytą poza KSeF”. Wymagania są trzy: spójność z plikiem XML, czytelność i brak sprzeczności z treścią XML. Wizualizacja może mieć dodatkowe elementy bez znaczenia systemowego, np. logo czy kontakt do działu obsługi klienta, a nawet być w innym języku niż XML. Liczy się zgodność merytoryczna.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. II, pkt 1.1, 1.6.5 i 4.1"
+/>
+
+Nabywca krajowy z NIP-em wpisanym w polu NIP dostaje fakturę w KSeF, a za datę jej otrzymania uznaje się dzień nadania numeru KSeF (art. 106na ust. 3 ustawy o VAT). Sprzedawcy objęci obowiązkiem nie wydają takim nabywcom faktur poza systemem. Po nadaniu numeru KSeF mogą im przekazać wizualizację faktury z kodem QR, a przed jego nadaniem jedynie potwierdzenie transakcji, które według MF nie jest dokumentem podatkowym. Jak znaleźć fakturę po stronie odbiorcy, opisujemy w poradniku [jak odebrać fakturę w KSeF](/guides/jak-odebrac-fakture-ksef).
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. II, pkt 1.6.6, 5.1 i 6.2"
+/>
+
+## Czego MF nie rozstrzygnęło
+
+Pani Krystyna prowadzi księgi kilkunastu firm. Klient przysyła jej PDF na 1 230,00 zł, a w KSeF pod tym samym numerem faktury jest XML na 1 320,00 zł. W materiałach MF, które przejrzeliśmy, nie znaleźliśmy odpowiedzi na pytania, które wtedy padają:
+
+- czy rozbieżny PDF jest „pustą fakturą” albo drugą fakturą,
+- który dokument przeważa, gdy treść się różni,
+- czy nabywca może odliczyć VAT z kwot widocznych na PDF,
+- czy za niezgodną wizualizację grozi kara.
+
+MF mówi wprost jedno: faktura przyjęta z numerem KSeF jest pełnoprawną fakturą i rodzi obowiązek zapłaty podatku (art. 108 ustawy o VAT), a błąd naprawia się niezwłocznie korektą „do zera”. Ten fragment Podręcznika dotyczy faktur testowych wysłanych przez pomyłkę na produkcję. To, że tak samo jest z innymi błędami w XML, to nasz wniosek, nie stanowisko MF. Jeśli rozbieżność dotyczy kwot, które już zaksięgowałeś lub odliczyłeś, skonsultuj sprawę z doradcą podatkowym.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. II, pkt 3.2.3"
+/>
+
+## Kiedy odpowiedź wygląda inaczej
+
+### Nabywca bez NIP-u albo z zagranicy
+
+Konsument, podmiot bez NIP-u, firma zagraniczna i podatnik UE w procedurze SME (art. 106gb ust. 4) dostają fakturę w sposób uzgodniony ze sprzedawcą, np. jako PDF; ustawa nie określa formy. Taka faktura musi mieć kod QR, a za datę otrzymania uznaje się dzień, w którym nabywca faktycznie ją dostał (art. 106na ust. 4). Wymóg spójności z XML obejmuje też ją, bo punkt Podręcznika dotyczy wprost faktury „wydanej w sposób uzgodniony”. Szczegóły w tekście o [fakturze dla osoby prywatnej](/blog/faktura-dla-osoby-prywatnej-ksef).
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. II, pkt 1.6.5, 5.1 i 5.3.1"
+/>
+
+### Faktura wystawiona offline
+
+Faktura offline, jeszcze bez numeru KSeF, ma dwa kody QR: „OFFLINE” i „CERTYFIKAT”. Nabywca z NIP-em, dopóki faktura nie ma numeru KSeF, może dostać tylko potwierdzenie transakcji, a samą fakturę otrzyma w KSeF. Wyjątkiem jest tryb awaryjny (art. 106nf): wtedy faktura z dwoma kodami QR trafia do nabywcy poza KSeF. Przekazanie mu faktury offline24 poza KSeF przed jej wysłaniem MF nazywa „działaniem nieprawidłowym sprzedawcy”; nabywca nabywa wtedy prawo do odliczenia w dacie faktycznego otrzymania dokumentu. Więcej o trybie offline w poradniku [awaria KSeF i tryb offline](/guides/awaria-ksef-offline).
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. II, pkt 1.6.5, 1.6.6 i 1.8"
+/>
+
+### Sprzedawca jeszcze poza KSeF
+
+Do 31 grudnia 2026 r. sprzedawca mieszczący się w limicie 10 000 zł (art. 145m) albo wystawiający faktury z kasy fiskalnej (art. 145n) może wystawić fakturę poza KSeF. Wtedy faktura (papierowa, elektroniczna, np. PDF, albo wydruk z kasy) jest zwykłą fakturą, a nie wizualizacją, i nie ma żadnego XML, z którym trzeba by go porównywać.
+
+<Source
+  href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  label="Ustawa o VAT (Dz.U. 2026 poz. 1263), art. 145m i 145n"
+/>
+
+## Jak poprawić rozbieżność
+
+Faktury z numerem KSeF nie da się edytować, anulować ani usunąć, a noty korygujące nie funkcjonują od 1 lutego 2026 r. **Jeśli błąd jest w XML, sprzedawca wystawia fakturę korygującą**, w której kwoty podaje się jako różnicę względem faktury pierwotnej. Nowy PDF z poprawionymi kwotami tego nie zastąpi. Przy pomylonym nabywcy jest to korekta „do zera” i nowa faktura. Jak to zrobić krok po kroku, opisujemy w tekście o [fakturze korygującej w KSeF](/blog/faktura-korygujaca-ksef).
+
+Nabywca nie odrzuci błędnej faktury w KSeF, bo system nie ma takiej opcji, a spory rozstrzyga się poza nim. W sprawie błędnych kwot może poprosić sprzedawcę o korektę. KSeF nie sprawdza też obliczeń, więc XML z błędną kwotą VAT dostaje numer tak samo jak poprawny.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. II, pkt 1.6.1–1.6.4, 2.13 i 6.3"
+/>
+
+Jeśli XML jest poprawny, a pomylił się tylko PDF, MF nie opisuje, co zrobić. Nasza rada: wyślij nabywcy nową wizualizację wygenerowaną z XML zapisanego w KSeF i poinformuj, że poprzedni plik był błędny.
+
+## Jak sprawdzić, czy PDF zgadza się z KSeF
+
+Kod QR na fakturze (KOD I) zawiera m.in. datę wystawienia, NIP sprzedawcy i skrót SHA-256 pliku XML. Po zeskanowaniu widzisz podstawowe dane faktury z KSeF albo informację, że takiej faktury w systemie nie ma. W drugim kroku podajesz numer faktury (P_2), identyfikator podatkowy nabywcy i kwotę należności ogółem (P_15) i pobierasz XML lub PDF bez logowania. Kilka błędnych prób powoduje czasową blokadę. Bez kodu QR fakturę otworzysz anonimowo w Aplikacji Podatnika: potrzebujesz numeru KSeF, P_2, identyfikatora i nazwy nabywcy oraz P_15.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. II, pkt 5.2, 5.4.1, 5.4.3, 5.5 i 5.7"
+/>
+
+Z zawartości kodu wyciągamy dwa wnioski (nasze, nie MF). Kod wygenerowany z innego pliku niż ten w KSeF nie powinien prowadzić do faktury. **Kod nie zawiera kwot, więc sam nie porówna tego, co widać na PDF, z XML.** Uważaj w drugim kroku: system pyta o P_15 z faktury w KSeF, więc kwota przepisana z błędnego PDF może nie zadziałać, a kolejne próby zablokują dostęp. Jeśli masz NIP, prościej zalogować się do KSeF i otworzyć fakturę tam, a potem porównać ją z PDF pole po polu.
+
+## Dla developerów: jeden XML, jedno źródło PDF
+
+Marek utrzymuje ERP, w którym XML do KSeF buduje jeden moduł, a PDF drukuje stary szablon czytający dane prosto z bazy. Każda zmiana w jednym miejscu bez zmiany w drugim daje rozbieżność. Bezpieczniej generować wizualizację z tego samego pliku XML, który dostał numer KSeF, i dopiero po otrzymaniu UPO dodać numer KSeF i kod QR.
+
+MF nie zaleca wysyłania do KSeF XML z danymi podstawowymi i trzymania terminu płatności czy numeru rachunku tylko na wizualizacji. Te dane mają miejsce w strukturze FA(3): `Platnosc`, `Rozliczenie`, `WarunkiTransakcji`, `DodatkowyOpis`. Adnotacje umieszczasz na wizualizacji tylko wtedy, gdy występują (np. `P_16` = 1 oznacza „metodę kasową”); braku adnotacji nie trzeba opisywać. MF udostępnia też własny generator wizualizacji na GitHubie, ale w materiałach MF nie znaleźliśmy wymogu korzystania z niego.
+
+<Source href="https://github.com/CIRFMF/ksef-pdf-generator" label="CIRFMF/ksef-pdf-generator" />
+
+Jeśli PDF od kontrahenta nie zgadza się z fakturą w KSeF, otwórz fakturę w KSeF i poproś sprzedawcę o [fakturę korygującą](/blog/faktura-korygujaca-ksef).
