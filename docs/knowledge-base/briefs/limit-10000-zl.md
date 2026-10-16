@@ -302,11 +302,18 @@ See **Critical Discrepancy** section.
   settlement method).
 - **Confidence:** HIGH (the VAT/PIT independence is a fundamental and settled point of Polish tax
   law, not specific to KSeF)
-- **Implication:** "Jestem na ryczałcie" is NOT a reason to be exempt from KSeF. Only being on VAT
-  exemption (not registered as czynny podatnik VAT) creates the exclusion.
-- **⚠️ NOTE:** "Rolnik ryczałtowy" (flat-rate VAT farmer) is a DIFFERENT concept under Art. 43 ust.
-  1 pkt 3 — they are excluded from KSeF for agricultural product sales. FAQ
-  `limity-i-wylaczenia.mdx` confirms this separately.
+- **Implication:** "Jestem na ryczałcie" is NOT a reason to be exempt from KSeF. ~~Only being on VAT
+  exemption (not registered as czynny podatnik VAT) creates the exclusion.~~ **INCORRECT
+  (2026-10-16):** VAT exemption is not an exclusion either; FAQ KSeF 2.0 Q10: „każdy podatnik
+  (czynny i zwolniony), który ma obowiązek wystawienia faktury, będzie wystawiał ją w KSeF".
+- **⚠️ NOTE:** "Rolnik ryczałtowy" (flat-rate VAT farmer) is a DIFFERENT concept from PIT ryczałt.
+  ~~They are excluded from KSeF for agricultural product sales under Art. 43 ust. 1 pkt 3.~~
+  **UNVERIFIED / INCORRECT (2026-10-16):** the only source was our own FAQ (circular). Art. 43 ust.
+  1 pkt 3 is a VAT exemption for the supply, not a KSeF exclusion, and art. 106ga ust. 2 does not
+  name farmers. What applies: art. 117 frees the farmer from issuing invoices (a rachunek is
+  allowed, Podręcznik KSeF 2.0 cz. II §1.3), and VAT RR invoices issued by the buyer (art. 116) are
+  optional in KSeF from 2026-04-01. See `limity-i-wylaczenia.md` and the FAQ answer „Czy rolnik
+  ryczałtowy musi korzystać z KSeF?".
 
 ---
 
@@ -446,8 +453,10 @@ For the article's "Źródła" footer:
 3. **"Jestem na ryczałcie, więc KSeF mnie nie dotyczy"** — WRONG. "Ryczałt" in common speech often
    refers to ryczałt ewidencjonowany — a PIT (income tax) settlement method. It is entirely separate
    from VAT status. A JDG on ryczałt PIT who is registered as czynny podatnik VAT is subject to the
-   KSeF obligation. Only "rolnik ryczałtowy" (flat-rate VAT farmer) has a separate exclusion — and
-   only for agricultural product sales under a specific VAT regime.
+   KSeF obligation. ~~Only "rolnik ryczałtowy" (flat-rate VAT farmer) has a separate exclusion, and
+   only for agricultural product sales under a specific VAT regime.~~ **UNVERIFIED / INCORRECT
+   (2026-10-16):** no KSeF exclusion for farmers exists in art. 106ga ust. 2; see the Fact 5.1 note
+   above and `limity-i-wylaczenia.md`.
 
 4. **"Poniżej 10 000 zł miesięcznie znaczy, że w ogóle nie muszę się przygotowywać"** — DANGEROUS
    REASONING. The exemption expires 31 December 2026. Any JDG below the threshold today must

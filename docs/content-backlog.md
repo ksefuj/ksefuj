@@ -19,13 +19,14 @@ what is not yet settled.
 
 ## Next up
 
-- [ ] **UPDATE** FAQ `limity-i-wylaczenia` (all locales), remaining entries: „Od kiedy obowiązuje
-      mnie KSeF jeśli jestem poniżej limitu?" says the date „zależy od statusu VAT" and gives no
-      date; czynni and zwolnieni share one schedule, and below 10 000 zł/month invoices may stay
-      outside KSeF until 31.12.2026 (art. 145m), mandatory from 1.01.2027. „Fundacja lub
-      stowarzyszenie" opens with „zależy od tego, czy … czynny podatnik VAT" (VAT-exempt ones are in
-      scope too) and omits art. 145m. „Kto jest zwolniony z KSeF?" omits invoices to private persons
-      (art. 106ga ust. 2 pkt 4). UK file still uses formal ви (STYLE.md: ти) (source:
+- [x] **UPDATE** FAQ `limity-i-wylaczenia` (in review: branch `content/limity-i-wylaczenia`) (all
+      locales), remaining entries: „Od kiedy obowiązuje mnie KSeF jeśli jestem poniżej limitu?" says
+      the date „zależy od statusu VAT" and gives no date; czynni and zwolnieni share one schedule,
+      and below 10 000 zł/month invoices may stay outside KSeF until 31.12.2026 (art. 145m),
+      mandatory from 1.01.2027. „Fundacja lub stowarzyszenie" opens with „zależy od tego, czy …
+      czynny podatnik VAT" (VAT-exempt ones are in scope too) and omits art. 145m. „Kto jest
+      zwolniony z KSeF?" omits invoices to private persons (art. 106ga ust. 2 pkt 4). UK file still
+      uses formal ви (STYLE.md: ти) (source:
       https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/, Q10)
 - [x] **UPDATE** `falszywe-faktury-ksef` (in review: branch `content/falszywe-faktury-ksef`): said
       the right to deduct arises in the period the invoice is entered in the records (art. 86 ust.

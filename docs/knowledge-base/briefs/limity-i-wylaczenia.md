@@ -6,7 +6,8 @@ rolnik ryczałtowy musi korzystać z KSeF?" in `apps/web/content/pl/faq/limity-i
 **Provenance:** built only from the repo knowledge base (baseline
 `docs/knowledge-base/WATCHLIST.md`, last checked 2026-10-07: VAT Act consolidated text Dz.U. 2026
 poz. 1263; Podręcznik KSeF 2.0 editions of 2026-08-06). A live check of ksef.podatki.gov.pl on
-2026-10-13 returned proxy 403, so no official source was fetched in this run.
+2026-10-13 returned proxy 403, so no official source was fetched in this run. All four sources were
+then fetched live on 2026-10-16; see „Live verification (2026-10-16)" at the end.
 
 **Target query:** „rolnik ryczałtowy KSeF"
 
@@ -69,16 +70,15 @@ page „Podstawy prawne oraz kluczowe terminy").
 
 ## NOT supported by the KB (UNVERIFIED, do not state as fact)
 
-1. **Who issues VAT RR and on what basis (art. 116).** Art. 116 is not quoted anywhere in the KB.
-   „Issued by the buyer" appears only in our own content (current FAQ, blog line 128) and in the
-   backlog note, not in an MF extract. Phrase it as MF does („faktury VAT RR … dobrowolnie") or cite
-   the blog's MF source; do not cite art. 116.
-2. **„Rolnik ryczałtowy is excluded from KSeF" / „art. 43 ust. 1 pkt 3".** `limit-10000-zl.md` Fact
-   5.1 note and misconception 3 claim this; their source is our own FAQ (`limity-i-wylaczenia.mdx`),
-   i.e. circular. Already flagged in `faktura-dla-osoby-prywatnej-ksef.md` fact 11. Text of art. 43
-   ust. 1 pkt 3 is not in the KB.
-3. **Definition of rolnik ryczałtowy (art. 2 pkt 19) and conditions of art. 117** (who is „zwolniony
-   z obowiązku fakturowania"): not in the KB.
+1. ~~**Who issues VAT RR and on what basis (art. 116).**~~ RESOLVED 2026-10-16, see „Live
+   verification" below: art. 116 ust. 1, issued by the buyer registered as czynny podatnik VAT.
+2. **„Rolnik ryczałtowy is excluded from KSeF" / „art. 43 ust. 1 pkt 3".** INCORRECT (2026-10-16).
+   `limit-10000-zl.md` Fact 5.1 note and misconception 3 claimed this from our own FAQ (circular);
+   both are now struck through there. Art. 43 ust. 1 pkt 3 (read live) exempts from VAT „dostawę
+   produktów rolnych dokonywaną przez rolnika ryczałtowego oraz świadczenie usług rolniczych przez
+   rolnika ryczałtowego"; it is a VAT exemption, not a KSeF exclusion.
+3. **Definition of rolnik ryczałtowy (art. 2 pkt 19):** still not extracted. Art. 117 is now
+   verified (see below).
 4. **Farmer with other business activity / VAT registration keeps or loses flat-rate status:** not
    in the KB. Current FAQ only says „skonsultuj się z księgowym"; keep that.
 5. **Rolnik ryczałtowy as a buyer** (does he get KSeF invoices, NIP vs consumer): not in the KB
@@ -112,7 +112,7 @@ page „Podstawy prawne oraz kluczowe terminy").
 - Rolnik ryczałtowy (VAT regime) ≠ ryczałt ewidencjonowany (PIT); see `limit-10000-zl.md`
   misconception 3 (the PIT part is fine, the farmer-exclusion part is UNVERIFIED).
 
-## URLs not fetched live (2026-10-13, proxy 403 confirmed on the first)
+## URLs not fetched live on 2026-10-13 (proxy 403; all fetched on 2026-10-16, see below)
 
 - https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/podstawy-prawne-oraz-kluczowe-terminy/
 - https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20
@@ -120,3 +120,42 @@ page „Podstawy prawne oraz kluczowe terminy").
 - https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf
 
 All facts above rest on the KB as verified up to 2026-10-07.
+
+## Live verification (2026-10-16)
+
+All four URLs above were fetched live on 2026-10-16.
+
+- **Podstawy prawne oraz kluczowe terminy** (section „Faktury VAT RR"): „Fakultatywne wystawianie
+  faktur VAT RR i faktur VAT RR KOREKTA w KSeF będzie możliwe od 1 kwietnia 2026 r." CONFIRMED. Same
+  page: „Faktury na rzecz osób fizycznych nieprowadzących działalności gospodarczej mogą być
+  wystawiane w KSeF dobrowolnie"; the art. 106s regulation is listed as Dz. U. z 2025 r. poz. 1742
+  („w sprawie przypadków, w których nie ma obowiązku wystawiania faktur ustrukturyzowanych").
+- **Pytania i odpowiedzi KSeF 2.0**, section „Zasady obowiązywania KSeF i przepisy prawne":
+  - Q10: „Forma prawna nie ma znaczenia. Co do zasady każdy podatnik (czynny i zwolniony), który ma
+    obowiązek wystawienia faktury, będzie wystawiał ją w KSeF — zgodnie z etapami: 1.02.2026 r.
+    (duże podmioty) i 1.04.2026 r. (reszta)." CONFIRMED.
+  - Q12: „Nabywca (podatnik VAT) wystawi fakturę VAT RR w KSeF tylko wtedy, gdy rolnik ryczałtowy
+    złoży w systemie oświadczenie, że jest rolnikiem ryczałtowym i wskaże tego nabywcę jako
+    uprawnionego. Jeśli rolnik nie złoży oświadczenia w KSeF, faktura VAT RR będzie wystawiona poza
+    systemem."
+  - Q5: „Obowiązek stosowania KSeF obejmie kwiaciarkę od 1 stycznia 2027 r." (sales under 10 000
+    zł).
+  - Q17: „Jeśli w drugim miesiącu przekroczy limit, to wystawia już w KSeF tę fakturę, którą
+    przekroczył limit oraz wszystkie kolejne faktury."
+- **Podręcznik KSeF 2.0 cz. II** (edition „Warszawa, sierpień 2026 r.", stan prawny na 1 lutego
+  2026), §1.3 „Brak możliwości wystawienia rachunku przez podatnika korzystającego ze zwolnienia",
+  p. 13: rachunki mogą być wystawione „przez rolników ryczałtowych zwolnionych z obowiązku
+  wystawiania faktur na podstawie art. 117 ustawy o VAT." CONFIRMED.
+- **Ustawa o VAT, Dz.U. 2026 poz. 1263** (tekst jednolity, stan na 26.08.2026):
+  - Art. 117: „Rolnik ryczałtowy w zakresie prowadzonej działalności rolniczej dostarczający
+    produkty rolne jest zwolniony z obowiązku: 1) wystawiania faktur; …" CONFIRMED.
+  - Art. 116 ust. 1: „Podatnik zarejestrowany jako podatnik VAT czynny nabywający produkty rolne od
+    rolnika ryczałtowego wystawia w dwóch egzemplarzach fakturę dokumentującą nabycie tych
+    produktów."
+  - Art. 106ga ust. 2 pkt 1–6: no seat/fixed establishment (pkt 1, 2); special procedures of dział
+    XII rozdz. 7 (procedura nieunijna), 7a (okazjonalny międzynarodowy przewóz drogowy osób) and 9
+    (import, IOSS) (pkt 3; the union OSS procedure, rozdz. 6a, is NOT listed); private-person buyer
+    (pkt 4); art. 106s regulation (pkt 5); art. 113a (pkt 6). No mention of rolnik ryczałtowy.
+    CONFIRMED.
+  - Art. 145m ust. 1–2: 1.04.2026–31.12.2026, ≤ 10 000 zł gross per month; the right is lost
+    „począwszy od faktury, którą przekroczono wartość".
