@@ -1,0 +1,135 @@
+---
+title: "PDF doesn't match the XML in KSeF: what counts"
+description: "In KSeF the invoice is the XML with a KSeF number, and MF says the PDF must match it. MF hasn't said what a mismatch means. XML errors need a correction."
+date: 2026-10-15
+section: blog
+locale: en
+slug: "pdf-different-from-xml-ksef"
+topic: "invoicing"
+tags: ["KSeF", "Invoice", "VAT"]
+translations:
+  pl: "pusta-faktura-pdf-xml"
+  en: "pdf-different-from-xml-ksef"
+  uk: "pdf-ne-zbigayetsya-z-xml-ksef"
+sources:
+  - label: "KSeF 2.0 Manual (Podręcznik KSeF 2.0), Part II (06.08.2026), sections 1.1, 1.6.1–1.6.6, 1.8, 2.13, 3.2.3, 4.1, 5.1–5.7, 6.3"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "Polish VAT Act (Dz.U. 2026 poz. 1263), Art. 2(32a), 88(3a), 106gb, 106j, 106na, 106nf, 108, 145m, 145n"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  - label: "MF, KSeF 2.0 questions and answers (Pytania i odpowiedzi KSeF 2.0)"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/"
+  - label: "Aplikacja Podatnika KSeF 2.0 user manual (06.08.2026), pp. 19–21"
+    url: "https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
+  - label: "MF, official invoice visualisation generator (GitHub)"
+    url: "https://github.com/CIRFMF/ksef-pdf-generator"
+---
+
+When you issue an invoice in KSeF (Krajowy System e-Faktur, Poland's National e-Invoicing System), the invoice is the FA(3) XML file the system assigned a KSeF number to, and the PDF you email to your customer is a visualisation of it, which the Ministry of Finance (MF) says must be consistent with the XML and must not contradict it. The MF materials we reviewed do not say whether a PDF that differs from the XML is a "pusta faktura" (literally an "empty invoice": an invoice for a transaction that did not take place), which document prevails when they disagree, or what tax consequences such a mismatch has.
+
+Legal status as of 15 October 2026.
+
+## What is the invoice and what is the visualisation
+
+The VAT Act defines a structured invoice as an invoice "issued using the National e-Invoicing System together with the assigned number identifying that invoice in the system" (Art. 2(32a)). The KSeF Manual adds that it takes the form of an XML file. The KSeF number itself is not part of the file: the FA(3) structure has no field for it, and the system returns it in the UPO (the official receipt confirmation). That is why you see the number and the QR code on the printout but not in the XML. In its Q&A, MF says plainly: "From a formal point of view, the document is the XML format of the invoice."
+
+MF describes an invoice handed over outside the system (for example a PDF by email, or a printout) as an invoice "issued in the agreed manner or used outside KSeF". There are three requirements: consistency with the XML file, legibility, and no contradiction with the XML content. The visualisation may carry extra elements with no meaning for the system, such as a logo or customer service contact details, and may even be in a different language from the XML. According to MF, it must reflect the data in KSeF in substance, "so as not to mislead as to the terms of the transaction" whoever receives it.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="KSeF 2.0 Manual, Part II, sections 1.1, 1.6.5 and 4.1"
+/>
+
+A domestic buyer whose NIP (Polish tax identification number) is entered in the NIP field receives the invoice in KSeF, and the date of receipt is the day the KSeF number is assigned (Art. 106na(3) of the VAT Act). For that buyer the PDF is an extra: once the number is assigned, the seller may send a printout or PDF with a QR code and the KSeF number; before that, only a transaction confirmation, which MF says is not a tax document. MF notes that email and other channels have "only an auxiliary, technical and organisational role" for such a buyer, and the law does not require sending them a visualisation. Our guide to [receiving invoices in KSeF](/en/guides/receiving-invoices-in-ksef) explains how the buyer finds the invoice.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="KSeF 2.0 Manual, Part II, sections 1.6.6 and 5.1"
+/>
+
+## What MF hasn't settled
+
+Pani Krystyna keeps the books for a dozen or so companies. A client sends her a PDF for PLN 1,230.00, while KSeF holds an XML for PLN 1,320.00 under the same invoice number. In the MF materials we reviewed, we found no answer to the questions that come up at that point:
+
+- whether the mismatched PDF is an "empty invoice" or a second invoice,
+- whether the XML prevails when they conflict (MF says the formal document is the XML, but doesn't apply that explicitly to a visualisation that contradicts it),
+- whether the buyer may deduct VAT based on the amounts shown on the PDF,
+- whether an inconsistent visualisation carries a penalty.
+
+The VAT Act does not use the term "pusta faktura". Two provisions come closest. Art. 88(3a)(4) denies the right to deduct from invoices that "state transactions which were not performed" (point a) or "give amounts that do not reflect reality" (point b), in the part concerned. Art. 108(1) obliges anyone who "issues an invoice showing an amount of tax" to pay it, and Art. 108(2) applies the same to tax shown higher than the tax due. Both provisions speak of invoices. Neither the Act nor MF says whether a PDF that contradicts the XML is an invoice for their purposes.
+
+MF links Art. 108 to KSeF in one place: a test invoice sent to production by mistake and accepted with a KSeF number is "a fully valid invoice which in fact documents no transaction", and this may result in an obligation to pay the tax. MF says to issue a correction "to zero" without delay. That the same applies to other errors in the XML is our conclusion, not MF's position. If the mismatch involves amounts you have already booked or deducted, talk to a tax adviser.
+
+<Source
+  href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  label="Polish VAT Act (Dz.U. 2026 poz. 1263), Art. 88(3a)(4) and Art. 108"
+/>
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="KSeF 2.0 Manual, Part II, section 3.2.3"
+/>
+
+## When the answer is different
+
+### Buyer without a NIP or from abroad
+
+A consumer, an entity without a NIP, a foreign company and an EU taxpayer using the SME scheme (Art. 106gb(4)) receive the invoice "in the manner agreed with them", for example as a PDF; the Act does not prescribe the form, and MF says sellers have "freedom" here. An invoice given to such a buyer outside KSeF must carry a QR code (Art. 106gb(5)), and the date of receipt is the day the buyer actually received it (Art. 106na(4)). The consistency requirement covers it too, because the Manual section explicitly refers to an invoice "issued in the agreed manner". Details in our post on [invoices for private individuals](/en/blog/invoice-for-private-person-ksef).
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="KSeF 2.0 Manual, Part II, sections 1.6.5, 5.1 and 5.3.1"
+/>
+
+### Invoice issued offline
+
+An offline invoice that does not yet have a KSeF number carries two QR codes: "OFFLINE" and "CERTYFIKAT". In offline24 mode and when KSeF is unavailable, a buyer with a NIP may receive only a transaction confirmation until the invoice has a number, and gets the invoice itself in KSeF. Emergency mode (Art. 106nf) works differently: the invoice is made available to every buyer "in the manner agreed with them". If the buyer agreed to receive it outside KSeF, they get the invoice with both QR codes; if in KSeF, the seller may additionally give them a transaction confirmation.
+
+MF calls handing an offline24 invoice to a buyer with a NIP outside KSeF before it has been submitted "incorrect conduct on the part of the seller". According to MF, the buyer then holds "a document other than an invoice issued in accordance with Art. 106nda", but may deduct VAT from it on the date they actually received it. Our guide to [KSeF outages and offline mode](/en/guides/ksef-outage-offline-mode) covers offline mode in more detail.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="KSeF 2.0 Manual, Part II, sections 1.6.5, 1.6.6 and 1.8"
+/>
+
+### Seller not yet in KSeF
+
+Until 31 December 2026, a seller may issue invoices outside KSeF if the sales documented by them in a given month do not exceed PLN 10,000 including tax (Art. 145m), or when issuing them using a cash register (Art. 145n). In that case the invoice (paper, electronic such as a PDF, or a cash register printout) is an ordinary invoice rather than a visualisation, and there is no XML to compare it with.
+
+<Source
+  href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  label="Polish VAT Act (Dz.U. 2026 poz. 1263), Art. 145m and 145n"
+/>
+
+## How to fix a mismatch
+
+An invoice with a KSeF number cannot be edited, cancelled or deleted, and correction notes (noty korygujące) have not been available since 1 February 2026. **If the error is in the XML, the seller issues a corrective invoice**, stating the amounts as the difference from the original invoice. A new PDF with corrected amounts does not replace it. If the wrong buyer was named, it takes a correction "to zero" and a new invoice. Our post on the [corrective invoice in KSeF](/en/blog/corrective-invoice-ksef) walks through it step by step.
+
+The buyer cannot reject an incorrect invoice in KSeF, because the system has no such option, and disputes are settled outside it. If an amount or any other item is wrong, the seller is obliged to issue a corrective invoice (Art. 106j(1)), so the buyer can ask for one. KSeF does not check the arithmetic either, so an XML with a wrong VAT amount gets a number just like a correct one.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="KSeF 2.0 Manual, Part II, sections 1.6.1–1.6.4, 2.13 and 6.3"
+/>
+
+If the XML is correct and only the PDF was wrong, MF does not say what to do. Our advice: send the buyer a new visualisation generated from the XML stored in KSeF and tell them the previous file was wrong.
+
+## How to check whether a PDF matches KSeF
+
+The QR code on the invoice (KOD I) contains the service address, the issue date (P_1), the seller's NIP and a SHA-256 hash of the XML file. It contains no amounts. Scanning it shows the invoice's basic data from KSeF, including whether the document in KSeF matches the one the code was generated for, or a message that no such invoice exists in the system. In the second step you enter the invoice number (P_2), the buyer's tax identifier and the total amount due (P_15), and download the XML or PDF without logging in. Several failed attempts in a row trigger a temporary block. Without a QR code, you can open the invoice anonymously in the Aplikacja Podatnika (MF's taxpayer app): you need the KSeF number, P_2, the buyer's identifier and name, and P_15.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="KSeF 2.0 Manual, Part II, sections 5.4.1, 5.4.3, 5.5 and 5.7"
+/>
+
+**The code on its own cannot compare what the PDF shows with the XML.** MF describes the check this way: the buyer downloads the invoice from KSeF and verifies that its data match the printout they received. Take care in the second step: the system asks for P_15 from the invoice in KSeF, so an amount copied from a wrong PDF may not work (our conclusion), and repeated attempts will lock you out. If you have a NIP, it is simpler to log in to KSeF, open the invoice there and compare it with the PDF field by field.
+
+## For developers: one XML, one source for the PDF
+
+Marek maintains an ERP in which one module builds the XML for KSeF, while an old template prints the PDF by reading data straight from the database. Any change in one place without a matching change in the other produces a mismatch. It is safer to generate the visualisation from the same XML file that received the KSeF number, and to add the KSeF number and QR code only once the UPO arrives.
+
+MF does not recommend sending KSeF an XML with only the basic data while keeping the payment due date or bank account number on the visualisation alone. That data has a place in the FA(3) structure: `Platnosc`, `Rozliczenie`, `WarunkiTransakcji`, `DodatkowyOpis`. Annotations go on the visualisation only when they apply (for example `P_16` = 1 means "metoda kasowa", cash accounting); you don't need to describe annotations that are absent. The issuer or integrator decides how the visualisation looks, and MF answers explicitly that it does not have to look like the Ministry's template. MF also publishes its own visualisation generator on GitHub, which you may use but don't have to.
+
+<Source href="https://github.com/CIRFMF/ksef-pdf-generator" label="CIRFMF/ksef-pdf-generator" />
+
+If a PDF from a supplier doesn't match the invoice in KSeF, open the invoice in KSeF and ask the seller for a [corrective invoice](/en/blog/corrective-invoice-ksef).

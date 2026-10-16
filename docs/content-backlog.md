@@ -107,8 +107,9 @@ what is not yet settled.
 - [x] `faktura-poza-ksef-odliczenie-vat` (in review: branch
       `content/faktura-poza-ksef-odliczenie-vat`) — Faktura wystawiona poza KSeF: co z odliczeniem
       VAT · „faktura poza KSeF odliczenie VAT" · K · FAQ
-- [ ] `pusta-faktura-pdf-xml` — PDF inny niż XML: ryzyko pustej faktury · „pusta faktura KSeF" · K,
-      M · official source UNVERIFIED · Strong validator fit.
+- [x] `pusta-faktura-pdf-xml` (in review: branch `content/pusta-faktura-pdf-xml`) — PDF inny niż
+      XML: ryzyko pustej faktury · „pusta faktura KSeF" · K, M · official source UNVERIFIED · Strong
+      validator fit.
 - [ ] `nota-korygujaca-ksef` — Nota korygująca a KSeF · „nota korygująca KSeF" · K · P2 · Frame as
       nota vs korekta; link `faktura-korygujaca-ksef`.
 - [ ] `usuniecie-faktury-ksef` — Czy można usunąć lub edytować fakturę w KSeF · „usunięcie faktury
