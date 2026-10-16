@@ -5,6 +5,23 @@ effect. Record the date, the page, what changed (old -> new for titles and descr
 metric that motivated it. After 28 days, add a **Results** line comparing current CTR/position with
 the baseline.
 
+## 2026-10-14
+
+Digest: `gsc-data` 2026-10-13 (GSC 2026-09-13 to 2026-10-10: 72 clicks, 8,687 impressions, CTR
+0.83%, avg position 6.4). No title or description changes: every page in the low-CTR list still has
+frontmatter `updated` within the last 28 days (2026-10-07/08).
+
+- **Pages:** `/blog/ksef-scisla-walidacja-xml`, `/en/blog/ksef-strict-xml-validation`
+  - **Change:** body only (title and description unchanged). One sentence at the end of „Jak
+    sprawdzić, czy Twoje pliki są dotknięte" / "How to find out whether your files are affected"
+    pointing readers whose file is not well-formed XML to
+    `/validator/xml-nie-jest-poprawnie-sformatowany` / `/en/validator/malformed-xml-invoice`.
+  - **Motivation:** `/validator/xml-nie-jest-poprawnie-sformatowany` is still "URL is unknown to
+    Google" and the health crawl found only 2 internal links to it (`/validator` and the FA(3)
+    errors post added on 2026-10-13). The strict-XML post is the closest topic match.
+  - **Baseline to compare:** URL Inspection state of the two validator pages (PL unknown to Google;
+    EN not in the not-indexed list).
+
 ## 2026-10-13
 
 Digest: `gsc-data` 2026-10-12 (GSC 2026-09-12 to 2026-10-09: 70 clicks, 8,869 impressions, CTR
