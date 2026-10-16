@@ -19,6 +19,11 @@ what is not yet settled.
 
 ## Next up
 
+- [ ] **UPDATE** `kary-ksef-2027-2028`: says „Odpowiedzi o odliczeniu nie mają ograniczenia w
+      czasie” (FAQ) without noting that Podręcznik KSeF 2.0 cz. II pkt 1.7 limits the deduction
+      position to February–December 2026 in its heading, so 2027 is open (source:
+      https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf,
+      pkt 1.7, heading: „w okresie od lutego do grudnia 2026 r.”)
 - [x] **UPDATE** FAQ `limity-i-wylaczenia` (in review: branch `content/limity-i-wylaczenia`) (all
       locales), remaining entries: „Od kiedy obowiązuje mnie KSeF jeśli jestem poniżej limitu?" says
       the date „zależy od statusu VAT" and gives no date; czynni and zwolnieni share one schedule,
@@ -99,8 +104,9 @@ what is not yet settled.
       dla osoby prywatnej KSeF" · A · FAQ, 10K
 - [x] `jak-odebrac-fakture-ksef` (in review: branch `content/jak-odebrac-fakture-ksef`) — Jak
       odebrać fakturę z KSeF · „jak odebrać fakturę w KSeF" · A · FAQ (art. 106gb ust. 4), P2
-- [ ] `faktura-poza-ksef-odliczenie-vat` — Faktura wystawiona poza KSeF: co z odliczeniem VAT ·
-      „faktura poza KSeF odliczenie VAT" · K · FAQ
+- [x] `faktura-poza-ksef-odliczenie-vat` (in review: branch
+      `content/faktura-poza-ksef-odliczenie-vat`) — Faktura wystawiona poza KSeF: co z odliczeniem
+      VAT · „faktura poza KSeF odliczenie VAT" · K · FAQ
 - [ ] `pusta-faktura-pdf-xml` — PDF inny niż XML: ryzyko pustej faktury · „pusta faktura KSeF" · K,
       M · official source UNVERIFIED · Strong validator fit.
 - [ ] `nota-korygujaca-ksef` — Nota korygująca a KSeF · „nota korygująca KSeF" · K · P2 · Frame as
