@@ -696,6 +696,13 @@ For the article's "Źródła" footer:
    legally valid invoice in B2B contexts once KSeF is mandatory. The legal document is the XML
    registered in KSeF. PDF can still be sent _in addition_ for convenience, but the XML in KSeF is
    the binding record.
+   - **Constitutional note (2026-10-16):** „the legal document is the XML" is our phrasing, not an
+     MF quote; MF says „Z formalnego punktu widzenia dokumentem jest format xml faktury" (MF FAQ
+     KSeF 2.0, „KSeF w JST" pyt. 40). „PDF is not a legally valid invoice" overstates it: the same
+     answer says a copy used outside KSeF with a QR code „może być dokumentem księgowym". Also
+     incomplete: until 31.12.2026 art. 145m (≤ 10 000 zł brutto per month) and art. 145n (kasa
+     rejestrująca) still allow paper/electronic invoices outside KSeF (Dz.U. 2026 poz. 1263, s.
+     193). See `pusta-faktura-pdf-xml.md` sections H7, H11.
 
 4. **"KSeF 2.0 używa formatu FA(2)"** — WRONG. FA(2) was the format for KSeF 1.0 (until 31 January
    2026). **KSeF 2.0 requires FA(3)** (from 1 February 2026). Any software still generating FA(2)
