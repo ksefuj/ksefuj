@@ -13,7 +13,7 @@ frontmatter `updated` within the last 28 days (2026-10-07/08).
 
 - **Pages:** `/blog/ksef-scisla-walidacja-xml`, `/en/blog/ksef-strict-xml-validation`
   - **Change:** body only (title and description unchanged). One sentence at the end of „Jak
-    sprawdzić, czy Twoje pliki są dotknięte" / "How to check whether your files are affected"
+    sprawdzić, czy Twoje pliki są dotknięte" / "How to find out whether your files are affected"
     pointing readers whose file is not well-formed XML to
     `/validator/xml-nie-jest-poprawnie-sformatowany` / `/en/validator/malformed-xml-invoice`.
   - **Motivation:** `/validator/xml-nie-jest-poprawnie-sformatowany` is still "URL is unknown to
