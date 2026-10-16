@@ -1,0 +1,73 @@
+---
+title: "Nota korygująca w KSeF: co zamiast niej"
+description: "Według MF od 1 lutego 2026 noty korygujące nie funkcjonują. Błąd zgłaszasz sprzedawcy, a on wystawia fakturę korygującą w KSeF."
+date: 2026-10-16
+section: blog
+locale: pl
+slug: "nota-korygujaca-ksef"
+topic: "invoicing"
+tags: ["KSeF", "Faktura", "VAT"]
+related:
+  - "blog/faktura-korygujaca-ksef"
+  - "guides/jak-odebrac-fakture-ksef"
+  - "blog/falszywe-faktury-ksef"
+sources:
+  - label: "Podręcznik KSeF 2.0, cz. II: wystawianie i otrzymywanie faktur (wyd. 6.08.2026)"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "Broszura informacyjna dotycząca struktury logicznej FA(3)"
+    url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "Struktura logiczna FA(3) (schemat XSD)"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/"
+translations:
+  pl: "nota-korygujaca-ksef"
+  en: "corrective-note-ksef"
+  uk: "koryguvalna-nota-ksef"
+---
+
+Według Ministerstwa Finansów od 1 lutego 2026 noty korygujące już nie funkcjonują, a faktury przesłanej do KSeF nie da się edytować, więc jedyną formą jej poprawienia jest faktura korygująca. Jeśli jako nabywca widzisz błąd w swojej nazwie czy adresie, w praktyce zgłaszasz go sprzedawcy, a sprzedawca wystawia korektę. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 1.6.2 i 6.3" />
+
+Stan prawny na 16 października 2026.
+
+## Co MF mówi o notach korygujących
+
+Zdanie o końcu not pochodzi z podręcznika KSeF 2.0 przygotowanego przez MF, z punktu o tym, że faktury przesłanej do systemu nie można edytować. To stanowisko ministerstwa w materiałach informacyjnych. Faktura z nadanym numerem KSeF weszła do obrotu prawnego: nie można jej anulować ani usunąć, a KSeF przechowuje ją przez 10 lat od końca roku wystawienia. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 1.6.3" />
+
+Nabywca nie ma też w KSeF przycisku „odrzuć”. System nie przewiduje zatwierdzania ani odrzucania faktur, a spory między stronami rozstrzyga się poza nim. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 6.1 i 6.3" /> Jak faktury trafiają do nabywcy, opisujemy w poradniku [jak odebrać fakturę w KSeF](/guides/jak-odebrac-fakture-ksef).
+
+## Co robi nabywca, gdy widzi błąd
+
+Ania prowadzi JDG i zamówiła wizytówki w drukarni. Na fakturze z KSeF jej firma ma nazwę „Ania Kowalska Desing” zamiast „Design”, a w adresie brakuje numeru lokalu. Do lutego 2026 pani Krystyna, jej księgowa, poradziłaby wystawić notę korygującą. Teraz Ania pisze do drukarni maila z poprawnymi danymi i prosi o fakturę korygującą.
+
+Poprawki wprowadza sprzedawca: instrukcje MF dotyczące błędów na fakturze są skierowane do wystawcy, a korekta to plik FA(3) wysłany do KSeF przez sprzedawcę (albo osobę z jego uprawnieniami). <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 1.6.2-1.6.4 i 2.13" />
+
+Jeśli faktura w ogóle nie jest Twoja, bo przyszła od firmy, z którą nie współpracujesz, to inna sytuacja. Co wtedy robić, piszemy w poście o [fałszywych fakturach w KSeF](/blog/falszywe-faktury-ksef).
+
+## Co wystawia sprzedawca
+
+Przy błędnej nazwie lub adresie nabywcy sprzedawca wystawia fakturę korygującą, w której podaje dane nabywcy sprzed korekty i dane poprawne. Błędny numer faktury też poprawia się korektą. <Source href="https://crd.gov.pl/wzor/2025/06/25/13775/" label="Struktura logiczna FA(3): Podmiot2K, NrFaKorygowany" />
+
+**Błędnego NIP nabywcy nie poprawia się na inny.** Faktura z cudzym NIP trafiła do firmy, która ma ten NIP, więc sprzedawca koryguje ją do zera i wystawia nową fakturę z prawidłowym NIP. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 1.6.4" /> Krok po kroku pokazujemy to w sekcji [korekta do zera przy pomylonym NIP](/blog/faktura-korygujaca-ksef#korekta-do-zera-gdy-nip-nabywcy-jest-pomylony).
+
+Ta sama zasada dotyczy faktury testowej wysłanej przez pomyłkę na środowisko produkcyjne. Przyjęta z numerem KSeF jest pełnoprawną fakturą i trzeba ją niezwłocznie skorygować do zera. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 3.2.3" />
+
+### Pola FA(3) dla księgowych
+
+Dane nabywcy sprzed korekty idą do elementu `Podmiot2K` (pełne dane z faktury korygowanej), poprawne do `Podmiot2`. Pole `IDNabywcy` łączy jedno z drugim. Dla sprzedawcy jest analogiczny `Podmiot1K`, który również nie służy do poprawiania NIP. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 2.13.8" /> <Source href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf" label="Broszura FA(3), §9.7" />
+
+Korekta wskazuje numer KSeF faktury korygowanej. Gdy tego numeru nie nadano, bo faktura powstała poza KSeF, w `DaneFaKorygowanej` zamiast numeru wpisuje się znacznik `NrKSeFN` = `1`. Decyduje to, czy korygowana faktura ma numer KSeF, a nie data jej wystawienia. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 2.13.6 i 4.1.3" />
+
+## Czego nie znaleźliśmy w materiałach MF
+
+Materiały MF, z których korzystamy, nie odpowiadają na trzy pytania, które pani Krystyna dostaje od klientów:
+
+- **Faktury wystawiane legalnie poza KSeF.** Część faktur nadal powstaje poza systemem: do 31 grudnia 2026 faktury w [limicie 10 000 zł miesięcznie](/blog/ksef-limit-10000-zl) i faktury z kasy fiskalnej, a także faktury dla osób prywatnych. Zdanie MF o notach nie ma zastrzeżeń, ale stoi w rozdziale o fakturach przesłanych do KSeF. Nie wiemy, czy do takich faktur nabywca może jeszcze wystawić notę.
+- **Noty wystawione przed 1 lutego 2026.** W tych materiałach nie ma nic o notach wystawionych przed tą datą.
+- **Samofakturowanie.** Samofakturowanie MF opisuje w części III podręcznika, której jeszcze nie przeanalizowaliśmy. Nie wiemy, czy rozstrzyga ona, kto koryguje, gdy nabywca wystawia faktury w imieniu sprzedawcy.
+
+W tych sprawach odpowiedź zależy od konkretnej faktury i tu zapytaj doradcę podatkowego.
+
+## Nota korygująca to nie nota księgowa
+
+Nota obciążeniowa, nota uznaniowa i nota księgowa to inne dokumenty niż nota korygująca. Not obciążeniowych i uznaniowych, tak samo jak faktur pro forma, według MF nie przesyła się do KSeF. Z tego, że notę obciążeniową wystawiasz poza KSeF, nie wynika więc nic o notach korygujących. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 1.1" />
+
+Jeśli to Ty masz poprawić fakturę z błędem w danych klienta, zacznij od posta o [fakturze korygującej w KSeF](/blog/faktura-korygujaca-ksef).
