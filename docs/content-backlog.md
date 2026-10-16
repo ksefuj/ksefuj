@@ -19,6 +19,13 @@ what is not yet settled.
 
 ## Next up
 
+- [ ] **UPDATE** `faktura-korygujaca-ksef` (all locales): section „Korekta faktury sprzed KSeF” says
+      to use `NrKSeFN` = `1` for any invoice issued before 1 April 2026; MF ties `NrKSeFN` to
+      whether the corrected invoice has a KSeF number (invoices issued in KSeF from 1.02.2026, or
+      voluntarily earlier, have one), not to the date. Also cites the superseded VAT Act text Dz.U.
+      2025 poz. 775 instead of 2026 poz. 1263 (source:
+      https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf,
+      pkt 2.13.6, 4.1.3)
 - [ ] **UPDATE** `kary-ksef-2027-2028`: says „Odpowiedzi o odliczeniu nie mają ograniczenia w
       czasie” (FAQ) without noting that Podręcznik KSeF 2.0 cz. II pkt 1.7 limits the deduction
       position to February–December 2026 in its heading, so 2027 is open (source:
@@ -110,8 +117,9 @@ what is not yet settled.
 - [x] `pusta-faktura-pdf-xml` (in review: branch `content/pusta-faktura-pdf-xml`) — PDF inny niż
       XML: ryzyko pustej faktury · „pusta faktura KSeF" · K, M · official source UNVERIFIED · Strong
       validator fit.
-- [ ] `nota-korygujaca-ksef` — Nota korygująca a KSeF · „nota korygująca KSeF" · K · P2 · Frame as
-      nota vs korekta; link `faktura-korygujaca-ksef`.
+- [x] `nota-korygujaca-ksef` (in review: branch `content/nota-korygujaca-ksef`) — Nota korygująca a
+      KSeF · „nota korygująca KSeF" · K · P2 · Frame as nota vs korekta; link
+      `faktura-korygujaca-ksef`.
 - [ ] `usuniecie-faktury-ksef` — Czy można usunąć lub edytować fakturę w KSeF · „usunięcie faktury
       KSeF" · A · FAQ
 - [ ] `numer-ksef-gdzie-znalezc` — Numer KSeF: gdzie go znaleźć · „numer KSeF faktury" · A, M · FAQ

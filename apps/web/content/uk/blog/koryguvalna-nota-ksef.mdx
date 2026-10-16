@@ -1,0 +1,79 @@
+---
+title: "Коригувальна нота в KSeF: що замість неї"
+description: "З 1 лютого 2026 ст. 106k закону про VAT про коригувальну ноту скасовано. Про помилку повідомляєш продавця, а він виставляє коригувальний рахунок."
+date: 2026-10-16
+section: blog
+locale: uk
+slug: "koryguvalna-nota-ksef"
+topic: "invoicing"
+tags: ["KSeF", "Рахунок", "VAT"]
+sources:
+  - label: "Закон про VAT, єдиний текст (Dz.U. 2026 poz. 1263), ст. 106j і 106k"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  - label: "Закон від 16 червня 2023 р. про зміну закону про VAT (Dz.U. 2023 poz. 1598), ст. 1 п. 15 і ст. 15"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2023/1598/text.pdf"
+  - label: "Закон про VAT, єдиний текст (Dz.U. 2025 poz. 775), ст. 106k у редакції до 31.01.2026"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2025/775/text.pdf"
+  - label: "Посібник KSeF 2.0, ч. II: виставлення та отримання рахунків (06.08.2026)"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "Інформаційна брошура щодо логічної структури FA(3)"
+    url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "Логічна структура FA(3) (схема XSD)"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/"
+  - label: "Питання та відповіді KSeF 2.0 (МФ)"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/"
+translations:
+  pl: "nota-korygujaca-ksef"
+  en: "corrective-note-ksef"
+  uk: "koryguvalna-nota-ksef"
+---
+
+З 1 лютого 2026 коригувальної ноти (nota korygująca) немає: норму, яка її дозволяла (ст. 106k закону про VAT), скасовано, а Міністерство фінансів (МФ) пише, що єдиний спосіб виправити помилку це коригувальний рахунок (faktura korygująca), виставлений тим, хто виставив первинний рахунок. Якщо ти покупець і бачиш помилку у своїй назві чи адресі, повідомляєш про неї продавця поза KSeF, а продавець виставляє корекцію. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="Закон про VAT, єдиний текст (Dz.U. 2026 poz. 1263), ст. 106k" /> <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, пп. 1.6.2 і 6.3" />
+
+Правовий стан на 16 жовтня 2026.
+
+## Що сталося з коригувальною нотою
+
+До 31 січня 2026 ст. 106k закону про VAT дозволяла покупцеві, який отримав рахунок із помилкою, виставити коригувальну ноту. Це не стосувалося помилок у даних зі ст. 106e ч. 1 пп. 8–15, тобто зокрема в кількості, ціні, ставці та сумах, а нота потребувала згоди того, хто виставив рахунок. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2025/775/text.pdf" label="Закон про VAT, єдиний текст (Dz.U. 2025 poz. 775), ст. 106k" /> Закон від 16 червня 2023 скасував ст. 106k з 1 лютого 2026. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2023/1598/text.pdf" label="Закон від 16 червня 2023 р. (Dz.U. 2023 poz. 1598), ст. 1 п. 15" /> <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="Закон про VAT, єдиний текст (Dz.U. 2026 poz. 1263), ст. 106k (скасована); оголошення, ч. 2 п. 1: ст. 23 закону від 16.06.2023" />
+
+МФ у посібнику KSeF 2.0 пише прямо: „Od 1 lutego 2026 r. nie funkcjonują już również noty korygujące” («З 1 лютого 2026 р. коригувальні ноти також більше не діють»). Рахунок із присвоєним номером KSeF увійшов у правовий обіг: його не можна анулювати чи видалити, а KSeF зберігає його 10 років від кінця року виставлення. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, пп. 1.6.2 і 1.6.3" />
+
+Кнопки «відхилити» в KSeF у покупця теж немає. Система не передбачає ні затвердження, ні відхилення рахунків, а спори між сторонами вирішують поза нею. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, пп. 6.1 і 6.3" /> Як рахунки потрапляють до покупця, описуємо в посібнику [як отримати рахунок у KSeF](/uk/guides/yak-otrymaty-rakhunok-v-ksef).
+
+## Що робить покупець, коли бачить помилку
+
+Аня веде JDG (jednoosobowa działalność gospodarcza, підприємницька діяльність) і замовила візитівки в друкарні. На рахунку з KSeF її фірма називається «Ania Kowalska Desing» замість «Design», а в адресі бракує номера приміщення. До лютого 2026 її бухгалтерка пані Кристина порадила б виставити коригувальну ноту. Тепер Аня пише друкарні листа з правильними даними й просить коригувальний рахунок.
+
+Виправлення вносить продавець. Закон про VAT зобов'язує платника податку виставити коригувальний рахунок, коли виявлено помилку в будь-якій позиції рахунку. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="Закон про VAT, єдиний текст (Dz.U. 2026 poz. 1263), ст. 106j ч. 1 п. 5" /> У KSeF корекцію виставляє сам продавець або особа чи фірма, якій він надав повноваження. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 1.6" />
+
+Якщо рахунок узагалі не твій, бо прийшов від фірми, з якою ти не співпрацюєш, це інша ситуація. Що тоді робити, пишемо в статті про [фальшиві рахунки в KSeF](/uk/blog/falshyvi-rakhunky-ksef).
+
+## Що виставляє продавець
+
+Якщо назва чи адреса покупця з помилкою, продавець виставляє коригувальний рахунок, у якому вказує дані покупця до корекції та правильні дані. Помилковий номер рахунку теж виправляють корекцією. <Source href="https://crd.gov.pl/wzor/2025/06/25/13775/" label="Логічна структура FA(3): Podmiot2K, NrFaKorygowany" />
+
+**Помилковий NIP покупця не замінюють на інший.** Рахунок із чужим NIP (польським податковим номером) уже потрапив до фірми, якій цей NIP належить, тож продавець коригує його до нуля й виставляє новий рахунок із правильним NIP. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 1.6.4" /> Покроково показуємо це в розділі [корекція до нуля, коли NIP покупця з помилкою](/uk/blog/koryguvalna-faktura-ksef#корекція-до-нуля-коли-nip-покупця-з-помилкою).
+
+Те саме правило стосується тестового рахунку, помилково надісланого в продуктивне середовище. Прийнятий із номером KSeF, він є повноцінним рахунком, і його треба невідкладно скоригувати до нуля. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 3.2.3" />
+
+### Поля FA(3) для бухгалтерів
+
+Дані покупця до корекції йдуть в елемент `Podmiot2K` (повні дані з рахунку, що коригується), а правильні в `Podmiot2`. Поле `IDNabywcy` пов'язує їх між собою. Для продавця є аналогічний `Podmiot1K`, який теж не служить для виправлення NIP. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 2.13.8" /> <Source href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf" label="Брошура FA(3), описи елементів Podmiot1K і Podmiot2K" />
+
+Корекція вказує номер KSeF рахунку, що коригується. Якщо такого номера не присвоєно, бо рахунок виставили поза KSeF, у `DaneFaKorygowanej` замість номера ставлять позначку `NrKSeFN` = `1`. Вирішує те, чи має коригований рахунок номер KSeF, а не дата його виставлення. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, пп. 2.13.6 і 4.1.3" />
+
+## Рахунки поза KSeF і ноти до лютого 2026
+
+Частину рахунків і далі виставляють поза системою: до 31 грудня 2026 це рахунки в межах [ліміту 10 000 zł на місяць](/uk/blog/ksef-porig-10000-zl) і рахунки з касового апарата, а також рахунки для приватних осіб. **Закон не передбачає ноти й для них.** Ст. 106k скасовано повністю, без винятку для рахунків поза KSeF, а перехідна норма стосується лише нот, виставлених до 1 лютого 2026. Помилку в такому рахунку виправляє продавець коригувальним рахунком, як описано вище. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2023/1598/text.pdf" label="Закон від 16 червня 2023 р. (Dz.U. 2023 poz. 1598), ст. 1 п. 15 і ст. 15" /> <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="Закон про VAT, єдиний текст (Dz.U. 2026 poz. 1263), ст. 106j ч. 1 п. 5" /> Те саме стосується рахунку за 2025 рік: за даними МФ, корекцію виставляє продавець, а покупець уже не може виставляти коригувальні ноти. <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/" label="МФ, Питання та відповіді KSeF 2.0: „Czy możliwe jest wystawienie korekty faktury z ubiegłego roku w KSeF?”" />
+
+Ноти, виставлені до 1 лютого 2026, підпадають під перехідну норму. Якщо продавець не погодив ноту до цієї дати, до неї й далі застосовують колишню вимогу згоди того, хто виставив рахунок (ст. 106k ч. 2). Якщо така нота загубиться або буде знищена, діють колишні правила повторного виставлення зі ст. 106l. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2023/1598/text.pdf" label="Закон від 16 червня 2023 р. (Dz.U. 2023 poz. 1598), ст. 15" />
+
+## Чого ми не знайшли в матеріалах МФ
+
+Самовиставлення рахунків (samofakturowanie) МФ описує в частині III посібника, яку ми ще не проаналізували. Ми не знаємо, чи вирішує вона, хто коригує рахунок, коли покупець виставляє рахунки від імені продавця. Якщо в тебе така угода, запитай податкового консультанта (doradca podatkowy).
+
+## Коригувальна нота не є бухгалтерською нотою
+
+Дебетова нота (nota obciążeniowa), кредитова нота (nota uznaniowa) і бухгалтерська нота (nota księgowa) є іншими документами, ніж коригувальна нота. Дебетові та кредитові ноти, як і рахунки pro forma, за даними МФ до KSeF не надсилають. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 1.1" /> Бухгалтерські ноти, як пише МФ, можуть і далі діяти, але їх не виставляють у KSeF. <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/" label="МФ, Питання та відповіді KSeF 2.0: „Czy nota księgowa przestanie funkcjonować?”" /> Тож із того, що дебетову ноту ти виставляєш поза KSeF, нічого не випливає щодо коригувальних нот.
+
+Якщо це тобі треба виправити рахунок із помилкою в даних клієнта, почни зі статті про [коригувальний рахунок у KSeF](/uk/blog/koryguvalna-faktura-ksef).
