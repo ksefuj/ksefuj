@@ -542,6 +542,13 @@ context:** ksefuj.to — free KSeF XML validator
 - **Confidence:** HIGH
 - **Ania-relevant:** ✅ She can keep sending PDFs to clients who want them, but must clarify the
   legal status
+- **Constitutional note (2026-10-16):** the verbatim above is our own published phrasing, not an MF
+  quote. MF supports the substance of „prawną wersją jest XML": MF FAQ KSeF 2.0, section „KSeF w
+  Jednostkach Samorządu Terytorialnego", pyt. 40: „Z formalnego punktu widzenia dokumentem jest
+  format xml faktury" (pyt. 70: „Faktura wystawiona przy użyciu KSeF stanowi plik w formacie XML");
+  art. 2 pkt 32a ustawy o VAT. MF does **not** say the PDF has no legal effect: the same pyt. 40
+  says a copy used outside KSeF with a QR code „może być dokumentem księgowym". When reusing, quote
+  MF instead of our phrasing. Details: `pusta-faktura-pdf-xml.md` section H11.
 
 ---
 

@@ -26,6 +26,20 @@ what is not yet settled.
       2025 poz. 775 instead of 2026 poz. 1263 (source:
       https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf,
       pkt 2.13.6, 4.1.3)
+- [ ] **UPDATE** `kary-ksef-2027-2028`: says „Odpowiedzi o odliczeniu nie mają ograniczenia w
+      czasie” (FAQ) without noting that Podręcznik KSeF 2.0 cz. II pkt 1.7 limits the deduction
+      position to February–December 2026 in its heading, so 2027 is open (source:
+      https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf,
+      pkt 1.7, heading: „w okresie od lutego do grudnia 2026 r.”)
+- [x] **UPDATE** FAQ `limity-i-wylaczenia` (in review: branch `content/limity-i-wylaczenia`) (all
+      locales), remaining entries: „Od kiedy obowiązuje mnie KSeF jeśli jestem poniżej limitu?" says
+      the date „zależy od statusu VAT" and gives no date; czynni and zwolnieni share one schedule,
+      and below 10 000 zł/month invoices may stay outside KSeF until 31.12.2026 (art. 145m),
+      mandatory from 1.01.2027. „Fundacja lub stowarzyszenie" opens with „zależy od tego, czy …
+      czynny podatnik VAT" (VAT-exempt ones are in scope too) and omits art. 145m. „Kto jest
+      zwolniony z KSeF?" omits invoices to private persons (art. 106ga ust. 2 pkt 4). UK file still
+      uses formal ви (STYLE.md: ти) (source:
+      https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/, Q10)
 - [x] **UPDATE** `falszywe-faktury-ksef` (in review: branch `content/falszywe-faktury-ksef`): said
       the right to deduct arises in the period the invoice is entered in the records (art. 86 ust.
       10); the KB gives the tax-point period, not earlier than the period of receipt (art. 86 ust.
@@ -40,9 +54,10 @@ what is not yet settled.
       (all locales): says „KSeF jest obowiązkowy dla wszystkich czynnych podatników VAT"; VAT-exempt
       taxpayers are covered too from 1.04.2026 (source:
       https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/)
-- [ ] **UPDATE** FAQ `limity-i-wylaczenia` (all locales): says rolnicy ryczałtowi „co do zasady są
-      wyłączeni z obowiązku KSeF"; unsupported. MF lists only VAT RR invoices (issued by the buyer)
-      as optional in KSeF from 1.04.2026 (source:
+- [x] **UPDATE** FAQ `limity-i-wylaczenia` (in review: branch `content/limity-i-wylaczenia`) (all
+      locales): says rolnicy ryczałtowi „co do zasady są wyłączeni z obowiązku KSeF"; unsupported.
+      MF lists only VAT RR invoices (issued by the buyer) as optional in KSeF from 1.04.2026
+      (source:
       https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/podstawy-prawne-oraz-kluczowe-terminy/)
 - [x] **UPDATE** `ksef-dla-jdg` + `ksef-od-1-kwietnia-2026` (all locales) — the consumer (B2C)
       exclusion is cited as art. 106nd ust. 3 + rozporządzenie MF z 7.12.2025; the KB gives art.
@@ -96,10 +111,12 @@ what is not yet settled.
       dla osoby prywatnej KSeF" · A · FAQ, 10K
 - [x] `jak-odebrac-fakture-ksef` (in review: branch `content/jak-odebrac-fakture-ksef`) — Jak
       odebrać fakturę z KSeF · „jak odebrać fakturę w KSeF" · A · FAQ (art. 106gb ust. 4), P2
-- [ ] `faktura-poza-ksef-odliczenie-vat` — Faktura wystawiona poza KSeF: co z odliczeniem VAT ·
-      „faktura poza KSeF odliczenie VAT" · K · FAQ
-- [ ] `pusta-faktura-pdf-xml` — PDF inny niż XML: ryzyko pustej faktury · „pusta faktura KSeF" · K,
-      M · official source UNVERIFIED · Strong validator fit.
+- [x] `faktura-poza-ksef-odliczenie-vat` (in review: branch
+      `content/faktura-poza-ksef-odliczenie-vat`) — Faktura wystawiona poza KSeF: co z odliczeniem
+      VAT · „faktura poza KSeF odliczenie VAT" · K · FAQ
+- [x] `pusta-faktura-pdf-xml` (in review: branch `content/pusta-faktura-pdf-xml`) — PDF inny niż
+      XML: ryzyko pustej faktury · „pusta faktura KSeF" · K, M · official source UNVERIFIED · Strong
+      validator fit.
 - [x] `nota-korygujaca-ksef` (in review: branch `content/nota-korygujaca-ksef`) — Nota korygująca a
       KSeF · „nota korygująca KSeF" · K · P2 · Frame as nota vs korekta; link
       `faktura-korygujaca-ksef`.
