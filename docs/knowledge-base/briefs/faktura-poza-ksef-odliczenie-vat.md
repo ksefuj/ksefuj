@@ -16,6 +16,41 @@ cited as „KB extract text"; page numbers (s. 29–32) come from sibling briefs
 the 06.08.2026 edition. FAQ „Najczęstsze pytania" wording is quoted only where a KB brief already
 quotes it; English paraphrases in `mf-faq-podreczniki-2026.md` are marked as paraphrases.
 
+**Live verification (2026-10-16).** All Tier 1–3 sources below were fetched and read in full on
+2026-10-16; the facts used in the post are confirmed against them:
+
+- [NP] https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/: pyt. 1 („prawo to będzie nadal
+  zapewnione, pod warunkiem spełnienia przesłanek materialnych odliczenia, o których mowa w art. 86
+  ustawy, oraz niezaistnienia przesłanek negatywnych zgodnie z art. 88 ustawy"), pyt. 2 („Naruszenie
+  obowiązku wystawienia faktury w KSeF obciąża co do zasady wystawcę"), pyt. 3 (sprzedaż nadal
+  podlega VAT), pyt. 4 („Brak faktury w KSeF jest traktowany jako uchybienie formalne."), pyt. 5
+  („powinien stanowić dla nabywcy sygnał ostrzegawczy", „mogą zwiększać ryzyko weryfikacji
+  rzetelności całej transakcji", „nabywca nie ma obowiązku wzywania sprzedawcy"; refers to [CZ2] s.
+  32). Verbatim.
+- [CZ2] 06.08.2026 PDF (106 pp.): pkt 1.6.5 (s. 20, „Zasadą jest, że faktura jest otrzymywana przez
+  nabywcę krajowego, posiadającego identyfikator podatkowy NIP, w transakcjach B2B, przy użyciu
+  systemu."), pkt 1.6.6 (s. 22, „Dokument ten nie ma charakteru podatkowego"; s. 24–25 offline24:
+  nabywca z NIP „otrzymuje fakturę wyłącznie w KSeF"), pkt 1.7 (s. 29–30; exact heading „Odliczenie
+  podatku VAT z faktur wystawionych poza KSeF w okresie od lutego do grudnia 2026 r."), pkt 1.8
+  „Skutki podwójnie wystawionej faktury." (s. 31–32, offline24 received early: „co w świetle
+  regulacji art. 106nda jest działaniem nieprawidłowym ze strony sprzedawcy", „nabywca nabywa prawo
+  odliczenia podatku z tego dokumentu w dacie jego faktycznego otrzymania dokumentu"), pkt 4.1.6 (s.
+  76, JPK_V7 from February 2026: numery KSeF „a w przypadku braku nr KSeF ma obowiązek stosowania
+  odpowiednich oznaczeń"), pkt 5.1 (s. 79, art. 106na ust. 3), pkt 5.5 (s. 89–90, QR scan shows the
+  invoice data or „komunikat o braku danej faktury w KSeF").
+- [CZ1] 06.08.2026 PDF, s. 14: table rows „Do 31 grudnia 2026 r." (art. 145m limit „mniejsza lub
+  równa 10 000 zł", art. 145n kasy/paragony) and „Od 1 stycznia 2027 r." („Brak możliwości
+  wystawiania faktur przy użyciu kas rejestrujących i uznawania za faktury uproszczone paragonów
+  fiskalnych z NIP nabywcy", „Możliwe stosowanie sankcji za niedopełnienie obowiązków KSeF").
+- [VAT] Dz.U. 2026 poz. 1263 (ELI status „obowiązujący"): art. 86 ust. 10b pkt 1, 106e ust. 5 pkt 3
+  (450 zł / 100 euro), 106ga ust. 2 pkt 1–6, 106na ust. 3–4, 106nda ust. 2, 3, 11, 106nh ust. 4
+  (odsyła do art. 106nda ust. 4–15), 106ni ust. 1 („Wejdzie w życie z dniem 1 stycznia 2027 r."),
+  145m, 145n.
+- [MF0916]: „organy KAS będą reagować w przypadkach wystawiania faktur poza KSeF (z wyjątkiem
+  ustawowo określonych przypadków) oraz badać, czy niestosowanie systemu nie prowadzi do
+  nierzetelnego rozliczania podatku." Verbatim.
+- [UD477] RCL: see fakt 22 for the stage on 2026-10-16.
+
 **Abbreviations:** [VAT] ustawa o VAT, Dz.U. 2026 poz. 1263; [NP] MF FAQ „Najczęstsze pytania";
 [CZ2] Podręcznik KSeF 2.0 cz. II; [CZ1] Podręcznik KSeF 2.0 cz. I; [MF0916] komunikat MF z
 16.09.2026; [UD477] projekt UD477 (RCL). URLs in „Suggested Sources Section".
@@ -52,10 +87,11 @@ KSeF (art. 106na ust. 3) ([CZ2] pkt 1.7, 5.1).
   faktycznego otrzymania ([CZ2] pkt 1.8). Awaria (106nf) i awaria całkowita (106ng): data otrzymania
   NOT IN KB. Fakty 9–11.
 - **Data: 1 stycznia 2027.** Koniec art. 145m i 145n; stanowisko MF o odliczeniu w [CZ2] pkt 1.7 ma
-  w tytule „luty–grudzień 2026", [NP] pyt. 1 nie ma ograniczenia w czasie: NIE wiadomo, czy MF je
-  powtórzy na 2027. Kary z art. 106ni (dla wystawcy) wchodzą 1.01.2027 według obowiązującej ustawy;
-  MF zapowiedziało odroczenie do końca 2027, projekt UD477 (nieuchwalony) przesuwa je na 1.01.2028.
-  Fakty 16–21.
+  tytuł „Odliczenie podatku VAT z faktur wystawionych poza KSeF w okresie od lutego do grudnia 2026
+  r.", [NP] pyt. 1 nie ma ograniczenia w czasie: NIE wiadomo, czy MF je powtórzy na 2027. Kary z
+  art. 106ni (dla wystawcy) wchodzą 1.01.2027 według obowiązującej ustawy; MF zapowiedziało
+  odroczenie do końca 2027, projekt UD477 (15.10.2026 skierowany do Rady Ministrów, nieuchwalony)
+  przesuwa je na 1.01.2028. Fakty 16–21.
 - **Status nabywcy:** czynny podatnik VAT odlicza; zwolniony (art. 113) nie odlicza (temat
   odliczenia go nie dotyczy).
 
@@ -278,7 +314,8 @@ KSeF (art. 106na ust. 3) ([CZ2] pkt 1.7, 5.1).
 
 20. **Czy MF powtórzy stanowisko o odliczeniu na 2027: NIE ROZSTRZYGNIĘTE.** [NP] pyt. 1 nie ma
     ograniczenia do roku, ale uzasadnienie odwołuje się do „etapowania"; [CZ2] pkt 1.7 ma tytuł
-    „Odliczenie podatku VAT z faktur wystawionych poza KSeF (luty–grudzień 2026)".
+    „Odliczenie podatku VAT z faktur wystawionych poza KSeF w okresie od lutego do grudnia 2026 r."
+    (verbatim, 06.08.2026 PDF s. 29 and changelog s. 105).
     - Source: `kary-ksef-2027-2028.md`, Unsettled Questions (3rd bullet) and fakt 12. HIGH that the
       question is open.
     - The published post `kary-ksef-2027-2028.mdx` states: „Odpowiedzi o odliczeniu nie mają
@@ -293,18 +330,24 @@ KSeF (art. 106na ust. 3) ([CZ2] pkt 1.7, 5.1).
     - Source: [MF0916] (`kary-ksef-2027-2028.md` fakt 7). MF announcement, not law. HIGH.
     - Uzasadnienie [UD477]: in 2027 KAS checks „zgodnie z zasadami art. 272 ustawy – Ordynacja
       podatkowa", whether not using KSeF leads to „nierzetelnego rozliczania podatku należnego i
-      naliczonego" (`kary-ksef-2027-2028.md` fakt 9, HIGH; `sankcje-ksef-ud477.md` fakt 7 rates the
-      same uzasadnienie MEDIUM, „verify in the RCL file before quoting" — see Contradictions).
-      „Naliczonego" = the buyer's input VAT side. Draft, not law.
+      naliczonego" (verified verbatim on 2026-10-16 in the uzasadnienie of the version sent to the
+      Rada Ministrów, RCL stage 12, file RM-0610-181-26.zip). HIGH. „Naliczonego" = the buyer's
+      input VAT side. Draft, not law.
     - Krystyna-relevant: yes (2027 = większe ryzyko czynności sprawdzających także po stronie
       nabywcy — **COMBINATION/inference** from „naliczonego"; MEDIUM).
 
-22. **Status prawny kar na 2026-10-14:** art. 106ni ust. 1–3 i 5–7 wchodzą w życie 1.01.2027 (Dz.U.
-    2026 poz. 1263). Projekt UD477 (wersja 22.09.2026; uzgodnienia/konsultacje otwarte 23.09.2026,
-    uwagi do 30.09.2026) przesuwa je na 1.01.2028, ustawa ma wejść w życie 31.12.2026. Brak wersji
-    późniejszej niż 22.09.2026 w KB; KB has no record of Sejm/Dz.U. stage.
-    - Source: [VAT]; [UD477] (`kary-ksef-2027-2028.md` fakty 4, 8; `WATCHLIST.md`; CHANGELOG
-      2026-10-07). HIGH (state as of KB check 2026-10-07; not re-checked 2026-10-14).
+22. **Status prawny kar na 2026-10-16:** art. 106ni ust. 1–3 i 5–7 wchodzą w życie 1.01.2027 (Dz.U.
+    2026 poz. 1263). Projekt UD477 przesuwa je na 1.01.2028 (art. 2 pkt 2 lit. b projektu), ustawa
+    ma wejść w życie 31.12.2026 (art. 3). Stage on RCL (checked live 2026-10-16): uzgodnienia,
+    konsultacje and opiniowanie closed with MF's responses (files dated 14.10.2026); Stały Komitet
+    RM (KRM-0610-172-26, 12.10.2026); MF letter of 15.10.2026 (PT8.8100.2.2026) asks the Sekretarz
+    Rady Ministrów to put the „projekt z dnia 15 października 2026 r." on the next Rada Ministrów
+    meeting; stage 12 „Rada Ministrów" holds RM-0610-181-26 (16.10.2026), „Rozstrzygnięcia Rady
+    Ministrów" empty. Not adopted by the Rada Ministrów, not in the Sejm (no Sejm print), not in
+    Dz.U. The 15.10.2026 text keeps the 1.01.2028 date; it also changes art. 106nh ust. 4 to refer
+    to art. 106nda ust. 3–15 (still includes ust. 11).
+    - Source: [VAT]; [UD477] https://legislacja.rcl.gov.pl/projekt/12414954 (stages 2–4, 9, 12).
+      HIGH (as of 2026-10-16).
     - Older MF materials say „Do 31 grudnia 2026 r. podatnicy nie będą karani" ([CZ2] s. 32) and
       [NP] pyt. 2: „za 2026 rok nie będą nakładane sankcje"; [NP] pyt. 3: kary „dopiero za
       naruszenia dokonane od 1 stycznia 2027 roku" — all predate [MF0916] (`sankcje-ksef-ud477.md`
@@ -339,17 +382,16 @@ KSeF (art. 106na ust. 3) ([CZ2] pkt 1.7, 5.1).
 
 ## Contradictions & Ambiguities (within KB)
 
-- **UD477 uzasadnienie confidence:** `kary-ksef-2027-2028.md` fakt 9 quotes it at HIGH;
-  `sankcje-ksef-ud477.md` fakt 7 rates it MEDIUM („per MF/legislative summary, verify in the RCL
-  file before quoting"). Resolution not by inference: quote [MF0916] (HIGH) for the 2027 KAS
-  reaction and use the uzasadnienie only with „projekt" and attribution.
+- **UD477 uzasadnienie confidence:** resolved 2026-10-16: the art. 272 Ordynacja podatkowa sentence
+  is verbatim in the uzasadnienie of the 15.10.2026 version (RCL stage 12). Still a draft: quote it
+  only with „projekt" and attribution.
 - **Time scope of the deduction position:** [NP] pyt. 1 has no year limit; [CZ2] pkt 1.7 title is
-  „luty–grudzień 2026". Both MF, different tiers (Tier 2 title vs Tier 3 FAQ). Not resolved; see
-  Unsettled.
-- **[CZ2] pkt 1.8 heading „Skutki podwójnie wystawionej faktury"** — the KB extract does not define
-  „podwójnie"; case 1 describes an electronic invoice that „nigdy nie zostanie przesłana do KSeF",
-  which does not read as a duplicate. The extract is a condensed summary; the 06.08.2026 PDF (s.
-  31–32) needs re-reading.
+  „Odliczenie podatku VAT z faktur wystawionych poza KSeF w okresie od lutego do grudnia 2026 r.".
+  Both MF, different tiers (Tier 2 title vs Tier 3 FAQ). Not resolved; see Unsettled.
+- **[CZ2] pkt 1.8 heading „Skutki podwójnie wystawionej faktury."** — resolved by reading the
+  06.08.2026 PDF (s. 31–32): the question is a document received electronically and deducted, then
+  sent to KSeF months later; case 1 (plain e-invoice) is never sent to KSeF, case 2 (offline24) is.
+  Pkt 1.8 does not say how to avoid a double deduction.
 
 ## Unsettled Questions (do NOT answer definitively)
 
@@ -373,7 +415,8 @@ KSeF (art. 106na ust. 3) ([CZ2] pkt 1.7, 5.1).
 ## Suggested Sources Section
 
 All URLs below already appear in `docs/knowledge-base/` (and most in published PL posts). None was
-fetched live on 2026-10-14.
+fetched live on 2026-10-14; [NP], [CZ1], [CZ2], [VAT], [MF0916] and [UD477] were fetched live on
+2026-10-16 (see „Live verification").
 
 - MF, KSeF: Najczęstsze pytania (pyt. 1–5, 12–14; opublik. 15.04.2026, zmodyf. 29.04.2026):
   https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/
@@ -438,4 +481,5 @@ Internal links (published, link don't restate): `/blog/kary-ksef-2027-2028`,
 2026-10-14 (KB baseline 2026-10-07). Re-check: [NP] pyt. 1–5 after any update (sanctions wording,
 2027 deduction scope); UD477 stage (RCL → Sejm → Dz.U.) before 2026-12-31; 2027-01-01 (art.
 145m/145n expiry, art. 106ni entry into force unless amended); a new Podręcznik cz. II edition (pkt
-1.7 title, 1.8 wording); re-read cz. II 06.08.2026 s. 29–32 verbatim when gov.pl is reachable.
+1.7 title, 1.8 wording); cz. II 06.08.2026 s. 29–32 re-read verbatim 2026-10-16 (done). UD477: on
+the Rada Ministrów agenda from 2026-10-16; re-check adoption and Sejm print.
