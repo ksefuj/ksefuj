@@ -19,11 +19,20 @@ what is not yet settled.
 
 ## Next up
 
-- [ ] **UPDATE** `faktura-korygujaca-ksef` (all locales): section „Korekta faktury sprzed KSeF” says
-      to use `NrKSeFN` = `1` for any invoice issued before 1 April 2026; MF ties `NrKSeFN` to
-      whether the corrected invoice has a KSeF number (invoices issued in KSeF from 1.02.2026, or
-      voluntarily earlier, have one), not to the date. Also cites the superseded VAT Act text Dz.U.
-      2025 poz. 775 instead of 2026 poz. 1263 (source:
+- [ ] **UPDATE** `fa2-vs-fa3-ksef` (all locales): section „Korekty do faktur FA(2)” and the
+      migration list say to use `NrKSeFN` = `1` for every FA(2) invoice from KSeF 1.0; the
+      brochure's `NrKSeF` description („1” when the corrected invoice „była wystawiona w KSeF”),
+      art. 106j ust. 2 pkt 2a and the XSD `TNumerKSeF` pattern (accepts 36-char KSeF 1.0 numbers)
+      point to `NrKSeF` + the number; MF does not address the case directly. Align with
+      `faktura-korygujaca-ksef` (source:
+      https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf,
+      `NrKSeF`, s. 69)
+- [x] **UPDATE** `faktura-korygujaca-ksef` (in review: branch `content/faktura-korygujaca-ksef`)
+      (all locales): section „Korekta faktury sprzed KSeF” says to use `NrKSeFN` = `1` for any
+      invoice issued before 1 April 2026; MF ties `NrKSeFN` to whether the corrected invoice has a
+      KSeF number (invoices issued in KSeF from 1.02.2026, or voluntarily earlier, have one), not to
+      the date. Also cites the superseded VAT Act text Dz.U. 2025 poz. 775 instead of 2026 poz. 1263
+      (source:
       https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf,
       pkt 2.13.6, 4.1.3)
 - [ ] **UPDATE** `kary-ksef-2027-2028`: says „Odpowiedzi o odliczeniu nie mają ograniczenia w
