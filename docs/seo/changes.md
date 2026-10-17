@@ -5,6 +5,33 @@ effect. Record the date, the page, what changed (old -> new for titles and descr
 metric that motivated it. After 28 days, add a **Results** line comparing current CTR/position with
 the baseline.
 
+## 2026-10-17
+
+Digest: `gsc-data` 2026-10-16 (GSC 2026-09-16 to 2026-10-13: 91 clicks, 8,595 impressions, CTR
+1.06%, avg position 6.5). No title or description changes: every page in the low-CTR list has
+frontmatter `updated` within the last 28 days (2026-10-07/08), and the two corrective-invoice posts
+are in open content PR #135. No crawl Problems (all 140 sitemap URLs 200, no broken links, no
+canonical mismatches).
+
+- **Pages:** `/blog/fa2-vs-fa3-ksef`, `/en/blog/fa2-vs-fa3-ksef`
+  - **Change:** body only. One sentence at the end of „Nowe obowiązkowe pola JST i GV w Podmiot2" /
+    "New mandatory JST and GV fields in Podmiot2" linking `/validator/brak-jst-gv-podmiot2` /
+    `/en/validator/missing-jst-gv-podmiot2`.
+  - **Motivation:** `/en/validator/missing-jst-gv-podmiot2` is "Discovered - currently not indexed"
+    with only 3 internal links. The FA(2) vs FA(3) posts are indexed (EN 603 impr, pos 5.9; PL pos
+    ~7) and have a section on exactly this error.
+  - **Baseline to compare:** URL Inspection state (EN Discovered - not indexed).
+- **Pages:** `/blog/pusta-faktura-pdf-xml`, `/en/blog/pdf-different-from-xml-ksef`,
+  `/uk/blog/pdf-ne-zbigayetsya-z-xml-ksef`
+  - **Change:** body only. One sentence in „Dla developerów" / "For developers" (where the post says
+    the bank account number belongs in `Platnosc`) linking the bank-account validator page in each
+    locale.
+  - **Motivation:** `/validator/bledny-numer-rachunku-bankowego` is "Discovered - currently not
+    indexed" with only 2 internal links (`/validator` and the FA(3) errors post). EN page gets the
+    query "account length is incorrect" (pos 11).
+  - **Baseline to compare:** URL Inspection state (PL Discovered - not indexed; EN and UK not in the
+    not-indexed list).
+
 ## 2026-10-14
 
 Digest: `gsc-data` 2026-10-13 (GSC 2026-09-13 to 2026-10-10: 72 clicks, 8,687 impressions, CTR
