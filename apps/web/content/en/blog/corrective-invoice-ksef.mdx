@@ -37,7 +37,18 @@ The legal basis is Art. 106j of the Polish VAT Act. Since 1 February 2026 [corre
 
 ## What you can and can't correct
 
-A correction can fix almost anything: net, VAT and gross amounts, quantity, price, VAT rate, description of goods or services, date of supply, the buyer's name and address. The exception is the **buyer's or seller's NIP** (tax identification number). If you entered the wrong company's NIP, you need a zero-value correction and a new invoice (see [below](#zero-value-correction-when-the-buyers-nip-is-wrong)).
+A correction can fix almost anything: net, VAT and gross amounts, quantity, price, VAT rate, description of goods or services, date of supply, the buyer's or seller's name and address. The exception is the **buyer's or seller's NIP** (tax identification number). If you entered the wrong company's NIP, you need a zero-value correction and a new invoice (see [below](#zero-value-correction-when-the-buyers-nip-is-wrong)).
+
+When you correct a name or address, the full details from the original go in `Podmiot2K` (buyer) or `Podmiot1K` (seller), and the corrected details in `Podmiot2` or `Podmiot1`.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="KSeF 2.0 Manual, Part II, point 2.13.8"
+/>
+<Source
+  href="https://crd.gov.pl/wzor/2025/06/25/13775/"
+  label="FA(3) XSD schema: Podmiot1K, Podmiot2K"
+/>
 
 ## Correcting an amount step by step
 
@@ -102,14 +113,21 @@ Here you need two documents rather than one, and many programs can't do it in on
 
 ## Correcting an invoice without a KSeF number
 
-Whether you set `NrKSeF` or `NrKSeFN` depends on whether the original has a KSeF number, not on its issue date. Invoices issued in KSeF since 1 February 2026 have one, including those from offline24 mode, from periods when KSeF was unavailable and from emergency mode, once they've reached the system. Invoices never sent to KSeF have none: paper or PDF invoices from before you became subject to the obligation and, after 1 April 2026, for example invoices issued under the 10,000 zł monthly limit (Art. 145m, until the end of 2026), from a cash register (Art. 145n) or to a consumer, unless you chose to issue them in KSeF. For these you set `NrKSeFN` = `1`. A bulk correction can mix both kinds: each corrected invoice gets its own `DaneFaKorygowanej` block with the right flag.
+Whether you set `NrKSeF` or `NrKSeFN` depends on whether the original has a KSeF number, not on its issue date. Invoices issued in KSeF since 1 February 2026 have one, including those from offline24 mode, from periods when KSeF was unavailable and from emergency mode, once they've reached the system. Invoices never sent to KSeF have none: paper or PDF invoices from before you became subject to the obligation and, once you're subject to it, for example invoices issued under the 10,000 zł monthly limit (Art. 145m, until the end of 2026), from a cash register (Art. 145n, until the end of 2026) or to a consumer, unless you chose to issue them in KSeF. For these you set `NrKSeFN` = `1`. A bulk correction can mix both kinds: each corrected invoice gets its own `DaneFaKorygowanej` block with the right flag.
 
 <Source
   href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
   label="KSeF 2.0 Manual, Part II, points 2.13.6 and 4.1.3"
 />
 
-The correction itself must be in FA(3): the FA(2) schema expired on 31 January 2026 and KSeF won't accept it in any form, even for an invoice from the FA(2) era. MF hasn't yet clarified which flag to set when correcting an FA(2) invoice numbered in KSeF 1.0. We compare the schemas in [FA(2) vs FA(3)](/en/blog/fa2-vs-fa3-ksef).
+The correction itself must be in FA(3): the FA(2) schema expired on 31 January 2026 and KSeF won't accept it in any form, even for an invoice from the FA(2) era. An FA(2) invoice sent to KSeF 1.0 has a KSeF number, and the FA(3) schema accepts KSeF 1.0-format numbers in `NrKSeFFaKorygowanej`. MF doesn't address this case directly, but the FA(3) brochure says to set `NrKSeF` = `1` when the original was issued in KSeF, and Art. 106j(2)(2a) of the VAT Act requires the original's KSeF number whenever one was assigned.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  label="FA(3) brochure: structured invoice template, description of the NrKSeF and NrKSeFN fields"
+/>
+
+We compare the schemas in [FA(2) vs FA(3)](/en/blog/fa2-vs-fa3-ksef).
 
 ## XML example
 

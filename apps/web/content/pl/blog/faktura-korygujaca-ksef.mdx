@@ -36,7 +36,18 @@ Podstawą jest art. 106j ustawy o VAT. Od 1 lutego 2026 nie ma już [not koryguj
 
 ## Co możesz skorygować, a czego nie
 
-Korektą poprawisz prawie wszystko: kwoty netto, VAT i brutto, ilość, cenę, stawkę VAT, opis towaru lub usługi, datę sprzedaży, nazwę i adres nabywcy. Wyjątkiem jest **NIP nabywcy lub sprzedawcy**. Jeśli wpisałeś NIP innej firmy, potrzebujesz korekty zerującej i nowej faktury (sekcja [niżej](#korekta-do-zera-gdy-nip-nabywcy-jest-pomylony)).
+Korektą poprawisz prawie wszystko: kwoty netto, VAT i brutto, ilość, cenę, stawkę VAT, opis towaru lub usługi, datę sprzedaży, nazwę i adres nabywcy lub sprzedawcy. Wyjątkiem jest **NIP nabywcy lub sprzedawcy**. Jeśli wpisałeś NIP innej firmy, potrzebujesz korekty zerującej i nowej faktury (sekcja [niżej](#korekta-do-zera-gdy-nip-nabywcy-jest-pomylony)).
+
+Gdy poprawiasz nazwę lub adres, pełne dane z oryginału podajesz w `Podmiot2K` (nabywca) albo `Podmiot1K` (sprzedawca), a dane poprawione w `Podmiot2` lub `Podmiot1`.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. II, pkt 2.13.8"
+/>
+<Source
+  href="https://crd.gov.pl/wzor/2025/06/25/13775/"
+  label="Schemat XSD FA(3): Podmiot1K, Podmiot2K"
+/>
 
 ## Korekta kwoty krok po kroku
 
@@ -101,14 +112,21 @@ Tu potrzebujesz dwóch dokumentów, a nie jednego, i wiele programów nie zrobi 
 
 ## Korekta faktury bez numeru KSeF
 
-O wyborze między `NrKSeF` a `NrKSeFN` decyduje to, czy oryginał ma numer KSeF, a nie data jego wystawienia. Numer mają faktury wystawione w KSeF od 1 lutego 2026, także te z trybu offline24, z okresu niedostępności KSeF i z trybu awaryjnego, gdy już trafiły do systemu. Bez numeru zostają faktury, których nie wysłano do KSeF: papierowe lub PDF sprzed objęcia obowiązkiem, a po 1 kwietnia 2026 np. wystawione w ramach limitu 10 000 zł (art. 145m, do końca 2026), z kasy fiskalnej (art. 145n) albo dla konsumenta, jeśli nie wystawiłeś ich dobrowolnie w KSeF. Dla nich ustawiasz `NrKSeFN` = `1`. Korekta zbiorcza może łączyć oba rodzaje: każda korygowana faktura ma własny blok `DaneFaKorygowanej` z właściwym znacznikiem.
+O wyborze między `NrKSeF` a `NrKSeFN` decyduje to, czy oryginał ma numer KSeF, a nie data jego wystawienia. Numer mają faktury wystawione w KSeF od 1 lutego 2026, także te z trybu offline24, z okresu niedostępności KSeF i z trybu awaryjnego, gdy już trafiły do systemu. Bez numeru zostają faktury, których nie wysłano do KSeF: papierowe lub PDF sprzed objęcia obowiązkiem, a po nim np. wystawione w ramach limitu 10 000 zł (art. 145m, do końca 2026), z kasy fiskalnej (art. 145n, do końca 2026) albo dla konsumenta, jeśli nie wystawiłeś ich dobrowolnie w KSeF. Dla nich ustawiasz `NrKSeFN` = `1`. Korekta zbiorcza może łączyć oba rodzaje: każda korygowana faktura ma własny blok `DaneFaKorygowanej` z właściwym znacznikiem.
 
 <Source
   href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
   label="Podręcznik KSeF 2.0, cz. II, pkt 2.13.6 i 4.1.3"
 />
 
-Sama korekta musi być w FA(3): schemat FA(2) wygasł 31 stycznia 2026 i KSeF nie przyjmie go w żadnej formie, nawet dla faktury z czasów FA(2). MF nie wyjaśniło dotąd, który znacznik ustawić przy korekcie faktury FA(2) z numerem nadanym w KSeF 1.0. Różnice między schematami opisaliśmy w artykule [FA(2) vs FA(3)](/blog/fa2-vs-fa3-ksef).
+Sama korekta musi być w FA(3): schemat FA(2) wygasł 31 stycznia 2026 i KSeF nie przyjmie go w żadnej formie, nawet dla faktury z czasów FA(2). Faktura FA(2) wysłana do KSeF 1.0 ma numer KSeF, a schemat FA(3) przyjmuje w `NrKSeFFaKorygowanej` także numery w formacie z KSeF 1.0. MF nie opisuje tego przypadku wprost, ale broszura FA(3) każe ustawić `NrKSeF` = `1`, gdy oryginał wystawiono w KSeF, a art. 106j ust. 2 pkt 2a ustawy o VAT wymaga numeru KSeF oryginału zawsze, gdy go nadano.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  label="Broszura FA(3): wzór faktury ustrukturyzowanej, opis pól NrKSeF i NrKSeFN"
+/>
+
+Różnice między schematami opisaliśmy w artykule [FA(2) vs FA(3)](/blog/fa2-vs-fa3-ksef).
 
 ## Przykład XML
 
