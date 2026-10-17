@@ -2,7 +2,7 @@
 title: "Faktura korygująca w KSeF: jak ją wystawić"
 description: "Faktury w KSeF nie edytujesz. Wystawiasz korektę KOR z numerem KSeF oryginału, a kwoty wpisujesz jako różnicę: −500 zł, nie nowe 4 500 zł."
 date: 2026-04-02
-updated: 2026-10-07
+updated: 2026-10-17
 section: blog
 locale: pl
 slug: "faktura-korygujaca-ksef"
@@ -15,8 +15,10 @@ sources:
     url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
   - label: "Schemat XSD FA(3)"
     url: "https://crd.gov.pl/wzor/2025/06/25/13775/"
-  - label: "Art. 106j ustawy o VAT"
-    url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
+  - label: "Art. 106j ustawy o VAT (t.j. Dz.U. 2026 poz. 1263)"
+    url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
+  - label: "Podręcznik KSeF 2.0, cz. II (6 sierpnia 2026)"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
 translations:
   pl: "faktura-korygujaca-ksef"
   en: "corrective-invoice-ksef"
@@ -25,16 +27,16 @@ translations:
 
 Faktury wysłanej do KSeF nie da się edytować ani usunąć, więc błąd poprawiasz fakturą korygującą: osobnym plikiem FA(3) z `RodzajFaktury` = `KOR`, który wskazuje oryginał. Kwoty na korekcie wpisujesz jako różnicę względem oryginału, nie jako nową wartość.
 
-Zasady wynikają z art. 106j ustawy o VAT i są takie same jak przed KSeF, zmienił się tylko format. Program do fakturowania (Fakturownia, inFakt, wFirma i inne) wypełni większość pól sam po wybraniu opcji „wystaw korektę”. Poniżej pokazujemy, co robi w Twoim imieniu.
+Podstawą jest art. 106j ustawy o VAT. Od 1 lutego 2026 nie ma już [not korygujących](/blog/nota-korygujaca-ksef), więc każdy błąd poprawia sprzedawca fakturą korygującą w KSeF. Program do fakturowania (Fakturownia, inFakt, wFirma i inne) wypełni większość pól sam po wybraniu opcji „wystaw korektę”. Poniżej pokazujemy, co robi w Twoim imieniu.
 
 <Source
-  href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
-  label="Art. 106j ustawy o VAT"
+  href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
+  label="Art. 106j ustawy o VAT (t.j. Dz.U. 2026 poz. 1263)"
 />
 
 ## Co możesz skorygować, a czego nie
 
-Korektą poprawisz prawie wszystko: kwoty netto, VAT i brutto, ilość, cenę, stawkę VAT, opis towaru lub usługi, datę sprzedaży, nazwę i adres nabywcy. Wyjątkiem jest **NIP nabywcy**. Jeśli wpisałeś NIP innej firmy, potrzebujesz korekty zerującej i nowej faktury (sekcja [niżej](#korekta-do-zera-gdy-nip-nabywcy-jest-pomylony)).
+Korektą poprawisz prawie wszystko: kwoty netto, VAT i brutto, ilość, cenę, stawkę VAT, opis towaru lub usługi, datę sprzedaży, nazwę i adres nabywcy. Wyjątkiem jest **NIP nabywcy lub sprzedawcy**. Jeśli wpisałeś NIP innej firmy, potrzebujesz korekty zerującej i nowej faktury (sekcja [niżej](#korekta-do-zera-gdy-nip-nabywcy-jest-pomylony)).
 
 ## Korekta kwoty krok po kroku
 
@@ -56,18 +58,18 @@ To pole decyduje, w której deklaracji VAT ujmiesz korektę, więc ma realne sku
 - **`2`**: korekta skutkuje w dacie jej wystawienia (bieżąco),
 - **`3`**: korekta skutkuje w innej dacie, w tym gdy daty różnią się dla poszczególnych pozycji.
 
-Przy prostej korekcie kwoty zwykle wybiera się `2`. Większość programów dobiera wartość sama; jeśli Twój tego nie robi, ustal ją z księgową.
+Pole nie jest obowiązkowe. Jeśli Twój program nie dobiera wartości sam, ustal ją z księgową.
 
 ### Krok 4: odniesienie do oryginału `DaneFaKorygowanej`
 
 Podajesz datę wystawienia oryginału (`DataWystFaKorygowanej`), jego numer (`NrFaKorygowanej`) i informację o numerze KSeF. Tę ostatnią wybierasz dokładnie w jednym z dwóch wariantów:
 
-| Sytuacja                       | Co ustawić                                                           |
-| :----------------------------- | :------------------------------------------------------------------- |
-| Oryginał przeszedł przez KSeF  | `NrKSeF` = `1` + pole `NrKSeFFaKorygowanej` z numerem KSeF oryginału |
-| Oryginał wystawiony przed KSeF | `NrKSeFN` = `1` (bez `NrKSeFFaKorygowanej`)                          |
+| Sytuacja                                           | Co ustawić                                                           |
+| :------------------------------------------------- | :------------------------------------------------------------------- |
+| Oryginał ma numer KSeF                             | `NrKSeF` = `1` + pole `NrKSeFFaKorygowanej` z numerem KSeF oryginału |
+| Oryginał nie ma numeru KSeF (wystawiony poza KSeF) | `NrKSeFN` = `1` (bez `NrKSeFFaKorygowanej`)                          |
 
-Podanie obu pól naraz kończy się odrzuceniem faktury. Numer KSeF ma postać `NIP-DATA-XXXXXXXXXXXX-ZZ`; kopiuj go, zamiast przepisywać, bo przy literówce system nie powiąże korekty z oryginałem. W przykładzie oryginał przeszedł przez KSeF, więc ustawiamy `NrKSeF` = `1` i podajemy jego numer.
+Podanie obu pól naraz kończy się odrzuceniem faktury. Numer KSeF ma postać `NIP-DATA-XXXXXXXXXXXX-ZZ`; kopiuj go, zamiast przepisywać. W przykładzie oryginał ma numer KSeF, więc ustawiamy `NrKSeF` = `1` i podajemy jego numer.
 
 ### Krok 5: kwoty jako różnica
 
@@ -90,16 +92,23 @@ Korekta ma więcej wymaganych pól niż zwykła faktura, więc łatwiej coś prz
 
 ## Korekta do zera, gdy NIP nabywcy jest pomylony
 
-Struktura FA(3) nie pozwala podmienić NIP-u nabywcy w zwykłej korekcie. Musisz wystawić dwa dokumenty:
+Błędnego NIP-u nabywcy ani sprzedawcy nie zmienisz zwykłą korektą na inny, prawidłowy. Musisz wystawić dwa dokumenty:
 
 1. **Korektę zerującą**: wszystkie kwoty ze znakiem minus, równe oryginałowi, tak że oryginał plus korekta daje 0 zł.
 2. **Nową fakturę** z prawidłowym NIP-em i kwotą.
 
-To jedyny scenariusz, w którym potrzebujesz dwóch dokumentów, i żaden program nie zrobi tego jednym kliknięciem. Korekta zerująca nie anuluje faktury: oryginał i korekta zostają w KSeF na zawsze, a ich suma wynosi zero. Jeśli taką fakturę dostałeś od kogoś innego, zobacz [co robić z fałszywą fakturą w KSeF](/blog/falszywe-faktury-ksef).
+Tu potrzebujesz dwóch dokumentów, a nie jednego, i wiele programów nie zrobi tego jednym kliknięciem. Korekta zerująca nie anuluje faktury: oryginał i korekta zostają w KSeF (system przechowuje faktury przez 10 lat od końca roku wystawienia), a ich suma wynosi zero. Jeśli taką fakturę dostałeś od kogoś innego, zobacz [co robić z fałszywą fakturą w KSeF](/blog/falszywe-faktury-ksef).
 
-## Korekta faktury sprzed KSeF
+## Korekta faktury bez numeru KSeF
 
-Jeśli korygujesz fakturę sprzed 1 kwietnia 2026, w `DaneFaKorygowanej` ustawiasz `NrKSeFN` = `1`, bo oryginał nie ma numeru KSeF. Sama korekta musi być w FA(3): schemat FA(2) wygasł 31 stycznia 2026 i KSeF nie przyjmie go w żadnej formie, nawet dla faktury z czasów FA(2). Różnice między schematami opisaliśmy w artykule [FA(2) vs FA(3)](/blog/fa2-vs-fa3-ksef).
+O wyborze między `NrKSeF` a `NrKSeFN` decyduje to, czy oryginał ma numer KSeF, a nie data jego wystawienia. Numer mają faktury wystawione w KSeF od 1 lutego 2026, także te z trybu offline24, z okresu niedostępności KSeF i z trybu awaryjnego, gdy już trafiły do systemu. Bez numeru zostają faktury, których nie wysłano do KSeF: papierowe lub PDF sprzed objęcia obowiązkiem, a po 1 kwietnia 2026 np. wystawione w ramach limitu 10 000 zł (art. 145m, do końca 2026), z kasy fiskalnej (art. 145n) albo dla konsumenta, jeśli nie wystawiłeś ich dobrowolnie w KSeF. Dla nich ustawiasz `NrKSeFN` = `1`. Korekta zbiorcza może łączyć oba rodzaje: każda korygowana faktura ma własny blok `DaneFaKorygowanej` z właściwym znacznikiem.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. II, pkt 2.13.6 i 4.1.3"
+/>
+
+Sama korekta musi być w FA(3): schemat FA(2) wygasł 31 stycznia 2026 i KSeF nie przyjmie go w żadnej formie, nawet dla faktury z czasów FA(2). MF nie wyjaśniło dotąd, który znacznik ustawić przy korekcie faktury FA(2) z numerem nadanym w KSeF 1.0. Różnice między schematami opisaliśmy w artykule [FA(2) vs FA(3)](/blog/fa2-vs-fa3-ksef).
 
 ## Przykład XML
 

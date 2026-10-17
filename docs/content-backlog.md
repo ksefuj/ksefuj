@@ -19,11 +19,12 @@ what is not yet settled.
 
 ## Next up
 
-- [ ] **UPDATE** `faktura-korygujaca-ksef` (all locales): section „Korekta faktury sprzed KSeF” says
-      to use `NrKSeFN` = `1` for any invoice issued before 1 April 2026; MF ties `NrKSeFN` to
-      whether the corrected invoice has a KSeF number (invoices issued in KSeF from 1.02.2026, or
-      voluntarily earlier, have one), not to the date. Also cites the superseded VAT Act text Dz.U.
-      2025 poz. 775 instead of 2026 poz. 1263 (source:
+- [x] **UPDATE** `faktura-korygujaca-ksef` (in review: branch `content/faktura-korygujaca-ksef`)
+      (all locales): section „Korekta faktury sprzed KSeF” says to use `NrKSeFN` = `1` for any
+      invoice issued before 1 April 2026; MF ties `NrKSeFN` to whether the corrected invoice has a
+      KSeF number (invoices issued in KSeF from 1.02.2026, or voluntarily earlier, have one), not to
+      the date. Also cites the superseded VAT Act text Dz.U. 2025 poz. 775 instead of 2026 poz. 1263
+      (source:
       https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf,
       pkt 2.13.6, 4.1.3)
 - [ ] **UPDATE** `kary-ksef-2027-2028`: says „Odpowiedzi o odliczeniu nie mają ograniczenia w
