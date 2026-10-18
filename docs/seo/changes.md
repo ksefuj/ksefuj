@@ -5,6 +5,28 @@ effect. Record the date, the page, what changed (old -> new for titles and descr
 metric that motivated it. After 28 days, add a **Results** line comparing current CTR/position with
 the baseline.
 
+## 2026-10-18
+
+Digest: `gsc-data` 2026-10-17 (GSC 2026-09-17 to 2026-10-14: 98 clicks, 8,559 impressions, CTR
+1.14%, avg position 6.5). No title or description changes: every page in the low-CTR list was
+updated or published within the last 28 days (corrective-invoice posts 2026-10-17, FA(3) errors post
+2026-10-08, `/guides/logowanie-ksef` published 2026-10-07), and the FA(2) vs FA(3) posts are in open
+content PR #137. No crawl Problems (all 149 sitemap URLs 200, no broken links, no canonical
+mismatches, no hreflang issues). No Results lines yet: the oldest logged change is from 2026-10-07.
+
+- **Pages:** `/blog/ksef-limit-10000-zl`, `/en/blog/ksef-10000-pln-limit`,
+  `/uk/blog/ksef-porig-10000-zl`
+  - **Change:** body only. One sentence at the end of the cash-register bullet in „Co nie wlicza się
+    do limitu" / its EN and UK equivalents linking `/blog/faktura-z-kasy-fiskalnej-ksef-2027`,
+    `/en/blog/cash-register-invoices-ksef-2027` and
+    `/uk/blog/rakhunok-z-kasovogo-aparata-ksef-2027`.
+  - **Motivation:** the PL and EN cash-register posts are "Discovered - currently not indexed" and
+    the health crawl found only 2 internal links to each (blog listing and the private-person post).
+    The 10,000 zł limit post is indexed (PL 136 impr, pos 8.8) and its bullet covers exactly the
+    art. 145n topic.
+  - **Baseline to compare:** URL Inspection state of the cash-register posts (PL and EN Discovered -
+    not indexed; UK not in the not-indexed list).
+
 ## 2026-10-17
 
 Digest: `gsc-data` 2026-10-16 (GSC 2026-09-16 to 2026-10-13: 91 clicks, 8,595 impressions, CTR
