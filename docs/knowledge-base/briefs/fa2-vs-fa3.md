@@ -7,6 +7,57 @@ update, what to add, what's gone. **Tool context:** ksefuj.to — free KSeF XML 
 
 ---
 
+## 2026-10-18 update (post `apps/web/content/pl/blog/fa2-vs-fa3-ksef.mdx`)
+
+**Target query:** „FA(2) FA(3) różnice" / „korekta faktury FA(2) KSeF"
+
+**Answer in two sentences:** Od 1.02.2026 każda faktura ustrukturyzowana, także korekta faktury
+FA(2) z KSeF 1.0, musi być w FA(3) ([BRO] wstęp „Wzór faktury ustrukturyzowanej", s. 3–4). Faktura
+FA(2) miała numer KSeF, więc korekta wskazuje go w `DaneFaKorygowanej` (`NrKSeF` = 1 +
+`NrKSeFFaKorygowanej`); `NrKSeFN` = 1 tylko dla oryginałów, którym numeru nie nadano ([BRO] opis pól
+`NrKSeF`/`NrKSeFN`, s. 69–70; art. 106j ust. 2 pkt 2a ustawy o VAT, t.j. Dz.U. 2026 poz. 1263).
+
+**What changes the answer:** original never sent to KSeF (paper/PDF, art. 145m 10 000 zł, art. 145n
+kasa, B2C outside KSeF) → `NrKSeFN` = 1 (`faktura-korygujaca-ksef.md` facts 1, 5). MF does not
+address KSeF 1.0 originals explicitly → MEDIUM.
+
+1. **FA(2) corrections: `NrKSeF`, not `NrKSeFN` (supersedes Step 5 below).** Sources, all via
+   `briefs/faktura-korygujaca-ksef.md` facts 1, 4 and „Unsettled Questions" (verified live
+   2026-10-17, PR #135):
+   - [BRO] `NrKSeF` (s. 69): „W przypadku, gdy faktura korygowana była wystawiona w KSeF, należy
+     wskazać „1"."; `NrKSeFN` (s. 70): „…była wystawiona poza KSeF należy wskazać „1"." URL:
+     https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf
+     Tier 2. HIGH (wording).
+   - Art. 106j ust. 2 pkt 2a (t.j. Dz.U. 2026 poz. 1263, s. 130): number required „z wyjątkiem
+     faktur korygujących wystawianych do faktur, dla których nie został nadany numer". URL:
+     https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263 (text:
+     https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf). Tier 1. HIGH.
+   - [XSD] `TNumerKSeF` pattern allows the optional hyphen, i.e. the 36-char KSeF 1.0 format
+     (`packages/validator/src/schemas/schemat.xsd`; https://crd.gov.pl/wzor/2025/06/25/13775/). HIGH
+     (pattern); MEDIUM (that MF intends it for KSeF 1.0 numbers).
+   - Conclusion for KSeF 1.0 originals: **MEDIUM** (no explicit MF statement in [CZ2], [BRO], FAQ,
+     checked 2026-10-17). `NrKSeFN` for paper/PDF originals: HIGH.
+   - Post conflict: section „Korekty do faktur FA(2)" (line 149) and checklist (line 162) say
+     `NrKSeFN` = 1 for every FA(2) invoice. Not supported; already logged in
+     `faktura-korygujaca-ksef.md` fact 4 „Conflict" and „Common Misconceptions".
+2. **1.04.2026 covers VAT-exempt taxpayers too.** Post line 39 („pozostałych czynnych podatników
+   VAT") is too narrow. FAQ KSeF 2.0, Q10: „Co do zasady każdy podatnik (czynny i zwolniony), który
+   ma obowiązek wystawienia faktury, będzie wystawiał ją w KSeF — zgodnie z etapami: 1.02.2026 r.
+   (duże podmioty) i 1.04.2026 r. (reszta)." URL:
+   https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20 (fetched live 2026-10-16 per
+   `limity-i-wylaczenia.md`; also `zwolniony-z-vat-ksef.md` fact 6, Q22). Law: art. 106ga ust. 1
+   (all „Podatnicy"). Tier 3 + Tier 1. HIGH. Exception: art. 113a sellers (art. 106ga ust. 2 pkt 6),
+   not Polish art. 113 JDG. Same wording issue in fact 1.3 below.
+3. **VAT Act citation:** Source Corpus and „Źródła" item 3 cite Dz.U. 2025 poz. 775; superseded by
+   t.j. Dz.U. 2026 poz. 1263 (obwieszczenie of 1.09.2026; `WATCHLIST.md` baseline 2026-10-07,
+   `zwolniony-z-vat-ksef.md` fact 1). HIGH.
+
+**Not fetched live on 2026-10-18** (proxy 403 for ksef.podatki.gov.pl, crd.gov.pl, isap): all URLs
+above, the [BRO] PDF (s. 3–4, 69–70), FAQ Q10/Q22, art. 106j and 106ga text. Facts rest on the KB
+checks of 2026-10-16/17 and the `WATCHLIST.md` baseline of 2026-10-07.
+
+---
+
 > **Freshness: 2026-10-07 update.**
 >
 > - Test environment: https://ap-test.ksef.mf.gov.pl/web/ (AP) and
@@ -301,6 +352,10 @@ by KSeF 2.0.
 - **Source:** FA(3) Information Sheet §6.1 — Confidence: HIGH
 
 **Step 5 — Handle FA(3) corrections of old FA(2) invoices correctly**
+
+> **SUPERSEDED 2026-10-18:** the `NrKSeFN` advice below is not supported by the sources; use
+> `NrKSeF` = 1 + `NrKSeFFaKorygowanej` (KSeF 1.0 number). See „2026-10-18 update", item 1. Kept for
+> history.
 
 - When issuing a corrective invoice in 2026 that corrects an original FA(2) invoice issued before
   Feb 1, 2026: use FA(3) format for the corrective invoice.

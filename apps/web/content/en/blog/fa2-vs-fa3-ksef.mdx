@@ -2,7 +2,7 @@
 title: "FA(2) vs FA(3): what to change in your XML"
 description: "Since 1 February 2026 KSeF accepts only FA(3). Change the namespace, KodFormularza and WariantFormularza, add JST and GV to Podmiot2. Corrections too."
 date: 2026-03-28
-updated: 2026-10-07
+updated: 2026-10-18
 section: blog
 locale: en
 slug: "fa2-vs-fa3-ksef"
@@ -15,6 +15,10 @@ sources:
     url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
   - label: "Aplikacja Podatnika KSeF 2.0 user manual"
     url: "https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
+  - label: "Art. 106j of the VAT Act (consolidated text, Dz.U. 2026 poz. 1263)"
+    url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
+  - label: "MF FAQ — KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
 translations:
   pl: "fa2-vs-fa3-ksef"
   en: "fa2-vs-fa3-ksef"
@@ -22,7 +26,7 @@ translations:
 
 Since 1 February 2026, KSeF (Krajowy System e-Faktur, Poland's national e-invoicing system) 2.0 accepts only FA(3), with no backward compatibility mode. To migrate from FA(2) you change the namespace, the `KodFormularza` attributes and the `WariantFormularza` value, and add the `JST` and `GV` fields to every `Podmiot2`.
 
-Legal position as of 7 October 2026.
+Legal position as of 18 October 2026.
 
 <Source
   href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
@@ -36,7 +40,12 @@ FA(2) applied from 1 September 2023, first voluntarily, then in the KSeF pilot, 
 Two dates are easy to confuse:
 
 - **1 February 2026:** KSeF became mandatory for taxpayers with 2024 turnover above PLN 200 million. From that day FA(3) is the only accepted format for **all** KSeF invoices.
-- **1 April 2026:** KSeF became mandatory for the remaining active VAT taxpayers.
+- **1 April 2026:** KSeF became mandatory for all remaining taxpayers, both VAT-registered and VAT-exempt.
+
+<Source
+  href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
+  label="MF FAQ — KSeF 2.0, question 10"
+/>
 
 So the format has applied since February, regardless of when KSeF became mandatory for you.
 
@@ -146,7 +155,12 @@ When `JST` = `1`, a `Podmiot3` entry with `Rola` = `8` is required. When `GV` = 
 
 A correction invoice for an invoice issued in FA(2) before 1 February 2026 **must be in FA(3)**. There is no "FA(2) correction in FA(2) format". The same goes for final invoices that settle FA(2) advance invoices (MF FA(3) information brochure, or broszura, introduction on the binding invoice template).
 
-When correcting an invoice issued outside the current KSeF, meaning any FA(2) invoice from KSeF 1.0, use `NrKSeFN` = `1` in `DaneFaKorygowanej`. The `NrKSeF` field applies to invoices already issued in KSeF 2.0.
+An FA(2) invoice sent to KSeF 1.0 has a KSeF number, so the correction sets `NrKSeF` = `1` in `DaneFaKorygowanej` and gives that number in `NrKSeFFaKorygowanej`. The FA(3) schema accepts numbers in the KSeF 1.0 format there too. Set `NrKSeFN` = `1` only when the original was never assigned a KSeF number, for example because it was issued on paper or as a PDF. MF does not address the KSeF 1.0 case directly. The rule follows from the descriptions of the `NrKSeF` and `NrKSeFN` fields in the FA(3) brochure and from art. 106j ust. 2 pkt 2a of the VAT Act, which requires the original's KSeF number whenever one was assigned. Other invoices without a KSeF number are covered in our article on [correcting an invoice without a KSeF number](/en/blog/corrective-invoice-ksef#correcting-an-invoice-without-a-ksef-number).
+
+<Source
+  href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
+  label="Art. 106j ust. 2 pkt 2a of the VAT Act (consolidated text, Dz.U. 2026 poz. 1263)"
+/>
 
 ## Migration checklist
 
@@ -159,7 +173,7 @@ When correcting an invoice issued outside the current KSeF, meaning any FA(2) in
 
 **Depending on your case:**
 
-- corrections to FA(2): `NrKSeFN` = `1` in `DaneFaKorygowanej`,
+- corrections to FA(2) invoices from KSeF 1.0: `NrKSeF` = `1` and the KSeF 1.0 number in `NrKSeFFaKorygowanej`,
 - employee invoices: `Rola` = `11` in `Podmiot3` with `BrakID` = `1`,
 - complex quantity-heavy invoices: `Zalacznik`, after notifying e-US.
 
