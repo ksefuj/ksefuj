@@ -1,7 +1,7 @@
 # Research Brief: Zmiany w API KSeF 2.x (CIRFMF) istotne dla integratorów, kwiecień–wrzesień 2026
 
-**Requested by:** weekly knowledge refresh **Date:** 2026-10-07 **Freshness:** 2026-10-07 **For
-content:** developer-facing posts; validator context. INTERNAL reference.
+**Requested by:** weekly knowledge refresh **Date:** 2026-10-07 **Freshness:** 2026-10-19 (CIRFMF
+GitHub only) **For content:** developer-facing posts; validator context. INTERNAL reference.
 
 **Target query:** "KSeF API zmiany 2026", "limity API KSeF", "KSeF walidacja XML 19 października"
 
@@ -46,7 +46,11 @@ dates below are PROD unless stated.
    `global` groups (global = future per-IP limits, currently off); new error `21184` ("Sesja
    tymczasowo niedostępna", HTTP 400) when sending in an existing interactive session is temporarily
    paused (open a new session); header `X-KSeF-Feature: subject-identifier-validation` on test
-   environments. 2.8.1: error codes 71001/71004/71005 and 21418 for collective identifiers.
+   environments. 2.8.1: error codes 71001/71004/71005 and 21418 for collective identifiers. **2.9.0
+   (TEST/DEMO 13.10.2026, PROD 15.10.2026):** POST /permissions/query/personal/grants returns
+   `OwnerPermissionScope` (owner permissions of the authenticated entity); error `21001`
+   ("Nieczytelna treść") added to the OpenAPI error docs; the changelog says the API returned it
+   before, so this is documentation only (source: api-changelog.md above). Confidence: HIGH
 8. **Deprecation:** `authenticationMethod` response field was announced for withdrawal on 2026-11-16
    (changelog 2.1.0). In issue #875 (closed 2026-10-05) the maintainer said it stays in current
    operations; removal comes with a **new operation revision** and a **12-month transition** from
@@ -58,11 +62,15 @@ dates below are PROD unless stated.
     test https://ap-test.ksef.mf.gov.pl/web/, AP demo https://ap-demo.ksef.mf.gov.pl/, API docs
     https://api.ksef.mf.gov.pl/docs/v2, https://api-test.ksef.mf.gov.pl/docs/v2,
     https://api-demo.ksef.mf.gov.pl/docs/v2.
-11. **SDKs (releases, unofficial summary of tags):** ksef-client-csharp 2.6.0 to 2.8.1 (tracking API
-    versions); ksef-client-java tags 3.0.24 to 3.0.29, breaking rename `upoVersion` -> `feature` in
-    3.0.28 (per coordinator research; verify tag text before citing); ksef-pdf-generator up to
-    1.1.40 (2026-09-17; PEF support, UTF-16 handling per coordinator research). ksef-latarnia: no
-    releases found by `gh release list`.
+11. **SDKs (releases, unofficial summary of tags):** ksef-client-csharp 2.6.0 to 2.9.0 (tracking API
+    versions; 2.9.0 of 2026-10-14 changes the return type of `SearchGrantedPersonalPermissionsAsync`
+    to `PersonalPermissionsQueryResponse`, a source-breaking change for explicitly typed callers);
+    ksef-client-java tags 3.0.24 to 3.0.29, breaking rename `upoVersion` -> `feature` in 3.0.28 (per
+    coordinator research; verify tag text before citing); ksef-pdf-generator up to 1.1.46 (changelog
+    date 2026-10-14: invoice-number formatting in the header, PEF correction refactor, decimal
+    separator fixes for Rabat and OSS tax amount, rounding fix; 1.1.40 of 2026-09-17 added PEF and
+    UTF-16 handling; https://github.com/CIRFMF/ksef-pdf-generator/blob/main/changelog.md).
+    ksef-latarnia: no releases found by `gh release list`.
 
 ## Unsettled Questions
 
