@@ -1,277 +1,296 @@
 {
-  "generatedAt": "2026-10-18T07:19:35.090Z",
-  "date": "2026-10-18",
+  "generatedAt": "2026-10-19T07:57:29.626Z",
+  "date": "2026-10-19",
   "gsc": {
     "skipped": false,
     "site": "sc-domain:ksefuj.to",
     "periods": {
       "current": {
-        "start": "2026-09-18",
-        "end": "2026-10-15"
+        "start": "2026-09-19",
+        "end": "2026-10-16"
       },
       "previous": {
-        "start": "2026-08-21",
-        "end": "2026-09-17"
+        "start": "2026-08-22",
+        "end": "2026-09-18"
       },
       "daily": {
-        "start": "2026-07-18",
-        "end": "2026-10-15"
+        "start": "2026-07-19",
+        "end": "2026-10-16"
       }
     },
     "sectionErrors": [],
     "totals": {
       "current": {
-        "clicks": 101,
-        "impressions": 8611,
-        "ctr": 0.011729183602369063,
-        "position": 6.529439089536639
+        "clicks": 103,
+        "impressions": 8672,
+        "ctr": 0.011877306273062731,
+        "position": 6.603782287822878
       },
       "previous": {
-        "clicks": 74,
-        "impressions": 11451,
-        "ctr": 0.006462317701510785,
-        "position": 6.479521439175618
+        "clicks": 73,
+        "impressions": 11511,
+        "ctr": 0.0063417600555989925,
+        "position": 6.446616280079923
       }
     },
     "comparisonAvailable": true,
     "pages": [
       {
         "page": "https://ksefuj.to/blog/tokeny-ksef-po-2026",
-        "clicks": 12,
-        "impressions": 128,
-        "ctr": 0.09375,
-        "position": 5.203125
+        "clicks": 13,
+        "impressions": 140,
+        "ctr": 0.09285714285714286,
+        "position": 5.271428571428571
       },
       {
         "page": "https://ksefuj.to/en/blog/most-common-fa3-validation-errors",
         "clicks": 11,
-        "impressions": 545,
-        "ctr": 0.02018348623853211,
-        "position": 4.3082568807339445,
+        "impressions": 538,
+        "ctr": 0.020446096654275093,
+        "position": 4.301115241635688,
         "prev": {
           "clicks": 10,
-          "impressions": 929,
-          "ctr": 0.010764262648008612,
-          "position": 5.420882669537137
+          "impressions": 916,
+          "ctr": 0.010917030567685589,
+          "position": 5.408296943231441
         },
         "delta": {
           "clicks": 1,
-          "impressions": -384,
-          "ctr": 0.009419223590523499,
-          "position": -1.112625788803192
+          "impressions": -378,
+          "ctr": 0.009529066086589504,
+          "position": -1.1071817015957537
         }
       },
       {
         "page": "https://ksefuj.to/en",
         "clicks": 10,
-        "impressions": 117,
-        "ctr": 0.08547008547008547,
-        "position": 4.564102564102564,
+        "impressions": 113,
+        "ctr": 0.08849557522123894,
+        "position": 4.699115044247788,
         "prev": {
           "clicks": 8,
-          "impressions": 186,
-          "ctr": 0.043010752688172046,
-          "position": 11.36021505376344
+          "impressions": 189,
+          "ctr": 0.042328042328042326,
+          "position": 10.698412698412698
         },
         "delta": {
           "clicks": 2,
-          "impressions": -69,
-          "ctr": 0.042459332781913425,
-          "position": -6.796112489660876
-        }
-      },
-      {
-        "page": "https://ksefuj.to/en/blog/corrective-invoice-ksef",
-        "clicks": 9,
-        "impressions": 3021,
-        "ctr": 0.0029791459781529296,
-        "position": 6.20820920225091,
-        "prev": {
-          "clicks": 10,
-          "impressions": 5078,
-          "ctr": 0.0019692792437967705,
-          "position": 5.237298148877511
-        },
-        "delta": {
-          "clicks": -1,
-          "impressions": -2057,
-          "ctr": 0.001009866734356159,
-          "position": 0.9709110533733991
+          "impressions": -76,
+          "ctr": 0.04616753289319661,
+          "position": -5.99929765416491
         }
       },
       {
         "page": "https://ksefuj.to/blog/najczestsze-bledy-walidacji-fa3",
-        "clicks": 7,
-        "impressions": 620,
-        "ctr": 0.01129032258064516,
-        "position": 7.041935483870968,
+        "clicks": 8,
+        "impressions": 631,
+        "ctr": 0.012678288431061807,
+        "position": 7.141045958795563,
         "prev": {
           "clicks": 7,
-          "impressions": 607,
-          "ctr": 0.011532125205930808,
-          "position": 7.398682042833608
+          "impressions": 605,
+          "ctr": 0.011570247933884297,
+          "position": 7.3685950413223145
         },
         "delta": {
-          "clicks": 0,
-          "impressions": 13,
-          "ctr": -0.0002418026252856472,
-          "position": -0.35674655896263996
+          "clicks": 1,
+          "impressions": 26,
+          "ctr": 0.0011080404971775103,
+          "position": -0.22754908252675143
+        }
+      },
+      {
+        "page": "https://ksefuj.to/en/blog/corrective-invoice-ksef",
+        "clicks": 8,
+        "impressions": 2900,
+        "ctr": 0.002758620689655172,
+        "position": 6.22448275862069,
+        "prev": {
+          "clicks": 11,
+          "impressions": 5191,
+          "ctr": 0.002119052205740705,
+          "position": 5.251781930263919
+        },
+        "delta": {
+          "clicks": -3,
+          "impressions": -2291,
+          "ctr": 0.0006395684839144672,
+          "position": 0.9727008283567713
         }
       },
       {
         "page": "https://ksefuj.to/",
         "clicks": 6,
-        "impressions": 52,
-        "ctr": 0.11538461538461539,
-        "position": 7.903846153846154,
+        "impressions": 53,
+        "ctr": 0.11320754716981132,
+        "position": 7.849056603773585,
         "prev": {
           "clicks": 4,
           "impressions": 101,
           "ctr": 0.039603960396039604,
-          "position": 22.85148514851485
+          "position": 22.88118811881188
         },
         "delta": {
           "clicks": 2,
-          "impressions": -49,
-          "ctr": 0.07578065498857578,
-          "position": -14.947638994668697
+          "impressions": -48,
+          "ctr": 0.07360358677377171,
+          "position": -15.032131515038296
         }
       },
       {
         "page": "https://ksefuj.to/blog/faktura-zagraniczna-ksef",
         "clicks": 6,
-        "impressions": 425,
-        "ctr": 0.01411764705882353,
-        "position": 7.463529411764706,
+        "impressions": 419,
+        "ctr": 0.014319809069212411,
+        "position": 7.5393794749403344,
         "prev": {
           "clicks": 7,
-          "impressions": 408,
-          "ctr": 0.01715686274509804,
-          "position": 6.644607843137255
+          "impressions": 418,
+          "ctr": 0.01674641148325359,
+          "position": 6.624401913875598
         },
         "delta": {
           "clicks": -1,
-          "impressions": 17,
-          "ctr": -0.003039215686274511,
-          "position": 0.8189215686274514
+          "impressions": 1,
+          "ctr": -0.002426602414041178,
+          "position": 0.9149775610647364
         }
       },
       {
         "page": "https://ksefuj.to/blog/kary-ksef-2027-2028",
         "clicks": 5,
-        "impressions": 107,
-        "ctr": 0.04672897196261682,
-        "position": 5.355140186915888
+        "impressions": 125,
+        "ctr": 0.04,
+        "position": 5.312
       },
       {
         "page": "https://ksefuj.to/blog/koniec-limitu-10000-zl",
         "clicks": 3,
-        "impressions": 111,
-        "ctr": 0.02702702702702703,
-        "position": 5.846846846846847
+        "impressions": 127,
+        "ctr": 0.023622047244094488,
+        "position": 5.960629921259843
       },
       {
         "page": "https://ksefuj.to/en/blog/foreign-invoice-ksef",
         "clicks": 3,
-        "impressions": 78,
-        "ctr": 0.038461538461538464,
-        "position": 7.17948717948718,
+        "impressions": 76,
+        "ctr": 0.039473684210526314,
+        "position": 7.078947368421052,
         "prev": {
           "clicks": 1,
           "impressions": 99,
           "ctr": 0.010101010101010102,
-          "position": 6.959595959595959
+          "position": 7.03030303030303
         },
         "delta": {
           "clicks": 2,
-          "impressions": -21,
-          "ctr": 0.02836052836052836,
-          "position": 0.2198912198912204
+          "impressions": -23,
+          "ctr": 0.02937267410951621,
+          "position": 0.048644338118021935
         }
       },
       {
         "page": "https://ksefuj.to/en/blog/ksef-number-in-bank-transfer",
         "clicks": 3,
-        "impressions": 47,
-        "ctr": 0.06382978723404255,
-        "position": 5.425531914893617
+        "impressions": 59,
+        "ctr": 0.05084745762711865,
+        "position": 4.881355932203389
       },
       {
         "page": "https://ksefuj.to/en/guides/first-fa3-invoice",
         "clicks": 3,
-        "impressions": 154,
-        "ctr": 0.01948051948051948,
-        "position": 5.967532467532467,
+        "impressions": 151,
+        "ctr": 0.019867549668874173,
+        "position": 6.052980132450331,
         "prev": {
           "clicks": 0,
-          "impressions": 435,
+          "impressions": 439,
           "ctr": 0,
-          "position": 5.885057471264368
+          "position": 5.876993166287016
         },
         "delta": {
           "clicks": 3,
-          "impressions": -281,
-          "ctr": 0.01948051948051948,
-          "position": 0.08247499626809951
+          "impressions": -288,
+          "ctr": 0.019867549668874173,
+          "position": 0.17598696616331555
         }
       },
       {
         "page": "https://ksefuj.to/guides/logowanie-ksef",
         "clicks": 3,
-        "impressions": 246,
-        "ctr": 0.012195121951219513,
-        "position": 8.951219512195122
+        "impressions": 272,
+        "ctr": 0.011029411764705883,
+        "position": 8.764705882352942
       },
       {
         "page": "https://ksefuj.to/blog/zwolniony-z-vat-ksef",
         "clicks": 2,
-        "impressions": 34,
-        "ctr": 0.058823529411764705,
-        "position": 6.764705882352941
+        "impressions": 38,
+        "ctr": 0.05263157894736842,
+        "position": 6.7894736842105265
       },
       {
         "page": "https://ksefuj.to/en/blog/fa2-vs-fa3-ksef",
         "clicks": 2,
-        "impressions": 565,
-        "ctr": 0.0035398230088495575,
-        "position": 6.2176991150442475,
+        "impressions": 554,
+        "ctr": 0.0036101083032490976,
+        "position": 6.503610108303249,
         "prev": {
           "clicks": 5,
-          "impressions": 1305,
-          "ctr": 0.0038314176245210726,
-          "position": 5.962452107279693
+          "impressions": 1278,
+          "ctr": 0.003912363067292645,
+          "position": 5.975743348982785
         },
         "delta": {
           "clicks": -3,
-          "impressions": -740,
-          "ctr": -0.0002915946156715151,
-          "position": 0.2552470077645541
+          "impressions": -724,
+          "ctr": -0.00030225476404354724,
+          "position": 0.5278667593204638
         }
       },
       {
         "page": "https://ksefuj.to/en/guides/ksef-login",
         "clicks": 2,
-        "impressions": 188,
-        "ctr": 0.010638297872340425,
-        "position": 6.388297872340425
+        "impressions": 211,
+        "ctr": 0.009478672985781991,
+        "position": 6.312796208530806
+      },
+      {
+        "page": "https://ksefuj.to/uk/blog/koryguvalna-faktura-ksef",
+        "clicks": 2,
+        "impressions": 72,
+        "ctr": 0.027777777777777776,
+        "position": 4.5,
+        "prev": {
+          "clicks": 4,
+          "impressions": 67,
+          "ctr": 0.05970149253731343,
+          "position": 3.044776119402985
+        },
+        "delta": {
+          "clicks": -2,
+          "impressions": 5,
+          "ctr": -0.031923714759535655,
+          "position": 1.455223880597015
+        }
       },
       {
         "page": "https://ksefuj.to/uk/blog/most-common-fa3-validation-errors",
         "clicks": 2,
-        "impressions": 98,
-        "ctr": 0.02040816326530612,
-        "position": 6.928571428571429,
+        "impressions": 96,
+        "ctr": 0.020833333333333332,
+        "position": 6.927083333333333,
         "prev": {
-          "clicks": 5,
-          "impressions": 118,
-          "ctr": 0.0423728813559322,
-          "position": 4.686440677966102
+          "clicks": 4,
+          "impressions": 121,
+          "ctr": 0.03305785123966942,
+          "position": 4.743801652892563
         },
         "delta": {
-          "clicks": -3,
-          "impressions": -20,
-          "ctr": -0.02196471809062608,
-          "position": 2.2421307506053267
+          "clicks": -2,
+          "impressions": -25,
+          "ctr": -0.01222451790633609,
+          "position": 2.1832816804407704
         }
       },
       {
@@ -279,89 +298,89 @@
         "clicks": 1,
         "impressions": 172,
         "ctr": 0.005813953488372093,
-        "position": 9.023255813953488,
+        "position": 9.145348837209303,
         "prev": {
           "clicks": 2,
-          "impressions": 324,
-          "ctr": 0.006172839506172839,
-          "position": 9.731481481481481
+          "impressions": 313,
+          "ctr": 0.006389776357827476,
+          "position": 9.731629392971247
         },
         "delta": {
           "clicks": -1,
-          "impressions": -152,
-          "ctr": -0.0003588860178007462,
-          "position": -0.7082256675279925
+          "impressions": -141,
+          "ctr": -0.0005758228694553828,
+          "position": -0.5862805557619435
         }
       },
       {
         "page": "https://ksefuj.to/blog/faktura-korygujaca-ksef",
         "clicks": 1,
-        "impressions": 336,
-        "ctr": 0.002976190476190476,
-        "position": 8.172619047619047,
+        "impressions": 325,
+        "ctr": 0.003076923076923077,
+        "position": 8.224615384615385,
         "prev": {
           "clicks": 6,
-          "impressions": 600,
-          "ctr": 0.01,
-          "position": 8.011666666666667
+          "impressions": 588,
+          "ctr": 0.01020408163265306,
+          "position": 7.833333333333333
         },
         "delta": {
           "clicks": -5,
-          "impressions": -264,
-          "ctr": -0.007023809523809524,
-          "position": 0.16095238095238074
+          "impressions": -263,
+          "ctr": -0.0071271585557299835,
+          "position": 0.39128205128205185
         }
       },
       {
         "page": "https://ksefuj.to/blog/numer-ksef-w-przelewie",
         "clicks": 1,
-        "impressions": 27,
-        "ctr": 0.037037037037037035,
-        "position": 6.481481481481482
+        "impressions": 28,
+        "ctr": 0.03571428571428571,
+        "position": 6.607142857142857
       },
       {
         "page": "https://ksefuj.to/en/blog/certificates-vs-tokens-ksef",
         "clicks": 1,
-        "impressions": 153,
-        "ctr": 0.006535947712418301,
-        "position": 7.42483660130719,
+        "impressions": 145,
+        "ctr": 0.006896551724137931,
+        "position": 7.517241379310345,
         "prev": {
           "clicks": 3,
           "impressions": 582,
           "ctr": 0.005154639175257732,
-          "position": 8.781786941580755
+          "position": 8.807560137457045
         },
         "delta": {
           "clicks": -2,
-          "impressions": -429,
-          "ctr": 0.001381308537160569,
-          "position": -1.3569503402735652
+          "impressions": -437,
+          "ctr": 0.001741912548880199,
+          "position": -1.2903187581467002
         }
       },
       {
         "page": "https://ksefuj.to/en/blog/end-of-10000-pln-limit",
         "clicks": 1,
-        "impressions": 111,
-        "ctr": 0.009009009009009009,
-        "position": 6.018018018018018
+        "impressions": 128,
+        "ctr": 0.0078125,
+        "position": 6.03125
       },
       {
         "page": "https://ksefuj.to/en/blog/ksef-from-april-1-2026",
         "clicks": 1,
-        "impressions": 147,
-        "ctr": 0.006802721088435374,
-        "position": 6.489795918367347,
+        "impressions": 145,
+        "ctr": 0.006896551724137931,
+        "position": 6.496551724137931,
         "prev": {
           "clicks": 0,
-          "impressions": 210,
+          "impressions": 212,
           "ctr": 0,
-          "position": 6.819047619047619
+          "position": 6.811320754716981
         },
         "delta": {
           "clicks": 1,
-          "impressions": -63,
-          "ctr": 0.006802721088435374,
-          "position": -0.3292517006802722
+          "impressions": -67,
+          "ctr": 0.006896551724137931,
+          "position": -0.3147690305790496
         }
       },
       {
@@ -384,25 +403,6 @@
         "impressions": 20,
         "ctr": 0.05,
         "position": 4.4
-      },
-      {
-        "page": "https://ksefuj.to/uk/blog/koryguvalna-faktura-ksef",
-        "clicks": 1,
-        "impressions": 67,
-        "ctr": 0.014925373134328358,
-        "position": 4.671641791044776,
-        "prev": {
-          "clicks": 4,
-          "impressions": 72,
-          "ctr": 0.05555555555555555,
-          "position": 3.3055555555555554
-        },
-        "delta": {
-          "clicks": -3,
-          "impressions": -5,
-          "ctr": -0.04063018242122719,
-          "position": 1.3660862354892203
-        }
       },
       {
         "page": "https://ksefuj.to/uk/guides/vkhid-do-ksef",
@@ -452,9 +452,9 @@
       {
         "page": "https://ksefuj.to/blog/certyfikaty-vs-tokeny-ksef",
         "clicks": 0,
-        "impressions": 80,
+        "impressions": 83,
         "ctr": 0,
-        "position": 8.8,
+        "position": 9.144578313253012,
         "prev": {
           "clicks": 0,
           "impressions": 46,
@@ -463,9 +463,9 @@
         },
         "delta": {
           "clicks": 0,
-          "impressions": 34,
+          "impressions": 37,
           "ctr": 0,
-          "position": -6.3086956521739115
+          "position": -5.9641173389209
         }
       },
       {
@@ -528,9 +528,9 @@
       {
         "page": "https://ksefuj.to/blog/faktura-dla-osoby-prywatnej-ksef",
         "clicks": 0,
-        "impressions": 57,
+        "impressions": 69,
         "ctr": 0,
-        "position": 7.7894736842105265
+        "position": 7.956521739130435
       },
       {
         "page": "https://ksefuj.to/blog/faktura-korygujaca-ksef#co-mozesz-skorygowac-a-czego-nie",
@@ -573,20 +573,20 @@
       {
         "page": "https://ksefuj.to/blog/faktura-korygujaca-ksef#korekta-faktury-sprzed-ksef",
         "clicks": 0,
-        "impressions": 3,
+        "impressions": 2,
         "ctr": 0,
-        "position": 5.666666666666667,
+        "position": 5.5,
         "prev": {
           "clicks": 0,
-          "impressions": 6,
+          "impressions": 7,
           "ctr": 0,
-          "position": 6.5
+          "position": 6.428571428571429
         },
         "delta": {
           "clicks": 0,
-          "impressions": -3,
+          "impressions": -5,
           "ctr": 0,
-          "position": -0.833333333333333
+          "position": -0.9285714285714288
         }
       },
       {
@@ -649,28 +649,28 @@
       {
         "page": "https://ksefuj.to/blog/faktura-korygujaca-ksef#krok-po-kroku-korekta-kwoty",
         "clicks": 0,
-        "impressions": 3,
+        "impressions": 2,
         "ctr": 0,
-        "position": 5.666666666666667,
+        "position": 5.5,
         "prev": {
           "clicks": 0,
-          "impressions": 5,
+          "impressions": 6,
           "ctr": 0,
-          "position": 5.6
+          "position": 5.666666666666667
         },
         "delta": {
           "clicks": 0,
-          "impressions": -2,
+          "impressions": -4,
           "ctr": 0,
-          "position": 0.06666666666666732
+          "position": -0.16666666666666696
         }
       },
       {
         "page": "https://ksefuj.to/blog/falszywe-faktury-ksef",
         "clicks": 0,
-        "impressions": 37,
+        "impressions": 39,
         "ctr": 0,
-        "position": 7.594594594594595,
+        "position": 7.435897435897436,
         "prev": {
           "clicks": 0,
           "impressions": 35,
@@ -679,9 +679,9 @@
         },
         "delta": {
           "clicks": 0,
-          "impressions": 2,
+          "impressions": 4,
           "ctr": 0,
-          "position": -0.6054054054054046
+          "position": -0.7641025641025632
         }
       },
       {
@@ -694,28 +694,28 @@
       {
         "page": "https://ksefuj.to/blog/ksef-limit-10000-zl",
         "clicks": 0,
-        "impressions": 134,
+        "impressions": 127,
         "ctr": 0,
-        "position": 8.738805970149254,
+        "position": 8.779527559055119,
         "prev": {
           "clicks": 0,
-          "impressions": 280,
+          "impressions": 279,
           "ctr": 0,
-          "position": 9.214285714285714
+          "position": 9.21146953405018
         },
         "delta": {
           "clicks": 0,
-          "impressions": -146,
+          "impressions": -152,
           "ctr": 0,
-          "position": -0.4754797441364591
+          "position": -0.4319419749950608
         }
       },
       {
         "page": "https://ksefuj.to/blog/ksef-od-1-kwietnia-2026",
         "clicks": 0,
-        "impressions": 10,
+        "impressions": 11,
         "ctr": 0,
-        "position": 8.1
+        "position": 8.272727272727273
       },
       {
         "page": "https://ksefuj.to/blog/ksef-ruszyl",
@@ -739,9 +739,9 @@
       {
         "page": "https://ksefuj.to/blog/ksef-scisla-walidacja-xml",
         "clicks": 0,
-        "impressions": 14,
+        "impressions": 15,
         "ctr": 0,
-        "position": 4.857142857142858
+        "position": 4.666666666666666
       },
       {
         "page": "https://ksefuj.to/blog/najczestsze-bledy-walidacji-fa3#1-brak-lub-nieprawid%C5%82owa-deklaracja-namespace",
@@ -751,15 +751,15 @@
         "position": 4.5,
         "prev": {
           "clicks": 0,
-          "impressions": 7,
+          "impressions": 6,
           "ctr": 0,
-          "position": 7.428571428571429
+          "position": 6.833333333333333
         },
         "delta": {
           "clicks": 0,
-          "impressions": 3,
+          "impressions": 4,
           "ctr": 0,
-          "position": -2.928571428571429
+          "position": -2.333333333333333
         }
       },
       {
@@ -789,15 +789,15 @@
         "position": 3,
         "prev": {
           "clicks": 0,
-          "impressions": 2,
+          "impressions": 1,
           "ctr": 0,
-          "position": 10.5
+          "position": 10
         },
         "delta": {
           "clicks": 0,
-          "impressions": 0,
+          "impressions": 1,
           "ctr": 0,
-          "position": -7.5
+          "position": -7
         }
       },
       {
@@ -827,15 +827,15 @@
         "position": 4.4,
         "prev": {
           "clicks": 0,
-          "impressions": 5,
+          "impressions": 4,
           "ctr": 0,
-          "position": 9
+          "position": 8.5
         },
         "delta": {
           "clicks": 0,
-          "impressions": 5,
+          "impressions": 6,
           "ctr": 0,
-          "position": -4.6
+          "position": -4.1
         }
       },
       {
@@ -1085,9 +1085,9 @@
       {
         "page": "https://ksefuj.to/en/blog/fake-invoices-ksef",
         "clicks": 0,
-        "impressions": 8,
+        "impressions": 9,
         "ctr": 0,
-        "position": 9.375,
+        "position": 8.88888888888889,
         "prev": {
           "clicks": 0,
           "impressions": 18,
@@ -1096,17 +1096,17 @@
         },
         "delta": {
           "clicks": 0,
-          "impressions": -10,
+          "impressions": -9,
           "ctr": 0,
-          "position": 2.9861111111111107
+          "position": 2.5
         }
       },
       {
         "page": "https://ksefuj.to/en/blog/invoice-for-private-person-ksef",
         "clicks": 0,
-        "impressions": 124,
+        "impressions": 139,
         "ctr": 0,
-        "position": 6.145161290322581
+        "position": 6.115107913669065
       },
       {
         "page": "https://ksefuj.to/en/blog/ksef-10000-pln-limit",
@@ -1130,9 +1130,9 @@
       {
         "page": "https://ksefuj.to/en/blog/ksef-for-sole-traders",
         "clicks": 0,
-        "impressions": 2,
+        "impressions": 4,
         "ctr": 0,
-        "position": 9.5
+        "position": 8.5
       },
       {
         "page": "https://ksefuj.to/en/blog/ksef-launched",
@@ -1142,15 +1142,15 @@
         "position": 14.818181818181818,
         "prev": {
           "clicks": 0,
-          "impressions": 56,
+          "impressions": 53,
           "ctr": 0,
-          "position": 11.053571428571429
+          "position": 10.679245283018869
         },
         "delta": {
           "clicks": 0,
-          "impressions": -34,
+          "impressions": -31,
           "ctr": 0,
-          "position": 3.7646103896103895
+          "position": 4.13893653516295
         }
       },
       {
@@ -1182,16 +1182,16 @@
       {
         "page": "https://ksefuj.to/en/blog/ksef-tokens-after-2026",
         "clicks": 0,
-        "impressions": 11,
+        "impressions": 12,
         "ctr": 0,
-        "position": 6.545454545454546
+        "position": 6.583333333333333
       },
       {
         "page": "https://ksefuj.to/en/blog/vat-exempt-ksef",
         "clicks": 0,
-        "impressions": 73,
+        "impressions": 93,
         "ctr": 0,
-        "position": 6.52054794520548
+        "position": 6.763440860215054
       },
       {
         "page": "https://ksefuj.to/en/docs",
@@ -1220,15 +1220,15 @@
         "position": 8.285714285714285,
         "prev": {
           "clicks": 0,
-          "impressions": 14,
+          "impressions": 13,
           "ctr": 0,
-          "position": 6.785714285714286
+          "position": 6.615384615384615
         },
         "delta": {
           "clicks": 0,
-          "impressions": -7,
+          "impressions": -6,
           "ctr": 0,
-          "position": 1.4999999999999991
+          "position": 1.6703296703296697
         }
       },
       {
@@ -1253,23 +1253,30 @@
       {
         "page": "https://ksefuj.to/en/guides/ksef-outage-offline-mode",
         "clicks": 0,
-        "impressions": 26,
+        "impressions": 27,
         "ctr": 0,
-        "position": 6.076923076923077
+        "position": 6.111111111111111
       },
       {
         "page": "https://ksefuj.to/en/guides/ksef-taxpayer-app-first-invoice",
         "clicks": 0,
-        "impressions": 21,
+        "impressions": 23,
         "ctr": 0,
-        "position": 5.095238095238095
+        "position": 5.260869565217392
+      },
+      {
+        "page": "https://ksefuj.to/en/validator/attribute-not-allowed-fa3",
+        "clicks": 0,
+        "impressions": 1,
+        "ctr": 0,
+        "position": 11
       },
       {
         "page": "https://ksefuj.to/en/validator/fa3-amount-format-no-separators",
         "clicks": 0,
-        "impressions": 2,
+        "impressions": 3,
         "ctr": 0,
-        "position": 6
+        "position": 4.666666666666666
       },
       {
         "page": "https://ksefuj.to/en/validator/foreign-currency-invoice-vat-in-pln",
@@ -1281,9 +1288,9 @@
       {
         "page": "https://ksefuj.to/en/validator/invalid-bank-account-number-invoice",
         "clicks": 0,
-        "impressions": 34,
+        "impressions": 45,
         "ctr": 0,
-        "position": 8.323529411764707
+        "position": 11.222222222222221
       },
       {
         "page": "https://ksefuj.to/en/validator/invalid-field-value-fa3",
@@ -1302,9 +1309,9 @@
       {
         "page": "https://ksefuj.to/en/validator/malformed-xml-invoice",
         "clicks": 0,
-        "impressions": 20,
+        "impressions": 26,
         "ctr": 0,
-        "position": 6.4
+        "position": 11.346153846153847
       },
       {
         "page": "https://ksefuj.to/en/validator/missing-p15-total-amount-due",
@@ -1330,7 +1337,7 @@
       {
         "page": "https://ksefuj.to/en/validator/unexpected-element-fa3",
         "clicks": 0,
-        "impressions": 1,
+        "impressions": 3,
         "ctr": 0,
         "position": 7
       },
@@ -1344,27 +1351,27 @@
       {
         "page": "https://ksefuj.to/en/validator/wrong-namespace-fa3-invoice",
         "clicks": 0,
-        "impressions": 6,
+        "impressions": 7,
         "ctr": 0,
-        "position": 4.5
+        "position": 5.142857142857143
       },
       {
         "page": "https://ksefuj.to/en/waluty",
         "clicks": 0,
         "impressions": 39,
         "ctr": 0,
-        "position": 5.82051282051282,
+        "position": 5.743589743589744,
         "prev": {
           "clicks": 0,
           "impressions": 178,
           "ctr": 0,
-          "position": 6.685393258426966
+          "position": 6.719101123595506
         },
         "delta": {
           "clicks": 0,
           "impressions": -139,
           "ctr": 0,
-          "position": -0.8648804379141461
+          "position": -0.975511380005762
         }
       },
       {
@@ -1408,9 +1415,9 @@
       {
         "page": "https://ksefuj.to/guides/aplikacja-podatnika-ksef-pierwsza-faktura",
         "clicks": 0,
-        "impressions": 25,
+        "impressions": 28,
         "ctr": 0,
-        "position": 7.92
+        "position": 8.928571428571429
       },
       {
         "page": "https://ksefuj.to/guides/awaria-ksef-offline",
@@ -1517,20 +1524,20 @@
       {
         "page": "https://ksefuj.to/uk/blog/ksef-porig-10000-zl",
         "clicks": 0,
-        "impressions": 5,
+        "impressions": 4,
         "ctr": 0,
-        "position": 13.2,
+        "position": 14.5,
         "prev": {
           "clicks": 0,
-          "impressions": 4,
+          "impressions": 5,
           "ctr": 0,
-          "position": 15.75
+          "position": 14.2
         },
         "delta": {
           "clicks": 0,
-          "impressions": 1,
+          "impressions": -1,
           "ctr": 0,
-          "position": -2.5500000000000007
+          "position": 0.3000000000000007
         }
       },
       {
@@ -1540,16 +1547,16 @@
         "ctr": 0,
         "position": 10.981132075471699,
         "prev": {
-          "clicks": 1,
-          "impressions": 21,
-          "ctr": 0.047619047619047616,
-          "position": 11.666666666666666
+          "clicks": 0,
+          "impressions": 20,
+          "ctr": 0,
+          "position": 11.35
         },
         "delta": {
-          "clicks": -1,
-          "impressions": 32,
-          "ctr": -0.047619047619047616,
-          "position": -0.6855345911949673
+          "clicks": 0,
+          "impressions": 33,
+          "ctr": 0,
+          "position": -0.36886792452830086
         }
       },
       {
@@ -1569,9 +1576,9 @@
       {
         "page": "https://ksefuj.to/uk/blog/rakhunok-dlya-pryvatnoyi-osoby-ksef",
         "clicks": 0,
-        "impressions": 3,
+        "impressions": 4,
         "ctr": 0,
-        "position": 4.666666666666666
+        "position": 5.75
       },
       {
         "page": "https://ksefuj.to/uk/blog/rakhunok-z-kasovogo-aparata-ksef-2027",
@@ -1585,18 +1592,18 @@
         "clicks": 0,
         "impressions": 24,
         "ctr": 0,
-        "position": 11.833333333333334,
+        "position": 11.583333333333334,
         "prev": {
           "clicks": 0,
           "impressions": 19,
           "ctr": 0,
-          "position": 6.894736842105263
+          "position": 6.473684210526316
         },
         "delta": {
           "clicks": 0,
           "impressions": 5,
           "ctr": 0,
-          "position": 4.938596491228071
+          "position": 5.109649122807018
         }
       },
       {
@@ -1623,27 +1630,27 @@
       {
         "page": "https://ksefuj.to/uk/guides/dostup-do-ksef-dlya-bukhgaltera",
         "clicks": 0,
-        "impressions": 9,
+        "impressions": 10,
         "ctr": 0,
-        "position": 5.444444444444445
+        "position": 5
       },
       {
         "page": "https://ksefuj.to/uk/guides/pershyy-rakhunok-fa3",
         "clicks": 0,
-        "impressions": 12,
+        "impressions": 11,
         "ctr": 0,
-        "position": 5.166666666666667,
+        "position": 5.2727272727272725,
         "prev": {
           "clicks": 0,
-          "impressions": 11,
+          "impressions": 12,
           "ctr": 0,
-          "position": 10
+          "position": 9.5
         },
         "delta": {
           "clicks": 0,
-          "impressions": 1,
+          "impressions": -1,
           "ctr": 0,
-          "position": -4.833333333333333
+          "position": -4.2272727272727275
         }
       },
       {
@@ -1740,23 +1747,23 @@
       {
         "page": "https://ksefuj.to/validator/blad-kalkulacji-vat-p14-p15",
         "clicks": 0,
-        "impressions": 3,
+        "impressions": 4,
         "ctr": 0,
-        "position": 5.666666666666667
+        "position": 4.5
       },
       {
         "page": "https://ksefuj.to/validator/brak-jst-gv-podmiot2",
         "clicks": 0,
-        "impressions": 12,
+        "impressions": 13,
         "ctr": 0,
-        "position": 5.25
+        "position": 4.923076923076923
       },
       {
         "page": "https://ksefuj.to/validator/brak-p15-kwota-naleznosci-ogolem",
         "clicks": 0,
-        "impressions": 14,
+        "impressions": 15,
         "ctr": 0,
-        "position": 3.5714285714285716
+        "position": 3.8666666666666667
       },
       {
         "page": "https://ksefuj.to/validator/brak-wymaganego-pola-fa3",
@@ -1768,9 +1775,9 @@
       {
         "page": "https://ksefuj.to/validator/element-w-zlym-miejscu-fa3",
         "clicks": 0,
-        "impressions": 2,
+        "impressions": 3,
         "ctr": 0,
-        "position": 8
+        "position": 8.666666666666668
       },
       {
         "page": "https://ksefuj.to/validator/kwoty-bez-separatorow-tysiecy",
@@ -1789,23 +1796,23 @@
       {
         "page": "https://ksefuj.to/validator/nieprawidlowa-stawka-vat-p12",
         "clicks": 0,
-        "impressions": 8,
+        "impressions": 10,
         "ctr": 0,
-        "position": 1.875
+        "position": 1.9
       },
       {
         "page": "https://ksefuj.to/validator/nieprawidlowa-wartosc-pola-fa3",
         "clicks": 0,
-        "impressions": 21,
+        "impressions": 22,
         "ctr": 0,
-        "position": 7.095238095238095
+        "position": 6.818181818181818
       },
       {
         "page": "https://ksefuj.to/validator/odwrotne-obciazenie-p18-ksef",
         "clicks": 0,
-        "impressions": 17,
+        "impressions": 21,
         "ctr": 0,
-        "position": 5.705882352941177
+        "position": 5.619047619047619
       },
       {
         "page": "https://ksefuj.to/validator/podatek-w-pln-faktura-walutowa",
@@ -1826,18 +1833,18 @@
         "clicks": 0,
         "impressions": 41,
         "ctr": 0,
-        "position": 6.512195121951219,
+        "position": 6.634146341463414,
         "prev": {
           "clicks": 0,
-          "impressions": 51,
+          "impressions": 52,
           "ctr": 0,
-          "position": 8.882352941176471
+          "position": 8.73076923076923
         },
         "delta": {
           "clicks": 0,
-          "impressions": -10,
+          "impressions": -11,
           "ctr": 0,
-          "position": -2.370157819225252
+          "position": -2.0966228893058156
         }
       },
       {
@@ -2036,17 +2043,9 @@
         "query": "ksef logowanie przez profil zaufany",
         "page": "https://ksefuj.to/guides/logowanie-ksef",
         "clicks": 2,
-        "impressions": 66,
-        "ctr": 0.030303030303030304,
-        "position": 5.363636363636363
-      },
-      {
-        "query": "korekta korekty",
-        "page": "https://ksefuj.to/en/blog/corrective-invoice-ksef",
-        "clicks": 1,
-        "impressions": 1,
-        "ctr": 1,
-        "position": 6
+        "impressions": 72,
+        "ctr": 0.027777777777777776,
+        "position": 5.347222222222222
       },
       {
         "query": "ksef log",
@@ -2060,9 +2059,9 @@
         "query": "ksef validator",
         "page": "https://ksefuj.to/en",
         "clicks": 1,
-        "impressions": 10,
-        "ctr": 0.1,
-        "position": 1.7
+        "impressions": 8,
+        "ctr": 0.125,
+        "position": 1.625
       },
       {
         "query": "podatnik ksef",
@@ -2084,9 +2083,9 @@
         "query": "tokeny ksef do kiedy",
         "page": "https://ksefuj.to/blog/tokeny-ksef-po-2026",
         "clicks": 1,
-        "impressions": 14,
-        "ctr": 0.07142857142857142,
-        "position": 5.857142857142857
+        "impressions": 16,
+        "ctr": 0.0625,
+        "position": 6
       },
       {
         "query": "walidator ksef",
@@ -2121,8 +2120,8 @@
         "position": 8
       },
       {
-        "query": "a co z ksef",
-        "page": "https://ksefuj.to/en/blog/corrective-invoice-ksef",
+        "query": "25-03-2026",
+        "page": "https://ksefuj.to/en/blog/ksef-for-sole-traders",
         "clicks": 0,
         "impressions": 1,
         "ctr": 0,
@@ -2244,33 +2243,41 @@
         "query": "bład walidacji",
         "page": "https://ksefuj.to/blog/najczestsze-bledy-walidacji-fa3",
         "clicks": 0,
-        "impressions": 1,
+        "impressions": 2,
         "ctr": 0,
         "position": 7
+      },
+      {
+        "query": "błąd podczas walidacji",
+        "page": "https://ksefuj.to/blog/najczestsze-bledy-walidacji-fa3",
+        "clicks": 0,
+        "impressions": 2,
+        "ctr": 0,
+        "position": 6
       },
       {
         "query": "błąd podczas walidacji co to znaczy",
         "page": "https://ksefuj.to/blog/najczestsze-bledy-walidacji-fa3",
         "clicks": 0,
-        "impressions": 3,
+        "impressions": 5,
         "ctr": 0,
-        "position": 8
+        "position": 7.8
       },
       {
         "query": "błąd walidacji",
         "page": "https://ksefuj.to/blog/najczestsze-bledy-walidacji-fa3",
         "clicks": 0,
-        "impressions": 13,
+        "impressions": 14,
         "ctr": 0,
-        "position": 11.384615384615385
+        "position": 11.071428571428571
       },
       {
         "query": "błąd walidacji co to",
         "page": "https://ksefuj.to/blog/najczestsze-bledy-walidacji-fa3",
         "clicks": 0,
-        "impressions": 17,
+        "impressions": 20,
         "ctr": 0,
-        "position": 9.941176470588236
+        "position": 10.1
       },
       {
         "query": "błąd walidacji danych",
@@ -2284,9 +2291,9 @@
         "query": "błąd walidacji ksef",
         "page": "https://ksefuj.to/blog/najczestsze-bledy-walidacji-fa3",
         "clicks": 0,
-        "impressions": 4,
+        "impressions": 5,
         "ctr": 0,
-        "position": 11
+        "position": 10.8
       },
       {
         "query": "błąd walidacji przy przelewie",
@@ -2332,9 +2339,9 @@
         "query": "błędy walidacji co to znaczy",
         "page": "https://ksefuj.to/blog/najczestsze-bledy-walidacji-fa3",
         "clicks": 0,
-        "impressions": 12,
+        "impressions": 13,
         "ctr": 0,
-        "position": 10.5
+        "position": 10.384615384615385
       },
       {
         "query": "cbilling firefox",
@@ -2580,9 +2587,9 @@
         "query": "fa 3",
         "page": "https://ksefuj.to/en/blog/fa2-vs-fa3-ksef",
         "clicks": 0,
-        "impressions": 15,
+        "impressions": 14,
         "ctr": 0,
-        "position": 5.666666666666667
+        "position": 5.785714285714286
       },
       {
         "query": "fa schema",
@@ -2596,9 +2603,9 @@
         "query": "fa(3)",
         "page": "https://ksefuj.to/en/blog/fa2-vs-fa3-ksef",
         "clicks": 0,
-        "impressions": 3,
+        "impressions": 4,
         "ctr": 0,
-        "position": 3.3333333333333335
+        "position": 3
       },
       {
         "query": "fa(3) ksef",
@@ -2660,17 +2667,17 @@
         "query": "fa3",
         "page": "https://ksefuj.to/blog/fa2-vs-fa3-ksef",
         "clicks": 0,
-        "impressions": 5,
+        "impressions": 6,
         "ctr": 0,
-        "position": 41.4
+        "position": 39
       },
       {
         "query": "fa3",
         "page": "https://ksefuj.to/en/blog/fa2-vs-fa3-ksef",
         "clicks": 0,
-        "impressions": 77,
+        "impressions": 78,
         "ctr": 0,
-        "position": 6.623376623376624
+        "position": 6.961538461538462
       },
       {
         "query": "fa3fa",
@@ -2703,6 +2710,14 @@
         "impressions": 2,
         "ctr": 0,
         "position": 7.5
+      },
+      {
+        "query": "fakt zero",
+        "page": "https://ksefuj.to/en/blog/corrective-invoice-ksef",
+        "clicks": 0,
+        "impressions": 1,
+        "ctr": 0,
+        "position": 4
       },
       {
         "query": "faktur 2",
@@ -2825,6 +2840,14 @@
         "position": 3
       },
       {
+        "query": "invalid account bank",
+        "page": "https://ksefuj.to/en/validator/invalid-bank-account-number-invoice",
+        "clicks": 0,
+        "impressions": 1,
+        "ctr": 0,
+        "position": 35
+      },
+      {
         "query": "invalid account number",
         "page": "https://ksefuj.to/en/validator/invalid-bank-account-number-invoice",
         "clicks": 0,
@@ -2836,9 +2859,25 @@
         "query": "invalid bank account number",
         "page": "https://ksefuj.to/en/validator/invalid-bank-account-number-invoice",
         "clicks": 0,
-        "impressions": 2,
+        "impressions": 3,
         "ctr": 0,
-        "position": 5
+        "position": 11.666666666666666
+      },
+      {
+        "query": "invalid bank code",
+        "page": "https://ksefuj.to/en/validator/invalid-bank-account-number-invoice",
+        "clicks": 0,
+        "impressions": 1,
+        "ctr": 0,
+        "position": 18
+      },
+      {
+        "query": "invalid bank identifier",
+        "page": "https://ksefuj.to/en/validator/invalid-bank-account-number-invoice",
+        "clicks": 0,
+        "impressions": 1,
+        "ctr": 0,
+        "position": 47
       },
       {
         "query": "invoice to go login",
@@ -2881,14 +2920,6 @@
         "position": 5
       },
       {
-        "query": "ja",
-        "page": "https://ksefuj.to/en/blog/corrective-invoice-ksef",
-        "clicks": 0,
-        "impressions": 1,
-        "ctr": 0,
-        "position": 6
-      },
-      {
         "query": "ja sprzedaje",
         "page": "https://ksefuj.to/en/blog/corrective-invoice-ksef",
         "clicks": 0,
@@ -2903,14 +2934,6 @@
         "impressions": 1,
         "ctr": 0,
         "position": 2
-      },
-      {
-        "query": "jak to zrobic",
-        "page": "https://ksefuj.to/en/blog/corrective-invoice-ksef",
-        "clicks": 0,
-        "impressions": 1,
-        "ctr": 0,
-        "position": 9
       },
       {
         "query": "jak to zrobic w ksef",
@@ -2967,6 +2990,22 @@
         "impressions": 1,
         "ctr": 0,
         "position": 2
+      },
+      {
+        "query": "jestem zwolniony z vat",
+        "page": "https://ksefuj.to/en/blog/vat-exempt-ksef",
+        "clicks": 0,
+        "impressions": 1,
+        "ctr": 0,
+        "position": 10
+      },
+      {
+        "query": "kary ksef 2027",
+        "page": "https://ksefuj.to/blog/kary-ksef-2027-2028",
+        "clicks": 0,
+        "impressions": 1,
+        "ctr": 0,
+        "position": 11
       },
       {
         "query": "kody ksef",
@@ -3052,25 +3091,25 @@
         "query": "kse logowanie",
         "page": "https://ksefuj.to/guides/logowanie-ksef",
         "clicks": 0,
-        "impressions": 44,
+        "impressions": 49,
         "ctr": 0,
-        "position": 9.75
+        "position": 9.877551020408163
       },
       {
         "query": "ksef",
         "page": "https://ksefuj.to/en/blog/certificates-vs-tokens-ksef",
         "clicks": 0,
-        "impressions": 8,
+        "impressions": 5,
         "ctr": 0,
-        "position": 19
+        "position": 19.2
       },
       {
         "query": "ksef",
         "page": "https://ksefuj.to/en/blog/corrective-invoice-ksef",
         "clicks": 0,
-        "impressions": 1,
+        "impressions": 2,
         "ctr": 0,
-        "position": 7
+        "position": 7.5
       },
       {
         "query": "ksef",
@@ -3140,9 +3179,9 @@
         "query": "ksef 2.0 logowanie przez profil zaufany",
         "page": "https://ksefuj.to/guides/logowanie-ksef",
         "clicks": 0,
-        "impressions": 22,
+        "impressions": 24,
         "ctr": 0,
-        "position": 8.454545454545453
+        "position": 8.208333333333332
       },
       {
         "query": "ksef 2.0 zaloguj",
@@ -3167,6 +3206,14 @@
         "impressions": 2,
         "ctr": 0,
         "position": 4.5
+      },
+      {
+        "query": "ksef aplikacja podatnika",
+        "page": "https://ksefuj.to/guides/aplikacja-podatnika-ksef-pierwsza-faktura",
+        "clicks": 0,
+        "impressions": 1,
+        "ctr": 0,
+        "position": 30
       },
       {
         "query": "ksef authentication methods",
@@ -3276,17 +3323,17 @@
         "query": "ksef log in",
         "page": "https://ksefuj.to/en/guides/ksef-login",
         "clicks": 0,
-        "impressions": 9,
+        "impressions": 12,
         "ctr": 0,
-        "position": 4.666666666666666
+        "position": 4.916666666666666
       },
       {
         "query": "ksef login",
         "page": "https://ksefuj.to/en/guides/ksef-login",
         "clicks": 0,
-        "impressions": 65,
+        "impressions": 73,
         "ctr": 0,
-        "position": 4.6923076923076925
+        "position": 4.767123287671232
       },
       {
         "query": "ksef login",
@@ -3332,17 +3379,17 @@
         "query": "ksef logowanie",
         "page": "https://ksefuj.to/en/guides/ksef-login",
         "clicks": 0,
-        "impressions": 33,
+        "impressions": 39,
         "ctr": 0,
-        "position": 6.606060606060606
+        "position": 6.538461538461538
       },
       {
         "query": "ksef logowanie",
         "page": "https://ksefuj.to/guides/logowanie-ksef",
         "clicks": 0,
-        "impressions": 5,
+        "impressions": 7,
         "ctr": 0,
-        "position": 33.4
+        "position": 26.142857142857142
       },
       {
         "query": "ksef logowanie profil zaufany",
@@ -3428,9 +3475,9 @@
         "query": "ksef schema",
         "page": "https://ksefuj.to/en/blog/fa2-vs-fa3-ksef",
         "clicks": 0,
-        "impressions": 2,
+        "impressions": 1,
         "ctr": 0,
-        "position": 11
+        "position": 15
       },
       {
         "query": "ksef test",
@@ -3444,9 +3491,9 @@
         "query": "ksef test environment",
         "page": "https://ksefuj.to/en/guides/first-fa3-invoice",
         "clicks": 0,
-        "impressions": 11,
+        "impressions": 12,
         "ctr": 0,
-        "position": 6.090909090909091
+        "position": 6.25
       },
       {
         "query": "ksef test portal",
@@ -3484,9 +3531,9 @@
         "query": "ksef tokeny do kiedy",
         "page": "https://ksefuj.to/blog/tokeny-ksef-po-2026",
         "clicks": 0,
-        "impressions": 3,
+        "impressions": 4,
         "ctr": 0,
-        "position": 4.666666666666666
+        "position": 5.75
       },
       {
         "query": "ksef validator",
@@ -3540,9 +3587,17 @@
         "query": "ksef zaloguj profil zaufany",
         "page": "https://ksefuj.to/guides/logowanie-ksef",
         "clicks": 0,
-        "impressions": 1,
+        "impressions": 2,
         "ctr": 0,
-        "position": 5
+        "position": 7.5
+      },
+      {
+        "query": "ksef zaloguj profilem zaufanym",
+        "page": "https://ksefuj.to/guides/logowanie-ksef",
+        "clicks": 0,
+        "impressions": 3,
+        "ctr": 0,
+        "position": 3
       },
       {
         "query": "ksef zaloguj sie",
@@ -3652,9 +3707,9 @@
         "query": "logowanie do ksef profilem zaufanym",
         "page": "https://ksefuj.to/guides/logowanie-ksef",
         "clicks": 0,
-        "impressions": 10,
+        "impressions": 11,
         "ctr": 0,
-        "position": 9.7
+        "position": 9.636363636363637
       },
       {
         "query": "logowanie kse",
@@ -3857,6 +3912,14 @@
         "position": 1
       },
       {
+        "query": "osoba prywatna a ksef",
+        "page": "https://ksefuj.to/blog/faktura-dla-osoby-prywatnej-ksef",
+        "clicks": 0,
+        "impressions": 1,
+        "ctr": 0,
+        "position": 36
+      },
+      {
         "query": "po",
         "page": "https://ksefuj.to/en/waluty",
         "clicks": 0,
@@ -3959,6 +4022,14 @@
         "impressions": 1,
         "ctr": 0,
         "position": 27
+      },
+      {
+        "query": "prowadzi jdg",
+        "page": "https://ksefuj.to/en/blog/invoice-for-private-person-ksef",
+        "clicks": 0,
+        "impressions": 1,
+        "ctr": 0,
+        "position": 2
       },
       {
         "query": "przelicz",
@@ -4161,6 +4232,14 @@
         "position": 2
       },
       {
+        "query": "tak",
+        "page": "https://ksefuj.to/en/blog/vat-exempt-ksef",
+        "clicks": 0,
+        "impressions": 1,
+        "ctr": 0,
+        "position": 9
+      },
+      {
         "query": "tak została wysłana do ksef",
         "page": "https://ksefuj.to/en/blog/corrective-invoice-ksef",
         "clicks": 0,
@@ -4188,7 +4267,7 @@
         "query": "token ksef do kiedy",
         "page": "https://ksefuj.to/blog/tokeny-ksef-po-2026",
         "clicks": 0,
-        "impressions": 12,
+        "impressions": 14,
         "ctr": 0,
         "position": 7
       },
@@ -4204,9 +4283,9 @@
         "query": "ud477",
         "page": "https://ksefuj.to/blog/kary-ksef-2027-2028",
         "clicks": 0,
-        "impressions": 18,
+        "impressions": 20,
         "ctr": 0,
-        "position": 5.888888888888889
+        "position": 5.9
       },
       {
         "query": "w ksef",
@@ -4263,6 +4342,14 @@
         "impressions": 1,
         "ctr": 0,
         "position": 8
+      },
+      {
+        "query": "well-formed xml",
+        "page": "https://ksefuj.to/en/validator/malformed-xml-invoice",
+        "clicks": 0,
+        "impressions": 1,
+        "ctr": 0,
+        "position": 70
       },
       {
         "query": "wfirma",
@@ -4348,9 +4435,17 @@
         "query": "zaloguj sie do ksef",
         "page": "https://ksefuj.to/guides/logowanie-ksef",
         "clicks": 0,
-        "impressions": 1,
+        "impressions": 2,
         "ctr": 0,
         "position": 6
+      },
+      {
+        "query": "zaloguj się do ksef",
+        "page": "https://ksefuj.to/guides/logowanie-ksef",
+        "clicks": 0,
+        "impressions": 1,
+        "ctr": 0,
+        "position": 7
       },
       {
         "query": "znajdź błąd",
@@ -4423,6 +4518,14 @@
         "impressions": 1,
         "ctr": 0,
         "position": 7
+      },
+      {
+        "query": "а где его найти?",
+        "page": "https://ksefuj.to/en/blog/ksef-number-in-bank-transfer",
+        "clicks": 0,
+        "impressions": 1,
+        "ctr": 0,
+        "position": 3
       },
       {
         "query": "березень який місяць по счету",
@@ -4524,19 +4627,12 @@
         "query": "سپیدar error correction tax invoice sana system",
         "page": "https://ksefuj.to/en/blog/corrective-invoice-ksef",
         "clicks": 0,
-        "impressions": 1037,
+        "impressions": 956,
         "ctr": 0,
-        "position": 5.7444551591128254
+        "position": 5.718619246861925
       }
     ],
     "daily": [
-      {
-        "date": "2026-07-18",
-        "clicks": 0,
-        "impressions": 76,
-        "ctr": 0,
-        "position": 6.5394736842105265
-      },
       {
         "date": "2026-07-19",
         "clicks": 2,
@@ -5159,71 +5255,78 @@
         "impressions": 449,
         "ctr": 0.015590200445434299,
         "position": 7.1002227171492205
+      },
+      {
+        "date": "2026-10-16",
+        "clicks": 3,
+        "impressions": 361,
+        "ctr": 0.008310249307479225,
+        "position": 7.811634349030471
       }
     ],
     "countries": [
       {
         "country": "pol",
-        "clicks": 54,
-        "impressions": 4642,
-        "ctr": 0.011632916846186989,
-        "position": 6.958423093494184
+        "clicks": 55,
+        "impressions": 4735,
+        "ctr": 0.011615628299894404,
+        "position": 6.971066525871172
       },
       {
         "country": "deu",
         "clicks": 10,
-        "impressions": 338,
-        "ctr": 0.029585798816568046,
-        "position": 5.825443786982248
+        "impressions": 343,
+        "ctr": 0.029154518950437316,
+        "position": 5.892128279883382
       },
       {
         "country": "ukr",
         "clicks": 9,
         "impressions": 227,
         "ctr": 0.039647577092511016,
-        "position": 7.052863436123348
+        "position": 7.066079295154185
       },
       {
         "country": "gbr",
         "clicks": 7,
-        "impressions": 151,
-        "ctr": 0.046357615894039736,
-        "position": 5.364238410596027
+        "impressions": 164,
+        "ctr": 0.042682926829268296,
+        "position": 5.536585365853658
       },
       {
         "country": "ind",
         "clicks": 5,
-        "impressions": 147,
-        "ctr": 0.034013605442176874,
-        "position": 5.1020408163265305
+        "impressions": 146,
+        "ctr": 0.03424657534246575,
+        "position": 5.232876712328767
       },
       {
         "country": "bel",
         "clicks": 2,
-        "impressions": 72,
-        "ctr": 0.027777777777777776,
-        "position": 5.527777777777778
+        "impressions": 71,
+        "ctr": 0.028169014084507043,
+        "position": 5.450704225352113
       },
       {
         "country": "fin",
         "clicks": 2,
-        "impressions": 34,
-        "ctr": 0.058823529411764705,
-        "position": 6.323529411764706
+        "impressions": 30,
+        "ctr": 0.06666666666666667,
+        "position": 6.4
       },
       {
         "country": "nld",
         "clicks": 2,
         "impressions": 111,
         "ctr": 0.018018018018018018,
-        "position": 5.54054054054054
+        "position": 5.63063063063063
       },
       {
         "country": "phl",
         "clicks": 2,
-        "impressions": 36,
-        "ctr": 0.05555555555555555,
-        "position": 6.027777777777778
+        "impressions": 35,
+        "ctr": 0.05714285714285714,
+        "position": 6.085714285714285
       },
       {
         "country": "bih",
@@ -5235,23 +5338,23 @@
       {
         "country": "che",
         "clicks": 1,
-        "impressions": 37,
-        "ctr": 0.02702702702702703,
-        "position": 4.162162162162162
+        "impressions": 39,
+        "ctr": 0.02564102564102564,
+        "position": 4.538461538461538
       },
       {
         "country": "cze",
         "clicks": 1,
-        "impressions": 45,
-        "ctr": 0.022222222222222223,
-        "position": 5.822222222222222
+        "impressions": 46,
+        "ctr": 0.021739130434782608,
+        "position": 5.695652173913044
       },
       {
         "country": "esp",
         "clicks": 1,
-        "impressions": 82,
-        "ctr": 0.012195121951219513,
-        "position": 4.7560975609756095
+        "impressions": 91,
+        "ctr": 0.01098901098901099,
+        "position": 4.626373626373626
       },
       {
         "country": "mar",
@@ -5263,16 +5366,16 @@
       {
         "country": "mys",
         "clicks": 1,
-        "impressions": 18,
-        "ctr": 0.05555555555555555,
-        "position": 6.833333333333333
+        "impressions": 17,
+        "ctr": 0.058823529411764705,
+        "position": 6.588235294117647
       },
       {
         "country": "prt",
         "clicks": 1,
-        "impressions": 15,
-        "ctr": 0.06666666666666667,
-        "position": 5.533333333333333
+        "impressions": 16,
+        "ctr": 0.0625,
+        "position": 5.4375
       },
       {
         "country": "sgp",
@@ -5280,6 +5383,13 @@
         "impressions": 16,
         "ctr": 0.0625,
         "position": 5.1875
+      },
+      {
+        "country": "swe",
+        "clicks": 1,
+        "impressions": 79,
+        "ctr": 0.012658227848101266,
+        "position": 5.987341772151899
       },
       {
         "country": "afg",
@@ -5349,21 +5459,21 @@
         "clicks": 0,
         "impressions": 39,
         "ctr": 0,
-        "position": 5.153846153846154
+        "position": 5.256410256410256
       },
       {
         "country": "bgd",
         "clicks": 0,
-        "impressions": 19,
+        "impressions": 20,
         "ctr": 0,
-        "position": 5.526315789473684
+        "position": 5.5
       },
       {
         "country": "bgr",
         "clicks": 0,
-        "impressions": 20,
+        "impressions": 23,
         "ctr": 0,
-        "position": 5.85
+        "position": 5.913043478260869
       },
       {
         "country": "bhr",
@@ -5382,9 +5492,9 @@
       {
         "country": "bra",
         "clicks": 0,
-        "impressions": 66,
+        "impressions": 70,
         "ctr": 0,
-        "position": 7.651515151515151
+        "position": 9.657142857142857
       },
       {
         "country": "brn",
@@ -5396,9 +5506,9 @@
       {
         "country": "can",
         "clicks": 0,
-        "impressions": 34,
+        "impressions": 37,
         "ctr": 0,
-        "position": 5.882352941176471
+        "position": 6.135135135135135
       },
       {
         "country": "chl",
@@ -5445,23 +5555,23 @@
       {
         "country": "cri",
         "clicks": 0,
-        "impressions": 4,
+        "impressions": 3,
         "ctr": 0,
         "position": 1
       },
       {
         "country": "cyp",
         "clicks": 0,
-        "impressions": 4,
+        "impressions": 3,
         "ctr": 0,
-        "position": 5.5
+        "position": 6
       },
       {
         "country": "dnk",
         "clicks": 0,
-        "impressions": 29,
+        "impressions": 30,
         "ctr": 0,
-        "position": 6.137931034482759
+        "position": 6.166666666666667
       },
       {
         "country": "dza",
@@ -5473,9 +5583,9 @@
       {
         "country": "ecu",
         "clicks": 0,
-        "impressions": 1,
+        "impressions": 2,
         "ctr": 0,
-        "position": 6
+        "position": 7
       },
       {
         "country": "egy",
@@ -5501,9 +5611,16 @@
       {
         "country": "fra",
         "clicks": 0,
-        "impressions": 65,
+        "impressions": 68,
         "ctr": 0,
-        "position": 5.415384615384616
+        "position": 5.426470588235294
+      },
+      {
+        "country": "gab",
+        "clicks": 0,
+        "impressions": 1,
+        "ctr": 0,
+        "position": 11
       },
       {
         "country": "geo",
@@ -5522,9 +5639,9 @@
       {
         "country": "grc",
         "clicks": 0,
-        "impressions": 25,
+        "impressions": 24,
         "ctr": 0,
-        "position": 4.76
+        "position": 4.791666666666666
       },
       {
         "country": "hkg",
@@ -5536,9 +5653,9 @@
       {
         "country": "hrv",
         "clicks": 0,
-        "impressions": 15,
+        "impressions": 16,
         "ctr": 0,
-        "position": 6.066666666666666
+        "position": 6.25
       },
       {
         "country": "hti",
@@ -5550,30 +5667,23 @@
       {
         "country": "hun",
         "clicks": 0,
-        "impressions": 25,
+        "impressions": 26,
         "ctr": 0,
-        "position": 8.2
+        "position": 8.346153846153847
       },
       {
         "country": "idn",
         "clicks": 0,
-        "impressions": 27,
+        "impressions": 28,
         "ctr": 0,
-        "position": 7.962962962962963
-      },
-      {
-        "country": "imn",
-        "clicks": 0,
-        "impressions": 1,
-        "ctr": 0,
-        "position": 7
+        "position": 7.892857142857143
       },
       {
         "country": "irl",
         "clicks": 0,
-        "impressions": 14,
+        "impressions": 13,
         "ctr": 0,
-        "position": 4.5
+        "position": 4.384615384615385
       },
       {
         "country": "irn",
@@ -5606,9 +5716,9 @@
       {
         "country": "ita",
         "clicks": 0,
-        "impressions": 56,
+        "impressions": 54,
         "ctr": 0,
-        "position": 6.285714285714286
+        "position": 6.203703703703703
       },
       {
         "country": "jpn",
@@ -5627,23 +5737,23 @@
       {
         "country": "ken",
         "clicks": 0,
-        "impressions": 12,
+        "impressions": 13,
         "ctr": 0,
-        "position": 7.75
+        "position": 6.923076923076923
       },
       {
         "country": "kgz",
         "clicks": 0,
-        "impressions": 3,
+        "impressions": 4,
         "ctr": 0,
-        "position": 2.666666666666667
+        "position": 2.25
       },
       {
         "country": "kor",
         "clicks": 0,
-        "impressions": 33,
+        "impressions": 36,
         "ctr": 0,
-        "position": 8.757575757575758
+        "position": 8.472222222222221
       },
       {
         "country": "kwt",
@@ -5669,16 +5779,16 @@
       {
         "country": "ltu",
         "clicks": 0,
-        "impressions": 17,
+        "impressions": 22,
         "ctr": 0,
-        "position": 5.235294117647059
+        "position": 5.090909090909091
       },
       {
         "country": "lux",
         "clicks": 0,
-        "impressions": 5,
+        "impressions": 6,
         "ctr": 0,
-        "position": 3.8
+        "position": 4.833333333333334
       },
       {
         "country": "lva",
@@ -5695,11 +5805,18 @@
         "position": 4
       },
       {
+        "country": "mdg",
+        "clicks": 0,
+        "impressions": 1,
+        "ctr": 0,
+        "position": 8
+      },
+      {
         "country": "mex",
         "clicks": 0,
-        "impressions": 11,
+        "impressions": 10,
         "ctr": 0,
-        "position": 8.454545454545453
+        "position": 9
       },
       {
         "country": "mkd",
@@ -5711,16 +5828,16 @@
       {
         "country": "mlt",
         "clicks": 0,
-        "impressions": 8,
+        "impressions": 7,
         "ctr": 0,
-        "position": 5.5
+        "position": 5.142857142857143
       },
       {
         "country": "mmr",
         "clicks": 0,
-        "impressions": 2,
+        "impressions": 1,
         "ctr": 0,
-        "position": 8
+        "position": 6
       },
       {
         "country": "mne",
@@ -5746,9 +5863,9 @@
       {
         "country": "nor",
         "clicks": 0,
-        "impressions": 19,
+        "impressions": 21,
         "ctr": 0,
-        "position": 5.421052631578948
+        "position": 5.380952380952381
       },
       {
         "country": "npl",
@@ -5774,9 +5891,9 @@
       {
         "country": "pak",
         "clicks": 0,
-        "impressions": 7,
+        "impressions": 8,
         "ctr": 0,
-        "position": 6.428571428571429
+        "position": 6.5
       },
       {
         "country": "pan",
@@ -5802,9 +5919,9 @@
       {
         "country": "qat",
         "clicks": 0,
-        "impressions": 1,
+        "impressions": 2,
         "ctr": 0,
-        "position": 8
+        "position": 7
       },
       {
         "country": "reu",
@@ -5816,9 +5933,9 @@
       {
         "country": "rou",
         "clicks": 0,
-        "impressions": 36,
+        "impressions": 38,
         "ctr": 0,
-        "position": 4.888888888888889
+        "position": 5
       },
       {
         "country": "rus",
@@ -5828,11 +5945,25 @@
         "position": 12.2
       },
       {
+        "country": "rwa",
+        "clicks": 0,
+        "impressions": 1,
+        "ctr": 0,
+        "position": 5
+      },
+      {
         "country": "sau",
         "clicks": 0,
         "impressions": 3,
         "ctr": 0,
         "position": 5
+      },
+      {
+        "country": "sen",
+        "clicks": 0,
+        "impressions": 1,
+        "ctr": 0,
+        "position": 6
       },
       {
         "country": "slv",
@@ -5853,14 +5984,7 @@
         "clicks": 0,
         "impressions": 24,
         "ctr": 0,
-        "position": 6.041666666666667
-      },
-      {
-        "country": "ssd",
-        "clicks": 0,
-        "impressions": 1,
-        "ctr": 0,
-        "position": 11
+        "position": 6
       },
       {
         "country": "svk",
@@ -5872,16 +5996,9 @@
       {
         "country": "svn",
         "clicks": 0,
-        "impressions": 5,
+        "impressions": 4,
         "ctr": 0,
-        "position": 3.8
-      },
-      {
-        "country": "swe",
-        "clicks": 0,
-        "impressions": 73,
-        "ctr": 0,
-        "position": 6.041095890410959
+        "position": 4.25
       },
       {
         "country": "syr",
@@ -5914,9 +6031,9 @@
       {
         "country": "tur",
         "clicks": 0,
-        "impressions": 19,
+        "impressions": 20,
         "ctr": 0,
-        "position": 6.368421052631579
+        "position": 6.4
       },
       {
         "country": "twn",
@@ -5942,16 +6059,16 @@
       {
         "country": "usa",
         "clicks": 0,
-        "impressions": 1620,
+        "impressions": 1530,
         "ctr": 0,
-        "position": 6.091975308641976
+        "position": 6.307843137254902
       },
       {
         "country": "uzb",
         "clicks": 0,
-        "impressions": 6,
+        "impressions": 7,
         "ctr": 0,
-        "position": 4.833333333333334
+        "position": 4.857142857142858
       },
       {
         "country": "ven",
@@ -5977,9 +6094,9 @@
       {
         "country": "xkk",
         "clicks": 0,
-        "impressions": 2,
+        "impressions": 1,
         "ctr": 0,
-        "position": 4
+        "position": 7
       },
       {
         "country": "zaf",
@@ -5999,24 +6116,24 @@
     "devices": [
       {
         "device": "DESKTOP",
-        "clicks": 80,
-        "impressions": 6932,
-        "ctr": 0.01154068090017311,
-        "position": 6.672821696480092
+        "clicks": 82,
+        "impressions": 6931,
+        "ctr": 0.011830904631366325,
+        "position": 6.761939114124946
       },
       {
         "device": "MOBILE",
         "clicks": 21,
-        "impressions": 1666,
-        "ctr": 0.012605042016806723,
-        "position": 5.9249699879951985
+        "impressions": 1726,
+        "ctr": 0.01216685979142526,
+        "position": 5.961761297798378
       },
       {
         "device": "TABLET",
         "clicks": 0,
-        "impressions": 13,
+        "impressions": 15,
         "ctr": 0,
-        "position": 7.538461538461538
+        "position": 7.4
       }
     ],
     "sitemaps": [
@@ -8952,11 +9069,10 @@
       {
         "url": "https://ksefuj.to/uk/guides/yak-otrymaty-rakhunok-v-ksef",
         "verdict": "NEUTRAL",
-        "coverageState": "Discovered - currently not indexed",
+        "coverageState": "URL is unknown to Google",
         "indexingState": "INDEXING_STATE_UNSPECIFIED",
         "robotsTxtState": "ROBOTS_TXT_STATE_UNSPECIFIED",
         "pageFetchState": "PAGE_FETCH_STATE_UNSPECIFIED",
-        "crawledAs": "CRAWLING_USER_AGENT_UNSPECIFIED",
         "mobileUsability": {
           "verdict": "VERDICT_UNSPECIFIED"
         }
@@ -9498,7 +9614,7 @@
   "health": {
     "sitemapUrl": "https://ksefuj.to/sitemap.xml",
     "sitemapUrlCount": 149,
-    "crawledAt": "2026-10-18T07:19:44.008Z",
+    "crawledAt": "2026-10-19T07:57:36.814Z",
     "robots": {
       "status": 200,
       "sitemapDirectives": [
@@ -9512,7 +9628,7 @@
         "finalUrl": "https://ksefuj.to/",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 244,
+        "responseTimeMs": 102,
         "title": "Darmowy walidator faktur KSeF FA(3) — ksefuj.to",
         "titleCount": 1,
         "titleLength": 47,
@@ -9565,7 +9681,7 @@
         "finalUrl": "https://ksefuj.to/en",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 334,
+        "responseTimeMs": 205,
         "title": "Free KSeF FA(3) invoice validator — ksefuj.to",
         "titleCount": 1,
         "titleLength": 45,
@@ -9618,7 +9734,7 @@
         "finalUrl": "https://ksefuj.to/uk",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 425,
+        "responseTimeMs": 228,
         "title": "Безкоштовний валідатор рахунків KSeF FA(3) — ksefuj.to",
         "titleCount": 1,
         "titleLength": 54,
@@ -9671,7 +9787,7 @@
         "finalUrl": "https://ksefuj.to/validator",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 540,
+        "responseTimeMs": 126,
         "title": "Walidator XML faktur KSeF FA(3) online — ksefuj.to",
         "titleCount": 1,
         "titleLength": 50,
@@ -9735,7 +9851,7 @@
         "finalUrl": "https://ksefuj.to/en/validator",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 929,
+        "responseTimeMs": 165,
         "title": "KSeF FA(3) invoice XML validator online — ksefuj.to",
         "titleCount": 1,
         "titleLength": 51,
@@ -9799,7 +9915,7 @@
         "finalUrl": "https://ksefuj.to/uk/validator",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 160,
+        "responseTimeMs": 98,
         "title": "Онлайн-валідатор XML рахунків KSeF FA(3) — ksefuj.to",
         "titleCount": 1,
         "titleLength": 52,
@@ -9863,7 +9979,7 @@
         "finalUrl": "https://ksefuj.to/podglad",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 131,
+        "responseTimeMs": 146,
         "title": "Podgląd faktury XML KSeF i zapis do PDF — ksefuj.to",
         "titleCount": 1,
         "titleLength": 51,
@@ -9913,7 +10029,7 @@
         "finalUrl": "https://ksefuj.to/en/podglad",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 576,
+        "responseTimeMs": 126,
         "title": "Open KSeF invoice XML and convert it to PDF — ksefuj.to",
         "titleCount": 1,
         "titleLength": 55,
@@ -9963,7 +10079,7 @@
         "finalUrl": "https://ksefuj.to/uk/podglad",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 129,
+        "responseTimeMs": 116,
         "title": "Відкрити XML-рахунок KSeF і зберегти в PDF — ksefuj.to",
         "titleCount": 1,
         "titleLength": 54,
@@ -10013,7 +10129,7 @@
         "finalUrl": "https://ksefuj.to/waluty",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 181,
+        "responseTimeMs": 636,
         "title": "Kurs NBP do faktury walutowej VAT — ksefuj.to",
         "titleCount": 1,
         "titleLength": 45,
@@ -10065,7 +10181,7 @@
         "finalUrl": "https://ksefuj.to/en/waluty",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 146,
+        "responseTimeMs": 96,
         "title": "NBP exchange rate for invoices — ksefuj.to",
         "titleCount": 1,
         "titleLength": 42,
@@ -10117,7 +10233,7 @@
         "finalUrl": "https://ksefuj.to/uk/waluty",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 197,
+        "responseTimeMs": 103,
         "title": "Курс NBP для рахунку-фактури — ksefuj.to",
         "titleCount": 1,
         "titleLength": 40,
@@ -10169,7 +10285,7 @@
         "finalUrl": "https://ksefuj.to/privacy",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 187,
+        "responseTimeMs": 106,
         "title": "Polityka prywatności — ksefuj.to",
         "titleCount": 1,
         "titleLength": 32,
@@ -10219,7 +10335,7 @@
         "finalUrl": "https://ksefuj.to/en/privacy",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 192,
+        "responseTimeMs": 126,
         "title": "Privacy Policy — ksefuj.to",
         "titleCount": 1,
         "titleLength": 26,
@@ -10269,7 +10385,7 @@
         "finalUrl": "https://ksefuj.to/uk/privacy",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 149,
+        "responseTimeMs": 569,
         "title": "Політика конфіденційності — ksefuj.to",
         "titleCount": 1,
         "titleLength": 37,
@@ -10319,7 +10435,7 @@
         "finalUrl": "https://ksefuj.to/terms",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 151,
+        "responseTimeMs": 111,
         "title": "Warunki użytkowania — ksefuj.to",
         "titleCount": 1,
         "titleLength": 31,
@@ -10369,7 +10485,7 @@
         "finalUrl": "https://ksefuj.to/en/terms",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 148,
+        "responseTimeMs": 617,
         "title": "Terms of Use — ksefuj.to",
         "titleCount": 1,
         "titleLength": 24,
@@ -10419,7 +10535,7 @@
         "finalUrl": "https://ksefuj.to/uk/terms",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 176,
+        "responseTimeMs": 166,
         "title": "Умови використання — ksefuj.to",
         "titleCount": 1,
         "titleLength": 30,
@@ -10469,7 +10585,7 @@
         "finalUrl": "https://ksefuj.to/blog",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 180,
+        "responseTimeMs": 98,
         "title": "Blog o KSeF i e-fakturach — ksefuj.to",
         "titleCount": 1,
         "titleLength": 37,
@@ -10551,7 +10667,7 @@
         "finalUrl": "https://ksefuj.to/guides",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 148,
+        "responseTimeMs": 158,
         "title": "Poradniki — ksefuj.to",
         "titleCount": 1,
         "titleLength": 21,
@@ -10609,7 +10725,7 @@
         "finalUrl": "https://ksefuj.to/faq",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 219,
+        "responseTimeMs": 164,
         "title": "FAQ — Najczęstsze pytania o KSeF — ksefuj.to",
         "titleCount": 1,
         "titleLength": 44,
@@ -10660,7 +10776,7 @@
         "finalUrl": "https://ksefuj.to/en/blog",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 136,
+        "responseTimeMs": 105,
         "title": "KSeF and e-invoicing blog — ksefuj.to",
         "titleCount": 1,
         "titleLength": 37,
@@ -10743,7 +10859,7 @@
         "finalUrl": "https://ksefuj.to/en/guides",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 140,
+        "responseTimeMs": 149,
         "title": "Guides — ksefuj.to",
         "titleCount": 1,
         "titleLength": 18,
@@ -10801,7 +10917,7 @@
         "finalUrl": "https://ksefuj.to/en/faq",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 166,
+        "responseTimeMs": 123,
         "title": "FAQ — KSeF Questions Answered — ksefuj.to",
         "titleCount": 1,
         "titleLength": 41,
@@ -10852,7 +10968,7 @@
         "finalUrl": "https://ksefuj.to/uk/blog",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 181,
+        "responseTimeMs": 174,
         "title": "Блог про KSeF та е-рахунки — ksefuj.to",
         "titleCount": 1,
         "titleLength": 38,
@@ -10935,7 +11051,7 @@
         "finalUrl": "https://ksefuj.to/uk/guides",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 185,
+        "responseTimeMs": 100,
         "title": "Порадники — ksefuj.to",
         "titleCount": 1,
         "titleLength": 21,
@@ -10993,7 +11109,7 @@
         "finalUrl": "https://ksefuj.to/uk/faq",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 150,
+        "responseTimeMs": 153,
         "title": "FAQ — Часті запитання про KSeF — ksefuj.to",
         "titleCount": 1,
         "titleLength": 42,
@@ -11044,7 +11160,7 @@
         "finalUrl": "https://ksefuj.to/blog/nota-korygujaca-ksef",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 184,
+        "responseTimeMs": 81,
         "title": "Nota korygująca w KSeF: co zamiast niej — ksefuj.to",
         "titleCount": 1,
         "titleLength": 51,
@@ -11098,7 +11214,7 @@
         "finalUrl": "https://ksefuj.to/blog/pusta-faktura-pdf-xml",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 182,
+        "responseTimeMs": 139,
         "title": "PDF inny niż XML w KSeF: co jest fakturą — ksefuj.to",
         "titleCount": 1,
         "titleLength": 52,
@@ -11154,7 +11270,7 @@
         "finalUrl": "https://ksefuj.to/blog/faktura-poza-ksef-odliczenie-vat",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 193,
+        "responseTimeMs": 146,
         "title": "Faktura poza KSeF: czy odliczysz z niej VAT — ksefuj.to",
         "titleCount": 1,
         "titleLength": 55,
@@ -11210,7 +11326,7 @@
         "finalUrl": "https://ksefuj.to/blog/faktura-dla-osoby-prywatnej-ksef",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 131,
+        "responseTimeMs": 153,
         "title": "Faktura dla osoby prywatnej w KSeF: czy musisz? — ksefuj.to",
         "titleCount": 1,
         "titleLength": 59,
@@ -11267,7 +11383,7 @@
         "finalUrl": "https://ksefuj.to/blog/faktura-z-kasy-fiskalnej-ksef-2027",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 90,
+        "responseTimeMs": 158,
         "title": "Paragon z NIP i faktura z kasy od 1 stycznia 2027",
         "titleCount": 1,
         "titleLength": 49,
@@ -11323,7 +11439,7 @@
         "finalUrl": "https://ksefuj.to/blog/kary-ksef-2027-2028",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 120,
+        "responseTimeMs": 162,
         "title": "Kary za KSeF: obowiązek od 2027, kary od 2028? — ksefuj.to",
         "titleCount": 1,
         "titleLength": 58,
@@ -11379,7 +11495,7 @@
         "finalUrl": "https://ksefuj.to/blog/koniec-limitu-10000-zl",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 443,
+        "responseTimeMs": 158,
         "title": "KSeF od 1 stycznia 2027: co zrobić przed terminem",
         "titleCount": 1,
         "titleLength": 49,
@@ -11436,7 +11552,7 @@
         "finalUrl": "https://ksefuj.to/blog/ksef-scisla-walidacja-xml",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 197,
+        "responseTimeMs": 65,
         "title": "KSeF od 19.10.2026 odrzuci XML z instrukcjami — ksefuj.to",
         "titleCount": 1,
         "titleLength": 57,
@@ -11486,7 +11602,7 @@
         "finalUrl": "https://ksefuj.to/blog/numer-ksef-w-przelewie",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 161,
+        "responseTimeMs": 162,
         "title": "Numer KSeF w przelewie: od kiedy i co wpisać — ksefuj.to",
         "titleCount": 1,
         "titleLength": 56,
@@ -11542,7 +11658,7 @@
         "finalUrl": "https://ksefuj.to/blog/tokeny-ksef-po-2026",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 190,
+        "responseTimeMs": 70,
         "title": "Tokeny KSeF po 31 grudnia 2026: co wiadomo — ksefuj.to",
         "titleCount": 1,
         "titleLength": 54,
@@ -11592,7 +11708,7 @@
         "finalUrl": "https://ksefuj.to/blog/zwolniony-z-vat-ksef",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 157,
+        "responseTimeMs": 107,
         "title": "Zwolniony z VAT a KSeF: od kiedy faktury — ksefuj.to",
         "titleCount": 1,
         "titleLength": 52,
@@ -11649,7 +11765,7 @@
         "finalUrl": "https://ksefuj.to/blog/falszywe-faktury-ksef",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 221,
+        "responseTimeMs": 163,
         "title": "Fałszywa faktura w KSeF: co zrobić — ksefuj.to",
         "titleCount": 1,
         "titleLength": 46,
@@ -11704,7 +11820,7 @@
         "finalUrl": "https://ksefuj.to/blog/faktura-korygujaca-ksef",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 204,
+        "responseTimeMs": 69,
         "title": "Faktura korygująca w KSeF: jak ją wystawić — ksefuj.to",
         "titleCount": 1,
         "titleLength": 54,
@@ -11760,7 +11876,7 @@
         "finalUrl": "https://ksefuj.to/blog/ksef-ruszyl",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 109,
+        "responseTimeMs": 81,
         "title": "KSeF ruszył 1 kwietnia 2026: pierwsze kroki — ksefuj.to",
         "titleCount": 1,
         "titleLength": 55,
@@ -11818,7 +11934,7 @@
         "finalUrl": "https://ksefuj.to/blog/ksef-checklist-przygotowanie",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 180,
+        "responseTimeMs": 141,
         "title": "KSeF: 10 punktów przed pierwszą fakturą — ksefuj.to",
         "titleCount": 1,
         "titleLength": 51,
@@ -11877,7 +11993,7 @@
         "finalUrl": "https://ksefuj.to/blog/faktura-zagraniczna-ksef",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 183,
+        "responseTimeMs": 195,
         "title": "Faktura dla nabywcy z zagranicy w KSeF — ksefuj.to",
         "titleCount": 1,
         "titleLength": 50,
@@ -11934,7 +12050,7 @@
         "finalUrl": "https://ksefuj.to/blog/certyfikaty-vs-tokeny-ksef",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 179,
+        "responseTimeMs": 139,
         "title": "Token czy certyfikat KSeF: czym się logować — ksefuj.to",
         "titleCount": 1,
         "titleLength": 55,
@@ -11988,7 +12104,7 @@
         "finalUrl": "https://ksefuj.to/blog/fa2-vs-fa3-ksef",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 150,
+        "responseTimeMs": 45,
         "title": "FA(2) vs FA(3): co zmienić w XML przy migracji — ksefuj.to",
         "titleCount": 1,
         "titleLength": 58,
@@ -12038,7 +12154,7 @@
         "finalUrl": "https://ksefuj.to/blog/ksef-limit-10000-zl",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 125,
+        "responseTimeMs": 153,
         "title": "Limit 10 000 zł w KSeF: jak go liczyć — ksefuj.to",
         "titleCount": 1,
         "titleLength": 49,
@@ -12094,7 +12210,7 @@
         "finalUrl": "https://ksefuj.to/blog/najczestsze-bledy-walidacji-fa3",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 209,
+        "responseTimeMs": 157,
         "title": "12 najczęstszych błędów walidacji FA(3) — ksefuj.to",
         "titleCount": 1,
         "titleLength": 51,
@@ -12153,7 +12269,7 @@
         "finalUrl": "https://ksefuj.to/blog/ksef-dla-jdg",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 174,
+        "responseTimeMs": 177,
         "title": "KSeF dla JDG: kogo dotyczy i co zrobić — ksefuj.to",
         "titleCount": 1,
         "titleLength": 50,
@@ -12210,7 +12326,7 @@
         "finalUrl": "https://ksefuj.to/blog/ksef-od-1-kwietnia-2026",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 172,
+        "responseTimeMs": 131,
         "title": "KSeF od 1 kwietnia 2026: kogo dotyczy, co robić — ksefuj.to",
         "titleCount": 1,
         "titleLength": 59,
@@ -12267,7 +12383,7 @@
         "finalUrl": "https://ksefuj.to/guides/jak-odebrac-fakture-ksef",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 192,
+        "responseTimeMs": 130,
         "title": "Jak odebrać fakturę w KSeF: nic nie akceptujesz — ksefuj.to",
         "titleCount": 1,
         "titleLength": 59,
@@ -12324,7 +12440,7 @@
         "finalUrl": "https://ksefuj.to/guides/aplikacja-podatnika-ksef-pierwsza-faktura",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 205,
+        "responseTimeMs": 147,
         "title": "Pierwsza prawdziwa faktura w Aplikacji Podatnika — ksefuj.to",
         "titleCount": 1,
         "titleLength": 60,
@@ -12380,7 +12496,7 @@
         "finalUrl": "https://ksefuj.to/guides/awaria-ksef-offline",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 159,
+        "responseTimeMs": 161,
         "title": "Awaria KSeF: co robić i do kiedy wysłać fakturę — ksefuj.to",
         "titleCount": 1,
         "titleLength": 59,
@@ -12437,7 +12553,7 @@
         "finalUrl": "https://ksefuj.to/guides/logowanie-ksef",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 123,
+        "responseTimeMs": 130,
         "title": "Logowanie do KSeF: Profil Zaufany i podpis — ksefuj.to",
         "titleCount": 1,
         "titleLength": 54,
@@ -12492,7 +12608,7 @@
         "finalUrl": "https://ksefuj.to/guides/uprawnienia-ksef-ksiegowa",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 136,
+        "responseTimeMs": 155,
         "title": "Jak dać księgowej dostęp do KSeF: krok po kroku — ksefuj.to",
         "titleCount": 1,
         "titleLength": 59,
@@ -12546,7 +12662,7 @@
         "finalUrl": "https://ksefuj.to/guides/pierwsza-faktura-fa3",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 181,
+        "responseTimeMs": 125,
         "title": "Faktura testowa w KSeF: wyślij ją przed startem — ksefuj.to",
         "titleCount": 1,
         "titleLength": 59,
@@ -12601,7 +12717,7 @@
         "finalUrl": "https://ksefuj.to/validator/blad-kalkulacji-vat-p14-p15",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 186,
+        "responseTimeMs": 103,
         "title": "Błąd kalkulacji VAT: P_14 lub P_15 się nie zgadza",
         "titleCount": 1,
         "titleLength": 49,
@@ -12653,7 +12769,7 @@
         "finalUrl": "https://ksefuj.to/validator/bledny-numer-rachunku-bankowego",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 115,
+        "responseTimeMs": 114,
         "title": "Błędny numer rachunku bankowego na fakturze — ksefuj.to",
         "titleCount": 1,
         "titleLength": 55,
@@ -12704,7 +12820,7 @@
         "finalUrl": "https://ksefuj.to/validator/brak-jst-gv-podmiot2",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 171,
+        "responseTimeMs": 133,
         "title": "Brak JST i GV w Podmiot2: co wpisać w FA(3) — ksefuj.to",
         "titleCount": 1,
         "titleLength": 55,
@@ -12756,7 +12872,7 @@
         "finalUrl": "https://ksefuj.to/validator/brak-p15-kwota-naleznosci-ogolem",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 157,
+        "responseTimeMs": 125,
         "title": "Brak P_15: kwota należności ogółem w FA(3) — ksefuj.to",
         "titleCount": 1,
         "titleLength": 54,
@@ -12808,7 +12924,7 @@
         "finalUrl": "https://ksefuj.to/validator/brak-wymaganego-pola-fa3",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 93,
+        "responseTimeMs": 104,
         "title": "Brak wymaganego pola w XML faktury FA(3) — ksefuj.to",
         "titleCount": 1,
         "titleLength": 52,
@@ -12863,7 +12979,7 @@
         "finalUrl": "https://ksefuj.to/validator/element-w-zlym-miejscu-fa3",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 177,
+        "responseTimeMs": 189,
         "title": "Element w złym miejscu w XML faktury FA(3) — ksefuj.to",
         "titleCount": 1,
         "titleLength": 54,
@@ -12915,7 +13031,7 @@
         "finalUrl": "https://ksefuj.to/validator/kwoty-bez-separatorow-tysiecy",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 208,
+        "responseTimeMs": 87,
         "title": "Spacja lub przecinek w kwocie faktury FA(3) — ksefuj.to",
         "titleCount": 1,
         "titleLength": 55,
@@ -12966,7 +13082,7 @@
         "finalUrl": "https://ksefuj.to/validator/niedozwolony-atrybut-fa3",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 120,
+        "responseTimeMs": 91,
         "title": "Niedozwolony atrybut w XML faktury FA(3) — ksefuj.to",
         "titleCount": 1,
         "titleLength": 52,
@@ -13017,7 +13133,7 @@
         "finalUrl": "https://ksefuj.to/validator/nieprawidlowa-stawka-vat-p12",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 137,
+        "responseTimeMs": 175,
         "title": "Nieprawidłowa stawka VAT w P_12: co wpisać — ksefuj.to",
         "titleCount": 1,
         "titleLength": 54,
@@ -13069,7 +13185,7 @@
         "finalUrl": "https://ksefuj.to/validator/nieprawidlowa-wartosc-pola-fa3",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 152,
+        "responseTimeMs": 133,
         "title": "Nieprawidłowa wartość pola w fakturze FA(3) — ksefuj.to",
         "titleCount": 1,
         "titleLength": 55,
@@ -13122,7 +13238,7 @@
         "finalUrl": "https://ksefuj.to/validator/odwrotne-obciazenie-p18-ksef",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 115,
+        "responseTimeMs": 125,
         "title": "Odwrotne obciążenie: P_18 niezgodne ze stawką — ksefuj.to",
         "titleCount": 1,
         "titleLength": 57,
@@ -13174,7 +13290,7 @@
         "finalUrl": "https://ksefuj.to/validator/podatek-w-pln-faktura-walutowa",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 157,
+        "responseTimeMs": 107,
         "title": "Faktura w walucie obcej bez podatku w PLN — ksefuj.to",
         "titleCount": 1,
         "titleLength": 53,
@@ -13226,7 +13342,7 @@
         "finalUrl": "https://ksefuj.to/validator/xml-nie-jest-poprawnie-sformatowany",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 133,
+        "responseTimeMs": 116,
         "title": "XML nie jest poprawnie sformatowany: co poprawić — ksefuj.to",
         "titleCount": 1,
         "titleLength": 60,
@@ -13278,7 +13394,7 @@
         "finalUrl": "https://ksefuj.to/validator/zly-namespace-faktura-fa3",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 138,
+        "responseTimeMs": 109,
         "title": "Zły namespace w fakturze: xmlns dla FA(3) — ksefuj.to",
         "titleCount": 1,
         "titleLength": 53,
@@ -13329,7 +13445,7 @@
         "finalUrl": "https://ksefuj.to/en/blog/corrective-note-ksef",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 219,
+        "responseTimeMs": 158,
         "title": "Corrective note in KSeF: what to do instead — ksefuj.to",
         "titleCount": 1,
         "titleLength": 55,
@@ -13383,7 +13499,7 @@
         "finalUrl": "https://ksefuj.to/en/blog/pdf-different-from-xml-ksef",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 148,
+        "responseTimeMs": 121,
         "title": "PDF doesn't match the XML in KSeF: what counts — ksefuj.to",
         "titleCount": 1,
         "titleLength": 58,
@@ -13439,7 +13555,7 @@
         "finalUrl": "https://ksefuj.to/en/blog/invoice-outside-ksef-vat-deduction",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 130,
+        "responseTimeMs": 148,
         "title": "Invoice outside KSeF: can you deduct the VAT? — ksefuj.to",
         "titleCount": 1,
         "titleLength": 57,
@@ -13495,7 +13611,7 @@
         "finalUrl": "https://ksefuj.to/en/blog/invoice-for-private-person-ksef",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 180,
+        "responseTimeMs": 141,
         "title": "Invoice for a private individual: KSeF or PDF? — ksefuj.to",
         "titleCount": 1,
         "titleLength": 58,
@@ -13552,7 +13668,7 @@
         "finalUrl": "https://ksefuj.to/en/blog/cash-register-invoices-ksef-2027",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 136,
+        "responseTimeMs": 156,
         "title": "Cash register invoices and NIP receipts in 2027 — ksefuj.to",
         "titleCount": 1,
         "titleLength": 59,
@@ -13608,7 +13724,7 @@
         "finalUrl": "https://ksefuj.to/en/blog/end-of-10000-pln-limit",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 166,
+        "responseTimeMs": 46,
         "title": "KSeF from 1 January 2027: what to do before then — ksefuj.to",
         "titleCount": 1,
         "titleLength": 60,
@@ -13665,7 +13781,7 @@
         "finalUrl": "https://ksefuj.to/en/blog/ksef-number-in-bank-transfer",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 167,
+        "responseTimeMs": 122,
         "title": "KSeF number in a bank transfer: from 2027 — ksefuj.to",
         "titleCount": 1,
         "titleLength": 53,
@@ -13721,7 +13837,7 @@
         "finalUrl": "https://ksefuj.to/en/blog/ksef-penalties-2027-2028",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 180,
+        "responseTimeMs": 121,
         "title": "KSeF penalties: duty in 2027, fines from 2028? — ksefuj.to",
         "titleCount": 1,
         "titleLength": 58,
@@ -13777,7 +13893,7 @@
         "finalUrl": "https://ksefuj.to/en/blog/ksef-strict-xml-validation",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 172,
+        "responseTimeMs": 49,
         "title": "Strict XML validation in KSeF from 19 Oct 2026 — ksefuj.to",
         "titleCount": 1,
         "titleLength": 58,
@@ -13827,7 +13943,7 @@
         "finalUrl": "https://ksefuj.to/en/blog/ksef-tokens-after-2026",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 153,
+        "responseTimeMs": 136,
         "title": "KSeF tokens after 2026: what we know — ksefuj.to",
         "titleCount": 1,
         "titleLength": 48,
@@ -13877,7 +13993,7 @@
         "finalUrl": "https://ksefuj.to/en/blog/vat-exempt-ksef",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 193,
+        "responseTimeMs": 134,
         "title": "VAT-exempt and KSeF: when your invoices go in — ksefuj.to",
         "titleCount": 1,
         "titleLength": 57,
@@ -13934,7 +14050,7 @@
         "finalUrl": "https://ksefuj.to/en/blog/fake-invoices-ksef",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 457,
+        "responseTimeMs": 152,
         "title": "Fake invoice in KSeF: what to do — ksefuj.to",
         "titleCount": 1,
         "titleLength": 44,
@@ -13989,7 +14105,7 @@
         "finalUrl": "https://ksefuj.to/en/blog/corrective-invoice-ksef",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 173,
+        "responseTimeMs": 55,
         "title": "Corrective invoice in KSeF: how to issue one — ksefuj.to",
         "titleCount": 1,
         "titleLength": 56,
@@ -14045,7 +14161,7 @@
         "finalUrl": "https://ksefuj.to/en/blog/ksef-launched",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 448,
+        "responseTimeMs": 108,
         "title": "KSeF is live: first steps and the 10k limit — ksefuj.to",
         "titleCount": 1,
         "titleLength": 55,
@@ -14103,7 +14219,7 @@
         "finalUrl": "https://ksefuj.to/en/blog/ksef-preparation-checklist",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 173,
+        "responseTimeMs": 137,
         "title": "KSeF checklist: 10 things before invoice one — ksefuj.to",
         "titleCount": 1,
         "titleLength": 56,
@@ -14162,7 +14278,7 @@
         "finalUrl": "https://ksefuj.to/en/blog/foreign-invoice-ksef",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 189,
+        "responseTimeMs": 124,
         "title": "Invoicing a foreign buyer in KSeF — ksefuj.to",
         "titleCount": 1,
         "titleLength": 45,
@@ -14219,7 +14335,7 @@
         "finalUrl": "https://ksefuj.to/en/blog/certificates-vs-tokens-ksef",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 159,
+        "responseTimeMs": 62,
         "title": "KSeF token or certificate: how to log in (2026) — ksefuj.to",
         "titleCount": 1,
         "titleLength": 59,
@@ -14273,7 +14389,7 @@
         "finalUrl": "https://ksefuj.to/en/blog/fa2-vs-fa3-ksef",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 159,
+        "responseTimeMs": 125,
         "title": "FA(2) vs FA(3): what to change in your XML — ksefuj.to",
         "titleCount": 1,
         "titleLength": 54,
@@ -14323,7 +14439,7 @@
         "finalUrl": "https://ksefuj.to/en/blog/ksef-10000-pln-limit",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 142,
+        "responseTimeMs": 118,
         "title": "KSeF 10,000 PLN limit: how to count it — ksefuj.to",
         "titleCount": 1,
         "titleLength": 50,
@@ -14379,7 +14495,7 @@
         "finalUrl": "https://ksefuj.to/en/blog/most-common-fa3-validation-errors",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 183,
+        "responseTimeMs": 208,
         "title": "12 most common FA(3) validation errors — ksefuj.to",
         "titleCount": 1,
         "titleLength": 50,
@@ -14438,7 +14554,7 @@
         "finalUrl": "https://ksefuj.to/en/blog/ksef-for-sole-traders",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 501,
+        "responseTimeMs": 117,
         "title": "KSeF for sole traders: what you must do — ksefuj.to",
         "titleCount": 1,
         "titleLength": 51,
@@ -14495,7 +14611,7 @@
         "finalUrl": "https://ksefuj.to/en/blog/ksef-from-april-1-2026",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 148,
+        "responseTimeMs": 125,
         "title": "KSeF from 1 April 2026: who must use it — ksefuj.to",
         "titleCount": 1,
         "titleLength": 51,
@@ -14552,7 +14668,7 @@
         "finalUrl": "https://ksefuj.to/en/guides/receiving-invoices-in-ksef",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 176,
+        "responseTimeMs": 136,
         "title": "Receiving invoices in KSeF: nothing to accept — ksefuj.to",
         "titleCount": 1,
         "titleLength": 57,
@@ -14609,7 +14725,7 @@
         "finalUrl": "https://ksefuj.to/en/guides/ksef-accountant-access",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 129,
+        "responseTimeMs": 104,
         "title": "Giving your accountant KSeF access: step by step — ksefuj.to",
         "titleCount": 1,
         "titleLength": 60,
@@ -14663,7 +14779,7 @@
         "finalUrl": "https://ksefuj.to/en/guides/ksef-login",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 97,
+        "responseTimeMs": 152,
         "title": "KSeF login: Profil Zaufany or qualified signature",
         "titleCount": 1,
         "titleLength": 49,
@@ -14718,7 +14834,7 @@
         "finalUrl": "https://ksefuj.to/en/guides/ksef-outage-offline-mode",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 148,
+        "responseTimeMs": 117,
         "title": "KSeF outage: what to do and when to send — ksefuj.to",
         "titleCount": 1,
         "titleLength": 52,
@@ -14775,7 +14891,7 @@
         "finalUrl": "https://ksefuj.to/en/guides/ksef-taxpayer-app-first-invoice",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 170,
+        "responseTimeMs": 124,
         "title": "Your first real invoice in the KSeF Taxpayer App — ksefuj.to",
         "titleCount": 1,
         "titleLength": 60,
@@ -14831,7 +14947,7 @@
         "finalUrl": "https://ksefuj.to/en/guides/first-fa3-invoice",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 170,
+        "responseTimeMs": 132,
         "title": "KSeF test invoice: try it before you go live — ksefuj.to",
         "titleCount": 1,
         "titleLength": 56,
@@ -14886,7 +15002,7 @@
         "finalUrl": "https://ksefuj.to/en/validator/attribute-not-allowed-fa3",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 127,
+        "responseTimeMs": 109,
         "title": "Attribute not allowed in FA(3) invoice XML — ksefuj.to",
         "titleCount": 1,
         "titleLength": 54,
@@ -14937,7 +15053,7 @@
         "finalUrl": "https://ksefuj.to/en/validator/fa3-amount-format-no-separators",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 114,
+        "responseTimeMs": 96,
         "title": "Space or comma in an FA(3) invoice amount — ksefuj.to",
         "titleCount": 1,
         "titleLength": 53,
@@ -14988,7 +15104,7 @@
         "finalUrl": "https://ksefuj.to/en/validator/foreign-currency-invoice-vat-in-pln",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 100,
+        "responseTimeMs": 89,
         "title": "Foreign-currency invoice without VAT in PLN — ksefuj.to",
         "titleCount": 1,
         "titleLength": 55,
@@ -15040,7 +15156,7 @@
         "finalUrl": "https://ksefuj.to/en/validator/invalid-bank-account-number-invoice",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 158,
+        "responseTimeMs": 106,
         "title": "Invalid bank account number on an FA(3) invoice — ksefuj.to",
         "titleCount": 1,
         "titleLength": 59,
@@ -15091,7 +15207,7 @@
         "finalUrl": "https://ksefuj.to/en/validator/invalid-field-value-fa3",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 164,
+        "responseTimeMs": 163,
         "title": "Invalid field value in an FA(3) invoice — ksefuj.to",
         "titleCount": 1,
         "titleLength": 51,
@@ -15144,7 +15260,7 @@
         "finalUrl": "https://ksefuj.to/en/validator/invalid-vat-rate-p12",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 98,
+        "responseTimeMs": 119,
         "title": "Invalid VAT rate in P_12: allowed values — ksefuj.to",
         "titleCount": 1,
         "titleLength": 52,
@@ -15196,7 +15312,7 @@
         "finalUrl": "https://ksefuj.to/en/validator/malformed-xml-invoice",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 111,
+        "responseTimeMs": 211,
         "title": "XML is not well-formed: how to fix the invoice — ksefuj.to",
         "titleCount": 1,
         "titleLength": 58,
@@ -15248,7 +15364,7 @@
         "finalUrl": "https://ksefuj.to/en/validator/missing-jst-gv-podmiot2",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 127,
+        "responseTimeMs": 146,
         "title": "Missing JST and GV in Podmiot2: what to enter — ksefuj.to",
         "titleCount": 1,
         "titleLength": 57,
@@ -15300,7 +15416,7 @@
         "finalUrl": "https://ksefuj.to/en/validator/missing-p15-total-amount-due",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 125,
+        "responseTimeMs": 107,
         "title": "Missing P_15: total amount due in FA(3) — ksefuj.to",
         "titleCount": 1,
         "titleLength": 51,
@@ -15352,7 +15468,7 @@
         "finalUrl": "https://ksefuj.to/en/validator/missing-required-field-fa3",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 131,
+        "responseTimeMs": 133,
         "title": "Missing required field in FA(3) invoice XML — ksefuj.to",
         "titleCount": 1,
         "titleLength": 55,
@@ -15407,7 +15523,7 @@
         "finalUrl": "https://ksefuj.to/en/validator/reverse-charge-p18-ksef",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 139,
+        "responseTimeMs": 114,
         "title": "Reverse charge: P_18 doesn't match the VAT rate — ksefuj.to",
         "titleCount": 1,
         "titleLength": 59,
@@ -15459,7 +15575,7 @@
         "finalUrl": "https://ksefuj.to/en/validator/unexpected-element-fa3",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 135,
+        "responseTimeMs": 85,
         "title": "Element in the wrong place in FA(3) invoice XML — ksefuj.to",
         "titleCount": 1,
         "titleLength": 59,
@@ -15511,7 +15627,7 @@
         "finalUrl": "https://ksefuj.to/en/validator/vat-calculation-error-p14-p15",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 166,
+        "responseTimeMs": 439,
         "title": "VAT calculation error: P_14 or P_15 is wrong — ksefuj.to",
         "titleCount": 1,
         "titleLength": 56,
@@ -15563,7 +15679,7 @@
         "finalUrl": "https://ksefuj.to/en/validator/wrong-namespace-fa3-invoice",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 134,
+        "responseTimeMs": 129,
         "title": "Wrong namespace in the invoice: xmlns for FA(3) — ksefuj.to",
         "titleCount": 1,
         "titleLength": 59,
@@ -15614,7 +15730,7 @@
         "finalUrl": "https://ksefuj.to/uk/blog/koryguvalna-nota-ksef",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 170,
+        "responseTimeMs": 136,
         "title": "Коригувальна нота в KSeF: що замість неї — ksefuj.to",
         "titleCount": 1,
         "titleLength": 52,
@@ -15668,7 +15784,7 @@
         "finalUrl": "https://ksefuj.to/uk/blog/pdf-ne-zbigayetsya-z-xml-ksef",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 182,
+        "responseTimeMs": 131,
         "title": "PDF не збігається з XML у KSeF: що є рахунком — ksefuj.to",
         "titleCount": 1,
         "titleLength": 57,
@@ -15724,7 +15840,7 @@
         "finalUrl": "https://ksefuj.to/uk/blog/rakhunok-poza-ksef-vidrakhuvannya-pdv",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 193,
+        "responseTimeMs": 130,
         "title": "Рахунок поза KSeF: чи відрахуєш із нього ПДВ — ksefuj.to",
         "titleCount": 1,
         "titleLength": 56,
@@ -15780,7 +15896,7 @@
         "finalUrl": "https://ksefuj.to/uk/blog/rakhunok-dlya-pryvatnoyi-osoby-ksef",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 184,
+        "responseTimeMs": 75,
         "title": "Рахунок для приватної особи: KSeF чи PDF? — ksefuj.to",
         "titleCount": 1,
         "titleLength": 53,
@@ -15837,7 +15953,7 @@
         "finalUrl": "https://ksefuj.to/uk/blog/kinets-limitu-10000-zl",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 156,
+        "responseTimeMs": 138,
         "title": "KSeF з 1 січня 2027: що зробити до цього — ksefuj.to",
         "titleCount": 1,
         "titleLength": 52,
@@ -15894,7 +16010,7 @@
         "finalUrl": "https://ksefuj.to/uk/blog/nomer-ksef-u-perekazi",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 153,
+        "responseTimeMs": 128,
         "title": "Номер KSeF у переказі: що вписати з 2027 року — ksefuj.to",
         "titleCount": 1,
         "titleLength": 57,
@@ -15950,7 +16066,7 @@
         "finalUrl": "https://ksefuj.to/uk/blog/rakhunok-z-kasovogo-aparata-ksef-2027",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 161,
+        "responseTimeMs": 117,
         "title": "Рахунок з каси та чек з NIP від 2027 року — ksefuj.to",
         "titleCount": 1,
         "titleLength": 53,
@@ -16006,7 +16122,7 @@
         "finalUrl": "https://ksefuj.to/uk/blog/shtrafy-ksef-2027-2028",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 139,
+        "responseTimeMs": 160,
         "title": "Штрафи за KSeF: обов'язок з 2027, штрафи з 2028? — ksefuj.to",
         "titleCount": 1,
         "titleLength": 60,
@@ -16062,7 +16178,7 @@
         "finalUrl": "https://ksefuj.to/uk/blog/zvilnenyy-vid-pdv-ksef",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 206,
+        "responseTimeMs": 126,
         "title": "Звільнений від ПДВ і KSeF: коли рахунки в системі",
         "titleCount": 1,
         "titleLength": 49,
@@ -16119,7 +16235,7 @@
         "finalUrl": "https://ksefuj.to/uk/blog/falshyvi-rakhunky-ksef",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 158,
+        "responseTimeMs": 120,
         "title": "Фальшивий рахунок у KSeF: що робити — ksefuj.to",
         "titleCount": 1,
         "titleLength": 47,
@@ -16174,7 +16290,7 @@
         "finalUrl": "https://ksefuj.to/uk/blog/koryguvalna-faktura-ksef",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 212,
+        "responseTimeMs": 119,
         "title": "Коригувальний рахунок у KSeF: як виставити — ksefuj.to",
         "titleCount": 1,
         "titleLength": 54,
@@ -16230,7 +16346,7 @@
         "finalUrl": "https://ksefuj.to/uk/blog/ksef-startuvav",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 184,
+        "responseTimeMs": 139,
         "title": "KSeF стартував 1 квітня: перші кроки — ksefuj.to",
         "titleCount": 1,
         "titleLength": 48,
@@ -16287,7 +16403,7 @@
         "finalUrl": "https://ksefuj.to/uk/blog/ksef-cheklist-pidhotovky",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 138,
+        "responseTimeMs": 173,
         "title": "Чекліст KSeF: 10 пунктів перед першим рахунком — ksefuj.to",
         "titleCount": 1,
         "titleLength": 58,
@@ -16346,7 +16462,7 @@
         "finalUrl": "https://ksefuj.to/uk/blog/rakhunok-inozemnomu-kontrahenty-ksef",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 172,
+        "responseTimeMs": 158,
         "title": "Рахунок іноземному покупцеві в KSeF — ksefuj.to",
         "titleCount": 1,
         "titleLength": 47,
@@ -16402,7 +16518,7 @@
         "finalUrl": "https://ksefuj.to/uk/blog/sertyfikaty-proty-tokeniv-ksef",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 474,
+        "responseTimeMs": 134,
         "title": "Токен чи сертифікат KSeF: чим входити у 2026 — ksefuj.to",
         "titleCount": 1,
         "titleLength": 56,
@@ -16456,7 +16572,7 @@
         "finalUrl": "https://ksefuj.to/uk/blog/ksef-porig-10000-zl",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 186,
+        "responseTimeMs": 117,
         "title": "Ліміт 10 000 зл. у KSeF: як рахувати — ksefuj.to",
         "titleCount": 1,
         "titleLength": 48,
@@ -16512,7 +16628,7 @@
         "finalUrl": "https://ksefuj.to/uk/blog/ksef-dlya-fop",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 229,
+        "responseTimeMs": 133,
         "title": "KSeF для ФОП: кого стосується і що робити — ksefuj.to",
         "titleCount": 1,
         "titleLength": 53,
@@ -16569,7 +16685,7 @@
         "finalUrl": "https://ksefuj.to/uk/blog/ksef-z-1-kvitnya-2026",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 175,
+        "responseTimeMs": 144,
         "title": "KSeF з 1 квітня 2026: кого стосується, що робити — ksefuj.to",
         "titleCount": 1,
         "titleLength": 60,
@@ -16626,7 +16742,7 @@
         "finalUrl": "https://ksefuj.to/uk/guides/yak-otrymaty-rakhunok-v-ksef",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 183,
+        "responseTimeMs": 134,
         "title": "Як отримати рахунок у KSeF: нічого не приймаєш — ksefuj.to",
         "titleCount": 1,
         "titleLength": 58,
@@ -16683,7 +16799,7 @@
         "finalUrl": "https://ksefuj.to/uk/guides/dostup-do-ksef-dlya-bukhgaltera",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 181,
+        "responseTimeMs": 133,
         "title": "Як дати бухгалтеру доступ до KSeF: крок за кроком",
         "titleCount": 1,
         "titleLength": 49,
@@ -16737,7 +16853,7 @@
         "finalUrl": "https://ksefuj.to/uk/guides/pershyy-rakhunok-v-aplikatsiyi-podatnyka",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 260,
+        "responseTimeMs": 199,
         "title": "Перший справжній рахунок в Aplikacja Podatnika — ksefuj.to",
         "titleCount": 1,
         "titleLength": 58,
@@ -16793,7 +16909,7 @@
         "finalUrl": "https://ksefuj.to/uk/guides/vkhid-do-ksef",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 176,
+        "responseTimeMs": 423,
         "title": "Вхід до KSeF: Profil Zaufany чи підпис — ksefuj.to",
         "titleCount": 1,
         "titleLength": 50,
@@ -16848,7 +16964,7 @@
         "finalUrl": "https://ksefuj.to/uk/guides/zbiy-ksef-offlayn",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 195,
+        "responseTimeMs": 142,
         "title": "Збій KSeF: що робити і коли надіслати рахунок — ksefuj.to",
         "titleCount": 1,
         "titleLength": 57,
@@ -16905,7 +17021,7 @@
         "finalUrl": "https://ksefuj.to/uk/guides/pershyy-rakhunok-fa3",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 155,
+        "responseTimeMs": 141,
         "title": "Тестовий рахунок у KSeF: спробуй до старту — ksefuj.to",
         "titleCount": 1,
         "titleLength": 54,
@@ -16960,7 +17076,7 @@
         "finalUrl": "https://ksefuj.to/uk/validator/element-ne-na-svoyemu-mistsi-fa3",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 222,
+        "responseTimeMs": 135,
         "title": "Елемент не на своєму місці в XML рахунку FA(3) — ksefuj.to",
         "titleCount": 1,
         "titleLength": 58,
@@ -17012,7 +17128,7 @@
         "finalUrl": "https://ksefuj.to/uk/validator/nedozvolenyy-atrybut-fa3",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 170,
+        "responseTimeMs": 171,
         "title": "Недозволений атрибут у XML рахунку FA(3) — ksefuj.to",
         "titleCount": 1,
         "titleLength": 52,
@@ -17063,7 +17179,7 @@
         "finalUrl": "https://ksefuj.to/uk/validator/nevirna-stavka-pdv-p12",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 120,
+        "responseTimeMs": 160,
         "title": "Неправильна ставка ПДВ у P_12: що вписати — ksefuj.to",
         "titleCount": 1,
         "titleLength": 53,
@@ -17115,7 +17231,7 @@
         "finalUrl": "https://ksefuj.to/uk/validator/nevirne-znachennya-polya-fa3",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 594,
+        "responseTimeMs": 140,
         "title": "Неправильне значення поля в рахунку FA(3) — ksefuj.to",
         "titleCount": 1,
         "titleLength": 53,
@@ -17168,7 +17284,7 @@
         "finalUrl": "https://ksefuj.to/uk/validator/nevirnyy-namespace-rakhunok-fa3",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 191,
+        "responseTimeMs": 122,
         "title": "Неправильний namespace у рахунку: xmlns для FA(3)",
         "titleCount": 1,
         "titleLength": 49,
@@ -17219,7 +17335,7 @@
         "finalUrl": "https://ksefuj.to/uk/validator/nevirnyy-nomer-bankivskogo-rakhunku",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 414,
+        "responseTimeMs": 180,
         "title": "Неправильний номер банківського рахунку у FA(3) — ksefuj.to",
         "titleCount": 1,
         "titleLength": 59,
@@ -17270,7 +17386,7 @@
         "finalUrl": "https://ksefuj.to/uk/validator/podatok-v-pln-valyutnyy-rakhunok",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 175,
+        "responseTimeMs": 202,
         "title": "Рахунок в іноземній валюті без податку в PLN — ksefuj.to",
         "titleCount": 1,
         "titleLength": 56,
@@ -17322,7 +17438,7 @@
         "finalUrl": "https://ksefuj.to/uk/validator/pomylka-rozrakhunku-pdv-p14-p15",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 118,
+        "responseTimeMs": 143,
         "title": "Помилка в ПДВ: P_14 або P_15 не збігається — ksefuj.to",
         "titleCount": 1,
         "titleLength": 54,
@@ -17374,7 +17490,7 @@
         "finalUrl": "https://ksefuj.to/uk/validator/sumy-bez-rozdilyuvachiv-tysyach",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 290,
+        "responseTimeMs": 125,
         "title": "Пробіл або кома в сумі рахунку FA(3) — ksefuj.to",
         "titleCount": 1,
         "titleLength": 48,
@@ -17425,7 +17541,7 @@
         "finalUrl": "https://ksefuj.to/uk/validator/vidsutni-jst-gv-podmiot2",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 353,
+        "responseTimeMs": 132,
         "title": "Немає JST і GV у Podmiot2: що вписати у FA(3) — ksefuj.to",
         "titleCount": 1,
         "titleLength": 57,
@@ -17477,7 +17593,7 @@
         "finalUrl": "https://ksefuj.to/uk/validator/vidsutnye-obovyazkove-pole-fa3",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 165,
+        "responseTimeMs": 145,
         "title": "Бракує обов'язкового поля в XML рахунку FA(3) — ksefuj.to",
         "titleCount": 1,
         "titleLength": 57,
@@ -17532,7 +17648,7 @@
         "finalUrl": "https://ksefuj.to/uk/validator/vidsutnye-p15-suma-do-oplaty",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 152,
+        "responseTimeMs": 97,
         "title": "Немає P_15: загальна сума до оплати у FA(3) — ksefuj.to",
         "titleCount": 1,
         "titleLength": 55,
@@ -17584,7 +17700,7 @@
         "finalUrl": "https://ksefuj.to/uk/validator/xml-nekorektno-sformovanyy",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 191,
+        "responseTimeMs": 119,
         "title": "XML сформовано некоректно: що виправити — ksefuj.to",
         "titleCount": 1,
         "titleLength": 51,
@@ -17636,7 +17752,7 @@
         "finalUrl": "https://ksefuj.to/uk/validator/zvorotne-opodatkuvannya-p18-ksef",
         "status": 200,
         "redirectChain": [],
-        "responseTimeMs": 155,
+        "responseTimeMs": 129,
         "title": "Зворотне оподаткування: P_18 суперечить ставці — ksefuj.to",
         "titleCount": 1,
         "titleLength": 58,
