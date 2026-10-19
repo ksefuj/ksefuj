@@ -2,7 +2,7 @@
 title: "FA(2) vs FA(3): co zmienić w XML przy migracji"
 description: "Od 1 lutego 2026 KSeF przyjmuje tylko FA(3). Zmień namespace, KodFormularza i WariantFormularza, dodaj JST i GV w Podmiot2. Korekty starych faktur też w FA(3)."
 date: 2026-03-28
-updated: 2026-10-07
+updated: 2026-10-18
 section: blog
 locale: pl
 slug: "fa2-vs-fa3-ksef"
@@ -15,6 +15,10 @@ sources:
     url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
   - label: "Podręcznik użytkownika Aplikacji Podatnika KSeF 2.0"
     url: "https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
+  - label: "Art. 106j ustawy o VAT (t.j. Dz.U. 2026 poz. 1263)"
+    url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
+  - label: "FAQ MF — KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
 translations:
   pl: "fa2-vs-fa3-ksef"
   en: "fa2-vs-fa3-ksef"
@@ -22,7 +26,7 @@ translations:
 
 Od 1 lutego 2026 roku KSeF 2.0 przyjmuje wyłącznie FA(3), bez trybu zgodności wstecznej. Przy migracji z FA(2) musisz zmienić namespace, atrybuty `KodFormularza`, wartość `WariantFormularza` i dodać pola `JST` oraz `GV` do każdego `Podmiot2`.
 
-Stan prawny na 7 października 2026.
+Stan prawny na 18 października 2026.
 
 <Source
   href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
@@ -36,7 +40,12 @@ FA(2) obowiązywała od 1 września 2023 roku, najpierw dobrowolnie, potem w pil
 Dwie daty łatwo pomylić:
 
 - **1 lutego 2026:** KSeF obowiązkowy dla podatników o obrocie powyżej 200 mln zł w 2024 roku. Od tego dnia FA(3) jest jedynym akceptowanym formatem dla **wszystkich** faktur KSeF.
-- **1 kwietnia 2026:** KSeF obowiązkowy dla pozostałych czynnych podatników VAT.
+- **1 kwietnia 2026:** KSeF obowiązkowy dla pozostałych podatników, czynnych i zwolnionych z VAT.
+
+<Source
+  href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
+  label="FAQ MF — KSeF 2.0, pytanie 10"
+/>
 
 Format obowiązuje więc od lutego niezależnie od tego, od kiedy KSeF jest obowiązkowy dla Ciebie.
 
@@ -146,7 +155,12 @@ Gdy `JST` = `1`, wymagany jest wpis w `Podmiot3` z `Rola` = `8`. Gdy `GV` = `1`,
 
 Faktura korygująca do faktury wystawionej w FA(2) przed 1 lutego 2026 **musi być w FA(3)**. Nie ma trybu „korekta FA(2) w formacie FA(2)”. Dotyczy to też faktur końcowych do zaliczkowych faktur FA(2) (broszura FA(3), wstęp o obowiązującym wzorze faktury ustrukturyzowanej).
 
-Przy korekcie faktury wystawionej poza obecnym KSeF, czyli każdej faktury FA(2) z KSeF 1.0, użyj w `DaneFaKorygowanej` pola `NrKSeFN` = `1`. Pole `NrKSeF` dotyczy faktur wystawionych już w KSeF 2.0.
+Faktura FA(2) wysłana do KSeF 1.0 ma numer KSeF, więc korekta ustawia w `DaneFaKorygowanej` pole `NrKSeF` = `1` i podaje ten numer w `NrKSeFFaKorygowanej`. Schemat FA(3) przyjmuje tam także numery w formacie z KSeF 1.0. `NrKSeFN` = `1` ustawiasz tylko wtedy, gdy oryginałowi nie nadano numeru KSeF, np. był papierowy lub w PDF. MF nie opisuje przypadku KSeF 1.0 wprost. Ta reguła wynika z opisu pól `NrKSeF` i `NrKSeFN` w broszurze FA(3) oraz z art. 106j ust. 2 pkt 2a ustawy o VAT, który wymaga numeru KSeF oryginału zawsze, gdy go nadano. Pozostałe faktury bez numeru KSeF wymieniamy w artykule o [korekcie faktury bez numeru KSeF](/blog/faktura-korygujaca-ksef#korekta-faktury-bez-numeru-ksef).
+
+<Source
+  href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
+  label="Art. 106j ust. 2 pkt 2a ustawy o VAT (t.j. Dz.U. 2026 poz. 1263)"
+/>
 
 ## Lista zmian przy migracji
 
@@ -159,7 +173,7 @@ Przy korekcie faktury wystawionej poza obecnym KSeF, czyli każdej faktury FA(2)
 
 **Zależnie od przypadku:**
 
-- korekty do FA(2): `NrKSeFN` = `1` w `DaneFaKorygowanej`,
+- korekty do FA(2) z KSeF 1.0: `NrKSeF` = `1` i numer KSeF 1.0 w `NrKSeFFaKorygowanej`,
 - faktury pracownicze: `Rola` = `11` w `Podmiot3` z `BrakID` = `1`,
 - złożone faktury ilościowe: `Zalacznik`, po zgłoszeniu w e-US.
 

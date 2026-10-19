@@ -19,12 +19,12 @@ what is not yet settled.
 
 ## Next up
 
-- [ ] **UPDATE** `fa2-vs-fa3-ksef` (all locales): section „Korekty do faktur FA(2)” and the
-      migration list say to use `NrKSeFN` = `1` for every FA(2) invoice from KSeF 1.0; the
-      brochure's `NrKSeF` description („1” when the corrected invoice „była wystawiona w KSeF”),
-      art. 106j ust. 2 pkt 2a and the XSD `TNumerKSeF` pattern (accepts 36-char KSeF 1.0 numbers)
-      point to `NrKSeF` + the number; MF does not address the case directly. Align with
-      `faktura-korygujaca-ksef` (source:
+- [x] **UPDATE** `fa2-vs-fa3-ksef` (in review: branch `content/fa2-vs-fa3-ksef`) (all locales):
+      section „Korekty do faktur FA(2)” and the migration list say to use `NrKSeFN` = `1` for every
+      FA(2) invoice from KSeF 1.0; the brochure's `NrKSeF` description („1” when the corrected
+      invoice „była wystawiona w KSeF”), art. 106j ust. 2 pkt 2a and the XSD `TNumerKSeF` pattern
+      (accepts 36-char KSeF 1.0 numbers) point to `NrKSeF` + the number; MF does not address the
+      case directly. Align with `faktura-korygujaca-ksef` (source:
       https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf,
       `NrKSeF`, s. 69)
 - [x] **UPDATE** `faktura-korygujaca-ksef` (in review: branch `content/faktura-korygujaca-ksef`)
