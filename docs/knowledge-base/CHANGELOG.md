@@ -6,6 +6,33 @@ validator, none).
 
 ---
 
+## 2026-10-07 → 2026-10-19 (partial run, GitHub only; `Last checked` not updated)
+
+Official hosts were unreachable from the run environment (proxy refused CONNECT with HTTP 403):
+ksef.podatki.gov.pl, api.sejm.gov.pl, legislacja.rcl.gov.pl, www.gov.pl, dziennikustaw.gov.pl,
+isap.sejm.gov.pl, eureka.mf.gov.pl, www.sejm.gov.pl, crd.gov.pl. Law, MF guidance and schemas were
+not checked; this is not a "no changes" entry. Open issue:
+https://github.com/ksefuj/ksefuj/issues/127.
+
+### Technical (API/schemas/GitHub)
+
+- ksef-api 2.9.0 (PROD 2026-10-15): `OwnerPermissionScope` in POST
+  /permissions/query/personal/grants; error 21001 documented in OpenAPI (code existed before):
+  https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md. Impact: brief
+  `api-ksef-zmiany-cirfmf.md`; posts none; validator none.
+- ksef-client-csharp 2.9.0 (2026-10-14), return type change for personal permission search:
+  https://github.com/CIRFMF/ksef-client-csharp/blob/main/RELEASE_NOTES.md. Impact: brief only.
+- ksef-pdf-generator 1.1.46 (2026-10-14), visualisation fixes (number formatting, decimal
+  separators, rounding): https://github.com/CIRFMF/ksef-pdf-generator/blob/main/changelog.md.
+  Impact: brief only.
+- `faktury/weryfikacja-faktury.md` (strict XML rules, PROD 2026-10-19): no commits since 2026-09-22.
+  ksef-client-java (last 3.0.29, 2026-09-25), ksef-schematy, ksef-latarnia: no commits since
+  2026-10-07. Impact: none.
+- `pnpm update-schemas`: crd.gov.pl unreachable, script fell back to bundled files; schemas not
+  verified.
+
+---
+
 ## 2026-04-01 → 2026-10-07 (catch-up run, checked 2026-10-07)
 
 ### Law in force
