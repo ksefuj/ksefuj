@@ -5,6 +5,35 @@ effect. Record the date, the page, what changed (old -> new for titles and descr
 metric that motivated it. After 28 days, add a **Results** line comparing current CTR/position with
 the baseline.
 
+## 2026-10-19
+
+Digest: `gsc-data` 2026-10-18 (GSC 2026-09-18 to 2026-10-15: 101 clicks, 8,611 impressions, CTR
+1.17%, avg position 6.5). No title or description changes: every page in the low-CTR list was
+updated or published within the last 28 days (`/blog/faktura-zagraniczna-ksef` 2026-10-12, the rest
+as on 2026-10-18), and the FA(2) vs FA(3) posts are still in open content PR #137. No crawl Problems
+(all 149 sitemap URLs 200, no broken links, no canonical mismatches, no hreflang issues). The
+sitemap has had 6 warnings with 0 errors since at least 2026-10-13; the API gives no detail. No
+Results lines yet: the oldest logged change is from 2026-10-07.
+
+- **Pages:** `/guides/logowanie-ksef`, `/en/guides/ksef-login`, `/uk/guides/vkhid-do-ksef`
+  - **Change:** body only. One sentence after „Po zalogowaniu zobaczysz faktury wystawione na Twój
+    NIP" (and its EN and UK equivalents) linking `/guides/jak-odebrac-fakture-ksef`,
+    `/en/guides/receiving-invoices-in-ksef` and `/uk/guides/yak-otrymaty-rakhunok-v-ksef`.
+  - **Motivation:** all three receiving-invoices guides are "Discovered - currently not indexed",
+    each with only 6 internal links (the listings and new posts that are themselves not indexed).
+    The login guides are indexed (PL 246 impr, pos 9.0; EN 188 impr, pos 6.4).
+  - **Baseline to compare:** URL Inspection state of the receiving-invoices guides (all three
+    Discovered - not indexed).
+- **Pages:** `/blog/ksef-dla-jdg`, `/en/blog/ksef-for-sole-traders`, `/uk/blog/ksef-dlya-fop`
+  - **Change:** body only. In the Aplikacja Podatnika bullet, the words „otrzymane" /
+    „uprawnieniami" (EN "received ones" / "permissions", UK „отримані" / „повноваженнями") now link
+    the receiving-invoices guide and the accountant-access guide in each locale.
+  - **Motivation:** `/guides/uprawnienia-ksef-ksiegowa` and `/en/guides/ksef-accountant-access` are
+    "Discovered - currently not indexed" with 6 internal links each; the sole-trader post is the
+    natural entry point for both topics.
+  - **Baseline to compare:** URL Inspection state of the accountant-access guides (PL and EN
+    Discovered - not indexed; UK not in the not-indexed list).
+
 ## 2026-10-18
 
 Digest: `gsc-data` 2026-10-17 (GSC 2026-09-17 to 2026-10-14: 98 clicks, 8,559 impressions, CTR
