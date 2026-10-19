@@ -35,9 +35,10 @@ what is not yet settled.
       (source:
       https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf,
       pkt 2.13.6, 4.1.3)
-- [ ] **UPDATE** `kary-ksef-2027-2028`: says „Odpowiedzi o odliczeniu nie mają ograniczenia w
-      czasie” (FAQ) without noting that Podręcznik KSeF 2.0 cz. II pkt 1.7 limits the deduction
-      position to February–December 2026 in its heading, so 2027 is open (source:
+- [x] **UPDATE** `kary-ksef-2027-2028` (in review: branch `content/kary-ksef-2027-2028`): says
+      „Odpowiedzi o odliczeniu nie mają ograniczenia w czasie” (FAQ) without noting that Podręcznik
+      KSeF 2.0 cz. II pkt 1.7 limits the deduction position to February–December 2026 in its
+      heading, so 2027 is open (source:
       https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf,
       pkt 1.7, heading: „w okresie od lutego do grudnia 2026 r.”)
 - [x] **UPDATE** FAQ `limity-i-wylaczenia` (in review: branch `content/limity-i-wylaczenia`) (all
