@@ -19,143 +19,75 @@ what is not yet settled.
 
 ## Next up
 
-- [x] **UPDATE** `fa2-vs-fa3-ksef` (in review: branch `content/fa2-vs-fa3-ksef`) (all locales):
-      section „Korekty do faktur FA(2)” and the migration list say to use `NrKSeFN` = `1` for every
-      FA(2) invoice from KSeF 1.0; the brochure's `NrKSeF` description („1” when the corrected
-      invoice „była wystawiona w KSeF”), art. 106j ust. 2 pkt 2a and the XSD `TNumerKSeF` pattern
-      (accepts 36-char KSeF 1.0 numbers) point to `NrKSeF` + the number; MF does not address the
-      case directly. Align with `faktura-korygujaca-ksef` (source:
-      https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf,
-      `NrKSeF`, s. 69)
-- [x] **UPDATE** `faktura-korygujaca-ksef` (in review: branch `content/faktura-korygujaca-ksef`)
-      (all locales): section „Korekta faktury sprzed KSeF” says to use `NrKSeFN` = `1` for any
-      invoice issued before 1 April 2026; MF ties `NrKSeFN` to whether the corrected invoice has a
-      KSeF number (invoices issued in KSeF from 1.02.2026, or voluntarily earlier, have one), not to
-      the date. Also cites the superseded VAT Act text Dz.U. 2025 poz. 775 instead of 2026 poz. 1263
-      (source:
-      https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf,
-      pkt 2.13.6, 4.1.3)
-- [x] **UPDATE** `kary-ksef-2027-2028` (in review: branch `content/kary-ksef-2027-2028`): says
-      „Odpowiedzi o odliczeniu nie mają ograniczenia w czasie” (FAQ) without noting that Podręcznik
-      KSeF 2.0 cz. II pkt 1.7 limits the deduction position to February–December 2026 in its
-      heading, so 2027 is open (source:
-      https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf,
-      pkt 1.7, heading: „w okresie od lutego do grudnia 2026 r.”)
-- [x] **UPDATE** FAQ `limity-i-wylaczenia` (in review: branch `content/limity-i-wylaczenia`) (all
-      locales), remaining entries: „Od kiedy obowiązuje mnie KSeF jeśli jestem poniżej limitu?" says
-      the date „zależy od statusu VAT" and gives no date; czynni and zwolnieni share one schedule,
-      and below 10 000 zł/month invoices may stay outside KSeF until 31.12.2026 (art. 145m),
-      mandatory from 1.01.2027. „Fundacja lub stowarzyszenie" opens with „zależy od tego, czy …
-      czynny podatnik VAT" (VAT-exempt ones are in scope too) and omits art. 145m. „Kto jest
-      zwolniony z KSeF?" omits invoices to private persons (art. 106ga ust. 2 pkt 4). UK file still
-      uses formal ви (STYLE.md: ти) (source:
-      https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/, Q10)
-- [x] **UPDATE** `falszywe-faktury-ksef` (in review: branch `content/falszywe-faktury-ksef`): said
-      the right to deduct arises in the period the invoice is entered in the records (art. 86 ust.
-      10); the KB gives the tax-point period, not earlier than the period of receipt (art. 86 ust.
-      10b pkt 1), with receipt = KSeF number date (art. 106na ust. 3). Also unbacked: the 1.04.2026
-      start of hiding/reporting fake invoices and the reporting mechanics (Podręcznik cz. II pkt 6.3
-      only says „kilka miesięcy po uruchomieniu"); the cz. III source points at the homepage; the
-      VAT Act source is Dz.U. 2025 poz. 775 instead of 2026 poz. 1263 (source:
-      https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf,
-      pkt 1.7, 5.1, 6.3). Note: cz. III (6.08.2026) pkt 7 now documents reporting via „Zgłoszenie
-      nadużycia" in Aplikacja Podatnika; hiding (pkt 8) is still announced only
-- [x] **UPDATE** `faktura-zagraniczna-ksef` (in review: branch `content/faktura-zagraniczna-ksef`)
-      (all locales): says „KSeF jest obowiązkowy dla wszystkich czynnych podatników VAT"; VAT-exempt
-      taxpayers are covered too from 1.04.2026 (source:
-      https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/)
-- [x] **UPDATE** FAQ `limity-i-wylaczenia` (in review: branch `content/limity-i-wylaczenia`) (all
-      locales): says rolnicy ryczałtowi „co do zasady są wyłączeni z obowiązku KSeF"; unsupported.
-      MF lists only VAT RR invoices (issued by the buyer) as optional in KSeF from 1.04.2026
-      (source:
-      https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/podstawy-prawne-oraz-kluczowe-terminy/)
-- [x] **UPDATE** `ksef-dla-jdg` + `ksef-od-1-kwietnia-2026` (all locales) — the consumer (B2C)
-      exclusion is cited as art. 106nd ust. 3 + rozporządzenie MF z 7.12.2025; the KB gives art.
-      106ga ust. 2 pkt 4 as its basis. Fix the citation (keep the regulation only for the exclusions
-      it actually covers), mention that issuing B2C invoices in KSeF is voluntary, link
-      `faktura-dla-osoby-prywatnej-ksef` · brief
-      `docs/knowledge-base/briefs/faktura-dla-osoby-prywatnej-ksef.md`
-- [x] `ksef-scisla-walidacja-xml-19-10` (in review: branch `content/ksef-scisla-walidacja-xml`) —
-      KSeF od 19.10.2026 odrzuci XML z instrukcjami przetwarzania i niezalecanymi znakami · „KSeF
-      błąd xml-002" · M, K · 2026-10-19 · CIRFMF ksef-api release 2.4.0 changelog and issue #718
-      (maintainer: PROD enforcement moved to 2026-10-19) · Urgent: explain what gets rejected, the
-      `X-System-Warning` xml-00x warnings, and how to check a file (the ksefuj validator, once it
-      flags these).
-- [x] `kary-ksef-2027-2028` (in review: branch `content/kary-ksef-2027-2028`) — Kary za KSeF: co się
-      zmienia od 1 stycznia 2027 · „kary KSeF 2027" · A, K · before 2026-12-31 · PRAWO, UD477 ·
-      Obligation in 2027, fines from 2028 (if passed). What KAS does in 2027 instead (reminders,
-      verification). Update when the act passes.
-- [x] `koniec-limitu-10000-zl` (in review: branch `content/koniec-limitu-10000-zl`) — Koniec limitu
-      10 000 zł: co zrobić przed 1 stycznia 2027 · „KSeF od 1 stycznia 2027" · A · 2026-12-31 · 10K,
-      PRAWO · Link to `ksef-limit-10000-zl`; don't re-explain the limit math.
-- [x] `faktura-z-kasy-fiskalnej-ksef-2027` (in review: branch
-      `content/faktura-z-kasy-fiskalnej-ksef-2027`) — Faktura z kasy fiskalnej i paragon z NIP od
-      2027 · „paragon z NIP KSeF 2027" · A · 2026-12-31 · FAQ, PRAWO · Transitional exclusion ends
-      2026-12-31 (UNVERIFIED legal basis).
-- [x] `numer-ksef-w-przelewie` (in review: branch `content/numer-ksef-w-przelewie`) — Numer KSeF w
-      przelewie i split payment · „numer KSeF w przelewie" · K, A · 2027-01-01 · PRAWO · Date and
-      format UNVERIFIED; PRAWO says "not yet in force".
-- [x] `tokeny-ksef-po-2026` (in review: branch `content/tokeny-ksef-po-2026`) — Tokeny KSeF po 31
-      grudnia 2026 · „token KSeF 2027" · M, K · 2026-12-31 · APP · MF announced tokens stay;
-      regulation change UNVERIFIED. Link to `certyfikaty-vs-tokeny-ksef` and UPDATE that post if the
-      regulation is published.
-- [x] `zwolniony-z-vat-ksef` (in review: branch `content/zwolniony-z-vat-ksef`) — Zwolniony z VAT a
-      KSeF od 2027 · „zwolniony z VAT KSeF" · A · 2027-01-01 · P2 · art. 113 threshold UNVERIFIED.
-- [x] `aplikacja-podatnika-ksef-pierwsza-faktura` (in review: branch
-      `content/aplikacja-podatnika-ksef-pierwsza-faktura`) — Pierwsza faktura w Aplikacji Podatnika
-      KSeF · „aplikacja podatnika KSeF jak wystawić fakturę" · A · rolling · APP,
-      `/czy-trzeba-miec-platny-program-zeby-wystawiac-faktury-w-ksef/` · Platform-agnostic intro,
-      then MF's free app step by step.
-- [x] `logowanie-ksef` (in review: branch `content/logowanie-ksef`) — Logowanie do KSeF: Profil
-      Zaufany, podpis, certyfikat · „KSeF logowanie profil zaufany" · A · rolling · APP, KOM
-- [x] `uprawnienia-ksef-ksiegowa` (in review: branch `content/uprawnienia-ksef-ksiegowa`) — Jak dać
-      księgowej dostęp do KSeF · „KSeF uprawnienia biuro rachunkowe" · A, K · before 2027-01-01 ·
-      FAQ, P3
-- [x] `awaria-ksef-offline` (in review: branch `content/awaria-ksef-offline`) — Awaria KSeF: tryb
-      offline24 i offline krok po kroku · „awaria KSeF co robić" · A, K, M · evergreen · KOM, P2
+Planned 2026-10-20 from Search Console (2026-09-19 to 2026-10-16) and a scan of what Polish tax
+sites published in the last month. Trade-press items are topic signals only: every fact still needs
+a Tier 1–3 source.
+
+- [ ] **UPDATE** `ksef-checklist-przygotowanie` — refresh as „KSeF: checklista na 1 stycznia 2027” ·
+      date-driven · A, K · 2026-12-01 · brief `checklist-przygotowanie.md` (its penalty facts are
+      stale), `sankcje-ksef-ud477.md` · End of art. 145m limit and 145n cash-register invoices,
+      tokens, penalties deferred (MF 2026-09-16, UD477 not enacted). Link the existing posts on
+      each.
+- [ ] **UPDATE** `ksef-scisla-walidacja-xml-19-10` — rejection was announced for PROD from
+      2026-10-19; once CIRFMF confirms it is live, switch the post from future to present tense and
+      lead with „KSeF odrzuca…” · M, K · now · CIRFMF `faktury/weryfikacja-faktury.md`,
+      `api-changelog.md`
+- [ ] **UPDATE** `najczestsze-bledy-walidacji-fa3` — open with a direct answer to „co znaczy błąd
+      walidacji” in the first 100 words, then the list; mention the strict-XML rejections from 19.10
+      and link that post · „błąd walidacji co to znaczy” · A · GSC ~74 impr at pos 7–14 · brief
+      `bledy-walidacji-fa3.md`
+- [ ] `mpp-split-payment-ksef` — Split payment (MPP) na fakturze w KSeF · „MPP KSeF” / „split
+      payment KSeF” · K, A · Broszura FA(3) `P_18A`, KIS interpretation
+      0114-KDIP1-1.4012.566.2026.1.MM of 22.09.2026 (UNVERIFIED, via infor.pl 2026-10-17) · No
+      coverage on our side; strong validator fit (Adnotacje rules).
+- [ ] **UPDATE** `tokeny-ksef-po-2026` — check the token decision for new details before 31.12:
+      validity 1–365 days and renewal only with the owner's consent are reported by infor.pl
+      (2026-10-07, citing interpelacja 19230) but UNVERIFIED; still no legal act · A, M · 2026-12-01
+      · brief `rozporzadzenie-ksef-i-tokeny.md`
+- [ ] `wspolnota-mieszkaniowa-ksef` — Wspólnota mieszkaniowa i spółdzielnia a KSeF · „wspólnota
+      mieszkaniowa KSeF” · K, A (zarządca) · FAQ, MF training PDF `/media/hb0mye13/` · Signal:
+      infor.pl 2026-09-01; MF answer to interpelacja 17044 reportedly rules out an exclusion
+      (UNVERIFIED). Cover VAT-exempt wspólnoty and the art. 145m limit.
+- [ ] `terminy-ksef-data-wystawienia` — Data wystawienia, przesłania i otrzymania faktury w KSeF ·
+      „data wystawienia faktury KSeF” · A, K · P2, art. 106na ust. 3 · Signal: infor.pl 2026-10-13.
+      Link `awaria-ksef-offline` and `jak-odebrac-fakture-ksef`.
+- [ ] `najem-lokalu-ksef` — Najem lokalu firmie a KSeF (bez działalności) · „najem KSeF” · A · FAQ,
+      PRAWO · Signal: infor.pl 2026-09-11; dates for private landlords UNVERIFIED.
+- [ ] **UPDATE** `awaria-ksef-offline` — add the case where downloading invoices is unavailable but
+      sending works (KOM notice of 2026-10-13 on the 16–17.10 outage) · A, K · KOM
 
 ## Evergreen
 
-- [x] `faktura-dla-osoby-prywatnej-ksef` (in review: branch
-      `content/faktura-dla-osoby-prywatnej-ksef`) — Faktura dla osoby prywatnej a KSeF · „faktura
-      dla osoby prywatnej KSeF" · A · FAQ, 10K
-- [x] `jak-odebrac-fakture-ksef` (in review: branch `content/jak-odebrac-fakture-ksef`) — Jak
-      odebrać fakturę z KSeF · „jak odebrać fakturę w KSeF" · A · FAQ (art. 106gb ust. 4), P2
-- [x] `faktura-poza-ksef-odliczenie-vat` (in review: branch
-      `content/faktura-poza-ksef-odliczenie-vat`) — Faktura wystawiona poza KSeF: co z odliczeniem
-      VAT · „faktura poza KSeF odliczenie VAT" · K · FAQ
-- [x] `pusta-faktura-pdf-xml` (in review: branch `content/pusta-faktura-pdf-xml`) — PDF inny niż
-      XML: ryzyko pustej faktury · „pusta faktura KSeF" · K, M · official source UNVERIFIED · Strong
-      validator fit.
-- [x] `nota-korygujaca-ksef` (in review: branch `content/nota-korygujaca-ksef`) — Nota korygująca a
-      KSeF · „nota korygująca KSeF" · K · P2 · Frame as nota vs korekta; link
-      `faktura-korygujaca-ksef`.
+Ordered by Search Console demand (2026-10-20); the items from `faktura-zaliczkowa-ksef` down had no
+matching queries.
+
+- [ ] `walidacja-xml-fa3` — Jak sprawdzić XML FA(3) przed wysyłką · „walidacja XML FA(3)” /
+      „walidator KSeF” · M · `/ksef-na-okres-obligatoryjny/wsparcie-dla-integratorow` · Core product
+      fit; developer voice allowed. ~20 impr of tool intent land on `/` and `/guides`. Also cover
+      where the official XSD lives („ksef xml schema”, ~11 impr, no PL page).
+- [ ] `kody-bledow-ksef` — Kody błędów KSeF i co znaczą · „błąd 450 KSeF" · M · integrator docs ·
+      Error codes UNVERIFIED.
 - [ ] `usuniecie-faktury-ksef` — Czy można usunąć lub edytować fakturę w KSeF · „usunięcie faktury
-      KSeF" · A · FAQ
+      KSeF" / „anulowanie faktury KSeF” · A · FAQ, P2 pkt 1.6.2–1.6.3 · Ranks pos 2 already;
+      infor.pl ran the same question 2026-10-19.
 - [ ] `numer-ksef-gdzie-znalezc` — Numer KSeF: gdzie go znaleźć · „numer KSeF faktury" · A, M · FAQ
+- [ ] `aplikacja-mobilna-ksef` — Aplikacja mobilna KSeF · „aplikacja mobilna KSeF" · A ·
+      `/mobilna-ksef-20/`, APP · infor.pl 2026-10-07 covers offline use in 2027 (UNVERIFIED).
+- [ ] `ryczalt-ksef` — Ryczałt a KSeF · „ryczałt KSeF" · A · P2
 - [ ] `faktura-zaliczkowa-ksef` — Faktura zaliczkowa w KSeF · „faktura zaliczkowa KSeF" · K, M · P2
 - [ ] `samofakturowanie-ksef` — Samofakturowanie w KSeF · „samofakturowanie KSeF" · K · FAQ, P3
 - [ ] `zalaczniki-ksef` — Załączniki do faktury w KSeF · „załącznik do faktury KSeF" · M, A · FAQ
-- [ ] `di-bfk-jpk-v7` — Oznaczenia DI i BFK w JPK_V7 · „JPK_V7 BFK DI" · K · FAQ
-- [ ] `ryczalt-ksef` — Ryczałt a KSeF · „ryczałt KSeF" · A · P2
 - [ ] `faktura-po-angielsku-ksef` — Faktura KSeF po angielsku · „faktura KSeF po angielsku" · A ·
       FAQ · Link `faktura-zagraniczna-ksef`.
 - [ ] `przechowywanie-faktur-ksef` — Jak długo KSeF przechowuje faktury · „jak długo faktury w KSeF"
       · K · FAQ
 - [ ] `kontekst-logowania-ksef` — Kontekst logowania w KSeF · „kontekst logowania KSeF" · A · FAQ
-- [ ] `aplikacja-mobilna-ksef` — Aplikacja mobilna KSeF · „aplikacja mobilna KSeF" · A ·
-      `/mobilna-ksef-20/`, APP
 - [ ] `faktura-vat-rr-ksef` — Faktura VAT RR w KSeF · „VAT RR KSeF" · A · APP
-- [ ] `walidacja-xml-fa3` — Jak sprawdzić XML FA(3) przed wysyłką · „walidacja XML FA(3)" · M ·
-      `/ksef-na-okres-obligatoryjny/wsparcie-dla-integratorow` · Core product fit; developer voice
-      allowed.
-- [ ] `kody-bledow-ksef` — Kody błędów KSeF i co znaczą · „błąd 450 KSeF" · M · integrator docs ·
-      Error codes UNVERIFIED.
+- [ ] `di-bfk-jpk-v7` — Oznaczenia DI i BFK w JPK_V7 · „JPK_V7 BFK DI" · K · FAQ
 - [ ] `kurs-waluty-faktura-ksef` — Kurs waluty na fakturze w KSeF · „faktura w walucie KSeF kurs" ·
-      K · existing brief `docs/knowledge-base/briefs/kurs-waluty-art-31a.md`
+      K · existing brief `docs/knowledge-base/briefs/kurs-waluty-art-31a.md` · The `/waluty` tool
+      already gets this intent.
 - [ ] `zaw-fa-ksef` — ZAW-FA: kiedy jest potrzebny · „ZAW-FA KSeF" · A, K · P3
-- [ ] **UPDATE** `ksef-checklist-przygotowanie` — refresh as a December 2026 checklist (after the
-      penalties update above).
 
 ## Scheduled maintenance
 
@@ -167,7 +99,33 @@ Dated chores, not for the daily routine's "first unchecked item" pick.
 
 ## Done
 
-- [x] **UPDATE** penalties postponed to 2028: done in the rewrite of all existing posts (branch
-      `content/rewrite-existing-posts`).
+Merged items, newest first. One line each; the PR has the details.
 
-<!-- Move items here with the PR number when merged, e.g. `- [x] slug (#81)` -->
+- [x] **UPDATE** `kary-ksef-2027-2028`: Podręcznik cz. II pkt 1.7 deduction limit, UD477 status
+      (#140)
+- [x] **UPDATE** `fa2-vs-fa3-ksef`: `NrKSeF` for FA(2) corrections, 1.04.2026 scope (#137)
+- [x] **UPDATE** `faktura-korygujaca-ksef`: `NrKSeFN` tied to the KSeF number, not the date (#135)
+- [x] `nota-korygujaca-ksef` (#134)
+- [x] `pusta-faktura-pdf-xml` (#133)
+- [x] `faktura-poza-ksef-odliczenie-vat` (#131)
+- [x] **UPDATE** FAQ `limity-i-wylaczenia`: below-limit schedule, foundations, B2C, rolnicy
+      ryczałtowi (#129)
+- [x] **UPDATE** `faktura-zagraniczna-ksef`: VAT-exempt taxpayers in scope (#128)
+- [x] **UPDATE** `falszywe-faktury-ksef`: deduction period, reporting mechanics (#126)
+- [x] `jak-odebrac-fakture-ksef` (#125)
+- [x] **UPDATE** `ksef-dla-jdg` + `ksef-od-1-kwietnia-2026`: B2C exclusion citation (#123)
+- [x] `faktura-dla-osoby-prywatnej-ksef` (#107)
+- [x] `logowanie-ksef` (#94)
+- [x] `aplikacja-podatnika-ksef-pierwsza-faktura` (#91)
+- [x] `awaria-ksef-offline` (#90)
+- [x] `uprawnienia-ksef-ksiegowa` (#89)
+- [x] `ksef-scisla-walidacja-xml-19-10` (#88)
+- [x] `kary-ksef-2027-2028` (#87)
+- [x] `numer-ksef-w-przelewie` (#85)
+- [x] `koniec-limitu-10000-zl` (#84)
+- [x] `zwolniony-z-vat-ksef` (#83)
+- [x] `faktura-z-kasy-fiskalnej-ksef-2027` (#82)
+- [x] `tokeny-ksef-po-2026` (#81)
+- [x] **UPDATE** penalties postponed to 2028, all existing posts (#80)
+
+<!-- When merged, move the item here as one line: `- [x] slug (#PR)`, newest first. -->
