@@ -300,6 +300,12 @@
       "invoicing": "Issuing and receiving invoices",
       "errors": "Errors and validation"
     },
+    "topicsShort": {
+      "deadlines": "Deadlines",
+      "access": "Access",
+      "invoicing": "Invoices",
+      "errors": "Errors"
+    },
     "discovery": {
       "readNext": "Read next",
       "topicFilterLabel": "Filter by topic",
@@ -498,6 +504,14 @@
           "description": "Under current law the penalties apply from 1 January 2027. The Ministry of Finance has announced a deferral to the end of 2027. Draft UD477, not yet enacted, sets 1 January 2028."
         }
       },
+      "timeline": {
+        "ariaLabel": "KSeF timeline: 1 February 2026, mandatory for the largest companies; 1 April 2026, for all other VAT taxpayers; 31 December 2026, end of the exceptions; 1 January 2027, penalties under the current law; 1 January 2028, penalties under draft UD477, not yet enacted. Details in the list below.",
+        "largeTaxpayers": "largest companies",
+        "allTaxpayers": "other VAT taxpayers",
+        "reliefsEndPenalties": "end of exceptions · penalties under the law",
+        "penaltiesDraft": "penalties under draft UD477",
+        "today": "today"
+      },
       "notify": {
         "title": "Find out when a date changes",
         "text": "The penalty date may still move. We’ll send a short email when any of these dates or the KSeF rules change.",
@@ -508,6 +522,12 @@
     "topics": {
       "title": "Topics",
       "allWithCount": "All ({count})",
+      "descriptions": {
+        "deadlines": "Who KSeF covers, from when, and the penalties",
+        "access": "How to log in and grant permissions",
+        "invoicing": "How to issue, receive and correct an invoice",
+        "errors": "Why KSeF rejects an invoice and how to fix it"
+      },
       "validatorMessages": "Validator messages"
     },
     "recent": {

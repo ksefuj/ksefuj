@@ -5,6 +5,7 @@ import { ContributeFooter } from "@/components/contribute-footer";
 import { ShareButton } from "@/components/share-button";
 import { ReadNext } from "@/components/read-next";
 import { Breadcrumbs } from "@/components/breadcrumbs";
+import { TopicLabel } from "@/components/topic-label";
 import { MoreInTopic } from "@/components/more-in-topic";
 import { SidebarNewsletter } from "@/components/sidebar-newsletter";
 import { ArticleNewsletter } from "@/components/article-newsletter";
@@ -69,9 +70,11 @@ export async function BlogPostLayout({
               <p className="text-sm font-medium">
                 <Link
                   href={buildListingHref(listHref, { topic: frontmatter.topic })}
-                  className="text-violet-700 underline-offset-4 hover:underline"
+                  className="group"
                 >
-                  {t(`topics.${frontmatter.topic}`)}
+                  <TopicLabel topic={frontmatter.topic}>
+                    {t(`topics.${frontmatter.topic}`)}
+                  </TopicLabel>
                 </Link>
               </p>
             )}

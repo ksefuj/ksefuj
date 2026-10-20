@@ -3,7 +3,11 @@ import {
   getMilestoneStatus,
   KSEF_MILESTONES,
   type Milestone,
+  PENALTIES_RANGE_END,
   statusKey,
+  TIMELINE_END,
+  TIMELINE_START,
+  timelinePercent,
   warsawDay,
 } from "./ksef-calendar";
 
@@ -79,5 +83,25 @@ describe("KSEF_MILESTONES", () => {
     const dates = KSEF_MILESTONES.map((x) => x.date);
     expect([...dates].sort()).toEqual(dates);
     expect(new Set(KSEF_MILESTONES.map((x) => x.id)).size).toBe(KSEF_MILESTONES.length);
+  });
+});
+
+describe("timelinePercent", () => {
+  it("maps the track bounds to 0 and 100", () => {
+    expect(timelinePercent(TIMELINE_START)).toBe(0);
+    expect(timelinePercent(TIMELINE_END)).toBe(100);
+  });
+
+  it("clamps days outside the track", () => {
+    expect(timelinePercent("2025-01-01")).toBe(0);
+    expect(timelinePercent("2030-01-01")).toBe(100);
+  });
+
+  it("orders milestones and the penalty range end left to right", () => {
+    const positions = [...KSEF_MILESTONES.map((m) => m.date), PENALTIES_RANGE_END].map(
+      timelinePercent,
+    );
+    expect([...positions].sort((a, b) => a - b)).toEqual(positions);
+    expect(positions[positions.length - 1]).toBeLessThan(100);
   });
 });

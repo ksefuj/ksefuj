@@ -100,3 +100,20 @@ export function statusKey(
   }
   return status.phase === "today" ? "startsToday" : "inForce";
 }
+
+/**
+ * End of the uncertain penalty range drawn on the homepage timeline. Comes from draft UD477 (not
+ * yet enacted), which moves the art. 106ni penalties to 1 January 2028. Change it here only.
+ */
+export const PENALTIES_RANGE_END = "2028-01-01";
+
+/** Timeline track bounds: the first milestone, and a margin after the end of the penalty range. */
+export const TIMELINE_START = "2026-02-01";
+export const TIMELINE_END = "2028-03-01";
+
+/** Position of `isoDay` on the timeline track as a percentage (0-100), clamped to the track. */
+export function timelinePercent(isoDay: string): number {
+  const start = dayNumber(TIMELINE_START);
+  const ratio = (dayNumber(isoDay) - start) / (dayNumber(TIMELINE_END) - start);
+  return Math.min(100, Math.max(0, ratio * 100));
+}

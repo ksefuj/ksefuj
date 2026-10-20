@@ -1,8 +1,10 @@
+import type { CSSProperties } from "react";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/routing";
 import { TrackedLink } from "@/components/tracked-link";
 import { buildContentPath } from "@/lib/content";
 import { getTopicHubs } from "@/lib/content-discovery";
+import { TOPIC_THEME } from "@/lib/topic-theme";
 import { buildListingHref } from "@/lib/listing-filters";
 import { homeLinkClasses, HomeSection } from "./home-section";
 
@@ -29,10 +31,17 @@ export async function TopicsSection({ locale }: { locale: string }) {
         {hubs.map(({ topic, items, total }) => (
           // Subgrid rows (md+) keep headings, lists and "all" links aligned across a row even when
           // a heading wraps or one topic has fewer items.
-          <div key={topic} className="md:row-span-3 md:grid md:grid-rows-subgrid md:gap-y-0">
-            <h3 className="mb-3 border-b border-slate-200 pb-2 font-display text-lg font-bold tracking-tight text-slate-900">
-              {tTopics(topic)}
-            </h3>
+          <div
+            key={topic}
+            style={{ "--topic": TOPIC_THEME[topic].accent } as CSSProperties}
+            className="border-l-[3px] border-[var(--topic)] pl-4 md:row-span-3 md:grid md:grid-rows-subgrid md:gap-y-0"
+          >
+            <div className="mb-3 border-b border-slate-200 pb-2">
+              <h3 className="font-display text-lg font-bold tracking-tight text-slate-900">
+                {tTopics(topic)}
+              </h3>
+              <p className="mt-1 text-sm text-slate-600">{t(`descriptions.${topic}`)}</p>
+            </div>
             <ul className="space-y-2.5 text-sm">
               {items.slice(0, DESKTOP_LIMIT).map(({ item, section }, index) => (
                 // Mobile shows the first MOBILE_LIMIT items only; the "all" link covers the rest

@@ -300,6 +300,12 @@
       "invoicing": "Wystawianie i odbieranie faktur",
       "errors": "Błędy i walidacja"
     },
+    "topicsShort": {
+      "deadlines": "Terminy",
+      "access": "Dostęp",
+      "invoicing": "Faktury",
+      "errors": "Błędy"
+    },
     "discovery": {
       "readNext": "Czytaj dalej",
       "topicFilterLabel": "Filtruj po temacie",
@@ -498,6 +504,14 @@
           "description": "Według obecnych przepisów kary obowiązują od 1 stycznia 2027 r. MF zapowiedziało przesunięcie tego terminu na koniec 2027 r. Projekt UD477, jeszcze nieuchwalony, wskazuje 1 stycznia 2028 r."
         }
       },
+      "timeline": {
+        "ariaLabel": "Oś czasu KSeF: 1 lutego 2026 r. obowiązek dla największych firm, 1 kwietnia 2026 r. dla pozostałych podatników VAT, 31 grudnia 2026 r. koniec wyjątków, 1 stycznia 2027 r. kary według obecnej ustawy, 1 stycznia 2028 r. kary według nieuchwalonego jeszcze projektu UD477. Szczegóły na liście poniżej.",
+        "largeTaxpayers": "największe firmy",
+        "allTaxpayers": "pozostali podatnicy VAT",
+        "reliefsEndPenalties": "koniec wyjątków · kary wg ustawy",
+        "penaltiesDraft": "kary wg projektu UD477",
+        "today": "dziś"
+      },
       "notify": {
         "title": "Dowiedz się, gdy termin się zmieni",
         "text": "Termin kar może się jeszcze przesunąć. Wyślemy krótki e-mail, gdy zmieni się któraś z tych dat albo przepisy KSeF.",
@@ -508,6 +522,12 @@
     "topics": {
       "title": "Tematy",
       "allWithCount": "Wszystkie ({count})",
+      "descriptions": {
+        "deadlines": "Kogo obejmuje KSeF, od kiedy i jakie są kary",
+        "access": "Jak się zalogować i nadać uprawnienia",
+        "invoicing": "Jak wystawić, odebrać i skorygować fakturę",
+        "errors": "Dlaczego KSeF odrzuca fakturę i jak to naprawić"
+      },
       "validatorMessages": "Komunikaty walidatora"
     },
     "recent": {

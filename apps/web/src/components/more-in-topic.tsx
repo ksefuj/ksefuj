@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { TrackedLink } from "@/components/tracked-link";
 import { buildContentPath, type Frontmatter } from "@/lib/content";
 import { getMoreInTopicItems } from "@/lib/content-discovery";
+import { TopicLabel } from "@/components/topic-label";
 import { isContentTopic } from "@/lib/topics";
 
 interface MoreInTopicProps {
@@ -34,7 +35,12 @@ export async function MoreInTopic({ locale, section, frontmatter }: MoreInTopicP
       >
         {t("discovery.moreInTopic")}
         {isContentTopic(topic) && (
-          <span className="font-normal text-slate-500">: {t(`topics.${topic}`)}</span>
+          <>
+            <span className="font-normal text-slate-500">: </span>
+            <TopicLabel topic={topic} className="font-normal">
+              {t(`topics.${topic}`)}
+            </TopicLabel>
+          </>
         )}
       </h2>
       <ul className="space-y-2">

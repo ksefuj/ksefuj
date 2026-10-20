@@ -2,110 +2,121 @@ import type { ReactElement } from "react";
 import { readFileSync } from "fs";
 import { join } from "path";
 import { ImageResponse } from "next/og";
-import { topographyDataUrl } from "./og-patterns";
+import type { ContentTopic } from "./topics";
+import { topicTheme } from "./topic-theme";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 interface OgImageProps {
   title: string;
-  /** Seeds the topography panel. Use a stable key (PL slug for articles) so locales match. */
-  patternKey: string;
-  /** Topic badge shown above the title (articles only). */
-  topicLabel?: string;
+  /** Topic of the article; picks the cover colour. Neutral theme when absent. */
+  topic?: ContentTopic;
+  /** Small uppercase label above the title (translated topic or section name). */
+  label?: string;
+  /** Small label bottom-right (formatted date or "Guide"). */
+  meta?: string;
 }
 
-// Load the pre-generated SVG logo (JetBrains Mono text converted to paths — no font needed at runtime).
-// Regenerate with: node apps/web/scripts/generate-logo-svg.mjs
-//
-// Lazy-loaded: reading at module level would crash the serverless function bundle on first import
-// because @vercel/nft cannot trace dynamic process.cwd() paths. The file is explicitly included
-// via outputFileTracingIncludes in next.config.js.
-let _logoDataUrl: string | undefined;
-function getLogoDataUrl() {
-  if (!_logoDataUrl) {
-    const svg = readFileSync(join(process.cwd(), "public/logo-og.svg"));
-    _logoDataUrl = `data:image/svg+xml;base64,${svg.toString("base64")}`;
-  }
-  return _logoDataUrl;
-}
+const VIOLET = "#8b5cf6";
 
-function cardTitleSize(title: string): string {
+function cardTitleSize(title: string): number {
   if (title.length <= 40) {
-    return "64px";
+    return 72;
   }
-  if (title.length <= 70) {
-    return "52px";
+  if (title.length <= 65) {
+    return 64;
   }
-  return "44px";
+  if (title.length <= 90) {
+    return 56;
+  }
+  return 48;
 }
 
-export function ogLayout({ title, patternKey, topicLabel }: OgImageProps): ReactElement {
+export function ogLayout({ title, topic, label, meta }: OgImageProps): ReactElement {
+  const theme = topicTheme(topic);
   return (
     <div
       style={{
         display: "flex",
-        position: "relative",
+        flexDirection: "column",
         width: "100%",
         height: "100%",
-        backgroundColor: "#FAFAF8",
+        padding: "72px",
+        backgroundColor: theme.cover,
+        color: "#ffffff",
         fontFamily: '"Plus Jakarta Sans", Inter, sans-serif',
       }}
     >
-      <img
-        src={topographyDataUrl(patternKey, size.width, size.height)}
-        width={size.width}
-        height={size.height}
-        alt=""
-        style={{ position: "absolute", top: 0, left: 0 }}
-      />
+      <div
+        style={{
+          display: "flex",
+          height: "32px",
+          fontSize: "24px",
+          fontWeight: 600,
+          letterSpacing: "0.14em",
+          textTransform: "uppercase",
+          color: "rgba(255,255,255,0.6)",
+        }}
+      >
+        {label ?? ""}
+      </div>
 
       <div
         style={{
           display: "flex",
-          flexDirection: "column",
-          position: "relative",
-          width: "760px",
-          height: "100%",
-          padding: "72px",
-          paddingRight: "48px",
+          flex: 1,
+          alignItems: "center",
+          minHeight: 0,
         }}
       >
-        {topicLabel ? (
-          <div style={{ display: "flex" }}>
-            <div
-              style={{
-                display: "flex",
-                fontSize: "24px",
-                fontWeight: 600,
-                color: "#6d28d9",
-                backgroundColor: "#f5f3ff",
-                border: "2px solid #ddd6fe",
-                borderRadius: "9999px",
-                padding: "8px 24px",
-              }}
-            >
-              {topicLabel}
-            </div>
-          </div>
-        ) : null}
-
         <div
           style={{
-            fontSize: cardTitleSize(title),
+            display: "block",
+            fontSize: `${cardTitleSize(title)}px`,
             fontWeight: 800,
-            color: "#0f172a",
-            lineHeight: 1.15,
-            letterSpacing: "-0.01em",
-            flex: 1,
-            display: "flex",
-            alignItems: "center",
+            lineHeight: 1.12,
+            letterSpacing: "-0.02em",
+            lineClamp: 4,
           }}
         >
           {title}
         </div>
+      </div>
 
-        <img src={getLogoDataUrl()} width={263} height={60} alt="ksefuj.to" />
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          fontSize: "32px",
+        }}
+      >
+        <div style={{ display: "flex", fontWeight: 800, letterSpacing: "-0.02em" }}>
+          <span>ksefuj</span>
+          <div
+            style={{
+              width: "16px",
+              flexShrink: 0,
+              height: "16px",
+              borderRadius: "9999px",
+              backgroundColor: VIOLET,
+              margin: "0 4px",
+              alignSelf: "center",
+            }}
+          />
+          <span style={{ color: "rgba(255,255,255,0.5)" }}>to</span>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            fontSize: "24px",
+            fontWeight: 600,
+            color: "rgba(255,255,255,0.6)",
+          }}
+        >
+          {meta ?? ""}
+        </div>
       </div>
     </div>
   );
@@ -120,7 +131,7 @@ type OgFont = {
 
 // Static instances (wght 600/800) of Plus Jakarta Sans (display font, Latin + Latin Extended) and
 // Inter (glyph fallback for Cyrillic, which Plus Jakarta Sans lacks). Both OFL; see assets/fonts.
-// Lazy-loaded and traced via outputFileTracingIncludes, like the logo.
+// Lazy-loaded and traced via outputFileTracingIncludes.
 const FONT_FILES: Array<[string, 600 | 800, string]> = [
   ["Plus Jakarta Sans", 800, "PlusJakartaSans-800.ttf"],
   ["Plus Jakarta Sans", 600, "PlusJakartaSans-600.ttf"],

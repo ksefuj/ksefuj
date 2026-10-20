@@ -3,6 +3,7 @@ import { NewsletterForm } from "@/components/newsletter-form";
 import { TrackedLink } from "@/components/tracked-link";
 import { buildContentPath, listContentItemsUnified } from "@/lib/content";
 import { KSEF_MILESTONES } from "@/lib/ksef-calendar";
+import { CalendarTimeline } from "./calendar-timeline";
 import { CalendarStatus } from "./calendar-status";
 import { HOME_RAIL_3, HomeSection } from "./home-section";
 
@@ -21,6 +22,7 @@ export async function CalendarSection({ locale }: CalendarSectionProps) {
   return (
     <HomeSection id="calendar" title={t("title")}>
       <p className="-mt-2 mb-5 max-w-2xl md:-mt-4 md:mb-8 text-slate-600">{t("intro")}</p>
+      <CalendarTimeline renderedAt={renderedAt} />
       <ol className="divide-y divide-slate-200 border-y border-slate-200">
         {KSEF_MILESTONES.map((milestone) => {
           const article = milestone.articlePlSlug
