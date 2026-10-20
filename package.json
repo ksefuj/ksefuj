@@ -30,6 +30,7 @@
     "check:style": "tsx scripts/check-content-style.ts",
     "update-schemas": "tsx scripts/update-schemas.ts",
     "screenshots": "tsx scripts/capture-ksef-screenshots.ts",
+    "newsletter:sync": "tsx scripts/buttondown-sync.ts",
     "prepare": "husky install",
     "postinstall": "pnpm --filter @ksefuj/validator build",
     "pre-commit": "pnpm format:check && pnpm lint && pnpm typecheck",
