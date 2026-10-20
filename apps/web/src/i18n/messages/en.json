@@ -387,6 +387,15 @@
     "preview": "Invoice preview",
     "licenses": "Third-party licences"
   },
+  "articleFeedback": {
+    "question": "Was this article helpful?",
+    "yes": "Yes",
+    "no": "Not really",
+    "yesLabel": "Yes, this article was helpful",
+    "noLabel": "Not really, this article wasn't helpful",
+    "thanks": "Thanks! Your rating helps us improve our articles.",
+    "helpfulCount": "This article has already helped {count, plural, one {# person} other {# people}}"
+  },
   "terms": {
     "meta": {
       "title": "Terms of Use — ksefuj.to",
@@ -689,7 +698,7 @@
     },
     "noStorage": {
       "title": "No Server Storage",
-      "description": "Your XML invoice files never leave your device. There is no backend, no database, and no server-side processing. Once you close the browser tab, the data is gone — we never had access to it in the first place."
+      "description": "Your XML invoice files never leave your device. Invoices never reach any server or database. Once you close the browser tab, the data is gone — we never had access to it in the first place."
     },
     "cookies": {
       "title": "Cookies",
@@ -717,6 +726,9 @@
     },
     "invoicePreview": {
       "description": "When you use the invoice preview, we count how many times a preview is opened and a PDF is downloaded. With each count we record only the page language and the invoice type (such as standard or corrective), never the invoice content or the file name."
+    },
+    "articleFeedback": {
+      "description": "When you rate an article (“Yes” or “Not really”), we add one to an anonymous rating counter for that article in our database. We don't store any personal data and don't use cookies. To stop anyone voting twice, your browser remembers your vote in its own storage (localStorage). That record stays on your device and is never sent to us. We also send an anonymous article_feedback analytics event: which article, which language and which rating."
     }
   },
   "structuredData": {

@@ -4,6 +4,7 @@ import { TableOfContents } from "@/components/table-of-contents";
 import { ContributeFooter } from "@/components/contribute-footer";
 import { ShareButton } from "@/components/share-button";
 import { Badge } from "@/components/badge";
+import { ArticleFeedback } from "@/components/article-feedback";
 import { ReadNext } from "@/components/read-next";
 import { BackLink } from "./back-link";
 import type { Frontmatter } from "@/lib/content";
@@ -70,6 +71,12 @@ export async function GuideLayout({
           </header>
 
           <div className="prose prose-slate max-w-none mdx-content">{children}</div>
+
+          <ArticleFeedback
+            section="guides"
+            locale={contentLocale ?? locale}
+            slug={frontmatter.slug}
+          />
 
           {frontmatter.sources && frontmatter.sources.filter((s) => s.url).length > 0 && (
             <div className="mt-10 pt-6 border-t border-slate-100">

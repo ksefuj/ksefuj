@@ -387,6 +387,15 @@
     "preview": "Podgląd faktury",
     "licenses": "Licencje zewnętrzne"
   },
+  "articleFeedback": {
+    "question": "Czy ten artykuł był pomocny?",
+    "yes": "Tak",
+    "no": "Nie bardzo",
+    "yesLabel": "Tak, artykuł był pomocny",
+    "noLabel": "Nie bardzo, artykuł nie był pomocny",
+    "thanks": "Dzięki! Twoja ocena pomaga nam ulepszać artykuły.",
+    "helpfulCount": "Ten artykuł pomógł już {count, plural, one {# osobie} few {# osobom} many {# osobom} other {# osoby}}"
+  },
   "terms": {
     "meta": {
       "title": "Warunki użytkowania — ksefuj.to",
@@ -689,7 +698,7 @@
     },
     "noStorage": {
       "title": "Brak przechowywania na serwerze",
-      "description": "Twoje pliki XML z fakturami nigdy nie opuszczają Twojego urządzenia. Nie ma backendu, bazy danych ani przetwarzania po stronie serwera. Po zamknięciu karty przeglądarki dane znikają — nigdy nie mieliśmy do nich dostępu."
+      "description": "Twoje pliki XML z fakturami nigdy nie opuszczają Twojego urządzenia. Faktury nie trafiają na żaden serwer ani do żadnej bazy danych. Po zamknięciu karty przeglądarki dane znikają — nigdy nie mieliśmy do nich dostępu."
     },
     "cookies": {
       "title": "Pliki cookie",
@@ -717,6 +726,9 @@
     },
     "invoicePreview": {
       "description": "Gdy korzystasz z podglądu faktury, liczymy otwarcia podglądu i pobrania PDF. Zapisujemy przy tym tylko język strony i rodzaj faktury (np. podstawowa, korygująca), nigdy treść faktury ani nazwę pliku."
+    },
+    "articleFeedback": {
+      "description": "Gdy oceniasz artykuł („Tak” lub „Nie bardzo”), zwiększamy w naszej bazie danych anonimowy licznik ocen tego artykułu. Nie zapisujemy żadnych danych osobowych i nie używamy plików cookie. Żeby nie dało się zagłosować dwa razy, Twoja przeglądarka zapamiętuje oddany głos w swojej pamięci (localStorage). Ta informacja zostaje u Ciebie i nie jest do nas wysyłana. Wysyłamy też anonimowe zdarzenie analityczne article_feedback: który artykuł, w jakim języku i jaka ocena."
     }
   },
   "structuredData": {
