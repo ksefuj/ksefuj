@@ -319,7 +319,11 @@
     },
     "mdx": {
       "copy": "Копіювати",
-      "copied": "Скопійовано"
+      "copied": "Скопійовано",
+      "screenshotSource": {
+        "test": "Aplikacja Podatnika KSeF, тестове середовище, станом на {date}",
+        "prod": "Aplikacja Podatnika KSeF, робоче середовище, станом на {date}"
+      }
     },
     "waluty": {
       "title": "Курс NBP для рахунку-фактури",

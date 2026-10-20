@@ -60,7 +60,19 @@ translations:
 
 **Безкоштовні інструменти Мінфіну.** Aplikacja Podatnika KSeF (ap.ksef.mf.gov.pl) слугує для виставлення й отримання рахунків, перегляду й завантаження UPO (urzędowe poświadczenie odbioru, офіційне підтвердження отримання). Отримувати рахунки можна також у мобільному застосунку KSeF (Aplikacja Mobilna KSeF) і в e-mikrofirma в e-Urząd Skarbowy, онлайн-кабінеті податкової. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 3.1" /> В Aplikacja Podatnika входиш через login.gov.pl (Profil Zaufany, mObywatel, інтернет-банкінг, e-Dowód) або кваліфікованим сертифікатом і як контекст обираєш свій NIP. <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Посібник Aplikacja Podatnika, розд. 4.1, с. 13-15" /> Як JDG (jednoosobowa działalność gospodarcza, польський відповідник ФОП) ти одразу маєш права власника, зокрема доступ до рахунків. <Source href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. I, с. 57" />
 
+<Screenshot
+  name="ksef-ap/faktury-wyszukiwanie"
+  alt="Екран Lista faktur в Aplikacja Podatnika KSeF з вибраною вкладкою Faktury zakupowe (Podmiot2) і розгорнутими фільтрами"
+  caption="Рахунки на закупівлю знайдеш у меню Faktury → Lista faktur (Рахунки → Список рахунків), на вкладці «Faktury zakupowe (Podmiot2)»."
+/>
+
 У списку рахунків позначаєш потрібні, натискаєш «Pobierz» (Завантажити) і обираєш формат. За один раз можна завантажити від 1 до 10 рахунків (кілька приходять у ZIP-файлі), а кожен файл названо номером KSeF. <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Посібник Aplikacja Podatnika, с. 116-117" /> Завантажувати рахунок можна скільки завгодно разів, а продавець не знає, чи ти вже це зробив. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 6.5" />
+
+<Screenshot
+  name="ksef-ap/faktura-pobierz"
+  alt="Список рахунків на закупівлю з позначеним рахунком і розгорнутою кнопкою Pobierz з варіантами PDF і XML"
+  caption="Познач рахунок, розгорни «Pobierz» (Завантажити) й обери PDF або XML."
+/>
 
 **Бухгалтерська або фактурна програма.** Програма, підключена до KSeF через API, завантажує рахунки на закупівлю за тебе. Вона з'єднується з KSeF підписом, токеном або сертифікатом KSeF; токеном і сертифікатом KSeF в Aplikacja Podatnika натомість не зайти. <Source href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. I, п. 2.4.8 і 2.5.1" />
 
@@ -101,6 +113,12 @@ KSeF не надсилає сповіщень про нові рахунки. П
 ## Як перевірити рахунок за QR-кодом на PDF чи роздруківці
 
 Рахунок із KSeF, показаний поза системою, має QR-код. На рахунку, виставленому онлайн, один код, а під ним номер KSeF. На офлайн-рахунку, який ще не має номера, два коди з підписами «OFFLINE» і «CERTYFIKAT» (сертифікат). <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 5.4" />
+
+<Screenshot
+  name="ksef-ap/faktura-podglad"
+  alt="Попередній перегляд рахунку в Aplikacja Podatnika з QR-кодом і номером KSeF під ним"
+  caption="Натисни номер KSeF у списку, і відкриється перегляд рахунку. Під QR-кодом стоїть номер KSeF."
+/>
 
 Відсканувавши перший код, бачиш основні дані: номер KSeF, NIP продавця, дату виставлення, дату присвоєння номера, режим і інформацію про відповідність. Якщо рахунку в KSeF немає, побачиш про це повідомлення. На другому кроці вводиш номер рахунку, ідентифікатор покупця й загальну суму до сплати, а тоді завантажуєш XML або PDF без входу в систему. Після кількох невдалих спроб доступ ненадовго блокується. Код «CERTYFIKAT» перевіряє, чи сертифікат виставника активний і чи має виставник відповідні права. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 5.5-5.7" />
 

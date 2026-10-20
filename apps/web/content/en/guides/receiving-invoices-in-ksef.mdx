@@ -60,7 +60,19 @@ There are three routes, and you can combine them.
 
 **Free Ministry tools.** The Taxpayer Application (ap.ksef.mf.gov.pl) lets you issue and receive invoices and view and download UPO (the official receipt confirmation). You can also receive invoices in the KSeF mobile app and in e-mikrofirma in e-Urząd Skarbowy, the tax office's online portal. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, part II, section 3.1" /> You log in to the Taxpayer Application through login.gov.pl (Profil Zaufany, mObywatel, online banking, e-Dowód) or with a qualified certificate, and choose your own NIP as the context. <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Taxpayer Application manual, ch. 4.1, pp. 13-15" /> As a sole trader (JDG, jednoosobowa działalność gospodarcza) you hold owner permissions from the start, including access to invoices. <Source href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf" label="KSeF 2.0 Manual, part I, p. 57" />
 
+<Screenshot
+  name="ksef-ap/faktury-wyszukiwanie"
+  alt="Invoice list screen in the KSeF Taxpayer Application with the Faktury zakupowe (Podmiot2) purchase invoices tab selected and filters expanded"
+  caption="Purchase invoices are under Faktury → Lista faktur (Invoices → Invoice list), on the “Faktury zakupowe (Podmiot2)” tab."
+/>
+
 In the invoice list you tick the ones you want, click "Pobierz" (Download) and choose a format. You can download 1 to 10 invoices at a time (several come as a ZIP file), and each file is named after its KSeF number. <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Taxpayer Application manual, pp. 116-117" /> You can download an invoice as many times as you like, and the seller does not know whether you have done so. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, part II, section 6.5" />
+
+<Screenshot
+  name="ksef-ap/faktura-pobierz"
+  alt="Purchase invoice list with one invoice ticked and the Pobierz (Download) button opened, showing PDF and XML"
+  caption="Tick an invoice, open “Pobierz” (Download) and choose PDF or XML."
+/>
 
 **Accounting or invoicing software.** Software connected to KSeF through the API fetches purchase invoices for you. It authenticates with a signature, a token or a KSeF certificate; note that a token or KSeF certificate will not log you in to the Taxpayer Application. <Source href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf" label="KSeF 2.0 Manual, part I, sections 2.4.8 and 2.5.1" />
 
@@ -101,6 +113,12 @@ If a seller should have issued the invoice in KSeF and did not, you keep the rig
 ## Checking an invoice with a QR code on a PDF or printout
 
 A KSeF invoice shown outside the system carries a QR code. An invoice issued online has one code, with the KSeF number below it. An offline invoice that does not yet have a number has two codes, labelled "OFFLINE" and "CERTYFIKAT" (certificate). <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, part II, section 5.4" />
+
+<Screenshot
+  name="ksef-ap/faktura-podglad"
+  alt="Invoice preview in the Taxpayer Application with a QR code and the KSeF number below it"
+  caption="Click the KSeF number in the list to open the invoice preview. The KSeF number sits below the QR code."
+/>
 
 Scanning the first code shows the basic data: KSeF number, seller's NIP, issue date, date the number was assigned, mode and a compliance note. If the invoice is not in KSeF, you see that instead. In a second step you enter the invoice number, the buyer's identifier and the total amount due, and then download the XML or PDF without logging in. After several wrong attempts, access is blocked for a while. The "CERTYFIKAT" code checks whether the issuer's certificate is active and whether the issuer holds the right permissions. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, part II, sections 5.5-5.7" />
 
