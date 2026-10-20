@@ -1,0 +1,90 @@
+---
+title: "Чи можна видалити рахунок із KSeF?"
+description: "Рахунок із номером KSeF не видалиш і не анулюєш, помилку виправляє корекція. Файл, який KSeF відхилив, не є рахунком: виправ його й надішли знову."
+date: 2026-10-20
+section: blog
+locale: uk
+slug: "vydalennya-rakhunku-ksef"
+topic: "invoicing"
+tags: ["KSeF", "Рахунок", "JDG"]
+sources:
+  - label: "Закон про VAT, єдиний текст (Dz.U. 2026 poz. 1263), ст. 2 п. 32a, 106j ч. 1, 106k (скасована), 106na ч. 1 і 3"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  - label: "Посібник KSeF 2.0, ч. II: виставлення та отримання рахунків (06.08.2026)"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "Посібник KSeF 2.0, ч. III: додаткові функції KSeF (06.08.2026)"
+    url: "https://ksef.podatki.gov.pl/media/3ikdk3qm/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06082026.pdf"
+  - label: "Логічна структура FA(3) (схема XSD)"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/"
+  - label: "МФ, найчастіші питання про KSeF"
+    url: "https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
+  - label: "KSeF API: перевірка рахунку (дублікати, код 440)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md"
+  - label: "KSeF API: технічна корекція офлайн-рахунку"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/offline/korekta-techniczna.md"
+  - label: "KSeF API: документація та специфікація (МФ)"
+    url: "https://github.com/CIRFMF/ksef-api"
+translations:
+  pl: "usuniecie-faktury-ksef"
+  en: "delete-invoice-ksef"
+  uk: "vydalennya-rakhunku-ksef"
+---
+
+Рахунок, якому KSeF (Krajowy System e-Faktur, польська національна система електронних рахунків) присвоїв номер, не можна видалити, анулювати чи відредагувати: він увійшов у правовий обіг, а KSeF зберігає його 10 років від кінця року виставлення. Помилку виправляє той, хто виставив рахунок, коригувальним рахунком (faktura korygująca), а якщо KSeF відхилив файл і не присвоїв номера, рахунок узагалі не виставлено, тож виправляєш дані й надсилаєш його ще раз. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, пп. 1.6.1–1.6.3 і 7" />
+
+Правовий стан на 20 жовтня 2026.
+
+## Номер KSeF означає, що рахунок уже існує
+
+Закон про VAT називає структурованим рахунком рахунок, виставлений за допомогою KSeF разом із присвоєним номером. Виставленим він вважається в день надсилання до KSeF, а отриманим у день присвоєння номера. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="Закон про VAT, єдиний текст (Dz.U. 2026 poz. 1263), ст. 2 п. 32a і ст. 106na ч. 1 і 3" />
+
+Відтоді рахунок уже не відкличеш. За даними Міністерства фінансів (МФ), платники не можуть самостійно видаляти рахунки, навіть коли покупця вказано неправильно. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 1.6.3" /> Такої операції немає й в API KSeF, яким користуються програми для виставлення рахунків. <Source href="https://github.com/CIRFMF/ksef-api" label="KSeF API, open-api.json і api-changelog.md (до версії 2.9.0)" /> Рахунок, надісланий 5 лютого 2026, залишається в системі до 31 грудня 2036. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 7" /> <Source href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/" label="МФ, найчастіші питання, пит. 21" />
+
+## KSeF відхилив файл: виправ його й надішли знову
+
+Коли рахунок, надісланий онлайн, не проходить перевірку, KSeF не присвоює номера, а це, за даними МФ, означає, що **рахунок не виставлено**. Немає чого видаляти чи коригувати. Файл відхиляють, зокрема, через невідповідність зразку FA(3), брак повноважень або дату виставлення з майбутнього. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 1.6.1" />
+
+Маєш XML-файл, який KSeF не прийняв? Завантаж його у [валідатор](/uk/validator): він покаже помилки в структурі та змісті файлу (повноважень і дублікатів не перевіряє). Твій файл не залишає браузера. Виправлений рахунок надсилаєш знову й не переймаєшся порядком: KSeF не перевіряє послідовності нумерації, тож рахунок із ранішим номером може потрапити в систему після рахунків із пізнішими номерами. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 1.6.7" />
+
+Офлайн-рахунок, відхилений із технічних причин (наприклад, невідповідність схемі, дублікат, завеликий файл), програма може надіслати повторно як так звану технічну корекцію (korekta techniczna). Це не стосується відхилення через брак повноважень. Змінювати зміст рахунку тоді не можна. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/offline/korekta-techniczna.md" label="KSeF API, технічна корекція" /> Aplikacja Podatnika (безкоштовний застосунок МФ) виставляє лише онлайн-рахунки, тож там ти з цим не зіткнешся. <Source href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/" label="МФ, найчастіші питання, пит. 11" /> Більше про офлайн-режим пишемо в посібнику про [збій KSeF](/uk/guides/zbiy-ksef-offlayn).
+
+## Помилку в прийнятому рахунку виправляє корекція
+
+Якщо після виставлення рахунку виявлено помилку в будь-якій його позиції, платник виставляє коригувальний рахунок. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="Закон про VAT, єдиний текст (Dz.U. 2026 poz. 1263), ст. 106j ч. 1" /> Так виправляють назву й адресу покупця, суми, ставку, дату і навіть номер рахунку. <Source href="https://crd.gov.pl/wzor/2025/06/25/13775/" label="Логічна структура FA(3): Podmiot2K, NrFaKorygowany" /> KSeF не перевіряє розрахунків, тож рахунок із неправильно порахованим VAT отримає номер і теж потребуватиме корекції. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, пп. 1.6.1 і 1.6.2" />
+
+Корекцію виставляє лише той, хто виставив первинний рахунок (зазвичай продавець). З 1 лютого 2026 коригувальних нот (noty korygujące) немає, зокрема й для рахунків, виставлених поза KSeF, тож покупець повідомляє продавця про помилку поза системою. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="Закон про VAT, єдиний текст (Dz.U. 2026 poz. 1263), ст. 106k (скасована)" /> <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, пп. 1.6.2 і 6.3" /> Подробиці в статті про [коригувальну ноту](/uk/blog/koryguvalna-nota-ksef).
+
+## Помилковий NIP покупця: корекція до нуля і новий рахунок
+
+Олена веде JDG (jednoosobowa działalność gospodarcza, підприємницька діяльність) з перекладами і в рахунку для бухгалтерського бюро вписала NIP (польський податковий номер) іншого клієнта. Рахунок потрапив до фірми, якій належить цей NIP. **Помилковий NIP не виправляють корекцією на інший.** Олена коригує рахунок до нуля, залишаючи в ньому помилковий NIP, і виставляє новий рахунок із правильним. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, пп. 1.6.3 і 1.6.4" />
+
+Корекція до нуля не анулює рахунку. Первинний рахунок і корекція залишаються в KSeF. Як заповнити таку корекцію, показуємо в розділі [корекція до нуля, коли NIP покупця з помилкою](/uk/blog/koryguvalna-faktura-ksef#корекція-до-нуля-коли-nip-покупця-з-помилкою).
+
+## Тестовий рахунок, надісланий у продуктивне середовище
+
+Марек, програміст, тестував інтеграцію системи своєї фірми з KSeF і помилково надіслав фіктивний рахунок у продуктивне середовище. Оскільки рахунок отримав номер KSeF, він є повноцінним рахунком, який не документує жодної операції, а це може означати обов'язок сплатити податок на підставі ст. 108 закону про VAT. Його треба невідкладно скоригувати до нуля. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 3.2.3" />
+
+У тестовому та демо-середовищі навпаки: документи, надіслані туди, не є рахунками й не мають правових наслідків. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, пп. 3.2.1 і 3.2.2" />
+
+## Той самий рахунок надіслано двічі
+
+Пан Томаш має веломагазин. Після обриву з'єднання його програма вдруге надіслала той самий рахунок, хоча перше надсилання дійшло до KSeF і отримало номер. KSeF розпізнає дублікат за NIP продавця, номером і типом рахунку, а другу копію відхиляє з кодом помилки 440 „Duplikat faktury” («Дублікат рахунку»). Друга копія не має номера, тож видаляти нічого. Унікальність рахунку KSeF контролює 10 повних років від кінця року виставлення. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md" label="KSeF API, перевірка рахунку: дублікати" />
+
+Інакше, коли ти виставиш той самий продаж двічі під двома різними номерами. Обидва рахунки пройдуть перевірку, а в матеріалах МФ, які ми проаналізували, ми не знайшли опису, як таку помилку виправити.
+
+## Ти отримав рахунок, якого не хочеш
+
+Покупець теж нічого не видалить. У KSeF немає опції затвердження чи відхилення рахунків, а спори про обґрунтованість рахунку чи помилки в ньому продавець і покупець з'ясовують поза системою. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, пп. 6.1 і 6.3" />
+
+МФ анонсувало можливість приховати рахунок із запровадженням через кілька місяців після старту KSeF 2.0. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 6.3" /> У частині III посібника від 6 серпня 2026 цю функцію описано як ще недоступну, а прихований рахунок не зникає з KSeF. <Source href="https://ksef.podatki.gov.pl/media/3ikdk3qm/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. III, п. 8" /> Ми не перевіряли, чи вона працює вже сьогодні. Якщо рахунок схожий на спробу шахрайства, що робити, пишемо в статті про [фальшиві рахунки в KSeF](/uk/blog/falshyvi-rakhunky-ksef).
+
+## Чого МФ не вирішило
+
+У матеріалах МФ, які ми проаналізували, ми не знайшли відповіді на два питання:
+
+- чи можна відкликати або взагалі не надсилати офлайн-рахунок, який виставлено, але ще не надіслано до KSeF,
+- чи можна анулювати рахунок, виставлений поза KSeF: паперовий або PDF у межах ліміту 10 000 zł на місяць (ст. 145m), з касового апарата (ст. 145n) або для приватної особи.
+
+Рахунки поза KSeF коригують так само, коригувальним рахунком, бо ст. 106j ч. 1 стосується кожного рахунку.
+
+Маєш номер KSeF і помилку в рахунку? Корекцію крок за кроком показуємо в статті про [коригувальний рахунок у KSeF](/uk/blog/koryguvalna-faktura-ksef).

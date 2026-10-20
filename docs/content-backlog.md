@@ -67,9 +67,6 @@ matching queries.
       where the official XSD lives („ksef xml schema”, ~11 impr, no PL page).
 - [ ] `kody-bledow-ksef` — Kody błędów KSeF i co znaczą · „błąd 450 KSeF" · M · integrator docs ·
       Error codes UNVERIFIED.
-- [ ] `usuniecie-faktury-ksef` — Czy można usunąć lub edytować fakturę w KSeF · „usunięcie faktury
-      KSeF" / „anulowanie faktury KSeF” · A · FAQ, P2 pkt 1.6.2–1.6.3 · Ranks pos 2 already;
-      infor.pl ran the same question 2026-10-19.
 - [ ] `numer-ksef-gdzie-znalezc` — Numer KSeF: gdzie go znaleźć · „numer KSeF faktury" · A, M · FAQ
 - [ ] `aplikacja-mobilna-ksef` — Aplikacja mobilna KSeF · „aplikacja mobilna KSeF" · A ·
       `/mobilna-ksef-20/`, APP · infor.pl 2026-10-07 covers offline use in 2027 (UNVERIFIED).
@@ -101,6 +98,7 @@ Dated chores, not for the daily routine's "first unchecked item" pick.
 
 Merged items, newest first. One line each; the PR has the details.
 
+- [x] `usuniecie-faktury-ksef` (#143)
 - [x] **UPDATE** `kary-ksef-2027-2028`: Podręcznik cz. II pkt 1.7 deduction limit, UD477 status
       (#140)
 - [x] **UPDATE** `fa2-vs-fa3-ksef`: `NrKSeF` for FA(2) corrections, 1.04.2026 scope (#137)

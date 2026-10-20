@@ -1,0 +1,94 @@
+---
+title: "Czy można usunąć fakturę z KSeF? Co zamiast"
+description: "Faktury z numerem KSeF nie usuniesz ani nie anulujesz, błąd poprawia korekta. Plik odrzucony przez KSeF nie jest fakturą: poprawiasz go i wysyłasz ponownie."
+date: 2026-10-20
+section: blog
+locale: pl
+slug: "usuniecie-faktury-ksef"
+topic: "invoicing"
+tags: ["KSeF", "Faktura", "JDG"]
+related:
+  - "blog/faktura-korygujaca-ksef"
+  - "blog/nota-korygujaca-ksef"
+  - "blog/falszywe-faktury-ksef"
+sources:
+  - label: "Ustawa o VAT, tekst jednolity (Dz.U. 2026 poz. 1263), art. 2 pkt 32a, 106j ust. 1, 106k (uchylony), 106na ust. 1 i 3"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  - label: "Podręcznik KSeF 2.0, cz. II: wystawianie i otrzymywanie faktur (wyd. 6.08.2026)"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "Podręcznik KSeF 2.0, cz. III: dodatkowe funkcjonalności KSeF (wyd. 6.08.2026)"
+    url: "https://ksef.podatki.gov.pl/media/3ikdk3qm/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06082026.pdf"
+  - label: "Struktura logiczna FA(3) (schemat XSD)"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/"
+  - label: "MF, Najczęstsze pytania o KSeF"
+    url: "https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
+  - label: "KSeF API: weryfikacja faktury (duplikaty, kod 440)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md"
+  - label: "KSeF API: korekta techniczna faktury offline"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/offline/korekta-techniczna.md"
+  - label: "KSeF API: dokumentacja i specyfikacja (MF)"
+    url: "https://github.com/CIRFMF/ksef-api"
+translations:
+  pl: "usuniecie-faktury-ksef"
+  en: "delete-invoice-ksef"
+  uk: "vydalennya-rakhunku-ksef"
+---
+
+Faktury, której KSeF nadał numer, nie da się usunąć, anulować ani edytować: weszła do obrotu prawnego, a KSeF przechowuje ją przez 10 lat od końca roku wystawienia. Błąd poprawia wystawca fakturą korygującą, a jeśli KSeF odrzucił plik i nie nadał numeru, faktury w ogóle nie wystawiono, więc poprawiasz dane i wysyłasz ją jeszcze raz. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 1.6.1–1.6.3 i 7" />
+
+Stan prawny na 20 października 2026.
+
+## Numer KSeF oznacza, że faktura już istnieje
+
+Ustawa o VAT nazywa fakturą ustrukturyzowaną fakturę wystawioną przy użyciu KSeF wraz z przydzielonym numerem. Za wystawioną uznaje się ją w dniu przesłania do KSeF, a za otrzymaną w dniu nadania numeru. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="Ustawa o VAT, tekst jednolity (Dz.U. 2026 poz. 1263), art. 2 pkt 32a i art. 106na ust. 1 i 3" />
+
+Od tej chwili faktury nie cofniesz. Według MF podatnicy nie mogą samodzielnie usuwać faktur, nawet gdy nabywca jest błędny. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 1.6.3" /> Takiej operacji nie ma też w API KSeF, z którego korzystają programy do fakturowania. <Source href="https://github.com/CIRFMF/ksef-api" label="KSeF API, open-api.json i api-changelog.md (do wersji 2.9.0)" /> Faktura wysłana 5 lutego 2026 zostaje w systemie do 31 grudnia 2036. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 7" /> <Source href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/" label="MF, Najczęstsze pytania, pyt. 21" />
+
+## KSeF odrzucił plik: popraw go i wyślij ponownie
+
+Gdy weryfikacja faktury wysłanej online wypadnie negatywnie, KSeF nie nadaje numeru, a to według MF oznacza, że **faktura nie została wystawiona**. Nie ma czego usuwać ani korygować. Plik bywa odrzucany m.in. za niezgodność ze wzorem FA(3), brak uprawnień albo datę wystawienia z przyszłości. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 1.6.1" />
+
+Masz plik XML, którego KSeF nie przyjął? Wrzuć go do [walidatora](/validator): pokaże błędy w strukturze i treści pliku (uprawnień ani duplikatów nie sprawdzi). Twój plik nie opuszcza przeglądarki. Poprawioną fakturę wysyłasz ponownie i nie przejmujesz się kolejnością: KSeF nie sprawdza ciągłości numeracji, więc faktura o wcześniejszym numerze może trafić do systemu po fakturach o numerach późniejszych. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 1.6.7" />
+
+Fakturę offline odrzuconą z powodów technicznych (np. niezgodność ze schematem, duplikat, za duży plik) program może wysłać ponownie jako tzw. korektę techniczną. Nie dotyczy to odrzucenia za brak uprawnień. Treści faktury nie wolno wtedy zmieniać. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/offline/korekta-techniczna.md" label="KSeF API, korekta techniczna" /> Aplikacja Podatnika wystawia tylko faktury online, więc tam tej sytuacji nie spotkasz. <Source href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/" label="MF, Najczęstsze pytania, pyt. 11" /> Więcej o trybie offline piszemy w poradniku o [awarii KSeF](/guides/awaria-ksef-offline).
+
+## Błąd w przyjętej fakturze poprawia korekta
+
+Jeśli po wystawieniu faktury stwierdzono pomyłkę w jakiejkolwiek jej pozycji, podatnik wystawia fakturę korygującą. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="Ustawa o VAT, tekst jednolity (Dz.U. 2026 poz. 1263), art. 106j ust. 1" /> Tak poprawiasz nazwę i adres nabywcy, kwoty, stawkę, datę, a nawet numer faktury. <Source href="https://crd.gov.pl/wzor/2025/06/25/13775/" label="Struktura logiczna FA(3): Podmiot2K, NrFaKorygowany" /> KSeF nie sprawdza rachunków, więc faktura z błędnie policzonym VAT dostanie numer i też wymaga korekty. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 1.6.1 i 1.6.2" />
+
+Korektę wystawia wyłącznie wystawca faktury pierwotnej (zwykle sprzedawca). Od 1 lutego 2026 nie funkcjonują noty korygujące, także dla faktur wystawionych poza KSeF, więc nabywca zgłasza błąd sprzedawcy poza systemem. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="Ustawa o VAT, tekst jednolity (Dz.U. 2026 poz. 1263), art. 106k (uchylony)" /> <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 1.6.2 i 6.3" /> Szczegóły są w poście o [nocie korygującej](/blog/nota-korygujaca-ksef).
+
+## Pomylony NIP nabywcy: korekta do zera i nowa faktura
+
+Ołena prowadzi JDG z tłumaczeniami i przy fakturze dla biura rachunkowego wpisała NIP innego klienta. Faktura trafiła do firmy, która ma ten NIP. **Błędnego NIP-u nie poprawia się korektą na inny.** Ołena koryguje fakturę do zera, zostawiając w niej błędny NIP, i wystawia nową fakturę z prawidłowym. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 1.6.3 i 1.6.4" />
+
+Korekta do zera nie anuluje faktury. Pierwotna faktura i korekta zostają w KSeF. Jak wypełnić taką korektę, pokazujemy w sekcji [korekta do zera przy pomylonym NIP](/blog/faktura-korygujaca-ksef#korekta-do-zera-gdy-nip-nabywcy-jest-pomylony).
+
+## Faktura testowa wysłana na produkcję
+
+Marek, programista, testował integrację firmowego systemu z KSeF i przez pomyłkę wysłał fikcyjną fakturę na środowisko produkcyjne. Skoro dostała numer KSeF, jest pełnoprawną fakturą, która nie dokumentuje żadnej transakcji, a to może skutkować obowiązkiem zapłaty podatku na podstawie art. 108 ustawy o VAT. Trzeba ją niezwłocznie skorygować do zera. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 3.2.3" />
+
+Odwrotnie jest w środowisku testowym i demo: dokumenty wysłane tam nie są fakturami i nie wywołują skutków prawnych. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 3.2.1 i 3.2.2" />
+
+## Ta sama faktura wysłana dwa razy
+
+Pan Tomasz prowadzi sklep z rowerami. Jego program po zerwanym połączeniu wysłał tę samą fakturę drugi raz, choć pierwsza wysyłka dotarła do KSeF i dostała numer. KSeF rozpoznaje duplikat po NIP-ie sprzedawcy, numerze i rodzaju faktury, a drugą kopię odrzuca z kodem błędu 440 „Duplikat faktury”. Druga kopia nie ma numeru, więc nie ma czego usuwać. Unikalność faktury KSeF pilnuje przez 10 pełnych lat od końca roku wystawienia. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md" label="KSeF API, weryfikacja faktury: duplikaty" />
+
+Inaczej jest, gdy tę samą sprzedaż wystawisz dwa razy pod dwoma różnymi numerami. Obie faktury przejdą weryfikację, a w materiałach MF, które przeanalizowaliśmy, nie znaleźliśmy opisu, jak taki błąd poprawić.
+
+## Dostałeś fakturę, której nie chcesz
+
+Nabywca też niczego nie usunie. KSeF nie ma opcji zatwierdzania ani odrzucania faktur, a spory o zasadność faktury czy błędy w niej sprzedawca i nabywca wyjaśniają poza systemem. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 6.1 i 6.3" />
+
+MF zapowiedziało opcję ukrycia faktury, z wdrożeniem kilka miesięcy po starcie KSeF 2.0. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 6.3" /> W części III podręcznika z 6 sierpnia 2026 funkcja jest opisana jako jeszcze niedostępna, a ukryta faktura nie znika z KSeF. <Source href="https://ksef.podatki.gov.pl/media/3ikdk3qm/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. III, pkt 8" /> Nie sprawdziliśmy, czy działa już dziś. Jeśli faktura wygląda na próbę oszustwa, co robić, piszemy w poście o [fałszywych fakturach w KSeF](/blog/falszywe-faktury-ksef).
+
+## Czego MF nie rozstrzygnęło
+
+W materiałach MF, które przeanalizowaliśmy, nie znaleźliśmy odpowiedzi na dwa pytania:
+
+- czy fakturę offline, wystawioną, ale jeszcze niewysłaną do KSeF, można wycofać albo w ogóle nie wysyłać,
+- czy da się anulować fakturę wystawioną poza KSeF: papierową lub PDF w limicie 10 000 zł miesięcznie (art. 145m), z kasy fiskalnej (art. 145n) albo dla osoby prywatnej.
+
+Faktury poza KSeF koryguje się tak samo, fakturą korygującą, bo art. 106j ust. 1 dotyczy każdej faktury.
+
+Masz numer KSeF i błąd w fakturze? Korektę krok po kroku pokazujemy w poście o [fakturze korygującej w KSeF](/blog/faktura-korygujaca-ksef).

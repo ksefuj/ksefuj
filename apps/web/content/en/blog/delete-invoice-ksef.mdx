@@ -1,0 +1,90 @@
+---
+title: "Deleting a KSeF invoice: what to do instead"
+description: "An invoice with a KSeF number can't be deleted or cancelled; a corrective invoice fixes it. A file KSeF rejected isn't an invoice: fix it and resend."
+date: 2026-10-20
+section: blog
+locale: en
+slug: "delete-invoice-ksef"
+topic: "invoicing"
+tags: ["KSeF", "Invoice", "JDG"]
+sources:
+  - label: "VAT Act, consolidated text (Dz.U. 2026 poz. 1263), Art. 2(32a), 106j(1), 106k (repealed), 106na(1) and (3)"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  - label: "KSeF 2.0 Handbook, part II: issuing and receiving invoices (6 Aug 2026)"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "KSeF 2.0 Handbook, part III: additional KSeF features (6 Aug 2026)"
+    url: "https://ksef.podatki.gov.pl/media/3ikdk3qm/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06082026.pdf"
+  - label: "FA(3) logical structure (XSD schema)"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/"
+  - label: "MF, frequently asked questions about KSeF"
+    url: "https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
+  - label: "KSeF API: invoice verification (duplicates, code 440)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md"
+  - label: "KSeF API: technical correction of an offline invoice"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/offline/korekta-techniczna.md"
+  - label: "KSeF API: documentation and specification (MF)"
+    url: "https://github.com/CIRFMF/ksef-api"
+translations:
+  pl: "usuniecie-faktury-ksef"
+  en: "delete-invoice-ksef"
+  uk: "vydalennya-rakhunku-ksef"
+---
+
+Once KSeF (Krajowy System e-Faktur, Poland's National e-Invoicing System) has assigned an invoice a number, you can't delete, cancel or edit it: the invoice has entered legal circulation, and KSeF stores it for 10 years from the end of the year it was issued. The issuer fixes a mistake with a corrective invoice (faktura korygująca), and if KSeF rejected the file without assigning a number, the invoice was never issued at all, so you fix the data and send it again. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Handbook, part II, sections 1.6.1–1.6.3 and 7" />
+
+Legal position as of 20 October 2026.
+
+## A KSeF number means the invoice already exists
+
+The VAT Act defines a structured invoice as an invoice issued using KSeF together with its assigned number. It counts as issued on the day it is sent to KSeF, and as received on the day the number is assigned. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="VAT Act, consolidated text (Dz.U. 2026 poz. 1263), Art. 2(32a) and Art. 106na(1) and (3)" />
+
+From that moment there's no undoing it. According to Poland's Ministry of Finance (MF), taxpayers can't delete invoices themselves, even when the buyer is wrong. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Handbook, part II, section 1.6.3" /> The KSeF API, which invoicing software uses, has no such operation either. <Source href="https://github.com/CIRFMF/ksef-api" label="KSeF API, open-api.json and api-changelog.md (up to version 2.9.0)" /> An invoice sent on 5 February 2026 stays in the system until 31 December 2036. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Handbook, part II, section 7" /> <Source href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/" label="MF, frequently asked questions, question 21" />
+
+## KSeF rejected the file: fix it and send it again
+
+When an invoice sent online fails verification, KSeF assigns no number, and according to MF that means **the invoice has not been issued**. There's nothing to delete or correct. Files are rejected for reasons such as not matching the FA(3) schema, missing permissions, or an issue date in the future. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Handbook, part II, section 1.6.1" />
+
+Got an XML file that KSeF didn't accept? Drop it into the [validator](/en/validator): it shows errors in the file's structure and content (it doesn't check permissions or duplicates). Your file never leaves your browser. You then resend the corrected invoice without worrying about order: KSeF doesn't check that numbering is sequential, so an invoice with an earlier number can reach the system after invoices with later numbers. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Handbook, part II, section 1.6.7" />
+
+An offline invoice rejected for technical reasons (for example a schema mismatch, a duplicate, or a file that's too large) can be resent by your software as a so-called technical correction (korekta techniczna). This doesn't apply to a rejection for missing permissions. The content of the invoice must not change. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/offline/korekta-techniczna.md" label="KSeF API, technical correction" /> Aplikacja Podatnika (MF's free invoicing app) issues online invoices only, so you won't run into this there. <Source href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/" label="MF, frequently asked questions, question 11" /> More on offline mode is in our guide to [KSeF outages](/en/guides/ksef-outage-offline-mode).
+
+## A mistake in an accepted invoice is fixed by a correction
+
+If a mistake is found in any item of an invoice after it was issued, the taxpayer issues a corrective invoice. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="VAT Act, consolidated text (Dz.U. 2026 poz. 1263), Art. 106j(1)" /> That's how you fix the buyer's name and address, amounts, tax rate, date and even the invoice number. <Source href="https://crd.gov.pl/wzor/2025/06/25/13775/" label="FA(3) logical structure: Podmiot2K, NrFaKorygowany" /> KSeF doesn't check the arithmetic, so an invoice with miscalculated VAT still gets a number and needs a correction too. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Handbook, part II, sections 1.6.1 and 1.6.2" />
+
+Only the issuer of the original invoice (usually the seller) can issue the correction. Corrective notes (noty korygujące) no longer exist from 1 February 2026, including for invoices issued outside KSeF, so the buyer reports the mistake to the seller outside the system. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="VAT Act, consolidated text (Dz.U. 2026 poz. 1263), Art. 106k (repealed)" /> <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Handbook, part II, sections 1.6.2 and 6.3" /> The details are in our post on the [corrective note](/en/blog/corrective-note-ksef).
+
+## Wrong buyer NIP: correct to zero and issue a new invoice
+
+Olena runs a JDG (jednoosobowa działalność gospodarcza, a Polish sole proprietorship) doing translations. On an invoice for an accounting firm she entered another client's NIP (Polish tax identification number). The invoice went to the company that holds that NIP. **A wrong NIP isn't fixed by correcting it to a different one.** Olena corrects the invoice to zero, leaving the wrong NIP in it, and issues a new invoice with the right one. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Handbook, part II, sections 1.6.3 and 1.6.4" />
+
+A zero-value correction doesn't cancel the invoice. The original invoice and the correction both stay in KSeF. How to fill in such a correction is shown in [zero-value correction when the buyer's NIP is wrong](/en/blog/corrective-invoice-ksef#zero-value-correction-when-the-buyers-nip-is-wrong).
+
+## A test invoice sent to production
+
+Marek, a developer, was testing his company's system integration with KSeF and sent a dummy invoice to the production environment by mistake. Since it got a KSeF number, it's a fully valid invoice that documents no transaction, which may mean having to pay the tax under Article 108 of the VAT Act. It has to be corrected to zero without delay. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Handbook, part II, section 3.2.3" />
+
+The test and demo environments work the other way round: documents sent there aren't invoices and have no legal effect. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Handbook, part II, sections 3.2.1 and 3.2.2" />
+
+## The same invoice sent twice
+
+Tomasz runs a bike shop. After a dropped connection, his software sent the same invoice a second time, even though the first submission had reached KSeF and received a number. KSeF recognises a duplicate by the seller's NIP, the invoice number and the invoice type, and rejects the second copy with error code 440 „Duplikat faktury” ("Duplicate invoice"). The second copy has no number, so there's nothing to delete. KSeF enforces invoice uniqueness for 10 full years from the end of the year of issue. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md" label="KSeF API, invoice verification: duplicates" />
+
+It's different if you invoice the same sale twice under two different numbers. Both invoices pass verification, and in the MF materials we analysed we found no description of how to fix such a mistake.
+
+## You received an invoice you don't want
+
+The buyer can't delete anything either. KSeF has no option to accept or reject invoices, and the seller and buyer resolve disputes over whether an invoice is justified, or over mistakes in it, outside the system. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Handbook, part II, sections 6.1 and 6.3" />
+
+MF announced an option to hide an invoice, to be rolled out a few months after KSeF 2.0 launched. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Handbook, part II, section 6.3" /> Part III of the handbook, dated 6 August 2026, describes the feature as not yet available, and a hidden invoice doesn't disappear from KSeF. <Source href="https://ksef.podatki.gov.pl/media/3ikdk3qm/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06082026.pdf" label="KSeF 2.0 Handbook, part III, section 8" /> We haven't checked whether it works today. If the invoice looks like an attempted fraud, see our post on [fake invoices in KSeF](/en/blog/fake-invoices-ksef) for what to do.
+
+## What MF hasn't settled
+
+In the MF materials we analysed, we found no answer to two questions:
+
+- whether an offline invoice that has been issued but not yet sent to KSeF can be withdrawn, or simply not sent,
+- whether an invoice issued outside KSeF can be cancelled: a paper or PDF invoice within the 10,000 zł monthly limit (Art. 145m), a cash-register invoice (Art. 145n), or one for a private individual.
+
+Invoices outside KSeF are corrected the same way, with a corrective invoice, because Art. 106j(1) applies to every invoice.
+
+Have a KSeF number and a mistake on the invoice? Our post on [corrective invoices in KSeF](/en/blog/corrective-invoice-ksef) walks through the correction step by step.
