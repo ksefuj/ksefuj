@@ -3,7 +3,7 @@ import { Inter, JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
 // Display font - for headings
 const displayFont = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-display",
+  variable: "--font-jakarta",
   weight: ["700", "800"],
   display: "swap",
 });
@@ -11,7 +11,7 @@ const displayFont = Plus_Jakarta_Sans({
 // Body font - for regular text
 const bodyFont = Inter({
   subsets: ["latin"],
-  variable: "--font-body",
+  variable: "--font-inter",
   weight: ["400", "500", "600"],
   display: "swap",
 });
@@ -19,7 +19,7 @@ const bodyFont = Inter({
 // Monospace font - for code and logo
 const monoFont = JetBrains_Mono({
   subsets: ["latin"],
-  variable: "--font-mono",
+  variable: "--font-jetbrains",
   weight: ["400", "700"],
   display: "swap",
 });

@@ -6,7 +6,7 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SectionContainer } from "@/components/section-container";
 import { LanguagePicker } from "../language-picker";
-import { ContentCard } from "@/components/content-card";
+import { ContentRow } from "@/components/content-row";
 import {
   GuidesListing,
   GuidesListingFallback,
@@ -71,10 +71,20 @@ export default async function GuidesListPage({ params }: Props) {
       topic: isContentTopic(guide.frontmatter.topic) ? guide.frontmatter.topic : undefined,
       translated: guide.contentLocale === locale,
       card: (
-        <ContentCard
+        <ContentRow
           item={guide}
           locale={locale}
           section="guides"
+          headingLevel="h2"
+          hideSectionMarker
+        />
+      ),
+      lead: (
+        <ContentRow
+          item={guide}
+          locale={locale}
+          section="guides"
+          variant="lead"
           headingLevel="h2"
           hideSectionMarker
         />
@@ -95,7 +105,7 @@ export default async function GuidesListPage({ params }: Props) {
         <SectionContainer>
           <div className="space-y-10">
             <div className="space-y-3">
-              <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900">
+              <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 font-display">
                 {t("guides.title")}
               </h1>
               <p className="text-lg text-slate-600">{t("guides.description")}</p>

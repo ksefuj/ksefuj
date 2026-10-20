@@ -243,7 +243,9 @@
     "guides": "Guides",
     "waluty": "Exchange rates",
     "validator": "Validator",
-    "preview": "Preview"
+    "preview": "Preview",
+    "toggleMenu": "Open or close menu",
+    "mainNav": "Main menu"
   },
   "translationBanner": {
     "body": "This article isn't available in your language yet. You're reading the {language} original.",
@@ -298,24 +300,31 @@
       "invoicing": "Issuing and receiving invoices",
       "errors": "Errors and validation"
     },
+    "topicsShort": {
+      "deadlines": "Deadlines",
+      "access": "Access",
+      "invoicing": "Invoices",
+      "errors": "Errors"
+    },
     "discovery": {
       "readNext": "Read next",
       "topicFilterLabel": "Filter by topic",
       "allTopics": "All topics",
       "guide": "Guide",
-      "guidesStrip": "Step-by-step guides",
-      "languageFilterLabel": "Filter by language"
+      "languageFilterLabel": "Filter by language",
+      "moreInTopic": "More on this topic"
     },
     "layout": {
-      "backToBlog": "Blog",
       "backToDocs": "Documentation",
-      "backToGuides": "Guides",
       "readingTime": "{minutes} min read",
       "lastVerified": "Last verified: {date}",
       "guideTime": "Time",
       "guideLevel": "Level",
       "tableOfContents": "Table of contents",
-      "sources": "Sources"
+      "sources": "Sources",
+      "breadcrumb": "Breadcrumb",
+      "home": "Home",
+      "updated": "Updated {date}"
     },
     "mdx": {
       "copy": "Copy",
@@ -364,6 +373,19 @@
       "relatedArticles": "Related articles",
       "readMore": "Read →",
       "source": "Source: NBP — exchange rates"
+    },
+    "newsletter": {
+      "title": "Don’t miss KSeF changes",
+      "text": "We’ll send a short email when KSeF rules or deadlines change. We only write then, so you won’t hear from us often.",
+      "deadlines": {
+        "title": "Find out when a deadline changes",
+        "text": "The penalty date may still move. We’ll send a short email when any KSeF deadline or the rules change.",
+        "button": "Notify me"
+      },
+      "sidebar": {
+        "title": "KSeF changes",
+        "text": "A short email when something changes."
+      }
     }
   },
   "footer": {
@@ -437,244 +459,128 @@
     },
     "hero": {
       "title": "Free KSeF FA(3) invoice validator",
-      "description": "Drag in your XML, see everything in seconds. Full KSeF FA(3) invoice validation that meets official MF requirements, zero privacy compromises.",
-      "trustLine": "Free validator • Full MF validation • NBP rates"
+      "lead": "Drop in your invoice XML file and see what needs fixing before you send it to KSeF.",
+      "eyebrow": "KSeF rules, deadlines and tools for businesses and accountants",
+      "trust": "Based on the law and Ministry of Finance documents · invoices never leave your browser · open source · free"
     },
-    "features": {
-      "title": "KSeF is no joke.",
-      "subtitle": "Professional validation. No paywall.",
-      "items": [
-        {
-          "title": "Built to MF spec",
-          "description": "Official FA(3) schema from June 2025 plus full semantic validation meeting official Ministry of Finance requirements"
-        },
-        {
-          "title": "Your data, your control",
-          "description": "Complete validation in your browser. Zero data transmission, zero leak risk"
-        },
-        {
-          "title": "Free. Always.",
-          "description": "No limits, no subscriptions, no hidden costs. Essential tools should be accessible to everyone"
-        }
-      ]
+    "newsletter": {
+      "title": "KSeF newsletter",
+      "subtitle": "A short email when KSeF rules or deadlines change.",
+      "placeholder": "Your email address",
+      "buttonText": "Sign me up",
+      "successMessage": "Check your inbox (and your spam folder) and confirm your subscription in the email we sent you.",
+      "errorMessage": "We couldn’t save your address. Please try again.",
+      "disclaimer": "You can unsubscribe at any time.",
+      "poweredBy": "Powered by"
     },
-    "validation": {
-      "title": "What we check",
-      "subtitle": "Three-layer validation ensures KSeF compliance",
-      "layers": [
-        {
-          "badge": "Layer 1",
-          "title": "XSD Schema",
-          "description": "Official FA(3) schema from June 2025 by Ministry of Finance",
-          "checks": [
-            "Document structure validity",
-            "Required fields and elements",
-            "Data types and formats",
-            "Element order"
-          ]
+    "calendar": {
+      "title": "KSeF calendar",
+      "intro": "The key KSeF dates and what follows from them. Each one links to an article that explains it.",
+      "uncertainBadge": "may change",
+      "status": {
+        "inDays": "in {days, plural, one {# day} other {# days}}",
+        "inDaysUncertain": "in {days, plural, one {# day} other {# days}}",
+        "startsToday": "in force from today",
+        "inForce": "in force",
+        "lastDay": "last day today",
+        "ended": "no longer in force",
+        "checkCurrent": "check the current legal position"
+      },
+      "items": {
+        "largeTaxpayers": {
+          "title": "KSeF mandatory for the largest companies",
+          "description": "Applies to taxpayers whose 2024 sales, including VAT, exceeded PLN 200 million."
         },
-        {
-          "badge": "Layer 2",
-          "title": "MF Rules",
-          "description": "Full validation aligned with official MF requirements",
-          "checks": [
-            "Entity check: JST/GV, NIP, roles",
-            "VAT rates and GTU compliance",
-            "Decimal precision for amounts and quantities",
-            "Annotation logic: exemptions, margin, NST"
-          ]
+        "allTaxpayers": {
+          "title": "KSeF mandatory for all other VAT taxpayers",
+          "description": "The obligation covers both active and VAT-exempt taxpayers, including those exempt under art. 113. Until the end of 2026 the exceptions below apply."
         },
-        {
-          "badge": "Layer 3",
-          "title": "Extra checks",
-          "description": "What KSeF won't catch — we run the numbers.",
-          "checks": [
-            "Tax amount matches the applied rate",
-            "Line totals equal the amount due",
-            "**Exchange rate matches the NBP rate**",
-            "Bank account format (NRB/IBAN)"
-          ]
+        "reliefsEnd": {
+          "title": "End of the transitional period",
+          "description": "Until 31 December 2026 you may issue invoices outside KSeF as long as your total sales documented by invoices do not exceed PLN 10,000 including tax in a month (art. 145m). Until the same date you may also issue invoices from a cash register (art. 145n)."
+        },
+        "penalties": {
+          "title": "Penalties under art. 106ni of the VAT Act",
+          "description": "Under current law the penalties apply from 1 January 2027. The Ministry of Finance has announced a deferral to the end of 2027. Draft UD477, not yet enacted, sets 1 January 2028."
         }
-      ]
+      },
+      "timeline": {
+        "ariaLabel": "KSeF timeline: 1 February 2026, mandatory for the largest companies; 1 April 2026, for all other VAT taxpayers; 31 December 2026, end of the exceptions; 1 January 2027, penalties under the current law; 1 January 2028, penalties under draft UD477, not yet enacted. Details in the list below.",
+        "largeTaxpayers": "largest companies",
+        "allTaxpayers": "other VAT taxpayers",
+        "reliefsEndPenalties": "end of exceptions · penalties under the law",
+        "penaltiesDraft": "penalties under draft UD477",
+        "today": "today"
+      },
+      "notify": {
+        "title": "Find out when a date changes",
+        "text": "The penalty date may still move. We’ll send a short email when any of these dates or the KSeF rules change.",
+        "button": "Notify me",
+        "jumpLink": "notify me"
+      }
     },
-    "gettingStarted": {
-      "title": "Don't have an XML file?",
-      "subtitle": "Start with one of these steps",
-      "steps": [
-        {
-          "number": "1",
-          "title": "Export from software",
-          "description": "Most accounting software has an option to export invoices to FA(3) XML format",
-          "code": "File → Export → KSeF FA(3)"
-        },
-        {
-          "number": "2",
-          "title": "Download from KSeF",
-          "description": "Login to KSeF portal and download XML of any invoice",
-          "code": "ap.ksef.mf.gov.pl (KSeF 2.0)"
-        },
-        {
-          "number": "3",
-          "title": "Use CLI",
-          "description": "Developers can use our CLI tool to validate files locally",
-          "code": "npx @ksefuj/validator file.xml"
-        }
-      ]
+    "topics": {
+      "title": "Topics",
+      "allWithCount": "All ({count})",
+      "descriptions": {
+        "deadlines": "Who KSeF covers, from when, and the penalties",
+        "access": "How to log in and grant permissions",
+        "invoicing": "How to issue, receive and correct an invoice",
+        "errors": "Why KSeF rejects an invoice and how to fix it"
+      },
+      "validatorMessages": "Validator messages"
     },
-    "openSource": {
-      "title": "100% Open Source",
-      "description": "All code is public on GitHub. Check how it works, report bugs, or help with development",
-      "features": [
-        {
-          "title": "Transparent code",
-          "description": "Every line of code available for review"
+    "recent": {
+      "title": "New and updated",
+      "allPosts": "All posts",
+      "guides": "Guides",
+      "updated": "Updated"
+    },
+    "tools": {
+      "title": "Tools",
+      "items": {
+        "validator": {
+          "title": "FA(3) invoice validator",
+          "description": "Checks your XML file before you send it to KSeF. The file stays in your browser."
         },
-        {
-          "title": "Community",
-          "description": "Developed by community for community"
+        "preview": {
+          "title": "Invoice preview",
+          "description": "Shows an XML invoice as a readable document. You can save it as PDF."
         },
-        {
-          "title": "Apache 2.0",
-          "description": "Use commercially without restrictions"
+        "rates": {
+          "title": "NBP exchange rates",
+          "description": "Gives the NBP mid-rate for converting a foreign-currency invoice (art. 31a of the VAT Act)."
         }
+      },
+      "validatorChecks": [
+        "Conformance with the official FA(3) schema",
+        "Rules from the MF guide to the FA(3) structure: parties, VAT rates, annotations",
+        "Beyond what KSeF requires: amount calculations, NBP rate, bank account number"
       ],
-      "ctaText": "View on GitHub"
+      "docs": "Validator and npm package documentation"
     },
-    "comparison": {
-      "title": "Compare and choose the best",
-      "subtitle": "Honest comparison.",
-      "featuresHeader": "Features",
-      "features": {
-        "pricing": {
-          "title": "Cost",
-          "ksefuj": "Always free",
-          "freemium": "Free with limits",
-          "enterprise": "Paid / usage-based"
-        },
-        "validationXsd": {
-          "title": "XSD validation",
-          "ksefuj": "In browser",
-          "freemium": "Varies",
-          "enterprise": "Server-only"
-        },
-        "validationSemantic": {
-          "title": "Semantic rules",
-          "ksefuj": "Full MF compliance",
-          "freemium": "Limited",
-          "enterprise": "Partial"
-        },
-        "currencyRate": {
-          "title": "Currency rate check",
-          "ksefuj": "Official NBP rate",
-          "freemium": "Rarely",
-          "enterprise": "Depends on tool"
+    "about": {
+      "title": "How we work",
+      "items": {
+        "sources": {
+          "title": "Sources",
+          "text": "We write from the VAT Act and Ministry of Finance documents: the FA(3) schema, the MF guide to that structure and the KSeF 2.0 handbook. Every article lists its sources."
         },
         "privacy": {
-          "title": "Account",
-          "ksefuj": "Not required",
-          "freemium": "Required",
-          "enterprise": "Required"
-        },
-        "errorDetails": {
-          "title": "Errors",
-          "ksefuj": "Detailed + helpful",
-          "freemium": "Basic",
-          "enterprise": "AI (paid)"
-        },
-        "cli": {
-          "title": "Dev tools",
-          "ksefuj": "CLI + npm",
-          "freemium": "No",
-          "enterprise": "Paid"
+          "title": "Privacy",
+          "text": "Validation and preview run on your computer. Your invoice file never leaves the browser. To check the exchange rate, we fetch only the NBP table for that currency and date."
         },
         "openSource": {
           "title": "Open source",
-          "ksefuj": "Apache 2.0",
-          "freemium": "No",
-          "enterprise": "No"
+          "text": "All the code is public on GitHub under the Apache 2.0 licence. You can inspect it, report a bug or use it in your own software."
+        },
+        "free": {
+          "title": "Free",
+          "text": "No account needed. No limits and no paid version."
         }
       },
-      "competitors": [
-        {
-          "name": "ksefuj.to",
-          "tagline": "Open source • Free"
-        },
-        {
-          "name": "Freemium",
-          "tagline": "Free with limits"
-        },
-        {
-          "name": "Enterprise",
-          "tagline": "Paid solutions"
-        }
-      ],
-      "disclaimer": "* Comparison based on publicly available information as of March 2026"
-    },
-    "comingSoon": {
-      "title": "More coming soon",
-      "subtitle": "The validator is just the start.",
-      "features": [
-        {
-          "title": "Invoice preview",
-          "description": "Automatic XML preview as readable PDF invoice",
-          "badge": "Coming Soon"
-        },
-        {
-          "title": "Auto-fix errors",
-          "description": "Smart correction suggestions with one-click fixes",
-          "badge": "Coming Soon"
-        },
-        {
-          "title": "Invoice generator",
-          "description": "Create compliant XMLs from simple forms",
-          "badge": "Planned"
-        }
-      ]
-    },
-    "latestPosts": {
-      "title": "Latest from the blog",
-      "allPosts": "All posts",
-      "guides": "Guides"
-    },
-    "newsletter": {
-      "title": "KSeF Newsletter",
-      "subtitle": "Practical insights about e-invoices: tips, pitfalls, and everything you need to know — no bureaucratic jargon",
-      "placeholder": "Your email address",
-      "buttonText": "Subscribe",
-      "successMessage": "Thanks! We'll be in touch soon.",
-      "errorMessage": "Oops, something went wrong. Please try again.",
-      "disclaimer": "Only valuable content. No spam.",
-      "poweredBy": "Powered by"
-    },
-    "developer": {
-      "title": "For developers",
-      "subtitle": "CLI, npm package — integrate with your tools",
-      "expandText": "Show options",
-      "collapseText": "Hide options",
-      "content": {
-        "cli": {
-          "title": "CLI",
-          "description": "Validate files from terminal",
-          "commands": [
-            {
-              "label": "Quick validation"
-            },
-            {
-              "label": "Install globally"
-            }
-          ]
-        },
-        "npm": {
-          "title": "npm Package",
-          "description": "Integrate validator with your app",
-          "installLabel": "Install",
-          "usageLabel": "Usage"
-        },
-        "docs": {
-          "title": "Documentation",
-          "description": "Full package documentation and usage examples"
-        }
-      }
+      "privacyLink": "Privacy policy",
+      "cli": "From the command line:"
     }
   },
   "privacy": {
@@ -685,7 +591,7 @@
     "intro": "Your privacy matters. ksefuj is designed so that your invoice data never leaves your browser. Here's exactly what that means.",
     "noCollection": {
       "title": "No Data Collection",
-      "description": "ksefuj does not collect, store, or process any personal data. All XML invoice validation happens entirely in your browser using JavaScript. Your files are never uploaded to any server."
+      "description": "ksefuj's tools (the validator, invoice preview and exchange rates) do not collect, store, or process any personal data. The only exception is the email address of people who sign up for the newsletter. All XML invoice validation happens entirely in your browser using JavaScript. Your files are never uploaded to any server."
     },
     "noStorage": {
       "title": "No Server Storage",
@@ -697,7 +603,7 @@
     },
     "thirdParty": {
       "title": "Third-Party Services",
-      "description": "The site is hosted on Vercel. We use Amplitude Analytics (EU zone — data stays in the European Union) and Vercel Speed Insights. Amplitude captures page views and the interactions we explicitly instrument (e.g. button clicks) to help us understand how the tool is used. Invoice content is never captured. Vercel Speed Insights collects aggregated performance data. This data is used solely for diagnostics and improvement; we do not use it to identify individuals."
+      "description": "The site is hosted on Vercel. We use Amplitude Analytics (EU zone — data stays in the European Union) and Vercel Speed Insights. Amplitude captures page views and the interactions we explicitly instrument (e.g. button clicks) to help us understand how the tool is used. Invoice content is never captured. Vercel Speed Insights collects aggregated performance data. This data is used solely for diagnostics and improvement; we do not use it to identify individuals. We send the newsletter through Buttondown, a company based in the US. When you sign up, we store your email address there. We use it only to send the newsletter, and you can unsubscribe at any time via the link in every email."
     },
     "noAccounts": {
       "title": "No User Accounts",
@@ -774,16 +680,16 @@
     "ctaTitle": "Check your invoice",
     "ctaText": "Drop in your XML file and we'll show you what needs fixing. Your file never leaves your browser.",
     "ctaButton": "Open the validator",
-    "commonErrors": {
-      "title": "Most common errors",
-      "intro": "Where these messages come from and how to fix them."
+    "messagesIndex": {
+      "title": "Most common validator messages",
+      "intro": "What each message means and how to fix your invoice."
     },
     "previewLinkText": "Just want to view an invoice or save it as a PDF?",
     "previewLink": "Open the preview"
   },
   "heroDropZone": {
     "title": "Drop your invoice XML file here",
-    "hint": "or click to choose it from your computer",
+    "hint": "or choose from your computer",
     "privacy": "Your file never leaves your browser.",
     "openValidator": "Open the validator",
     "opening": "Opening the validator…"

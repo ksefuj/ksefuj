@@ -14,5 +14,5 @@ export default async function Image({ params }: Props) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "validatorPage" });
 
-  return ogResponse({ title: t("ogImageTitle"), patternKey: "validator" });
+  return ogResponse({ title: t("ogImageTitle") });
 }

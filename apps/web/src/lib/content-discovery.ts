@@ -4,7 +4,9 @@ import {
   getContentItem,
   listContentItemsUnified,
 } from "./content";
-import { type LatestPostEntry, selectLatestPosts } from "./latest-posts";
+import { type RecentEntry, selectRecentActivity } from "./recent-activity";
+import { type HubEntry, hubEntryKey, selectMoreInTopic, selectTopicHub } from "./topic-hubs";
+import { CONTENT_TOPICS, type ContentTopic, isContentTopic } from "./topics";
 import { type ReadNextEntry, type ReadNextReason, selectReadNext } from "./read-next";
 
 export interface ReadNextItem {
@@ -58,18 +60,19 @@ export async function getReadNextItems(
   return picks.map(({ entry, reason }) => ({ item: entry.item, section: entry.section, reason }));
 }
 
-export interface LatestPostItem {
+export interface DiscoveryItem {
   item: ContentItemWithLocale;
   section: DiscoverySection;
 }
 
+interface TopicCandidate extends HubEntry, RecentEntry, DiscoveryItem {}
+
 /**
- * Items for the homepage "Latest from the blog" section: `featured` items first, then the newest
- * blog posts (see `selectLatestPosts`). Built from the PL-driven unified listing, so EN/UK get
- * translations where they exist and PL fallbacks (shown with the PL badge) otherwise. `featured`
- * is authored on the PL source; translations inherit it. Runs at build time.
+ * All blog posts and guides of a locale as selection candidates. Built from the PL-driven unified
+ * listing, so EN/UK get translations where they exist and PL fallbacks (shown with the PL badge)
+ * otherwise. `featured` is authored on the PL source; translations inherit it. Runs at build time.
  */
-export async function getLatestPostItems(locale: string): Promise<LatestPostItem[]> {
+async function loadCandidates(locale: string): Promise<TopicCandidate[]> {
   const sections: DiscoverySection[] = ["blog", "guides"];
   const lists = await Promise.all(
     sections.map(async (section) => ({
@@ -79,23 +82,67 @@ export async function getLatestPostItems(locale: string): Promise<LatestPostItem
     })),
   );
 
-  const candidates = lists.flatMap(({ section, items, plItems }) => {
-    const plFeatured = new Set(
-      (plItems ?? items)
-        .filter((i) => i.frontmatter.featured === true)
-        .map((i) => i.frontmatter.slug),
-    );
-    return items.map((item): LatestPostEntry & LatestPostItem => ({
-      item,
-      section,
-      plSlug: item.plSlug,
-      title: item.frontmatter.title,
-      date: item.frontmatter.date,
-      updated: item.frontmatter.updated,
-      featured: item.frontmatter.featured === true || plFeatured.has(item.plSlug),
-      translated: item.contentLocale === locale,
-    }));
+  return lists.flatMap(({ section, items, plItems }) => {
+    const plBySlug = new Map((plItems ?? items).map((i) => [i.frontmatter.slug, i]));
+    return items.map((item): TopicCandidate => {
+      const pl = plBySlug.get(item.plSlug);
+      const topic = item.frontmatter.topic ?? pl?.frontmatter.topic;
+      return {
+        item,
+        section,
+        plSlug: item.plSlug,
+        topic: isContentTopic(topic) ? topic : undefined,
+        date: item.frontmatter.date,
+        updated: item.frontmatter.updated,
+        featured: item.frontmatter.featured === true || pl?.frontmatter.featured === true,
+        translated: item.contentLocale === locale,
+      };
+    });
   });
+}
 
-  return selectLatestPosts(candidates).map(({ item, section }) => ({ item, section }));
+export interface TopicHub {
+  topic: ContentTopic;
+  items: DiscoveryItem[];
+  total: number;
+}
+
+/** Homepage topic hubs: per topic, up to six blog posts and guides (see `selectTopicHub`). */
+export async function getTopicHubs(locale: string): Promise<TopicHub[]> {
+  const candidates = await loadCandidates(locale);
+  return CONTENT_TOPICS.map((topic) => {
+    const { items, total } = selectTopicHub(candidates, topic);
+    return { topic, items: items.map(({ item, section }) => ({ item, section })), total };
+  }).filter((hub) => hub.total > 0);
+}
+
+/** Homepage "recently published and updated" list (see `selectRecentActivity`). */
+export async function getRecentActivityItems(locale: string): Promise<DiscoveryItem[]> {
+  const candidates = await loadCandidates(locale);
+  return selectRecentActivity(candidates).map(({ item, section }) => ({ item, section }));
+}
+
+/**
+ * "More in this topic" for an article: other items of its topic, minus the article and its
+ * "read next" picks (see `selectMoreInTopic`).
+ */
+export async function getMoreInTopicItems(
+  locale: string,
+  current: { section: DiscoverySection; frontmatter: Frontmatter },
+): Promise<DiscoveryItem[]> {
+  const { section, frontmatter } = current;
+  const plSlug = frontmatter.translations?.pl ?? frontmatter.slug;
+  const [candidates, readNext, plSource] = await Promise.all([
+    loadCandidates(locale),
+    getReadNextItems(locale, current),
+    locale === "pl" ? null : getContentItem("pl", section, plSlug),
+  ]);
+  const topic = frontmatter.topic ?? plSource?.frontmatter.topic;
+
+  const picks = selectMoreInTopic(
+    candidates,
+    { section, plSlug, topic: isContentTopic(topic) ? topic : undefined },
+    readNext.map((r) => hubEntryKey({ section: r.section, plSlug: r.item.plSlug })),
+  );
+  return picks.map(({ item, section: s }) => ({ item, section: s }));
 }

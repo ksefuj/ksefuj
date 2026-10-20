@@ -100,22 +100,30 @@ export default async function ValidatorPage({ params }: Props) {
               issueHelpAnchors={issueHelpAnchors}
             />
             {referencePages.length > 0 && (
-              <section className="space-y-4 pt-8 border-t border-slate-100">
+              <section id="messages" aria-labelledby="messages-heading" className="space-y-4 pt-8">
                 <div className="space-y-1">
-                  <h2 className="text-xl md:text-2xl font-bold text-slate-900 font-display">
-                    {t("commonErrors.title")}
+                  <h2
+                    id="messages-heading"
+                    className="text-xl md:text-2xl font-bold tracking-tight text-slate-900 font-display"
+                  >
+                    {t("messagesIndex.title")}
                   </h2>
-                  <p className="text-sm text-slate-500">{t("commonErrors.intro")}</p>
+                  <p className="text-sm text-slate-500">{t("messagesIndex.intro")}</p>
                 </div>
-                <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <ul className="divide-y divide-slate-200 border-y border-slate-200">
                   {referencePages.map(({ frontmatter }) => (
-                    <li key={frontmatter.slug}>
-                      <Link
-                        href={buildContentPath(locale, "validator", frontmatter.slug)}
-                        className="block h-full bg-white rounded-2xl border border-slate-200 p-4 text-slate-700 font-medium hover:shadow-md hover:text-violet-600 transition-shadow duration-200"
-                      >
-                        {frontmatter.title}
-                      </Link>
+                    <li key={frontmatter.slug} className="group relative py-4">
+                      <h3 className="text-base font-semibold leading-snug text-slate-900">
+                        <Link
+                          href={buildContentPath(locale, "validator", frontmatter.slug)}
+                          className="underline-offset-4 decoration-violet-500 group-hover:text-violet-700 group-hover:underline after:absolute after:inset-0 focus-visible:outline-2 focus-visible:outline-violet-500"
+                        >
+                          {frontmatter.title}
+                        </Link>
+                      </h3>
+                      <p className="mt-1 max-w-3xl text-sm text-slate-600 line-clamp-2">
+                        {frontmatter.description}
+                      </p>
                     </li>
                   ))}
                 </ul>
