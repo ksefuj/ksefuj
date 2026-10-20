@@ -57,7 +57,7 @@ export default async function DocsPage({ params }: Props) {
   const headings = extractHeadings(item.content);
   const localePaths = buildContentLocalePaths("docs", slug, item.frontmatter.translations);
 
-  const { content } = await compileMDXContent({ source: item.content });
+  const { content } = await compileMDXContent({ source: item.content, locale: locale });
 
   return (
     <>

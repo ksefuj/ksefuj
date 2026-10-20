@@ -108,3 +108,44 @@ The script will:
 - Source `.ts` files are excluded (~318KB saved)
 - Only compiled `.js` and `.d.ts` files are included
 - Package size: ~100KB compressed (vs ~500KB+ with duplicates)
+
+## capture-ksef-screenshots.ts
+
+Captures the KSeF Aplikacja Podatnika screenshots used in the guide "Jak odebrać fakturę z KSeF".
+
+### Purpose
+
+The guide shows the official purchase-invoice screens. This script reproduces them so they can be
+refreshed whenever MF changes the UI.
+
+### Usage
+
+```bash
+# From project root (first run only: download the browser)
+pnpm exec playwright install chromium
+
+pnpm screenshots
+
+# Watch the browser while debugging
+pnpm screenshots -- --headed
+```
+
+### What it does
+
+1. **Logs in** to the KSeF **test** environment (`ap-test.ksef.mf.gov.pl`) as a fake seller with a
+   self-signed test certificate
+2. **Issues** two fake FA(3) invoices to a fake buyer ("Wczytaj fakturę", then "Wystaw fakturę")
+3. **Logs in as the buyer** and captures the menu, the "Faktury zakupowe (Podmiot2)" search, the
+   list, the "Pobierz" dropdown and the invoice preview (1280x800 viewport, 2x scale)
+4. **Writes** WebP files to `apps/web/public/screenshots/ksef-ap/` and merges the entries into
+   `apps/web/src/data/screenshots.json` (width, height, capture date, app version)
+
+### Notes
+
+- **Test environment only, fake data only** - the NIPs and names in the script are fictional; the
+  test environment is not isolated between users, so never use real data
+- **Not run in CI** - run it manually and review the images before committing
+- **When MF changes the UI** - rerun, and if a step times out fix the Polish label or selector in
+  the script (they are `getByRole`/`getByText` lookups at the top of each step), then compare the
+  new images with the old ones
+- **Reruns** - an identical invoice on the same day is reported by KSeF as a duplicate and reused

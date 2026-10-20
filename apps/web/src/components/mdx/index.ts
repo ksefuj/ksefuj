@@ -9,6 +9,7 @@ import {
   XmlExample,
 } from "./mdx-components";
 import { ExternalLink } from "./external-link";
+import { Screenshot } from "./screenshot";
 import { Source } from "./source";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -16,6 +17,7 @@ export const mdxComponents: Record<string, any> = {
   a: ExternalLink,
   table: MdxTable,
   Source,
+  Screenshot,
   Warning,
   Info,
   Tip,

@@ -88,7 +88,7 @@ export default async function ValidatorReferencePage({ params }: Props) {
     ]),
   );
 
-  const { content } = await compileMDXContent({ source: item.content });
+  const { content } = await compileMDXContent({ source: item.content, locale: locale });
 
   return (
     <>

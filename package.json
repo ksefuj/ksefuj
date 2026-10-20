@@ -29,6 +29,7 @@
     "validate:seo": "tsx scripts/validate-seo.ts",
     "check:style": "tsx scripts/check-content-style.ts",
     "update-schemas": "tsx scripts/update-schemas.ts",
+    "screenshots": "tsx scripts/capture-ksef-screenshots.ts",
     "prepare": "husky install",
     "postinstall": "pnpm --filter @ksefuj/validator build",
     "pre-commit": "pnpm format:check && pnpm lint && pnpm typecheck",
@@ -52,7 +53,9 @@
     "google-auth-library": "^11.1.0",
     "gray-matter": "^4.0.3",
     "husky": "^9.0.0",
+    "playwright": "^1.64.1",
     "prettier": "^3.4.0",
+    "sharp": "^0.35.5",
     "tsx": "^4.21.0",
     "typescript": "^5.7.0",
     "vitest": "^2.0.0"

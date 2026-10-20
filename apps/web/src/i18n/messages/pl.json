@@ -319,7 +319,11 @@
     },
     "mdx": {
       "copy": "Kopiuj",
-      "copied": "Skopiowano"
+      "copied": "Skopiowano",
+      "screenshotSource": {
+        "test": "Aplikacja Podatnika KSeF, środowisko testowe, stan na {date}",
+        "prod": "Aplikacja Podatnika KSeF, środowisko produkcyjne, stan na {date}"
+      }
     },
     "waluty": {
       "title": "Kurs NBP do faktury walutowej VAT",

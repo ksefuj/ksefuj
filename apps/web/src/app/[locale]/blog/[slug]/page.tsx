@@ -100,7 +100,7 @@ export default async function BlogPostPage({ params }: Props) {
   ]);
   const localePaths = buildContentLocalePaths("blog", slug, item.frontmatter.translations);
 
-  const { content } = await compileMDXContent({ source: item.content });
+  const { content } = await compileMDXContent({ source: item.content, locale: contentLocale });
 
   return (
     <>

@@ -81,7 +81,7 @@ export default async function FaqPage({ params }: Props) {
 
   const compiled = await Promise.all(
     items.map(async (item) => {
-      const { content } = await compileMDXContent({ source: item.content });
+      const { content } = await compileMDXContent({ source: item.content, locale: locale });
       return (
         <div key={item.frontmatter.slug} className="prose prose-slate max-w-none mdx-content">
           {content}
