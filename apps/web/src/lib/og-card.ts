@@ -1,15 +1,22 @@
 import { getTranslations } from "next-intl/server";
 import { getContentItem, getContentItemWithFallback } from "@/lib/content";
-import { isContentTopic } from "@/lib/topics";
+import { type ContentTopic, isContentTopic } from "@/lib/topics";
 
 type Section = "blog" | "guides" | "docs" | "validator";
 
-/** Title, pattern key and topic badge for an article OG card; null when the item is missing. */
+export interface ArticleCard {
+  title: string;
+  topic?: ContentTopic;
+  label?: string;
+  meta?: string;
+}
+
+/** Title, topic, top label and bottom-right label for an article OG card; null when missing. */
 export async function getArticleCard(
   locale: string,
   section: Section,
   slug: string,
-): Promise<{ title: string; patternKey: string; topicLabel?: string } | null> {
+): Promise<ArticleCard | null> {
   const result = await getContentItemWithFallback(locale, section, slug);
   if (!result) {
     return null;
@@ -22,15 +29,31 @@ export async function getArticleCard(
     topic = (await getContentItem("pl", section, plSlug))?.frontmatter.topic;
   }
 
-  let topicLabel: string | undefined;
-  if (isContentTopic(topic)) {
-    const t = await getTranslations({ locale, namespace: "content" });
-    topicLabel = t(`topics.${topic}`);
+  const tContent = await getTranslations({ locale, namespace: "content" });
+  const tNav = await getTranslations({ locale, namespace: "nav" });
+  const validTopic = isContentTopic(topic) ? topic : undefined;
+
+  let label: string | undefined;
+  if (validTopic) {
+    label = tContent(`topics.${validTopic}`);
+  } else if (section === "validator") {
+    label = tNav("validator");
+  } else if (section === "docs") {
+    label = tNav("docs");
   }
 
-  return {
-    title: frontmatter.title,
-    patternKey: section === "docs" ? `docs/${plSlug}` : plSlug,
-    topicLabel,
-  };
+  let meta: string | undefined;
+  if (section === "guides") {
+    meta = tContent("discovery.guide");
+  } else if (section === "blog") {
+    const date = frontmatter.updated ?? frontmatter.date;
+    meta = new Date(date).toLocaleDateString(locale, {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+      timeZone: "UTC",
+    });
+  }
+
+  return { title: frontmatter.title, topic: validTopic, label, meta };
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import { useSearchParams } from "next/navigation";
 import { type FilterChip, FilterChips } from "@/components/filter-chips";
 import type { ContentTopic } from "@/lib/topics";
@@ -15,8 +15,10 @@ export interface GuidesListingItem {
   key: string;
   topic?: ContentTopic;
   translated: boolean;
-  /** Pre-rendered grid card. */
+  /** Pre-rendered list row (the first one gets the lead variant). */
   card: ReactNode;
+  /** Pre-rendered lead row, used when this guide is first in the current view. */
+  lead: ReactNode;
 }
 
 export interface GuidesListingProps {
@@ -70,11 +72,11 @@ export function GuidesListingView({
       {visible.length === 0 ? (
         <p className="text-slate-500">{labels.empty}</p>
       ) : (
-        <div className="grid gap-6 sm:grid-cols-2">
-          {visible.map((guide) => (
-            <Fragment key={guide.key}>{guide.card}</Fragment>
+        <ul className="divide-y divide-slate-200 border-y border-slate-200">
+          {visible.map((guide, index) => (
+            <li key={guide.key}>{index === 0 ? guide.lead : guide.card}</li>
           ))}
-        </div>
+        </ul>
       )}
     </>
   );

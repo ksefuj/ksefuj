@@ -243,7 +243,9 @@
     "guides": "Poradniki",
     "waluty": "Kursy walut",
     "validator": "Walidator",
-    "preview": "Podgląd"
+    "preview": "Podgląd",
+    "toggleMenu": "Otwórz lub zamknij menu",
+    "mainNav": "Menu główne"
   },
   "translationBanner": {
     "body": "Ten artykuł nie jest jeszcze dostępny w Twoim języku. Czytasz oryginalną wersję w języku {language}.",
@@ -298,24 +300,31 @@
       "invoicing": "Wystawianie i odbieranie faktur",
       "errors": "Błędy i walidacja"
     },
+    "topicsShort": {
+      "deadlines": "Terminy",
+      "access": "Dostęp",
+      "invoicing": "Faktury",
+      "errors": "Błędy"
+    },
     "discovery": {
       "readNext": "Czytaj dalej",
       "topicFilterLabel": "Filtruj po temacie",
       "allTopics": "Wszystkie tematy",
       "guide": "Poradnik",
-      "guidesStrip": "Poradniki krok po kroku",
-      "languageFilterLabel": "Filtruj po języku"
+      "languageFilterLabel": "Filtruj po języku",
+      "moreInTopic": "Więcej na ten temat"
     },
     "layout": {
-      "backToBlog": "Blog",
       "backToDocs": "Dokumentacja",
-      "backToGuides": "Poradniki",
       "readingTime": "{minutes} min czytania",
       "lastVerified": "Ostatnia weryfikacja: {date}",
       "guideTime": "Czas",
       "guideLevel": "Poziom",
       "tableOfContents": "Spis treści",
-      "sources": "Źródła"
+      "sources": "Źródła",
+      "breadcrumb": "Ścieżka nawigacji",
+      "home": "Strona główna",
+      "updated": "Zaktualizowano {date}"
     },
     "mdx": {
       "copy": "Kopiuj",
@@ -364,6 +373,19 @@
       "relatedArticles": "Powiązane artykuły",
       "readMore": "Czytaj →",
       "source": "Źródło: NBP — kursy walut"
+    },
+    "newsletter": {
+      "title": "Nie przegap zmian w KSeF",
+      "text": "Wyślemy krótki e-mail, gdy zmienią się przepisy albo terminy KSeF. Piszemy tylko wtedy, więc rzadko.",
+      "deadlines": {
+        "title": "Dowiedz się, gdy termin się zmieni",
+        "text": "Termin kar może się jeszcze przesunąć. Wyślemy krótki e-mail, gdy zmieni się któryś termin albo przepisy KSeF.",
+        "button": "Powiadom mnie"
+      },
+      "sidebar": {
+        "title": "Zmiany w KSeF",
+        "text": "Krótki e-mail, gdy coś się zmieni."
+      }
     }
   },
   "footer": {
@@ -446,244 +468,128 @@
     },
     "hero": {
       "title": "Darmowy walidator faktur KSeF FA(3)",
-      "description": "Przeciągnij XML, dowiedz się wszystkiego w sekundach. ksefuj oferuje pełną walidację faktur KSeF FA(3) zgodną z oficjalnymi wymaganiami MF, zero kompromisów w prywatności.",
-      "trustLine": "Darmowy walidator • Pełna walidacja MF • Kursy NBP"
-    },
-    "features": {
-      "title": "Bo KSeF to nie żarty.",
-      "subtitle": "ksefuj to profesjonalna walidacja bez paywallu.",
-      "items": [
-        {
-          "title": "Ministerialnie precyzyjne",
-          "description": "ksefuj używa oficjalnego schematu XSD z czerwca 2025 plus pełna walidacja semantyczna zgodna z oficjalnymi wymaganiami Ministerstwa Finansów"
-        },
-        {
-          "title": "Twoje dane, Twoja kontrola",
-          "description": "ksefuj wykonuje całą walidację w Twojej przeglądarce. Zero przesyłania danych, zero ryzyka przecieku"
-        },
-        {
-          "title": "Za darmo. Na zawsze.",
-          "description": "ksefuj jest bez limitów, bez subskrypcji, bez ukrytych kosztów. Podstawowe narzędzia powinny być dostępne dla każdego"
-        }
-      ]
-    },
-    "validation": {
-      "title": "Co sprawdzamy?",
-      "subtitle": "Trzy poziomy kontroli — od schematu MF po poprawność wyliczeń",
-      "layers": [
-        {
-          "badge": "Poziom 1",
-          "title": "Schemat XSD",
-          "description": "Oficjalny schemat FA(3) z czerwca 2025 od Ministerstwa Finansów",
-          "checks": [
-            "Poprawność struktury dokumentu",
-            "Wymagane pola i elementy",
-            "Typy danych i formaty",
-            "Kolejność elementów"
-          ]
-        },
-        {
-          "badge": "Poziom 2",
-          "title": "Reguły MF",
-          "description": "Pełna walidacja zgodna z oficjalnymi wymaganiami MF",
-          "checks": [
-            "Weryfikacja podmiotów: JST/GV, NIP, role",
-            "Poprawność stawek VAT i GTU",
-            "Precyzja dziesiętna kwot i ilości",
-            "Logika adnotacji: zwolnienia, marża, NST"
-          ]
-        },
-        {
-          "badge": "Poziom 3",
-          "title": "Kontrole dodatkowe",
-          "description": "To, czego KSeF nie złapie — liczymy za Ciebie.",
-          "checks": [
-            "Kwota podatku zgodna ze stawką",
-            "Suma wierszy równa kwocie należności",
-            "**Kurs waluty zgodny z kursem NBP**",
-            "Format rachunku bankowego NRB/IBAN"
-          ]
-        }
-      ]
-    },
-    "gettingStarted": {
-      "title": "Nie masz pliku XML?",
-      "subtitle": "Zacznij od jednego z tych kroków",
-      "steps": [
-        {
-          "number": "1",
-          "title": "Eksport z programu",
-          "description": "Większość programów księgowych ma opcję eksportu faktury do XML w formacie FA(3)",
-          "code": "Plik → Eksport → KSeF FA(3)"
-        },
-        {
-          "number": "2",
-          "title": "Pobierz z KSeF",
-          "description": "Zaloguj się do portalu KSeF i pobierz XML dowolnej faktury",
-          "code": "ap.ksef.mf.gov.pl (KSeF 2.0)"
-        },
-        {
-          "number": "3",
-          "title": "Użyj CLI",
-          "description": "Programiści mogą użyć naszego narzędzia CLI do walidacji plików lokalnie",
-          "code": "npx @ksefuj/validator file.xml"
-        }
-      ]
-    },
-    "openSource": {
-      "title": "100% Open Source",
-      "description": "Cały kod jest publiczny na GitHub. Sprawdź, jak działa, zgłoś błąd lub pomóż w rozwoju",
-      "features": [
-        {
-          "title": "Przejrzysty kod",
-          "description": "Każda linia kodu dostępna do wglądu"
-        },
-        {
-          "title": "Społeczność",
-          "description": "Rozwijane przez społeczność dla społeczności"
-        },
-        {
-          "title": "Apache 2.0",
-          "description": "Używaj komercyjnie bez ograniczeń"
-        }
-      ],
-      "ctaText": "Zobacz na GitHub"
-    },
-    "comparison": {
-      "title": "Porównaj i wybierz najlepsze",
-      "subtitle": "Uczciwe porównanie.",
-      "featuresHeader": "Funkcje",
-      "features": {
-        "pricing": {
-          "title": "Koszt",
-          "ksefuj": "Zawsze darmowe",
-          "freemium": "Z limitami",
-          "enterprise": "Płatne / za użycie"
-        },
-        "validationXsd": {
-          "title": "Walidacja XSD",
-          "ksefuj": "W przeglądarce",
-          "freemium": "Różnie",
-          "enterprise": "Na serwerze"
-        },
-        "validationSemantic": {
-          "title": "Reguły semantyczne",
-          "ksefuj": "Pełna zgodność z MF",
-          "freemium": "Ograniczona",
-          "enterprise": "Częściowa"
-        },
-        "currencyRate": {
-          "title": "Kursy walut",
-          "ksefuj": "Oficjalny kurs NBP",
-          "freemium": "Rzadko",
-          "enterprise": "Zależy od narzędzia"
-        },
-        "privacy": {
-          "title": "Konto",
-          "ksefuj": "Nie wymagane",
-          "freemium": "Wymagane",
-          "enterprise": "Wymagane"
-        },
-        "errorDetails": {
-          "title": "Błędy",
-          "ksefuj": "Szczegółowe + pomocne",
-          "freemium": "Podstawowe",
-          "enterprise": "AI (płatne)"
-        },
-        "cli": {
-          "title": "Narzędzia dev",
-          "ksefuj": "CLI + npm",
-          "freemium": "Nie",
-          "enterprise": "Płatne"
-        },
-        "openSource": {
-          "title": "Open source",
-          "ksefuj": "Apache 2.0",
-          "freemium": "Nie",
-          "enterprise": "Nie"
-        }
-      },
-      "competitors": [
-        {
-          "name": "ksefuj.to",
-          "tagline": "Open source • Darmowy"
-        },
-        {
-          "name": "Freemium",
-          "tagline": "Darmowe z limitami"
-        },
-        {
-          "name": "Enterprise",
-          "tagline": "Płatne rozwiązania"
-        }
-      ],
-      "disclaimer": "* Porównanie na podstawie publicznie dostępnych informacji z marca 2026"
-    },
-    "comingSoon": {
-      "title": "Nadchodzi jeszcze więcej",
-      "subtitle": "Walidator to dopiero początek.",
-      "features": [
-        {
-          "title": "Podgląd faktury",
-          "description": "Automatyczny podgląd XML jako czytelna faktura PDF",
-          "badge": "Wkrótce"
-        },
-        {
-          "title": "Autonaprawa błędów",
-          "description": "Inteligentne sugestie poprawek z jednym kliknięciem",
-          "badge": "Wkrótce"
-        },
-        {
-          "title": "Generator faktur",
-          "description": "Tworzenie zgodnych XML-i z prostego formularza",
-          "badge": "W planach"
-        }
-      ]
-    },
-    "latestPosts": {
-      "title": "Najnowsze z bloga",
-      "allPosts": "Wszystkie wpisy",
-      "guides": "Poradniki"
+      "lead": "Wrzuć plik XML z fakturą i zobacz, co trzeba poprawić, zanim wyślesz go do KSeF.",
+      "eyebrow": "Przepisy, terminy i narzędzia KSeF dla firm i księgowych",
+      "trust": "Na podstawie przepisów i dokumentów MF · faktury nie opuszczają przeglądarki · cały kod jest publiczny · za darmo"
     },
     "newsletter": {
       "title": "Newsletter o KSeF",
-      "subtitle": "Praktyczna wiedza o e-fakturach: walidator, pułapki i wszystko, co musisz wiedzieć — bez urzędniczego żargonu",
-      "placeholder": "Twój adres email",
+      "subtitle": "Krótki e-mail, gdy zmieniają się przepisy albo terminy KSeF.",
+      "placeholder": "Twój adres e-mail",
       "buttonText": "Zapisz mnie",
-      "successMessage": "Dziękujemy! Wkrótce się odezwiemy.",
-      "errorMessage": "Ups, coś poszło nie tak. Spróbuj ponownie.",
-      "disclaimer": "Tylko wartościowa treść. Zero spamu.",
+      "successMessage": "Sprawdź skrzynkę (także folder spam) i potwierdź zapis w e-mailu od nas.",
+      "errorMessage": "Nie udało się zapisać adresu. Spróbuj jeszcze raz.",
+      "disclaimer": "Możesz wypisać się w każdej chwili.",
       "poweredBy": "Obsługiwane przez"
     },
-    "developer": {
-      "title": "Dla programistów",
-      "subtitle": "CLI, npm package — integruj z twoimi narzędziami",
-      "expandText": "Pokaż opcje",
-      "collapseText": "Ukryj opcje",
-      "content": {
-        "cli": {
-          "title": "CLI",
-          "description": "Waliduj pliki z terminala",
-          "commands": [
-            {
-              "label": "Szybka walidacja"
-            },
-            {
-              "label": "Zainstaluj globalnie"
-            }
-          ]
+    "calendar": {
+      "title": "Kalendarz KSeF",
+      "intro": "Najważniejsze terminy KSeF i to, co z nich wynika. Przy każdym znajdziesz artykuł z wyjaśnieniem.",
+      "uncertainBadge": "może się zmienić",
+      "status": {
+        "inDays": "za {days, plural, one {# dzień} few {# dni} many {# dni} other {# dnia}}",
+        "inDaysUncertain": "za {days, plural, one {# dzień} few {# dni} many {# dni} other {# dnia}}",
+        "startsToday": "obowiązuje od dziś",
+        "inForce": "obowiązuje",
+        "lastDay": "dziś ostatni dzień",
+        "ended": "już nie obowiązuje",
+        "checkCurrent": "sprawdź aktualny stan prawny"
+      },
+      "items": {
+        "largeTaxpayers": {
+          "title": "KSeF obowiązkowy dla największych firm",
+          "description": "Dotyczy podatników, których sprzedaż z VAT w 2024 r. przekroczyła 200 mln zł."
         },
-        "npm": {
-          "title": "npm Package",
-          "description": "Integruj walidator z Twoją aplikacją",
-          "installLabel": "Instalacja",
-          "usageLabel": "Użycie"
+        "allTaxpayers": {
+          "title": "KSeF obowiązkowy dla pozostałych podatników VAT",
+          "description": "Obowiązek obejmuje czynnych i zwolnionych podatników VAT, także zwolnionych na podstawie art. 113. Do końca 2026 r. działają wyjątki opisane niżej."
         },
-        "docs": {
-          "title": "Dokumentacja",
-          "description": "Pełna dokumentacja pakietu i przykłady użycia"
+        "reliefsEnd": {
+          "title": "Koniec okresu przejściowego",
+          "description": "Do 31 grudnia 2026 r. można wystawiać faktury poza KSeF, dopóki łączna sprzedaż udokumentowana fakturami nie przekracza w miesiącu 10 000 zł brutto (art. 145m). Do tego dnia można też wystawiać faktury z kasy rejestrującej (art. 145n)."
+        },
+        "penalties": {
+          "title": "Kary z art. 106ni ustawy o VAT",
+          "description": "Według obecnych przepisów kary obowiązują od 1 stycznia 2027 r. MF zapowiedziało przesunięcie tego terminu na koniec 2027 r. Projekt UD477, jeszcze nieuchwalony, wskazuje 1 stycznia 2028 r."
         }
+      },
+      "timeline": {
+        "ariaLabel": "Oś czasu KSeF: 1 lutego 2026 r. obowiązek dla największych firm, 1 kwietnia 2026 r. dla pozostałych podatników VAT, 31 grudnia 2026 r. koniec wyjątków, 1 stycznia 2027 r. kary według obecnej ustawy, 1 stycznia 2028 r. kary według nieuchwalonego jeszcze projektu UD477. Szczegóły na liście poniżej.",
+        "largeTaxpayers": "największe firmy",
+        "allTaxpayers": "pozostali podatnicy VAT",
+        "reliefsEndPenalties": "koniec wyjątków · kary wg ustawy",
+        "penaltiesDraft": "kary wg projektu UD477",
+        "today": "dziś"
+      },
+      "notify": {
+        "title": "Dowiedz się, gdy termin się zmieni",
+        "text": "Termin kar może się jeszcze przesunąć. Wyślemy krótki e-mail, gdy zmieni się któraś z tych dat albo przepisy KSeF.",
+        "button": "Powiadom mnie",
+        "jumpLink": "powiadom mnie"
       }
+    },
+    "topics": {
+      "title": "Tematy",
+      "allWithCount": "Wszystkie ({count})",
+      "descriptions": {
+        "deadlines": "Kogo obejmuje KSeF, od kiedy i jakie są kary",
+        "access": "Jak się zalogować i nadać uprawnienia",
+        "invoicing": "Jak wystawić, odebrać i skorygować fakturę",
+        "errors": "Dlaczego KSeF odrzuca fakturę i jak to naprawić"
+      },
+      "validatorMessages": "Komunikaty walidatora"
+    },
+    "recent": {
+      "title": "Nowe i zaktualizowane",
+      "allPosts": "Wszystkie wpisy",
+      "guides": "Poradniki",
+      "updated": "Zaktualizowano"
+    },
+    "tools": {
+      "title": "Narzędzia",
+      "items": {
+        "validator": {
+          "title": "Walidator faktur FA(3)",
+          "description": "Sprawdza plik XML przed wysyłką do KSeF. Plik zostaje w przeglądarce."
+        },
+        "preview": {
+          "title": "Podgląd faktury",
+          "description": "Pokazuje fakturę XML jako czytelny dokument. Możesz ją zapisać jako PDF."
+        },
+        "rates": {
+          "title": "Kursy walut NBP",
+          "description": "Podaje średni kurs NBP do przeliczenia faktury w obcej walucie (art. 31a ustawy o VAT)."
+        }
+      },
+      "validatorChecks": [
+        "Zgodność z oficjalnym schematem FA(3)",
+        "Reguły z broszury MF o strukturze FA(3): dane stron, stawki VAT, adnotacje",
+        "Ponad wymagania KSeF: obliczenia kwot, kurs NBP, numer rachunku bankowego"
+      ],
+      "docs": "Dokumentacja walidatora i pakietu npm"
+    },
+    "about": {
+      "title": "Jak pracujemy",
+      "items": {
+        "sources": {
+          "title": "Źródła",
+          "text": "Piszemy na podstawie ustawy o VAT i dokumentów Ministerstwa Finansów: schematu FA(3), broszury informacyjnej o tej strukturze i podręcznika KSeF 2.0. Każdy artykuł podaje źródła."
+        },
+        "privacy": {
+          "title": "Prywatność",
+          "text": "Walidacja i podgląd działają na Twoim komputerze. Plik z fakturą nie opuszcza przeglądarki. Do sprawdzenia kursu pobieramy z NBP tylko tabelę dla waluty i daty."
+        },
+        "openSource": {
+          "title": "Otwarty kod",
+          "text": "Cały kod jest publiczny na GitHubie (licencja Apache 2.0). Możesz go sprawdzić, zgłosić błąd albo użyć we własnym programie."
+        },
+        "free": {
+          "title": "Za darmo",
+          "text": "Nie trzeba zakładać konta. Nie ma limitów ani płatnej wersji."
+        }
+      },
+      "privacyLink": "Polityka prywatności",
+      "cli": "Z wiersza poleceń:"
     }
   },
   "privacy": {
@@ -694,7 +600,7 @@
     "intro": "Twoja prywatność jest dla nas ważna. ksefuj jest zaprojektowany tak, aby dane Twoich faktur nigdy nie opuszczały Twojej przeglądarki. Oto co to dokładnie oznacza.",
     "noCollection": {
       "title": "Brak zbierania danych",
-      "description": "ksefuj nie zbiera, nie przechowuje ani nie przetwarza żadnych danych osobowych. Cała walidacja faktur XML odbywa się wyłącznie w Twojej przeglądarce za pomocą JavaScript. Twoje pliki nigdy nie są wysyłane na żaden serwer."
+      "description": "Narzędzia ksefuj (walidator, podgląd faktury, kursy walut) nie zbierają, nie przechowują ani nie przetwarzają żadnych danych osobowych. Jedyny wyjątek to adres e-mail osób, które zapiszą się na newsletter. Cała walidacja faktur XML odbywa się wyłącznie w Twojej przeglądarce za pomocą JavaScript. Twoje pliki nigdy nie są wysyłane na żaden serwer."
     },
     "noStorage": {
       "title": "Brak przechowywania na serwerze",
@@ -706,7 +612,7 @@
     },
     "thirdParty": {
       "title": "Usługi zewnętrzne",
-      "description": "Strona jest hostowana na platformie Vercel. Korzystamy z Amplitude Analytics (strefa EU — dane pozostają w Unii Europejskiej) oraz Vercel Speed Insights. Amplitude rejestruje wyświetlenia stron i interakcje, które świadomie instrumentujemy (np. kliknięcia przycisków) — pomagają nam one zrozumieć, jak narzędzie jest używane. Treść faktur nigdy nie jest rejestrowana. Vercel Speed Insights zbiera zagregowane dane wydajnościowe. Dane te służą wyłącznie celom diagnostycznym i ulepszaniu usługi; nie wykorzystujemy ich do identyfikacji konkretnych osób."
+      "description": "Strona jest hostowana na platformie Vercel. Korzystamy z Amplitude Analytics (strefa EU — dane pozostają w Unii Europejskiej) oraz Vercel Speed Insights. Amplitude rejestruje wyświetlenia stron i interakcje, które świadomie instrumentujemy (np. kliknięcia przycisków) — pomagają nam one zrozumieć, jak narzędzie jest używane. Treść faktur nigdy nie jest rejestrowana. Vercel Speed Insights zbiera zagregowane dane wydajnościowe. Dane te służą wyłącznie celom diagnostycznym i ulepszaniu usługi; nie wykorzystujemy ich do identyfikacji konkretnych osób. Newsletter wysyłamy przez Buttondown, firmę z siedzibą w USA. Po zapisie przechowujemy tam Twój adres e-mail. Używamy go wyłącznie do wysyłki newslettera, a wypisać się możesz w każdej chwili przez link w każdym e-mailu."
     },
     "noAccounts": {
       "title": "Brak kont użytkowników",
@@ -786,16 +692,16 @@
     "ctaTitle": "Sprawdź swoją fakturę",
     "ctaText": "Wrzuć plik XML, a pokażemy, co trzeba poprawić. Twój plik nie opuszcza przeglądarki.",
     "ctaButton": "Otwórz walidator",
-    "commonErrors": {
-      "title": "Najczęstsze błędy",
-      "intro": "Wyjaśniamy, skąd biorą się te komunikaty i jak je poprawić."
+    "messagesIndex": {
+      "title": "Najczęstsze komunikaty walidatora",
+      "intro": "Co oznacza każdy komunikat i jak poprawić fakturę."
     },
     "previewLinkText": "Chcesz tylko obejrzeć fakturę albo zapisać ją jako PDF?",
     "previewLink": "Otwórz podgląd"
   },
   "heroDropZone": {
     "title": "Wrzuć plik XML z fakturą",
-    "hint": "albo kliknij i wybierz go z dysku",
+    "hint": "albo wybierz z dysku",
     "privacy": "Twój plik nie opuszcza przeglądarki.",
     "openValidator": "Otwórz walidator",
     "opening": "Otwieram walidator…"

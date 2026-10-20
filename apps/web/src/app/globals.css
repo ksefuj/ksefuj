@@ -32,13 +32,13 @@
 
   /* Page Background */
   --color-page-bg: #fafaf8;
-}
 
-:root {
-  /* CSS Variables for fonts (will be set by next/font) */
-  --font-display: system-ui, -apple-system, sans-serif;
-  --font-body: system-ui, -apple-system, sans-serif;
-  --font-mono: "JetBrains Mono", monospace;
+  /* Font families. next/font exposes --font-jakarta / --font-inter / --font-jetbrains on <html>
+     (see fonts.ts); mapping them here makes Tailwind generate font-display, font-body, font-mono. */
+  --font-display: var(--font-jakarta), system-ui, -apple-system, sans-serif;
+  --font-body: var(--font-inter), system-ui, -apple-system, sans-serif;
+  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
 }
 
 html {

@@ -16,7 +16,8 @@ export default async function Image({ params }: Props) {
 
   return ogResponse({
     title: result?.title ?? "ksefuj.to",
-    patternKey: result?.patternKey ?? slug,
-    topicLabel: result?.topicLabel,
+    topic: result?.topic,
+    label: result?.label,
+    meta: result?.meta,
   });
 }

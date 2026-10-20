@@ -1,5 +1,5 @@
 import { getTranslations } from "next-intl/server";
-import { ContentCard } from "@/components/content-card";
+import { ContentRow } from "@/components/content-row";
 import type { Frontmatter } from "@/lib/content";
 import { getReadNextItems } from "@/lib/content-discovery";
 
@@ -21,36 +21,37 @@ export async function ReadNext({ locale, section, frontmatter }: ReadNextProps) 
   }
 
   return (
-    <section aria-labelledby="read-next-heading" className="mt-12 pt-8 border-t border-slate-100">
+    <section aria-labelledby="read-next-heading" className="mt-12 border-t border-slate-200 pt-8">
       <h2
         id="read-next-heading"
-        className="text-xl md:text-2xl font-bold tracking-tight text-slate-900 mb-5"
+        className="mb-2 font-display text-xl font-bold tracking-tight text-slate-900"
       >
         {t("readNext")}
       </h2>
-      <div className="grid gap-4">
+      <ul className="divide-y divide-slate-200">
         {picks.map(({ item, section: toSection, reason }, index) => (
-          <ContentCard
-            key={`${toSection}/${item.plSlug}`}
-            item={item}
-            locale={locale}
-            section={toSection}
-            headingLevel="h3"
-            track={{
-              event: "read_next_clicked",
-              props: {
-                locale,
-                fromSection: section,
-                fromSlug: frontmatter.slug,
-                toSection,
-                toSlug: item.frontmatter.slug,
-                position: index + 1,
-                reason,
-              },
-            }}
-          />
+          <li key={`${toSection}/${item.plSlug}`}>
+            <ContentRow
+              item={item}
+              locale={locale}
+              section={toSection}
+              headingLevel="h3"
+              track={{
+                event: "read_next_clicked",
+                props: {
+                  locale,
+                  fromSection: section,
+                  fromSlug: frontmatter.slug,
+                  toSection,
+                  toSlug: item.frontmatter.slug,
+                  position: index + 1,
+                  reason,
+                },
+              }}
+            />
+          </li>
         ))}
-      </div>
+      </ul>
     </section>
   );
 }

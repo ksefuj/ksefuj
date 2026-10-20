@@ -14,5 +14,5 @@ export default async function Image({ params }: Props) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "content.docs" });
 
-  return ogResponse({ title: t("ogImageTitle"), patternKey: "docs" });
+  return ogResponse({ title: t("ogImageTitle") });
 }
