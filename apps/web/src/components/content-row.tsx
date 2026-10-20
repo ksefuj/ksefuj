@@ -79,7 +79,6 @@ export async function ContentRow({
   const dateText = updated ? t("layout.updated", { date: dateFormatted }) : dateFormatted;
   const showGuideMarker = section === "guides" && !hideSectionMarker;
 
-  const topicNode = topic ? <TopicLabel topic={topic}>{t(`topics.${topic}`)}</TopicLabel> : null;
   // The narrow rail uses the short topic name so it stays on one line.
   const railTopicNode = topic ? (
     <TopicLabel topic={topic}>{t(`topicsShort.${topic}`)}</TopicLabel>
@@ -112,39 +111,27 @@ export async function ContentRow({
   );
 
   if (isLead) {
-    const coverMeta = section === "guides" ? t("discovery.guide") : undefined;
+    const languageNote = isFallback ? ` · ${t("blog.languageBadge")}` : "";
     return (
-      <div className="group relative grid gap-x-8 gap-y-4 py-6 md:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] md:items-center md:py-8">
+      <div className="group relative py-6 md:py-8">
         <CoverTile
-          size="lg"
           topic={topic}
           label={topic ? t(`topics.${topic}`) : undefined}
-          meta={coverMeta ?? dateFormatted}
+          meta={
+            <>
+              {showGuideMarker && <>{t("discovery.guide")} · </>}
+              {dateNode} · {t("blog.readingTime", { minutes: item.readingTime })}
+              {languageNote}
+            </>
+          }
         >
-          <Heading className="font-display text-xl font-extrabold leading-tight tracking-tight text-white sm:text-2xl">
-            {titleLink("group-hover:text-white")}
+          <Heading className="max-w-3xl font-display text-2xl font-extrabold leading-tight tracking-tight text-white sm:text-3xl">
+            {titleLink("decoration-white/60 group-hover:text-white")}
           </Heading>
-        </CoverTile>
-        <div className="space-y-3">
-          <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-slate-500">
-            {topicNode}
-            {showGuideMarker && (
-              <>
-                {topic && <span aria-hidden>·</span>}
-                <span>{t("discovery.guide")}</span>
-              </>
-            )}
-            {(topic || showGuideMarker) && <span aria-hidden>·</span>}
-            {dateNode}
-            {languageBadge}
-          </p>
-          <p className="line-clamp-3 max-w-xl text-base text-slate-600">
+          <p className="line-clamp-3 max-w-2xl text-base text-white/75">
             {frontmatter.description}
           </p>
-          <p className="text-sm text-slate-500">
-            {t("blog.readingTime", { minutes: item.readingTime })}
-          </p>
-        </div>
+        </CoverTile>
       </div>
     );
   }
