@@ -5,7 +5,7 @@ import { getTranslations } from "next-intl/server";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SectionContainer } from "@/components/section-container";
-import { ContentCard } from "@/components/content-card";
+import { ContentRow } from "@/components/content-row";
 import { BlogListing, BlogListingFallback, type BlogListingProps } from "@/components/blog-listing";
 import { LanguagePicker } from "../language-picker";
 import { listContentItemsUnified } from "@/lib/content";
@@ -76,11 +76,11 @@ export default async function BlogListPage({ params }: Props) {
       topic: isContentTopic(post.frontmatter.topic) ? post.frontmatter.topic : undefined,
       translated: post.contentLocale === locale,
       lead: (
-        <ContentCard
+        <ContentRow
           item={post}
           locale={locale}
           section="blog"
-          variant="featured"
+          variant="lead"
           headingLevel="h2"
           track={{
             event: "featured_post_clicked",
@@ -88,13 +88,14 @@ export default async function BlogListPage({ params }: Props) {
           }}
         />
       ),
-      card: <ContentCard item={post} locale={locale} section="blog" headingLevel="h2" />,
+      card: <ContentRow item={post} locale={locale} section="blog" headingLevel="h2" />,
     })),
     guides: allGuides.map((guide) => ({
       key: guide.plSlug,
+      topic: isContentTopic(guide.frontmatter.topic) ? guide.frontmatter.topic : undefined,
       translated: guide.contentLocale === locale,
       card: (
-        <ContentCard
+        <ContentRow
           item={guide}
           locale={locale}
           section="guides"
@@ -128,7 +129,7 @@ export default async function BlogListPage({ params }: Props) {
           <div className="space-y-10">
             <div className="space-y-3">
               <div className="flex items-center gap-3">
-                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900">
+                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 font-display">
                   {t("blog.title")}
                 </h1>
                 <a

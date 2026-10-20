@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { type FilterChip, FilterChips } from "@/components/filter-chips";
@@ -17,16 +17,16 @@ export interface BlogListingPost {
   key: string;
   topic?: ContentTopic;
   translated: boolean;
-  /** Pre-rendered `featured` card, used when this post is the lead of the current view. */
+  /** Pre-rendered lead row (larger title), used when this post is first in the current view. */
   lead: ReactNode;
-  /** Pre-rendered grid card. */
+  /** Pre-rendered list row. */
   card: ReactNode;
 }
 
 export interface BlogListingGuide {
   key: string;
   translated: boolean;
-  /** Pre-rendered compact strip card. */
+  /** Pre-rendered compact row. */
   card: ReactNode;
 }
 
@@ -67,8 +67,8 @@ export function BlogListingView({
   const { topic: activeTopic, translatedOnly } = filters;
 
   const visiblePosts = filterListingItems(posts, filters);
-  // The guides strip is a "what else is there" row: hidden once a topic narrows the view.
-  const visibleGuides = activeTopic ? [] : filterListingItems(guides, { translatedOnly });
+  // Guides follow the same topic filter, so a topic view (e.g. from a homepage hub) lists them too.
+  const visibleGuides = filterListingItems(guides, filters);
   const [lead, ...rest] = visiblePosts;
 
   const topicChips: FilterChip[] = [
@@ -116,31 +116,34 @@ export function BlogListingView({
         <p className="text-slate-500">{labels.empty}</p>
       ) : (
         <>
-          {lead.lead}
+          <ul className="divide-y divide-slate-200 border-y border-slate-200">
+            <li key={lead.key}>{lead.lead}</li>
+            {rest.map((post) => (
+              <li key={post.key}>{post.card}</li>
+            ))}
+          </ul>
 
           {visibleGuides.length > 0 && (
-            <section aria-labelledby="guides-strip-heading" className="space-y-4">
-              <h2 id="guides-strip-heading" className="text-lg font-bold text-slate-900">
-                <Link href={guidesPath} className="hover:text-violet-700 transition-colors">
-                  {labels.guidesStrip} →
+            <section aria-labelledby="guides-strip-heading" className="space-y-2">
+              <h2
+                id="guides-strip-heading"
+                className="font-display text-xl font-bold tracking-tight text-slate-900"
+              >
+                <Link
+                  href={guidesPath}
+                  className="hover:text-violet-700 hover:underline underline-offset-4"
+                >
+                  {labels.guidesStrip}
                 </Link>
               </h2>
-              <ul className="-mx-4 -mt-2 flex gap-4 overflow-x-auto px-4 pt-2 pb-3 snap-x scroll-px-4 md:-mx-2 md:px-2 md:scroll-px-2">
+              <ul className="grid gap-x-8 divide-y divide-slate-200 border-y border-slate-200 sm:grid-cols-2 sm:divide-y-0">
                 {visibleGuides.map((guide) => (
-                  <li key={guide.key} className="flex w-64 shrink-0 snap-start">
+                  <li key={guide.key} className="border-slate-200 sm:border-b sm:last:border-b-0">
                     {guide.card}
                   </li>
                 ))}
               </ul>
             </section>
-          )}
-
-          {rest.length > 0 && (
-            <div className="grid gap-6 sm:grid-cols-2">
-              {rest.map((post) => (
-                <Fragment key={post.key}>{post.card}</Fragment>
-              ))}
-            </div>
           )}
         </>
       )}

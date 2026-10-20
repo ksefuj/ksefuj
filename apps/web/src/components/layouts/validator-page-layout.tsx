@@ -4,7 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { TableOfContents } from "@/components/table-of-contents";
 import { ContributeFooter } from "@/components/contribute-footer";
 import { ShareButton } from "@/components/share-button";
-import { BackLink } from "./back-link";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 import type { Frontmatter } from "@/lib/content";
 
 interface ValidatorPageLayoutProps {
@@ -23,6 +23,7 @@ export async function ValidatorPageLayout({
 }: ValidatorPageLayoutProps) {
   const t = await getTranslations({ locale, namespace: "content.layout" });
   const tPage = await getTranslations({ locale, namespace: "validatorPage" });
+  const tNav = await getTranslations({ locale, namespace: "nav" });
   const p = locale === "pl" ? "" : `/${locale}`;
   const validatorHref = `${p}/validator`;
   const updatedFormatted = new Date(frontmatter.updated ?? frontmatter.date).toLocaleDateString(
@@ -33,12 +34,19 @@ export async function ValidatorPageLayout({
 
   return (
     <div className="max-w-4xl mx-auto px-4 md:px-6 py-12">
-      <BackLink href={validatorHref} label={tPage("backToValidator")} />
+      <Breadcrumbs
+        label={t("breadcrumb")}
+        items={[
+          { label: t("home"), href: p || "/" },
+          { label: tNav("validator"), href: validatorHref },
+          { label: frontmatter.title },
+        ]}
+      />
 
       <div className="lg:grid lg:grid-cols-[1fr_220px] lg:gap-12">
         <article>
           <header className="mb-8 space-y-3">
-            <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 leading-tight">
+            <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 leading-tight font-display">
               {frontmatter.title}
             </h1>
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-slate-500">

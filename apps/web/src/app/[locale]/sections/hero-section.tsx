@@ -1,45 +1,24 @@
-import React from "react";
-import { Badge } from "@/components/badge";
+import type { ReactNode } from "react";
 
 interface HeroSectionProps {
   title: string;
-  description: string;
-  trustLine?: string;
-  children?: React.ReactNode; // For the validator/dropzone
+  lead: string;
+  /** The compact drop zone, placed beside the text on large screens. */
+  children?: ReactNode;
 }
 
-export function HeroSection({ title, description, trustLine, children }: HeroSectionProps) {
+/** Masthead: H1 and one plain sentence on the left, the validator drop zone on the right. */
+export function HeroSection({ title, lead, children }: HeroSectionProps) {
   return (
-    <section className="py-20 md:py-32">
-      <div className="max-w-4xl mx-auto px-4 md:px-6">
-        <div className="text-center space-y-6 mb-12">
-          {trustLine && (
-            <div className="animate-fade-up">
-              <Badge variant="info" className="text-xs text-center">
-                {trustLine.split(" • ").map((item, i, arr) => (
-                  <React.Fragment key={i}>
-                    <span className="whitespace-nowrap">{item}</span>
-                    {i < arr.length - 1 && " • "}
-                  </React.Fragment>
-                ))}
-              </Badge>
-            </div>
-          )}
-
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 animate-fade-up font-display">
+    <section className="py-12 md:py-16">
+      <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 md:px-6 lg:grid-cols-2 lg:gap-16">
+        <div className="space-y-4">
+          <h1 className="font-display text-4xl font-extrabold tracking-tight text-slate-900 md:text-5xl">
             {title}
           </h1>
-
-          <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto animate-fade-up font-body">
-            {description}
-          </p>
+          <p className="max-w-xl text-lg text-slate-600">{lead}</p>
         </div>
-
-        {children && (
-          <div className="animate-fade-up" style={{ animationDelay: "100ms" }}>
-            {children}
-          </div>
-        )}
+        {children && <div>{children}</div>}
       </div>
     </section>
   );

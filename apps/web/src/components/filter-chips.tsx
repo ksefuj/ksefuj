@@ -15,10 +15,10 @@ interface FilterChipsProps {
   label: string;
 }
 
-const base = "inline-block rounded-full px-4 py-1.5 text-sm font-medium transition-colors border";
-const active = "bg-violet-600 text-white border-violet-600";
+const base = "inline-block rounded-full px-3.5 py-1 text-sm font-medium transition-colors border";
+const active = "bg-slate-900 text-white border-slate-900";
 const inactive =
-  "bg-white text-slate-600 border-slate-200 hover:border-violet-300 hover:text-violet-700";
+  "bg-transparent text-slate-600 border-slate-300 hover:border-slate-500 hover:text-slate-900";
 
 /** Filter chips. Plain links that update the query string; the listing reads it client-side. */
 export function FilterChips({ chips, label }: FilterChipsProps) {

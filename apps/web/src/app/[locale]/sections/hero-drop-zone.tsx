@@ -19,7 +19,7 @@ export function HeroDropZone() {
   const [opening, setOpening] = useState(false);
 
   return (
-    <div className="w-full max-w-2xl mx-auto space-y-4">
+    <div className="w-full space-y-3">
       <XmlDropZone
         variant="compact"
         title={opening ? t("opening") : t("title")}
@@ -39,11 +39,11 @@ export function HeroDropZone() {
           router.push("/validator");
         }}
       />
-      <p className="text-center">
+      <p>
         <Link
           href="/validator"
           onClick={() => amplitude.track("hero_open_validator_clicked", { locale })}
-          className="text-sm font-medium text-violet-600 hover:text-violet-700 underline underline-offset-4 transition-colors"
+          className="text-sm font-medium text-violet-700 hover:text-violet-800 underline underline-offset-4"
         >
           {t("openValidator")}
         </Link>
