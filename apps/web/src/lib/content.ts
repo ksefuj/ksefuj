@@ -60,6 +60,11 @@ export function estimateReadingTime(content: string): number {
   return Math.max(1, Math.ceil(wordCount / 180));
 }
 
+/** Whether an MDX file exists for this locale/section/slug (no parsing). */
+export function contentExists(locale: string, section: string, slug: string): boolean {
+  return fs.existsSync(path.join(CONTENT_DIR, locale, section, `${slug}.mdx`));
+}
+
 /**
  * Read and parse a single MDX file.
  * Returns null if the file does not exist.

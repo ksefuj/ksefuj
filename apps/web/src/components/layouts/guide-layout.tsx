@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { TableOfContents } from "@/components/table-of-contents";
 import { ContributeFooter } from "@/components/contribute-footer";
 import { ShareButton } from "@/components/share-button";
+import { ArticleFeedback } from "@/components/article-feedback";
 import { ReadNext } from "@/components/read-next";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { TopicLabel } from "@/components/topic-label";
@@ -98,6 +99,12 @@ export async function GuideLayout({
           </header>
 
           <div className="prose prose-slate max-w-none mdx-content">{children}</div>
+
+          <ArticleFeedback
+            section="guides"
+            locale={contentLocale ?? locale}
+            slug={frontmatter.slug}
+          />
 
           {frontmatter.sources && frontmatter.sources.filter((s) => s.url).length > 0 && (
             <div className="mt-10 pt-6 border-t border-slate-200">

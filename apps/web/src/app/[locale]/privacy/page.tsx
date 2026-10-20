@@ -36,14 +36,14 @@ export default async function PrivacyPage({ params }: Props) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "privacy" });
 
-  const sections: Array<{ title: string; description: string; extra?: string }> = [
+  const sections: Array<{ title: string; description: string; extra?: string[] }> = [
     { title: t("noCollection.title"), description: t("noCollection.description") },
     { title: t("noStorage.title"), description: t("noStorage.description") },
     { title: t("cookies.title"), description: t("cookies.description") },
     {
       title: t("thirdParty.title"),
       description: t("thirdParty.description"),
-      extra: t("invoicePreview.description"),
+      extra: [t("invoicePreview.description"), t("articleFeedback.description")],
     },
     { title: t("noAccounts.title"), description: t("noAccounts.description") },
     { title: t("openSource.title"), description: t("openSource.description") },
@@ -71,9 +71,11 @@ export default async function PrivacyPage({ params }: Props) {
                 <div key={section.title} className="space-y-3">
                   <h2 className="text-xl font-bold text-slate-900">{section.title}</h2>
                   <p className="text-slate-600 leading-relaxed">{section.description}</p>
-                  {section.extra && (
-                    <p className="text-slate-600 leading-relaxed">{section.extra}</p>
-                  )}
+                  {section.extra?.map((paragraph) => (
+                    <p key={paragraph} className="text-slate-600 leading-relaxed">
+                      {paragraph}
+                    </p>
+                  ))}
                 </div>
               ))}
             </div>

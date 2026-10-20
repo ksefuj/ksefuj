@@ -28,6 +28,8 @@ const nextConfig = {
   // so we must declare the file explicitly.
   outputFileTracingIncludes: {
     "/**": ["./public/logo-og.svg", "./assets/fonts/*.ttf"],
+    // The feedback API only counts votes for articles that exist on disk.
+    "/api/feedback": ["./content/**/*.mdx"],
   },
   async redirects() {
     return [
