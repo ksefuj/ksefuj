@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { TrackedLink } from "@/components/tracked-link";
 import { buildContentPath, type ContentItemWithLocale } from "@/lib/content";
 import { isContentTopic } from "@/lib/topics";
+import { toIsoDay } from "@/lib/content-dates";
 import { cn } from "@/lib/utils";
 
 export interface ContentRowTrack {
@@ -68,7 +69,7 @@ export async function ContentRow({
           </>
         )}
         {(topic || (section === "guides" && !hideSectionMarker)) && <span aria-hidden>·</span>}
-        <time dateTime={String(frontmatter.date)}>{dateFormatted}</time>
+        <time dateTime={toIsoDay(frontmatter.date)}>{dateFormatted}</time>
         <span aria-hidden>·</span>
         <span>{t("blog.readingTime", { minutes: item.readingTime })}</span>
         {isFallback && (

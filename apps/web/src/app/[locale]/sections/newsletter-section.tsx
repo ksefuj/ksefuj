@@ -2,20 +2,22 @@ import { getTranslations } from "next-intl/server";
 import { NewsletterForm } from "@/components/newsletter-form";
 import { HomeSection } from "./home-section";
 
-/** Homepage newsletter block: the page's single tinted area, a plain inline form. */
+/** Homepage newsletter block: a hairline-bounded inline block, like the calendar notify block. */
 export async function NewsletterSection({ locale }: { locale: string }) {
   const t = await getTranslations({ locale, namespace: "landing.newsletter" });
 
   return (
-    <HomeSection id="newsletter" tinted>
-      <div className="max-w-xl">
-        <h2
-          id="newsletter-title"
-          className="font-display text-2xl font-bold tracking-tight text-slate-900 md:text-3xl"
-        >
-          {t("title")}
-        </h2>
-        <p className="mb-5 mt-2 text-slate-600">{t("subtitle")}</p>
+    <HomeSection id="newsletter">
+      <div className="grid gap-x-8 gap-y-4 rounded-xl border border-slate-200 bg-white p-6 md:grid-cols-[1fr_auto] md:items-start">
+        <div className="max-w-xl">
+          <h2
+            id="newsletter-title"
+            className="font-display text-lg font-bold tracking-tight text-slate-900"
+          >
+            {t("title")}
+          </h2>
+          <p className="mt-1 text-sm text-slate-600">{t("subtitle")}</p>
+        </div>
         <NewsletterForm placement="homepage" />
       </div>
     </HomeSection>

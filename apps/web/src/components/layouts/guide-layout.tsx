@@ -9,6 +9,7 @@ import { MoreInTopic } from "@/components/more-in-topic";
 import { SidebarNewsletter } from "@/components/sidebar-newsletter";
 import { ArticleNewsletter } from "@/components/article-newsletter";
 import type { Frontmatter } from "@/lib/content";
+import { getUpdatedDay, toIsoDay } from "@/lib/content-dates";
 import Link from "next/link";
 import { buildListingHref } from "@/lib/listing-filters";
 import { isContentTopic } from "@/lib/topics";
@@ -41,6 +42,14 @@ export async function GuideLayout({
     month: "long",
     day: "numeric",
   });
+  const updatedDay = getUpdatedDay(frontmatter);
+  const updatedFormatted = updatedDay
+    ? new Date(updatedDay).toLocaleDateString(locale, {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    : "";
 
   return (
     <div className="max-w-4xl mx-auto px-4 md:px-6 py-12">
@@ -68,8 +77,16 @@ export async function GuideLayout({
             <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900 leading-tight font-display">
               {frontmatter.title}
             </h1>
-            <div className="flex items-center gap-3 text-sm text-slate-500">
-              <time dateTime={frontmatter.date}>{dateFormatted}</time>
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-slate-500">
+              <time dateTime={toIsoDay(frontmatter.date)}>{dateFormatted}</time>
+              {updatedDay && (
+                <>
+                  <span aria-hidden>·</span>
+                  <time dateTime={updatedDay}>
+                    {t("layout.updated", { date: updatedFormatted })}
+                  </time>
+                </>
+              )}
               <span aria-hidden>·</span>
               <span>{t("layout.readingTime", { minutes: readingTime })}</span>
               <span aria-hidden>·</span>

@@ -4,7 +4,7 @@ import { buildContentPath } from "@/lib/content";
 import { getRecentActivityItems } from "@/lib/content-discovery";
 import { isUpdate } from "@/lib/recent-activity";
 import { isContentTopic } from "@/lib/topics";
-import { homeLinkClasses, HomeSection } from "./home-section";
+import { HOME_RAIL_2, homeLinkClasses, HomeSection } from "./home-section";
 
 /** Homepage "recently published and updated": a dense list, newest activity first. */
 export async function RecentSection({ locale }: { locale: string }) {
@@ -55,20 +55,22 @@ export async function RecentSection({ locale }: { locale: string }) {
           return (
             <li
               key={`${section}/${item.plSlug}`}
-              className="grid gap-x-6 gap-y-0.5 py-3 sm:grid-cols-[11rem_13rem_1fr]"
+              className={`grid gap-x-8 gap-y-0.5 py-3 ${HOME_RAIL_2}`}
             >
-              <time dateTime={updated ? fm.updated : fm.date} className="text-sm text-slate-500">
-                {updated ? `${t("updated")} ${fmt(fm.updated as string)}` : fmt(fm.date)}
-              </time>
-              <span className="text-sm text-slate-500">{topic ? tTopics(topic) : ""}</span>
               <TrackedLink
                 href={buildContentPath(item.contentLocale, section, fm.slug)}
-                className="font-medium text-slate-900 underline-offset-4 hover:text-violet-700 hover:underline"
+                className="font-semibold text-slate-900 underline-offset-4 hover:text-violet-700 hover:underline md:col-start-2 md:row-start-1"
                 event="homepage_post_clicked"
                 eventProps={{ locale, slug: fm.slug, section, position: index + 1 }}
               >
                 {fm.title}
               </TrackedLink>
+              <p className="text-xs text-slate-500 md:col-start-1 md:row-start-1 md:pt-1">
+                <time dateTime={updated ? fm.updated : fm.date} className="whitespace-nowrap">
+                  {updated ? `${t("updated")} ${fmt(fm.updated as string)}` : fmt(fm.date)}
+                </time>
+                {topic && <span className="block">{tTopics(topic)}</span>}
+              </p>
             </li>
           );
         })}

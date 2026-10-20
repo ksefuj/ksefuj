@@ -4,7 +4,7 @@ import { TrackedLink } from "@/components/tracked-link";
 import { buildContentPath, listContentItemsUnified } from "@/lib/content";
 import { KSEF_MILESTONES } from "@/lib/ksef-calendar";
 import { CalendarStatus } from "./calendar-status";
-import { HomeSection } from "./home-section";
+import { HOME_RAIL_3, HomeSection } from "./home-section";
 
 interface CalendarSectionProps {
   locale: string;
@@ -20,7 +20,7 @@ export async function CalendarSection({ locale }: CalendarSectionProps) {
 
   return (
     <HomeSection id="calendar" title={t("title")}>
-      <p className="-mt-4 mb-8 max-w-2xl text-slate-600">{t("intro")}</p>
+      <p className="-mt-2 mb-5 max-w-2xl md:-mt-4 md:mb-8 text-slate-600">{t("intro")}</p>
       <ol className="divide-y divide-slate-200 border-y border-slate-200">
         {KSEF_MILESTONES.map((milestone) => {
           const article = milestone.articlePlSlug
@@ -35,24 +35,31 @@ export async function CalendarSection({ locale }: CalendarSectionProps) {
           return (
             <li
               key={milestone.id}
-              className="grid gap-x-8 gap-y-2 py-5 md:grid-cols-[13rem_1fr_14rem]"
+              className={`grid gap-x-8 gap-y-1 py-3 md:gap-y-2 md:py-5 ${HOME_RAIL_3}`}
             >
               <div>
-                <time dateTime={milestone.date} className="font-display text-lg font-bold">
+                <time
+                  dateTime={milestone.date}
+                  className="font-display text-xl font-bold tabular-nums text-slate-900"
+                >
                   {date}
                 </time>
-                <p className="mt-0.5 text-sm font-medium">
+                <p className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-medium">
                   <CalendarStatus milestone={milestone} renderedAt={renderedAt} />
+                  {milestone.uncertain && (
+                    <span className="rounded border border-amber-200 bg-amber-50 px-1.5 py-px text-xs font-medium text-amber-700">
+                      {t("uncertainBadge")}
+                    </span>
+                  )}
                 </p>
               </div>
               <div>
                 <h3 className="font-semibold text-slate-900">{t(`items.${milestone.id}.title`)}</h3>
-                <p className="mt-1 max-w-2xl text-sm text-slate-600">
+                <p className="mt-1 line-clamp-2 max-w-2xl text-sm text-slate-600 md:line-clamp-none">
                   {t(`items.${milestone.id}.description`)}
                 </p>
                 {milestone.uncertain && (
                   <p className="mt-1 text-sm font-medium text-amber-700">
-                    {t("uncertain")} ·{" "}
                     <a
                       href="#calendar-notify"
                       className="underline underline-offset-4 decoration-amber-300 hover:decoration-amber-700"

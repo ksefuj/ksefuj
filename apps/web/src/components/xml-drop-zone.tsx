@@ -10,7 +10,8 @@ interface XmlDropZoneProps {
   onFiles: (files: File[], info: { skipped: number }) => void;
   /** Called on every drop or pick, also when no XML file was among them (for counts only). */
   onSelection?: (info: { xmlCount: number; skipped: number }) => void;
-  variant?: "default" | "compact";
+  /** `strip`: one slim, input-like row (icon, headline and hint inline) for the homepage masthead. */
+  variant?: "default" | "compact" | "strip";
   disabled?: boolean;
   /** Overrides the headline. */
   title?: string;
@@ -43,6 +44,7 @@ export function XmlDropZone({
 }: XmlDropZoneProps) {
   const t = useTranslations("validator.dropzone");
   const compact = variant === "compact";
+  const strip = variant === "strip";
   const [dragging, setDragging] = useState(false);
   const [dragItemCount, setDragItemCount] = useState(0);
   const [skipped, setSkipped] = useState(0);
@@ -129,12 +131,17 @@ export function XmlDropZone({
         onClick={openPicker}
         onKeyDown={onKeyDown}
         className={cn(
-          "relative rounded-2xl border-2 border-dashed transition-all duration-200 cursor-pointer",
-          "bg-white hover:bg-white/90 hover:shadow-lg",
-          "flex items-center justify-center",
+          "relative border-dashed transition-all duration-200 cursor-pointer bg-white",
+          "flex items-center",
           "focus:outline-none focus-visible:ring-4 focus-visible:ring-violet-500/30",
-          compact ? "min-h-[160px] md:min-h-[200px]" : "min-h-[300px]",
-          dragging && "border-violet-400 bg-violet-50/50 scale-[1.01] shadow-lg",
+          strip
+            ? "min-h-14 rounded-xl border px-4 py-2 md:min-h-16"
+            : "justify-center rounded-2xl border-2 hover:bg-white/90 hover:shadow-lg",
+          !strip && (compact ? "min-h-[160px] md:min-h-[200px]" : "min-h-[300px]"),
+          dragging &&
+            (strip
+              ? "border-violet-400 bg-violet-50/50"
+              : "border-violet-400 bg-violet-50/50 scale-[1.01] shadow-lg"),
           !dragging && "border-slate-200 hover:border-violet-300",
           disabled && "opacity-50 cursor-not-allowed",
         )}
@@ -151,52 +158,79 @@ export function XmlDropZone({
           className="hidden"
         />
 
-        <div className={cn("text-center", compact ? "space-y-3 p-6" : "space-y-4 p-12")}>
-          <div className="flex justify-center">
-            <div
-              className={cn(
-                "rounded-2xl bg-violet-50 flex items-center justify-center",
-                compact ? "w-14 h-14" : "w-20 h-20",
-              )}
+        {strip ? (
+          <div className="flex min-w-0 items-center gap-3">
+            <svg
+              className="h-5 w-5 shrink-0 text-violet-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden
             >
-              <svg
-                className={cn("text-violet-500", compact ? "w-7 h-7" : "w-10 h-10")}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+              />
+            </svg>
+            <p className="min-w-0 text-slate-900">
+              <span className="font-medium">{title ?? t("callToAction")}</span>{" "}
+              <span className="text-sm text-slate-500">
+                {dragging && dragItemCount > 0
+                  ? (dropLabel ?? t("dropFiles", { count: dragItemCount }))
+                  : (hint ?? t("dragHere"))}
+              </span>
+            </p>
+          </div>
+        ) : (
+          <div className={cn("text-center", compact ? "space-y-3 p-6" : "space-y-4 p-12")}>
+            <div className="flex justify-center">
+              <div
+                className={cn(
+                  "rounded-2xl bg-violet-50 flex items-center justify-center",
+                  compact ? "w-14 h-14" : "w-20 h-20",
+                )}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                />
-              </svg>
+                <svg
+                  className={cn("text-violet-500", compact ? "w-7 h-7" : "w-10 h-10")}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                  />
+                </svg>
+              </div>
             </div>
-          </div>
 
-          <div className="space-y-2">
-            <p
-              className={cn(
-                "font-bold text-slate-900 font-display",
-                compact ? "text-xl" : "text-2xl",
-              )}
-            >
-              {title ?? t("callToAction")}
-            </p>
-            <p className="text-slate-600">
-              {dragging && dragItemCount > 0
-                ? (dropLabel ?? t("dropFiles", { count: dragItemCount }))
-                : (hint ?? t("dragHere"))}
-            </p>
-          </div>
+            <div className="space-y-2">
+              <p
+                className={cn(
+                  "font-bold text-slate-900 font-display",
+                  compact ? "text-xl" : "text-2xl",
+                )}
+              >
+                {title ?? t("callToAction")}
+              </p>
+              <p className="text-slate-600">
+                {dragging && dragItemCount > 0
+                  ? (dropLabel ?? t("dropFiles", { count: dragItemCount }))
+                  : (hint ?? t("dragHere"))}
+              </p>
+            </div>
 
-          {caption && <p className="text-sm text-slate-400">{caption}</p>}
-        </div>
+            {caption && <p className="text-sm text-slate-400">{caption}</p>}
+          </div>
+        )}
       </div>
 
-      <p role="status" className={cn("mt-3 text-sm text-amber-700", skipped === 0 && "sr-only")}>
+      <p role="status" className={cn("mt-2 text-sm text-amber-700", skipped === 0 && "sr-only")}>
         {skipped > 0 ? t("skipped", { count: skipped }) : ""}
       </p>
     </div>

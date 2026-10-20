@@ -56,7 +56,12 @@ export default async function Home({ params }: Props) {
       <SiteHeader locale={locale} languagePicker={<LanguagePicker currentLocale={locale} />} />
 
       <main className="min-h-screen">
-        <HeroSection title={t("landing.hero.title")} lead={t("landing.hero.lead")}>
+        <HeroSection
+          eyebrow={t("landing.hero.eyebrow")}
+          title={t("landing.hero.title")}
+          lead={t("landing.hero.lead")}
+          trust={t("landing.hero.trust")}
+        >
           <HeroDropZone />
         </HeroSection>
 

@@ -305,7 +305,6 @@
       "topicFilterLabel": "Filter by topic",
       "allTopics": "All topics",
       "guide": "Guide",
-      "guidesStrip": "Step-by-step guides",
       "languageFilterLabel": "Filter by language",
       "moreInTopic": "More on this topic"
     },
@@ -318,7 +317,8 @@
       "tableOfContents": "Table of contents",
       "sources": "Sources",
       "breadcrumb": "Breadcrumb",
-      "home": "Home"
+      "home": "Home",
+      "updated": "Updated {date}"
     },
     "mdx": {
       "copy": "Copy",
@@ -453,7 +453,9 @@
     },
     "hero": {
       "title": "Free KSeF FA(3) invoice validator",
-      "lead": "Drop in your invoice XML file and see what needs fixing before you send it to KSeF."
+      "lead": "Drop in your invoice XML file and see what needs fixing before you send it to KSeF.",
+      "eyebrow": "KSeF rules, deadlines and tools for businesses and accountants",
+      "trust": "Based on the law and Ministry of Finance documents · invoices never leave your browser · open source · free"
     },
     "newsletter": {
       "title": "KSeF newsletter",
@@ -468,10 +470,10 @@
     "calendar": {
       "title": "KSeF calendar",
       "intro": "The key KSeF dates and what follows from them. Each one links to an article that explains it.",
-      "uncertain": "Date may change",
+      "uncertainBadge": "may change",
       "status": {
         "inDays": "in {days, plural, one {# day} other {# days}}",
-        "inDaysUncertain": "under current law, in {days, plural, one {# day} other {# days}}",
+        "inDaysUncertain": "in {days, plural, one {# day} other {# days}}",
         "startsToday": "in force from today",
         "inForce": "in force",
         "lastDay": "last day today",
@@ -505,7 +507,8 @@
     },
     "topics": {
       "title": "Topics",
-      "allInTopic": "All posts in this topic"
+      "allWithCount": "All ({count})",
+      "validatorMessages": "Validator messages"
     },
     "recent": {
       "title": "New and updated",
@@ -657,16 +660,16 @@
     "ctaTitle": "Check your invoice",
     "ctaText": "Drop in your XML file and we'll show you what needs fixing. Your file never leaves your browser.",
     "ctaButton": "Open the validator",
-    "commonErrors": {
-      "title": "Most common errors",
-      "intro": "Where these messages come from and how to fix them."
+    "messagesIndex": {
+      "title": "Most common validator messages",
+      "intro": "What each message means and how to fix your invoice."
     },
     "previewLinkText": "Just want to view an invoice or save it as a PDF?",
     "previewLink": "Open the preview"
   },
   "heroDropZone": {
     "title": "Drop your invoice XML file here",
-    "hint": "or click to choose it from your computer",
+    "hint": "or choose from your computer",
     "privacy": "Your file never leaves your browser.",
     "openValidator": "Open the validator",
     "opening": "Opening the validator…"

@@ -1,24 +1,35 @@
 import type { ReactNode } from "react";
 
 interface HeroSectionProps {
+  eyebrow: string;
   title: string;
   lead: string;
-  /** The compact drop zone, placed beside the text on large screens. */
+  /** One-line trust strip under the masthead; links to the about section. */
+  trust: string;
+  /** The slim drop strip, placed beside the text on large screens. */
   children?: ReactNode;
 }
 
-/** Masthead: H1 and one plain sentence on the left, the validator drop zone on the right. */
-export function HeroSection({ title, lead, children }: HeroSectionProps) {
+/** Masthead: eyebrow, H1 and one plain sentence on the left, the validator drop strip beside it. */
+export function HeroSection({ eyebrow, title, lead, trust, children }: HeroSectionProps) {
   return (
-    <section className="py-12 md:py-16">
-      <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 md:px-6 lg:grid-cols-2 lg:gap-16">
-        <div className="space-y-4">
-          <h1 className="font-display text-4xl font-extrabold tracking-tight text-slate-900 md:text-5xl">
-            {title}
-          </h1>
-          <p className="max-w-xl text-lg text-slate-600">{lead}</p>
+    <section className="pb-6 pt-8 md:pb-8 md:pt-12">
+      <div className="mx-auto max-w-6xl px-4 md:px-6">
+        <div className="grid items-end gap-6 lg:grid-cols-[3fr_2fr] lg:gap-14">
+          <div>
+            <p className="mb-2 text-sm font-medium text-slate-500">{eyebrow}</p>
+            <h1 className="font-display text-3xl font-extrabold tracking-tight text-slate-900 md:text-5xl">
+              {title}
+            </h1>
+            <p className="mt-3 max-w-xl text-base text-slate-600 md:text-lg">{lead}</p>
+          </div>
+          {children && <div>{children}</div>}
         </div>
-        {children && <div>{children}</div>}
+        <p className="mt-6 text-sm text-slate-500">
+          <a href="#about" className="underline-offset-4 hover:text-violet-700 hover:underline">
+            {trust}
+          </a>
+        </p>
       </div>
     </section>
   );

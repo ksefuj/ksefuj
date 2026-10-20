@@ -305,7 +305,6 @@
       "topicFilterLabel": "Filtruj po temacie",
       "allTopics": "Wszystkie tematy",
       "guide": "Poradnik",
-      "guidesStrip": "Poradniki krok po kroku",
       "languageFilterLabel": "Filtruj po języku",
       "moreInTopic": "Więcej na ten temat"
     },
@@ -318,7 +317,8 @@
       "tableOfContents": "Spis treści",
       "sources": "Źródła",
       "breadcrumb": "Ścieżka nawigacji",
-      "home": "Strona główna"
+      "home": "Strona główna",
+      "updated": "Zaktualizowano {date}"
     },
     "mdx": {
       "copy": "Kopiuj",
@@ -453,7 +453,9 @@
     },
     "hero": {
       "title": "Darmowy walidator faktur KSeF FA(3)",
-      "lead": "Wrzuć plik XML z fakturą i zobacz, co trzeba poprawić, zanim wyślesz go do KSeF."
+      "lead": "Wrzuć plik XML z fakturą i zobacz, co trzeba poprawić, zanim wyślesz go do KSeF.",
+      "eyebrow": "Przepisy, terminy i narzędzia KSeF dla firm i księgowych",
+      "trust": "Na podstawie przepisów i dokumentów MF · faktury nie opuszczają przeglądarki · cały kod jest publiczny · za darmo"
     },
     "newsletter": {
       "title": "Newsletter o KSeF",
@@ -468,10 +470,10 @@
     "calendar": {
       "title": "Kalendarz KSeF",
       "intro": "Najważniejsze terminy KSeF i to, co z nich wynika. Przy każdym znajdziesz artykuł z wyjaśnieniem.",
-      "uncertain": "Termin może się zmienić",
+      "uncertainBadge": "może się zmienić",
       "status": {
         "inDays": "za {days, plural, one {# dzień} few {# dni} many {# dni} other {# dnia}}",
-        "inDaysUncertain": "według obecnych przepisów za {days, plural, one {# dzień} few {# dni} many {# dni} other {# dnia}}",
+        "inDaysUncertain": "za {days, plural, one {# dzień} few {# dni} many {# dni} other {# dnia}}",
         "startsToday": "obowiązuje od dziś",
         "inForce": "obowiązuje",
         "lastDay": "dziś ostatni dzień",
@@ -505,7 +507,8 @@
     },
     "topics": {
       "title": "Tematy",
-      "allInTopic": "Wszystkie wpisy w tym temacie"
+      "allWithCount": "Wszystkie ({count})",
+      "validatorMessages": "Komunikaty walidatora"
     },
     "recent": {
       "title": "Nowe i zaktualizowane",
@@ -657,16 +660,16 @@
     "ctaTitle": "Sprawdź swoją fakturę",
     "ctaText": "Wrzuć plik XML, a pokażemy, co trzeba poprawić. Twój plik nie opuszcza przeglądarki.",
     "ctaButton": "Otwórz walidator",
-    "commonErrors": {
-      "title": "Najczęstsze błędy",
-      "intro": "Wyjaśniamy, skąd biorą się te komunikaty i jak je poprawić."
+    "messagesIndex": {
+      "title": "Najczęstsze komunikaty walidatora",
+      "intro": "Co oznacza każdy komunikat i jak poprawić fakturę."
     },
     "previewLinkText": "Chcesz tylko obejrzeć fakturę albo zapisać ją jako PDF?",
     "previewLink": "Otwórz podgląd"
   },
   "heroDropZone": {
     "title": "Wrzuć plik XML z fakturą",
-    "hint": "albo kliknij i wybierz go z dysku",
+    "hint": "albo wybierz z dysku",
     "privacy": "Twój plik nie opuszcza przeglądarki.",
     "openValidator": "Otwórz walidator",
     "opening": "Otwieram walidator…"

@@ -1,7 +1,6 @@
 "use client";
 
 import type { ReactNode } from "react";
-import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { type FilterChip, FilterChips } from "@/components/filter-chips";
 import type { ContentTopic } from "@/lib/topics";
@@ -13,29 +12,22 @@ import {
   parseListingFiltersFromParams,
 } from "@/lib/listing-filters";
 
-export interface BlogListingPost {
+export interface BlogListingItem {
+  /** Unique across posts and guides (prefix with the section). */
   key: string;
   topic?: ContentTopic;
   translated: boolean;
-  /** Pre-rendered lead row (larger title), used when this post is first in the current view. */
+  /** Pre-rendered lead row (larger title), used when this item is first in the current view. */
   lead: ReactNode;
   /** Pre-rendered list row. */
-  card: ReactNode;
-}
-
-export interface BlogListingGuide {
-  key: string;
-  translated: boolean;
-  /** Pre-rendered compact row. */
   card: ReactNode;
 }
 
 export interface BlogListingProps {
   locale: string;
   basePath: string;
-  guidesPath: string;
-  posts: BlogListingPost[];
-  guides: BlogListingGuide[];
+  /** Posts and guides, already merged and sorted by date (newest first). */
+  items: BlogListingItem[];
   labels: {
     allTopics: string;
     topics: Record<ContentTopic, string>;
@@ -43,7 +35,6 @@ export interface BlogListingProps {
     languageFilter: string;
     languageAll: string;
     languageTranslatedOnly: string;
-    guidesStrip: string;
     empty: string;
   };
 }
@@ -52,24 +43,22 @@ const NO_FILTERS: ListingFilters = { translatedOnly: false };
 
 /**
  * Blog listing body. The page itself is static: the server renders every post and guide into
- * `posts`/`guides`, and this component only decides which of them to show. With no JS (and in the
+ * one date-sorted `items` list, and this component only decides which of them to show. With no JS (and in the
  * static HTML crawlers see) the unfiltered list is rendered, see `BlogListing`'s Suspense fallback.
  */
 export function BlogListingView({
   filters,
   locale,
   basePath,
-  guidesPath,
-  posts,
-  guides,
+  items,
   labels,
 }: BlogListingProps & { filters: ListingFilters }) {
   const { topic: activeTopic, translatedOnly } = filters;
 
-  const visiblePosts = filterListingItems(posts, filters);
-  // Guides follow the same topic filter, so a topic view (e.g. from a homepage hub) lists them too.
-  const visibleGuides = filterListingItems(guides, filters);
-  const [lead, ...rest] = visiblePosts;
+  // Posts and guides share one list and follow the same topic and language filters. The first
+  // visible item always gets the lead variant, so a filtered view opens the same way as the full one.
+  const visibleItems = filterListingItems(items, filters);
+  const [lead, ...rest] = visibleItems;
 
   const topicChips: FilterChip[] = [
     {
@@ -80,7 +69,7 @@ export function BlogListingView({
       event: "topic_filter_selected",
       eventProps: { locale, section: "blog", topic: "all" },
     },
-    ...availableTopics(posts, { translatedOnly }).map((topic) => ({
+    ...availableTopics(items, { translatedOnly }).map((topic) => ({
       key: topic,
       label: labels.topics[topic],
       href: buildListingHref(basePath, { topic, translatedOnly }),
@@ -118,33 +107,10 @@ export function BlogListingView({
         <>
           <ul className="divide-y divide-slate-200 border-y border-slate-200">
             <li key={lead.key}>{lead.lead}</li>
-            {rest.map((post) => (
-              <li key={post.key}>{post.card}</li>
+            {rest.map((item) => (
+              <li key={item.key}>{item.card}</li>
             ))}
           </ul>
-
-          {visibleGuides.length > 0 && (
-            <section aria-labelledby="guides-strip-heading" className="space-y-2">
-              <h2
-                id="guides-strip-heading"
-                className="font-display text-xl font-bold tracking-tight text-slate-900"
-              >
-                <Link
-                  href={guidesPath}
-                  className="hover:text-violet-700 hover:underline underline-offset-4"
-                >
-                  {labels.guidesStrip}
-                </Link>
-              </h2>
-              <ul className="grid gap-x-8 divide-y divide-slate-200 border-y border-slate-200 sm:grid-cols-2 sm:divide-y-0">
-                {visibleGuides.map((guide) => (
-                  <li key={guide.key} className="border-slate-200 sm:border-b sm:last:border-b-0">
-                    {guide.card}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )}
         </>
       )}
     </>

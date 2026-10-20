@@ -6,6 +6,7 @@ import { ContributeFooter } from "@/components/contribute-footer";
 import { ShareButton } from "@/components/share-button";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import type { Frontmatter } from "@/lib/content";
+import { getUpdatedDay } from "@/lib/content-dates";
 
 interface ValidatorPageLayoutProps {
   frontmatter: Frontmatter;
@@ -26,10 +27,13 @@ export async function ValidatorPageLayout({
   const tNav = await getTranslations({ locale, namespace: "nav" });
   const p = locale === "pl" ? "" : `/${locale}`;
   const validatorHref = `${p}/validator`;
-  const updatedFormatted = new Date(frontmatter.updated ?? frontmatter.date).toLocaleDateString(
-    locale,
-    { year: "numeric", month: "long", day: "numeric" },
-  );
+  const updatedDay = getUpdatedDay(frontmatter);
+  const shownDate = new Date(updatedDay ?? frontmatter.date);
+  const updatedFormatted = shownDate.toLocaleDateString(locale, {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
   const sources = (frontmatter.sources ?? []).filter((s) => s.url);
 
   return (
@@ -50,7 +54,11 @@ export async function ValidatorPageLayout({
               {frontmatter.title}
             </h1>
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-slate-500">
-              <time dateTime={frontmatter.updated ?? frontmatter.date}>{updatedFormatted}</time>
+              {updatedDay ? (
+                <time dateTime={updatedDay}>{t("updated", { date: updatedFormatted })}</time>
+              ) : (
+                <time dateTime={shownDate.toISOString().slice(0, 10)}>{updatedFormatted}</time>
+              )}
               <span aria-hidden>·</span>
               <ShareButton title={frontmatter.title} locale={locale} />
             </div>

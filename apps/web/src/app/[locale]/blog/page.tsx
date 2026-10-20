@@ -6,7 +6,12 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SectionContainer } from "@/components/section-container";
 import { ContentRow } from "@/components/content-row";
-import { BlogListing, BlogListingFallback, type BlogListingProps } from "@/components/blog-listing";
+import {
+  BlogListing,
+  BlogListingFallback,
+  type BlogListingItem,
+  type BlogListingProps,
+} from "@/components/blog-listing";
 import { LanguagePicker } from "../language-picker";
 import { listContentItemsUnified } from "@/lib/content";
 import { isContentTopic, topicLabels } from "@/lib/topics";
@@ -65,50 +70,46 @@ export default async function BlogListPage({ params }: Props) {
   ]);
 
   const basePath = locale === "pl" ? "/blog" : `/${locale}/blog`;
-  const guidesPath = locale === "pl" ? "/guides" : `/${locale}/guides`;
+
+  const toItem = (
+    entry: (typeof allPosts)[number],
+    section: "blog" | "guides",
+  ): BlogListingItem => {
+    const track = {
+      event: "featured_post_clicked",
+      props: { locale, slug: entry.frontmatter.slug, section },
+    };
+    return {
+      key: `${section}:${entry.plSlug}`,
+      topic: isContentTopic(entry.frontmatter.topic) ? entry.frontmatter.topic : undefined,
+      translated: entry.contentLocale === locale,
+      lead: (
+        <ContentRow
+          item={entry}
+          locale={locale}
+          section={section}
+          variant="lead"
+          headingLevel="h2"
+          track={track}
+        />
+      ),
+      card: <ContentRow item={entry} locale={locale} section={section} headingLevel="h2" />,
+    };
+  };
+
+  // Guides sit in the same list as posts, newest first (stable sort: ties keep posts first).
+  const dated = [
+    ...allPosts.map((entry) => ({ entry, section: "blog" as const })),
+    ...allGuides.map((entry) => ({ entry, section: "guides" as const })),
+  ].sort(
+    (a, b) =>
+      new Date(b.entry.frontmatter.date).getTime() - new Date(a.entry.frontmatter.date).getTime(),
+  );
 
   const listing: BlogListingProps = {
     locale,
     basePath,
-    guidesPath,
-    posts: allPosts.map((post) => ({
-      key: post.plSlug,
-      topic: isContentTopic(post.frontmatter.topic) ? post.frontmatter.topic : undefined,
-      translated: post.contentLocale === locale,
-      lead: (
-        <ContentRow
-          item={post}
-          locale={locale}
-          section="blog"
-          variant="lead"
-          headingLevel="h2"
-          track={{
-            event: "featured_post_clicked",
-            props: { locale, slug: post.frontmatter.slug },
-          }}
-        />
-      ),
-      card: <ContentRow item={post} locale={locale} section="blog" headingLevel="h2" />,
-    })),
-    guides: allGuides.map((guide) => ({
-      key: guide.plSlug,
-      topic: isContentTopic(guide.frontmatter.topic) ? guide.frontmatter.topic : undefined,
-      translated: guide.contentLocale === locale,
-      card: (
-        <ContentRow
-          item={guide}
-          locale={locale}
-          section="guides"
-          variant="compact"
-          headingLevel="h3"
-          hideSectionMarker
-          track={{
-            event: "guides_strip_clicked",
-            props: { locale, slug: guide.frontmatter.slug },
-          }}
-        />
-      ),
-    })),
+    items: dated.map(({ entry, section }) => toItem(entry, section)),
     labels: {
       allTopics: t("discovery.allTopics"),
       topics: topicLabels(t),
@@ -116,7 +117,6 @@ export default async function BlogListPage({ params }: Props) {
       languageFilter: t("discovery.languageFilterLabel"),
       languageAll: t("blog.filter.all"),
       languageTranslatedOnly: t("blog.filter.translatedOnly"),
-      guidesStrip: t("discovery.guidesStrip"),
       empty: t("blog.empty"),
     },
   };
