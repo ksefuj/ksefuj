@@ -130,7 +130,7 @@ what is not yet settled.
 - [x] `nota-korygujaca-ksef` (in review: branch `content/nota-korygujaca-ksef`) — Nota korygująca a
       KSeF · „nota korygująca KSeF" · K · P2 · Frame as nota vs korekta; link
       `faktura-korygujaca-ksef`.
-- [ ] `usuniecie-faktury-ksef` — Czy można usunąć lub edytować fakturę w KSeF · „usunięcie faktury
+- [x] `usuniecie-faktury-ksef` — Czy można usunąć lub edytować fakturę w KSeF · „usunięcie faktury
       KSeF" · A · FAQ
 - [ ] `numer-ksef-gdzie-znalezc` — Numer KSeF: gdzie go znaleźć · „numer KSeF faktury" · A, M · FAQ
 - [ ] `faktura-zaliczkowa-ksef` — Faktura zaliczkowa w KSeF · „faktura zaliczkowa KSeF" · K, M · P2
