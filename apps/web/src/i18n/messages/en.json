@@ -319,7 +319,11 @@
     },
     "mdx": {
       "copy": "Copy",
-      "copied": "Copied"
+      "copied": "Copied",
+      "screenshotSource": {
+        "test": "KSeF Taxpayer App (Aplikacja Podatnika), test environment, as of {date}",
+        "prod": "KSeF Taxpayer App (Aplikacja Podatnika), production environment, as of {date}"
+      }
     },
     "waluty": {
       "title": "NBP exchange rate for invoices",

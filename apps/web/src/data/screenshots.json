@@ -1,0 +1,42 @@
+{
+  "ksef-ap/faktura-pobierz": {
+    "src": "/screenshots/ksef-ap/faktura-pobierz.webp",
+    "width": 2560,
+    "height": 1300,
+    "capturedAt": "2026-10-20",
+    "appVersion": "2.5.5",
+    "env": "test"
+  },
+  "ksef-ap/faktura-podglad": {
+    "src": "/screenshots/ksef-ap/faktura-podglad.webp",
+    "width": 2560,
+    "height": 1600,
+    "capturedAt": "2026-10-20",
+    "appVersion": "2.5.5",
+    "env": "test"
+  },
+  "ksef-ap/faktury-lista": {
+    "src": "/screenshots/ksef-ap/faktury-lista.webp",
+    "width": 2560,
+    "height": 1300,
+    "capturedAt": "2026-10-20",
+    "appVersion": "2.5.5",
+    "env": "test"
+  },
+  "ksef-ap/faktury-menu": {
+    "src": "/screenshots/ksef-ap/faktury-menu.webp",
+    "width": 1280,
+    "height": 1280,
+    "capturedAt": "2026-10-20",
+    "appVersion": "2.5.5",
+    "env": "test"
+  },
+  "ksef-ap/faktury-wyszukiwanie": {
+    "src": "/screenshots/ksef-ap/faktury-wyszukiwanie.webp",
+    "width": 2560,
+    "height": 1300,
+    "capturedAt": "2026-10-20",
+    "appVersion": "2.5.5",
+    "env": "test"
+  }
+}

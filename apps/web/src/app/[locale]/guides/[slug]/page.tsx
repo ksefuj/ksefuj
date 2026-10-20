@@ -100,7 +100,7 @@ export default async function GuidePage({ params }: Props) {
   ]);
   const localePaths = buildContentLocalePaths("guides", slug, item.frontmatter.translations);
 
-  const { content } = await compileMDXContent({ source: item.content });
+  const { content } = await compileMDXContent({ source: item.content, locale: contentLocale });
 
   return (
     <>
