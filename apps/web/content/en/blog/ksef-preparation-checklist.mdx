@@ -1,8 +1,8 @@
 ---
-title: "KSeF checklist: 10 things before invoice one"
-description: "10 things to check before your first KSeF invoice: FA(3) software, login, tests, offline mode, accountant access. Written for sole traders."
+title: "KSeF checklist for 1 January 2027"
+description: "From 1 January 2027 the 10,000 PLN limit and cash-register invoices end: B2B invoices go through KSeF at any amount. Penalties: 2027 by law, MF plans a delay."
 date: 2026-03-31
-updated: 2026-10-07
+updated: 2026-10-21
 section: blog
 locale: en
 slug: "ksef-preparation-checklist"
@@ -11,111 +11,112 @@ translations:
   pl: "ksef-checklist-przygotowanie"
   en: "ksef-preparation-checklist"
   uk: "ksef-cheklist-pidhotovky"
-tags: ["KSeF", "JDG", "Walidacja"]
+tags: ["KSeF", "JDG", "Faktura"]
 sources:
-  - label: "FAQ MF — KSeF 2.0"
-    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
-  - label: "Polish VAT Act, consolidated text, Journal of Laws 2026, item 1263 (Art. 106na, 106nda, 106nf, 106ni, 145m)"
-    url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
-  - label: "MF announcement: penalty deferral extended to end of 2027"
-    url: "https://www.gov.pl/web/finanse/przedluzenie-odroczenia-kar-za-bledy-w-stosowaniu-ksef-do-konca-2027-r"
-  - label: "MF regulation, Journal of Laws 2025, item 1815, §4–5"
+  - label: "Polish VAT Act, consolidated text, Journal of Laws 2026, item 1263 (Art. 106b, 106e, 106ga, 106ni, 108a, 108g, 145m, 145n)"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  - label: "MF regulation, Journal of Laws 2025, item 1815 (§4–5, §13)"
     url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250001815"
-  - label: "KSeF 2.0 Handbook, Part I, §3.2.3"
+  - label: "KSeF 2.0 Handbook, Part I (6 August 2026)"
     url: "https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
-  - label: "Draft UD477 — Government Legislative Process"
+  - label: "KSeF 2.0 Handbook, Part II (6 August 2026)"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "MF: penalty deferral for KSeF errors extended to the end of 2027 (16 September 2026)"
+    url: "https://www.gov.pl/web/finanse/przedluzenie-odroczenia-kar-za-bledy-w-stosowaniu-ksef-do-konca-2027-r"
+  - label: "Draft UD477, Government Legislative Process"
     url: "https://legislacja.rcl.gov.pl/projekt/12414954"
+  - label: "KSeF API team: tokens after 2026 (CIRFMF/ksef-api#834)"
+    url: "https://github.com/CIRFMF/ksef-api/issues/834"
+  - label: "FAQ MF, KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
+  - label: "FAQ MF, most common questions"
+    url: "https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
 ---
 
-Before your first invoice in KSeF (Krajowy System e-Faktur, Poland's National e-Invoicing System), check the ten items below. Everyone who issues invoices, active VAT taxpayers and VAT-exempt ones alike, has been in the system since 1 April 2026. The exception, until the end of 2026, is sales up to 10,000 PLN a month. Not sure whether that applies to you? Start with our articles on [the deadlines](/en/blog/ksef-from-april-1-2026) and [the 10,000 PLN limit](/en/blog/ksef-10000-pln-limit).
+On 1 January 2027 two exceptions in the Polish VAT Act end: the 10,000 PLN gross monthly limit (Art. 145m) and invoices from cash registers (Art. 145n), so invoices to other businesses go through KSeF (Krajowy System e-Faktur, Poland's National e-Invoicing System) whatever the amount. Under the Act as it stands, the Art. 106ni penalties also start on 1 January 2027, but the Ministry of Finance (MF) has announced a deferral to the end of 2027, and draft UD477, which makes that change, is not law yet.
 
-_Legal position as of 7 October 2026._
+The KSeF obligation itself already applies to you: since 1 April 2026 (since 1 February 2026 if your 2024 sales exceeded 200 million PLN), including if you are VAT-exempt. Invoices to consumers still don't have to go into KSeF (Art. 106ga(2)(4)), and the same goes for the other permanent exclusions in Art. 106ga(2).
 
-## The checklist
+_Legal position as of 21 October 2026._
 
-### 1. Does my software support KSeF and FA(3)?
+## What changes on 1 January 2027
 
-Since 1 February 2026 the only accepted format for structured invoices is FA(3), and the system rejects FA(2). Ask your provider directly: "Do you support KSeF 2.0 and FA(3)?" If the answer is "no" or "not yet", switch. Fakturownia, inFakt, wFirma and Comarch already support KSeF. We explain the schema differences in [FA(2) vs FA(3)](/en/blog/fa2-vs-fa3-ksef).
+### 1. Do you issue invoices outside KSeF under the 10,000 PLN limit?
 
-### 2. Can I log in to KSeF?
+Art. 145m covers only the period from 1 April to 31 December 2026. After that there is no threshold, including for VAT-exempt taxpayers (Art. 113). **What counts is the invoice issue date, not the sale date**, so an invoice for December 2026 issued in January 2027 already goes through KSeF. This follows from the wording of Art. 145m and the MF FAQ on the limit; MF has not answered this specific case separately.
 
-You can log in with **Profil Zaufany** (Poland's trusted identity profile, free, set up through online banking or mObywatel), the mObywatel app, your bank account, an e-ID card (via login.gov.pl), a qualified signature or seal, a KSeF certificate or a token. For most sole traders (JDG) Profil Zaufany is the simplest. Check that login works at [ap.ksef.mf.gov.pl](https://ap.ksef.mf.gov.pl/). We compare the methods in our article on [KSeF certificates and tokens](/en/blog/certificates-vs-tokens-ksef).
-
-### 3. Have I checked a test invoice?
-
-Create an invoice with fictitious data in your software, then drop the XML file into [ksefuj.to](/en/validator). The validator checks compliance with the FA(3) schema and MF requirements, and the file never leaves your browser.
-
-<Tip>
-  KSeF 2.0 has no built-in validator. You only find out about errors when the invoice is rejected,
-  and a rejected invoice formally does not exist.
-</Tip>
-
-The most common errors are covered in our article on [FA(3) validation errors](/en/blog/most-common-fa3-validation-errors).
-
-### 4. Have I sent an invoice to the MF test environment?
-
-The test environment is at [ap-test.ksef.mf.gov.pl](https://ap-test.ksef.mf.gov.pl/web/). Invoices with fictitious data have no legal effect there, and you confirm that your software connects to KSeF correctly.
-
-### 5. Do I know what to do when KSeF is down?
-
-- **Offline mode** (no internet or a brief KSeF outage): issue the invoice locally and submit it to KSeF by **the end of the next business day**.
-- **Emergency mode** (the MF announces a longer outage): issue invoices outside KSeF and submit them **within 7 business days** after the outage ends.
-
-Your software should handle both modes automatically, so ask your provider. More in our [FAQ](/en/faq).
-
-### 6. Does my accountant have access to KSeF?
-
-An accounting firm needs permissions on your behalf. You grant them electronically in Aplikacja Podatnika KSeF 2.0 or through the API. The **ZAW-FA** form, filed at the tax office, is needed only if you are not a natural person and have no qualified seal, or if your signature or seal carries no NIP or PESEL.
-
-<Warning>
-  Without granted permissions your accountant cannot see your invoices in KSeF, even if they have
-  kept your books for years.
-</Warning>
+If you send clients a PDF today, switch your software to KSeF submission before the end of the year. How to count the limit in the last months is covered in our article on [the end of the 10,000 PLN limit](/en/blog/end-of-10000-pln-limit). MF has not clarified whether invoices issued outside KSeF in 2026 must later be uploaded to the system.
 
 <Source
-  href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250001815"
-  label="MF regulation, Journal of Laws 2025, item 1815, §4–5"
+  href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  label="Polish VAT Act, Journal of Laws 2026, item 1263, Art. 106ga, 145m"
 />
+
+### 2. Do you issue invoices from a cash register?
+
+Until 31 December 2026 you can issue invoices using a cash register, and a receipt showing the buyer's NIP for up to 450 PLN (100 EUR) counts as a simplified invoice, both outside KSeF (Art. 145n(1)). From 1 January 2027 both options disappear. An invoice for a cash-register sale to another business is issued in KSeF.
+
+You can issue an invoice to a business for a receipt only if the receipt shows the buyer's NIP (Art. 106b(5)). Breaking this rule carries a sanction of 100% of the tax amount (Art. 106b(6)). Details for shops and services are in our article on [cash-register invoices from 2027](/en/blog/cash-register-invoices-ksef-2027).
+
 <Source
   href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
-  label="KSeF 2.0 Handbook, Part I, §3.2.3"
+  label="KSeF 2.0 Handbook, Part I, p. 14"
 />
 
-### 7. Do I know the QR code on the invoice?
+### 3. How does your software log in to KSeF?
 
-Invoices from KSeF carry a QR code that lets anyone verify the document. Your software generates it automatically. Just check that it appears on the printout.
+The KSeF regulation allows tokens until 31 December 2026 (§13(1)(1), Journal of Laws 2025, item 1815). In the KSeF 2.0 Handbook, MF wrote that it has decided to keep this authentication method indefinitely and that the regulation will be amended accordingly. The amendment has not been published yet.
 
-### 8. Do I know where to get help?
+In September 2026 the KSeF API team said that tokens issued by 31 December 2026 will keep working, but they expire on 30 November 2027, and a new version of the token-generation service arrives on 1 January 2027. This is technical guidance, not law. If your software sends invoices to KSeF with a token, ask your provider whether it will move to the new tokens. More in our article on [KSeF tokens after 2026](/en/blog/ksef-tokens-after-2026).
 
-The MF runs a helpdesk for KSeF questions, with contact details at [ksef.podatki.gov.pl](https://ksef.podatki.gov.pl). For tax questions you can call the Krajowa Informacja Skarbowa (National Tax Information) line.
+<Source
+  href="https://github.com/CIRFMF/ksef-api/issues/834"
+  label="KSeF API team, CIRFMF/ksef-api#834"
+/>
 
-### 9. Have I told my clients about the change?
+### 4. Do you know when penalties start?
 
-Invoices go into KSeF instead of an inbox, and clients need their own KSeF access to retrieve purchase invoices. You can still send a PDF for convenience, but the legal document is the XML file registered in KSeF.
+Under the Act in force, Art. 106ni(1)–(3) and (5)–(7) take effect on 1 January 2027. The penalty is up to 100% of the tax on the invoice or, when the invoice shows no tax, up to 18.7% of the total amount due. It covers, among other things, an invoice issued outside KSeF when it should have been in the system, and late submission of invoices issued in offline or emergency mode.
 
-### 10. Do I have a plan B?
-
-If your software fails, you have two options. [Aplikacja Podatnika KSeF](https://ap.ksef.mf.gov.pl/) is a free MF tool where you issue an invoice through a form (enough for 2–3 invoices a month). The other is the offline mode from point 5, which is a lawful mechanism, not a workaround.
-
-## When penalties start
-
-The KSeF obligation for everyone still starts on 1 January 2027. On 16 September 2026 the Ministry of Finance announced that it will extend the deferral of KSeF penalties until the end of 2027. A government draft amending the VAT Act (UD477, version of 22 September 2026, at the inter-ministerial consultation stage) would make Art. 106ni(1)–(3) and (5)–(7) apply from 1 January 2028. It is not law yet.
+On 16 September 2026 MF announced that it would extend the penalty deferral to the end of 2027. In the same announcement it stressed that deferring penalties does not lift the obligation to use KSeF, and that the deferral requires a change to the Act. Draft UD477 contains that change: the version of 15 October 2026 has gone to the Council of Ministers and moves the penalties to 1 January 2028. **The draft has not been adopted or published.** If it is not published in the Journal of Laws (Dziennik Ustaw) before 31 December 2026, penalties apply from 1 January 2027. We track the current state in our article on [KSeF penalties in 2027 and 2028](/en/blog/ksef-penalties-2027-2028).
 
 <Source
   href="https://www.gov.pl/web/finanse/przedluzenie-odroczenia-kar-za-bledy-w-stosowaniu-ksef-do-konca-2027-r"
-  label="MF announcement: penalty deferral extended to end of 2027"
+  label="MF announcement of 16 September 2026"
 />
 <Source
   href="https://legislacja.rcl.gov.pl/projekt/12414954"
-  label="Draft UD477 — Government Legislative Process"
+  label="Draft UD477, Government Legislative Process"
 />
 
-No penalties does not change what a rejection means: an invoice rejected by the system formally does not exist.
+### 5. Do you pay invoices by bank transfer as an active VAT taxpayer?
 
-If any item came out as "no", start with number 3. The wider context is in our [KSeF guide for sole traders](/en/blog/ksef-for-sole-traders).
+For payments made on or after 1 January 2027, an active VAT taxpayer paying another active VAT taxpayer for a KSeF invoice puts its KSeF number in the transfer title (Art. 108g). When one transfer covers several invoices, you enter a collective identifier. The same applies to split payment transfers (Art. 108a(3)(3)). The payment date counts, not the invoice date, so a December invoice paid in January already needs the number. Invoices issued during a KSeF outage are not covered. How this works in practice is in our article on [the KSeF number in a bank transfer](/en/blog/ksef-number-in-bank-transfer).
 
-<Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20" label="FAQ MF — KSeF 2.0" />
+### 6. For accountants: VAT deduction on invoices issued outside KSeF
+
+MF's position on buyers deducting VAT from invoices issued outside KSeF covers the period from February to December 2026 (KSeF 2.0 Handbook, Part II, point 1.7). MF has not said how to treat such invoices issued in 2027.
+
 <Source
-  href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250000775"
-  label="Polish VAT Act — Journal of Laws 2025, item 775, as amended"
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="KSeF 2.0 Handbook, Part II, pp. 29–30"
 />
+
+## What to check even though it stays the same
+
+**Software.** Ask your provider: "Do you support KSeF 2.0 and FA(3)?" For a few invoices a month, the free MF tools are enough: Aplikacja Podatnika KSeF (the KSeF Taxpayer App), Aplikacja Mobilna KSeF (the mobile app) and e-mikrofirma.
+
+**Login.** Check that you can log in to [Aplikacja Podatnika KSeF](https://ap.ksef.mf.gov.pl/), for example with Profil Zaufany (Poland's free trusted profile).
+
+**Permissions for your accountant.** Without them, your accounting firm cannot see your invoices in KSeF. You grant them electronically in Aplikacja Podatnika. The ZAW-FA form at the tax office is needed only by a business that is not a natural person and has no qualified seal, or when the signature or seal carries neither NIP nor PESEL (§4–5 of the regulation). Step by step: [KSeF access for your accountant](/en/guides/ksef-accountant-access).
+
+**Outages and no internet.** The rules for offline and emergency mode do not change in 2027. What changes is that late submission of such invoices is subject to the Art. 106ni penalty. For offline invoices you need a type 2 KSeF certificate, and Aplikacja Podatnika issues online invoices only. The deadlines for each mode are in our guide to [KSeF outages and offline mode](/en/guides/ksef-outage-offline-mode).
+
+<Source
+  href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
+  label="FAQ MF, most common questions"
+/>
+
+**Test invoice.** KSeF 2.0 has no separate validator: you learn about an error only when the invoice is rejected, and a rejected invoice formally does not exist. You can test submission with no legal effect in the [MF test environment](https://ap-test.ksef.mf.gov.pl/web/).
+
+If your software saves the invoice as an XML file, drop it into the [ksefuj.to validator](/en/validator) before your first invoice in January. The file never leaves your browser.
