@@ -23,6 +23,11 @@ Planned 2026-10-20 from Search Console (2026-09-19 to 2026-10-16) and a scan of 
 sites published in the last month. Trade-press items are topic signals only: every fact still needs
 a Tier 1–3 source.
 
+- [ ] **UPDATE** `faktura-zagraniczna-ksef`: the `P_18A` section says MPP „nie ma zastosowania w
+      transakcjach zagranicznych” and calls `2` the „domyślna wartość”; no source supports the
+      blanket rule. Replace it with the schema conditions (over 15 000 zł, Annex 15, supply „na
+      rzecz podatnika”) and mark WDT/export/reverse-charge `2` as following from them (source:
+      https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd)
 - [ ] **UPDATE** `ksef-checklist-przygotowanie` — refresh as „KSeF: checklista na 1 stycznia 2027” ·
       date-driven · A, K · 2026-12-01 · brief `checklist-przygotowanie.md` (its penalty facts are
       stale), `sankcje-ksef-ud477.md` · End of art. 145m limit and 145n cash-register invoices,
@@ -36,7 +41,7 @@ a Tier 1–3 source.
       walidacji” in the first 100 words, then the list; mention the strict-XML rejections from 19.10
       and link that post · „błąd walidacji co to znaczy” · A · GSC ~74 impr at pos 7–14 · brief
       `bledy-walidacji-fa3.md`
-- [ ] `mpp-split-payment-ksef` — Split payment (MPP) na fakturze w KSeF · „MPP KSeF” / „split
+- [x] `mpp-split-payment-ksef` — Split payment (MPP) na fakturze w KSeF · „MPP KSeF” / „split
       payment KSeF” · K, A · Broszura FA(3) `P_18A`, KIS interpretation
       0114-KDIP1-1.4012.566.2026.1.MM of 22.09.2026 (UNVERIFIED, via infor.pl 2026-10-17) · No
       coverage on our side; strong validator fit (Adnotacje rules).
