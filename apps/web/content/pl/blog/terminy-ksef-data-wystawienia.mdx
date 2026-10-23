@@ -14,12 +14,10 @@ related:
 sources:
   - label: "Ustawa o VAT, tekst jednolity Dz.U. 2026 poz. 1263 (art. 106i, 106na, 106nda, 106nf, 106nh, 145m)"
     url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
-  - label: "Podręcznik KSeF 2.0, cz. II (06.08.2026), pkt 1.4, 1.6.1, 1.8, 4.2, 5.1"
+  - label: "Podręcznik KSeF 2.0, cz. II (06.08.2026), pkt 1.4, 1.6.1, 1.7, 1.8, 4.2, 5.1"
     url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
   - label: "Broszura informacyjna dotycząca struktury logicznej FA(3)"
     url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
-  - label: "MF: Tabela trybów wystawiania faktur (24.02.2026)"
-    url: "https://ksef.podatki.gov.pl/media/xp2dhszg/tabela-tryby-wystawiania-faktur-24022026.pdf"
   - label: "MF: Poniżej 10 000 zł"
     url: "https://ksef.podatki.gov.pl/ponizej-10-000-zl/"
   - label: "Dokumentacja API KSeF: weryfikacja faktury (walidacja dat)"
@@ -42,7 +40,7 @@ Fakturę wysłaną do KSeF w zwykłym trybie (online) uznaje się za wystawioną
 
 <Source
   href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
-  label="Ustawa o VAT, art. 106na ust. 1, 3 i 4, art. 106nda ust. 10"
+  label="Ustawa o VAT, art. 106na ust. 1, 3 i 4, art. 106nda ust. 10 i 16"
 />
 
 <Info>
@@ -58,11 +56,16 @@ Liczy się dzień wysłania, a nie chwila, w której KSeF nada numer. Ministerst
   label="Podręcznik KSeF 2.0, cz. II, pkt 1.4"
 />
 
-Datę otrzymania w tym przykładzie MF pomija. Z art. 106na ust. 3 wynika, że nabywca otrzymał fakturę 2 lutego, bo tego dnia nadano numer. To nasze zestawienie dwóch przepisów, nie zdanie z podręcznika: faktura może więc być wystawiona jednego dnia, a otrzymana następnego.
+Datę otrzymania MF rozstrzyga innym przykładem w podręczniku (pkt 5.1, przykład 10): faktura wysłana 1 lutego o 23:56, numer nadany 2 lutego o 00:01. „Datą otrzymania faktury jest w tym przypadku … 2 lutego 2026 r.”, zgodnie z art. 106na ust. 3. Faktura może więc być wystawiona jednego dnia, a otrzymana następnego.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. II, pkt 5.1"
+/>
 
 ## P_1 wcześniejsza lub późniejsza niż dzień wysłania
 
-Ania, graficzka na JDG, przygotowuje fakturę we wtorek wieczorem z datą P_1 na wtorek, ale wysyła ją do KSeF w środę rano. KSeF jej nie odrzuca. Faktura jest traktowana jak wystawiona w trybie offline24, a jej datą wystawienia zostaje wtorek, czyli P_1 (art. 106nda ust. 10 i 16). Fakturę offline24 trzeba wysłać do KSeF niezwłocznie, najpóźniej w następnym dniu roboczym po dniu wystawienia, więc środa mieści się w terminie. Gdyby Ania wysłała ją dopiero w czwartek, KSeF nadal by ją przyjął, ale termin z art. 106nda ust. 2 byłby przekroczony.
+Ania, graficzka na JDG, przygotowuje fakturę we wtorek wieczorem z datą P_1 na wtorek, ale wysyła ją do KSeF w środę rano. KSeF jej nie odrzuca. Faktura jest traktowana jak wystawiona w trybie offline24, a jej datą wystawienia zostaje wtorek, czyli P_1 (art. 106nda ust. 10 i 16). Fakturę offline24 trzeba wysłać do KSeF niezwłocznie, najpóźniej w następnym dniu roboczym po dniu wystawienia, więc środa mieści się w terminie. Gdyby Ania wysłała ją dopiero w czwartek, KSeF nadal by ją przyjął. Czy termin z art. 106nda ust. 2 obowiązuje też fakturę uznaną za offline24 na podstawie ust. 16, przepisy nie przesądzają (ust. 16 nie wymienia ust. 2 wśród przepisów stosowanych odpowiednio); naszym zdaniem bezpieczniej przyjąć, że tak.
 
 <Source
   href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
@@ -76,9 +79,9 @@ Odwrotna sytuacja kończy się odrzuceniem. Jeśli wysyłasz fakturę 2 lutego z
   label="Dokumentacja API KSeF: walidacja dat"
 />
 
-Odrzucona faktura nie dostaje numeru KSeF, a MF pisze w podręczniku wprost, że przy negatywnej weryfikacji faktura nie została wystawiona (pkt 1.6.1, wśród przyczyn odrzucenia jest P_1 z przyszłości). Poprawiasz datę i wysyłasz ponownie. KSeF nie sprawdza ciągłości numeracji, więc wcześniejszy numer faktury może trafić do systemu po późniejszych, ale sama numeracja nadal musi być ciągła (art. 106e ust. 1 pkt 2).
+Odrzucona faktura nie dostaje numeru KSeF, a MF pisze w podręczniku wprost, że przy negatywnej weryfikacji faktura nie została wystawiona (pkt 1.6.1, wśród przyczyn odrzucenia jest P_1 z przyszłości). Poprawiasz datę i wysyłasz ponownie. KSeF nie sprawdza numeracji, więc wcześniejszy numer faktury może trafić do systemu po późniejszych, ale sama numeracja nadal musi być kolejna (narastająca) (art. 106e ust. 1 pkt 2).
 
-Jeśli wystawiasz w Aplikacji Podatnika w trybie skróconym, problem praktycznie znika: aplikacja sama wpisuje datę wystawienia, nie pozwala jej zmienić i wysyła faktury tylko online. P_1 jest tam więc dniem wysłania (to nasz wniosek z instrukcji aplikacji; dla trybu rozszerzonego instrukcja tego nie opisuje).
+Jeśli wystawiasz w Aplikacji Podatnika w trybie skróconym, ryzyko rozjazdu jest niewielkie: aplikacja sama wpisuje datę wystawienia i nie pozwala jej zmienić, więc P_1 zgadza się z dniem wysłania (to nasz wniosek z instrukcji aplikacji; dla trybu rozszerzonego instrukcja tego nie opisuje). Jeśli formularz zaczniesz przed północą, a wyślesz po niej, faktura może i tak stać się offline24.
 
 ## Kiedy nabywca otrzymuje fakturę
 
@@ -100,11 +103,11 @@ Daty otrzymania nie odczytasz z numeru KSeF. Według dokumentacji API część `
 
 ## Tryby offline: data wystawienia to zawsze P_1
 
-W trybie offline24 i podczas niedostępności KSeF (art. 106nh ust. 4 odsyła do art. 106nda) data wystawienia to P_1, a data otrzymania to dzień nadania numeru KSeF, z tym samym wyjątkiem dla nabywców z art. 106gb ust. 4. W trybie awaryjnym (art. 106nf) data wystawienia też wynika z P_1. Dla nabywcy z polskim NIP przy awarii i awarii całkowitej (art. 106ng) nie znaleźliśmy w materiałach MF reguły o dacie otrzymania. Terminy wysłania w każdym trybie zebraliśmy w przewodniku [awaria KSeF: co robić i do kiedy wysłać fakturę](/guides/awaria-ksef-offline).
+W trybie offline24 i podczas niedostępności KSeF (art. 106nh ust. 4 odsyła do art. 106nda) data wystawienia to P_1, a data otrzymania to dzień nadania numeru KSeF, z tym samym wyjątkiem dla nabywców z art. 106gb ust. 4. W trybie awaryjnym (art. 106nf) data wystawienia też wynika z P_1. Datą otrzymania jest wtedy dzień faktycznego otrzymania, a jeśli nabywca dostał fakturę dopiero po nadaniu numeru, liczy się data nadania numeru (art. 106nf ust. 10). Nabywca z art. 106gb ust. 4, który uzgodnił inny sposób doręczenia, ma datę faktycznego otrzymania. Dla awarii całkowitej (art. 106ng) przepisy nie mają osobnej reguły. Terminy wysłania w każdym trybie zebraliśmy w przewodniku [awaria KSeF: co robić i do kiedy wysłać fakturę](/guides/awaria-ksef-offline).
 
 <Source
   href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
-  label="Ustawa o VAT, art. 106nda ust. 10 i 11, art. 106nf, art. 106nh ust. 4"
+  label="Ustawa o VAT, art. 106nda ust. 10 i 11, art. 106nf (w tym ust. 10), art. 106nh ust. 4"
 />
 <Source
   href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
@@ -115,7 +118,12 @@ Jeśli sprzedawca wyśle Ci fakturę offline24 mailem, zanim trafi do KSeF, MF n
 
 ## Co zależy od tych dat
 
-**Odliczenie VAT.** Prawo do odliczenia powstaje w okresie powstania obowiązku podatkowego, ale nie wcześniej niż w okresie otrzymania faktury (art. 86 ust. 10b pkt 1). MF opisuje tę regułę przy fakturach spoza KSeF. Dla zwykłej faktury z KSeF łączymy ją z art. 106na ust. 3: faktura z numerem nadanym 1 listopada trafia do odliczenia najwcześniej za listopad, nawet jeśli wysłano ją 31 października przed północą. MF nie ujęło tego wprost, więc przy fakturach z przełomu miesiąca bezpieczniej patrzeć na datę nadania numeru, a nie na datę wystawienia.
+**Odliczenie VAT.** Prawo do odliczenia powstaje w okresie powstania obowiązku podatkowego, ale nie wcześniej niż w okresie otrzymania faktury (art. 86 ust. 10b pkt 1). Podręcznik MF (pkt 1.7) ujmuje to tak: odliczenie przysługuje „nie wcześniej niż w rozliczeniu za okres, w którym tę fakturę otrzymał”, a „za datę otrzymania faktury w KSeF uznaje się datę przydzielenia numeru”. Faktura z numerem nadanym 1 listopada trafia więc do odliczenia najwcześniej za listopad, nawet jeśli wysłano ją 31 października przed północą. Przy fakturach z przełomu miesiąca liczy się data nadania numeru, a nie data wystawienia (art. 106na ust. 3 i art. 86 ust. 10b pkt 1).
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. II, pkt 1.7 (s. 30–31) i 5.1"
+/>
 
 **Termin wystawienia faktury.** KSeF nie zmienia art. 106i: fakturę wystawia się co do zasady najpóźniej 15. dnia miesiąca po miesiącu dostawy lub wykonania usługi. Jeśli wyślesz fakturę z P_1 równą ostatniemu dniu terminu tego samego dnia, jest wystawiona online w terminie. Jeśli wyślesz ją następnego dnia roboczego, staje się fakturą offline24 z datą wystawienia z P_1, jak w przykładzie Ani (to nasze zestawienie przepisów). Brak przepisu, który rozstrzygałby, czy faktura odrzucona w ostatnim dniu terminu i wysłana ponownie następnego dnia jest spóźniona, więc lepiej nie zostawiać jej na ostatni wieczór.
 
@@ -123,7 +131,7 @@ Jeśli sprzedawca wyśle Ci fakturę offline24 mailem, zanim trafi do KSeF, MF n
 
 <Source href="https://ksef.podatki.gov.pl/ponizej-10-000-zl/" label="MF: Poniżej 10 000 zł" />
 
-**Kurs waluty.** Gdy faktura poprzedza obowiązek podatkowy, kurs NBP bierzesz z ostatniego dnia roboczego przed dniem wystawienia (art. 31a ust. 2). Datą wystawienia jest P_1 zarówno online (gdzie P_1 równa się dniowi wysłania), jak i w trybach offline24, niedostępności i awaryjnym, więc kurs ustalasz od P_1, a nie od daty nadania numeru.
+**Kurs waluty.** Gdy faktura poprzedza obowiązek podatkowy, kurs NBP (albo kurs EBC, jeśli wybrałeś tę metodę; art. 31a ust. 2 zd. 2) bierzesz z ostatniego dnia roboczego przed dniem wystawienia (art. 31a ust. 2). Datą wystawienia jest P_1 zarówno online (gdzie P_1 równa się dniowi wysłania), jak i w trybach offline24, niedostępności i awaryjnym, więc kurs ustalasz od P_1, a nie od daty nadania numeru.
 
 ## Daty na fakturze w skrócie
 
@@ -161,6 +169,6 @@ KSeF sam przełącza fakturę wysłaną w trybie online na offline, gdy dzień k
   label="Dokumentacja API KSeF: automatyczne określanie trybu offline"
 />
 
-Trzy rzeczy pozostają nierozstrzygnięte. Żadne źródło nie mówi, w jakiej strefie czasowej liczy się dzień kalendarzowy przy porównaniu P_1 z `invoicingDate`. Nie wiadomo, czy dzień otwarcia sesji wsadowej jest „dniem przesłania” w rozumieniu art. 106na ust. 1. Broszura FA(3) opisuje tryb offline przy dacie wysłania równej P_1 plus jeden dzień, a dokumentacja API przy każdym wcześniejszym dniu.
+Dwie rzeczy pozostają nierozstrzygnięte. Żadne źródło nie mówi, w jakiej strefie czasowej liczy się dzień kalendarzowy przy porównaniu P_1 z `invoicingDate`. Nie wiadomo, czy dzień otwarcia sesji wsadowej jest „dniem przesłania” w rozumieniu art. 106na ust. 1.
 
 Jeśli chcesz wiedzieć, co zrobić z fakturą, której nie możesz teraz wysłać, zacznij od przewodnika [awaria KSeF i tryby offline](/guides/awaria-ksef-offline).

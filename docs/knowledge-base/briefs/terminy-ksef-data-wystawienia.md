@@ -147,8 +147,10 @@ facts joined, no single source sentence states it (do not attribute to MF).
      (EN): "Art. 106nda sec. 10 + Art. 106nh sec. 4". Tier 1. HIGH. [KB]
    - **Awaria (art. 106nf):** data wystawienia = P_1 (information sheet §9.2 EN: "Invoices in
      'emergency' mode due to KSeF failure (Art. 106nf sec. 9)"); termin 7 dni roboczych od końca
-     awarii (ust. 4). **Data otrzymania przy awarii i awarii całkowitej (106ng): NOT IN KB**
-     (`faktura-poza-ksef-odliczenie-vat.md` Unsettled). Tier 1/2. HIGH / NOT IN KB.
+     awarii (ust. 4). **Data otrzymania przy awarii (106nf ust. 10):** dzień faktycznego otrzymania;
+     jeśli nabywca dostał fakturę dopiero po nadaniu numeru, data nadania numeru; nabywca z art.
+     106gb ust. 4, który uzgodnił inny sposób doręczenia, ma datę faktycznego otrzymania (Dz.U. 2026
+     poz. 1263, verified 2026-10-23). **Awaria całkowita (106ng):** no separate rule. Tier 1. HIGH.
    - [API] verbatim, `tryby-offline.md`: „Za datę wystawienia system KSeF przyjmuje wyłącznie
      wartość zawartą w polu `P_1` struktury e-faktury." „Data otrzymania faktury to data nadania
      numeru KSeF lub w przypadku udostępnienia poza KSeF, data faktycznego jej otrzymania." Tier 2.
@@ -303,8 +305,9 @@ facts joined, no single source sentence states it (do not attribute to MF).
    ust. 2 breached): KSeF does not reject (fakt 2), sanction art. 106ni ust. 1 pkt 3 from 1.01.2027
    under current law, deferral to 1.01.2028 only in draft UD477. Do not describe consequences beyond
    that.
-4. **Data otrzymania w trybie awaryjnym (106nf) i awarii całkowitej (106ng)** dla nabywcy z NIP: NOT
-   IN KB.
+4. **Data otrzymania w trybie awaryjnym (106nf) i awarii całkowitej (106ng):** SETTLED for 106nf by
+   art. 106nf ust. 10 (Dz.U. 2026 poz. 1263, verified 2026-10-23, see fakt 4); 106ng has no separate
+   rule.
 5. **Odliczenie dla zwykłej faktury online w okresie daty numeru KSeF:** COMBINATION only (fakt 10).
 6. **Odrzucona faktura online a termin z art. 106i:** no source on whether a rejected first attempt
    on the deadline day and a resend the next day is late. Do not answer.

@@ -10,12 +10,10 @@ tags: ["KSeF", "Invoice", "VAT"]
 sources:
   - label: "Polish VAT Act, consolidated text Dz.U. 2026 poz. 1263 (art. 106i, 106na, 106nda, 106nf, 106nh, 145m)"
     url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
-  - label: "KSeF 2.0 Manual, Part II (06.08.2026), sections 1.4, 1.6.1, 1.8, 4.2, 5.1"
+  - label: "KSeF 2.0 Manual, Part II (06.08.2026), sections 1.4, 1.6.1, 1.7, 1.8, 4.2, 5.1"
     url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
   - label: "FA(3) logical structure information brochure"
     url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
-  - label: "MF: table of invoice issuing modes (24.02.2026)"
-    url: "https://ksef.podatki.gov.pl/media/xp2dhszg/tabela-tryby-wystawiania-faktur-24022026.pdf"
   - label: "MF: Below 10 000 zł"
     url: "https://ksef.podatki.gov.pl/ponizej-10-000-zl/"
   - label: "KSeF API documentation: invoice verification (date validation)"
@@ -38,7 +36,7 @@ An invoice sent to KSeF (Krajowy System e-Faktur, Poland's National e-Invoicing 
 
 <Source
   href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
-  label="VAT Act, art. 106na ust. 1, 3 and 4, art. 106nda ust. 10"
+  label="VAT Act, art. 106na ust. 1, 3 and 4, art. 106nda ust. 10 and 16"
 />
 
 <Info>
@@ -54,11 +52,16 @@ What counts is the day of sending, not the moment KSeF assigns the number. The M
   label="KSeF 2.0 Manual, Part II, section 1.4"
 />
 
-MF leaves out the receipt date in that example. Under art. 106na ust. 3 the buyer received the invoice on 2 February, because that is when the number was assigned. This is our reading of two provisions together, not a sentence from the manual: an invoice can be issued on one day and received on the next.
+MF settles the receipt date with another example in the manual (section 5.1, example 10): the invoice is sent on 1 February at 23:56 and the number is assigned on 2 February at 00:01. "The invoice receipt date in this case is … 2 February 2026," in line with art. 106na ust. 3. An invoice can therefore be issued on one day and received on the next.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="KSeF 2.0 Manual, Part II, section 5.1"
+/>
 
 ## P_1 earlier or later than the sending day
 
-Ania, a freelance graphic designer running a JDG (jednoosobowa działalność gospodarcza, a Polish sole-trader business), prepares an invoice on Tuesday evening with P_1 set to Tuesday, but sends it to KSeF on Wednesday morning. KSeF doesn't reject it. The invoice is treated as issued in offline24 mode, and its issue date stays Tuesday, the P_1 date (art. 106nda ust. 10 and 16). An offline24 invoice must be sent to KSeF without delay, at the latest on the business day after the issue date, so Wednesday is within the deadline. Had Ania sent it on Thursday, KSeF would still have accepted it, but she would have missed the deadline in art. 106nda ust. 2.
+Ania, a freelance graphic designer running a JDG (jednoosobowa działalność gospodarcza, a Polish sole-trader business), prepares an invoice on Tuesday evening with P_1 set to Tuesday, but sends it to KSeF on Wednesday morning. KSeF doesn't reject it. The invoice is treated as issued in offline24 mode, and its issue date stays Tuesday, the P_1 date (art. 106nda ust. 10 and 16). An offline24 invoice must be sent to KSeF without delay, at the latest on the business day after the issue date, so Wednesday is within the deadline. Had Ania sent it on Thursday, KSeF would still have accepted it. Whether the deadline in art. 106nda ust. 2 also applies to an invoice treated as offline24 under ust. 16 is not settled by the provisions (ust. 16 does not list ust. 2 among the provisions applied accordingly); in our view it is safer to assume that it does.
 
 <Source
   href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
@@ -72,9 +75,9 @@ The reverse ends in rejection. If you send an invoice on 2 February with P_1 = 3
   label="KSeF API documentation: date validation"
 />
 
-A rejected invoice gets no KSeF number, and the MF manual states plainly that after a negative verification the invoice has not been issued (section 1.6.1 lists a future P_1 among the rejection reasons). You correct the date and send it again. KSeF doesn't check that your numbering is sequential, so an earlier invoice number can reach the system after later ones, but the numbering itself must still be continuous (art. 106e ust. 1 pkt 2).
+A rejected invoice gets no KSeF number, and the MF manual states plainly that after a negative verification the invoice has not been issued (section 1.6.1 lists a future P_1 among the rejection reasons). You correct the date and send it again. KSeF doesn't check your numbering, so an earlier invoice number can reach the system after later ones, but the numbering itself must still be sequential (art. 106e ust. 1 pkt 2).
 
-If you issue invoices in the Aplikacja Podatnika (the free KSeF Taxpayer Application) in its simplified mode, the problem practically disappears: the app fills in the issue date itself, doesn't let you change it, and sends invoices online only. P_1 is therefore the sending day (our conclusion from the app's manual; the manual doesn't describe this for the extended mode).
+If you issue invoices in the Aplikacja Podatnika (the free KSeF Taxpayer Application) in its simplified mode, the risk of a mismatch is small: the app fills in the issue date itself and doesn't let you change it, so P_1 matches the sending day (our conclusion from the app's manual; the manual doesn't describe this for the extended mode). If you start the form before midnight and send it after, the invoice can still become offline24.
 
 ## When the buyer receives the invoice
 
@@ -96,11 +99,11 @@ You can't read the receipt date from the KSeF number. According to the API docum
 
 ## Offline modes: the issue date is always P_1
 
-In offline24 mode and during KSeF unavailability (art. 106nh ust. 4 refers to art. 106nda), the issue date is P_1 and the receipt date is the day the KSeF number is assigned, with the same exception for art. 106gb ust. 4 buyers. In emergency mode (art. 106nf) the issue date also follows from P_1. For a buyer with a Polish NIP during an outage or a total outage (art. 106ng), we found no rule on the receipt date in MF materials. The sending deadlines for each mode are in our guide to [KSeF outages and offline mode](/en/guides/ksef-outage-offline-mode).
+In offline24 mode and during KSeF unavailability (art. 106nh ust. 4 refers to art. 106nda), the issue date is P_1 and the receipt date is the day the KSeF number is assigned, with the same exception for art. 106gb ust. 4 buyers. In emergency mode (art. 106nf) the issue date also follows from P_1. The receipt date is then the day the buyer actually received the invoice, or, if the buyer got it only after the number was assigned, the number assignment date (art. 106nf ust. 10). A buyer under art. 106gb ust. 4 who agreed on another way of delivery has the date of actual receipt. For a total outage (art. 106ng) the provisions have no separate rule. The sending deadlines for each mode are in our guide to [KSeF outages and offline mode](/en/guides/ksef-outage-offline-mode).
 
 <Source
   href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
-  label="VAT Act, art. 106nda ust. 10 and 11, art. 106nf, art. 106nh ust. 4"
+  label="VAT Act, art. 106nda ust. 10 and 11, art. 106nf (including ust. 10), art. 106nh ust. 4"
 />
 <Source
   href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
@@ -111,7 +114,12 @@ If a seller emails you an offline24 invoice before it reaches KSeF, MF calls tha
 
 ## What these dates affect
 
-**VAT deduction.** The right to deduct arises in the period in which the tax obligation arose, but no earlier than the period in which the invoice was received (art. 86 ust. 10b pkt 1). MF describes this rule for invoices outside KSeF. For an ordinary KSeF invoice we combine it with art. 106na ust. 3: an invoice whose number was assigned on 1 November can be deducted in November at the earliest, even if it was sent on 31 October before midnight. MF hasn't said this explicitly, so for invoices around the turn of a month it is safer to go by the number assignment date rather than the issue date.
+**VAT deduction.** The right to deduct arises in the period in which the tax obligation arose, but no earlier than the period in which the invoice was received (art. 86 ust. 10b pkt 1). The MF manual (section 1.7) puts it this way: deduction is possible "no earlier than in the settlement for the period in which the buyer received the invoice", and "the date the invoice is received in KSeF is the date the number is assigned". An invoice whose number was assigned on 1 November can therefore be deducted in November at the earliest, even if it was sent on 31 October before midnight. For invoices around the turn of a month, the number assignment date is what counts, not the issue date (art. 106na ust. 3 and art. 86 ust. 10b pkt 1).
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="KSeF 2.0 Manual, Part II, sections 1.7 (pp. 30-31) and 5.1"
+/>
 
 **Invoicing deadline.** KSeF doesn't change art. 106i: as a rule, you issue an invoice no later than the 15th day of the month after the month of supply or service. If you send an invoice with P_1 set to the last day of the deadline on that same day, it is issued online on time. If you send it the next business day, it becomes an offline24 invoice with the P_1 issue date, as in Ania's example (our reading of the provisions together). No provision settles whether an invoice rejected on the last day of the deadline and resent the next day is late, so don't leave it until the last evening.
 
@@ -119,7 +127,7 @@ If a seller emails you an offline24 invoice before it reaches KSeF, MF calls tha
 
 <Source href="https://ksef.podatki.gov.pl/ponizej-10-000-zl/" label="MF: Below 10 000 zł" />
 
-**Exchange rate.** When the invoice precedes the tax obligation, you take the NBP (National Bank of Poland) rate from the last business day before the issue date (art. 31a ust. 2). The issue date is P_1 both online (where P_1 equals the sending day) and in offline24, unavailability and emergency modes, so you set the rate from P_1, not from the number assignment date.
+**Exchange rate.** When the invoice precedes the tax obligation, you take the NBP (National Bank of Poland) rate (or the ECB rate, if you chose that method; art. 31a ust. 2 sentence 2) from the last business day before the issue date (art. 31a ust. 2). The issue date is P_1 both online (where P_1 equals the sending day) and in offline24, unavailability and emergency modes, so you set the rate from P_1, not from the number assignment date.
 
 ## Invoice dates at a glance
 
@@ -157,6 +165,6 @@ KSeF switches an invoice sent in online mode to offline by itself when the calen
   label="KSeF API documentation: automatic offline mode detection"
 />
 
-Three things remain unsettled. No source says which time zone defines the calendar day when P_1 is compared with `invoicingDate`. It isn't clear whether the day a batch session was opened is the "day of sending" within the meaning of art. 106na ust. 1. The FA(3) brochure describes offline mode when the sending date equals P_1 plus one day, while the API documentation applies it to any earlier day.
+Two things remain unsettled. No source says which time zone defines the calendar day when P_1 is compared with `invoicingDate`. It isn't clear whether the day a batch session was opened is the "day of sending" within the meaning of art. 106na ust. 1.
 
 If you have an invoice you can't send right now, start with our guide to [KSeF outages and offline modes](/en/guides/ksef-outage-offline-mode).
