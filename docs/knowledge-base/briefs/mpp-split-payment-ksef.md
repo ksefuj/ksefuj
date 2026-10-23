@@ -80,17 +80,23 @@ existing KB briefs whose own fetch dates are given per fact.
 
 ### B. Kiedy MPP jest obowiązkowy, a kiedy dobrowolny (Tier 1, z KB)
 
-8. **Dobrowolny co do zasady:** art. 108a ust. 1 („mogą zastosować"). — Dz.U. 2026 poz. 1263, PDF s.
-   136, wg briefu `numer-ksef-w-przelewie.md` fakt 4 (pobrany 2026-10-07). Confidence: HIGH. Fetched
-   live: no (from KB). K: yes, A: yes
-9. **Obowiązkowy** m.in. przy towarach/usługach z załącznika nr 15, gdy faktura przekracza 15 000 zł
-   (art. 108a ust. 1a). — jw., fakt 4; w KB brak cytatu verbatim ust. 1a i brak pełnego katalogu
-   przesłanek („m.in."). Confidence: HIGH (istota), MEDIUM (pełny zakres warunków). Fetched live:
-   no. K: yes, A: yes
-10. **Sankcja z art. 108a ust. 7:** dotyczy naruszenia ust. 1a (w KB opisana jako 30% VAT), nie
-    numeru KSeF. — brief `numer-ksef-w-przelewie.md` fakt 12 (tekst jednolity Dz.U. 2026 poz. 1263).
-    KB nie zawiera verbatim ust. 7 ani jego adresata (nabywca/sprzedawca) i wyjątków. Confidence:
-    MEDIUM (brak cytatu). Fetched live: no. K: yes, A: partly
+8. **Dobrowolny co do zasady:** art. 108a ust. 1: podatnicy, którzy otrzymali fakturę z VAT, „mogą
+   zastosować mechanizm podzielonej płatności" przy jej opłacaniu, niezależnie od wartości `P_18A`.
+   — Dz.U. 2026 poz. 1263 (fetched 2026-10-23). Confidence: HIGH. Fetched live: yes. K: yes, A: yes
+9. **Obowiązkowy w jednym przypadku (ust. 1a):** „Przy dokonywaniu płatności za nabyte towary lub
+   usługi wymienione w załączniku nr 15 do ustawy, udokumentowane fakturą, w której kwota należności
+   ogółem przekracza kwotę 15 000 zł lub jej równowartość wyrażoną w walucie obcej, podatnicy są
+   obowiązani zastosować mechanizm podzielonej płatności." — Dz.U. 2026 poz. 1263 (fetched
+   2026-10-23). Ust. 1b: sprzedawca jest obowiązany przyjąć zapłatę w MPP za fakturę objętą art.
+   106e ust. 1 pkt 18a. Ust. 1c: ust. 1–1b stosuje się „odpowiednio" do zaliczek (art. 19a ust. 8);
+   w komunikacie przelewu zamiast numeru faktury wpisuje się wyraz „zaliczka". Art. 106e ust. 1 pkt
+   18a ma brzmienie zgodne z adnotacją XSD `P_18A`, łącznie z „na rzecz podatnika". Confidence:
+   HIGH. Fetched live: yes. K: yes, A: yes
+10. **Sankcja z art. 108a ust. 7:** dotyczy naruszenia ust. 1a (dodatkowe zobowiązanie 30% kwoty
+    podatku; nie dotyczy osób fizycznych odpowiadających za ten sam czyn jako przestępstwo skarbowe
+    lub wykroczenie skarbowe), nie numeru KSeF. Ust. 8: sankcji nie stosuje się, jeżeli dostawca
+    rozliczył pełną kwotę podatku. — Dz.U. 2026 poz. 1263 (fetched 2026-10-23). Confidence: HIGH.
+    Fetched live: yes. K: yes, A: partly
 
 ### C. Komunikat przelewu MPP i numer KSeF (od 2027)
 
@@ -128,11 +134,9 @@ existing KB briefs whose own fetch dates are given per fact.
   postach i broszurze: brak tekstu art. 106e ust. 1 pkt 18a i brak jakiejkolwiek sankcji dla
   sprzedawcy. Adnotacja XSD `P_18A` (fakt 1) brzmi jak odwzorowanie tego przepisu, ale to wniosek.
   Not verified from an official source in this run. W poście nie podawać sankcji dla wystawcy.
-- **Dobrowolne MPP a `P_18A=1`:** XSD i broszura każą wpisać `1` tylko przy spełnieniu obu warunków
-  (> 15 000 zł i załącznik nr 15), „w przeciwnym przypadku" `2`. Czy sprzedawca może wpisać `1` na
-  fakturze poniżej progu, by zachęcić do MPP, oraz czy nabywca może zapłacić w MPP fakturę z
-  `P_18A=2` — źródła w repo nie mówią. (Dobrowolność po stronie płacącego wynika z art. 108a ust. 1,
-  fakt 8.)
+- **Dobrowolne MPP a `P_18A`:** rozstrzygnięte 2026-10-23: `P_18A` nie jest do wyboru (XSD i
+  broszura s. 55–56: „w przeciwnym przypadku – wartość „2""), a nabywca może zapłacić w MPP każdą
+  fakturę z VAT (art. 108a ust. 1).
 - **Faktura mieszana:** gdy tylko część wierszy jest z załącznika nr 15, czy próg 15 000 zł liczy
   się od całej kwoty należności ogółem: adnotacja XSD mówi o „kwota należności ogółem" faktury
   „obejmujących" takie towary; pełnego brzmienia art. 108a ust. 1a w KB nie ma. Nie rozstrzygać.
@@ -142,8 +146,6 @@ existing KB briefs whose own fetch dates are given per fact.
   zagranicznych"; w KB nie ma źródła tego zdania (do weryfikacji przez Judge'a).
 - **Korekta faktury z MPP:** jak ustawić `P_18A` na fakturze korygującej (np. gdy korekta przenosi
   kwotę przez próg): brak w źródłach w repo.
-- **Treść art. 108a ust. 7:** stawka 30%, adresat, wyjątki (np. korekta deklaracji) — w KB tylko
-  streszczenie bez cytatu (fakt 10).
 - **Rachunek VAT, biała lista, pełna lista pozycji załącznika nr 15:** brak w KB.
 - **Interpretacja indywidualna KIS 0114-KDIP1-1.4012.566.2026.1.MM z 22.09.2026: UNVERIFIED.** Znana
   tylko z infor.pl (wpis w `docs/content-backlog.md`, 2026-10-17); eureka.mf.gov.pl niedostępna (403
