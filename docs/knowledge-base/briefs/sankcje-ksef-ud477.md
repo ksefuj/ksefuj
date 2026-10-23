@@ -39,7 +39,14 @@ publication the binding text still says 1 January 2027.
    reason for the short deadline: „pilnego wprowadzenia zmian w zakresie odroczenia stosowania kar w
    KSeF, które aktualnie miały obowiązywać od 1 stycznia 2027 r." Stage on 2026-10-07: uzgodnienia /
    konsultacje publiczne / opiniowanie (all opened 2026-09-23). Tier 1 (draft, not binding)
-   Confidence: HIGH Ania-relevant: yes
+   Confidence: HIGH Ania-relevant: yes 5a. **UD477 in the Sejm (status checked 2026-10-23).**
+   2026-10-15: version sent to the Council of Ministers. 2026-10-20: the government referred the
+   bill to the Sejm (druk nr 3245). 2026-10-21: first reading and referral to Komisja Finansów
+   Publicznych. Not passed (uchwalony), not published. Text matches the 15.10 version on art. 106ni
+   (ust. 1–3 i 5–7 from 2028-01-01) and art. 3 (entry into force 2026-12-31); it does not change
+   art. 145m/145n. Sources: RCL project 12414954; Sejm API /sejm/term10/processes/3245. Prints
+   3249/3249-A are a different VAT bill. Tier 1 (bill, not binding) Confidence: HIGH Ania-relevant:
+   yes
 6. **Content of UD477 (draft text):**
    - art. 2 pkt 1: in art. 106ni ust. 1 pkt 2 the words „lub 3" are struck;
    - art. 2 pkt 2: new art. 23 pkt 5 of the 2023 amending act: art. 1 pkt 24 „w zakresie art. 106ni

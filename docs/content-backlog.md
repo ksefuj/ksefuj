@@ -23,7 +23,7 @@ Planned 2026-10-20 from Search Console (2026-09-19 to 2026-10-16) and a scan of 
 sites published in the last month. Trade-press items are topic signals only: every fact still needs
 a Tier 1–3 source.
 
-- [ ] **UPDATE** `ksef-checklist-przygotowanie` — refresh as „KSeF: checklista na 1 stycznia 2027” ·
+- [x] **UPDATE** `ksef-checklist-przygotowanie` — refresh as „KSeF: checklista na 1 stycznia 2027” ·
       date-driven · A, K · 2026-12-01 · brief `checklist-przygotowanie.md` (its penalty facts are
       stale), `sankcje-ksef-ud477.md` · End of art. 145m limit and 145n cash-register invoices,
       tokens, penalties deferred (MF 2026-09-16, UD477 not enacted). Link the existing posts on
