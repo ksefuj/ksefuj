@@ -299,12 +299,13 @@ facts joined, no single source sentence states it (do not attribute to MF).
 2. **Sesja wsadowa otwarta przed północą, paczka po północy:** API keeps the invoice online with the
    session-opening day; whether that day is „data przesłania" under art. 106na ust. 1 is not
    addressed by any Tier 1/2 legal text in KB.
-3. **Information sheet vs API on auto-offline:** §9.2 API NOTE (EN): "The 'offline24' mode is
-   recognized as 'offline' if sending date = P_1 + 1 day." API docs: any earlier calendar day →
-   offline. What happens (legally) when P_1 is 2+ days before sending (late offline24, art. 106nda
-   ust. 2 breached): KSeF does not reject (fakt 2), sanction art. 106ni ust. 1 pkt 3 from 1.01.2027
-   under current law, deferral to 1.01.2028 only in draft UD477. Do not describe consequences beyond
-   that.
+3. **Late offline24 (art. 106nda ust. 16 vs ust. 2):** RESOLVED, no sheet/API conflict. The broszura
+   "P_1 + 1 day" sentence only concerns the mode label shown in link-based verification; its own
+   example (P_1 = 1.02, sent 3.02) applies ust. 16, matching the API (any earlier calendar day →
+   offline). Still open: whether the ust. 2 deadline applies to an invoice converted under ust. 16
+   (ust. 16 does not list ust. 2 among provisions applied "odpowiednio"). KSeF does not reject (fakt
+   2); sanction art. 106ni ust. 1 pkt 3 from 1.01.2027 under current law, deferral to 1.01.2028 only
+   in government bill UD477 (not yet passed). Do not describe consequences beyond that.
 4. **Data otrzymania w trybie awaryjnym (106nf) i awarii całkowitej (106ng):** SETTLED for 106nf by
    art. 106nf ust. 10 (Dz.U. 2026 poz. 1263, verified 2026-10-23, see fakt 4); 106ng has no separate
    rule.
