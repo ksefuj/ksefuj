@@ -2,7 +2,7 @@
 title: "KSeF checklist for 1 January 2027"
 description: "From 1 January 2027 the 10,000 PLN limit and cash-register invoices end: B2B invoices go through KSeF at any amount. Penalties: 2027 by law, MF plans a delay."
 date: 2026-03-31
-updated: 2026-10-21
+updated: 2026-10-23
 section: blog
 locale: en
 slug: "ksef-preparation-checklist"
@@ -31,13 +31,17 @@ sources:
     url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
   - label: "FAQ MF, most common questions"
     url: "https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
+  - label: "MF: Below PLN 10,000"
+    url: "https://ksef.podatki.gov.pl/ponizej-10-000-zl/"
+  - label: "Sejm: print no. 3245, government bill (UD477)"
+    url: "https://api.sejm.gov.pl/sejm/term10/prints/3245/3245.pdf"
 ---
 
 On 1 January 2027 two exceptions in the Polish VAT Act end: the 10,000 PLN gross monthly limit (Art. 145m) and invoices from cash registers (Art. 145n), so invoices to other businesses go through KSeF (Krajowy System e-Faktur, Poland's National e-Invoicing System) whatever the amount. Under the Act as it stands, the Art. 106ni penalties also start on 1 January 2027, but the Ministry of Finance (MF) has announced a deferral to the end of 2027, and draft UD477, which makes that change, is not law yet.
 
 The KSeF obligation itself already applies to you: since 1 April 2026 (since 1 February 2026 if your 2024 sales exceeded 200 million PLN), including if you are VAT-exempt. Invoices to consumers still don't have to go into KSeF (Art. 106ga(2)(4)), and the same goes for the other permanent exclusions in Art. 106ga(2).
 
-_Legal position as of 21 October 2026._
+_Legal position as of 23 October 2026._
 
 ## What changes on 1 January 2027
 
@@ -67,7 +71,7 @@ You can issue an invoice to a business for a receipt only if the receipt shows t
 
 The KSeF regulation allows tokens until 31 December 2026 (§13(1)(1), Journal of Laws 2025, item 1815). In the KSeF 2.0 Handbook, MF wrote that it has decided to keep this authentication method indefinitely and that the regulation will be amended accordingly. The amendment has not been published yet.
 
-In September 2026 the KSeF API team said that tokens issued by 31 December 2026 will keep working, but they expire on 30 November 2027, and a new version of the token-generation service arrives on 1 January 2027. This is technical guidance, not law. If your software sends invoices to KSeF with a token, ask your provider whether it will move to the new tokens. More in our article on [KSeF tokens after 2026](/en/blog/ksef-tokens-after-2026).
+In September 2026 the KSeF API team said that tokens issued by 31 December 2026 will keep working, but they expire on 30 November 2027, and from 1 January 2027 tokens are to be issued on new terms: MF will add a new version of the endpoint, and the existing one is to keep working in compatibility mode. This is technical guidance, not law. If your software sends invoices to KSeF with a token, ask your provider whether it will move to the new tokens. More in our article on [KSeF tokens after 2026](/en/blog/ksef-tokens-after-2026).
 
 <Source
   href="https://github.com/CIRFMF/ksef-api/issues/834"
@@ -78,7 +82,7 @@ In September 2026 the KSeF API team said that tokens issued by 31 December 2026 
 
 Under the Act in force, Art. 106ni(1)–(3) and (5)–(7) take effect on 1 January 2027. The penalty is up to 100% of the tax on the invoice or, when the invoice shows no tax, up to 18.7% of the total amount due. It covers, among other things, an invoice issued outside KSeF when it should have been in the system, and late submission of invoices issued in offline or emergency mode.
 
-On 16 September 2026 MF announced that it would extend the penalty deferral to the end of 2027. In the same announcement it stressed that deferring penalties does not lift the obligation to use KSeF, and that the deferral requires a change to the Act. Draft UD477 contains that change: the version of 15 October 2026 has gone to the Council of Ministers and moves the penalties to 1 January 2028. **The draft has not been adopted or published.** If it is not published in the Journal of Laws (Dziennik Ustaw) before 31 December 2026, penalties apply from 1 January 2027. We track the current state in our article on [KSeF penalties in 2027 and 2028](/en/blog/ksef-penalties-2027-2028).
+On 16 September 2026 MF announced that it would extend the penalty deferral to the end of 2027. In the same announcement it stressed that deferring penalties does not lift the obligation to use KSeF, and that the deferral requires a change to the Act. Government bill UD477 contains that change: it went to the Sejm on 20 October 2026 as print no. 3245, had its first reading on 21 October and was referred to the Public Finance Committee. It moves the penalties to 1 January 2028. **The Sejm has not passed it yet, and it is not published.** If it is not published in the Journal of Laws (Dziennik Ustaw) before 1 January 2027, penalties apply from 1 January 2027. We track the current state in our article on [KSeF penalties in 2027 and 2028](/en/blog/ksef-penalties-2027-2028).
 
 <Source
   href="https://www.gov.pl/web/finanse/przedluzenie-odroczenia-kar-za-bledy-w-stosowaniu-ksef-do-konca-2027-r"
@@ -87,6 +91,10 @@ On 16 September 2026 MF announced that it would extend the penalty deferral to t
 <Source
   href="https://legislacja.rcl.gov.pl/projekt/12414954"
   label="Draft UD477, Government Legislative Process"
+/>
+<Source
+  href="https://api.sejm.gov.pl/sejm/term10/prints/3245/3245.pdf"
+  label="Sejm, print no. 3245"
 />
 
 ### 5. Do you pay invoices by bank transfer as an active VAT taxpayer?
@@ -108,9 +116,9 @@ MF's position on buyers deducting VAT from invoices issued outside KSeF covers t
 
 **Login.** Check that you can log in to [Aplikacja Podatnika KSeF](https://ap.ksef.mf.gov.pl/), for example with Profil Zaufany (Poland's free trusted profile).
 
-**Permissions for your accountant.** Without them, your accounting firm cannot see your invoices in KSeF. You grant them electronically in Aplikacja Podatnika. The ZAW-FA form at the tax office is needed only by a business that is not a natural person and has no qualified seal, or when the signature or seal carries neither NIP nor PESEL (§4–5 of the regulation). Step by step: [KSeF access for your accountant](/en/guides/ksef-accountant-access).
+**Permissions for your accountant.** Without them, your accounting firm cannot see your invoices in KSeF. You grant them electronically in Aplikacja Podatnika. The ZAW-FA form at the tax office is needed only by a business that is not a natural person and has no qualified seal, or when your own signature or seal carries neither NIP nor PESEL (a seal carries only NIP). An accountant with their own signature can be registered electronically in Aplikacja Podatnika or through the API (§5 of the regulation, Journal of Laws 2025, item 1815; KSeF 2.0 Handbook, Part I, pp. 32–34). Step by step: [KSeF access for your accountant](/en/guides/ksef-accountant-access).
 
-**Outages and no internet.** The rules for offline and emergency mode do not change in 2027. What changes is that late submission of such invoices is subject to the Art. 106ni penalty. For offline invoices you need a type 2 KSeF certificate, and Aplikacja Podatnika issues online invoices only. The deadlines for each mode are in our guide to [KSeF outages and offline mode](/en/guides/ksef-outage-offline-mode).
+**Outages and no internet.** The rules for offline and emergency mode do not change in 2027. Under the Act in force, from 2027 late submission of such invoices is subject to the Art. 106ni penalty. For offline invoices you need a type 2 KSeF certificate, and Aplikacja Podatnika issues online invoices only. The deadlines for each mode are in our guide to [KSeF outages and offline mode](/en/guides/ksef-outage-offline-mode).
 
 <Source
   href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
