@@ -12,8 +12,8 @@ brutto miesięcznie) i art. 145n (faktury z kas i paragony z NIP), więc od 1 st
 faktura dla innego podatnika idzie przez KSeF bez względu na kwotę, a stałe pozostają tylko wyjątki
 z art. 106ga ust. 2 i rozporządzenia Dz.U. 2025 poz. 1740 (Dz.U. 2026 poz. 1263; Podręcznik KSeF 2.0
 cz. I, s. 14). Kary z art. 106ni wchodzą według obowiązującej ustawy 1 stycznia 2027 r., MF
-zapowiedziało 16.09.2026 odroczenie do końca 2027 r., a projekt UD477 (wersja z 15.10.2026, przed
-Radą Ministrów) przesuwa je na 1 stycznia 2028 r., ale nie jest prawem.
+zapowiedziało 16.09.2026 odroczenie do końca 2027 r., a rządowy projekt UD477 (druk sejmowy nr 3245,
+pierwsze czytanie 21.10.2026) przesuwa je na 1 stycznia 2028 r., ale nie jest prawem.
 
 **What changes the answer:**
 
@@ -108,11 +108,12 @@ Radą Ministrów) przesuwa je na 1 stycznia 2028 r., ale nie jest prawem.
     https://www.gov.pl/web/finanse/przedluzenie-odroczenia-kar-za-bledy-w-stosowaniu-ksef-do-konca-2027-r
     Tier 3, zapowiedź. HIGH. KAS ma w 2027 „reagować" i badać rzetelność rozliczeń (ten sam
     komunikat).
-17. **UD477 (https://legislacja.rcl.gov.pl/projekt/12414954), stan na 2026-10-16: wersja z
-    15.10.2026 skierowana do Rady Ministrów (RM-0610-181-26), brak rozstrzygnięcia RM, brak druku
-    sejmowego, brak Dz.U.; art. 106ni ust. 1–3 i 5–7 od 1.01.2028; art. 3: wejście w życie
-    31.12.2026.** Draft. HIGH (as of 2026-10-16). KB: `faktura-poza-ksef-odliczenie-vat.md` fakt 22;
-    `kary-ksef-2027-2028.md` Fact B. Nowszego stanu brak w KB: UNVERIFIED po 2026-10-16.
+17. **UD477 (https://legislacja.rcl.gov.pl/projekt/12414954), stan na 2026-10-23: rząd skierował
+    projekt do Sejmu 20.10.2026 jako druk nr 3245; pierwsze czytanie 21.10.2026, skierowany do
+    Komisji Finansów Publicznych; nieuchwalony, nieogłoszony w Dz.U.; art. 106ni ust. 1–3 i 5–7 od
+    1.01.2028; art. 3: wejście w życie 31.12.2026.** Government bill. HIGH (as of 2026-10-23; RCL +
+    Sejm API /sejm/term10/processes/3245). Druki 3249/3249-A to inny projekt VAT, nie cytować. KB:
+    `faktura-poza-ksef-odliczenie-vat.md` fakt 22; `kary-ksef-2027-2028.md` Fact B.
 18. **UD477 nie zmienia art. 145m ani 145n.** Treść projektu w KB: art. 1 (106nd ust. 2 pkt 8, 106nh
     ust. 4, 145e do 30.06.2030), art. 2 (106ni ust. 1 pkt 2 bez „lub 3"; art. 23 pkt 5 ustawy z
     16.06.2023: 1.01.2028), art. 3. Uzasadnienie wprost: od 1.01.2027 nie będzie faktur z kas ani

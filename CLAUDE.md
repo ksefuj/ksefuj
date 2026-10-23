@@ -19,9 +19,10 @@ art. 106ga ust. 2 cases (e.g. consumer buyers, art. 113a EU SME scheme) and the 
 invoices if monthly sales documented by them are at most 10 000 zł (incl. tax); cash-register
 invoices (art. 145n) are also allowed until then. The financial penalty of art. 106ni (up to 100% of
 tax, 18.7% of the total when no tax is shown) applies from January 1, 2027 in the law in force, but
-MF announced on 2026-09-16 a deferral to the end of 2027; draft UD477 (not yet enacted) moves it to
-January 1, 2028. Details: `docs/knowledge-base/briefs/sankcje-ksef-ud477.md`. The XML schema is
-published by the Ministry of Finance.
+MF announced on 2026-09-16 a deferral to the end of 2027; government bill UD477 (Sejm druk 3245,
+first reading 2026-10-21, not yet passed) moves it to January 1, 2028. Details:
+`docs/knowledge-base/briefs/sankcje-ksef-ud477.md`. The XML schema is published by the Ministry of
+Finance.
 
 ## Architecture
 
