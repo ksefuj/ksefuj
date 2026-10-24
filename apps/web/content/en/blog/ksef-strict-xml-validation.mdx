@@ -1,7 +1,8 @@
 ---
-title: "Strict XML validation in KSeF from 19 Oct 2026"
-description: "From 19 October 2026 KSeF rejects invoices with XML processing instructions or discouraged Unicode characters. Until then it warns via X-System-Warning."
+title: "Strict KSeF XML checks: 19 Oct date unconfirmed"
+description: "KSeF was to reject XML with processing instructions or discouraged characters from 19.10.2026. The API docs don't confirm the date. Remove them from your files."
 date: 2026-10-07
+updated: 2026-10-24
 section: blog
 locale: en
 slug: "ksef-strict-xml-validation"
@@ -10,7 +11,7 @@ tags: ["KSeF", "FA(3)", "Validation"]
 sources:
   - label: "MF / CIRF: Weryfikacja faktury (invoice verification), 09.04.2026, section on XML verification"
     url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md"
-  - label: "CIRFMF/ksef-api: API changelog (versions 2.3.0, 2.4.0, 2.6.0)"
+  - label: "CIRFMF/ksef-api: API changelog (versions 2.3.0, 2.4.0, 2.6.0, 2.9.0)"
     url: "https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md"
   - label: "CIRFMF/ksef-api: issue #718 (comment of 24.06.2026 on the 19.10.2026 date)"
     url: "https://github.com/CIRFMF/ksef-api/issues/718"
@@ -28,17 +29,17 @@ translations:
   en: "ksef-strict-xml-validation"
 ---
 
-From 19 October 2026, production KSeF (Krajowy System e-Faktur, Poland's national e-invoicing system) will start rejecting invoices whose XML contains processing instructions (for example `<?xml-stylesheet ...?>`) or discouraged Unicode characters. If you maintain an API integration, remove them from the files you generate and log the `X-System-Warning` header from KSeF responses: until that date (according to the KSeF API team) the system only warns.
+According to the KSeF API team, production KSeF (Krajowy System e-Faktur, Poland's national e-invoicing system) was to start rejecting invoices from 19 October 2026 if their XML contains processing instructions (for example `<?xml-stylesheet ...?>`) or discouraged Unicode characters. As of 24 October the API documentation has neither confirmed this nor given a new date, so treat such files as rejected: if you maintain an API integration, remove them from the files you generate and log the `X-System-Warning` header from KSeF responses.
 
-Status as of 7 October 2026.
+Status as of 24 October 2026.
 
 ## Where the rule comes from and when it applies
 
-This is not a statute. It is a technical requirement from the KSeF API documentation maintained by the Ministry of Finance's IT centre (CIRF). It is described on the "Weryfikacja faktury" (invoice verification) page dated 9 April 2026. API version 2.4.0 (deployed to TEST on 10 April, to DEMO on 13 April and to production on 16 April 2026) introduced the stricter check, which production was to enforce from 16 July 2026. On 24 June 2026 a repository maintainer wrote that the date had moved to 19 October 2026. The changelog still says 16 July, so that comment is the only source of the new date.
+This is not a statute. It is a technical requirement from the KSeF API documentation maintained by the Ministry of Finance's IT centre (CIRF). It is described on the "Weryfikacja faktury" (invoice verification) page dated 9 April 2026. API version 2.4.0 (deployed to TEST on 10 April, to DEMO on 13 April and to production on 16 April 2026) introduced the stricter check, which production was to enforce from 16 July 2026. On 24 June 2026 a repository maintainer wrote that the date had moved to 19 October 2026. The changelog still says 16 July, so that comment is the only source of the new date. The 19 October date has passed, and as of 24 October neither the changelog (the latest version, 2.9.0, reached production on 15 October) nor the "Weryfikacja faktury" page has confirmed that production now rejects such files.
 
 <Source href="https://github.com/CIRFMF/ksef-api/issues/718" label="CIRFMF/ksef-api, issue #718" />
 
-According to the maintainer, the TEST and DEMO environments have rejected such files since 2.4.0 was deployed. We found none of these rules in the KSeF 2.0 Handbook, the FA(3) information sheet, the MF FAQ or the technical notices of recent months on ksef.podatki.gov.pl.
+According to the maintainer, the TEST and DEMO environments have rejected such files since 2.4.0 was deployed (April 2026). We found none of these rules in the KSeF 2.0 Handbook, the FA(3) information sheet, the MF FAQ or the technical notices of recent months on ksef.podatki.gov.pl.
 
 ## What exactly will be rejected
 
@@ -65,7 +66,7 @@ The 19 October date applies to the 2.4.0 tightening, that is processing instruct
 
 ## How to find out whether your files are affected
 
-Until 19 October, production does not reject such files but may return an `X-System-Warning` HTTP response header. It does not change the outcome of the operation and does not signal an error. Version 2.6.0 added it, and the OpenAPI specification declares it for, among others, sending an invoice and reading an invoice status in a session. The format is `[code]: message | [code]: message`, and the value contains no Polish diacritics. An example from the repository maintainer:
+According to the repository maintainer, before 19 October production did not reject such files and could only return an `X-System-Warning` HTTP response header (the changelog still gives 16 July as the date). The documentation does not say whether production still only warns after that date. The header itself does not change the outcome of the operation and does not signal an error. Version 2.6.0 added it, and the OpenAPI specification declares it for, among others, sending an invoice and reading an invoice status in a session. The format is `[code]: message | [code]: message`, and the value contains no Polish diacritics. An example from the repository maintainer:
 
 > Faktura o numerze KSeF 2026041400-20260514-5A9845400000-55 zawiera niedozwolone znaki Unicode, ktore po 16.07.2026 beda odrzucane.
 
@@ -118,7 +119,7 @@ An `xml-stylesheet` instruction added by an integrator is described in issue #71
 
 Software vendors and integrators, because their code generates the XML. If you issue invoices in invoicing software you cannot fix this yourself: ask the vendor whether the program adds visualisation instructions to the file and whether it re-tested sending on the TEST environment after version 2.4.0. You can also open an earlier invoice (XML downloaded from KSeF) in a text editor and search for `<?xml-stylesheet`.
 
-The repository maintainer also recommends filling in the optional `SystemInfo` field in the invoice header (`Naglowek/SystemInfo`). According to the 24 June 2026 comment, if the problem is still visible before the deadline, there is a good chance an MF engineer will contact the vendors identified by that field directly.
+The repository maintainer also recommends filling in the optional `SystemInfo` field in the invoice header (`Naglowek/SystemInfo`). In the 24 June 2026 comment the maintainer wrote that if the problem was still visible before the deadline, there was a good chance an MF engineer would contact the vendors identified by that field directly.
 
 ## What happens to a rejected invoice
 

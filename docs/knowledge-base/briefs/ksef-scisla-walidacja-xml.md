@@ -1,20 +1,62 @@
 # Research Brief: Ścisła walidacja XML w KSeF od 19.10.2026
 
 **Requested by:** human (content backlog item `ksef-scisla-walidacja-xml-19-10`) **Date:**
-2026-10-07 **Freshness:** 2026-10-07 **For content:** „KSeF od 19.10.2026 odrzuci XML z
-instrukcjami" (PL), „Strict XML validation in KSeF from 19 Oct 2026" (EN)
+2026-10-07 (updated 2026-10-24) **Freshness:** 2026-10-24 (stan repo CIRFMF/ksef-api: HEAD
+`ce3670e`, 2026-10-14; issues i strony MF nieodczytane na żywo, zob. „Update 2026-10-24") **For
+content:** „KSeF od 19.10.2026 odrzuci XML z instrukcjami" (PL), „Strict XML validation in KSeF from
+19 Oct 2026" (EN); aktualizacja opublikowanego posta
+`apps/web/content/pl/blog/ksef-scisla-walidacja-xml.mdx`
 
-**Target query:** „KSeF odrzucona faktura XML 19 października", „KSeF X-System-Warning"
+## Update 2026-10-24
 
-**Answer in two sentences:** Od 19.10.2026 (środowisko produkcyjne) KSeF odrzuca fakturę, której XML
-zawiera instrukcje przetwarzania (np. `<?xml-stylesheet ...?>`) albo niezalecane znaki Unicode ze
-specyfikacji W3C; do tego dnia produkcja tylko ostrzega nagłówkiem `X-System-Warning`, a TEST i DEMO
-odrzucają już teraz (CIRFMF/ksef-api: `faktury/weryfikacja-faktury.md` z 09.04.2026, issue #718,
-issue #807). Poprawkę robi producent oprogramowania: usunąć instrukcje z generowanego XML, wyczyścić
-pola tekstowe ze znaków z listy i zapisywać plik w UTF-8 bez BOM.
+Cel aktualizacji: backlog „rejection was announced for PROD from 2026-10-19; once CIRFMF confirms it
+is live, switch the post from future to present tense". Stan na 2026-10-24:
+
+- **Zapowiedziana data minęła.** Jedynym źródłem daty 19.10.2026 pozostaje komentarz konta kw-cirf
+  (COLLABORATOR) z 2026-06-24 w issue #718 (Tier 3; Key Fact 3). Dziś jest 5 dni po tej dacie.
+- **Brak potwierdzenia w dokumentacji (Tier 2).** Sprawdzone w płytkim klonie CIRFMF/ksef-api (HEAD
+  `ce3670e`, commit 2026-10-14 „update version"):
+  - `api-changelog.md`: najnowsza wersja 2.9.0 (TEST 13.10.2026, DEMO 13.10.2026, PROD 15.10.2026);
+    jej wpis dotyczy uprawnień (`OwnerPermissionScope`) i dokumentacji kodu błędu `21001`, nie
+    walidacji XML. Wpis 2.4.0 nadal brzmi: „Zaostrzenie walidacji XML zacznie obowiązywać od
+    **16.07.2026**." Żaden wpis (2.8.0, 2.8.1, 2.9.0) nie ogłasza włączenia odrzucania na PROD ani
+    nowej daty.
+  - `faktury/weryfikacja-faktury.md`: ostatnia zmiana 2026-04-21 (`f1f68ba`, „docs: minor wording
+    and formatting updates"); bez daty wejścia w życie na PROD.
+  - Ciąg „19.10.2026" / „2026-10-19" nie występuje nigdzie w repozytorium (jedyne trafienie „19:10"
+    to znacznik czasu generowania w `faktury/schemy/PEF/bazowe/UBL-xmldsig-core-schema-2.1.xsd`, bez
+    związku).
+- **Czego nie udało się odczytać na żywo (2026-10-24, z tego środowiska: HTTP 403 / proxy CONNECT
+  403):** https://github.com/CIRFMF/ksef-api/issues/718,
+  https://github.com/CIRFMF/ksef-api/issues/807 (oraz api.github.com), komunikaty techniczne na
+  https://ksef.podatki.gov.pl/, gov.pl, Sejm, RCL. Nie wiemy więc, czy w issues lub komunikatach MF
+  pojawiło się potwierdzenie, odwołanie albo nowa data.
+- **Wniosek dla copywritera:** żadne dostępne nam źródło oficjalne nie potwierdza ani nie zaprzecza,
+  że PROD odrzuca takie pliki od 19.10.2026. Warunek z backlogu („once CIRFMF confirms it is live")
+  **nie jest spełniony**. Nie przechodzić na czas teraźniejszy w zdaniu „PROD odrzuca"; można
+  przejść na czas przeszły dla zapowiedzi („miał zacząć odrzucać od 19.10.2026") i podać stan
+  dokumentacji z datą sprawdzenia.
+- TEST i DEMO: odrzucanie od wdrożenia 2.4.0 (TEST 10.04.2026, DEMO 13.04.2026) wg changelogu i
+  issue #807 (Key Facts 2 i 4). Nie testowaliśmy TEST na żywo 2026-10-24.
+
+**Target query:** „KSeF odrzucona faktura XML 19 października", „KSeF X-System-Warning", „KSeF
+odrzuca xml-stylesheet"
+
+**Answer in two sentences (stan 2026-10-24):** Według zespołu API KSeF (komentarz w issue #718 z
+24.06.2026) produkcyjny KSeF miał od 19.10.2026 odrzucać faktury, których XML zawiera instrukcje
+przetwarzania (np. `<?xml-stylesheet ...?>`) albo niezalecane znaki Unicode ze specyfikacji W3C, a
+dokumentacja CIRFMF/ksef-api (changelog do wersji 2.9.0, `faktury/weryfikacja-faktury.md`) do
+24.10.2026 tego nie potwierdziła ani nie podała nowej daty. Traktuj takie pliki jako odrzucane:
+producent oprogramowania powinien usunąć instrukcje z XML, wyczyścić pola tekstowe ze znaków z listy
+i zapisywać plik w UTF-8 bez BOM, a sprawdzić to można na środowisku TEST, które takie pliki odrzuca
+od 10.04.2026.
 
 **What changes the answer:**
 
+- **Potwierdzenie lub zmiana daty przez CIRF/MF** (wpis w `api-changelog.md`, zmiana
+  `faktury/weryfikacja-faktury.md`, komentarz w issue #718/#807 albo komunikat techniczny na
+  ksef.podatki.gov.pl): dopiero wtedy przejść na „PROD odrzuca" (czas teraźniejszy) albo podać nową
+  datę. Stan 2026-10-24: brak takiego wpisu w klonie repo; issues i komunikaty nieodczytane.
 - Data 19.10.2026 dotyczy zaostrzenia z wersji 2.4.0 (instrukcje przetwarzania, niezalecane znaki).
   Regułę o kodowaniu w prologu changelog przypisuje wersji 2.3.0, bez osobnej daty. Dla BOM nie
   znaleziono osobnej daty. Nie rozstrzygamy, od kiedy dokładnie PROD egzekwuje te dwa punkty.
@@ -111,7 +153,8 @@ pola tekstowe ze znaków z listy i zapisywać plik w UTF-8 bez BOM.
   nie mówi.
 - Czy 19.10.2026 obejmuje także BOM i kodowanie w prologu: patrz „What changes the answer".
 - Czy data 19.10.2026 zostanie jeszcze zmieniona: changelog nadal podaje 16.07.2026; jedyne źródło
-  daty to komentarz w issue #718.
+  daty to komentarz w issue #718. Stan 2026-10-24: data minęła, changelog (do 2.9.0) i
+  `weryfikacja-faktury.md` nadal bez potwierdzenia; issue #718 nieodczytane ponownie (403).
 - Nie znaleziono wzmianki o tych regułach w: Podręcznik KSeF 2.0 cz. I-IV (wydania 06.08.2026),
   broszura FA(3), FAQ KSeF 2.0, komunikaty techniczne na ksef.podatki.gov.pl (strona 1, stan
   2026-10-07). Podręcznik cz. II (pkt 1.6.1) wymienia przesłanki odrzucenia bez tych reguł.
