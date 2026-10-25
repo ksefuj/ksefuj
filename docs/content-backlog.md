@@ -40,7 +40,7 @@ a Tier 1–3 source.
       payment KSeF” · K, A · Broszura FA(3) `P_18A`, KIS interpretation
       0114-KDIP1-1.4012.566.2026.1.MM of 22.09.2026 (UNVERIFIED, via infor.pl 2026-10-17) · No
       coverage on our side; strong validator fit (Adnotacje rules).
-- [ ] **UPDATE** `tokeny-ksef-po-2026` — check the token decision for new details before 31.12:
+- [x] **UPDATE** `tokeny-ksef-po-2026` — check the token decision for new details before 31.12:
       validity 1–365 days and renewal only with the owner's consent are reported by infor.pl
       (2026-10-07, citing interpelacja 19230) but UNVERIFIED; still no legal act · A, M · 2026-12-01
       · brief `rozporzadzenie-ksef-i-tokeny.md`
