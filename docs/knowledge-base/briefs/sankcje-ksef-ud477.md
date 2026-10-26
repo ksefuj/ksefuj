@@ -1,14 +1,14 @@
 # Research Brief: Kary za błędy w KSeF: art. 106ni i projekt UD477
 
-**Requested by:** weekly knowledge refresh **Date:** 2026-10-07 **Freshness:** 2026-10-07 **For
+**Requested by:** weekly knowledge refresh **Date:** 2026-10-07 **Freshness:** 2026-10-23 **For
 content:** update of posts that say "kary od 1 stycznia 2027" (see CONTENT IMPACT in the PR)
 
 **Target query:** "kary KSeF od kiedy", "sankcje KSeF 2027", "UD477"
 
 **Answer in two sentences:** In the law in force (consolidated VAT Act, Dz.U. 2026 poz. 1263) the
 financial penalty of art. 106ni applies from 1 January 2027. The Ministry of Finance announced on
-2026-09-16 that it will defer it to the end of 2027 and put the draft UD477 (22 September 2026, not
-yet enacted) into inter-ministerial consultation, which moves art. 106ni ust. 1–3 and 5–7 to 1
+2026-09-16 that it will defer it to the end of 2027; the government bill UD477 (Sejm print 3245,
+first reading 2026-10-21, not passed or published) moves art. 106ni ust. 1–3 and 5–7 to 1
 January 2028.
 
 **What changes the answer:** whether UD477 is adopted and published in Dziennik Ustaw before 31
@@ -40,6 +40,13 @@ publication the binding text still says 1 January 2027.
    KSeF, które aktualnie miały obowiązywać od 1 stycznia 2027 r." Stage on 2026-10-07: uzgodnienia /
    konsultacje publiczne / opiniowanie (all opened 2026-09-23). Tier 1 (draft, not binding)
    Confidence: HIGH Ania-relevant: yes
+   - **UD477 in the Sejm (status checked 2026-10-23).** 2026-10-15: version sent to the Council of
+     Ministers. 2026-10-20: the government referred the bill to the Sejm (druk nr 3245). 2026-10-21:
+     first reading and referral to Komisja Finansów Publicznych. Not passed (uchwalony), not
+     published. Text matches the 15.10 version on art. 106ni (ust. 1–3 i 5–7 from 2028-01-01) and
+     art. 3 (entry into force 2026-12-31); it does not change art. 145m/145n. Sources: RCL project
+     12414954; Sejm API /sejm/term10/processes/3245. Prints 3249/3249-A are a different VAT bill.
+     Tier 1 (bill, not binding) Confidence: HIGH Ania-relevant: yes
 6. **Content of UD477 (draft text):**
    - art. 2 pkt 1: in art. 106ni ust. 1 pkt 2 the words „lub 3" are struck;
    - art. 2 pkt 2: new art. 23 pkt 5 of the 2023 amending act: art. 1 pkt 24 „w zakresie art. 106ni
@@ -63,7 +70,7 @@ publication the binding text still says 1 January 2027.
 ## Unsettled Questions
 
 - Will UD477 be enacted and published by 31 December 2026? Do NOT state 2028 as law until it is
-  published; say "zapowiedziane przez MF, projekt w uzgodnieniach".
+  published; say "zapowiedziane przez MF, projekt w Sejmie (druk nr 3245), nieuchwalony".
 - Does the deferral to 2028 also move art. 106ni ust. 4 (penalty for not issuing offline24 invoice
   etc.)? The draft keeps ust. 4 outside the deferred list; read the consolidated text before
   claiming anything about ust. 4.
@@ -76,6 +83,7 @@ publication the binding text still says 1 January 2027.
 - MF, „Przedłużenie odroczenia kar za błędy w stosowaniu KSeF do końca 2027 r.", 2026-09-16:
   https://www.gov.pl/web/finanse/przedluzenie-odroczenia-kar-za-bledy-w-stosowaniu-ksef-do-konca-2027-r
 - RCL, projekt UD477: https://legislacja.rcl.gov.pl/projekt/12414954
+- Sejm, druk nr 3245: https://api.sejm.gov.pl/sejm/term10/prints/3245/3245.pdf
 - MF, Najczęstsze pytania (Q2, Q3): https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/
 
 ## Warning: Common Misconceptions

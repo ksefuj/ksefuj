@@ -34,7 +34,7 @@ a Tier 1–3 source.
       blanket rule. Replace it with the schema conditions (over 15 000 zł, Annex 15, supply „na
       rzecz podatnika”) and mark WDT/export/reverse-charge `2` as following from them (source:
       https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd)
-- [ ] **UPDATE** `ksef-checklist-przygotowanie` — refresh as „KSeF: checklista na 1 stycznia 2027” ·
+- [x] **UPDATE** `ksef-checklist-przygotowanie` — refresh as „KSeF: checklista na 1 stycznia 2027” ·
       date-driven · A, K · 2026-12-01 · brief `checklist-przygotowanie.md` (its penalty facts are
       stale), `sankcje-ksef-ud477.md` · End of art. 145m limit and 145n cash-register invoices,
       tokens, penalties deferred (MF 2026-09-16, UD477 not enacted). Link the existing posts on
