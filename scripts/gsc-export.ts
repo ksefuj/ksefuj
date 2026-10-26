@@ -541,6 +541,9 @@ interface InspectionResult {
   richResults?: { verdict?: string; issues?: unknown[] };
 }
 
+/** Compact per-day tuple: [date, clicks, impressions, position]. */
+type PageDailyTuple = [string, number, number, number];
+
 interface GscData {
   skipped: boolean;
   reason?: string;
@@ -554,6 +557,8 @@ interface GscData {
   pages?: PageRow[];
   queries?: QueryRow[];
   daily?: ({ date: string } & Metrics)[];
+  /** Per-page daily series over the daily period, keyed by path (origin and fragment stripped). */
+  pageDaily?: Record<string, PageDailyTuple[]>;
   countries?: ({ country: string } & Metrics)[];
   devices?: ({ device: string } & Metrics)[];
   totals?: { current?: Metrics; previous?: Metrics };
@@ -680,6 +685,44 @@ function sumMetrics(rows: Metrics[]): Metrics {
   return { clicks, impressions, ctr: impressions ? clicks / impressions : 0, position };
 }
 
+/**
+ * Collapse ["page","date"] rows into per-path daily tuples. Paths come from `pathOf` (host and
+ * fragment dropped), trailing slashes are trimmed, clicks/impressions are summed and position is
+ * impression-weighted.
+ */
+function aggregatePageDaily(rows: Json[]): Record<string, PageDailyTuple[]> {
+  const acc = new Map<string, Map<string, { c: number; i: number; pw: number }>>();
+  for (const r of rows) {
+    const [url, date] = r.keys as string[];
+    const path = pathOf(url).replace(/(.)\/$/, "$1");
+    const m = metrics(r);
+    let days = acc.get(path);
+    if (!days) {
+      days = new Map();
+      acc.set(path, days);
+    }
+    const cur = days.get(date) ?? { c: 0, i: 0, pw: 0 };
+    cur.c += m.clicks;
+    cur.i += m.impressions;
+    cur.pw += m.position * m.impressions;
+    days.set(date, cur);
+  }
+  const out: Record<string, PageDailyTuple[]> = {};
+  for (const path of [...acc.keys()].sort()) {
+    out[path] = [...(acc.get(path) as Map<string, { c: number; i: number; pw: number }>)]
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(
+        ([date, v]): PageDailyTuple => [
+          date,
+          v.c,
+          v.i,
+          Math.round((v.i ? v.pw / v.i : 0) * 10) / 10,
+        ],
+      );
+  }
+  return out;
+}
+
 async function runGsc(client: GscClient, urls: string[], today: Date): Promise<GscData> {
   const end = addDays(today, -3);
   const curStart = addDays(end, -27);
@@ -797,6 +840,13 @@ async function runGsc(client: GscClient, urls: string[], today: Date): Promise<G
   );
   data.daily = (daily ?? []).map((r) => ({ date: (r.keys as string[])[0], ...metrics(r) }));
 
+  const pageDailyRows = await section("pageDaily", () =>
+    client.searchAnalytics(periods.daily.start, periods.daily.end, ["page", "date"], 5000, 50000),
+  );
+  if (pageDailyRows) {
+    data.pageDaily = aggregatePageDaily(pageDailyRows);
+  }
+
   const countries = await section("countries", () =>
     client.searchAnalytics(periods.current.start, periods.current.end, ["country"], 1000),
   );
@@ -897,6 +947,112 @@ function queryCoveredByPage(query: string, page: HealthData["pages"][number] | u
   return hits / terms.length >= 0.5;
 }
 
+/** Markdown lines for the "Page trends" section (new pages and weekly movers). */
+function buildPageTrends(
+  pageDaily: Record<string, PageDailyTuple[]>,
+  windowStart: string,
+  windowEnd: string,
+): string[] {
+  const L: string[] = [];
+  const end = new Date(`${windowEnd}T00:00:00Z`);
+  const daysAgo = (n: number) => isoDate(addDays(end, -n));
+  const newFrom = daysAgo(29);
+  const thisWeekFrom = daysAgo(6);
+  const prevWeekFrom = daysAgo(13);
+  const prevWeekTo = daysAgo(7);
+  const sumRange = (days: PageDailyTuple[], from: string, to: string) => {
+    let clicks = 0;
+    let impressions = 0;
+    for (const [d, c, i] of days) {
+      if (d >= from && d <= to) {
+        clicks += c;
+        impressions += i;
+      }
+    }
+    return { clicks, impressions };
+  };
+
+  L.push("## Page trends", "");
+
+  L.push("### New pages (first impression in the last 30 days)", "");
+  L.push(`"First seen" is bounded by the 90-day window (${windowStart} to ${windowEnd}).`, "");
+  const fresh = Object.entries(pageDaily)
+    .map(([path, days]) => {
+      const first = days.find(([, , i]) => i > 0)?.[0];
+      if (!first || first < newFrom) {
+        return undefined;
+      }
+      const total = sumRange(days, "0000-00-00", "9999-99-99");
+      const weighted = days.reduce((s, [, , i, p]) => s + p * i, 0);
+      const week = sumRange(days, thisWeekFrom, windowEnd);
+      const sinceDays = Math.round(
+        (end.getTime() - new Date(`${first}T00:00:00Z`).getTime()) / 864e5,
+      );
+      return {
+        path,
+        first,
+        sinceDays,
+        ...total,
+        position: total.impressions ? weighted / total.impressions : 0,
+        week,
+      };
+    })
+    .filter((r): r is NonNullable<typeof r> => r !== undefined)
+    .sort((a, b) => b.clicks - a.clicks || b.impressions - a.impressions);
+  if (fresh.length === 0) {
+    L.push("No new pages in this window.", "");
+  } else {
+    L.push(
+      "| Page | First seen | Days ago | Clicks | Impr | Avg pos | Clicks 7d | Impr 7d |",
+      "| --- | --- | --- | --- | --- | --- | --- | --- |",
+      ...fresh.map(
+        (r) =>
+          `| ${r.path} | ${r.first} | ${r.sinceDays} | ${num(r.clicks)} | ${num(r.impressions)} | ${r.position.toFixed(1)} | ${num(r.week.clicks)} | ${num(r.week.impressions)} |`,
+      ),
+      "",
+    );
+  }
+
+  L.push("### Movers (last 7 days vs previous 7 days)", "");
+  L.push(
+    `Last 7 days: ${thisWeekFrom} to ${windowEnd}; previous 7 days: ${prevWeekFrom} to ${prevWeekTo}.`,
+    "",
+  );
+  const movers = Object.entries(pageDaily)
+    .map(([path, days]) => {
+      const cur = sumRange(days, thisWeekFrom, windowEnd);
+      const prev = sumRange(days, prevWeekFrom, prevWeekTo);
+      return { path, cur, prev, dClicks: cur.clicks - prev.clicks };
+    })
+    .filter(
+      (r) =>
+        r.cur.clicks > 0 ||
+        r.prev.clicks > 0 ||
+        Math.abs(r.cur.impressions - r.prev.impressions) >= 100,
+    )
+    .sort(
+      (a, b) =>
+        Math.abs(b.dClicks) - Math.abs(a.dClicks) ||
+        Math.abs(b.cur.impressions - b.prev.impressions) -
+          Math.abs(a.cur.impressions - a.prev.impressions),
+    )
+    .slice(0, 15);
+  if (movers.length === 0) {
+    L.push("No movers.", "");
+  } else {
+    L.push(
+      "| Page | Clicks (last 7d) | Clicks (prev 7d) | Change | Impr (last 7d) | Impr (prev 7d) |",
+      "| --- | --- | --- | --- | --- | --- |",
+      ...movers.map(
+        (r) =>
+          `| ${r.path} | ${num(r.cur.clicks)} | ${num(r.prev.clicks)} | ${signed(r.dClicks)} | ${num(r.cur.impressions)} | ${num(r.prev.impressions)} |`,
+      ),
+      "",
+    );
+  }
+  return L;
+}
+
 function buildDigest(date: string, health: HealthData, gsc: GscData): string {
   const L: string[] = [];
   const byUrl = new Map(health.pages.map((p) => [normalizeUrl(p.url), p]));
@@ -954,6 +1110,10 @@ function buildDigest(date: string, health: HealthData, gsc: GscData): string {
   }
   if (gsc.sectionErrors?.length) {
     L.push("GSC section errors:", ...gsc.sectionErrors.map((e) => `- ${e}`), "");
+  }
+
+  if (gsc.pageDaily && gsc.periods) {
+    L.push(...buildPageTrends(gsc.pageDaily, gsc.periods.daily.start, gsc.periods.daily.end));
   }
 
   // ----- Problems -----
