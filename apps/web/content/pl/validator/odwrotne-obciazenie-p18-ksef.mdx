@@ -1,6 +1,6 @@
 ---
-title: "Odwrotne obciążenie: P_18 niezgodne ze stawką"
-description: "Faktura ma kwoty z odwrotnym obciążeniem, a P_18 = 2, albo P_18 = 1 bez stawki np I, np II lub oo w wierszach. Sprawdź, kto rozlicza VAT, i ujednolij pola."
+title: "Kiedy przy odwrotnym obciążeniu wpisać P_18 = 1?"
+description: "Faktura ma kwoty z odwrotnym obciążeniem, a P_18 = 2, albo P_18 = 1 bez stawki np I, np II lub oo w wierszach. Sprawdź, kto rozlicza VAT, i uzgodnij pola."
 date: 2026-10-08
 section: validator
 locale: pl
@@ -35,7 +35,7 @@ Walidator zgłasza je w dwóch sytuacjach:
   label="Broszura informacyjna FA(3), opisy pól P_18, P_12, P_13_8, P_13_9 i P_13_10"
 />
 
-Opis `P_13_8` nie zależy jednak od tego, kto rozlicza podatek: pole obejmuje sprzedaż poza terytorium kraju z wyłączeniem kwot z `P_13_5` i `P_13_9`, a broszura podaje jako przykład usługi, których miejsce opodatkowania ustala się według art. 28e ustawy o VAT. Jeśli przy takiej sprzedaży podatek rozliczasz Ty, a nie nabywca, `P_18` = `2` jest zgodne z opisem pola i ostrzeżenie możesz pominąć. Przy `P_13_10` tak nie będzie, bo to sprzedaż, przy której podatnikiem jest nabywca. Jeśli nie wiesz, który przypadek dotyczy Twojej faktury, zapytaj księgową.
+Opis `P_13_8` nie zależy jednak od tego, kto rozlicza podatek: pole obejmuje sprzedaż poza terytorium kraju z wyłączeniem kwot z `P_13_5` i `P_13_9`, a broszura podaje jako przykład usługi, których miejsce opodatkowania ustala się według art. 28e ustawy o VAT. Jeśli przy takiej sprzedaży podatek rozliczasz ty, a nie nabywca, `P_18` = `2` jest zgodne z opisem pola i ostrzeżenie możesz pominąć. Przy `P_13_10` tak nie będzie, bo to sprzedaż, przy której podatnikiem jest nabywca. Jeśli nie wiesz, który przypadek dotyczy twojej faktury, zapytaj księgową.
 
 ## Jak to naprawić
 
@@ -78,7 +78,7 @@ Przykład: usługa dla firmy spoza UE, która rozlicza podatek u siebie.
   ```
 </XmlExample>
 
-Odwrotna sytuacja to `P_18` = `1` przy wierszach ze zwykłą stawką, na przykład `23`. Skoro podatek naliczasz Ty, ustaw `P_18` na `2`. Jeśli VAT naprawdę rozlicza nabywca, popraw stawki w wierszach.
+Odwrotna sytuacja to `P_18` = `1` przy wierszach ze zwykłą stawką, na przykład `23`. Skoro podatek naliczasz ty, ustaw `P_18` na `2`. Jeśli VAT naprawdę rozlicza nabywca, popraw stawki w wierszach.
 
 ## Co dalej
 

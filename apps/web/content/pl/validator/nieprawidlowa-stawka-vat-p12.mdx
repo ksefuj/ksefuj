@@ -1,6 +1,6 @@
 ---
-title: "Nieprawidłowa stawka VAT w P_12: co wpisać"
-description: "P_12 przyjmuje tylko 14 kodów z katalogu FA(3), np. 23, 0 KR, zw, np I. Bez znaku %, z dokładną spacją i wielkością liter. Pełna lista ze znaczeniem i poprawki."
+title: "Nieprawidłowa stawka VAT w P_12. Co wpisać?"
+description: "P_12 przyjmuje tylko 14 kodów z katalogu FA(3), np. 23, 0 KR, zw, np I, bez znaku %. Liczą się spacje i wielkość liter. Podajemy pełną listę ze znaczeniem."
 date: 2026-10-08
 section: validator
 locale: pl
@@ -44,7 +44,7 @@ W opisie pola `P_12` w `FaWiersz` broszura MF podaje zamknięty katalog wartośc
   label="Broszura informacyjna FA(3), opis pola P_12 w FaWiersz"
 />
 
-Nasz walidator porównuje `P_12` w każdym wierszu z tą listą znak po znaku i w komunikacie pokazuje wartość, którą znalazł. Puste lub pominięte `P_12` nie uruchamia tego błędu. Broszura dopuszcza brak stawki przy procedurze marży, przy sprzedaży zwolnionej, o której mowa w art. 106b ust. 3 pkt 2 ustawy o VAT, i na fakturze uproszczonej.
+Nasz walidator porównuje `P_12` w każdym wierszu z tą listą znak po znaku i w komunikacie pokazuje wartość, którą znalazł. Puste lub pominięte `P_12` nie wywołuje tego błędu. Broszura dopuszcza brak stawki przy procedurze marży, przy sprzedaży zwolnionej, o której mowa w art. 106b ust. 3 pkt 2 ustawy o VAT, i na fakturze uproszczonej.
 
 ## Jak to naprawić
 
