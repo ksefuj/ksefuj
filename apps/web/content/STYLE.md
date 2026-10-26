@@ -39,10 +39,12 @@ Good opening:
 Search Console shows thousands of impressions per post and a click-through rate under 1%. The title
 and description are the cheapest thing to improve.
 
-- **Title** = the query plus the specific thing the post delivers. Use a number, date, or outcome
-  when there is one: „Limit 10 000 zł w KSeF: jak go liczyć". Keep it at 48 characters or fewer: the
-  page template appends „ — ksefuj.to" (12 characters) only when the result fits in 60, and Google
-  truncates at about 60. A 49-character title is shown without the brand.
+- **Title** = the reader's question or the answer to it, as a natural Polish sentence: „Jak liczyć
+  limit 10 000 zł w KSeF?", „Nie usuniesz faktury z KSeF. Co zrobić z błędną?". Use a number, date,
+  or outcome when there is one. Aim for 48 characters or fewer, so the template can append „ —
+  ksefuj.to" (12 characters, added only when the result fits in 60). Up to 58 is fine when the
+  shorter version would need a verbless fragment: a natural title beats the brand suffix. Google
+  truncates at about 60. See section 8 for what „natural" means.
 - **Description** (under 160 characters) = the answer in short form, not a table of contents. Bad:
   „Jak liczyć, od kiedy obowiązuje, kto jest zwolniony. Konkretne przykłady." Good: „Limit liczy się
   miesięcznie, od kwot brutto, tylko z faktur B2B. Po przekroczeniu nie ma powrotu do PDF."
@@ -127,6 +129,82 @@ Also:
 3. For each callout and FAQ entry: is this already said in the body? Delete if yes.
 4. Is every number, date, and article reference in the research brief, with a source?
 5. Read the last section. Does it recap? Replace it with the next step.
-6. Title 48 characters or fewer, description under 160, both specific.
+6. Title 48 characters or fewer (58 at most, see section 2), description under 160, both specific.
 7. Blog posts and guides: `topic` set to one key from the list in `README.md` (the build fails
    without it).
+8. Polish posts: run the section 8 checklist, then hand the post to the `redaktor` agent.
+
+## 8. Polszczyzna: pisz jak polski redaktor, nie jak tłumacz
+
+Ta sekcja jest po polsku, bo dotyczy polskiego. Nasze teksty są poprawne, ale często brzmią jak
+przekład z angielskiego: ta sama formuła w każdym tytule, zdania bez czasowników, kalki. Czytelnik
+tego nie nazwie, ale poczuje, że pisał to ktoś „nie stąd”.
+
+### Tytuły
+
+- **Pełne zdanie albo pełne pytanie.** Formuła „X w KSeF: Y" to angielski szablon SEO („X: how to
+  Y"). Wolno jej użyć, ale nie w co drugim tytule. Pytanie kończy się znakiem zapytania.
+- **Tytuł ma czasownik.** Równoważniki typu „od kiedy faktury", „co zamiast" to skróty myślowe, nie
+  nagłówki.
+- **Słowa z wyszukiwarki na początku, ale w odmianie, jaką wymaga zdanie.** „Czy odliczysz VAT z
+  faktury spoza KSeF?" zawiera frazę „faktura poza KSeF" i brzmi po polsku.
+- **Bez wielkich liter w środku tytułu** (to zwyczaj angielski). Wielka litera tylko na początku i w
+  nazwach własnych.
+
+| Brzmi jak przekład                              | Brzmi po polsku                                       |
+| ----------------------------------------------- | ----------------------------------------------------- |
+| Zwolniony z VAT a KSeF: od kiedy faktury        | Od kiedy zwolniony z VAT wystawia faktury w KSeF?     |
+| Faktura poza KSeF: czy odliczysz z niej VAT     | Czy odliczysz VAT z faktury wystawionej poza KSeF?    |
+| Jak odebrać fakturę w KSeF: nic nie akceptujesz | Jak odebrać fakturę w KSeF? Nie musisz nic akceptować |
+| Czy można usunąć fakturę z KSeF? Co zamiast     | Nie usuniesz faktury z KSeF. Co zrobić z błędną?      |
+| KSeF: checklista na 1 stycznia 2027             | Co sprawdzić przed 1 stycznia 2027 r.?                |
+
+### Kalki i anglicyzmy
+
+| Zamiast                                      | Pisz                                                     |
+| -------------------------------------------- | -------------------------------------------------------- |
+| faktury idą przez KSeF                       | faktury wystawia się w KSeF / trafiają do KSeF           |
+| checklista                                   | lista kontrolna, co sprawdzić                            |
+| sprawdź to / zrób to (z „to" jak „it")       | sprawdź / zrób; zaimek, gdy jest konieczny               |
+| bazując na                                   | na podstawie                                             |
+| w oparciu o                                  | na podstawie                                             |
+| adresować problem                            | rozwiązać problem, zająć się                             |
+| dedykowany (program, opcja)                  | przeznaczony do, specjalny, osobny                       |
+| wspierać format                              | obsługiwać format                                        |
+| aplikować (przepis)                          | stosować                                                 |
+| na ten moment                                | na razie, obecnie                                        |
+| w przypadku gdy                              | gdy, jeśli                                               |
+| posiadać (np. NIP)                           | mieć                                                     |
+| dokonać zapłaty / dokonać korekty            | zapłacić / skorygować (styl nominalny brzmi urzędowo)    |
+| XML z instrukcjami (processing instructions) | XML z instrukcjami przetwarzania (`<?...?>`), objaśnione |
+
+### Zdanie
+
+- **Czasownik zamiast rzeczownika.** „Wystawiasz korektę", nie „wystawienie korekty następuje". Styl
+  nominalny zostaw ustawie.
+- **Nowa informacja na końcu zdania.** Polski szyk stawia na końcu to, co ważne: „Fakturę w KSeF
+  wystawia także **zwolniony z VAT**", nie „Zwolniony z VAT też wystawia fakturę w KSeF" (jeśli
+  nowością jest zwolniony).
+- **Przecinek przed „że", „który", „gdy", „jeśli", „bo", „ale" i imiesłowem na -ąc.** Brak przecinka
+  przed „który" to najczęstszy błąd w tekstach pisanych po angielsku.
+- **Bez przecinka przed „i", „oraz", „lub" w wyliczeniu** (polski nie ma „Oxford comma").
+- **Strona bierna z umiarem.** „KSeF nadaje numer", nie „numer jest nadawany przez KSeF".
+- **Zaimki „ty", „twój" małą literą w artykułach** („sprawdź swoją fakturę", „twój NIP"). Wielka
+  litera to zwyczaj listowy; w tekście publicystycznym brzmi jak reklama. Teksty UI zostają bez
+  zmian.
+- **Rejestr: rzeczowy kolega z branży.** Nie urzędnik („należy dokonać"), nie influencer („ogarnij
+  KSeF"). „Co do zasady" najwyżej raz na tekst, gdy naprawdę chodzi o zasadę z wyjątkami.
+
+### Liczby, daty, skróty
+
+- Daty w tekście: „1 stycznia 2027 r.", z „r." po roku, gdy stoi data dzienna. W tytule „r." można
+  pominąć, ale konsekwentnie w całym tytule. Zapis „19.10" tylko w tabelach.
+- Kwoty: „10 000 zł" (spacja nierozdzielająca, „zł", nie „PLN", chyba że chodzi o kod waluty w XML).
+- Przedziały: „2027–2028" z półpauzą.
+- „Art. 106ga ust. 2 pkt 4 ustawy o VAT", nie „art. 106ga(2)(4)".
+
+### Test na koniec
+
+Przeczytaj tytuł i pierwszy akapit na głos. Czy tak napisałby dziennikarz Rzeczpospolitej albo
+Bankier.pl, tłumacząc to znajomemu przedsiębiorcy? Jeśli zdanie trzeba „rozpakować" w głowie, napisz
+je od nowa.
