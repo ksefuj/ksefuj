@@ -1,6 +1,6 @@
 ---
-title: "Faktura zagraniczna w KSeF: co zamiast NIP-u"
-description: "Też idzie przez KSeF. Nabywca z UE: KodUE + NrVatUE, nie NIP. Spoza UE: KodKraju + NrID. Stawki np I, np II, 0 WDT, 0 EX i gotowe przykłady XML."
+title: "Faktura zagraniczna w KSeF. Co wpisać zamiast NIP-u?"
+description: "Trafia do KSeF jak krajowa. Firmie z UE wpisujesz KodUE i NrVatUE zamiast NIP-u, nabywcy spoza UE KodKraju i NrID. Stawki to np I, np II, 0 WDT i 0 EX."
 date: 2026-03-30
 updated: 2026-10-12
 section: blog
@@ -27,13 +27,13 @@ translations:
   uk: "rakhunok-inozemnomu-kontrahenty-ksef"
 ---
 
-Faktura dla zagranicznego kontrahenta trafia do KSeF tak samo jak krajowa, nawet jeśli nabywca nie ma polskiego NIP-u i nigdy nie zaloguje się do systemu. W danych nabywcy nie wpisujesz obcego numeru w pole NIP: dla firm z UE używasz `KodUE` + `NrVatUE`, dla pozostałych `KodKraju` + `NrID`, a gdy numeru brak, `BrakID`.
+Faktura dla zagranicznego kontrahenta trafia do KSeF tak samo jak krajowa, nawet jeśli nabywca nie ma polskiego NIP-u i nigdy nie zaloguje się do systemu. W danych nabywcy nie wpisujesz obcego numeru w pole NIP: dla firm z UE używasz `KodUE` i `NrVatUE`, dla pozostałych `KodKraju` i `NrID`, a gdy numeru brak, `BrakID`.
 
-Nabywca nie dostanie faktury z KSeF, więc wyślij mu czytelną kopię (PDF z kodem QR) mailem lub pocztą. Poniżej pola dla każdego typu nabywcy, stawki VAT i adnotacje. Od [1 kwietnia 2026](/blog/ksef-od-1-kwietnia-2026) faktury w KSeF wystawiają wszyscy podatnicy, czynni i zwolnieni z VAT (największe firmy od 1 lutego). Do końca 2026 r. fakturę możesz jeszcze wystawić poza KSeF, jeśli Twoja sprzedaż na fakturach w danym miesiącu nie przekracza [10 000 zł brutto](/blog/ksef-limit-10000-zl).
+Nabywca nie dostanie faktury z KSeF, więc wyślij mu czytelną kopię (PDF z kodem QR) mailem lub pocztą. Od [1 kwietnia 2026 r.](/blog/ksef-od-1-kwietnia-2026) faktury w KSeF wystawiają wszyscy podatnicy, czynni i zwolnieni z VAT (największe firmy od 1 lutego). Do końca 2026 r. fakturę możesz jeszcze wystawić poza KSeF, jeśli twoja sprzedaż na fakturach w danym miesiącu nie przekracza [10 000 zł brutto](/blog/ksef-limit-10000-zl).
 
 ## Nabywca z UE z numerem VAT-UE
 
-W bloku Podmiot2 użyj pary `KodUE` + `NrVatUE`, **nie NIP**. Zagraniczny numer w polu NIP kończy się odrzuceniem faktury.
+W bloku Podmiot2 użyj pary `KodUE` + `NrVatUE`, **nie NIP**. Jeśli wpiszesz zagraniczny numer w pole NIP, faktura zostanie odrzucona.
 
 - **`KodUE`**: dwuliterowy prefiks kraju UE (`DE`, `NL`, `FR`)
 - **`NrVatUE`**: numer VAT **bez prefiksu kraju** (`123456789`, nie `DE123456789`)
@@ -46,7 +46,7 @@ W adresie podajesz `KodKraju` (ten sam kod co w `KodUE`; pole wymagane), `AdresL
   oznacza problemy z rozliczeniem WDT lub usług wewnątrzwspólnotowych.
 </Tip>
 
-Przykład, faktura dla firmy z Niemiec:
+Faktura dla firmy z Niemiec wygląda tak:
 
 <XmlExample copyable>
   ```xml
@@ -67,7 +67,7 @@ Przykład, faktura dla firmy z Niemiec:
   ```
 </XmlExample>
 
-`JST` i `GV` są obowiązkowe w każdym bloku Podmiot2. Dla kontrahentów zagranicznych wpisz `2` („nie dotyczy"), inaczej faktura nie przejdzie walidacji.
+`JST` i `GV` są obowiązkowe w każdym bloku Podmiot2. Dla kontrahentów zagranicznych wpisz `2` („nie dotyczy”), inaczej faktura nie przejdzie walidacji.
 
 <Source
   href="https://ec.europa.eu/taxation_customs/vies/"
@@ -76,7 +76,7 @@ Przykład, faktura dla firmy z Niemiec:
 
 ## Nabywca z UE bez numeru VAT
 
-Osoba prywatna, freelancer na ryczałcie albo firma niezarejestrowana do VAT nie ma numeru, który mógłbyś wpisać. Zamiast `KodUE` + `NrVatUE` użyj `BrakID` = `1` (nabywca nie posiada numeru identyfikacyjnego). `Nazwa` pozostaje obowiązkowa. Faktura dla osoby prywatnej (konsumenta) nie musi trafić do KSeF (art. 106ga ust. 2 pkt 4 ustawy o VAT); możesz ją tam wystawić dobrowolnie, szczegóły w artykule o [fakturze dla osoby prywatnej](/blog/faktura-dla-osoby-prywatnej-ksef).
+Osoba prywatna, freelancer na ryczałcie albo firma niezarejestrowana do VAT nie ma numeru, który mógłbyś wpisać. Zamiast `KodUE` + `NrVatUE` użyj `BrakID` = `1` (nabywca nie ma numeru identyfikacyjnego). `Nazwa` pozostaje obowiązkowa. Faktura dla osoby prywatnej (konsumenta) nie musi trafić do KSeF (art. 106ga ust. 2 pkt 4 ustawy o VAT). Możesz ją tam wystawić dobrowolnie; szczegóły opisaliśmy w artykule o [fakturze dla osoby prywatnej](/blog/faktura-dla-osoby-prywatnej-ksef).
 
 <XmlExample copyable>
   ```xml
@@ -167,7 +167,7 @@ W praktyce: strona internetowa dla klienta z Niemiec z numerem VAT-UE to usługa
   II`.
 </Warning>
 
-Wartości stawek w FA(3) są wrażliwe na wielkość liter i spacje. Poprawnie: `np I`, `np II`, `0 WDT`, `0 EX`. Niepoprawnie: `NP I`, `npI`, `0WDT`.
+W wartościach stawek FA(3) liczą się wielkość liter i spacje. Poprawnie: `np I`, `np II`, `0 WDT`, `0 EX`. Niepoprawnie: `NP I`, `npI`, `0WDT`.
 
 <Source
   href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
@@ -176,14 +176,14 @@ Wartości stawek w FA(3) są wrażliwe na wielkość liter i spacje. Poprawnie: 
 
 ## Adnotacje: P_18 i P_18A
 
-Wszystkie osiem pól bloku Adnotacje jest obowiązkowych, nawet gdy wartość to „nie dotyczy". Dwa z nich łatwo pomylić, a dotyczą faktur zagranicznych:
+Wszystkie osiem pól bloku Adnotacje jest obowiązkowych, nawet gdy wartość to „nie dotyczy”. Dwa z nich łatwo pomylić, a dotyczą faktur zagranicznych:
 
-| Pole    | Wartość | Znaczenie                                                                                                     |
-| :------ | :------ | :------------------------------------------------------------------------------------------------------------ |
-| `P_18`  | `1`     | Odwrotne obciążenie — nabywca rozlicza VAT (usługi ze stawką `np I` lub `np II`)                              |
-| `P_18`  | `2`     | Brak odwrotnego obciążenia (np. WDT ze stawką `0 WDT`, eksport ze stawką `0 EX`)                              |
-| `P_18A` | `1`     | Mechanizm podzielonej płatności (MPP) — kwota powyżej 15 000 PLN i towary/usługi z załącznika 15 ustawy o VAT |
-| `P_18A` | `2`     | Brak MPP — domyślna wartość przy transakcjach zagranicznych                                                   |
+| Pole    | Wartość | Znaczenie                                                                                                    |
+| :------ | :------ | :----------------------------------------------------------------------------------------------------------- |
+| `P_18`  | `1`     | Odwrotne obciążenie — nabywca rozlicza VAT (usługi ze stawką `np I` lub `np II`)                             |
+| `P_18`  | `2`     | Brak odwrotnego obciążenia (np. WDT ze stawką `0 WDT`, eksport ze stawką `0 EX`)                             |
+| `P_18A` | `1`     | Mechanizm podzielonej płatności (MPP) — kwota powyżej 15 000 zł i towary/usługi z załącznika 15 ustawy o VAT |
+| `P_18A` | `2`     | Brak MPP — domyślna wartość przy transakcjach zagranicznych                                                  |
 
 `P_18` to odwrotne obciążenie, `P_18A` to MPP, który dotyczy płatności krajowych i nie ma zastosowania w transakcjach zagranicznych. Dla usług: `P_18` = `1`, `P_18A` = `2`. Dla WDT i eksportu towarów: `P_18` = `2`, `P_18A` = `2`. Pełną strukturę Adnotacji opisaliśmy w artykule o [najczęstszych błędach walidacji FA(3)](/blog/najczestsze-bledy-walidacji-fa3).
 
@@ -194,7 +194,7 @@ Wszystkie osiem pól bloku Adnotacje jest obowiązkowych, nawet gdy wartość to
 
 ## Faktura w walucie obcej
 
-Fakturę możesz wystawić w dowolnej walucie (EUR, USD, GBP, CHF); `KodWaluty` przyjmuje kody ISO 4217, a kwoty netto i brutto podajesz w tej walucie. Wyjątek: **kwota VAT musi być w PLN**, przeliczona po [kursie średnim NBP](/waluty) z ostatniego dnia roboczego przed datą powstania obowiązku podatkowego. Przy stawkach `np I`, `np II`, `0 WDT` i `0 EX` VAT wynosi zero, więc przeliczenie nie jest potrzebne.
+Fakturę możesz wystawić w dowolnej walucie (EUR, USD, GBP, CHF); `KodWaluty` przyjmuje kody ISO 4217, a kwoty netto i brutto podajesz w tej walucie. Wyjątek: **kwota VAT musi być w złotych**, przeliczona po [kursie średnim NBP](/waluty) z ostatniego dnia roboczego przed datą powstania obowiązku podatkowego. Przy stawkach `np I`, `np II`, `0 WDT` i `0 EX` VAT wynosi zero, więc przeliczenie nie jest potrzebne.
 
 Jeśli nie jesteś pewien pól nabywcy w pliku XML, sprawdzisz je w [walidatorze ksefuj.to](/validator) przed wysyłką do KSeF. Plik nie opuszcza przeglądarki.
 

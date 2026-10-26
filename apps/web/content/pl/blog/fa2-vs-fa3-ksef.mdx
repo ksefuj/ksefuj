@@ -1,6 +1,6 @@
 ---
-title: "FA(3) zamiast FA(2): co zmienić w XML faktury"
-description: "Od 1 lutego 2026 KSeF przyjmuje tylko FA(3). Zmieniasz namespace, KodFormularza i WariantFormularza, dodajesz JST i GV w Podmiot2. Korekty FA(2) też w FA(3)."
+title: "Co zmienić w XML, przechodząc z FA(2) na FA(3)?"
+description: "Od 1 lutego 2026 r. KSeF przyjmuje tylko FA(3). Zmień namespace, KodFormularza i WariantFormularza, dodaj JST i GV w Podmiot2, a korekty FA(2) wystaw w FA(3)."
 date: 2026-03-28
 updated: 2026-10-18
 section: blog
@@ -24,34 +24,34 @@ translations:
   en: "fa2-vs-fa3-ksef"
 ---
 
-Od 1 lutego 2026 roku KSeF 2.0 przyjmuje wyłącznie FA(3), bez trybu zgodności wstecznej. Przy migracji z FA(2) musisz zmienić namespace, atrybuty `KodFormularza`, wartość `WariantFormularza` i dodać pola `JST` oraz `GV` do każdego `Podmiot2`.
+Od 1 lutego 2026 r. KSeF 2.0 przyjmuje wyłącznie FA(3), bez trybu zgodności wstecznej. Przy migracji z FA(2) musisz zmienić namespace, atrybuty `KodFormularza`, wartość `WariantFormularza` i dodać pola `JST` oraz `GV` do każdego `Podmiot2`.
 
-Stan prawny na 18 października 2026.
+Stan prawny na 18 października 2026 r.
 
 <Source
   href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
   label="Broszura informacyjna FA(3) — Ministerstwo Finansów"
 />
 
-## FA(2) wygasł 1 lutego 2026
+## FA(2) nie obowiązuje od 1 lutego 2026 r.
 
-FA(2) obowiązywała od 1 września 2023 roku, najpierw dobrowolnie, potem w pilotażu KSeF, i przestała działać 31 stycznia 2026 o północy. Od 1 lutego **FA(3) jest jedynym wiążącym szablonem e-faktury strukturyzowanej**. Nie ma trybu legacy ani okresu przejściowego dla formatu.
+FA(2) obowiązywała od 1 września 2023 r., najpierw dobrowolnie, potem w pilotażu KSeF, i przestała działać 31 stycznia 2026 r. o północy. Od 1 lutego **FA(3) jest jedynym wiążącym szablonem e-faktury strukturyzowanej**. Format nie ma trybu zgodności wstecznej ani okresu przejściowego.
 
 Dwie daty łatwo pomylić:
 
-- **1 lutego 2026:** KSeF obowiązkowy dla podatników o obrocie powyżej 200 mln zł w 2024 roku. Od tego dnia FA(3) jest jedynym akceptowanym formatem dla **wszystkich** faktur KSeF.
-- **1 kwietnia 2026:** KSeF obowiązkowy dla pozostałych podatników, czynnych i zwolnionych z VAT.
+- **1 lutego 2026 r.:** KSeF obowiązkowy dla podatników o obrocie powyżej 200 mln zł w 2024 r. Od tego dnia FA(3) jest jedynym akceptowanym formatem dla **wszystkich** faktur KSeF.
+- **1 kwietnia 2026 r.:** KSeF obowiązkowy dla pozostałych podatników, czynnych i zwolnionych z VAT.
 
 <Source
   href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
   label="FAQ MF — KSeF 2.0, pytanie 10"
 />
 
-Format obowiązuje więc od lutego niezależnie od tego, od kiedy KSeF jest obowiązkowy dla Ciebie.
+Format obowiązuje więc od lutego niezależnie od tego, od kiedy ciebie obowiązuje KSeF.
 
 ## Namespace
 
-Namespace to atrybut `xmlns` w elemencie `<Faktura>`. W FA(3) zmienił się jego adres URI i KSeF 2.0 odrzuca dokument już na tym poziomie, zanim sprawdzi resztę. Ta jedna zmiana odpowiada za błędy walidacji u większości deweloperów migrujących z FA(2).
+Namespace to atrybut `xmlns` w elemencie `<Faktura>`. W FA(3) zmienił się jego adres URI i KSeF 2.0 odrzuca dokument już na tym poziomie, zanim sprawdzi resztę. Przez tę jedną zmianę większość programistów przechodzących z FA(2) dostaje błędy walidacji.
 
 <XmlExample copyable>
   ```xml
@@ -66,7 +66,7 @@ Namespace to atrybut `xmlns` w elemencie `<Faktura>`. W FA(3) zmienił się jego
   ```
 </XmlExample>
 
-Łatwo to przeoczyć, gdy namespace jest zahardkodowany w szablonie generatora albo pochodzi ze skopiowanego kiedyś przykładu. Data w URL schematu (`https://crd.gov.pl/wzor/2025/06/25/13775/`) to data jego publikacji, nie wejścia w życie.
+Łatwo to przeoczyć, gdy namespace jest wpisany na sztywno w szablon generatora albo pochodzi ze skopiowanego kiedyś przykładu. Data w adresie schematu (`https://crd.gov.pl/wzor/2025/06/25/13775/`) to data jego publikacji, nie wejścia w życie.
 
 ## Nagłówek
 
@@ -101,7 +101,7 @@ W `kodSystemowy="FA (3)"` jest spacja przed nawiasem, a literówki w tym miejscu
 
 FA(3) wprowadza w `Podmiot2` dwa **obowiązkowe** pola. Bez nich dokument nie przejdzie walidacji XSD, niezależnie od profilu firmy. Sekcja wygląda jak w FA(2), więc to zmiana najłatwiejsza do przeoczenia.
 
-| Pole  | Znaczenie                        | Wartość domyślna  | Kiedy "1"                               |
+| Pole  | Znaczenie                        | Wartość domyślna  | Kiedy „1”                               |
 | ----- | -------------------------------- | ----------------- | --------------------------------------- |
 | `JST` | Flaga jednostki samorządu teryt. | `2` = nie dotyczy | Faktura dotyczy podległej jednostki JST |
 | `GV`  | Flaga członka grupy VAT          | `2` = nie dotyczy | Faktura dotyczy członka grupy VAT       |
@@ -137,25 +137,25 @@ Dla zdecydowanej większości faktur ustaw oba na `2`.
   ```
 </XmlExample>
 
-Gdy `JST` = `1`, wymagany jest wpis w `Podmiot3` z `Rola` = `8`. Gdy `GV` = `1`, wpis z `Rola` = `10`. Szczegóły są w [broszurze informacyjnej FA(3)](https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf). Jeśli walidator zgłasza brak tych pól, zobacz [brak JST i GV w Podmiot2](/validator/brak-jst-gv-podmiot2).
+Gdy `JST` = `1`, w `Podmiot3` musi być wpis z `Rola` = `8`. Gdy `GV` = `1`, wpis z `Rola` = `10`. Szczegóły są w [broszurze informacyjnej FA(3)](https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf). Jeśli walidator zgłasza brak tych pól, zobacz [brak JST i GV w Podmiot2](/validator/brak-jst-gv-podmiot2).
 
 ## Nowe elementy w FA(3)
 
 **`Rola` = `11` w `Podmiot3` (pracownik).** Dotyczy faktur za wydatki pracownicze, gdy pracownik kupuje w imieniu pracodawcy i nie ma własnego NIP jako strony transakcji. Pole `DaneIdentyfikacyjne/NIP` wtedy nie istnieje: ustawiasz `BrakID` = `1` i podajesz imię i nazwisko pracownika w `Nazwa`.
 
-**`<Zalacznik>`.** Opcjonalny załącznik strukturyzowany na najwyższym poziomie dokumentu, dla faktur z rozbudowanymi danymi o jednostkach miary, ilościach lub cenach jednostkowych netto.
+**`<Zalacznik>`.** To opcjonalny załącznik strukturyzowany na najwyższym poziomie dokumentu. Służy fakturom z rozbudowanymi danymi o jednostkach miary, ilościach lub cenach jednostkowych netto.
 
 <Warning>
-  Użycie `Zalacznik` wymaga wcześniejszego zgłoszenia zamiaru w e-Urzędzie Skarbowym. Załącznik
-  można stosować wyłącznie do danych podatkowych. Użycie go dla cenników, gwarancji lub umów
-  skutkuje utratą prawa do wystawiania faktur z załącznikiem.
+  Zanim użyjesz `Zalacznik`, musisz zgłosić taki zamiar w e-Urzędzie Skarbowym. Załącznik służy
+  wyłącznie do danych podatkowych. Jeśli umieścisz w nim cenniki, gwarancje lub umowy, stracisz
+  prawo do wystawiania faktur z załącznikiem.
 </Warning>
 
 ## Korekty do faktur FA(2)
 
 Faktura korygująca do faktury wystawionej w FA(2) przed 1 lutego 2026 **musi być w FA(3)**. Nie ma trybu „korekta FA(2) w formacie FA(2)”. Dotyczy to też faktur końcowych do zaliczkowych faktur FA(2) (broszura FA(3), wstęp o obowiązującym wzorze faktury ustrukturyzowanej).
 
-Faktura FA(2) wysłana do KSeF 1.0 ma numer KSeF, więc korekta ustawia w `DaneFaKorygowanej` pole `NrKSeF` = `1` i podaje ten numer w `NrKSeFFaKorygowanej`. Schemat FA(3) przyjmuje tam także numery w formacie z KSeF 1.0. `NrKSeFN` = `1` ustawiasz tylko wtedy, gdy oryginałowi nie nadano numeru KSeF, np. był papierowy lub w PDF. MF nie opisuje przypadku KSeF 1.0 wprost. Ta reguła wynika z opisu pól `NrKSeF` i `NrKSeFN` w broszurze FA(3) oraz z art. 106j ust. 2 pkt 2a ustawy o VAT, który wymaga numeru KSeF oryginału zawsze, gdy go nadano. Pozostałe faktury bez numeru KSeF wymieniamy w artykule o [korekcie faktury bez numeru KSeF](/blog/faktura-korygujaca-ksef#korekta-faktury-bez-numeru-ksef).
+Faktura FA(2) wysłana do KSeF 1.0 ma numer KSeF, więc w korekcie ustawiasz w `DaneFaKorygowanej` pole `NrKSeF` = `1` i podaje ten numer w `NrKSeFFaKorygowanej`. Schemat FA(3) przyjmuje tam także numery w formacie z KSeF 1.0. `NrKSeFN` = `1` ustawiasz tylko wtedy, gdy oryginałowi nie nadano numeru KSeF, np. był papierowy lub w PDF. MF nie opisuje przypadku KSeF 1.0 wprost. Ta reguła wynika z opisu pól `NrKSeF` i `NrKSeFN` w broszurze FA(3) oraz z art. 106j ust. 2 pkt 2a ustawy o VAT, który wymaga numeru KSeF oryginału zawsze, gdy go nadano. Pozostałe faktury bez numeru KSeF wymieniamy w artykule o [korekcie faktury bez numeru KSeF](/blog/faktura-korygujaca-ksef#korekta-faktury-bez-numeru-ksef).
 
 <Source
   href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
@@ -169,7 +169,7 @@ Faktura FA(2) wysłana do KSeF 1.0 ma numer KSeF, więc korekta ustawia w `DaneF
 1. Zmień namespace z `http://crd.gov.pl/wzor/2023/06/29/12648/` na `http://crd.gov.pl/wzor/2025/06/25/13775/`.
 2. Ustaw `kodSystemowy="FA (3)"` i `wersjaSchemy="1-0E"` w `KodFormularza`.
 3. Ustaw `<WariantFormularza>3</WariantFormularza>`.
-4. Dodaj `<JST>2</JST>` i `<GV>2</GV>` do każdego `Podmiot2` (wartość `2` oznacza „nie dotyczy").
+4. Dodaj `<JST>2</JST>` i `<GV>2</GV>` do każdego `Podmiot2` (wartość `2` oznacza „nie dotyczy”).
 
 **Zależnie od przypadku:**
 
@@ -177,11 +177,11 @@ Faktura FA(2) wysłana do KSeF 1.0 ma numer KSeF, więc korekta ustawia w `DaneF
 - faktury pracownicze: `Rola` = `11` w `Podmiot3` z `BrakID` = `1`,
 - złożone faktury ilościowe: `Zalacznik`, po zgłoszeniu w e-US.
 
-Jeśli budujesz integrację od zera, pomiń FA(2): stare szablony z internetu i kod z pilotażu KSeF 1.0 są nieaktualne. Pobierz schemat XSD z `https://crd.gov.pl/wzor/2025/06/25/13775/`, wygeneruj z niego klasy lub typy (JAXB, xsd.exe, xsd-to-ts) i implementuj według broszury. Na dzień publikacji nie ma nowszej wersji schematu.
+Jeśli budujesz integrację od zera, pomiń FA(2): stare szablony z internetu i kod z pilotażu KSeF 1.0 są nieaktualne. Pobierz schemat XSD z `https://crd.gov.pl/wzor/2025/06/25/13775/`, wygeneruj z niego klasy lub typy (JAXB, xsd.exe, xsd-to-ts) i pisz kod według broszury. Na dzień publikacji nie ma nowszej wersji schematu.
 
 ## Środowisko testowe
 
-Środowisko testowe KSeF 2.0 działa pod adresem `https://ap-test.ksef.mf.gov.pl/web/`. Faktury z fikcyjnymi danymi nie mają tam skutków prawnych, a środowisko przyjmuje wyłącznie FA(3). Aplikacja KSeF 1.0 pod adresem `ksef.mf.gov.pl/web` została wyłączona 1 lutego 2026. Produkcyjna Aplikacja Podatnika KSeF 2.0 działa pod adresem `ap.ksef.mf.gov.pl`.
+Środowisko testowe KSeF 2.0 działa pod adresem `https://ap-test.ksef.mf.gov.pl/web/`. Faktury z fikcyjnymi danymi nie mają tam skutków prawnych, a środowisko przyjmuje wyłącznie FA(3). Aplikacja KSeF 1.0 pod adresem `ksef.mf.gov.pl/web` została wyłączona 1 lutego 2026 r. Produkcyjna Aplikacja Podatnika KSeF 2.0 działa pod adresem `ap.ksef.mf.gov.pl`.
 
 <Source
   href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
