@@ -2,13 +2,14 @@
 title: "Чи можна видалити рахунок із KSeF?"
 description: "Рахунок із номером KSeF не видалиш і не анулюєш, помилку виправляє корекція. Файл, який KSeF відхилив, не є рахунком: виправ його й надішли знову."
 date: 2026-10-20
+updated: 2026-10-26
 section: blog
 locale: uk
 slug: "vydalennya-rakhunku-ksef"
 topic: "invoicing"
 tags: ["KSeF", "Рахунок", "JDG"]
 sources:
-  - label: "Закон про VAT, єдиний текст (Dz.U. 2026 poz. 1263), ст. 2 п. 32a, 106j ч. 1, 106k (скасована), 106na ч. 1 і 3"
+  - label: "Закон про VAT, єдиний текст (Dz.U. 2026 poz. 1263), ст. 2 п. 32a, 106j ч. 1, 106k (скасована), 106na ч. 1, 3 і 4, 106nda ч. 10 і 16"
     url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
   - label: "Посібник KSeF 2.0, ч. II: виставлення та отримання рахунків (06.08.2026)"
     url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
@@ -32,11 +33,11 @@ translations:
 
 Рахунок, якому KSeF (Krajowy System e-Faktur, польська національна система електронних рахунків) присвоїв номер, не можна видалити, анулювати чи відредагувати: він увійшов у правовий обіг, а KSeF зберігає його 10 років від кінця року виставлення. Помилку виправляє той, хто виставив рахунок, коригувальним рахунком (faktura korygująca), а якщо KSeF відхилив файл і не присвоїв номера, рахунок узагалі не виставлено, тож виправляєш дані й надсилаєш його ще раз. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, пп. 1.6.1–1.6.3 і 7" />
 
-Правовий стан на 20 жовтня 2026.
+Правовий стан на 26 жовтня 2026.
 
 ## Номер KSeF означає, що рахунок уже існує
 
-Закон про VAT називає структурованим рахунком рахунок, виставлений за допомогою KSeF разом із присвоєним номером. Виставленим він вважається в день надсилання до KSeF, а отриманим у день присвоєння номера. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="Закон про VAT, єдиний текст (Dz.U. 2026 poz. 1263), ст. 2 п. 32a і ст. 106na ч. 1 і 3" />
+Закон про VAT називає структурованим рахунком рахунок, виставлений за допомогою KSeF разом із присвоєним номером. Виставленим він вважається в день надсилання до KSeF, якщо [дата виставлення](/uk/blog/data-vystavlennya-rakhunku-ksef) в полі P_1 припадає на той самий день, а з ранішою датою його вважають рахунком offline24 з датою з P_1. Отриманим він вважається в день присвоєння номера, а коли покупець, наприклад, споживач або іноземна фірма без місцезнаходження чи постійного місця діяльності в Польщі, отримав його поза KSeF, то в день фактичного отримання. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="Закон про VAT, єдиний текст (Dz.U. 2026 poz. 1263), ст. 2 п. 32a, ст. 106na ч. 1, 3 і 4, ст. 106nda ч. 10 і 16" /> <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, пп. 1.4 і 5.1" />
 
 Відтоді рахунок уже не відкличеш. За даними Міністерства фінансів (МФ), платники не можуть самостійно видаляти рахунки, навіть коли покупця вказано неправильно. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 1.6.3" /> Такої операції немає й в API KSeF, яким користуються програми для виставлення рахунків. <Source href="https://github.com/CIRFMF/ksef-api" label="KSeF API, open-api.json і api-changelog.md (до версії 2.9.0)" /> Рахунок, надісланий 5 лютого 2026, залишається в системі до 31 грудня 2036. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 7" /> <Source href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/" label="МФ, найчастіші питання, пит. 21" />
 
