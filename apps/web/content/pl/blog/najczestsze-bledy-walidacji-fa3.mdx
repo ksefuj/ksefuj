@@ -1,6 +1,6 @@
 ---
-title: "Błąd walidacji w KSeF: co oznacza i jak naprawić"
-description: "Błąd walidacji to niezgodność XML ze wzorem FA(3): KSeF odrzuca fakturę i nie nadaje numeru. 12 częstych błędów FA(3), każdy z poprawką do skopiowania."
+title: "Co oznacza błąd walidacji w KSeF i jak go naprawić?"
+description: "Plik XML nie zgadza się ze wzorem FA(3), więc KSeF odrzuca fakturę i nie nadaje jej numeru. Opisujemy 12 częstych błędów, każdy z poprawką do skopiowania."
 date: 2026-03-26
 updated: 2026-10-08
 section: blog
@@ -18,11 +18,11 @@ translations:
   en: "most-common-fa3-validation-errors"
 ---
 
-Faktura FA(3) najczęściej wpada na walidacji przez zły namespace, kolejność elementów, brakujące pola, format NIP i dat, nadmiarowe miejsca po przecinku, stawkę w `P_12` albo niekompletne `Adnotacje`. Każdy z 12 błędów poniżej ma przyczynę i poprawkę w XML do skopiowania.
+Faktura FA(3) najczęściej nie przechodzi walidacji z powodu złego namespace’u, kolejności elementów, brakujących pól, formatu NIP i dat, nadmiarowych miejsc po przecinku, stawki w `P_12` albo niekompletnej sekcji `Adnotacje`. Każdy z 12 błędów poniżej ma przyczynę i poprawkę w XML do skopiowania.
 
-Błąd walidacji oznacza, że plik XML nie zgadza się ze wzorem FA(3): brakuje w nim wymaganego elementu, coś stoi w złym miejscu albo wartość ma zły format. Fakturę wysłaną online z takim błędem KSeF odrzuca i nie nadaje jej numeru, więc nie zostaje ona wystawiona. Poprawiasz XML i wysyłasz go jeszcze raz. Taki skutek mają jednak błędy względem schematu (XSD). Błąd rachunkowy (nr 10, suma `P_15`) i błędy, których schemat nie wychwytuje (nr 9, prefiks kraju w `NrVatUE`, i nr 12, `P_6` razem z `P_6A`), KSeF przepuści. Faktura dostaje wtedy numer KSeF i jest wystawiona, więc poprawiasz ją fakturą korygującą, a nie ponowną wysyłką. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 1.6.1" />
+Błąd walidacji oznacza, że plik XML nie zgadza się ze wzorem FA(3): brakuje w nim wymaganego elementu, coś stoi w złym miejscu albo wartość ma zły format. Fakturę wysłaną online z takim błędem KSeF odrzuca i nie nadaje jej numeru, więc nie zostaje ona wystawiona. Poprawiasz XML i wysyłasz go jeszcze raz. Tak kończą się jednak błędy względem schematu (XSD). Błąd rachunkowy (nr 10, suma `P_15`) i błędy, których schemat nie wychwytuje (nr 9, prefiks kraju w `NrVatUE`, i nr 12, `P_6` razem z `P_6A`), KSeF przepuści. Faktura dostaje wtedy numer KSeF i jest wystawiona, więc poprawiasz ją fakturą korygującą, a nie ponowną wysyłką. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 1.6.1" />
 
-Komunikaty walidacji bywają hermetyczne. Zamiast „brakuje numeru faktury" zobaczysz na przykład `Element 'P_6': This element is not expected. Expected is ( P_2 ).` Jeśli program do fakturowania generuje XML sam, większość tych błędów wyłapie za Ciebie. Te opisy przydadzą się, gdy integrujesz KSeF przez API, piszesz własny eksport albo chcesz zrozumieć, dlaczego faktura wróciła. Przykłady opierają się na schemacie FA(3) obowiązującym od 1 lutego 2026 roku.
+Komunikaty walidacji bywają hermetyczne. Zamiast „brakuje numeru faktury” zobaczysz na przykład `Element 'P_6': This element is not expected. Expected is ( P_2 ).` Jeśli program do fakturowania generuje XML sam, większość tych błędów wyłapie za ciebie. Te opisy przydadzą się, gdy integrujesz KSeF przez API, piszesz własny eksport albo chcesz zrozumieć, dlaczego faktura wróciła. Przykłady opierają się na schemacie FA(3) obowiązującym od 1 lutego 2026 r.
 
 <Source
   href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
@@ -31,7 +31,7 @@ Komunikaty walidacji bywają hermetyczne. Zamiast „brakuje numeru faktury" zob
 
 ## 1. Brak lub zły namespace
 
-Element `<Faktura>` musi zawierać namespace FA(3). Bez niego walidator nie rozpozna pliku jako faktury FA(3): zgłosi jeden błąd przy elemencie `Faktura` i nie sprawdzi reszty pliku. Przyczyna to zwykle szablon z internetu z FA(2), pominięty atrybut `xmlns` albo literówka w adresie (`2025/06/25/13775` łatwo przekręcić). Namespace z szablonów sprzed lutego 2026 jest prawie na pewno nieaktualny, bo FA(2) przestał obowiązywać 31 stycznia 2026.
+Element `<Faktura>` musi zawierać namespace FA(3). Bez niego walidator nie rozpozna pliku jako faktury FA(3): zgłosi jeden błąd przy elemencie `Faktura` i nie sprawdzi reszty pliku. Przyczyna to zwykle szablon z internetu z FA(2), pominięty atrybut `xmlns` albo literówka w adresie (`2025/06/25/13775` łatwo przekręcić). Namespace z szablonów sprzed lutego 2026 jest prawie na pewno nieaktualny, bo FA(2) przestał obowiązywać 31 stycznia 2026 r.
 
 <XmlExample copyable>
   ```xml
@@ -52,7 +52,7 @@ Więcej o tym błędzie: [Zły namespace w fakturze: xmlns dla FA(3)](/validator
 
 ## 2. Zła kolejność elementów
 
-Schemat używa `xs:sequence`, więc kolejność elementów jest obowiązkowa. Przestawione `Podmiot2` przed `Podmiot1` odrzuca cały plik. Program zwykle trzyma kolejność, ale ręczne edycje i własne eksporty ją psują.
+Schemat używa `xs:sequence`, więc kolejność elementów jest obowiązkowa. Jeśli `Podmiot2` stoi przed `Podmiot1`, KSeF odrzuci cały plik. Program do faktur zwykle pilnuje kolejności, ale psują ją ręczne poprawki i własne eksporty.
 
 Na najwyższym poziomie: `Naglowek` → `Podmiot1` → `Podmiot2` → [`Podmiot3`] → [`PodmiotUpowazniony`] → `Fa` (w tym `FaWiersz`) → [`Stopka`] → [`Zalacznik`]. Elementy w nawiasach są opcjonalne, ale jeśli występują, mają swoje miejsce. `FaWiersz` jest **wewnątrz** `Fa`, nie obok.
 
@@ -110,7 +110,7 @@ Więcej o tym błędzie: [Brak wymaganego pola w XML faktury FA(3)](/validator/b
 
 ## 4. Zły format NIP
 
-Schemat wymaga dokładnie 10 cyfr bez separatorów. Zapisy `123-456-78-90` i `PL 1234567890` są błędne. Prefiks `PL` nie trafia do pola `NIP`. Sprzedawca podaje go osobno w `PrefiksPodatnika` (`Podmiot1`), gdy jest wymagany (np. przy WDT). Polskiego nabywcę w `Podmiot2` identyfikuje sam `NIP`; pola `KodUE` i `NrVatUE` służą do numeru VAT UE nabywcy z innego kraju.
+Schemat wymaga dokładnie 10 cyfr bez separatorów. Zapisy `123-456-78-90` i `PL 1234567890` są błędne. Prefiks `PL` nie trafia do pola `NIP`. Sprzedawca podaje go osobno w `PrefiksPodatnika` (`Podmiot1`), gdy jest wymagany (np. przy WDT). Polskiego nabywcę w `Podmiot2` identyfikuje sam `NIP`; pola `KodUE` i `NrVatUE` służą do podania numeru VAT UE nabywcy z innego kraju.
 
 <XmlExample copyable>
   ```xml
@@ -125,14 +125,14 @@ Schemat wymaga dokładnie 10 cyfr bez separatorów. Zapisy `123-456-78-90` i `PL
 
 <Warning>
   NIP polskiego nabywcy musi trafić do pola `NIP` w `Podmiot2/DaneIdentyfikacyjne`, nie do `NrVatUE`
-  ani `NrID`. W złym polu faktura nie zostanie poprawnie doręczona w KSeF.
+  ani `NrID`. Jeśli trafi do złego pola, faktura nie zostanie poprawnie doręczona w KSeF.
 </Warning>
 
 Więcej o tym błędzie: [Nieprawidłowa wartość pola: NIP](/validator/nieprawidlowa-wartosc-pola-fa3#nip).
 
 ## 5. Zły format daty
 
-Polskie `15.09.2026` zamiast `2026-09-15` to najczęstsza pomyłka. Druga: pomylenie pól daty (`P_1`) z polem daty i czasu (`DataWytworzeniaFa`). Pola daty (`P_1`, `P_6`, `P_6A` i inne) przyjmują `RRRR-MM-DD`. `DataWytworzeniaFa` przyjmuje `RRRR-MM-DDTHH:MM:SS`. Broszura podaje przykład w czasie UTC, z literą `Z` na końcu, ale schemat przyjmie też zapis bez strefy czasowej albo z przesunięciem (`+02:00`).
+Polskie `15.09.2026` zamiast `2026-09-15` to najczęstsza pomyłka. Druga to pomylenie pola daty (`P_1`) z polem daty i czasu (`DataWytworzeniaFa`). Pola daty (`P_1`, `P_6`, `P_6A` i inne) przyjmują `RRRR-MM-DD`. `DataWytworzeniaFa` przyjmuje `RRRR-MM-DDTHH:MM:SS`. Broszura podaje przykład w czasie UTC, z literą `Z` na końcu, ale schemat przyjmie też zapis bez strefy czasowej albo z przesunięciem (`+02:00`).
 
 <XmlExample copyable>
   ```xml
@@ -153,13 +153,13 @@ Więcej o tym błędzie: [Nieprawidłowa wartość pola: format daty](/validator
 
 ## 6. Zbyt wiele miejsc po przecinku
 
-ERP i arkusze trzymają liczby z pełną precyzją (`123.456789`), a przy eksporcie nadmiar trafia do XML. Zaokrąglij:
+Systemy ERP i arkusze kalkulacyjne przechowują liczby z pełną precyzją (`123.456789`), a przy eksporcie nadmiar trafia do XML. Zaokrąglij:
 
 - **kwoty** (P_11, P_13_x, P_14_x, P_15): maks. **2** miejsca,
 - **ilości** (P_8B): maks. **6** miejsc,
 - **ceny jednostkowe** (P_9A, P_9B): maks. **8** miejsc.
 
-Separator dziesiętny to zawsze kropka. Przecinek ani spacja jako separator tysięcy nie są dopuszczalne.
+Separator dziesiętny to zawsze kropka. Nie wstawiaj przecinka ani spacji jako separatora tysięcy.
 
 <XmlExample copyable>
   ```xml
@@ -222,7 +222,7 @@ Więcej o tym błędzie: [Brak JST i GV w Podmiot2: co wpisać w FA(3)](/validat
 
 ## 8. Zła stawka VAT w P_12
 
-`P_12` przyjmuje tylko wartości z katalogu FA(3), wrażliwe na wielkość liter i spacje. Samo `0` nie istnieje, trzeba podać wariant (`0 KR`, `0 WDT`, `0 EX`), spacja w `0 KR` jest obowiązkowa, a `zw` pisze się małymi literami.
+`P_12` przyjmuje tylko wartości z katalogu FA(3), wrażliwe na wielkość liter i spacje. Samo `0` nie istnieje: trzeba podać wariant (`0 KR`, `0 WDT`, `0 EX`). Spacja w `0 KR` jest obowiązkowa, a `zw` pisze się małymi literami.
 
 Dozwolone: `23`, `22`, `8`, `7`, `5`, `4`, `3`, `0 KR`, `0 WDT`, `0 EX`, `zw`, `oo`, `np I`, `np II`.
 
@@ -258,7 +258,7 @@ Więcej o tym błędzie: [Nieprawidłowa stawka VAT w P_12: co wpisać](/validat
 
 ## 9. Zła identyfikacja zagranicznego nabywcy
 
-FA(3) identyfikuje nabywcę inaczej zależnie od kraju:
+W FA(3) nabywcę identyfikuje się inaczej w zależności od kraju:
 
 - **Polska:** pole `NIP` (10 cyfr, bez prefiksu),
 - **UE:** `KodUE` + `NrVatUE` (kod kraju osobno, numer VAT bez prefiksu),
@@ -290,7 +290,7 @@ Częsty błąd to kod kraju wewnątrz numeru VAT (`DE123456789` w `NrVatUE`). `K
 
 ## 10. P_15 nie zgadza się z sumami
 
-`P_15` (kwota należności ogółem) musi równać się sumie kwot netto (`P_13_x`) i podatku (`P_14_x`). Najczęściej winne jest zaokrąglanie (podatek `22.9977` zaokrąglony do `22.99` zamiast `23.00`) albo pominięte pole `P_13_x`, np. `P_13_6_1` dla stawki 0%.
+`P_15` (kwota należności ogółem) musi być równa sumie kwot netto (`P_13_x`) i podatku (`P_14_x`). Najczęściej winne jest zaokrąglanie (podatek `22.9977` zaokrąglony do `22.99` zamiast `23.00`) albo pominięte pole `P_13_x`, np. `P_13_6_1` dla stawki 0%.
 
 Formuła: **P_15 = suma wszystkich P_13_x + suma wszystkich P_14_x**, czyli P_13_1 do P_13_11 i P_14_1 do P_14_5. Pola P_13_6_1 do P_13_11 (stawka 0%, zwolnione, odwrotne obciążenie) nie mają odpowiadających P_14_x, ale ich kwoty netto wliczają się do P_15.
 
@@ -319,9 +319,9 @@ Więcej o tym błędzie: [Błąd kalkulacji VAT: P_14 lub P_15 się nie zgadza](
 
 ## 11. Niekompletne Adnotacje
 
-Nazwa sugeruje notatki, ale `Adnotacje` to obowiązkowa sekcja z ośmioma polami, z których każde musi mieć wartość. Trzy (`Zwolnienie`, `NoweSrodkiTransportu`, `PMarzy`) wymagają zagnieżdżonych elementów nawet wtedy, gdy odpowiedź brzmi „nie". Kolejność też jest obowiązkowa: P_16 → P_17 → P_18 → P_18A → Zwolnienie → NoweSrodkiTransportu → P_23 → PMarzy.
+Nazwa sugeruje notatki, ale `Adnotacje` to obowiązkowa sekcja z ośmioma polami, z których każde musi mieć wartość. Trzy (`Zwolnienie`, `NoweSrodkiTransportu`, `PMarzy`) wymagają zagnieżdżonych elementów nawet wtedy, gdy odpowiedź brzmi „nie”. Kolejność też jest obowiązkowa: P_16 → P_17 → P_18 → P_18A → Zwolnienie → NoweSrodkiTransportu → P_23 → PMarzy.
 
-Dla standardowej faktury VAT poniższy blok działa jako szablon bez zmian:
+Przy standardowej fakturze VAT możesz użyć poniższego bloku bez zmian:
 
 <XmlExample copyable>
   ```xml
@@ -344,9 +344,9 @@ Dla standardowej faktury VAT poniższy blok działa jako szablon bez zmian:
   ```
 </XmlExample>
 
-## 12. P_6, P_6A i OkresFa
+## 12. Pomylone P_6, P_6A i OkresFa
 
-Trzy pola, trzy zastosowania:
+Każde z tych trzech pól służy do czegoś innego:
 
 - **P_6** (w `Fa`): data dostawy lub wykonania usługi, wspólna dla wszystkich wierszy,
 - **P_6A** (w `FaWiersz`): data dla konkretnego wiersza, gdy wiersze mają różne daty,
@@ -402,7 +402,7 @@ W `Fa` pole **P_6 i element OkresFa wykluczają się** (`xs:choice` w XSD). Zaka
 
 ## Co dalej
 
-Plik z błędem możesz wrzucić na [ksefuj.to](/validator), a walidator wskaże każdy z powyższych problemów po polsku; plik nie opuszcza przeglądarki. Jeśli dopiero zaczynasz, zacznij od [poradnika po pierwszej fakturze](/guides/pierwsza-faktura-fa3), a przy migracji ze starego formatu od [różnic FA(2) i FA(3)](/blog/fa2-vs-fa3-ksef).
+Plik z błędem możesz wrzucić na [ksefuj.to](/validator), a walidator wskaże każdy z powyższych problemów po polsku; plik nie opuszcza przeglądarki. Jeśli dopiero zaczynasz, zacznij od [poradnika o pierwszej fakturze](/guides/pierwsza-faktura-fa3), a przy przejściu ze starego formatu od [różnic FA(2) i FA(3)](/blog/fa2-vs-fa3-ksef).
 
 Błędy spoza tej listy też mają osobne opisy, np. [XML nie jest poprawnie sformatowany](/validator/xml-nie-jest-poprawnie-sformatowany) albo [błędny numer rachunku bankowego](/validator/bledny-numer-rachunku-bankowego).
 
