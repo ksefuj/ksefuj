@@ -686,14 +686,18 @@ function sumMetrics(rows: Metrics[]): Metrics {
 }
 
 /**
- * Collapse ["page","date"] rows into per-path daily tuples. URL fragments are folded into the base
- * path, clicks/impressions are summed and position is impression-weighted.
+ * Collapse ["page","date"] rows into per-path daily tuples. Fragments, trailing slashes and www/http
+ * host variants are folded into the base path, clicks/impressions are summed and position is
+ * impression-weighted.
  */
 function aggregatePageDaily(rows: Json[]): Record<string, PageDailyTuple[]> {
   const acc = new Map<string, Map<string, { c: number; i: number; pw: number }>>();
   for (const r of rows) {
     const [url, date] = r.keys as string[];
-    const path = url.replace(SITE_ORIGIN, "").replace(/#.*$/, "") || "/";
+    const path =
+      normalizeUrl(url)
+        .replace(/^https?:\/\/(www\.)?ksefuj\.to/, "")
+        .replace(/\/$/, "") || "/";
     const m = metrics(r);
     let days = acc.get(path);
     if (!days) {
