@@ -2,7 +2,7 @@
 title: "KSeF tokens after 2026: what we know"
 description: "The KSeF regulation allows tokens only until 31 Dec 2026. MF and the API team say they will stay, but there is no rule change or new token endpoint yet."
 date: 2026-10-07
-updated: 2026-10-25
+updated: 2026-10-26
 section: blog
 locale: en
 slug: "ksef-tokens-after-2026"
@@ -32,14 +32,13 @@ translations:
   en: "ksef-tokens-after-2026"
 ---
 
-The regulation in force lets you authenticate to KSeF (Krajowy System e-Faktur, Poland's national e-invoicing system) with a token only until 31 December 2026. The Ministry of Finance (MF) and the KSeF API team say tokens will stay in use, but as of 7 October the regulation had not been changed.
+The regulation in force lets you authenticate to KSeF (Krajowy System e-Faktur, Poland's national e-invoicing system) with a token only until 31 December 2026. The Ministry of Finance (MF) and the KSeF API team say tokens will stay in use, but as of 26 October the regulation had not been changed.
 
 <Info>
-  We checked the legal status on 7 October 2026. The only amendment to the regulation at that point
-  was Dz.U. 2026 item 169, which does not concern tokens, and we found no draft of a further
-  amendment.{" "}
-  <Source href="https://api.sejm.gov.pl/eli/acts/DU/2025/1815" label="list of amendments, ELI" />{" "}
-  Statements by the API team and the API changelog are given as of 25 October 2026.
+  We checked the legal status, the API team's statements and the API changelog on 26 October 2026.
+  The only amendment to the regulation is Dz.U. 2026 item 169, which does not concern tokens, and we
+  found no draft of a further amendment.{" "}
+  <Source href="https://api.sejm.gov.pl/eli/acts/DU/2025/1815" label="list of amendments, ELI" />
 </Info>
 
 ## What exactly expires on 31 December
@@ -84,7 +83,7 @@ Marek, whose integration authenticates with a token, should not wait for the ame
   label="KSeF 2.0 Handbook, part I, table 3 and ch. 2.5"
 />
 
-Renew a certificate before it expires, and note that the number of active certificates per PESEL and NIP is limited. You request it in the API or the Taxpayer Application after logging in with the national node, a qualified signature or a qualified seal. A token login cannot generate a certificate (§ 13 ust. 2), so you need one of those three.
+Renew a certificate before it expires, and note that the number of active certificates per PESEL or NIP is limited. You request it in the API or the Taxpayer Application after logging in with the national node, a qualified signature or a qualified seal. A token login cannot generate a certificate (§ 13 ust. 2), so you need one of those three.
 
 <Info>
   A type 2 certificate marks invoices issued OFFLINE with a QR code and is not used for logging in.

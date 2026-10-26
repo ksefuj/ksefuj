@@ -107,22 +107,21 @@ token-creation endpoint is not in the API changelog as of 2026-10-25.
     was said; it is an announcement, not law, and no OpenAPI for it was published as of 2026-10-07
     (still not in the changelog as of 2026-10-25, fact 14). Re-checked 2026-10-25: issue 834 is
     still open and the latest `kw-cirf` comment is still the 2026-09-10 one. The thread author
-    quoted a KIS reply of 23 July repeating the 1-365 day validity and auto-renewal „po uprzedniej
-    zgodzie właściciela"; that is consistent with fact 5, which remains the citable source for both
-    points. Also in the 2026-09-10 comment (re-read 2026-10-25): the goal is to get through
-    2026/2027 „bez dotykania kodu po stronie integratora", while tokens created via the old endpoint
-    will get a limited lifetime (the author calls this a breaking change in behaviour). A goal, not
-    a promise.
+    quoted, in a comment of 23 July, a KIS reply (date of the reply not given) repeating the 1-365
+    day validity and auto-renewal „po uprzedniej zgodzie właściciela"; that is consistent with fact
+    5, which remains the citable source for both points. Also in the 2026-09-10 comment (re-read
+    2026-10-25): the goal is to get through 2026/2027 „bez dotykania kodu po stronie integratora",
+    while tokens created via the old endpoint will get a limited lifetime (the author calls this a
+    breaking change in behaviour). A goal, not a promise.
 
 12. **KSeF API team statement, 2026-09-23 (Tier 3, collaborator `kw-cirf`, closing the issue):**
     „Zamykam bo tokeny zostają ale na nowych zasadach. Dopracowujemy propozycję." Source:
     CIRFMF/ksef-api issue 565 („Bezsensowność rezygnacji z tokenów"),
     https://github.com/CIRFMF/ksef-api/issues/565 (fetched 2026-10-25). Confidence: HIGH that it was
     said; an announcement, not law. It does not state what the „nowe zasady" are.
-13. **Amending regulation status.** As of the last verified check (2026-10-07) no regulation
-    amending Dz.U. 2025 poz. 1815 with respect to tokens was published and no draft was found. Not
-    re-checked live on 2026-10-25 (official Polish hosts unreachable from the research environment).
-    Confidence: HIGH for 2026-10-07; unknown after that date.
+13. **Amending regulation status.** Verified live 2026-10-26: the ELI record for Dz.U. 2025 poz.
+    1815 lists only DU/2026/169 (changeDate 2026-02-16); RCL title search „e-Faktur" shows no 2026
+    draft; no MF news on tokens. Confidence: HIGH for 2026-10-26.
 14. **API changelog, 2026-10-25:** latest version 2.9.0 (TEST/DEMO 13.10.2026, PROD 15.10.2026). No
     release contains an entry on token validity/expiry or a new version of the token-creation
     endpoint. Source: https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md (fetched
@@ -132,9 +131,8 @@ token-creation endpoint is not in the API changelog as of 2026-10-25.
 ## Unsettled Questions
 
 - Text, date of publication and entry into force of the amending regulation. No draft found as of
-  2026-10-07. The RCL register (legislacja.rcl.gov.pl) could not be searched programmatically (list
-  pages render client-side, the API rejects requests); a manual check on the site is still
-  advisable.
+  2026-10-26. legislacja.gov.pl/szukaj?title=e-Faktur works but does not list every MFiG project; a
+  manual check on the site is still advisable.
 - What rules („nowe zasady", facts 11-12) will cover tokens issued from 1 Jan 2027. The 30 Nov 2027
   limit (fact 11) is a separate transition rule for tokens issued until 31 Dec 2026; MF has not said
   whether the 1-365 day proposal (fact 5) is what the new rules contain.
@@ -173,14 +171,19 @@ token-creation endpoint is not in the API changelog as of 2026-10-25.
 - Older ksefuj.to content (certyfikaty-vs-tokeny-ksef) mixes up certificate types (they are by
   function: type 1 authentication, type 2 OFFLINE invoicing); do not copy from it.
 
-## Not fetched live on 2026-10-25 (rely on the 2026-10-07 baseline)
+## Verified live on 2026-10-26
+
+- ELI record https://api.sejm.gov.pl/eli/acts/DU/2025/1815: only DU/2026/169 (changeDate
+  2026-02-16); fact 13
+- RCL title search „e-Faktur": no 2026 draft; no MF news on tokens; fact 13
+
+Not re-fetched (2026-10-07 baseline):
 
 - Dz.U. 2025 poz. 1815, § 6 and § 13 (ISAP): facts 1-3
-- ELI record https://api.sejm.gov.pl/eli/acts/DU/2025/1815 and Dz.U. 2026 poz. 169: fact 4, 13
+- Dz.U. 2026 poz. 169 text: fact 4
 - MF consultation summary on ksef.podatki.gov.pl: fact 5
 - Podręcznik KSeF 2.0 cz. I and Podręcznik Aplikacji Podatnika (ksef.podatki.gov.pl): facts 6-10
 - FAQ MF q. 35: fact 7(a)
-- RCL register (legislacja.rcl.gov.pl): drafts
 
 **Freshness:** 2026-10-25 (GitHub sources live; official Polish hosts at the 2026-10-07 baseline).
 Re-check when Dz.U. publishes an amendment to poz. 1815, when the API changelog adds a token

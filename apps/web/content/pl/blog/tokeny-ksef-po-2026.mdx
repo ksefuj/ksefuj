@@ -2,7 +2,7 @@
 title: "Tokeny KSeF po 31 grudnia 2026: co wiadomo"
 description: "Rozporządzenie dopuszcza tokeny KSeF do 31.12.2026. MF i zespół API zapowiadają ich zachowanie, ale zmiany przepisu ani nowego endpointu tokenów nie ma."
 date: 2026-10-07
-updated: 2026-10-25
+updated: 2026-10-26
 section: blog
 locale: pl
 slug: "tokeny-ksef-po-2026"
@@ -32,13 +32,13 @@ translations:
   en: "ksef-tokens-after-2026"
 ---
 
-Obowiązujące rozporządzenie pozwala uwierzytelniać się tokenem KSeF tylko do 31 grudnia 2026 r. Ministerstwo Finansów i zespół API KSeF zapowiadają, że tokeny zostaną w użyciu, ale według stanu na 7 października przepis nie został zmieniony.
+Obowiązujące rozporządzenie pozwala uwierzytelniać się tokenem KSeF tylko do 31 grudnia 2026 r. Ministerstwo Finansów i zespół API KSeF zapowiadają, że tokeny zostaną w użyciu, ale według stanu na 26 października przepis nie został zmieniony.
 
 <Info>
-  Stan prawny sprawdziliśmy 7 października 2026. Jedyną nowelizacją rozporządzenia była wtedy Dz.U.
-  2026 poz. 169, która tokenów nie dotyczy, a projektu kolejnej zmiany nie znaleźliśmy.{" "}
-  <Source href="https://api.sejm.gov.pl/eli/acts/DU/2025/1815" label="wykaz zmian, ELI" />{" "}
-  Wypowiedzi zespołu API i changelog API podajemy według stanu na 25 października 2026.
+  Stan prawny, wypowiedzi zespołu API i changelog API sprawdziliśmy 26 października 2026. Jedyną
+  nowelizacją rozporządzenia jest Dz.U. 2026 poz. 169, która tokenów nie dotyczy, a projektu
+  kolejnej zmiany nie znaleźliśmy.{" "}
+  <Source href="https://api.sejm.gov.pl/eli/acts/DU/2025/1815" label="wykaz zmian, ELI" />
 </Info>
 
 ## Co dokładnie wygasa 31 grudnia
@@ -83,7 +83,7 @@ Marek, który ma integrację opartą na tokenie, nie powinien czekać na noweliz
   label="Podręcznik KSeF 2.0, cz. I, tabela 3 i rozdz. 2.5"
 />
 
-Certyfikat trzeba odnawiać przed końcem ważności, a liczba aktywnych certyfikatów na jeden PESEL i NIP jest ograniczona. Wniosek składa się w API albo w Aplikacji Podatnika, po zalogowaniu węzłem krajowym, podpisem lub pieczęcią kwalifikowaną. Po zalogowaniu tokenem certyfikatu nie wygenerujesz (§ 13 ust. 2), więc potrzebujesz jednego z tych trzech sposobów.
+Certyfikat trzeba odnawiać przed końcem ważności, a liczba aktywnych certyfikatów na jeden PESEL lub NIP jest ograniczona. Wniosek składa się w API albo w Aplikacji Podatnika, po zalogowaniu węzłem krajowym, podpisem lub pieczęcią kwalifikowaną. Po zalogowaniu tokenem certyfikatu nie wygenerujesz (§ 13 ust. 2), więc potrzebujesz jednego z tych trzech sposobów.
 
 <Info>
   Certyfikat typu 2 służy do oznaczania faktur wystawianych OFFLINE kodem QR, nie do logowania. Do
