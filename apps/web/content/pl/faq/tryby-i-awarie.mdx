@@ -2,6 +2,7 @@
 title: Tryby pracy i awarie
 description: Czym różni się tryb offline od trybu awaryjnego i co zrobić, gdy KSeF nie działa.
 date: 2026-03-22
+updated: 2026-10-26
 section: faq
 locale: pl
 slug: tryby-i-awarie
@@ -14,16 +15,18 @@ translations:
 ## Tryby pracy i awarie
 
 <Question q="Co zrobić, gdy KSeF nie działa?">
-  Gdy KSeF jest niedostępny, MF oficjalnie ogłasza tryb awaryjny. W tym czasie możesz wystawiać
-  faktury poza systemem z odpowiednim oznaczeniem. Gdy KSeF znów działa, masz określony czas na
-  wysłanie zaległych faktur. Śledź status systemu na stronie ksef.podatki.gov.pl.
+  Fakturę możesz wystawić poza KSeF w trybie offline. Jeśli MF ogłosi niedostępność KSeF albo
+  awarię, obowiązują dla nich osobne zasady i terminy wysłania faktur do KSeF. Przy awarii
+  całkowitej faktur w ogóle nie wysyła się do KSeF (art. 106ng ustawy o VAT).
 </Question>
 
 <Question q="Co to jest tryb offline?">
-  W trybie offline wystawiasz faktury poza KSeF, gdy nie masz dostępu do internetu lub system nie
-  działa. Faktura offline otrzymuje specjalny kod QR pobrany z wyprzedzeniem z MF, a po przywróceniu
-  łączności musisz ją wysłać do KSeF. Tryb offline można stosować prewencyjnie, nie tylko podczas
-  awarii.
+  W trybie offline (offline24) wystawiasz fakturę poza KSeF i wysyłasz ją do KSeF najpóźniej
+  następnego dnia roboczego po dniu wystawienia (art. 106nda ustawy o VAT). Przepisy nie uzależniają
+  tego trybu od awarii, więc możesz z niego korzystać w dowolnym momencie. Jeśli przekazujesz
+  fakturę offline nabywcy poza KSeF, umieszczasz na niej dwa kody QR, a do wygenerowania drugiego
+  potrzebujesz certyfikatu KSeF typu 2. Aplikacja Podatnika wystawia tylko faktury online, więc tryb
+  offline wymaga programu, który go obsługuje.
 </Question>
 
 <Question q="Co to jest tryb awaryjny?">
@@ -34,21 +37,24 @@ translations:
 </Question>
 
 <Question q="Ile czasu mam na wysłanie faktury po awarii?">
-  Po zakończeniu trybu awaryjnego masz co do zasady do następnego dnia roboczego na przesłanie
-  faktur wystawionych w trybie offline lub awaryjnym. Dokładny termin zależy od długości awarii i
-  może być ogłoszony przez MF wraz z komunikatem o przywróceniu systemu. Zaległe faktury najlepiej
-  wyślij jak najszybciej.
+  Fakturę wystawioną w trybie awaryjnym wysyłasz do KSeF w ciągu 7 dni roboczych od dnia zakończenia
+  awarii wskazanego w komunikacie MF (art. 106nf ust. 4 ustawy o VAT). Jeśli w tym czasie MF ogłosi
+  kolejną awarię, termin liczy się od nowa. Fakturę wystawioną podczas niedostępności KSeF wysyłasz
+  najpóźniej następnego dnia roboczego po jej zakończeniu (art. 106nh ust. 2), a fakturę offline24
+  najpóźniej następnego dnia roboczego po dniu wystawienia (art. 106nda ust. 2). Faktur z awarii
+  całkowitej nie wysyła się do KSeF (art. 106ng).
 </Question>
 
-<Question q="Jak wygląda kod QR w trybie offline?">
-  Kod QR na fakturze offline to specjalny token pobrany wcześniej z systemu KSeF. Każdy
-  przedsiębiorca może pobrać pulę kodów na wypadek braku łączności. Kod identyfikuje fakturę i
-  umożliwia jej późniejsze powiązanie z KSeF po wgraniu dokumentu. Bez prawidłowego kodu QR faktura
-  offline może być zakwestionowana.
+<Question q="Jakie kody QR ma faktura offline?">
+  Faktura offline, która nie ma jeszcze numeru KSeF, ma dwa kody QR. Pierwszy, z napisem „OFFLINE”,
+  prowadzi do faktury w KSeF i pozwala sprawdzić jej dane. Drugi, z napisem „CERTYFIKAT”, potwierdza
+  tożsamość wystawcy. Kody generuje program fakturowy, a do drugiego potrzebny jest certyfikat KSeF
+  typu 2, który trzeba uzyskać wcześniej (Podręcznik KSeF 2.0, cz. II, pkt 5.4).
 </Question>
 
 <Question q="Skąd mam wiedzieć, że KSeF nie działa?">
-  Oficjalny status KSeF MF publikuje na stronie ksef.podatki.gov.pl. Twój program fakturowy powinien
-  też wyświetlić komunikat, gdy nie może nawiązać połączenia z API MF. Planowane przerwy MF zwykle
-  ogłasza z wyprzedzeniem, a nieplanowane awarie od razu.
+  Komunikat o awarii MF publikuje w Biuletynie Informacji Publicznej i w oprogramowaniu
+  interfejsowym KSeF, o niedostępności w Biuletynie, a o awarii całkowitej w środkach masowego
+  przekazu (art. 106ne ustawy o VAT). Twój program fakturowy powinien też wyświetlić komunikat, gdy
+  nie może nawiązać połączenia z API MF.
 </Question>

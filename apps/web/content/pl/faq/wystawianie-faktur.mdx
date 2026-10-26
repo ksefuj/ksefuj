@@ -2,6 +2,7 @@
 title: Wystawianie faktur
 description: Jak wystawić w KSeF pierwszą fakturę, korektę, fakturę w walucie obcej i fakturę dla nabywcy z zagranicy.
 date: 2026-03-23
+updated: 2026-10-26
 section: faq
 locale: pl
 slug: wystawianie-faktur
@@ -43,21 +44,24 @@ translations:
 <Question q="Co to jest Aplikacja Podatnika KSeF?">
   To oficjalna aplikacja MF (ap.ksef.mf.gov.pl) do zarządzania fakturami w KSeF. Pozwala wystawiać
   faktury ręcznie przez formularz, przesyłać gotowe pliki XML, przeglądać faktury otrzymane i
-  zarządzać uprawnieniami. Logujesz się przez Profil Zaufany, e-dowód lub certyfikat kwalifikowany.
-  Jest bezpłatna i nie wymaga instalacji.
+  zarządzać uprawnieniami. Logujesz się przez login.gov.pl (Profil Zaufany, mObywatel, bankowość
+  elektroniczna, e-dowód) albo kwalifikowanym podpisem lub pieczęcią. Jest bezpłatna i nie wymaga
+  instalacji.
 </Question>
 
-<Question q="Jak wygląda faktura korygująca w KSeF?">
+<Question q="Jak wystawić fakturę korygującą w KSeF?">
   Jeśli faktura pierwotna była wystawiona w KSeF, korekta musi zawierać jej numer KSeF. Wysyłasz ją
   tak samo jak zwykłą fakturę: jako plik XML do KSeF. Gdy KSeF ją przyjmie, dostaje własny numer
   KSeF. Zasady uzgadniania korekt z nabywcą pozostają bez zmian.
 </Question>
 
 <Question q="Jak wystawić fakturę walutową?">
-  Faktura walutowa w KSeF musi zawierać kwoty podatku VAT przeliczone na złote według kursu NBP. W
-  pliku XML podajesz zarówno kwoty w walucie obcej, jak i ich równowartość w złotych. Kurs walutowy
-  musi odpowiadać temu z dnia poprzedzającego datę wystawienia. Pola w złotych są obowiązkowe, a bez
-  przeliczenia faktura zostanie odrzucona.
+  Na fakturze w walucie obcej kwoty podajesz w tej walucie, a kwotę podatku dodatkowo przeliczasz na
+  złote (art. 106e ust. 11 ustawy o VAT, pola P_14_1W do P_14_4W). Co do zasady stosujesz średni
+  kurs NBP z ostatniego dnia roboczego przed dniem powstania obowiązku podatkowego, a jeśli
+  wystawiasz fakturę przed tym dniem, z ostatniego dnia roboczego przed dniem jej wystawienia (art.
+  31a). Schemat FA(3) nie wymaga pól P_14_xW, więc KSeF przyjmie fakturę bez nich, ale przepisy
+  wymagają podania podatku w złotych.
 </Question>
 
 <Question q="Jak wystawić fakturę dla zagranicznego nabywcy?">

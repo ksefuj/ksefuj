@@ -2,6 +2,7 @@
 title: Podstawy KSeF
 description: Czym jest KSeF, kogo dotyczy i od kiedy obowiązuje. Wyjaśniamy też FA(3), numer KSeF i UPO.
 date: 2026-03-25
+updated: 2026-10-26
 section: faq
 locale: pl
 slug: podstawy-ksef
@@ -21,30 +22,35 @@ translations:
 </Question>
 
 <Question q="Od kiedy KSeF jest obowiązkowy?">
-  Dla dużych przedsiębiorców (sprzedaż powyżej 200 mln zł rocznie) KSeF jest obowiązkowy od 1 lutego
-  2026 r., dla pozostałych czynnych podatników VAT od 1 kwietnia 2026 r. Zwolnieni z VAT mają te
-  same terminy co pozostali. Od 1 stycznia 2027 r. obowiązek dotyczy wszystkich, bez limitu
-  miesięcznej sprzedaży.
+  Dla dużych przedsiębiorców (sprzedaż powyżej 200 mln zł w 2024 r.) KSeF jest obowiązkowy od 1
+  lutego 2026 r., dla pozostałych podatników VAT, czynnych i zwolnionych, od 1 kwietnia 2026 r. Do
+  31 grudnia 2026 r. część faktur można jeszcze wystawiać poza KSeF: przy sprzedaży do 10 000 zł
+  miesięcznie (art. 145m ustawy o VAT) i przy użyciu kasy rejestrującej (art. 145n). Od 1 stycznia
+  2027 r. tych wyjątków nie ma.
 </Question>
 
 <Question q="Kogo dotyczy obowiązek KSeF?">
-  KSeF dotyczy wszystkich czynnych podatników VAT mających siedzibę lub stałe miejsce prowadzenia
-  działalności w Polsce. Obowiązek obejmuje wystawianie faktur na rzecz innych firm (B2B) oraz
-  faktur dla osób fizycznych wystawianych poza kasą fiskalną. KSeF obejmuje też podmioty zwolnione z
-  VAT, w tych samych terminach co pozostałych podatników.
+  KSeF dotyczy podatników VAT, czynnych i zwolnionych, którzy mają siedzibę lub stałe miejsce
+  prowadzenia działalności w Polsce i wystawiają faktury (art. 106ga ustawy o VAT). Obejmuje faktury
+  dla firm i instytucji (B2B). Faktury dla konsumentów, czyli osób fizycznych nieprowadzących
+  działalności gospodarczej, są z niego wyłączone (art. 106ga ust. 2 pkt 4). Zwolnieni z VAT mają te
+  same terminy co pozostali podatnicy.
 </Question>
 
 <Question q="Czy KSeF dotyczy faktur dla osób prywatnych (B2C)?">
-  Faktury wystawiane konsumentom (B2C) co do zasady podlegają KSeF, ale z ważnym wyjątkiem: faktury
-  wystawiane przy użyciu kasy fiskalnej są z niego wyłączone. Jeśli wystawiasz fakturę poza systemem
-  kasowym (np. w programie fakturowym), musi ona trafić do KSeF. W praktyce większość faktur
-  detalicznych wystawianych z kasy pozostaje poza systemem.
+  Nie. Faktury dla konsumentów, czyli osób fizycznych nieprowadzących działalności gospodarczej, nie
+  podlegają obowiązkowi KSeF (art. 106ga ust. 2 pkt 4 ustawy o VAT), niezależnie od tego, czy
+  wystawiasz je z kasy fiskalnej, czy w programie fakturowym. Możesz je wystawić w KSeF dobrowolnie
+  (art. 106ga ust. 4), ale klientowi i tak przekazujesz fakturę w uzgodniony sposób, z kodem QR
+  (art. 106gb ust. 4). Jeśli klient kupuje na firmę i podaje NIP, to już faktura B2B.
 </Question>
 
 <Question q="Czy KSeF dotyczy paragonów z NIP?">
-  Paragony z NIP nabywcy wystawiane na kasie fiskalnej są traktowane jako faktury uproszczone i nie
-  wchodzą do KSeF. Paragony te wciąż mają moc prawną jako dokument zakupu. Obowiązek KSeF obejmuje
-  tylko zwykłe faktury VAT wystawiane poza kasą fiskalną.
+  Do 31 grudnia 2026 r. paragon z NIP nabywcy na kwotę do 450 zł (albo 100 euro) jest fakturą
+  uproszczoną i może być wystawiony poza KSeF. Poza KSeF możesz też do tego dnia wystawiać faktury
+  przy użyciu kasy rejestrującej (art. 145n ustawy o VAT). Od 1 stycznia 2027 r. paragon z NIP nie
+  jest już fakturą uproszczoną, a fakturę dla firmy do sprzedaży z kasy wystawiasz w KSeF
+  (Podręcznik KSeF 2.0, cz. I).
 </Question>
 
 <Question q="Co to jest FA(3)?">
@@ -69,9 +75,9 @@ translations:
 
 <Question q="Co to jest numer KSeF?">
   Numer KSeF to unikalny identyfikator, który system MF nadaje fakturze po jej zaewidencjonowaniu.
-  Potrzebujesz go, gdy korygujesz fakturę wystawioną w KSeF: korekta musi się odwoływać do numeru
-  KSeF faktury pierwotnej, bez niego zostanie odrzucona. Jeśli faktura pierwotna była wystawiona
-  poza KSeF (przed jego wdrożeniem), zamiast numeru KSeF używa się znacznika NrKSeFN.
+  Potrzebujesz go, gdy korygujesz fakturę wystawioną w KSeF: w korekcie podajesz numer KSeF faktury
+  pierwotnej (pola NrKSeF i NrKSeFFaKorygowanej). Jeśli faktura pierwotna nie ma numeru KSeF, bo
+  była wystawiona poza KSeF, zamiast niego zaznaczasz pole NrKSeFN.
 </Question>
 
 <Question q="Co to jest UPO?">

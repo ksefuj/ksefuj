@@ -2,6 +2,7 @@
 title: Dostęp i uprawnienia
 description: Jak zalogować się do KSeF, jak upoważnić księgowego i czym różni się certyfikat KSeF od tokenu.
 date: 2026-03-21
+updated: 2026-10-26
 section: faq
 locale: pl
 slug: dostep-i-uprawnienia
@@ -14,17 +15,19 @@ translations:
 ## Dostęp i uprawnienia
 
 <Question q="Jak się zalogować do KSeF?">
-  Do KSeF logujesz się przez Aplikację Podatnika (ap.ksef.mf.gov.pl) za pomocą jednej z metod:
-  Profil Zaufany, e-dowód, podpis kwalifikowany lub certyfikat KSeF. Profil Zaufany jest
-  najwygodniejszy dla większości przedsiębiorców. Założysz go bezpłatnie przez bankowość
-  elektroniczną lub w urzędzie. Dostęp przez API (dla programów) wymaga certyfikatu lub tokenu.
+  Do Aplikacji Podatnika KSeF (ap.ksef.mf.gov.pl) logujesz się przez login.gov.pl (Profil Zaufany,
+  mObywatel, bankowość elektroniczna, e-dowód) albo kwalifikowanym podpisem lub pieczęcią. Profil
+  Zaufany jest najwygodniejszy dla większości przedsiębiorców. Założysz go bezpłatnie przez
+  bankowość elektroniczną lub w urzędzie. Certyfikat KSeF i token służą programom, które łączą się z
+  KSeF przez API. Do Aplikacji Podatnika się nimi nie zalogujesz (Podręcznik KSeF 2.0, cz. I).
 </Question>
 
 <Question q="Co to jest ZAW-FA?">
-  ZAW-FA to papierowy formularz zawiadomienia o nadaniu lub odebraniu uprawnień w KSeF, składany w
-  urzędzie skarbowym. Jest potrzebny tylko wtedy, gdy podatnik nie jest osobą fizyczną i nie ma
-  pieczęci kwalifikowanej albo gdy jego podpis lub pieczęć nie zawierają numeru NIP lub PESEL. W
-  pozostałych przypadkach uprawnienia nadaje się elektronicznie.
+  ZAW-FA to formularz zawiadomienia o nadaniu lub odebraniu uprawnień w KSeF, składany w urzędzie
+  skarbowym na papierze, przez e-Urząd Skarbowy albo e-Doręczenia. Jest potrzebny tylko wtedy, gdy
+  podatnik nie jest osobą fizyczną i nie ma pieczęci kwalifikowanej albo gdy jego podpis lub pieczęć
+  nie zawierają numeru NIP lub PESEL. W pozostałych przypadkach uprawnienia nadaje się
+  elektronicznie.
 </Question>
 
 <Question q="Jak upoważnić księgowego do KSeF?">
@@ -51,6 +54,8 @@ translations:
 <Question q="Co to jest token uwierzytelniający?">
   Token uwierzytelniający to ciąg znaków, który generujesz w Aplikacji Podatnika KSeF i którego
   używasz zamiast certyfikatu do uwierzytelniania w API. Tokeny są wygodniejsze dla integratorów i
-  mniejszych systemów, bo nie wymagają zarządzania certyfikatami PKI. Token ma określony czas
-  ważności i zakres uprawnień. Można go w każdej chwili unieważnić z poziomu Aplikacji Podatnika.
+  mniejszych systemów, bo nie wymagają zarządzania certyfikatami PKI. Token ma zakres uprawnień
+  nadany przy generowaniu i według Podręcznika KSeF 2.0 (cz. I) działa, dopóki go nie unieważnisz w
+  Aplikacji Podatnika. Rozporządzenie przewiduje tokeny do 31 grudnia 2026 r., ale MF zdecydowało je
+  zachować. Szczegóły opisujemy w artykule o [tokenach KSeF po 2026 r.](/blog/tokeny-ksef-po-2026)
 </Question>
