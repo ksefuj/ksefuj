@@ -1,8 +1,8 @@
 ---
-title: "Token czy certyfikat KSeF: czym się logować"
-description: "Do ręcznego logowania wystarczy Profil Zaufany. Program do fakturowania łączy się z KSeF przez token lub certyfikat. Co wybrać w Twojej sytuacji."
+title: "Jak zalogować się do KSeF: token czy certyfikat?"
+description: "Do ręcznego logowania wystarczy Profil Zaufany. Program do fakturowania łączy się z KSeF przez token lub certyfikat KSeF."
 date: 2026-03-29
-updated: 2026-10-07
+updated: 2026-10-26
 section: blog
 locale: pl
 slug: "certyfikaty-vs-tokeny-ksef"
@@ -25,7 +25,7 @@ translations:
   uk: "sertyfikaty-proty-tokeniv-ksef"
 ---
 
-Jeśli wystawiasz faktury ręcznie w Aplikacji Podatnika, zaloguj się Profilem Zaufanym: jest bezpłatny i wystarcza JDG. Jeśli faktury wysyła program (Fakturownia, inFakt, wFirma, własny ERP), program łączy się z KSeF przez API i potrzebuje **tokenu** albo **certyfikatu KSeF**. Profil Zaufany tam nie działa.
+Jeśli wystawiasz faktury ręcznie w Aplikacji Podatnika, zaloguj się Profilem Zaufanym: jest bezpłatny i wystarcza JDG. Jeśli faktury wysyła program (Fakturownia, inFakt, wFirma, własny ERP), program łączy się z KSeF przez API i potrzebuje **tokenu** albo **certyfikatu KSeF**. Programy nie logują się Profilem Zaufanym.
 
 ## Metody logowania w skrócie
 
@@ -35,27 +35,27 @@ Jeśli wystawiasz faktury ręcznie w Aplikacji Podatnika, zaloguj się Profilem 
 | e-dowód (przez login.gov.pl)                              | przeglądarka | każdy z aktywowanym nowym dowodem              | bezpłatny            |
 | Podpis / pieczęć kwalifikowana                            | przeglądarka | osoby i podmioty z certyfikatem kwalifikowanym | płatny (subskrypcja) |
 | Certyfikat KSeF (typ 1: uwierzytelnienie, typ 2: offline) | API          | systemy ERP, integratorzy                      | bezpłatny            |
-| Token uwierzytelniający                                   | API          | programy do fakturowania, integratorzy         | bezpłatny            |
+| Token KSeF                                                | API          | programy do fakturowania, integratorzy         | bezpłatny            |
 
-## Profil Zaufany i e-dowód: logowanie ręczne
+## Do logowania w przeglądarce: Profil Zaufany i e-dowód
 
 Profil Zaufany to bezpłatna tożsamość cyfrowa. Jeśli składałeś PIT przez internet albo logowałeś się do ZUS, pewnie już go masz. Założysz go w kilka minut przez bankowość elektroniczną, aplikację mObywatel, ePUAP (pz.gov.pl) albo w urzędzie.
 
-Daje pełny dostęp do Aplikacji Podatnika ([ap.ksef.mf.gov.pl](https://ap.ksef.mf.gov.pl/)): wystawianie faktur przez formularz, przeglądanie faktur od kontrahentów i nadawanie uprawnień innym osobom, np. biuru rachunkowemu.
+Daje pełny dostęp do Aplikacji Podatnika ([ap.ksef.mf.gov.pl](https://ap.ksef.mf.gov.pl/)): wystawisz w niej fakturę w formularzu, przejrzysz faktury od kontrahentów i nadasz uprawnienia innym osobom, np. biuru rachunkowemu.
 
-E-dowód działa tak samo, o ile masz go aktywowanego do podpisu elektronicznego (jednorazowa wizyta w urzędzie). W praktyce wybiera się go rzadziej, bo Profil Zaufany nie wymaga czytnika kart. Do Aplikacji Podatnika zalogujesz się też przez mObywatel albo bankowość elektroniczną, a e-dowodem przez login.gov.pl.
+E-dowód działa tak samo, jeśli masz w nim aktywny podpis elektroniczny (wymaga to jednorazowej wizyty w urzędzie). W praktyce wybiera się go rzadziej, bo Profil Zaufany nie wymaga czytnika kart. Do Aplikacji Podatnika zalogujesz się też przez mObywatel albo bankowość elektroniczną, a e-dowodem przez login.gov.pl.
 
-## Podpis i pieczęć kwalifikowana: dla tych, którzy już je mają
+## Podpis i pieczęć kwalifikowana, jeśli już je masz
 
 Kwalifikowany podpis elektroniczny (standard eIDAS) wydają komercyjni dostawcy, m.in. Certum, Sigillum i EuroCert, w rocznej lub wieloletniej subskrypcji. W KSeF daje taki sam dostęp przez przeglądarkę jak Profil Zaufany, więc ma sens głównie wtedy, gdy używasz go już do e-KRS, przetargów albo umów.
 
 Pieczęć kwalifikowana to odpowiednik podpisu dla osoby prawnej i też jest metodą logowania do KSeF.
 
-## Token: najprostszy dostęp dla programu
+## Token to najprostszy dostęp dla programu
 
 Token to ciąg znaków, który generujesz w Aplikacji Podatnika i wpisujesz w konfiguracji programu. Nie wymaga infrastruktury certyfikatów. Działa do unieważnienia, ma zakres uprawnień (np. tylko wystawianie albo tylko odczyt), a unieważnisz go jednym kliknięciem, gdy zmienisz dostawcę oprogramowania.
 
-Według rozporządzenia tokeny można stosować do 31 grudnia 2026 r. Ministerstwo Finansów zapowiedziało, że tokeny zostaną dłużej, i zamierza znowelizować rozporządzenie. Na 7 października 2026 zmiana nie jest jeszcze wprowadzona.
+Według rozporządzenia tokeny można stosować do 31 grudnia 2026 r. Ministerstwo Finansów zapowiedziało, że tokeny zostaną dłużej, i zamierza znowelizować rozporządzenie. Na 7 października 2026 r. rozporządzenia jeszcze nie zmieniono.
 
 <Source
   href="https://ksef.podatki.gov.pl/wyjasnienia/pierwsze-konsultacje-po-czesciowym-wdrozeniu-ksef-podsumowanie/"
@@ -64,12 +64,12 @@ Według rozporządzenia tokeny można stosować do 31 grudnia 2026 r. Ministerst
 
 <Tip>
   Gdy program prosi o „konfigurację połączenia z KSeF", zaloguj się do Aplikacji Podatnika, otwórz
-  zarządzanie tokenami i wygeneruj nowy. Większość programów prowadzi przez ten krok.
+  zarządzanie tokenami i wygeneruj nowy. Większość programów przeprowadzi cię przez ten krok.
 </Tip>
 
 ## Certyfikat KSeF: typ 1 (uwierzytelnienie) i typ 2 (offline)
 
-Certyfikat to trwalsze poświadczenie do dostępu przez API, pobierane z systemu MF. Lepiej sprawdza się niż token w złożonych wdrożeniach obsługujących wielu podatników. Typy różnią się funkcją, a jeden certyfikat ma jeden typ:
+Certyfikat to trwalsze poświadczenie dostępu przez API, które pobierasz z systemu MF. W złożonych wdrożeniach obsługujących wielu podatników sprawdza się lepiej niż token. Typy różnią się funkcją, a jeden certyfikat ma jeden typ:
 
 - **Typ 1** (w API `Authentication`) służy do uwierzytelnienia w KSeF.
 - **Typ 2** (w API `Offline`) służy do wystawiania faktur w trybie offline.
@@ -86,7 +86,7 @@ Biuro rachunkowe czy integrator nie ma więc osobnego typu certyfikatu. Kto i w 
 />
 
 <Warning>
-  Proces pobierania certyfikatu zmienia się wraz z aktualizacjami systemu MF. Przed pobraniem
+  Sposób pobierania certyfikatu zmienia się wraz z aktualizacjami systemu MF. Przed pobraniem
   sprawdź aktualną instrukcję w Podręczniku Aplikacji Podatnika KSeF 2.0 na ksef.podatki.gov.pl.
 </Warning>
 
@@ -94,7 +94,7 @@ Biuro rachunkowe czy integrator nie ma więc osobnego typu certyfikatu. Kto i w 
 
 Uprawnienia, także dla biura rachunkowego, nadajesz elektronicznie w Aplikacji Podatnika KSeF 2.0 albo przez API. To podstawowa droga. Zgłoszenie ZAW-FA w urzędzie skarbowym jest potrzebne tylko wtedy, gdy podatnik nie jest osobą fizyczną i nie ma kwalifikowanej pieczęci albo gdy podpis lub pieczęć nie zawiera NIP lub PESEL.
 
-Zakres ustawiasz sam: tylko odczyt, tylko wystawianie albo pełny dostęp. Ustal go z księgowym i nie dawaj więcej, niż trzeba. Biuro rachunkowe zwykle samo poprosi o uprawnienia i przeprowadzi przez proces.
+Zakres ustawiasz sam: tylko odczyt, tylko wystawianie albo pełny dostęp. Ustal go z księgowym i nie dawaj więcej, niż trzeba. Biuro rachunkowe zwykle samo poprosi o uprawnienia i przeprowadzi cię przez całą procedurę.
 
 <Source
   href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20250001815"
@@ -110,7 +110,7 @@ Zakres ustawiasz sam: tylko odczyt, tylko wystawianie albo pełny dostęp. Ustal
   label="FAQ MF — uprawnienia i certyfikaty"
 />
 
-## Co wybrać w Twojej sytuacji
+## Co wybrać w twojej sytuacji
 
 | Twoja sytuacja                                        | Metoda                                                                                        |
 | ----------------------------------------------------- | --------------------------------------------------------------------------------------------- |
@@ -121,6 +121,6 @@ Zakres ustawiasz sam: tylko odczyt, tylko wystawianie albo pełny dostęp. Ustal
 | Developer integrujący KSeF                            | **Token** na start, **certyfikat typ 1** na produkcji (typ 2 dla trybu offline)               |
 | Masz podpis kwalifikowany z innych powodów            | Możesz go użyć zamiast Profilu Zaufanego                                                      |
 
-Przy sporadycznym wystawianiu faktur możesz też sprawdzić e-mikrofirmę, bezpłatną aplikację MF dla najmniejszych firm. Zakres obsługi KSeF jest w niej ograniczony i się zmienia, więc zajrzyj na stronę MF przed wyborem.
+Przy sporadycznym wystawianiu faktur możesz też sprawdzić e-mikrofirmę, bezpłatną aplikację MF dla najmniejszych firm. Obsługuje KSeF w ograniczonym zakresie, który się zmienia, więc zajrzyj na stronę MF przed wyborem.
 
-Resztę przygotowań do obowiązku opisaliśmy w artykule [KSeF od 1 kwietnia 2026](/blog/ksef-od-1-kwietnia-2026). Gdy chcesz sprawdzić plik XML przed wysyłką, wrzuć go do [walidatora ksefuj.to](/validator); działa w przeglądarce, a plik nie opuszcza Twojego komputera.
+Resztę przygotowań do obowiązku opisaliśmy w artykule [KSeF od 1 kwietnia 2026](/blog/ksef-od-1-kwietnia-2026). Jeśli chcesz sprawdzić plik XML przed wysyłką, wrzuć go do [walidatora ksefuj.to](/validator). Działa w przeglądarce, a plik nie opuszcza twojego komputera.

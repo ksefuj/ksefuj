@@ -1,7 +1,8 @@
 ---
-title: "MPP w KSeF: jak oznaczyć split payment w FA(3)"
-description: "MPP oznaczasz w polu P_18A: 1 przy kwocie powyżej 15 000 zł, towarach lub usługach z załącznika nr 15 i sprzedaży dla podatnika, w innym razie 2."
+title: "Jak oznaczyć MPP (split payment) w KSeF?"
+description: "W polu P_18A wpisz 1, gdy faktura przekracza 15 000 zł brutto, obejmuje pozycje z załącznika nr 15 i jest wystawiona dla podatnika. W innym razie wpisz 2."
 date: 2026-10-22
+updated: 2026-10-26
 section: blog
 locale: pl
 slug: "mpp-split-payment-ksef"
@@ -26,9 +27,9 @@ related:
   - "blog/faktura-korygujaca-ksef"
 ---
 
-Na fakturze FA(3) mechanizm podzielonej płatności (MPP, split payment) oznacza się polem `P_18A` w sekcji `Adnotacje`: wpisujesz `1`, gdy kwota należności ogółem przekracza 15 000 zł (lub jej równowartość w walucie obcej), faktura obejmuje towary lub usługi z załącznika nr 15 do ustawy o VAT i sprzedaż jest dokonana na rzecz podatnika, a w każdym innym przypadku `2`. Pole jest obowiązkowe na każdej fakturze, także wtedy, gdy MPP Cię nie dotyczy.
+Na fakturze FA(3) mechanizm podzielonej płatności (MPP, split payment) oznaczasz w polu `P_18A` w sekcji `Adnotacje`: wpisujesz `1`, gdy kwota należności ogółem przekracza 15 000 zł (lub jej równowartość w walucie obcej), faktura obejmuje towary lub usługi z załącznika nr 15 do ustawy o VAT i sprzedaż jest dokonana na rzecz podatnika, a w każdym innym przypadku `2`. Pole jest obowiązkowe na każdej fakturze, także wtedy, gdy MPP cię nie dotyczy.
 
-Stan prawny na 22 października 2026.
+Stan prawny na 22 października 2026 r.
 
 <Source
   href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
@@ -53,15 +54,15 @@ Pełnej listy pozycji załącznika nr 15 tu nie przepisujemy. Broszura FA(3) prz
 
 ## Faktura w walucie obcej
 
-Próg 15 000 zł obowiązuje też przy fakturach w euro czy dolarach. Kwotę przelicza się na złote według tych samych zasad, które stosujesz do podstawy opodatkowania (tak mówi adnotacja do `P_18A` w schemacie). Te zasady opisuje art. 31a ustawy o VAT. Co do zasady to kurs średni NBP z ostatniego dnia roboczego przed powstaniem obowiązku podatkowego, ale przepis przewiduje wyjątki, m.in. kurs EBC do wyboru i inną datę, gdy faktura jest wystawiona przed powstaniem obowiązku podatkowego.
+Próg 15 000 zł obowiązuje też przy fakturach w euro czy dolarach. Kwotę przeliczasz na złote według tych samych zasad co podstawę opodatkowania (tak mówi adnotacja do `P_18A` w schemacie). Te zasady opisuje art. 31a ustawy o VAT. Zwykle jest to kurs średni NBP z ostatniego dnia roboczego przed powstaniem obowiązku podatkowego, ale przepis przewiduje wyjątki, m.in. kurs EBC do wyboru i inną datę, gdy faktura jest wystawiona przed powstaniem obowiązku podatkowego.
 
 Faktura dla firmy na 4 000 EUR za towar z załącznika nr 15 przy przykładowym kursie 4,25 zł daje 17 000 zł. To powyżej progu, więc `P_18A` = `1`. Przy przykładowym kursie 3,70 zł wyszłoby 14 800 zł i `2`.
 
-## MPP obowiązkowy i dobrowolny
+## Kiedy MPP jest obowiązkowy, a kiedy dobrowolny
 
 Co do zasady MPP jest dobrowolny: ustawa mówi, że przy zapłacie podatnicy „mogą zastosować” podzieloną płatność (art. 108a ust. 1 ustawy o VAT). Obowiązkowy jest przy zapłacie za towary i usługi z załącznika nr 15, gdy faktura przekracza 15 000 zł (art. 108a ust. 1a; z wyjątkami w art. 108a ust. 1d–1e, m.in. przy potrąceniu), a sprzedawca musi wtedy przyjąć zapłatę w MPP za fakturę objętą art. 106e ust. 1 pkt 18a (ust. 1b). Za zapłatę z naruszeniem ust. 1a ustawa przewiduje sankcję w art. 108a ust. 7. Sprzedawcy, który wystawi fakturę z naruszeniem art. 106e ust. 1 pkt 18a, grozi dodatkowe zobowiązanie w wysokości 30% podatku od pozycji z załącznika nr 15 (art. 106e ust. 12); nie stosuje się go, jeśli ten podatek zapłacono w MPP (ust. 13). Sankcja z art. 108a ust. 7 dotyczy sposobu zapłaty, nie tego, czy w przelewie jest numer KSeF. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="Ustawa o VAT, art. 108a (Dz.U. 2026 poz. 1263)" />
 
-`P_18A` opisuje tylko przypadek obowiązkowy i nie jest do wyboru: schemat i broszura każą wpisać `1` przy spełnieniu trzech warunków, a „w przeciwnym przypadku – wartość „2”” (broszura, s. 55–56). Nie ma osobnej wartości dla dobrowolnego MPP. Nabywca będący podatnikiem, który dostał fakturę z VAT, może przy jej opłacaniu zastosować MPP także wtedy, gdy `P_18A` = `2` (art. 108a ust. 1).
+`P_18A` opisuje tylko przypadek obowiązkowy i nie jest do wyboru: schemat i broszura każą wpisać `1` przy spełnieniu trzech warunków, a „w przeciwnym przypadku – wartość „2”” (broszura, s. 55–56). Nie ma osobnej wartości dla dobrowolnego MPP. Nabywca, który jest podatnikiem i dostał fakturę z VAT, może przy jej opłacaniu zastosować MPP także wtedy, gdy `P_18A` = `2` (art. 108a ust. 1).
 
 ## Oznaczenie przy wierszu i kody GTU
 
@@ -76,16 +77,16 @@ Kody GTU to osobna sprawa. GTU_05, GTU_06 i GTU_08 obejmują m.in. towary z zał
 
 ## Czego przepisy i MF nie rozstrzygają
 
-- **Faktura mieszana.** Gdy tylko część pozycji jest z załącznika nr 15, nie wiemy z materiałów MF, czy próg liczy się od całej kwoty należności ogółem, czy od tych pozycji. Schemat mówi o „kwocie należności ogółem” faktury, która takie towary „obejmuje”.
+- **Faktura mieszana.** Gdy tylko część pozycji jest z załącznika nr 15, materiały MF nie mówią, czy próg liczy się od całej kwoty należności ogółem, czy od tych pozycji. Schemat mówi o „kwocie należności ogółem” faktury, która takie towary „obejmuje”.
 - **Korekta.** Nie znaleźliśmy opisu, jak ustawić `P_18A` na fakturze korygującej, zwłaszcza gdy korekta przesuwa kwotę przez próg 15 000 zł. Sam mechanizm korekty w KSeF opisujemy w poście o [fakturze korygującej](/blog/faktura-korygujaca-ksef).
 
 Przy fakturze mieszanej lub korekcie przez próg decyzja zależy od konkretnej transakcji, więc zapytaj doradcę podatkowego.
 
 ## Przelew MPP a numer KSeF od 2027 r.
 
-Dla płatności dokonanych od 1 stycznia 2027 r. w komunikacie przelewu MPP za fakturę z KSeF wpisuje się jej numer KSeF zamiast numeru faktury (art. 108a ust. 3 pkt 3). Szczegóły, w tym identyfikator zbiorczy dla kilku faktur, opisaliśmy w poście o [numerze KSeF w przelewie](/blog/numer-ksef-w-przelewie).
+Gdy od 1 stycznia 2027 r. płacisz w MPP za fakturę z KSeF, w komunikacie przelewu wpisujesz jej numer KSeF zamiast numeru faktury (art. 108a ust. 3 pkt 3). Szczegóły, w tym identyfikator zbiorczy dla kilku faktur, opisaliśmy w poście o [numerze KSeF w przelewie](/blog/numer-ksef-w-przelewie).
 
-## Dla developerów: P_18A w XML
+## Dla programistów: P_18A w XML
 
 `P_18A` przyjmuje tylko `1` albo `2` i stoi w ściśle określonym miejscu: po `P_18`, przed `Zwolnienie`. Fragment `Adnotacje` dla faktury objętej obowiązkowym MPP:
 
