@@ -1,6 +1,6 @@
 ---
-title: "Logowanie do KSeF: Profil Zaufany i podpis"
-description: "Do KSeF zalogujesz się Profilem Zaufanym przez login.gov.pl albo podpisem kwalifikowanym. Token i certyfikat KSeF są dla programów, nie dla Ciebie."
+title: "Jak działa logowanie do KSeF Profilem Zaufanym?"
+description: "Do KSeF zalogujesz się Profilem Zaufanym przez login.gov.pl albo podpisem kwalifikowanym. Token i certyfikat KSeF są dla programów, nie dla ciebie."
 date: 2026-10-07
 section: guides
 locale: pl
@@ -36,7 +36,7 @@ Tak, do KSeF zalogujesz się Profilem Zaufanym: w Aplikacji Podatnika KSeF 2.0 w
 przez login.gov.pl”, a tam Profil Zaufany, mObywatel, bankowość elektroniczną albo e-dowód. Drugi
 przycisk, „Zaloguj certyfikatem”, jest dla osób i firm z kwalifikowanym podpisem lub pieczęcią.
 
-Stan prawny na 7 października 2026.
+Stan prawny na 7 października 2026 r.
 
 <Source
   href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
@@ -62,15 +62,15 @@ potrzebne są uprawnienia w kontekście tej firmy.
 
 ## JDG: wchodzisz od razu, bez ZAW-FA
 
-Jeśli prowadzisz jednoosobową działalność, KSeF sam przypisuje Ci uprawnienia właścicielskie do
-Twojego NIP. Obejmują wystawianie faktur, dostęp do faktur, nadawanie uprawnień innym (np. biuru
+Jeśli prowadzisz jednoosobową działalność, KSeF sam przypisuje ci uprawnienia właścicielskie do
+twojego NIP. Obejmują wystawianie faktur, dostęp do faktur, nadawanie uprawnień innym (np. biuru
 rachunkowemu), historię sesji i podgląd uprawnień. Nie da się ich odebrać. Możesz wejść od razu
 Profilem Zaufanym albo podpisem kwalifikowanym.
 
-**JDG nie składa zawiadomienia ZAW-FA.** Jedyny wyjątek to rejestracja Twojego własnego podpisu
+**JDG nie składa zawiadomienia ZAW-FA.** Jedyny wyjątek to rejestracja twojego własnego podpisu
 kwalifikowanego, który nie zawiera NIP ani PESEL (o tym niżej).
 
-Po zalogowaniu zobaczysz faktury wystawione na Twój NIP. Jak je wyszukać i pobrać, pokazujemy w
+Po zalogowaniu zobaczysz faktury wystawione na twój NIP. Jak je wyszukać i pobrać, pokazujemy w
 [poradniku o odbieraniu faktur w KSeF](/guides/jak-odebrac-fakture-ksef). Jeśli trafi się wśród nich faktura od firmy,
 której nie znasz, sprawdź, [jak rozpoznać fałszywą fakturę w KSeF](/blog/falszywe-faktury-ksef).
 
@@ -79,7 +79,7 @@ której nie znasz, sprawdź, [jak rozpoznać fałszywą fakturę w KSeF](/blog/f
   label="Podręcznik KSeF 2.0, cz. I, s. 57"
 />
 
-## Spółka: pieczęć kwalifikowana albo osoba wskazana w ZAW-FA
+## Spółka loguje się pieczęcią albo przez osobę wskazaną w ZAW-FA
 
 Tomasz jest prezesem spółki z o.o. Jego Profil Zaufany sam w sobie nie otworzy mu faktur spółki, bo
 spółka nie jest osobą fizyczną i nie dostaje uprawnień automatycznie. Ma dwie drogi:
@@ -90,7 +90,7 @@ spółka nie jest osobą fizyczną i nie dostaje uprawnień automatycznie. Ma dw
   nich, a kolejne osoby dodaje już elektronicznie.
 
 ZAW-FA(3) złożysz na papierze, przez e-Urząd Skarbowy (Dokumenty → Złóż dokument) albo przez
-e-Doręczenia. Złożenie przez ePUAP nie jest skuteczne od 1 stycznia 2026. Uprawnienia zaczynają działać,
+e-Doręczenia. Od 1 stycznia 2026 r. zawiadomienie złożone przez ePUAP nie jest skuteczne. Uprawnienia zaczynają działać,
 gdy urząd skarbowy wprowadzi dane do systemu, więc nie zostawiaj tego na dzień wystawienia faktury.
 Gdy już działają, osoba wskazana w ZAW-FA loguje się swoim sposobem (przez login.gov.pl albo
 podpisem kwalifikowanym) i w kroku z identyfikatorem wpisuje NIP spółki.
@@ -113,7 +113,7 @@ certyfikatem i wybierasz „Przekaż plik”.
 
 Kto zgłasza odcisk, zależy od tego, czyj to podpis:
 
-- **Twój własny, a prowadzisz JDG:** rejestrujesz go zawiadomieniem ZAW-FA (to ten wyjątek z
+- **Twój własny, gdy prowadzisz JDG:** rejestrujesz go zawiadomieniem ZAW-FA (to ten wyjątek z
   sekcji o JDG).
 - **Osoby, której nadajesz uprawnienia:** wpisujesz odcisk przy nadawaniu uprawnień, z
   identyfikatorem „Brak”, datą urodzenia i dokumentem tożsamości tej osoby.
@@ -140,13 +140,13 @@ może założyć Profil Zaufany lub mObywatel, dokumenty KSeF nie rozstrzygają.
   label="Podręcznik Aplikacji Podatnika KSeF 2.0, s. 13-17"
 />
 
-## Token i certyfikat KSeF: dla programów, nie dla Ciebie
+## Token i certyfikat KSeF są dla programów, nie dla ciebie
 
 Tokenem ani certyfikatem KSeF nie zalogujesz się do Aplikacji Podatnika. Służą programom do
 fakturowania, które łączą się z KSeF przez API. Program uwierzytelnia się podpisanym żądaniem (XAdES)
-albo tokenem KSeF. Certyfikat KSeF generuje się po uwierzytelnieniu przez
-login.gov.pl, podpisem albo pieczęcią kwalifikowaną i jest ważny najwyżej 2 lata. Po uwierzytelnieniu
-tokenem certyfikatu KSeF wygenerować się nie da.
+albo tokenem KSeF. Certyfikat KSeF wygenerujesz po uwierzytelnieniu przez
+login.gov.pl, podpisem albo pieczęcią kwalifikowaną. Jest ważny najwyżej 2 lata. Po
+uwierzytelnieniu tokenem certyfikatu KSeF nie wygenerujesz.
 
 <Source
   href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
@@ -157,21 +157,21 @@ tokenem certyfikatu KSeF wygenerować się nie da.
   label="CIRFMF: uwierzytelnianie"
 />
 
-### Co z tokenami po 31 grudnia 2026
+### Co z tokenami po 31 grudnia 2026 r.
 
-Nie jest to przesądzone. Rozporządzenie pozwala używać tokenów do 31 grudnia 2026 (§ 13 ust. 1 pkt 1).
-Ministerstwo w podręczniku z 6 sierpnia 2026 zapowiada, że tokeny zostają „na czas nieokreślony”, a
-rozporządzenie „zostanie odpowiednio znowelizowane”. Do 7 października 2026 nowelizacja się nie
-ukazała. Zespół API CIRF MF napisał 10 września 2026 na GitHubie, że tokeny wydane do 31 grudnia 2026
-będą działać, ale najdłużej do 30 listopada 2027. To zapowiedź, nie przepis.
+Nie jest to przesądzone. Rozporządzenie pozwala używać tokenów do 31 grudnia 2026 r. (§ 13 ust. 1 pkt 1).
+Ministerstwo w podręczniku z 6 sierpnia 2026 r. zapowiada, że tokeny zostają „na czas nieokreślony”, a
+rozporządzenie „zostanie odpowiednio znowelizowane”. Do 7 października 2026 r. nowelizacja się nie
+ukazała. Zespół API CIRF MF napisał 10 września 2026 r. na GitHubie, że tokeny wydane do 31 grudnia 2026 r.
+będą działać, ale najdłużej do 30 listopada 2027 r. To zapowiedź, nie przepis.
 
 <Source
   href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
   label="Podręcznik KSeF 2.0, cz. I, s. 26"
 />
 
-Jeśli Twój program łączy się z KSeF tokenem, nic nie musisz robić dziś. Zapytaj dostawcę programu,
-jak przygotowuje się na koniec 2026 roku.
+Jeśli twój program łączy się z KSeF tokenem, dziś nic nie musisz robić. Zapytaj dostawcę programu,
+jak przygotowuje się na koniec 2026 r.
 
 <Source href="https://api.sejm.gov.pl/eli/acts/DU/2025/1815" label="Dz.U. 2025 poz. 1815, § 13" />
 <Source
@@ -182,8 +182,8 @@ jak przygotowuje się na koniec 2026 roku.
 ## Czy Profil Zaufany nadal działa w KSeF?
 
 Tak, przez login.gov.pl. Nowelizacja rozporządzenia (Dz.U. 2026 poz. 169) zmieniła dwie daty:
-przejściowa podstawa dla samodzielnego podpisu zaufanego skończyła się 13 lutego 2026, a od 14 lutego
-2026 obowiązuje stała podstawa logowania przez węzeł krajowy, czyli login.gov.pl, gdzie Profil
+przejściowa podstawa dla samodzielnego podpisu zaufanego skończyła się 13 lutego 2026 r., a od 14 lutego
+2026 r. obowiązuje stała podstawa logowania przez węzeł krajowy, czyli login.gov.pl, gdzie Profil
 Zaufany jest jednym ze środków. FAQ KSeF 2.0 nadal wymienia Profil Zaufany wśród sposobów logowania
 do Aplikacji Podatnika.
 
@@ -195,12 +195,12 @@ rozstrzygnęło.
 
 ## Gdy Profil Zaufany nie działa
 
-MF ogłasza awarie na stronie z komunikatami technicznymi. W 2026 były tam m.in. awarie Profilu
+MF ogłasza awarie na stronie z komunikatami technicznymi. W 2026 r. były tam m.in. awarie Profilu
 Zaufanego 5 i 11 maja oraz utrudnienia w Aplikacji Podatnika 25 września. Zajrzyj tam najpierw, żeby
-wiedzieć, czy problem leży po Twojej stronie.
+wiedzieć, czy problem leży po twojej stronie.
 
 Jeśli niedostępny jest tylko Profil Zaufany, na tym samym ekranie login.gov.pl wybierz mObywatel,
-bankowość elektroniczną albo e-dowód. Logowanie podpisem lub pieczęcią kwalifikowaną idzie osobnym
+bankowość elektroniczną albo e-dowód. Podpisem lub pieczęcią kwalifikowaną logujesz się osobnym
 przyciskiem „Zaloguj certyfikatem”. Gdy nie działa sama Aplikacja Podatnika, zmiana sposobu
 logowania nie pomoże.
 
@@ -209,5 +209,5 @@ logowania nie pomoże.
   label="MF: komunikaty techniczne"
 />
 
-Jeśli prowadzisz JDG i logujesz się pierwszy raz, resztę minimum znajdziesz w
+Jeśli prowadzisz JDG i logujesz się pierwszy raz, pozostałe kroki znajdziesz w
 [poradniku KSeF dla JDG](/blog/ksef-dla-jdg).
