@@ -22,7 +22,7 @@
       "skipped": "Pominięto {count, plural, one {# plik} few {# pliki} many {# plików} other {# plików}}. Sprawdzamy tylko pliki XML."
     },
     "summary": {
-      "allValid": "Wszystkie pliki są poprawne",
+      "allValid": "Nie znaleźliśmy błędów ani ostrzeżeń",
       "hasErrors": "Znaleziono problemy w {errorCount} z {totalCount} plików",
       "hasWarnings": "Znaleziono ostrzeżenia w {warningCount} z {totalCount} plików",
       "validating": "Sprawdzamy pliki ({count})…",
@@ -135,10 +135,10 @@
       "P12_INVALID": "Nieprawidłowa stawka **VAT**: `{actual}`. Dozwolone wartości: {allowedValues}",
       "CURRENCY_RATE_UNVERIFIABLE": "Nie można zweryfikować kursu {currency} — brak kursu NBP dla faktury z dnia {invoiceDate}",
       "CURRENCY_RATE_MISMATCH": "`KursWaluty` {currency} ({actual}) odbiega od kursu NBP z dnia {date} ({expected})",
-      "XML_DISCOURAGED_CHARACTER": "Plik zawiera niedozwolony znak, który KSeF odrzuci od 19 października 2026 — usuń go lub zamień na zwykły tekst. Znak `{codePoint}` w linii {line}, kolumnie {column}: {snippet}. Źródło: [Weryfikacja faktury](https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md)",
-      "XML_PROCESSING_INSTRUCTION": "Plik zawiera ukrytą instrukcję, której KSeF nie przyjmie od 19 października 2026 — usuń ją z pliku. Instrukcja przetwarzania XML `<?{target} …?>` w linii {line}, kolumnie {column} (np. dołączony styl wizualizacji). Źródło: [Weryfikacja faktury](https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md)",
-      "XML_BOM_PRESENT": "Plik zapisano w sposób, którego KSeF nie przyjmie od 19 października 2026 — zapisz go ponownie jako UTF-8 bez BOM. Plik zaczyna się od znacznika BOM (bajty `EF BB BF`). Źródło: [Weryfikacja faktury](https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md)",
-      "XML_ENCODING_NOT_UTF8": "Plik zapisano w złym kodowaniu znaków — KSeF wymaga UTF-8 i odrzuci inne od 19 października 2026. Deklaracja XML wskazuje kodowanie `{encoding}` w linii {line}, kolumnie {column}. Źródło: [Weryfikacja faktury](https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md)",
+      "XML_DISCOURAGED_CHARACTER": "Plik zawiera niedozwolony znak, przez który KSeF może odrzucić fakturę: środowisko testowe już to robi, a produkcyjne miało zacząć 19 października 2026, czego dokumentacja na razie nie potwierdza. Usuń go lub zamień na zwykły tekst. Znak `{codePoint}` w linii {line}, kolumnie {column}: {snippet}. Źródło: [Weryfikacja faktury](https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md)",
+      "XML_PROCESSING_INSTRUCTION": "Plik zawiera ukrytą instrukcję, przez którą KSeF może odrzucić fakturę: środowisko testowe już to robi, a produkcyjne miało zacząć 19 października 2026, czego dokumentacja na razie nie potwierdza. Usuń ją z pliku. Instrukcja przetwarzania XML `<?{target} …?>` w linii {line}, kolumnie {column} (np. dołączony styl wizualizacji). Źródło: [Weryfikacja faktury](https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md)",
+      "XML_BOM_PRESENT": "Plik zapisano w sposób, przez który KSeF może go odrzucić (dokumentacja API nie podaje, od kiedy środowisko produkcyjne to sprawdza). Zapisz go ponownie jako UTF-8 bez BOM. Plik zaczyna się od znacznika BOM (bajty `EF BB BF`). Źródło: [Weryfikacja faktury](https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md)",
+      "XML_ENCODING_NOT_UTF8": "Plik zapisano w złym kodowaniu znaków. KSeF wymaga UTF-8 i może odrzucić plik w innym kodowaniu (dokumentacja API nie podaje, od kiedy środowisko produkcyjne to sprawdza). Deklaracja XML wskazuje kodowanie `{encoding}` w linii {line}, kolumnie {column}. Źródło: [Weryfikacja faktury](https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md)",
       "XML_DISCOURAGED_CHARACTER_MORE": "…i jeszcze {count} takich znaków w pliku (łącznie {total}). Usuń wszystkie niedozwolone znaki.",
       "XML_PROCESSING_INSTRUCTION_MORE": "…i jeszcze {count} takich instrukcji w pliku (łącznie {total}). Usuń wszystkie.",
       "UNEXPECTED_ELEMENT": "Element `{element}` stoi w złym miejscu albo nie powinno go tu być",
@@ -421,11 +421,11 @@
   "terms": {
     "meta": {
       "title": "Warunki użytkowania — ksefuj.to",
-      "description": "Warunki korzystania z ksefuj.to, darmowego walidatora faktur KSeF FA(3) z publicznym kodem."
+      "description": "Warunki korzystania z ksefuj.to, darmowego walidatora faktur KSeF FA(3) z otwartym kodem źródłowym."
     },
     "title": "Warunki użytkowania",
     "lastUpdated": "Ostatnia aktualizacja: marzec 2026",
-    "intro": "ksefuj.to to bezpłatne narzędzie z publicznym kodem do sprawdzania faktur KSeF FA(3). Korzystając z narzędzia, akceptujesz poniższe warunki.",
+    "intro": "ksefuj.to to bezpłatne narzędzie z otwartym kodem źródłowym do sprawdzania faktur KSeF FA(3). Korzystając z narzędzia, akceptujesz poniższe warunki.",
     "sections": {
       "license": {
         "title": "1. Otwarta licencja Apache 2.0",
@@ -641,11 +641,11 @@
     "faq": [
       {
         "question": "Czym jest KSeF i kto musi z niego korzystać od 1 kwietnia 2026?",
-        "answer": "KSeF (Krajowy System e-Faktur) to centralny system Ministerstwa Finansów do wystawiania i odbierania faktur ustrukturyzowanych w formacie XML. Od 1 lutego 2026 r. obowiązek dotyczy dużych firm (obrót powyżej 200 mln zł w 2024 r.), a od 1 kwietnia 2026 r. — wszystkich czynnych podatników VAT, w tym jednoosobowych działalności gospodarczych (JDG) i freelancerów. Najmniejsze firmy (sprzedaż do 10 tys. zł miesięcznie) mają zwolnienie do końca 2026 r."
+        "answer": "KSeF (Krajowy System e-Faktur) to centralny system Ministerstwa Finansów do wystawiania i odbierania faktur ustrukturyzowanych w formacie XML. Od 1 lutego 2026 r. obowiązek dotyczy dużych firm (sprzedaż powyżej 200 mln zł w 2024 r.), a od 1 kwietnia 2026 r. wszystkich pozostałych podatników, czynnych i zwolnionych z VAT, w tym jednoosobowych działalności gospodarczych (JDG) i freelancerów. Do końca 2026 r. możesz wystawiać faktury poza KSeF, jeśli łączna wartość sprzedaży brutto na fakturach w danym miesiącu nie przekracza 10 tys. zł (art. 145m ustawy o VAT)."
       },
       {
         "question": "Co się stanie, jeśli nie wystawię faktury w KSeF?",
-        "answer": "W 2026 r. obowiązuje okres ochronny: za naruszenia związane z KSeF urząd nie nakłada kar finansowych. Od 1 stycznia 2027 r. grożą kary do 100% kwoty VAT na fakturze lub do 18,7% wartości brutto faktury. Tradycyjne faktury papierowe i zwykłe PDF-y nie będą uznawane za dokumenty księgowe w krajowym obrocie B2B."
+        "answer": "W 2026 r. urząd nie nakłada kar finansowych za błędy w stosowaniu KSeF. Według obowiązującej ustawy (art. 106ni) od 1 stycznia 2027 r. za fakturę wystawioną poza KSeF grozi kara do 100% kwoty VAT z tej faktury albo do 18,7% kwoty należności ogółem, gdy faktura nie wykazuje VAT. MF zapowiedziało, że kar nie będzie do końca 2027 r. Projekt ustawy, który przesuwa je na 1 stycznia 2028 r. (druk sejmowy nr 3245), nie został jeszcze uchwalony."
       },
       {
         "question": "Czym jest format XML FA(3)?",
@@ -657,7 +657,7 @@
       },
       {
         "question": "Czy mogę korzystać z KSeF bez programu księgowego?",
-        "answer": "Tak. Ministerstwo Finansów udostępnia bezpłatną Aplikację Podatnika na ap.ksef.mf.gov.pl, która pozwala wystawiać i odbierać faktury bezpośrednio w KSeF. Narzędzia takie jak ksefuj.to pomagają sprawdzić XML przed wysłaniem, a w przyszłości pozwolą też tworzyć faktury bez instalowania programu księgowego."
+        "answer": "Tak. Ministerstwo Finansów udostępnia bezpłatną Aplikację Podatnika na ap.ksef.mf.gov.pl, która pozwala wystawiać i odbierać faktury bezpośrednio w KSeF. Narzędzia takie jak ksefuj.to pomagają sprawdzić XML przed wysłaniem. W planach mamy też formularz do tworzenia faktur XML bez programu księgowego."
       },
       {
         "question": "Czym jest numer KSeF (identyfikator KSeF)?",
@@ -665,15 +665,15 @@
       },
       {
         "question": "Jak wystawić fakturę w KSeF, gdy nabywca nie ma NIP?",
-        "answer": "Faktury dla osób fizycznych nieprowadzących działalności gospodarczej (B2C) nie wymagają NIP nabywcy. W KSeF wystawia się je normalnie, ale nabywca nie ma dostępu do systemu KSeF — fakturę można mu przekazać w inny sposób (np. wydruk, PDF z kodem QR)."
+        "answer": "Faktury dla osób fizycznych nieprowadzących działalności gospodarczej (konsumentów) nie wymagają NIP nabywcy i nie musisz ich wystawiać w KSeF (art. 106ga ust. 2 pkt 4 ustawy o VAT). Możesz to zrobić dobrowolnie: w XML zaznaczasz wtedy brak identyfikatora nabywcy (BrakID = 1), a fakturę przekazujesz konsumentowi w uzgodniony sposób, np. jako wydruk lub PDF z kodem QR."
       },
       {
         "question": "Jak wystawiać w KSeF faktury dla zagranicznych nabywców?",
-        "answer": "Faktury dla zagranicznych kontrahentów również muszą trafić do KSeF. W schemacie FA(3) dla nabywców zagranicznych używa się pola NrVatUE (nie NIP), a stawki VAT powinny być oznaczone jako „np” (nie podlega) z odpowiednim oznaczeniem (np I lub np II). Fakturę w formacie czytelnym dla kontrahenta (np. PDF z kodem QR) można wysłać dodatkowo."
+        "answer": "Faktury dla zagranicznych kontrahentów również trafiają do KSeF. Jeśli nabywca nie ma polskiego NIP, w FA(3) podajesz zamiast niego KodUE i NrVatUE (np. przy dostawie towarów do firmy z UE) albo KodKraju i NrID (nabywca spoza UE). Stawka zależy od transakcji: np. „0 WDT” przy wewnątrzwspólnotowej dostawie towarów, „0 EX” przy eksporcie, „np II” przy usługach, które rozlicza nabywca z UE (art. 100 ust. 1 pkt 4 ustawy o VAT), „np I” przy pozostałej sprzedaży poza krajem. Fakturę w formie czytelnej dla kontrahenta (np. PDF z kodem QR) możesz wysłać dodatkowo."
       },
       {
         "question": "Jakie kary grożą za nieprzestrzeganie przepisów o KSeF?",
-        "answer": "W 2026 r. obowiązuje okres ochronny bez kar finansowych. Od 1 stycznia 2027 r. kary mogą wynosić do 100% kwoty VAT z faktury lub do 18,7% wartości brutto (gdy VAT nie jest wyodrębniony). Kary dotyczą m.in. niewystawienia faktury w KSeF, opóźnień w przesłaniu faktur wystawionych offline oraz błędów w danych. Urząd skarbowy będzie oceniał każdy przypadek indywidualnie."
+        "answer": "W 2026 r. urząd nie nakłada kar finansowych za błędy w stosowaniu KSeF. Według obowiązującej ustawy (art. 106ni) od 1 stycznia 2027 r. kara może wynieść do 100% kwoty VAT z faktury albo do 18,7% kwoty należności ogółem, gdy faktura nie wykazuje VAT. Dotyczy m.in. niewystawienia faktury w KSeF i spóźnionego przesłania do KSeF faktur wystawionych offline lub w czasie awarii. MF zapowiedziało, że kar nie będzie do końca 2027 r., a projekt ustawy, który przesuwa je na 1 stycznia 2028 r. (druk sejmowy nr 3245), nie został jeszcze uchwalony."
       },
       {
         "question": "Czy istnieje darmowy walidator faktur KSeF?",
