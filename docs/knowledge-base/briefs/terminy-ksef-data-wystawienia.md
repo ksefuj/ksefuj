@@ -71,8 +71,9 @@ facts joined, no single source sentence states it (do not attribute to MF).
    - Information sheet §9.2 (EN, verbatim): P_1 is the formal date of issue for "Invoices in
      'online' mode where sending date > P_1 date (Art. 106nda sec. 16)" and "Invoices in 'offline24'
      mode (Art. 106nda sec. 10)".
-   - Source: art. 106nda ust. 10, 16 (statute not in KB verbatim; `awaria-ksef-offline.md` fakt 4);
-     Podręcznik cz. II pkt 1.4, 1.6.1. Tier 1/2. Confidence: HIGH. [KB] Ania: yes.
+   - Source: art. 106nda ust. 10, 16 (verbatim in `usuniecie-faktury-ksef.md` U2, checked live
+     2026-10-26; `awaria-ksef-offline.md` fakt 4); Podręcznik cz. II pkt 1.4, 1.6.1. Tier 1/2.
+     Confidence: HIGH. [KB] Ania: yes.
 
 3. **P_1 późniejsza niż dzień przesłania (data „z przyszłości") → odrzucenie pliku XML.** MF
    (Podręcznik) + MF API rule.

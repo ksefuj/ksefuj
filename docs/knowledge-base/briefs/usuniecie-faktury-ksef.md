@@ -112,10 +112,9 @@ transakcji), podmiot bez NIP), któremu udostępniono ją poza KSeF, w dniu fakt
     przy użyciu Krajowego Systemu e-Faktur"), not on buyer type alone.
   - KB: `terminy-ksef-data-wystawienia.md` fakt 7. Tier 1. Confidence: HIGH. [KB]
 
-**KB inconsistency noted (not resolved):** `terminy-ksef-data-wystawienia.md` (Provenance) states
-the KB holds „no verbatim text of art. 106na"; `pusta-faktura-pdf-xml.md` H4 records verbatim ust.
-3–4 and fakt 3 verbatim ust. 1 (live 2026-10-16). The verbatim quotes above are taken from the
-latter.
+**KB inconsistency resolved 2026-10-26:** `terminy-ksef-data-wystawienia.md` no longer claims the KB
+lacks verbatim art. 106na; `pusta-faktura-pdf-xml.md` H4 (ust. 3–4) and fakt 3 (ust. 1) match the
+live text. The verbatim quotes above are taken from there.
 
 **Sources (URLs already in KB):**
 
