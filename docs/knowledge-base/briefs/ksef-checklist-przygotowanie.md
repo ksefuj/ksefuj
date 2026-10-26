@@ -156,8 +156,9 @@ pierwsze czytanie 21.10.2026) przesuwa je na 1 stycznia 2028 r., ale nie jest pr
   stycznia 2027 r. znika limit 10 000 zł." Źródło mylącego sformułowania: harmonogram MF (fakt 2) i
   KB extract cz. II („Od 1 stycznia 2027 r. — podatnicy zwolnieni, u których limit 10 000 zł nie
   jest przekroczony").
-- **S2 (NIEAKTUALNE) Stan UD477 „wersja z 22 września 2026 r., etap uzgodnień":** obecnie wersja z
-  15.10.2026, etap Rada Ministrów (fakt 17). „Stan prawny na 7 października 2026" do zmiany.
+- **S2 (NIEAKTUALNE) Stan UD477 „wersja z 22 września 2026 r., etap uzgodnień":** obecnie druk
+  sejmowy nr 3245, po pierwszym czytaniu 21.10.2026, w Komisji Finansów Publicznych (fakt 17). „Stan
+  prawny na 7 października 2026" do zmiany.
 - **S3 (NIEPEŁNE) pkt 5 tryb offline:** łączy offline24 i niedostępność jednym terminem „do końca
   następnego dnia roboczego"; przy niedostępności termin liczy się od zakończenia niedostępności;
   brak awarii całkowitej i certyfikatu typ 2 (fakt 22; `koniec-limitu-10000-zl.md` fakt 14).
@@ -186,7 +187,7 @@ Limit i kasa (1, 3, 8), tokeny u dostawcy (13), przelewy z numerem KSeF (20), ka
 
 ## Unsettled Questions
 
-- Czy UD477 zostanie przyjęty i ogłoszony przed 31.12.2026 (stan w KB: 2026-10-16).
+- Czy UD477 zostanie przyjęty i ogłoszony przed 31.12.2026 (stan w KB: 2026-10-23, druk 3245 w KFP).
 - Nowelizacja § 13 rozporządzenia 1815; co KSeF zrobi 1.01.2027, jeśli jej nie będzie.
 - Faktury z art. 145m z 2026 a KSeF w 2027 (fakt 4); offline24 na przełomie roku (fakt 5).
 - Odliczenie z faktur poza KSeF wystawionych w 2027 (fakt 6); JPK dla faktur do paragonów (fakt 10).
@@ -227,8 +228,8 @@ Limit i kasa (1, 3, 8), tokeny u dostawcy (13), przelewy z numerem KSeF (20), ka
 All URLs above were not fetched in this run: isap.sejm.gov.pl, api.sejm.gov.pl, ksef.podatki.gov.pl,
 www.gov.pl, legislacja.rcl.gov.pl (unreachable from this environment), github.com (HTTP 403). Facts
 rely on KB verification dates: Dz.U. 2026 poz. 1263, Dz.U. 2025 poz. 1815 / 2026 poz. 169, MF pages
-and Podręczniki (2026-10-07; [NP], cz. I/II PDFs, MF 16.09 re-read 2026-10-16); UD477 (2026-10-16);
-CIRFMF #834, #718 (2026-10-07 / 2026-10-19).
+and Podręczniki (2026-10-07; [NP], cz. I/II PDFs, MF 16.09 re-read 2026-10-16); UD477 (RCL
+2026-10-16; Sejm API 2026-10-23); CIRFMF #834, #718 (2026-10-07 / 2026-10-19).
 
 **Freshness:** 2026-10-21. Re-check UD477 stage, Dz.U. (rozporządzenie 1815, ustawa o VAT) and FAQ
 pyt. 2–3 before publishing and again on 2026-12-15 and 2027-01-02.
