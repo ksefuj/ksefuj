@@ -16,22 +16,22 @@
       "dragHere": "Przeciągnij pliki XML tutaj",
       "dropFiles": "Upuść {count, plural, one {plik} few {# pliki} many {# plików} other {# plików}} XML",
       "validating": "Walidacja...",
-      "validatingDetails": "Sprawdzanie zgodności ze schematem...",
-      "acceptedFiles": "Akceptowane: .xml (faktury KSeF FA3)",
+      "validatingDetails": "Sprawdzamy zgodność ze schematem…",
+      "acceptedFiles": "Pliki .xml z fakturami KSeF FA(3)",
       "callToAction": "ksefuj to!",
       "skipped": "Pominięto {count, plural, one {# plik} few {# pliki} many {# plików} other {# plików}}. Sprawdzamy tylko pliki XML."
     },
     "summary": {
-      "allValid": "Walidacja zakończona pomyślnie",
+      "allValid": "Wszystkie pliki są poprawne",
       "hasErrors": "Znaleziono problemy w {errorCount} z {totalCount} plików",
       "hasWarnings": "Znaleziono ostrzeżenia w {warningCount} z {totalCount} plików",
-      "validating": "Walidowanie {count} plików...",
-      "validatingProgress": "Walidowanie... ({completed}/{total})",
+      "validating": "Sprawdzamy pliki ({count})…",
+      "validatingProgress": "Sprawdzamy… ({completed}/{total})",
       "processing": "Przetwarzanie",
       "noFiles": "Brak plików",
-      "valid": "{count} poprawne",
-      "errors": "{count} z błędami",
-      "warnings": "{count} ostrzeżenia"
+      "valid": "Poprawne: {count}",
+      "errors": "Z błędami: {count}",
+      "warnings": "Z ostrzeżeniami: {count}"
     },
     "fileList": {
       "title": "Pliki",
@@ -39,11 +39,11 @@
       "processingError": "Błąd przetwarzania",
       "errors": {
         "unknownError": "Nieznany błąd",
-        "failedToInitializeValidator": "Nie udało się zainicjować walidatora"
+        "failedToInitializeValidator": "Nie udało się uruchomić walidatora"
       }
     },
     "pagination": {
-      "showing": "Pokazane {start}-{end} z {total}",
+      "showing": "Pokazano {start}–{end} z {total}",
       "previous": "Poprzednia",
       "next": "Następna"
     },
@@ -54,25 +54,25 @@
       "noIssuesTitle": "Wszystko w porządku!",
       "noIssuesDescription": "Twoja faktura jest poprawna.",
       "showingCount": "Pokazano {shown} z {total} problemów.",
-      "remaining": "{count} pozostało."
+      "remaining": "Pozostałe: {count}."
     },
     "domain": {
       "parse": "STRUKTURA XML",
-      "xsd": "SCHEMA XSD",
+      "xsd": "SCHEMAT XSD",
       "semantic": "REGUŁY BIZNESOWE",
       "infrastructure": "SYSTEM"
     },
     "details": {
-      "location": "Lokalizacja w pliku",
+      "location": "Miejsce w pliku",
       "xpath": "XPath:",
       "line": "Linia:",
       "column": ", kolumna",
       "valueDetails": "Szczegóły wartości",
       "actualValue": "Wartość:",
       "expectedValues": "Oczekiwane:",
-      "allowedOptions": "Dozwolone opcje:",
+      "allowedOptions": "Dozwolone wartości:",
       "hint": "Wskazówka:",
-      "useCountryCode": "Użyj kodu kraju \"PL\" zamiast \"POL\" dla Polski.",
+      "useCountryCode": "Dla Polski użyj kodu kraju „PL”, nie „POL”.",
       "among": "spośród",
       "options": "opcji",
       "expected": "oczekiwane:",
@@ -149,7 +149,7 @@
       "fieldPrefix": "Pole {field}",
       "invalidValue": "Pole {field}: nieprawidłowa wartość {value}",
       "invalidValues": "Pole {field}: nieprawidłowe wartości {values}",
-      "invalidEnumValue": "Nieprawidłowa wartość {value} dla pola {field}",
+      "invalidEnumValue": "Nieprawidłowa wartość {value} w polu {field}",
       "invalidDate": "Nieprawidłowa data {value}. Użyj formatu **RRRR-MM-DD**",
       "invalidDateValue": "Nieprawidłowa data {value}. Użyj formatu **RRRR-MM-DD**",
       "invalidRootElement": "Brak deklaracji {field} w schemacie **XSD**. Sprawdź przestrzeń nazw **XML**",
@@ -201,7 +201,7 @@
         "wrongLength": "Pole {element} ma niewłaściwą długość ({actual, plural, one {# znak} few {# znaki} many {# znaków} other {# znaków}}). Wymagana liczba znaków: {limit}."
       },
       "fix": {
-        "rename": "Popraw nazwę elementu, to prawdopodobnie literówka.",
+        "rename": "Popraw nazwę elementu. To prawdopodobnie literówka.",
         "order": "Elementy faktury muszą stać w ściśle określonej kolejności. Przenieś ten element we właściwe miejsce albo usuń go, jeśli jest zbędny.",
         "add": "Dodaj brakujący element albo atrybut.",
         "namespace": "Ustaw w elemencie `Faktura` atrybut `xmlns` dokładnie jak w przykładzie i zapisz plik ponownie.",
@@ -263,7 +263,7 @@
       "empty": "Wkrótce pojawią się nowe artykuły.",
       "readingTime": "{minutes} min czytania",
       "metaTitle": "Blog o KSeF i e-fakturach",
-      "metaDescription": "Artykuły o KSeF, FA(3) i e-fakturach dla JDG i małych firm.",
+      "metaDescription": "Piszemy o KSeF, FA(3) i e-fakturach dla JDG i małych firm.",
       "ogImageTitle": "Blog — artykuły o KSeF i e-fakturach",
       "languageBadge": "PL",
       "filter": {
@@ -280,15 +280,15 @@
       "ogImageTitle": "Dokumentacja techniczna walidatora KSeF"
     },
     "faq": {
-      "title": "FAQ — Najczęstsze pytania o KSeF",
+      "title": "FAQ — najczęstsze pytania o KSeF",
       "description": "Odpowiedzi na najczęstsze pytania o KSeF — od podstaw po szczegóły techniczne.",
-      "metaDescription": "Odpowiedzi na 40+ pytań o KSeF — od podstaw po szczegóły techniczne. Wszystko co potrzebujesz wiedzieć o obowiązkowym e-fakturowaniu.",
-      "ogImageTitle": "FAQ — Najczęstsze pytania o KSeF",
+      "metaDescription": "Odpowiadamy na ponad 40 pytań o KSeF, od podstaw po szczegóły techniczne. Sprawdź, jak działa obowiązkowe e-fakturowanie.",
+      "ogImageTitle": "FAQ — najczęstsze pytania o KSeF",
       "empty": "FAQ jest w przygotowaniu."
     },
     "guides": {
       "title": "Poradniki",
-      "description": "Krok po kroku przez KSeF i faktury elektroniczne.",
+      "description": "Przeprowadzimy Cię krok po kroku przez KSeF i faktury elektroniczne.",
       "empty": "Poradniki są w przygotowaniu.",
       "metaTitle": "Poradniki",
       "metaDescription": "Poradniki krok po kroku o KSeF i fakturach elektronicznych dla JDG i firm.",
@@ -344,7 +344,7 @@
       "invoiceDate": "Data faktury (P_1)",
       "invoiceDateHint": "Dzień, w którym wystawiasz fakturę (pole P_1)",
       "saleDate": "Data sprzedaży (wykonania usługi)",
-      "saleDateHint": "Dla usługi rozliczanej miesięcznie to ostatni dzień miesiąca — skrót „Ub. miesiąc” zakłada, że fakturę wystawiasz już po zakończeniu okresu. Przy najmie, leasingu, stałej obsłudze prawnej lub biurowej i usługach budowlanych — data wystawienia faktury. Zostaw puste, jeśli sprzedaż nastąpiła w dniu wystawienia.",
+      "saleDateHint": "Dla usługi rozliczanej miesięcznie to ostatni dzień miesiąca. Skrót „Ub. miesiąc” zakłada, że fakturę wystawiasz już po zakończeniu okresu. Przy najmie, leasingu, stałej obsłudze prawnej lub biurowej i usługach budowlanych wpisz datę wystawienia faktury. Zostaw puste, jeśli sprzedaż nastąpiła w dniu wystawienia.",
       "saleDatePlaceholder": "Jak data faktury",
       "checkRate": "Sprawdź kurs",
       "loading": "Pobieranie kursu z NBP…",
@@ -364,7 +364,7 @@
       "error": {
         "title": "Nie udało się pobrać kursu",
         "no_rate": "Nie znaleźliśmy kursu NBP dla wybranej waluty i podanych dat. Sprawdź, czy daty nie są zbyt dawne lub przyszłe.",
-        "network": "Błąd połączenia z API NBP. Sprawdź połączenie z internetem i spróbuj ponownie."
+        "network": "Nie udało się połączyć z NBP. Sprawdź połączenie z internetem i spróbuj ponownie."
       },
       "openDatePicker": "Otwórz kalendarz",
       "openSaleDatePicker": "Otwórz kalendarz daty sprzedaży",
@@ -397,14 +397,14 @@
     "guides": "Poradniki",
     "waluty": "Kursy walut",
     "content": "Treści",
-    "legal": "Prawne",
+    "legal": "Informacje prawne",
     "contact": "Kontakt",
     "emailLabel": "Pytania? Sugestie?",
-    "npmPackage": "npm Package",
+    "npmPackage": "Pakiet npm",
     "ksefPortal": "Portal KSeF",
     "privacyPolicy": "Polityka prywatności",
     "termsOfUse": "Warunki użytkowania",
-    "copyright": "© 2026 ksefuj. Cały kod jest publiczny na GitHub.",
+    "copyright": "© 2026 ksefuj. Cały kod jest publiczny na GitHubie.",
     "validator": "Walidator",
     "preview": "Podgląd faktury",
     "licenses": "Licencje zewnętrzne"
@@ -421,15 +421,15 @@
   "terms": {
     "meta": {
       "title": "Warunki użytkowania — ksefuj.to",
-      "description": "Warunki użytkowania narzędzia ksefuj.to — darmowego, open source walidatora faktur KSeF FA(3)."
+      "description": "Warunki korzystania z ksefuj.to, darmowego walidatora faktur KSeF FA(3) z publicznym kodem."
     },
     "title": "Warunki użytkowania",
     "lastUpdated": "Ostatnia aktualizacja: marzec 2026",
-    "intro": "ksefuj.to to bezpłatne, open source narzędzie do walidacji faktur KSeF FA(3). Korzystając z narzędzia, akceptujesz poniższe warunki.",
+    "intro": "ksefuj.to to bezpłatne narzędzie z publicznym kodem do sprawdzania faktur KSeF FA(3). Korzystając z narzędzia, akceptujesz poniższe warunki.",
     "sections": {
       "license": {
-        "title": "1. Licencja open source (Apache 2.0)",
-        "content": "Kod źródłowy narzędzia ksefuj.to jest udostępniony na licencji Apache 2.0. Możesz go swobodnie używać, modyfikować i dystrybuować — również komercyjnie — pod warunkiem zachowania informacji o prawach autorskich i licencji oraz wskazania wprowadzonych zmian. Licencja dostępna jest na GitHub."
+        "title": "1. Otwarta licencja Apache 2.0",
+        "content": "Kod źródłowy narzędzia ksefuj.to jest udostępniony na licencji Apache 2.0. Możesz go swobodnie używać, modyfikować i rozpowszechniać, również komercyjnie, pod warunkiem że zachowasz informacje o prawach autorskich i licencji oraz wskażesz wprowadzone zmiany. Tekst licencji znajdziesz na GitHubie."
       },
       "noWarranties": {
         "title": "2. Brak gwarancji",
@@ -441,30 +441,30 @@
       },
       "userResponsibility": {
         "title": "4. Odpowiedzialność użytkownika",
-        "content": "Jesteś odpowiedzialny za weryfikację poprawności swoich faktur przed przesłaniem ich do systemu KSeF. Narzędzie pomaga wykryć typowe błędy, ale nie zastępuje weryfikacji przez księgowego ani własnej wiedzy o obowiązujących przepisach."
+        "content": "Odpowiadasz za sprawdzenie swoich faktur, zanim wyślesz je do KSeF. Narzędzie pomaga wykryć typowe błędy, ale nie zastępuje weryfikacji przez księgowego ani własnej wiedzy o obowiązujących przepisach."
       },
       "freeForever": {
         "title": "5. Bezpłatne na zawsze",
-        "content": "Walidator na ksefuj.to jest i pozostanie bezpłatny — bez limitów, ukrytych kosztów, kont użytkownika ani paywallu. Uważamy, że podstawowe narzędzia walidacji powinny być dostępne dla każdego pracującego z KSeF."
+        "content": "Walidator na ksefuj.to jest i pozostanie bezpłatny: bez limitów, ukrytych kosztów, kont użytkownika ani płatnej wersji. Uważamy, że podstawowe narzędzia do sprawdzania faktur powinny być dostępne dla każdego, kto pracuje z KSeF."
       },
       "privacy": {
         "title": "6. Prywatność",
-        "content": "Twoje pliki XML nie opuszczają przeglądarki. Całe przetwarzanie odbywa się lokalnie — żadne dane faktur nie są przesyłane na serwery. Szczegóły znajdziesz w Polityce prywatności."
+        "content": "Twoje pliki XML nie opuszczają przeglądarki. Przetwarzamy je lokalnie i nie wysyłamy danych faktur na żaden serwer. Szczegóły znajdziesz w Polityce prywatności."
       },
       "governingLaw": {
         "title": "7. Prawo właściwe",
-        "content": "Niniejsze warunki podlegają prawu polskiemu. Wszelkie spory rozstrzygane będą przez polskie sądy właściwe miejscowo."
+        "content": "Te warunki podlegają prawu polskiemu. Wszelkie spory rozstrzygają polskie sądy właściwe miejscowo."
       },
       "contact": {
         "title": "8. Kontakt",
-        "content": "Pytania dotyczące warunków użytkowania kieruj na adres:"
+        "content": "Pytania o warunki użytkowania wyślij na adres:"
       }
     }
   },
   "landing": {
     "meta": {
       "title": "Darmowy walidator faktur KSeF FA(3) — ksefuj.to",
-      "description": "Sprawdź poprawność faktury KSeF FA(3) online. Walidacja schematu XSD i reguł biznesowych. Bezpłatnie, bez rejestracji. Twoje dane nie opuszczają przeglądarki."
+      "description": "Sprawdź poprawność faktury KSeF FA(3) online: zgodność ze schematem XSD i wymaganiami MF. Za darmo i bez rejestracji. Twoje dane nie opuszczają przeglądarki."
     },
     "hero": {
       "title": "Darmowy walidator faktur KSeF FA(3)",
@@ -480,7 +480,7 @@
       "successMessage": "Sprawdź skrzynkę (także folder spam) i potwierdź zapis w e-mailu od nas.",
       "errorMessage": "Nie udało się zapisać adresu. Spróbuj jeszcze raz.",
       "disclaimer": "Możesz wypisać się w każdej chwili.",
-      "poweredBy": "Obsługiwane przez"
+      "poweredBy": "Wysyłamy przez"
     },
     "calendar": {
       "title": "Kalendarz KSeF",
@@ -597,34 +597,34 @@
     "metaDescription": "Polityka prywatności ksefuj.to — Twoje dane fakturowe nie opuszczają przeglądarki.",
     "title": "Polityka prywatności",
     "lastUpdated": "Ostatnia aktualizacja: październik 2026",
-    "intro": "Twoja prywatność jest dla nas ważna. ksefuj jest zaprojektowany tak, aby dane Twoich faktur nigdy nie opuszczały Twojej przeglądarki. Oto co to dokładnie oznacza.",
+    "intro": "Zaprojektowaliśmy ksefuj tak, żeby dane z Twoich faktur nigdy nie opuszczały Twojej przeglądarki.",
     "noCollection": {
-      "title": "Brak zbierania danych",
-      "description": "Narzędzia ksefuj (walidator, podgląd faktury, kursy walut) nie zbierają, nie przechowują ani nie przetwarzają żadnych danych osobowych. Jedyny wyjątek to adres e-mail osób, które zapiszą się na newsletter. Cała walidacja faktur XML odbywa się wyłącznie w Twojej przeglądarce za pomocą JavaScript. Twoje pliki nigdy nie są wysyłane na żaden serwer."
+      "title": "Nie zbieramy danych",
+      "description": "Narzędzia ksefuj (walidator, podgląd faktury, kursy walut) nie zbierają, nie przechowują ani nie przetwarzają żadnych danych osobowych. Jedyny wyjątek to adres e-mail osób, które zapiszą się na newsletter. Faktury XML sprawdzamy wyłącznie w Twojej przeglądarce, za pomocą JavaScriptu. Nigdy nie wysyłamy Twoich plików na żaden serwer."
     },
     "noStorage": {
-      "title": "Brak przechowywania na serwerze",
+      "title": "Faktury nie trafiają na serwer",
       "description": "Twoje pliki XML z fakturami nigdy nie opuszczają Twojego urządzenia. Faktury nie trafiają na żaden serwer ani do żadnej bazy danych. Po zamknięciu karty przeglądarki dane znikają — nigdy nie mieliśmy do nich dostępu."
     },
     "cookies": {
       "title": "Pliki cookie",
-      "description": "ksefuj nie używa śledzących plików cookie do celów reklamowych. Jedyny plik cookie, który może zostać ustawiony, służy do zapamiętania preferencji językowych. Korzystamy z Amplitude Analytics, która działa bez plików cookie, używając zamiast tego zanonimizowanych danych."
+      "description": "ksefuj nie używa śledzących plików cookie do celów reklamowych. Jedyny plik cookie, jaki możemy ustawić, zapamiętuje wybrany język. Korzystamy z Amplitude Analytics, która działa bez plików cookie i zamiast nich używa zanonimizowanych danych."
     },
     "thirdParty": {
       "title": "Usługi zewnętrzne",
-      "description": "Strona jest hostowana na platformie Vercel. Korzystamy z Amplitude Analytics (strefa EU — dane pozostają w Unii Europejskiej) oraz Vercel Speed Insights. Amplitude rejestruje wyświetlenia stron i interakcje, które świadomie instrumentujemy (np. kliknięcia przycisków) — pomagają nam one zrozumieć, jak narzędzie jest używane. Treść faktur nigdy nie jest rejestrowana. Vercel Speed Insights zbiera zagregowane dane wydajnościowe. Dane te służą wyłącznie celom diagnostycznym i ulepszaniu usługi; nie wykorzystujemy ich do identyfikacji konkretnych osób. Newsletter wysyłamy przez Buttondown, firmę z siedzibą w USA. Po zapisie przechowujemy tam Twój adres e-mail. Używamy go wyłącznie do wysyłki newslettera, a wypisać się możesz w każdej chwili przez link w każdym e-mailu."
+      "description": "Strona działa na platformie Vercel. Korzystamy z Amplitude Analytics (strefa UE, dane pozostają w Unii Europejskiej) oraz Vercel Speed Insights. Amplitude rejestruje wyświetlenia stron i te interakcje, które sami wybraliśmy do pomiaru (np. kliknięcia przycisków). Dzięki nim widzimy, jak ludzie korzystają z narzędzia. Treści faktur nigdy nie rejestrujemy. Vercel Speed Insights zbiera zagregowane dane o wydajności strony. Używamy tych danych wyłącznie do diagnostyki i ulepszania usługi. Nie identyfikujemy na ich podstawie konkretnych osób. Newsletter wysyłamy przez Buttondown, firmę z siedzibą w USA. Po zapisie przechowujemy tam Twój adres e-mail. Używamy go wyłącznie do wysyłania newslettera, a wypisać się możesz w każdej chwili przez link w każdym e-mailu."
     },
     "noAccounts": {
-      "title": "Brak kont użytkowników",
-      "description": "ksefuj nie wymaga rejestracji, logowania ani żadnej formy konta użytkownika. Możesz korzystać ze wszystkich funkcji bez podawania jakichkolwiek danych osobowych."
+      "title": "Nie potrzebujesz konta",
+      "description": "ksefuj nie wymaga rejestracji, logowania ani zakładania konta. Możesz korzystać ze wszystkich funkcji bez podawania jakichkolwiek danych osobowych."
     },
     "openSource": {
-      "title": "Otwarte źródło i możliwość audytu",
-      "description": "ksefuj jest w pełni open source na licencji Apache 2.0. Możesz przeglądać, audytować i weryfikować cały kod źródłowy na GitHubie pod adresem github.com/ksefuj/ksefuj. To, co widzisz, jest tym, co działa w Twojej przeglądarce."
+      "title": "Otwarty kod, który możesz sprawdzić",
+      "description": "Cały kod ksefuj jest publiczny, na licencji Apache 2.0. Możesz go przejrzeć i sprawdzić na GitHubie pod adresem github.com/ksefuj/ksefuj. To ten sam kod, który działa w Twojej przeglądarce."
     },
     "changes": {
       "title": "Zmiany w polityce",
-      "description": "Jeśli kiedykolwiek zmienimy tę politykę prywatności, aktualizacja zostanie odzwierciedlona na tej stronie z nową datą. Ponieważ naszą podstawową zasadą jest to, że żadne dane nie opuszczają Twojej przeglądarki, istotne zmiany są mało prawdopodobne."
+      "description": "Jeśli kiedykolwiek zmienimy tę politykę prywatności, opublikujemy nową wersję na tej stronie, z nową datą. Naszą podstawową zasadą jest to, że żadne dane nie opuszczają Twojej przeglądarki, więc istotne zmiany są mało prawdopodobne."
     },
     "contact": {
       "title": "Kontakt",
@@ -644,40 +644,40 @@
         "answer": "KSeF (Krajowy System e-Faktur) to centralny system Ministerstwa Finansów do wystawiania i odbierania faktur ustrukturyzowanych w formacie XML. Od 1 lutego 2026 r. obowiązek dotyczy dużych firm (obrót powyżej 200 mln zł w 2024 r.), a od 1 kwietnia 2026 r. — wszystkich czynnych podatników VAT, w tym jednoosobowych działalności gospodarczych (JDG) i freelancerów. Najmniejsze firmy (sprzedaż do 10 tys. zł miesięcznie) mają zwolnienie do końca 2026 r."
       },
       {
-        "question": "Co się stanie, jeśli nie wystawię faktury przez KSeF?",
-        "answer": "W 2026 roku obowiązuje okres ochronny — nie są nakładane kary finansowe za naruszenia związane z KSeF. Od 1 stycznia 2027 r. grożą kary do 100% kwoty VAT na fakturze lub do 18,7% wartości brutto faktury. Tradycyjne faktury papierowe i zwykłe PDF-y nie będą uznawane za dokumenty księgowe w krajowym obrocie B2B."
+        "question": "Co się stanie, jeśli nie wystawię faktury w KSeF?",
+        "answer": "W 2026 r. obowiązuje okres ochronny: za naruszenia związane z KSeF urząd nie nakłada kar finansowych. Od 1 stycznia 2027 r. grożą kary do 100% kwoty VAT na fakturze lub do 18,7% wartości brutto faktury. Tradycyjne faktury papierowe i zwykłe PDF-y nie będą uznawane za dokumenty księgowe w krajowym obrocie B2B."
       },
       {
         "question": "Czym jest format XML FA(3)?",
         "answer": "FA(3) to oficjalny schemat XML opublikowany przez Ministerstwo Finansów, definiujący strukturę faktury ustrukturyzowanej w KSeF. Każda faktura musi być zgodna z tym schematem — zawierać wymagane pola w odpowiedniej kolejności (XSD używa xs:sequence). Schemat obejmuje dane sprzedawcy, nabywcy, pozycje faktury, stawki VAT, adnotacje i wiele innych elementów."
       },
       {
-        "question": "Jak zwalidować fakturę KSeF przed wysłaniem?",
-        "answer": "Użyj darmowego walidatora na ksefuj.to — przeciągnij plik XML, a narzędzie sprawdzi zgodność ze schematem XSD oraz reguły semantyczne zgodne z oficjalnymi wymaganiami Ministerstwa Finansów. Walidacja odbywa się w całości w przeglądarce — Twoje dane nigdy nie opuszczają komputera. Możesz też użyć pakietu npm @ksefuj/validator lub CLI."
+        "question": "Jak sprawdzić fakturę KSeF przed wysłaniem?",
+        "answer": "Użyj darmowego walidatora na ksefuj.to. Przeciągnij plik XML, a narzędzie sprawdzi, czy faktura jest zgodna ze schematem XSD i z oficjalnymi wymaganiami Ministerstwa Finansów. Całe sprawdzanie odbywa się w przeglądarce, więc Twoje dane nigdy nie opuszczają komputera. Możesz też użyć pakietu npm @ksefuj/validator lub CLI."
       },
       {
         "question": "Czy mogę korzystać z KSeF bez programu księgowego?",
-        "answer": "Tak. Ministerstwo Finansów udostępnia bezpłatną Aplikację Podatnika na ap.ksef.mf.gov.pl, która pozwala wystawiać i odbierać faktury bezpośrednio w KSeF. Narzędzia takie jak ksefuj.to pomagają zwalidować XML przed wysłaniem, a w przyszłości umożliwią też generowanie faktur bez potrzeby instalowania oprogramowania księgowego."
+        "answer": "Tak. Ministerstwo Finansów udostępnia bezpłatną Aplikację Podatnika na ap.ksef.mf.gov.pl, która pozwala wystawiać i odbierać faktury bezpośrednio w KSeF. Narzędzia takie jak ksefuj.to pomagają sprawdzić XML przed wysłaniem, a w przyszłości pozwolą też tworzyć faktury bez instalowania programu księgowego."
       },
       {
         "question": "Czym jest numer KSeF (identyfikator KSeF)?",
-        "answer": "Numer KSeF to unikalny identyfikator nadawany każdej fakturze w momencie jej przyjęcia przez system KSeF. Potwierdza on, że faktura została poprawnie zarejestrowana i jest prawnie wiążąca. Numer ten jest wymagany przy korektach faktur i przy odwoływaniu się do faktur w systemie."
+        "answer": "Numer KSeF to unikalny identyfikator, który KSeF nadaje każdej fakturze, gdy ją przyjmie. Potwierdza, że faktura została poprawnie zarejestrowana i jest prawnie wiążąca. Ten numer jest wymagany przy korektach faktur i przy odwoływaniu się do faktur w systemie."
       },
       {
         "question": "Jak wystawić fakturę w KSeF, gdy nabywca nie ma NIP?",
         "answer": "Faktury dla osób fizycznych nieprowadzących działalności gospodarczej (B2C) nie wymagają NIP nabywcy. W KSeF wystawia się je normalnie, ale nabywca nie ma dostępu do systemu KSeF — fakturę można mu przekazać w inny sposób (np. wydruk, PDF z kodem QR)."
       },
       {
-        "question": "Jak wystawiać faktury dla zagranicznych nabywców przez KSeF?",
-        "answer": "Faktury dla zagranicznych kontrahentów również muszą przejść przez KSeF. W schemacie FA(3) dla nabywców zagranicznych używa się pola NrVatUE (nie NIP), a stawki VAT powinny być oznaczone jako „np” (nie podlega) z odpowiednim oznaczeniem (np I lub np II). Fakturę w formacie czytelnym dla kontrahenta (np. PDF z kodem QR) można wysłać dodatkowo."
+        "question": "Jak wystawiać w KSeF faktury dla zagranicznych nabywców?",
+        "answer": "Faktury dla zagranicznych kontrahentów również muszą trafić do KSeF. W schemacie FA(3) dla nabywców zagranicznych używa się pola NrVatUE (nie NIP), a stawki VAT powinny być oznaczone jako „np” (nie podlega) z odpowiednim oznaczeniem (np I lub np II). Fakturę w formacie czytelnym dla kontrahenta (np. PDF z kodem QR) można wysłać dodatkowo."
       },
       {
         "question": "Jakie kary grożą za nieprzestrzeganie przepisów o KSeF?",
-        "answer": "W 2026 roku obowiązuje okres ochronny bez kar finansowych. Od 1 stycznia 2027 r. kary mogą wynosić do 100% kwoty VAT z faktury lub do 18,7% wartości brutto (gdy VAT nie jest wyodrębniony). Kary dotyczą m.in. niewystawienia faktury przez KSeF, opóźnień w przesłaniu faktur wystawionych offline oraz błędów w danych. Urząd skarbowy będzie oceniał każdy przypadek indywidualnie."
+        "answer": "W 2026 r. obowiązuje okres ochronny bez kar finansowych. Od 1 stycznia 2027 r. kary mogą wynosić do 100% kwoty VAT z faktury lub do 18,7% wartości brutto (gdy VAT nie jest wyodrębniony). Kary dotyczą m.in. niewystawienia faktury w KSeF, opóźnień w przesłaniu faktur wystawionych offline oraz błędów w danych. Urząd skarbowy będzie oceniał każdy przypadek indywidualnie."
       },
       {
         "question": "Czy istnieje darmowy walidator faktur KSeF?",
-        "answer": "Tak — ksefuj.to to w pełni darmowy, open-source’owy walidator faktur KSeF FA(3). Sprawdza zgodność XML ze schematem XSD oraz weryfikuje reguły biznesowe zgodne z oficjalnymi wymaganiami Ministerstwa Finansów. Działa w całości w przeglądarce (dane nie opuszczają komputera), jest dostępny też jako pakiet npm (@ksefuj/validator) i narzędzie CLI. Bez limitów, bez rejestracji, bez opłat."
+        "answer": "Tak. ksefuj.to to w pełni darmowy walidator faktur KSeF FA(3), którego cały kod jest publiczny. Sprawdza, czy XML jest zgodny ze schematem XSD i z oficjalnymi wymaganiami Ministerstwa Finansów. Działa w całości w przeglądarce (dane nie opuszczają komputera), jest dostępny też jako pakiet npm (@ksefuj/validator) i narzędzie CLI. Bez limitów, bez rejestracji, bez opłat."
       }
     ]
   },
@@ -704,7 +704,7 @@
     "hint": "albo wybierz z dysku",
     "privacy": "Twój plik nie opuszcza przeglądarki.",
     "openValidator": "Otwórz walidator",
-    "opening": "Otwieram walidator…"
+    "opening": "Otwieramy walidator…"
   },
   "invoicePreview": {
     "actions": {
@@ -732,7 +732,7 @@
     "mobileHint": "Na telefonie pobierz PDF i otwórz go w przeglądarce lub aplikacji do PDF.",
     "errors": {
       "notXml": "To nie jest plik XML. Wrzuć fakturę zapisaną jako .xml.",
-      "notFa3": "Ten plik nie jest fakturą FA(3). Podgląd działa tylko dla faktur w formacie KSeF obowiązującym od 1 lutego 2026.",
+      "notFa3": "Ten plik nie jest fakturą FA(3). Podgląd działa tylko dla faktur w formacie KSeF obowiązującym od 1 lutego 2026 r.",
       "renderFailed": "Nie udało się przygotować PDF. Spróbuj jeszcze raz. Jeśli to nie pomoże, napisz do nas: hej@ksefuj.to."
     }
   },
@@ -759,7 +759,7 @@
         },
         {
           "title": "Zobacz fakturę",
-          "text": "Sprzedawca, nabywca, pozycje i kwoty w układzie znanym z wizualizacji MF."
+          "text": "Zobaczysz sprzedawcę, nabywcę, pozycje i kwoty w układzie znanym z wizualizacji MF."
         },
         {
           "title": "Pobierz PDF",
