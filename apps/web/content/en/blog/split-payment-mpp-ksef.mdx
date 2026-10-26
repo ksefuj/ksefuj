@@ -12,7 +12,7 @@ sources:
     url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
   - label: "MF: FA(3) logical structure information sheet, pp. 55–56, 93–95, 139"
     url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
-  - label: "VAT Act, consolidated text Dz.U. 2026 item 1263 (art. 108a, art. 17 of the act of 16 June 2023)"
+  - label: "VAT Act, consolidated text Dz.U. 2026 item 1263 (art. 106e, art. 108a, art. 17 of the act of 16 June 2023)"
     url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
   - label: "KSeF 2.0 Handbook, part II, section 4.1.4"
     url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
@@ -22,7 +22,7 @@ translations:
   uk: "podilenyy-platizh-mpp-ksef"
 ---
 
-On an FA(3) invoice in KSeF (Krajowy System e-Faktur, Poland's National e-Invoicing System), the split payment mechanism (MPP, _mechanizm podzielonej płatności_) is marked in field `P_18A` of the `Adnotacje` section: enter `1` when the total amount due exceeds PLN 15,000 (or its equivalent in a foreign currency) the invoice covers goods or services listed in annex 15 to the VAT Act and the supply is made to a taxpayer, and `2` in every other case. The field is mandatory on every invoice, including when MPP doesn't apply to you.
+On an FA(3) invoice in KSeF (Krajowy System e-Faktur, Poland's National e-Invoicing System), the split payment mechanism (MPP, _mechanizm podzielonej płatności_) is marked in field `P_18A` of the `Adnotacje` section: enter `1` when the total amount due exceeds PLN 15,000 (or its equivalent in a foreign currency), the invoice covers goods or services listed in annex 15 to the VAT Act and the supply is made to a taxpayer, and `2` in every other case. The field is mandatory on every invoice, including when MPP doesn't apply to you.
 
 Legal position as of 22 October 2026.
 
@@ -43,7 +43,7 @@ That is how the schema annotation for `P_18A` reads, and it follows art. 106e us
 
 If any of them is missing, you enter `2`. On advance, final settlement and corrective invoices, the schema gives `P_15` a different meaning (the amount paid, the amount still due, the correction amount), and MF sources don't say how to count the threshold in those cases. The VAT Act applies art. 108a ust. 1–1b to advance payments "accordingly" (ust. 1c; art. 19a ust. 8), and the transfer message carries the word "zaliczka" (advance) instead of the invoice number. The schema annotation for the field also repeats the words "mechanizm podzielonej płatności" (split payment mechanism), and in KSeF their equivalent is the value `1`. <Source href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd" label="FA(3) schema, element P_18A" />
 
-An example: a wholesaler, a client of Pani Krystyna (an accountant), sells annex 15 goods on an invoice with a total amount due of PLN 18,450. `P_18A` = `1`. The same wholesaler issues an invoice for PLN 12,300 for the same goods: `P_18A` = `2`. Ania, a graphic designer, invoices PLN 20,000 for logo design. The amount is above the threshold, but if her service isn't in annex 15, she enters `2`.
+An example: a wholesaler, a client of Pani Krystyna (an accountant), sells annex 15 goods to a business (a VAT taxpayer) on an invoice with a total amount due of PLN 18,450. `P_18A` = `1`. The same wholesaler issues an invoice for PLN 12,300 for the same goods: `P_18A` = `2`. Ania, a graphic designer, invoices PLN 20,000 for logo design. The amount is above the threshold, but if her service isn't in annex 15, she enters `2`.
 
 We don't reproduce the full list of annex 15 items here. The FA(3) information sheet refers to its items when describing GTU codes: they include some electronics, waste and metals.
 
@@ -51,11 +51,11 @@ We don't reproduce the full list of annex 15 items here. The FA(3) information s
 
 The PLN 15,000 threshold also applies to invoices in euro or dollars. You convert the amount into złoty using the same rules you apply to the taxable amount (so says the annotation to `P_18A` in the schema). Those rules are in art. 31a of the VAT Act. As a rule it is the NBP (National Bank of Poland) average rate from the last business day before the tax point, but the provision has exceptions, including the option to use the ECB rate and a different date when the invoice is issued before the tax point.
 
-An invoice for EUR 4,000 for annex 15 goods at an example rate of PLN 4.25 gives PLN 17,000. That is above the threshold, so `P_18A` = `1`. At an example rate of PLN 3.70 it would come to PLN 14,800, and `2`.
+An invoice to a business for EUR 4,000 for annex 15 goods at an example rate of PLN 4.25 gives PLN 17,000. That is above the threshold, so `P_18A` = `1`. At an example rate of PLN 3.70 it would come to PLN 14,800, and `2`.
 
 ## Mandatory and voluntary MPP
 
-As a rule, MPP is voluntary: the Act says that when paying, taxpayers "may apply" split payment (art. 108a ust. 1 of the VAT Act). It is mandatory when paying for annex 15 goods and services if the invoice exceeds PLN 15,000 (art. 108a ust. 1a), and the seller must then accept payment by MPP for an invoice covered by art. 106e ust. 1 pkt 18a (ust. 1b). For paying in breach of ust. 1a, the Act provides a sanction in art. 108a ust. 7. That sanction concerns how you pay, not whether the transfer carries a KSeF number. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="VAT Act, art. 108a (Dz.U. 2026 item 1263)" />
+As a rule, MPP is voluntary: the Act says that when paying, taxpayers "may apply" split payment (art. 108a ust. 1 of the VAT Act). It is mandatory when paying for annex 15 goods and services if the invoice exceeds PLN 15,000 (art. 108a ust. 1a; with exceptions in art. 108a ust. 1d–1e, e.g. offsetting), and the seller must then accept payment by MPP for an invoice covered by art. 106e ust. 1 pkt 18a (ust. 1b). For paying in breach of ust. 1a, the Act provides a sanction in art. 108a ust. 7. A seller who issues an invoice in breach of art. 106e ust. 1 pkt 18a faces an additional liability of 30% of the tax on the annex 15 items (art. 106e ust. 12); it does not apply if that tax was paid by MPP (ust. 13). The art. 108a ust. 7 sanction concerns how you pay, not whether the transfer carries a KSeF number. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="VAT Act, art. 108a (Dz.U. 2026 item 1263)" />
 
 `P_18A` describes only the mandatory case and is not a free choice: the schema and the information sheet say to enter `1` when all three conditions are met and, "otherwise, the value 2" (information sheet, pp. 55–56). There is no separate value for voluntary MPP. A buyer who is a taxpayer and received an invoice showing VAT may use MPP when paying it even if `P_18A` = `2` (art. 108a ust. 1).
 

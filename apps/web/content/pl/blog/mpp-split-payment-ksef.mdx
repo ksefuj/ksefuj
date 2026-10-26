@@ -12,7 +12,7 @@ sources:
     url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
   - label: "MF: Broszura informacyjna dotycząca struktury logicznej FA(3), s. 55–56, 93–95, 139"
     url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
-  - label: "Ustawa o VAT, tekst jednolity Dz.U. 2026 poz. 1263 (art. 108a, art. 17 ustawy z 16.06.2023)"
+  - label: "Ustawa o VAT, tekst jednolity Dz.U. 2026 poz. 1263 (art. 106e, art. 108a, art. 17 ustawy z 16.06.2023)"
     url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
   - label: "Podręcznik KSeF 2.0, cz. II, pkt 4.1.4"
     url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
@@ -26,7 +26,7 @@ related:
   - "blog/faktura-korygujaca-ksef"
 ---
 
-Na fakturze FA(3) mechanizm podzielonej płatności (MPP, split payment) oznacza się polem `P_18A` w sekcji `Adnotacje`: wpisujesz `1`, gdy kwota należności ogółem przekracza 15 000 zł (lub jej równowartość w walucie obcej) faktura obejmuje towary lub usługi z załącznika nr 15 do ustawy o VAT i sprzedaż jest dokonana na rzecz podatnika, a w każdym innym przypadku `2`. Pole jest obowiązkowe na każdej fakturze, także wtedy, gdy MPP Cię nie dotyczy.
+Na fakturze FA(3) mechanizm podzielonej płatności (MPP, split payment) oznacza się polem `P_18A` w sekcji `Adnotacje`: wpisujesz `1`, gdy kwota należności ogółem przekracza 15 000 zł (lub jej równowartość w walucie obcej), faktura obejmuje towary lub usługi z załącznika nr 15 do ustawy o VAT i sprzedaż jest dokonana na rzecz podatnika, a w każdym innym przypadku `2`. Pole jest obowiązkowe na każdej fakturze, także wtedy, gdy MPP Cię nie dotyczy.
 
 Stan prawny na 22 października 2026.
 
@@ -47,7 +47,7 @@ Tak brzmi adnotacja `P_18A` w schemacie, a wynika to z art. 106e ust. 1 pkt 18a 
 
 Jeśli brakuje któregokolwiek z nich, wpisujesz `2`. Na fakturze zaliczkowej, rozliczeniowej i korygującej `P_15` znaczy według schematu co innego (kwota zapłaty, kwota pozostała do zapłaty, korekta kwoty), a źródła MF nie mówią, jak wtedy liczyć próg. Do płatności zaliczek ustawa stosuje przepisy ust. 1–1b art. 108a „odpowiednio” (ust. 1c; art. 19a ust. 8), a w komunikacie przelewu zamiast numeru faktury wpisuje się wyraz „zaliczka”. Adnotacja do pola w schemacie MF powtarza przy tym wyrazy „mechanizm podzielonej płatności”, a w KSeF ich odpowiednikiem jest wartość `1`. <Source href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd" label="Schemat FA(3), element P_18A" />
 
-Przykład: klient Pani Krystyny, hurtownia, sprzedaje towar z załącznika nr 15 na fakturę z kwotą należności ogółem 18 450 zł. `P_18A` = `1`. Ta sama hurtownia wystawia fakturę na 12 300 zł za taki sam towar: `P_18A` = `2`. Ania, graficzka, fakturuje projekty logo na 20 000 zł. Kwota jest powyżej progu, ale jeśli jej usługi nie ma w załączniku nr 15, wpisuje `2`.
+Przykład: klient Pani Krystyny, hurtownia, sprzedaje firmie (podatnikowi VAT) towar z załącznika nr 15 na fakturę z kwotą należności ogółem 18 450 zł. `P_18A` = `1`. Ta sama hurtownia wystawia fakturę na 12 300 zł za taki sam towar: `P_18A` = `2`. Ania, graficzka, fakturuje projekty logo na 20 000 zł. Kwota jest powyżej progu, ale jeśli jej usługi nie ma w załączniku nr 15, wpisuje `2`.
 
 Pełnej listy pozycji załącznika nr 15 tu nie przepisujemy. Broszura FA(3) przywołuje jego pozycje przy opisie kodów GTU: chodzi m.in. o część elektroniki, odpadów i metali.
 
@@ -55,11 +55,11 @@ Pełnej listy pozycji załącznika nr 15 tu nie przepisujemy. Broszura FA(3) prz
 
 Próg 15 000 zł obowiązuje też przy fakturach w euro czy dolarach. Kwotę przelicza się na złote według tych samych zasad, które stosujesz do podstawy opodatkowania (tak mówi adnotacja do `P_18A` w schemacie). Te zasady opisuje art. 31a ustawy o VAT. Co do zasady to kurs średni NBP z ostatniego dnia roboczego przed powstaniem obowiązku podatkowego, ale przepis przewiduje wyjątki, m.in. kurs EBC do wyboru i inną datę, gdy faktura jest wystawiona przed powstaniem obowiązku podatkowego.
 
-Faktura na 4 000 EUR za towar z załącznika nr 15 przy przykładowym kursie 4,25 zł daje 17 000 zł. To powyżej progu, więc `P_18A` = `1`. Przy przykładowym kursie 3,70 zł wyszłoby 14 800 zł i `2`.
+Faktura dla firmy na 4 000 EUR za towar z załącznika nr 15 przy przykładowym kursie 4,25 zł daje 17 000 zł. To powyżej progu, więc `P_18A` = `1`. Przy przykładowym kursie 3,70 zł wyszłoby 14 800 zł i `2`.
 
 ## MPP obowiązkowy i dobrowolny
 
-Co do zasady MPP jest dobrowolny: ustawa mówi, że przy zapłacie podatnicy „mogą zastosować” podzieloną płatność (art. 108a ust. 1 ustawy o VAT). Obowiązkowy jest przy zapłacie za towary i usługi z załącznika nr 15, gdy faktura przekracza 15 000 zł (art. 108a ust. 1a), a sprzedawca musi wtedy przyjąć zapłatę w MPP za fakturę objętą art. 106e ust. 1 pkt 18a (ust. 1b). Za zapłatę z naruszeniem ust. 1a ustawa przewiduje sankcję w art. 108a ust. 7. Ta sankcja dotyczy sposobu zapłaty, nie tego, czy w przelewie jest numer KSeF. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="Ustawa o VAT, art. 108a (Dz.U. 2026 poz. 1263)" />
+Co do zasady MPP jest dobrowolny: ustawa mówi, że przy zapłacie podatnicy „mogą zastosować” podzieloną płatność (art. 108a ust. 1 ustawy o VAT). Obowiązkowy jest przy zapłacie za towary i usługi z załącznika nr 15, gdy faktura przekracza 15 000 zł (art. 108a ust. 1a; z wyjątkami w art. 108a ust. 1d–1e, m.in. przy potrąceniu), a sprzedawca musi wtedy przyjąć zapłatę w MPP za fakturę objętą art. 106e ust. 1 pkt 18a (ust. 1b). Za zapłatę z naruszeniem ust. 1a ustawa przewiduje sankcję w art. 108a ust. 7. Sprzedawcy, który wystawi fakturę z naruszeniem art. 106e ust. 1 pkt 18a, grozi dodatkowe zobowiązanie w wysokości 30% podatku od pozycji z załącznika nr 15 (art. 106e ust. 12); nie stosuje się go, jeśli ten podatek zapłacono w MPP (ust. 13). Sankcja z art. 108a ust. 7 dotyczy sposobu zapłaty, nie tego, czy w przelewie jest numer KSeF. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="Ustawa o VAT, art. 108a (Dz.U. 2026 poz. 1263)" />
 
 `P_18A` opisuje tylko przypadek obowiązkowy i nie jest do wyboru: schemat i broszura każą wpisać `1` przy spełnieniu trzech warunków, a „w przeciwnym przypadku – wartość „2”” (broszura, s. 55–56). Nie ma osobnej wartości dla dobrowolnego MPP. Nabywca będący podatnikiem, który dostał fakturę z VAT, może przy jej opłacaniu zastosować MPP także wtedy, gdy `P_18A` = `2` (art. 108a ust. 1).
 
