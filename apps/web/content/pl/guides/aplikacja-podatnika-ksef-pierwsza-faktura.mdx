@@ -1,7 +1,8 @@
 ---
-title: "Pierwsza prawdziwa faktura w Aplikacji Podatnika"
-description: "Jak wystawić prawdziwą fakturę w KSeF za darmo, bez programu: logowanie, formularz, numer KSeF i UPO. Dla firm z kilkoma fakturami w miesiącu."
+title: "Jak wystawić fakturę w Aplikacji Podatnika KSeF?"
+description: "Fakturę w KSeF wystawisz za darmo, bez programu: logujesz się, wypełniasz formularz, dostajesz numer KSeF i UPO. Dla firm z kilkoma fakturami w miesiącu."
 date: 2026-10-07
+updated: 2026-10-26
 section: guides
 locale: pl
 slug: "aplikacja-podatnika-ksef-pierwsza-faktura"
@@ -18,6 +19,10 @@ sources:
     url: "https://ksef.podatki.gov.pl/aplikacja-podatnika-ksef-i-inne-narzedzia/aplikacja-mobilna-ksef/"
   - label: "Komunikaty techniczne KSeF (MF)"
     url: "https://ksef.podatki.gov.pl/komunikaty-techniczne/"
+  - label: "MF: przedłużenie odroczenia kar (16.09.2026)"
+    url: "https://www.gov.pl/web/finanse/przedluzenie-odroczenia-kar-za-bledy-w-stosowaniu-ksef-do-konca-2027-r"
+  - label: "Sejm: druk nr 3245, rządowy projekt ustawy (UD477)"
+    url: "https://api.sejm.gov.pl/sejm/term10/prints/3245/3245.pdf"
 translations:
   pl: "aplikacja-podatnika-ksef-pierwsza-faktura"
   en: "ksef-taxpayer-app-first-invoice"
@@ -26,28 +31,26 @@ translations:
 
 Fakturę w KSeF wystawisz za darmo, bez żadnego programu. Wystarczy przeglądarka i logowanie, na przykład Profilem Zaufanym, w Aplikacji Podatnika KSeF 2.0 pod adresem [ap.ksef.mf.gov.pl](https://ap.ksef.mf.gov.pl). Aplikacja wystawia faktury wyłącznie online, czyli potrzebujesz internetu w chwili wysyłki.
 
-Poniżej cały proces, od logowania po numer KSeF i UPO.
-
 <Source href="https://ap.ksef.mf.gov.pl" label="Aplikacja Podatnika KSeF (MF)" />
 
 ---
 
-## Dla kogo to rozwiązanie
+## Dla kogo jest Aplikacja Podatnika
 
-Aplikacja Podatnika jest dla Ciebie, jeśli wystawiasz kilka faktur w miesiącu i nie masz programu do fakturowania. Tak jak fryzjerka zwolniona z VAT, która wystawia fakturę, kiedy klient firmowy o nią poprosi.
+Aplikacja Podatnika jest dla ciebie, jeśli wystawiasz kilka faktur w miesiącu i nie masz programu do fakturowania. Tak jest na przykład z fryzjerką zwolnioną z VAT, która wystawia fakturę, kiedy klient firmowy o nią poprosi.
 
 Jeśli wystawiasz faktury seriami, lepszy będzie program zintegrowany z KSeF. Wpisywanie wszystkiego ręcznie szybko męczy.
 
 <Info>
   Podatnik zwolniony z VAT wystawia fakturę tylko na żądanie nabywcy (z jego NIP-em, jeśli go ma),
   zgłoszone w ciągu 3 miesięcy od końca miesiąca, w którym dostarczono towar lub wykonano usługę. W
-  KSeF wystawia ją od 1.04.2026, a jeśli jego sprzedaż nie przekracza 10 000 zł, od 1.01.2027.
-  Opisuje to Podręcznik KSeF 2.0, część II (wydanie z 6.08.2026).
+  KSeF wystawia ją od 1 kwietnia 2026 r., a jeśli jego sprzedaż nie przekracza 10 000 zł, od 1
+  stycznia 2027 r. Opisuje to Podręcznik KSeF 2.0, część II (wydanie z 6 sierpnia 2026 r.).
 </Info>
 
 ---
 
-## Co przygotować przed startem
+## Co przygotować, zanim zaczniesz
 
 - **Sposób logowania.** Przez login.gov.pl: Profil Zaufany, aplikacja mObywatel, bankowość elektroniczna albo e-dowód. Dla JDG dostęp działa od razu, Profilem Zaufanym lub podpisem kwalifikowanym.
 - **Kontekst logowania.** To NIP firmy, w imieniu której wystawiasz fakturę. Wpisujesz go po wyborze metody logowania.
@@ -65,11 +68,11 @@ Jeśli wystawiasz faktury seriami, lepszy będzie program zintegrowany z KSeF. W
 
 ### 1. Zaloguj się i wybierz kontekst
 
-Wejdź na [ap.ksef.mf.gov.pl](https://ap.ksef.mf.gov.pl), wybierz metodę logowania. Potem wskaż identyfikator NIP, wpisz numer swojej firmy i kliknij „Przejdź dalej". Przy logowaniu przez login.gov.pl zostaniesz przekierowany na jego stronę, gdzie potwierdzasz tożsamość. <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Podręcznik AP, s. 14" />
+Wejdź na [ap.ksef.mf.gov.pl](https://ap.ksef.mf.gov.pl) i wybierz metodę logowania. Potem wskaż identyfikator NIP, wpisz numer swojej firmy i kliknij „Przejdź dalej". Jeśli logujesz się przez login.gov.pl, aplikacja przekieruje cię na jego stronę, gdzie potwierdzisz tożsamość. <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Podręcznik AP, s. 14" />
 
 ### 2. Wybierz „Wystaw fakturę VAT"
 
-W menu bocznym wybierz „Wystaw fakturę VAT". Aplikacja zapyta o formularz. Dla zwykłej sprzedaży krajowej wybierz **tryb skrócony**: ma najczęściej używane pola i mniej okazji do pomyłki. Tryb rozszerzony przyda się przy bardziej nietypowych fakturach.
+W menu bocznym wybierz „Wystaw fakturę VAT". Aplikacja zapyta o formularz. Dla zwykłej sprzedaży krajowej wybierz **tryb skrócony**: ma najczęściej używane pola i mniej okazji do pomyłki. Tryb rozszerzony przyda się przy nietypowych fakturach.
 
 ### 3. Uzupełnij dane faktury
 
@@ -82,7 +85,7 @@ W trybie skróconym wypełnisz kolejno:
 - **Sprzedawcę i nabywcę.** Dane wpiszesz ręcznie albo pobierzesz po NIP przyciskiem „Pobierz dane".
 - **Pozycje.** Nazwa, ilość, miara, cena i stawka VAT do wyboru z listy.
 
-Jeśli sprzedajesz ze zwolnieniem z VAT, zaznacz w adnotacjach pole o zwolnieniu i wpisz przepis, z którego korzystasz. Którego użyć, ustal z księgową: nie podpowiem go tu za Ciebie.
+Jeśli sprzedajesz ze zwolnieniem z VAT, zaznacz w adnotacjach pole o zwolnieniu i wpisz przepis, z którego korzystasz. Który to przepis, ustal z księgową; nie wskażemy go tu za ciebie.
 
 Przed wysyłką użyj przycisku „Pozostałe akcje" i opcji „Podgląd", żeby sprawdzić, jak faktura wygląda.
 
@@ -112,7 +115,7 @@ UPO to Urzędowe Poświadczenie Odbioru, czyli potwierdzenie z KSeF, że faktura
 
 ## Jak przekazać fakturę klientowi
 
-Kupujący z polskim NIP-em dostanie fakturę we własnym KSeF. Nie musisz mu jej niczym wysyłać.
+Kupujący z polskim NIP-em dostanie fakturę we własnym KSeF. Nie musisz mu jej wysyłać.
 
 Inaczej jest przy nabywcach z art. 106gb ust. 4 ustawy o VAT: gdy miejsce świadczenia jest za granicą, nabywca nie ma w Polsce siedziby ani stałego miejsca działalności (albo jego polski oddział nie uczestniczy w transakcji), jest zwolniony na podstawie art. 113a, nie ma numeru identyfikacji podatkowej albo jest osobą fizyczną bez działalności. Wtedy fakturę udostępniasz w sposób uzgodniony z nim. Ministerstwo Finansów przypomina, że ustawa nie wskazuje żadnego konkretnego sposobu ani formy uzgodnienia. Możesz więc wysłać wizualizację, na przykład mailem, ale faktura udostępniona poza KSeF musi mieć kod QR (art. 106gb ust. 5 pkt 1). <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, s. 23 i 82" />
 
@@ -125,7 +128,7 @@ Fakturę pobierzesz z listy faktur, wybierając format pliku. Wizualizacja może
 
 ---
 
-## Pomyłka na fakturze
+## Co zrobić, gdy pomylisz się na fakturze
 
 Błędu nie poprawisz edycją. Wystawioną fakturę poprawia się wyłącznie fakturą korygującą. Jak to zrobić, opisaliśmy w [osobnym artykule o korektach w KSeF](/blog/faktura-korygujaca-ksef).
 
@@ -133,13 +136,13 @@ Pomaga też opcja „Wystaw podobną fakturę": otwiera formularz wypełniony da
 
 ---
 
-## Ograniczenia aplikacji
+## Czego aplikacja nie zrobi
 
 - **Tylko tryb online.** Aplikacja Podatnika nie wystawia faktur offline. Gdy nie działa, trzeba poczekać albo użyć innego narzędzia.
 - **Praca ręczna.** Każdą fakturę wpisujesz sama. Przy dużej liczbie dokumentów lepszy będzie program zintegrowany z KSeF.
-- **Awarie.** Komunikaty o utrudnieniach MF publikuje na stronie komunikatów technicznych. Jeden z nich, z 25.09.2026, dotyczył właśnie Aplikacji Podatnika w wersji produkcyjnej.
+- **Awarie.** Komunikaty o utrudnieniach MF publikuje na stronie komunikatów technicznych. Jeden z nich, z 25 września 2026 r., dotyczył właśnie Aplikacji Podatnika w wersji produkcyjnej.
 
-Wystawisz też fakturę w aplikacji mobilnej KSeF. Według instrukcji MF wystawia faktury podstawowe i ich korekty w transakcjach krajowych w złotych, a korekty tylko do faktur wystawionych w tej samej aplikacji mobilnej.
+Fakturę wystawisz też w aplikacji mobilnej KSeF. Według instrukcji MF aplikacja mobilna wystawia faktury podstawowe i ich korekty w transakcjach krajowych w złotych, a korekty tylko do faktur wystawionych w tej samej aplikacji mobilnej.
 
 <Source
   href="https://ksef.podatki.gov.pl/aplikacja-podatnika-ksef-i-inne-narzedzia/aplikacja-mobilna-ksef/"
@@ -148,15 +151,24 @@ Wystawisz też fakturę w aplikacji mobilnej KSeF. Według instrukcji MF wystawi
 
 ---
 
-## Co dalej z terminami
+## Jakie terminy jeszcze cię czekają
 
-Limit 10 000 zł miesięcznie, który dziś zwalnia najmniejsze firmy z KSeF, obowiązuje do 31.12.2026 (art. 145m ustawy o VAT). Od 1.01.2027 KSeF obejmuje wszystkich. Podatnicy zwolnieni z VAT idą tą samą ścieżką etapów. Kary za naruszenia będą nakładane dopiero za działania od 1.01.2027, a za 2026 rok MF nie nakłada sankcji za błędy w KSeF. Więcej o limicie: [Limit 10 000 zł w KSeF](/blog/ksef-limit-10000-zl).
+Limit 10 000 zł miesięcznie, który dziś zwalnia najmniejsze firmy z KSeF, obowiązuje do 31 grudnia 2026 r. (art. 145m ustawy o VAT). Od 1 stycznia 2027 r. KSeF obejmuje co do zasady wszystkich, poza wyjątkami z art. 106ga ust. 2 (np. faktury dla konsumentów). Podatników zwolnionych z VAT obowiązują te same etapy. Za 2026 r. MF nie nakłada sankcji za błędy w KSeF. W obowiązującej ustawie kary (art. 106ni) grożą za naruszenia od 1 stycznia 2027 r., ale MF zapowiedziało 16 września 2026 r. odroczenie ich do końca 2027 r. Rządowy projekt UD477 (druk sejmowy nr 3245, po pierwszym czytaniu 21 października 2026 r.) przesuwa je na 1 stycznia 2028 r., ale nie został uchwalony. Jak liczyć limit, piszemy w poście [Limit 10 000 zł w KSeF](/blog/ksef-limit-10000-zl).
+
+<Source
+  href="https://www.gov.pl/web/finanse/przedluzenie-odroczenia-kar-za-bledy-w-stosowaniu-ksef-do-konca-2027-r"
+  label="MF: przedłużenie odroczenia kar (16.09.2026)"
+/>
+<Source
+  href="https://api.sejm.gov.pl/sejm/term10/prints/3245/3245.pdf"
+  label="Sejm, druk nr 3245"
+/>
 
 ---
 
 ## Chcesz najpierw potrenować?
 
-Zanim wyślesz prawdziwą fakturę, możesz przećwiczyć cały proces w środowisku testowym. Opisaliśmy to w przewodniku [Faktura testowa w KSeF: wyślij ją przed startem](/guides/pierwsza-faktura-fa3).
+Zanim wyślesz prawdziwą fakturę, możesz przećwiczyć cały proces w środowisku testowym. Opisaliśmy w przewodniku, [jak wysłać fakturę testową do KSeF](/guides/pierwsza-faktura-fa3).
 
 ---
 
@@ -170,6 +182,6 @@ Nie. W Aplikacji Podatnika KSeF 2.0 wystawiasz tylko faktury w trybie online.
 
 Nie. W systemie nie da się jej edytować, anulować ani usunąć. Błędy poprawia się fakturą korygującą.
 
-### Jak długo faktura leży w KSeF?
+### Jak długo KSeF przechowuje fakturę?
 
-Faktury ustrukturyzowane są przechowywane w KSeF przez 10 lat, licząc od końca roku, w którym zostały wystawione.
+KSeF przechowuje faktury ustrukturyzowane przez 10 lat, licząc od końca roku, w którym je wystawiono.
