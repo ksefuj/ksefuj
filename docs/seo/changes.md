@@ -5,6 +5,27 @@ effect. Record the date, the page, what changed (old -> new for titles and descr
 metric that motivated it. After 28 days, add a **Results** line comparing current CTR/position with
 the baseline.
 
+## 2026-10-21
+
+Digest: `gsc-data` 2026-10-20 (GSC 2026-09-20 to 2026-10-17: 105 clicks, 8,629 impressions, CTR
+1.22%, avg position 6.6). The digest crawl predates the redesign merges of 2026-10-20 (#145, #146);
+the live site could not be reached from the routine's environment to re-crawl. No title or
+description changes: every page in the low-CTR list was updated or published within the last 28
+days. No crawl Problems (all 149 sitemap URLs 200, no broken links, no canonical or hreflang
+issues); sitemap still 0 errors, 6 warnings. The not-indexed pages are 5-14 days old and already
+have 7-15 internal links each, so no new links today. No Results lines yet: the oldest logged change
+is from 2026-10-07.
+
+- **Page:** `/blog/najczestsze-bledy-walidacji-fa3`
+  - **Change:** body only (title and description unchanged). New second paragraph defining what a
+    validation error is and what happens to the invoice (KSeF rejects it, no KSeF number, the
+    invoice is not issued; fix and resend), citing Podręcznik KSeF 2.0 cz. II pkt 1.6.1.
+  - **Motivation:** definitional queries rank the post at positions 6-11 without a direct answer:
+    „błędy walidacji co to znaczy" (13 impr, pos 10.4), „błąd podczas walidacji co to znaczy" (5,
+    7.8), „błąd podczas walidacji" (3, 5.7), „co to jest błąd walidacji" (3, 6.7), „co oznacza błąd
+    walidacji" (2, 10.5). Page: 629 impr, 8 clicks, CTR 1.27%, pos 7.1.
+  - **Baseline to compare:** position of those queries and the page CTR above.
+
 ## 2026-10-19
 
 Digest: `gsc-data` 2026-10-18 (GSC 2026-09-18 to 2026-10-15: 101 clicks, 8,611 impressions, CTR

@@ -68,6 +68,11 @@ jobs:
           mkdir -p gsc
           cp "$OUT_DIR"/*.json "$OUT_DIR"/latest.md gsc/
 
+          # Vercel builds every pushed branch from apps/web; without this stub
+          # each export fails with "Root Directory does not exist".
+          mkdir -p apps/web
+          printf '%s\n' '{"git":{"deploymentEnabled":false},"ignoreCommand":"exit 0"}' > apps/web/vercel.json
+
           # Keep 90 days of dated snapshots.
           CUTOFF="$(date -u -d '90 days ago' +%F)"
           for f in gsc/????-??-??.json; do
@@ -78,7 +83,7 @@ jobs:
             fi
           done
 
-          git add -A gsc
+          git add -A gsc apps/web/vercel.json
           if git diff --cached --quiet; then
             echo "No changes to publish"
             exit 0
