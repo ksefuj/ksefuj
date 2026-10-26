@@ -161,22 +161,37 @@ tego nie nazwie, ale poczuje, że pisał to ktoś „nie stąd”.
 
 ### Kalki i anglicyzmy
 
-| Zamiast                                      | Pisz                                                     |
-| -------------------------------------------- | -------------------------------------------------------- |
-| faktury idą przez KSeF                       | faktury wystawia się w KSeF / trafiają do KSeF           |
-| checklista                                   | lista kontrolna, co sprawdzić                            |
-| sprawdź to / zrób to (z „to" jak „it")       | sprawdź / zrób; zaimek, gdy jest konieczny               |
-| bazując na                                   | na podstawie                                             |
-| w oparciu o                                  | na podstawie                                             |
-| adresować problem                            | rozwiązać problem, zająć się                             |
-| dedykowany (program, opcja)                  | przeznaczony do, specjalny, osobny                       |
-| wspierać format                              | obsługiwać format                                        |
-| aplikować (przepis)                          | stosować                                                 |
-| na ten moment                                | na razie, obecnie                                        |
-| w przypadku gdy                              | gdy, jeśli                                               |
-| posiadać (np. NIP)                           | mieć                                                     |
-| dokonać zapłaty / dokonać korekty            | zapłacić / skorygować (styl nominalny brzmi urzędowo)    |
-| XML z instrukcjami (processing instructions) | XML z instrukcjami przetwarzania (`<?...?>`), objaśnione |
+| Zamiast                                         | Pisz                                                             |
+| ----------------------------------------------- | ---------------------------------------------------------------- |
+| faktury idą przez KSeF                          | faktury wystawia się w KSeF / trafiają do KSeF                   |
+| checklista                                      | lista kontrolna, co sprawdzić                                    |
+| sprawdź to / zrób to (z „to" jak „it")          | sprawdź / zrób; zaimek, gdy jest konieczny                       |
+| bazując na                                      | na podstawie                                                     |
+| w oparciu o                                     | na podstawie                                                     |
+| adresować problem                               | rozwiązać problem, zająć się                                     |
+| dedykowany (program, opcja)                     | przeznaczony do, specjalny, osobny                               |
+| wspierać format                                 | obsługiwać format                                                |
+| aplikować (przepis)                             | stosować                                                         |
+| na ten moment                                   | na razie, obecnie                                                |
+| w przypadku gdy                                 | gdy, jeśli                                                       |
+| posiadać (np. NIP)                              | mieć                                                             |
+| dokonać zapłaty / dokonać korekty               | zapłacić / skorygować (styl nominalny brzmi urzędowo)            |
+| XML z instrukcjami (processing instructions)    | XML z instrukcjami przetwarzania (`<?...?>`), objaśnione         |
+| idzie / idą (przez KSeF, przelewem, ścieżką)    | trafia do KSeF, płacisz przelewem, logujesz się przyciskiem      |
+| dane idą do elementu                            | dane wpisuje się w element                                       |
+| płatnik (o tym, kto płaci)                      | płacący, nabywca („płatnik" to w prawie podatkowym inny podmiot) |
+| deweloper, developer (o programiście)           | programista („deweloper" buduje mieszkania)                      |
+| zahardkodowany, legacy, migrować, implementować | wpisany na sztywno, starszy, przejść na, wdrożyć                 |
+| wrażliwe na wielkość liter                      | liczy się wielkość liter                                         |
+| aplikacja webowa, standalone, paywall, wolumen  | aplikacja internetowa, osobny, płatna wersja, liczba             |
+| sufit, czas życia (tokenu)                      | najwyżej, ważność                                                |
+| nie funkcjonuje, jest obowiązany                | nie ma, musi (poza cytatem z ustawy)                             |
+| skutkuje odrzuceniem, umożliwia wysłanie        | KSeF odrzuci, możesz wysłać                                      |
+| z perspektywy księgowej                         | dla księgowej, u księgowej                                       |
+| na środowisku testowym, na kasie                | w środowisku testowym, przy kasie                                |
+| zapytać doradcy                                 | zapytać doradcę                                                  |
+| przypadki, gdzie                                | przypadki, w których                                             |
+| i/lub, „wydruk / PDF", „+" w zdaniu             | albo, lub, i                                                     |
 
 ### Zdanie
 
@@ -195,12 +210,40 @@ tego nie nazwie, ale poczuje, że pisał to ktoś „nie stąd”.
 - **Rejestr: rzeczowy kolega z branży.** Nie urzędnik („należy dokonać"), nie influencer („ogarnij
   KSeF"). „Co do zasady" najwyżej raz na tekst, gdy naprawdę chodzi o zasadę z wyjątkami.
 
+- **Nagłówki `##` i `###` też z czasownikiem albo jako pytanie** ze znakiem zapytania, nie etykieta
+  („Pomyłka na fakturze" → „Co zrobić, gdy pomylisz się na fakturze?"). Przed zmianą nagłówka
+  sprawdź `grep -rn "slug#"`, czy ktoś nie linkuje do jego kotwicy.
+- **Opis (description) to zdanie z czasownikiem,** nie lista rzeczowników ani urwany dopisek („Jak
+  policzyć i poprawić.").
+- **Czas teraźniejszy dla przepisów, które obowiązują** („limit obowiązuje do końca 2026 r."), nie
+  „limit działał".
+- **Podmiot, który może wykonać czynność.** „KSeF odrzuci plik, jeśli `Podmiot2` stoi przed
+  `Podmiot1`", nie „przestawione `Podmiot2` odrzuca plik". Gdy oba rzeczowniki mogą być podmiotem,
+  podmiot stawiaj pierwszy.
+- **Jedna forma w zdaniu:** albo „ty", albo bezosobowe „się" („Kwotę przeliczasz…, które stosujesz",
+  nie „przelicza się…, które stosujesz").
+- **Bez łańcuchów imiesłowów** („faktura wystawiona… jest wystawiona", „NIP wpisany przez wystawcę"
+  → „NIP, który wystawca wpisał").
+- **Źródło przed cytatem:** „MF zapowiada, że…", nie długi cytat zakończony „Tak zapowiada MF".
+- **Zdanie główne na początku,** nie pytanie zależne przed nim („Czy X, przepisy nie przesądzają").
+- **Bez akcentującego zaimka z angielskiego:** „Ty nie musisz…" → „Nie musisz…".
+- **Przecinek przed „czy" i zaimkiem pytającym w pytaniu zależnym** („sprawdź, czy…", „wskazuje,
+  którego…"), także w nagłówkach.
+- **Bez przecinka łączącego dwa zdania główne** (comma splice): kropka albo spójnik.
+- **Rzeczownik z liczbą się odmienia:** „certyfikat typu 1", nie „certyfikat typ 1".
+- **Żeńskie formy dla bohaterek:** „Ania jest graficzką", „pani Krystyna" (małą literą w środku
+  zdania, jak „pan Tomasz").
+- **Tekst linku pasuje do zdania,** nie powtarza cudzego tytułu (tytuły się zmieniają).
+
 ### Liczby, daty, skróty
 
 - Daty w tekście: „1 stycznia 2027 r.", z „r." po roku, gdy stoi data dzienna. W tytule „r." można
   pominąć, ale konsekwentnie w całym tytule. Zapis „19.10" tylko w tabelach.
 - Kwoty: „10 000 zł" (spacja nierozdzielająca, „zł", nie „PLN", chyba że chodzi o kod waluty w XML).
 - Przedziały: „2027–2028" z półpauzą.
+- „r." także po samym roku w tekście („od 2027 r."), nie tylko po pełnej dacie. W tytule wolno
+  pominąć.
+- Polski cudzysłów zamyka się znakiem ”, nie prostym ". Najczęstszy błąd w tabelach.
 - „Art. 106ga ust. 2 pkt 4 ustawy o VAT", nie „art. 106ga(2)(4)".
 
 ### Test na koniec
