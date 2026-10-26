@@ -2,6 +2,7 @@
 title: KSeF Basics
 description: What KSeF is, who it applies to, and how it works — answers to fundamental questions.
 date: 2026-03-25
+updated: 2026-10-26
 section: faq
 locale: en
 slug: ksef-basics
@@ -21,30 +22,35 @@ translations:
 </Question>
 
 <Question q="When did KSeF become mandatory?">
-  For large businesses (sales above 200M PLN per year), KSeF became mandatory on February 1, 2026.
-  For all other active VAT taxpayers — from April 1, 2026. VAT-exempt taxpayers follow the same
-  deadlines as everyone else. From January 1, 2027 the obligation applies to all, with no monthly
-  sales limit.
+  For large businesses (sales above 200M PLN in 2024), KSeF became mandatory on February 1, 2026.
+  For all other VAT taxpayers, active and VAT-exempt alike, it has applied since April 1, 2026.
+  Until December 31, 2026 some invoices can still be issued outside KSeF: when monthly sales stay
+  within 10,000 PLN (Art. 145m of the VAT Act) and when the invoice is issued with a cash register
+  (Art. 145n). From January 1, 2027 these exceptions end.
 </Question>
 
 <Question q="Who does KSeF apply to?">
-  KSeF applies to all active VAT taxpayers with a registered office or fixed place of business in
-  Poland. The obligation covers B2B invoices and invoices issued to individuals outside the cash
-  register system. VAT-exempt entities are covered too, on the same deadlines as other taxpayers.
+  KSeF applies to VAT taxpayers, active and VAT-exempt, who have a registered office or fixed place
+  of business in Poland and issue invoices (Art. 106ga of the VAT Act). It covers invoices to
+  businesses and institutions (B2B). Invoices to consumers, meaning individuals not running a
+  business, are excluded (Art. 106ga ust. 2 pkt 4). VAT-exempt taxpayers follow the same deadlines
+  as everyone else.
 </Question>
 
 <Question q="Does KSeF apply to consumer invoices (B2C)?">
-  Consumer invoices (B2C) are generally subject to KSeF, with one important exception: invoices
-  issued via cash registers are excluded. If you issue an invoice outside the cash register system —
-  e.g. in invoicing software — it must go through KSeF. In practice, most retail invoices issued via
-  a cash register remain outside the system.
+  No. Invoices to consumers, meaning individuals not running a business, are outside the KSeF
+  obligation (Art. 106ga ust. 2 pkt 4 of the VAT Act), whether you issue them from a cash register
+  or in invoicing software. You can issue them in KSeF voluntarily (Art. 106ga ust. 4), but you
+  still deliver the invoice to the customer in the way you agreed, with a QR code (Art. 106gb ust.
+  4). If the customer buys for their business and gives you a NIP, it is a B2B invoice.
 </Question>
 
 <Question q="Does KSeF apply to till receipts with a NIP number?">
-  Till receipts with the buyer's NIP number issued via a cash register are treated as simplified
-  invoices and are not subject to KSeF. These receipts still have full legal force as proof of
-  purchase. Only regular VAT invoices issued outside the cash register system are subject to the
-  KSeF obligation.
+  Until December 31, 2026, a till receipt showing the buyer's NIP for up to 450 PLN (or EUR 100)
+  counts as a simplified invoice and can be issued outside KSeF. Until that date you can also issue
+  invoices with a cash register outside KSeF (Art. 145n of the VAT Act). From January 1, 2027 a
+  receipt with a NIP is no longer a simplified invoice, and an invoice to a business for a
+  cash-register sale is issued in KSeF (Podręcznik KSeF 2.0, cz. I).
 </Question>
 
 <Question q="What is FA(3)?">
@@ -68,11 +74,10 @@ translations:
 </Question>
 
 <Question q="What is a KSeF number?">
-  A KSeF number is a unique invoice identifier assigned by the MF system upon successful
-  registration of the document. This number is required when correcting an invoice that was issued
-  through KSeF — the correction must reference the KSeF number of the original invoice, otherwise it
-  will be rejected. If the original invoice was issued outside KSeF (before the system was
-  introduced), the NrKSeFN marker is used instead.
+  A KSeF number is a unique invoice identifier assigned by the MF system once the invoice is
+  registered. You need it when correcting an invoice issued in KSeF: the correction gives the KSeF
+  number of the original invoice (the NrKSeF and NrKSeFFaKorygowanej fields). If the original
+  invoice has no KSeF number because it was issued outside KSeF, you tick the NrKSeFN field instead.
 </Question>
 
 <Question q="What is UPO?">

@@ -2,7 +2,7 @@
 title: "KSeF from 1 April 2026: who must use it"
 description: "From 1 April 2026 you issue B2B invoices in KSeF, VAT-exempt taxpayers included. Until the end of 2026 the exception is sales up to 10,000 PLN a month."
 date: 2026-03-25
-updated: 2026-10-09
+updated: 2026-10-26
 section: blog
 locale: en
 slug: "ksef-from-april-1-2026"
@@ -24,6 +24,8 @@ sources:
     url: "https://www.gov.pl/web/finanse/przedluzenie-odroczenia-kar-za-bledy-w-stosowaniu-ksef-do-konca-2027-r"
   - label: "Draft UD477 — Government Legislative Process"
     url: "https://legislacja.rcl.gov.pl/projekt/12414954"
+  - label: "Sejm: print no. 3245, government bill (UD477)"
+    url: "https://api.sejm.gov.pl/sejm/term10/prints/3245/3245.pdf"
   - label: "KSeF 2.0 Handbook, Part I"
     url: "https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
   - label: "MF regulation on cases with no structured invoice obligation (Journal of Laws 2025, item 1740)"
@@ -83,7 +85,7 @@ Invoices to consumers (B2C), meaning individuals not running a business, fall ou
 
 FA(3) is the official XML schema for structured invoices, in force since 1 February 2026. It replaced FA(2), used since September 2023. The Ministry of Finance describes every field in the FA(3) information sheet: what is mandatory, its data type and the permitted values. The schema is public at `https://crd.gov.pl/wzor/2025/06/25/13775/`. Your invoicing software usually generates the XML, but if you use the API integration you need to know FA(3).
 
-KSeF 2.0 has no built-in validator, so you learn about errors only after sending. A rejected invoice does not exist: it gets no KSeF number, which means a payment delay, a correction and a risk with the issue deadline. You can check the XML beforehand in the [ksefuj.to validator](/en/validator), which runs in your browser and does not upload the file. Typical errors are in our article on [common FA(3) validation errors](/en/blog/most-common-fa3-validation-errors).
+KSeF 2.0 has no built-in validator, so you learn about errors only after sending. A rejected invoice does not exist: it gets no KSeF number, which means a payment delay, fixing the file and sending it again, and a risk of missing the issue deadline. You can check the XML beforehand in the [ksefuj.to validator](/en/validator), which runs in your browser and does not upload the file. Typical errors are in our article on [common FA(3) validation errors](/en/blog/most-common-fa3-validation-errors).
 
 ## Penalties for invoicing outside KSeF
 
@@ -95,11 +97,12 @@ The basis is Art. 106ni of the VAT Act. The penalty applies to not issuing an in
 />
 
 <Info>
-  Update 7 Oct 2026: on 16 September 2026 the Ministry of Finance announced that it will extend the
-  deferral of KSeF penalties until the end of 2027. A government draft amending the VAT Act (UD477,
-  version of 22 September 2026, at the inter-ministerial consultation stage) would make Art.
-  106ni(1)–(3) and (5)–(7) apply from 1 January 2028. It is not law yet, and the KSeF obligation for
-  everyone still starts on 1 January 2027. Legal position as of 7 October 2026.
+  Update 26 Oct 2026: on 16 September 2026 the Ministry of Finance announced that it will extend the
+  deferral of KSeF penalties until the end of 2027. A government bill amending the VAT Act (UD477)
+  went to the Sejm as print no. 3245 and had its first reading on 21 October 2026. It would make
+  Art. 106ni(1)–(3) and (5)–(7) apply from 1 January 2028. The Sejm has not passed it, so it is not
+  law, and the KSeF obligation for everyone still starts on 1 January 2027. Legal position as of 26
+  October 2026.
 </Info>
 
 <Source
@@ -109,6 +112,10 @@ The basis is Art. 106ni of the VAT Act. The penalty applies to not issuing an in
 <Source
   href="https://legislacja.rcl.gov.pl/projekt/12414954"
   label="Draft UD477 — Government Legislative Process"
+/>
+<Source
+  href="https://api.sejm.gov.pl/sejm/term10/prints/3245/3245.pdf"
+  label="Sejm, print no. 3245"
 />
 
 <Warning>
@@ -159,7 +166,7 @@ Details are in our [guides](/en/guides).
 
 1. **Check whether you are covered.** You issue B2B invoices as an active VAT payer or VAT-exempt: yes, unless you stay within 10,000 PLN a month (until the end of 2026).
 2. **Check your software.** It must generate FA(3) XML, send invoices through the API and receive purchase invoices. Fakturownia, inFakt, wFirma, Comarch, Symfonia and others support it or are rolling it out. Confirm with your vendor.
-3. **Set up authentication:** a qualified electronic signature, Profil Zaufany (via ePUAP or mObywatel) or an authorisation token for API integrations. Your NIP must have permissions in the system.
+3. **Set up authentication:** a qualified electronic signature, Profil Zaufany (via ePUAP or mObywatel) or a KSeF token for API integrations. Your NIP must have permissions in the system.
 4. **Test in the test environment** at `https://ap-test.ksef.mf.gov.pl/web/`. Invoices with fictitious data have no legal effect.
 
 Other questions are in the [FAQ](/en/faq). If you already have an XML file, check it in the [validator](/en/validator) before the first submission.
