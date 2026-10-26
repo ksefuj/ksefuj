@@ -1,6 +1,6 @@
 ---
-title: "Faktura korygująca w KSeF: jak ją wystawić"
-description: "Faktury w KSeF nie edytujesz. Wystawiasz korektę KOR z numerem KSeF oryginału, a kwoty wpisujesz jako różnicę: −500 zł, nie nowe 4 500 zł."
+title: "Korekta faktury w KSeF: 6 kroków i przykład XML"
+description: "Faktury w KSeF nie edytujesz. Wystawiasz korektę KOR z numerem KSeF oryginału, a kwoty jako różnicę: −500 zł, nie 4 500 zł. Przy błędnym NIP: korekta do zera."
 date: 2026-04-02
 updated: 2026-10-17
 section: blog
@@ -25,7 +25,7 @@ translations:
   uk: "koryguvalna-faktura-ksef"
 ---
 
-Faktury wysłanej do KSeF nie da się edytować ani usunąć, więc błąd poprawiasz fakturą korygującą: osobnym plikiem FA(3) z `RodzajFaktury` = `KOR`, który wskazuje oryginał. Kwoty na korekcie wpisujesz jako różnicę względem oryginału, nie jako nową wartość.
+Faktury wysłanej do KSeF nie da się edytować ani [usunąć](/blog/usuniecie-faktury-ksef), więc błąd poprawiasz fakturą korygującą: osobnym plikiem FA(3) z `RodzajFaktury` = `KOR`, który wskazuje oryginał. Kwoty na korekcie wpisujesz jako różnicę względem oryginału, nie jako nową wartość.
 
 Podstawą jest art. 106j ustawy o VAT. Od 1 lutego 2026 nie ma już [not korygujących](/blog/nota-korygujaca-ksef), więc każdy błąd poprawia sprzedawca fakturą korygującą w KSeF. Program do fakturowania (Fakturownia, inFakt, wFirma i inne) wypełni większość pól sam po wybraniu opcji „wystaw korektę”. Poniżej pokazujemy, co robi w Twoim imieniu.
 

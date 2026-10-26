@@ -1,6 +1,6 @@
 ---
-title: "Corrective invoice in KSeF: how to issue one"
-description: "You can't edit a KSeF invoice. Issue a KOR correction that cites the original's KSeF number and enters the difference: −500 zł, not the new 4,500 zł."
+title: "Correcting a KSeF invoice: 6 steps with XML"
+description: "You can't edit or delete a KSeF invoice. Issue a KOR correction citing the original's KSeF number, with amounts as the difference: −500 zł, not 4,500 zł."
 date: 2026-04-02
 updated: 2026-10-17
 section: blog
@@ -26,7 +26,7 @@ translations:
   uk: "koryguvalna-faktura-ksef"
 ---
 
-An invoice sent to KSeF (Krajowy System e-Faktur, Poland's National e-Invoicing System) can't be edited or deleted, so you fix a mistake with a corrective invoice: a separate FA(3) file with `RodzajFaktury` = `KOR` that points to the original. The amounts on it are the difference from the original, not the new value.
+An invoice sent to KSeF (Krajowy System e-Faktur, Poland's National e-Invoicing System) can't be edited or [deleted](/en/blog/delete-invoice-ksef), so you fix a mistake with a corrective invoice: a separate FA(3) file with `RodzajFaktury` = `KOR` that points to the original. The amounts on it are the difference from the original, not the new value.
 
 The legal basis is Art. 106j of the Polish VAT Act. Since 1 February 2026 [corrective notes](/en/blog/corrective-note-ksef) no longer exist, so every mistake is fixed by the seller with a corrective invoice in KSeF. Invoicing software (Fakturownia, inFakt, wFirma and others) fills in most fields when you choose "issue correction". Below we show what it does on your behalf.
 

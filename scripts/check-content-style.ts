@@ -7,7 +7,7 @@
  * - Em-dash budget: at most ceil(words / 150) per file
  * - Banned phrases per locale (pl/en/uk)
  * - No "Podsumowanie" / "Summary" / "Підсумок" heading
- * - Warnings for title > 60 and description > 160 characters
+ * - Warnings for title > 58 and description > 160 characters
  *
  * Run: pnpm check:style [file.mdx ...]
  * With no arguments, checks apps/web/content/{pl,en,uk}/blog/*.mdx
@@ -239,9 +239,10 @@ function checkFile(file: string): FileReport {
   const title = frontmatterValue(frontmatter, "title");
   const description = frontmatterValue(frontmatter, "description");
   // The page template appends " — ksefuj.to" (12 chars) only when the result fits in 60
-  // (see apps/web/src/lib/page-title.ts); longer titles lose the brand suffix.
-  if (title && title.length > 48) {
-    warnings.push(`title is ${title.length} chars (limit 48)`);
+  // (see apps/web/src/lib/page-title.ts); longer titles lose the brand suffix. STYLE.md accepts
+  // that up to 58 chars when it buys a natural sentence; Google truncates at about 60.
+  if (title && title.length > 58) {
+    warnings.push(`title is ${title.length} chars (limit 58)`);
   }
   if (description && description.length > 160) {
     warnings.push(`description is ${description.length} chars (limit 160)`);
