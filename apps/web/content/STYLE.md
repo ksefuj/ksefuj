@@ -39,9 +39,10 @@ Good opening:
 Search Console shows thousands of impressions per post and a click-through rate under 1%. The title
 and description are the cheapest thing to improve.
 
-- **Title** = the reader's question or the answer to it, as a natural Polish sentence: „Jak liczyć
-  limit 10 000 zł w KSeF?”, „Nie usuniesz faktury z KSeF. Co zrobić z błędną?”. Use a number, date,
-  or outcome when there is one. Aim for 48 characters or fewer, so the template can append „ —
+- **Title** = the answer when it's settled, otherwise the reader's question, in natural Polish:
+  „Limit 10 000 zł w KSeF liczysz miesięcznie i brutto”, „Czy kary za KSeF przesuną się na 2028
+  rok?”. Vary the form; section 8 says how, and caps questions at about one in three. Use a number,
+  date, or outcome when there is one. Aim for 48 characters or fewer, so the template can append „ —
   ksefuj.to” (12 characters, added only when the result fits in 60). Up to 58 is fine when the
   shorter version would need a verbless fragment: a natural title beats the brand suffix. Google
   truncates at about 60. See section 8 for what „natural” means.
@@ -142,10 +143,19 @@ tego nie nazwie, ale poczuje, że pisał to ktoś „nie stąd”.
 
 ### Tytuły
 
-- **Pełne zdanie albo pełne pytanie.** Formuła „X w KSeF: Y” to angielski szablon SEO („X: how to
-  Y”). Wolno jej użyć, ale nie w co drugim tytule. Pytanie kończy się znakiem zapytania.
-- **Tytuł ma czasownik.** Równoważniki typu „od kiedy faktury”, „co zamiast” to skróty myślowe, nie
-  nagłówki.
+- **Mieszaj formy, pytań najwyżej co trzeci tytuł.** Seria samych pytań to taki sam tik jak seria „X
+  w KSeF: Y”. Wybieraj formę po treści:
+  - **twierdzenie z odpowiedzią**, gdy odpowiedź jest pewna: „Faktura dla osoby prywatnej nie musi
+    trafić do KSeF”, „Limit 10 000 zł w KSeF liczysz miesięcznie i brutto”;
+  - **tryb rozkazujący**, gdy tekst mówi, co zrobić: „Fałszywa faktura w KSeF: nie płać i zgłoś
+    nadużycie”;
+  - **pytanie**, gdy odpowiedź zależy od sytuacji czytelnika albo nie jest przesądzona: „Czy kary za
+    KSeF przesuną się na 2028 rok?”. Pytanie kończy się znakiem zapytania;
+  - **rzeczownikowa etykieta**, gdy czytelnik szuka nazwy rzeczy (strony błędów walidatora, listy):
+    „Błędny numer rachunku bankowego w FA(3)”, „Lista kontrolna KSeF przed 1 stycznia 2027 r.”.
+- **Formuła „X: Y” najwyżej od czasu do czasu.** To angielski szablon SEO („X: how to Y”).
+- **Bez urwanych równoważników.** „Od kiedy faktury”, „co zamiast” to skróty myślowe, nie nagłówki.
+  Etykieta to pełna nazwa rzeczy, a nie zdanie, któremu ucięto czasownik.
 - **Słowa z wyszukiwarki na początku, ale w odmianie, jaką wymaga zdanie.** „Czy odliczysz VAT z
   faktury spoza KSeF?” zawiera frazę „faktura poza KSeF” i brzmi po polsku.
 - **Bez wielkich liter w środku tytułu** (to zwyczaj angielski). Wielka litera tylko na początku i w
@@ -153,11 +163,11 @@ tego nie nazwie, ale poczuje, że pisał to ktoś „nie stąd”.
 
 | Brzmi jak przekład                              | Brzmi po polsku                                       |
 | ----------------------------------------------- | ----------------------------------------------------- |
-| Zwolniony z VAT a KSeF: od kiedy faktury        | Od kiedy zwolniony z VAT wystawia faktury w KSeF?     |
+| Zwolniony z VAT a KSeF: od kiedy faktury        | Zwolniony z VAT też wystawia faktury w KSeF           |
 | Faktura poza KSeF: czy odliczysz z niej VAT     | Czy odliczysz VAT z faktury wystawionej poza KSeF?    |
 | Jak odebrać fakturę w KSeF: nic nie akceptujesz | Jak odebrać fakturę w KSeF? Nie musisz nic akceptować |
 | Czy można usunąć fakturę z KSeF? Co zamiast     | Nie usuniesz faktury z KSeF. Co zrobić z błędną?      |
-| KSeF: checklista na 1 stycznia 2027             | Co sprawdzić przed 1 stycznia 2027 r.?                |
+| KSeF: checklista na 1 stycznia 2027             | Lista kontrolna KSeF przed 1 stycznia 2027 r.         |
 
 ### Kalki i anglicyzmy
 

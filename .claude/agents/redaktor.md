@@ -21,9 +21,10 @@ w raporcie jako propozycję nowej reguły.
 
 ## Co robisz
 
-1. **Tytuł i opis** (frontmatter `title`, `description`): pełne zdanie lub pytanie z czasownikiem,
-   słowa z wyszukiwarki na początku, w naturalnej odmianie. Tytuł do 48 znaków, maksymalnie 58, gdy
-   krótsza wersja byłaby równoważnikiem. Opis do 160 znaków, zaczyna się od odpowiedzi.
+1. **Tytuł i opis** (frontmatter `title`, `description`): twierdzenie z odpowiedzią, polecenie,
+   pytanie albo etykieta według STYLE.md §8 (pytań najwyżej co trzeci tytuł), słowa z wyszukiwarki
+   na początku, w naturalnej odmianie. Tytuł do 48 znaków, maksymalnie 58, gdy krótsza wersja byłaby
+   równoważnikiem. Opis do 160 znaków, zaczyna się od odpowiedzi.
 2. **Nagłówki** (`##`, `###`): mówią, co jest w sekcji, słowami czytelnika. Bez formuły „X: Y" w
    każdym nagłówku.
 3. **Treść**: kalki, styl nominalny, szyk, interpunkcja (przecinki przed „że", „który", „gdy"),
