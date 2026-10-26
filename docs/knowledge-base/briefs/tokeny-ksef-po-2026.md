@@ -1,24 +1,30 @@
 # Research Brief: Tokeny KSeF po 31 grudnia 2026
 
-**Requested by:** human (content backlog item `tokeny-ksef-po-2026`) **Date:** 2026-10-07 **For
-content:** blog post "Tokeny KSeF po 31 grudnia 2026" (PL) and "KSeF tokens after 2026" (EN)
+**Requested by:** human (content backlog item `tokeny-ksef-po-2026`) **Date:** 2026-10-07, updated
+2026-10-25 **For content:** blog post "Tokeny KSeF po 31 grudnia 2026" (PL) and "KSeF tokens after
+2026" (EN)
 
 **Target query:** „token KSeF 2027"
 
 **Answer in two sentences:** The regulation in force allows authentication with a token only until
 31 December 2026 (Dz.U. 2025 poz. 1815, § 13 ust. 1 pkt 1; § 6 ust. 1, the list of permanent
-methods, does not include tokens). MF has said it will keep tokens indefinitely and will amend the
-regulation (Podręcznik KSeF 2.0 cz. I, p. 26; consultations of 9 June 2026), but as of 2026-10-07 no
-amending regulation has been published.
+methods, does not include tokens). MF has said it will keep tokens (Podręcznik KSeF 2.0 cz. I, p.
+26: „na czas nieokreślony"; KSeF API team, 2026-09-23: „tokeny zostają ale na nowych zasadach"), but
+as of the last verified check (2026-10-07) no amending regulation had been published, and the new
+token-creation endpoint is not in the API changelog as of 2026-10-25.
 
 **What changes the answer:**
 
-- Publication of an amending regulation (watch Dziennik Ustaw / ISAP; the ELI record of the
-  regulation lists only Dz.U. 2026 poz. 169 as an amending act).
+- Publication of an amending regulation (watch Dziennik Ustaw / ISAP; as of the 2026-10-07 check the
+  ELI record listed only Dz.U. 2026 poz. 169 as an amending act; not re-checked live on 2026-10-25
+  because official hosts were unreachable).
 - Wording of that amendment: validity period (1-365 days) and the auto-renewal permission were
-  proposals at the 2026-06-09 consultations, not law.
+  proposals at the 2026-06-09 consultations, not law; the API team separately announced a 30 Nov
+  2027 limit for tokens issued until 31 Dec 2026 (fact 11). MF has not reconciled the two.
 - Whether the amendment is published before 2027-01-01. If not, § 13 as written no longer covers
   tokens from that date; MF has not said what KSeF does technically in that case.
+- Publication of the new token-creation endpoint version in the API changelog (absent up to 2.9.0,
+  fact 14).
 
 ## Key Facts (ready to use)
 
@@ -98,13 +104,38 @@ amending regulation has been published.
     przejściowego należą do Ministerstwa Finansów." Sources:
     https://github.com/CIRFMF/ksef-api/issues/834#issuecomment-5619765888 and
     https://github.com/CIRFMF/ksef-api/issues/834#issuecomment-5003022923. Confidence: HIGH that it
-    was said; it is an announcement, not law, and no OpenAPI for it was published as of 2026-10-07.
+    was said; it is an announcement, not law, and no OpenAPI for it was published as of 2026-10-07
+    (still not in the changelog as of 2026-10-25, fact 14). Re-checked 2026-10-25: issue 834 is
+    still open and the latest `kw-cirf` comment is still the 2026-09-10 one. The thread author
+    quoted, in a comment of 23 July, a KIS reply (date of the reply not given) repeating the 1-365
+    day validity and auto-renewal „po uprzedniej zgodzie właściciela"; that is consistent with fact
+    5, which remains the citable source for both points. Also in the 2026-09-10 comment (re-read
+    2026-10-25): the goal is to get through 2026/2027 „bez dotykania kodu po stronie integratora",
+    while tokens created via the old endpoint will get a limited lifetime (the author calls this a
+    breaking change in behaviour). A goal, not a promise.
+
+12. **KSeF API team statement, 2026-09-23 (Tier 3, collaborator `kw-cirf`, closing the issue):**
+    „Zamykam bo tokeny zostają ale na nowych zasadach. Dopracowujemy propozycję." Source:
+    CIRFMF/ksef-api issue 565 („Bezsensowność rezygnacji z tokenów"),
+    https://github.com/CIRFMF/ksef-api/issues/565 (fetched 2026-10-25). Confidence: HIGH that it was
+    said; an announcement, not law. It does not state what the „nowe zasady" are.
+13. **Amending regulation status.** Verified live 2026-10-26: the ELI record for Dz.U. 2025 poz.
+    1815 lists only DU/2026/169 (changeDate 2026-02-16); RCL title search „e-Faktur" shows no 2026
+    draft; no MF news on tokens. Confidence: HIGH for 2026-10-26.
+14. **API changelog, 2026-10-25:** latest version 2.9.0 (TEST/DEMO 13.10.2026, PROD 15.10.2026). No
+    release contains an entry on token validity/expiry or a new version of the token-creation
+    endpoint. Source: https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md (fetched
+    2026-10-25). Tier 2/3 (official MF repo). Confidence: HIGH. Implication: the endpoint announced
+    in fact 11 is not yet published.
 
 ## Unsettled Questions
 
-- Text, date of publication and entry into force of the amending regulation. No draft found. The RCL
-  register (legislacja.rcl.gov.pl) could not be searched programmatically (list pages render
-  client-side, the API rejects requests); a manual check on the site is still advisable.
+- Text, date of publication and entry into force of the amending regulation. No draft found as of
+  2026-10-26. legislacja.gov.pl/szukaj?title=e-Faktur works but does not list every MFiG project; a
+  manual check on the site is still advisable.
+- What rules („nowe zasady", facts 11-12) will cover tokens issued from 1 Jan 2027. The 30 Nov 2027
+  limit (fact 11) is a separate transition rule for tokens issued until 31 Dec 2026; MF has not said
+  whether the 1-365 day proposal (fact 5) is what the new rules contain.
 - Whether the 30 Nov 2027 limit announced in the API repo will be confirmed by MF or the regulation.
 - Whether the proposed token validity (1-365 days) and the auto-renewal permission will be adopted;
   MF's current manual says tokens have no expiry.
@@ -126,15 +157,34 @@ amending regulation has been published.
 - FAQ MF q. 35: https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20
 - CIRFMF/ksef-docs: https://github.com/CIRFMF/ksef-docs/blob/main/tokeny-ksef.md and
   https://github.com/CIRFMF/ksef-docs/blob/main/uwierzytelnianie.md
+- CIRFMF/ksef-api issues 834 and 565 (facts 11-12) and the API changelog:
+  https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md
 
 ## Warning: Common Misconceptions
 
 - „Tokeny znikają z KSeF 1 stycznia 2027": not yet true as law or as MF's plan. MF says it will keep
   them, but the regulation has not been changed yet.
 - „Tokeny zostają na stałe": that is MF's declared intent, not a published legal change.
-- Press and vendor blogs repeat MF's statements; only the sources above are used here.
+- Press and vendor blogs repeat MF's statements; only the sources above are used here. In
+  particular, the infor.pl report citing interpelacja 19230 (2026-10-07) could not be verified
+  (sejm.gov.pl unreachable) and is not used.
 - Older ksefuj.to content (certyfikaty-vs-tokeny-ksef) mixes up certificate types (they are by
   function: type 1 authentication, type 2 OFFLINE invoicing); do not copy from it.
 
-**Freshness:** 2026-10-07. Re-check when Dz.U. publishes an amendment to poz. 1815 or before
-2026-12-31.
+## Verified live on 2026-10-26
+
+- ELI record https://api.sejm.gov.pl/eli/acts/DU/2025/1815: only DU/2026/169 (changeDate
+  2026-02-16); fact 13
+- RCL title search „e-Faktur": no 2026 draft; no MF news on tokens; fact 13
+
+Not re-fetched (2026-10-07 baseline):
+
+- Dz.U. 2025 poz. 1815, § 6 and § 13 (ISAP): facts 1-3
+- Dz.U. 2026 poz. 169 text: fact 4
+- MF consultation summary on ksef.podatki.gov.pl: fact 5
+- Podręcznik KSeF 2.0 cz. I and Podręcznik Aplikacji Podatnika (ksef.podatki.gov.pl): facts 6-10
+- FAQ MF q. 35: fact 7(a)
+
+**Freshness:** 2026-10-25 (GitHub sources live; official Polish hosts at the 2026-10-07 baseline).
+Re-check when Dz.U. publishes an amendment to poz. 1815, when the API changelog adds a token
+endpoint version, or before 2026-12-31.
