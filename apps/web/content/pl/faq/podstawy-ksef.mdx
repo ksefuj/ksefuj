@@ -1,7 +1,8 @@
 ---
 title: Podstawy KSeF
-description: Czym jest KSeF, kogo dotyczy i jak działa — odpowiedzi na podstawowe pytania.
+description: Czym jest KSeF, kogo dotyczy i od kiedy obowiązuje. Wyjaśniamy też FA(3), numer KSeF i UPO.
 date: 2026-03-25
+updated: 2026-10-26
 section: faq
 locale: pl
 slug: podstawy-ksef
@@ -15,69 +16,72 @@ translations:
 
 <Question q="Co to jest KSeF?">
   KSeF (Krajowy System e-Faktur) to platforma Ministerstwa Finansów do wystawiania i odbierania
-  faktur ustrukturyzowanych. Każda faktura B2B musi być przesłana do KSeF w formacie XML i otrzymać
+  faktur ustrukturyzowanych. Każdą fakturę B2B wysyłasz do KSeF w formacie XML, a system nadaje jej
   urzędowy numer, zanim trafi do nabywcy. System działa jak centralny rejestr faktur podatkowych
   prowadzony przez państwo.
 </Question>
 
 <Question q="Od kiedy KSeF jest obowiązkowy?">
-  Dla dużych przedsiębiorców (sprzedaż powyżej 200 mln zł rocznie) KSeF jest obowiązkowy od 1 lutego
-  2026 roku. Dla pozostałych czynnych podatników VAT — od 1 kwietnia 2026 roku. Podatnicy zwolnieni
-  z VAT podlegają tym samym terminom co pozostali. Od 1 stycznia 2027 roku obowiązek dotyczy
-  wszystkich, bez limitu miesięcznej sprzedaży.
+  Dla dużych przedsiębiorców (sprzedaż powyżej 200 mln zł w 2024 r.) KSeF jest obowiązkowy od 1
+  lutego 2026 r., dla pozostałych podatników VAT, czynnych i zwolnionych, od 1 kwietnia 2026 r. Do
+  31 grudnia 2026 r. część faktur można jeszcze wystawiać poza KSeF: przy sprzedaży do 10 000 zł
+  miesięcznie (art. 145m ustawy o VAT) i przy użyciu kasy rejestrującej (art. 145n). Od 1 stycznia
+  2027 r. tych wyjątków nie ma.
 </Question>
 
 <Question q="Kogo dotyczy obowiązek KSeF?">
-  KSeF dotyczy wszystkich czynnych podatników VAT mających siedzibę lub stałe miejsce prowadzenia
-  działalności w Polsce. Obowiązek obejmuje wystawianie faktur na rzecz innych firm (B2B) oraz
-  faktur dla osób fizycznych wystawianych poza kasą fiskalną. Podmioty zwolnione z VAT też są objęte
-  KSeF, w tych samych terminach co pozostali podatnicy.
+  KSeF dotyczy podatników VAT, czynnych i zwolnionych, którzy mają siedzibę lub stałe miejsce
+  prowadzenia działalności w Polsce i wystawiają faktury (art. 106ga ustawy o VAT). Obejmuje faktury
+  dla firm i instytucji (B2B). Faktury dla konsumentów, czyli osób fizycznych nieprowadzących
+  działalności gospodarczej, są z niego wyłączone (art. 106ga ust. 2 pkt 4). Zwolnieni z VAT mają te
+  same terminy co pozostali podatnicy.
 </Question>
 
 <Question q="Czy KSeF dotyczy faktur dla osób prywatnych (B2C)?">
-  Faktury wystawiane konsumentom (B2C) co do zasady podlegają KSeF, ale z ważnym wyjątkiem: faktury
-  wystawiane przy użyciu kasy fiskalnej są z niego wyłączone. Jeśli wystawiasz fakturę poza systemem
-  kasowym — np. w programie fakturowym — musi ona trafić do KSeF. W praktyce większość faktur
-  detalicznych wystawianych z kasy pozostaje poza systemem.
+  Nie. Faktury dla konsumentów, czyli osób fizycznych nieprowadzących działalności gospodarczej, nie
+  podlegają obowiązkowi KSeF (art. 106ga ust. 2 pkt 4 ustawy o VAT), niezależnie od tego, czy
+  wystawiasz je z kasy fiskalnej, czy w programie fakturowym. Możesz je wystawić w KSeF dobrowolnie
+  (art. 106ga ust. 4), ale klientowi i tak przekazujesz fakturę w uzgodniony sposób, z kodem QR
+  (art. 106gb ust. 4). Jeśli klient kupuje na firmę i podaje NIP, to już faktura B2B.
 </Question>
 
 <Question q="Czy KSeF dotyczy paragonów z NIP?">
-  Paragony z NIP nabywcy wystawiane na kasie fiskalnej są traktowane jako faktury uproszczone i nie
-  wchodzą do KSeF. Paragony te wciąż mają moc prawną jako dokument zakupu. Tylko zwykłe faktury VAT
-  wystawiane poza kasą fiskalną podlegają obowiązkowi KSeF.
+  Do 31 grudnia 2026 r. paragon z NIP nabywcy na kwotę do 450 zł (albo 100 euro) jest fakturą
+  uproszczoną i może być wystawiony poza KSeF. Poza KSeF możesz też do tego dnia wystawiać faktury
+  przy użyciu kasy rejestrującej (art. 145n ustawy o VAT). Od 1 stycznia 2027 r. paragon z NIP nie
+  jest już fakturą uproszczoną, a fakturę dla firmy do sprzedaży z kasy wystawiasz w KSeF
+  (Podręcznik KSeF 2.0, cz. I).
 </Question>
 
 <Question q="Co to jest FA(3)?">
   FA(3) to aktualnie obowiązujący schemat XML faktur ustrukturyzowanych, opublikowany przez
-  Ministerstwo Finansów. Numer 3 oznacza trzecią wersję tego formatu. Wszystkie faktury przesyłane
-  do KSeF muszą być zgodne z tym schematem — każde odchylenie skutkuje odrzuceniem faktury przez
-  system.
+  Ministerstwo Finansów. Numer 3 oznacza trzecią wersję tego formatu. Wszystkie faktury wysyłane do
+  KSeF muszą być zgodne z tym schematem. Fakturę z jakimkolwiek odstępstwem system odrzuci.
 </Question>
 
 <Question q="Czym się różni FA(2) od FA(3)?">
-  FA(2) to poprzednia wersja schematu, stosowana w KSeF 1.0 (do 31 stycznia 2026 roku). FA(3)
+  FA(2) to poprzednia wersja schematu, stosowana w KSeF 1.0 (do 31 stycznia 2026 r.). FA(3)
   wprowadziła nową przestrzeń nazw XML, zaktualizowane pola i rozszerzone wymagania dotyczące
-  adnotacji. Faktury w formacie FA(2) nie są akceptowane przez KSeF 2.0 — jeśli twój program
-  generował FA(2), upewnij się, że dostawca wydał aktualizację do FA(3).
+  adnotacji. KSeF 2.0 nie przyjmuje faktur w formacie FA(2). Jeśli twój program generował FA(2),
+  upewnij się, że dostawca wydał aktualizację do FA(3).
 </Question>
 
 <Question q="Czy mogę nadal wysyłać faktury w PDF?">
-  Nie — PDF nie jest akceptowany przez KSeF jako dokument podatkowy. System wymaga strukturalnego
-  pliku XML zgodnego z FA(3). Możesz co prawda wysyłać nabywcy wizualizację faktury jako PDF dla
-  wygody, ale prawną wersją dokumentu jest plik XML zarejestrowany w KSeF. Dobry program fakturowy
-  generuje oba: XML do KSeF i PDF dla nabywcy.
+  Nie. KSeF nie przyjmuje PDF jako dokumentu podatkowego. System wymaga ustrukturyzowanego pliku XML
+  zgodnego z FA(3). Dla wygody możesz wysłać nabywcy także wizualizację faktury w PDF, ale prawną
+  wersją dokumentu jest plik XML zarejestrowany w KSeF. Dobry program fakturowy generuje oba: XML do
+  KSeF i PDF dla nabywcy.
 </Question>
 
 <Question q="Co to jest numer KSeF?">
-  Numer KSeF to unikalny identyfikator faktury nadawany przez system MF po pomyślnym
-  zaewidencjonowaniu dokumentu. Numer ten jest wymagany przy wystawianiu faktury korygującej do
-  faktury wystawionej w KSeF — korekta musi się odwoływać do numeru KSeF faktury pierwotnej, bez
-  niego zostanie odrzucona. Jeśli faktura pierwotna była wystawiona poza KSeF (przed jego
-  wdrożeniem), zamiast numeru KSeF używa się znacznika NrKSeFN.
+  Numer KSeF to unikalny identyfikator, który system MF nadaje fakturze po jej zaewidencjonowaniu.
+  Potrzebujesz go, gdy korygujesz fakturę wystawioną w KSeF: w korekcie podajesz numer KSeF faktury
+  pierwotnej (pola NrKSeF i NrKSeFFaKorygowanej). Jeśli faktura pierwotna nie ma numeru KSeF, bo
+  była wystawiona poza KSeF, zamiast niego zaznaczasz pole NrKSeFN.
 </Question>
 
 <Question q="Co to jest UPO?">
   UPO (Urzędowe Poświadczenie Odbioru) to dokument potwierdzający przyjęcie faktury przez KSeF.
   Zawiera numer KSeF, datę przyjęcia i podpis cyfrowy systemu. UPO jest dowodem na to, że faktura
-  została prawidłowo zaewidencjonowana — warto je archiwizować razem z plikiem XML faktury.
+  została prawidłowo zaewidencjonowana. Warto je przechowywać razem z plikiem XML faktury.
 </Question>

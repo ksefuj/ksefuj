@@ -1,6 +1,6 @@
 ---
-title: "Nieprawidłowa wartość pola w fakturze FA(3)"
-description: "Wartość pola ma zły format: kwota z przecinkiem, data 15.02.2026, NIP z kreskami, kod POL zamiast PL. Poprawny zapis każdego typu pola FA(3) w XML."
+title: "Nieprawidłowa wartość pola w FA(3). Jak ją poprawić?"
+description: "Wartość pola ma zły format: kwota z przecinkiem, data 15.02.2026, NIP z kreskami, kod POL zamiast PL. Pokazujemy, jak zapisać każdy typ pola FA(3)."
 date: 2026-10-08
 section: validator
 locale: pl
@@ -122,7 +122,7 @@ Pole `KodUE` przy numerze VAT UE nabywcy ma osobną, krótszą listę: państwa 
 
 Pola tekstowe mają limit długości. Numer faktury `P_2` i wiele innych pól tekstowych mieści najwyżej 256 znaków, nazwa w `Nazwa` 512, a numer rachunku `NrRB` od 10 do 34 znaków. Przy tych błędach biblioteka walidacji nie cytuje wartości, więc w komunikacie zobaczysz jej długość i limit, a samą wartość znajdziesz w pliku pod wskazaną linią.
 
-Za krótka wartość to najczęściej pole puste: każde pole tekstowe musi mieć co najmniej jeden znak. Uzupełnij je albo usuń element, jeśli jest opcjonalny. Za długą skróć, na przykład rozwijaną formę prawną w nazwie firmy zamień na skrót.
+Za krótka wartość to najczęściej pole puste: każde pole tekstowe musi mieć co najmniej jeden znak. Uzupełnij je albo usuń element, jeśli jest opcjonalny. Za długą skróć, na przykład rozwiniętą formę prawną w nazwie firmy zamień na skrót.
 
 <XmlExample copyable>
   ```xml
@@ -177,7 +177,7 @@ Część pól przyjmuje tylko wartości z zamkniętej listy, a komunikat wymieni
 
 Pozostałe przypadki:
 
-- **Pole, które przyjmuje tylko `1`**, na przykład `FP` albo `P_19N`. Nie wpisuj `tak` ani `true`. Jeśli pole Cię nie dotyczy i jest opcjonalne, jak `FP`, usuń cały element.
+- **Pole, które przyjmuje tylko `1`**, na przykład `FP` albo `P_19N`. Nie wpisuj `tak` ani `true`. Jeśli pole cię nie dotyczy i jest opcjonalne, jak `FP`, usuń cały element.
 - **Tekst w sekcji**, która zawiera tylko inne elementy, na przykład słowo wpisane bezpośrednio w `Adnotacje`. Przenieś go do właściwego pola albo usuń.
 - **Liczba spoza zakresu**, na przykład `NrWierszaFa` równy `0`. Numery wierszy zaczynają się od `1`.
 - **Adres e-mail bez znaku `@`** w `Email`.

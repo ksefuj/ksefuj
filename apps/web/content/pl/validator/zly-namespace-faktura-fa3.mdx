@@ -1,6 +1,6 @@
 ---
-title: "Zły namespace w fakturze: xmlns dla FA(3)"
-description: "Element Faktura nie ma przestrzeni nazw FA(3), więc plik nie jest rozpoznany jako faktura. Wpisz w xmlns adres http://crd.gov.pl/wzor/2025/06/25/13775/."
+title: "Zły namespace w FA(3). Jaki xmlns wpisać?"
+description: "Element Faktura nie ma przestrzeni nazw FA(3), więc walidator nie rozpoznaje pliku jako faktury. Wpisz w xmlns adres http://crd.gov.pl/wzor/2025/06/25/13775/."
 date: 2026-10-08
 section: validator
 locale: pl
@@ -25,7 +25,7 @@ translations:
 
 Element `Faktura` nie ma przestrzeni nazw FA(3), więc schemat nie rozpoznaje pliku jako faktury FA(3). Atrybut `xmlns` w tym elemencie musi mieć dokładnie wartość `http://crd.gov.pl/wzor/2025/06/25/13775/`.
 
-Przestrzeń nazw (namespace) to identyfikator wersji wzoru. Po nim walidator wybiera schemat, którym sprawdzi plik. KSeF też sprawdza fakturę ze schematem, a od 1 lutego 2026 obowiązującym wzorem faktury jest FA(3). Dopóki adres się nie zgadza, **walidator nie sprawdza niczego więcej**: dostajesz tylko ten jeden komunikat, przy elemencie `Faktura`. Po poprawce sprawdzi cały plik, więc mogą pojawić się nowe błędy.
+Przestrzeń nazw (namespace) to identyfikator wersji wzoru. Po nim walidator wybiera schemat, którym sprawdzi plik. KSeF też sprawdza fakturę ze schematem, a od 1 lutego 2026 r. obowiązującym wzorem faktury jest FA(3). Dopóki adres się nie zgadza, **walidator nie sprawdza niczego więcej**: dostajesz tylko ten jeden komunikat, przy elemencie `Faktura`. Po poprawce sprawdzi cały plik, więc mogą pojawić się nowe błędy.
 
 ## Skąd się bierze najczęściej
 
