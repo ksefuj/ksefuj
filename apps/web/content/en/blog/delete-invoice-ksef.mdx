@@ -2,13 +2,14 @@
 title: "Deleting a KSeF invoice: what to do instead"
 description: "An invoice with a KSeF number can't be deleted or cancelled; a corrective invoice fixes it. A file KSeF rejected isn't an invoice: fix it and resend."
 date: 2026-10-20
+updated: 2026-10-26
 section: blog
 locale: en
 slug: "delete-invoice-ksef"
 topic: "invoicing"
 tags: ["KSeF", "Invoice", "JDG"]
 sources:
-  - label: "VAT Act, consolidated text (Dz.U. 2026 poz. 1263), Art. 2(32a), 106j(1), 106k (repealed), 106na(1) and (3)"
+  - label: "VAT Act, consolidated text (Dz.U. 2026 poz. 1263), Art. 2(32a), 106j(1), 106k (repealed), 106na(1), (3) and (4), 106nda(10) and (16)"
     url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
   - label: "KSeF 2.0 Handbook, part II: issuing and receiving invoices (6 Aug 2026)"
     url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
@@ -32,11 +33,11 @@ translations:
 
 Once KSeF (Krajowy System e-Faktur, Poland's National e-Invoicing System) has assigned an invoice a number, you can't delete, cancel or edit it: the invoice has entered legal circulation, and KSeF stores it for 10 years from the end of the year it was issued. The issuer fixes a mistake with a corrective invoice (faktura korygująca), and if KSeF rejected the file without assigning a number, the invoice was never issued at all, so you fix the data and send it again. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Handbook, part II, sections 1.6.1–1.6.3 and 7" />
 
-Legal position as of 20 October 2026.
+Legal position as of 26 October 2026.
 
 ## A KSeF number means the invoice already exists
 
-The VAT Act defines a structured invoice as an invoice issued using KSeF together with its assigned number. It counts as issued on the day it is sent to KSeF, and as received on the day the number is assigned. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="VAT Act, consolidated text (Dz.U. 2026 poz. 1263), Art. 2(32a) and Art. 106na(1) and (3)" />
+The VAT Act defines a structured invoice as an invoice issued using KSeF together with its assigned number. It counts as issued on the day it is sent to KSeF if the [issue date](/en/blog/ksef-invoice-issue-date) in field P_1 is that same day; with an earlier date, it is treated as an offline24 invoice dated as in P_1. It counts as received on the day the number is assigned, or on the day it actually arrives when the buyer, for example a consumer or a foreign company with no seat or fixed establishment in Poland, got it outside KSeF. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="VAT Act, consolidated text (Dz.U. 2026 poz. 1263), Art. 2(32a), Art. 106na(1), (3) and (4), Art. 106nda(10) and (16)" /> <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Handbook, part II, sections 1.4 and 5.1" />
 
 From that moment there's no undoing it. According to Poland's Ministry of Finance (MF), taxpayers can't delete invoices themselves, even when the buyer is wrong. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Handbook, part II, section 1.6.3" /> The KSeF API, which invoicing software uses, has no such operation either. <Source href="https://github.com/CIRFMF/ksef-api" label="KSeF API, open-api.json and api-changelog.md (up to version 2.9.0)" /> An invoice sent on 5 February 2026 stays in the system until 31 December 2036. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Handbook, part II, section 7" /> <Source href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/" label="MF, frequently asked questions, question 21" />
 

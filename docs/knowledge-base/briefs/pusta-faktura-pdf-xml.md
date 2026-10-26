@@ -180,8 +180,8 @@ PDF „pustą fakturą" i nie rozstrzyga, który dokument przeważa przy rozbie�
     KSeF.** KB extract text: „Art. 106na ust. 3 — data otrzymania = dzień przydzielenia numeru
     KSeF." „Art. 106na ust. 4 — dla nabywców z art. 106gb ust. 4 (…) = data faktycznego otrzymania
     poza KSeF." Warunek: NIP nabywcy w polu NIP (nie NrVatUE ani NrID).
-    - Source: [CZ2] pkt 5 (wstęp), 5.1, 5.2; [VAT] art. 106na ust. 3–4 (paraphrased by MF; **no
-      verbatim of art. 106na ust. 3–4 in the KB**). Tier 1 via Tier 2. Confidence: HIGH.
+    - Source: [CZ2] pkt 5 (wstęp), 5.1, 5.2; [VAT] art. 106na ust. 3–4 (paraphrased by MF; verbatim
+      art. 106na ust. 3–4: see H4 (checked live 2026-10-26)). Tier 1 via Tier 2. Confidence: HIGH.
 
 14. **Faktura offline24 przekazana nabywcy poza KSeF przed wysłaniem = „działanie nieprawidłowe
     sprzedawcy".** KB extract text: „Jeśli nabywca otrzymał dokument poza KSeF przed przesłaniem do

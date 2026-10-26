@@ -23,7 +23,7 @@ Planned 2026-10-20 from Search Console (2026-09-19 to 2026-10-16) and a scan of 
 sites published in the last month. Trade-press items are topic signals only: every fact still needs
 a Tier 1–3 source.
 
-- [ ] **UPDATE** `usuniecie-faktury-ksef`: the sentence „Za wystawioną uznaje się ją w dniu
+- [x] **UPDATE** `usuniecie-faktury-ksef`: the sentence „Za wystawioną uznaje się ją w dniu
       przesłania do KSeF, a za otrzymaną w dniu nadania numeru” drops the condition that P_1 equals
       the send day (art. 106na ust. 1; otherwise offline24 dated P_1) and the art. 106gb ust. 4
       receipt exception (art. 106na ust. 4) (source:

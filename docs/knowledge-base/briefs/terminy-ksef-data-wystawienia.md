@@ -36,12 +36,13 @@ fact marked **[KB]** is from the KB, not fetched live; baseline per `WATCHLIST.m
 2026-10-07): VAT Act consolidated text Dz.U. 2026 poz. 1263; Podręcznik KSeF 2.0 editions of
 2026-08-06. The KB extract `podrecznik-ksef-20-czesc-ii.md` is a condensed summary of the
 **2026-02-01** edition, not a verbatim transcript: its lines are cited as „KB extract text" and must
-not be put in quotation marks as MF wording. The KB holds **no verbatim text of art. 106na or art.
-106nda** (only paraphrases via the Podręcznik and sibling briefs). Facts marked **[API]** were read
-verbatim from the local clone of https://github.com/CIRFMF/ksef-api (`/home/user/cirfmf/ksef-api`,
-commit `ce3670e`, 2026-10-14); Tier 2 (official MF API documentation), but the GitHub repo was not
-re-fetched after that commit. Section/page numbers: cz. II pkt numbers from the 2026-02-01 extract;
-pages (s.) from the 06.08.2026 edition as recorded in sibling briefs.
+not be put in quotation marks as MF wording. Verbatim art. 106na ust. 1, 3, 4 is in
+`pusta-faktura-pdf-xml.md` H4 and art. 106nda ust. 10 and 16 in `usuniecie-faktury-ksef.md` (U2),
+both checked live 2026-10-26. Facts marked **[API]** were read verbatim from the local clone of
+https://github.com/CIRFMF/ksef-api (`/home/user/cirfmf/ksef-api`, commit `ce3670e`, 2026-10-14);
+Tier 2 (official MF API documentation), but the GitHub repo was not re-fetched after that commit.
+Section/page numbers: cz. II pkt numbers from the 2026-02-01 extract; pages (s.) from the 06.08.2026
+edition as recorded in sibling briefs.
 
 **Labels:** LAW = the statute says; MF = MF guidance/technical documentation; COMBINATION = two KB
 facts joined, no single source sentence states it (do not attribute to MF).
@@ -70,8 +71,9 @@ facts joined, no single source sentence states it (do not attribute to MF).
    - Information sheet §9.2 (EN, verbatim): P_1 is the formal date of issue for "Invoices in
      'online' mode where sending date > P_1 date (Art. 106nda sec. 16)" and "Invoices in 'offline24'
      mode (Art. 106nda sec. 10)".
-   - Source: art. 106nda ust. 10, 16 (statute not in KB verbatim; `awaria-ksef-offline.md` fakt 4);
-     Podręcznik cz. II pkt 1.4, 1.6.1. Tier 1/2. Confidence: HIGH. [KB] Ania: yes.
+   - Source: art. 106nda ust. 10, 16 (verbatim in `usuniecie-faktury-ksef.md` U2, checked live
+     2026-10-26; `awaria-ksef-offline.md` fakt 4); Podręcznik cz. II pkt 1.4, 1.6.1. Tier 1/2.
+     Confidence: HIGH. [KB] Ania: yes.
 
 3. **P_1 późniejsza niż dzień przesłania (data „z przyszłości") → odrzucenie pliku XML.** MF
    (Podręcznik) + MF API rule.

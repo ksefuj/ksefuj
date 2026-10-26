@@ -2,6 +2,7 @@
 title: "Czy można usunąć fakturę z KSeF? Co zamiast"
 description: "Faktury z numerem KSeF nie usuniesz ani nie anulujesz, błąd poprawia korekta. Plik odrzucony przez KSeF nie jest fakturą: poprawiasz go i wysyłasz ponownie."
 date: 2026-10-20
+updated: 2026-10-26
 section: blog
 locale: pl
 slug: "usuniecie-faktury-ksef"
@@ -12,7 +13,7 @@ related:
   - "blog/nota-korygujaca-ksef"
   - "blog/falszywe-faktury-ksef"
 sources:
-  - label: "Ustawa o VAT, tekst jednolity (Dz.U. 2026 poz. 1263), art. 2 pkt 32a, 106j ust. 1, 106k (uchylony), 106na ust. 1 i 3"
+  - label: "Ustawa o VAT, tekst jednolity (Dz.U. 2026 poz. 1263), art. 2 pkt 32a, 106j ust. 1, 106k (uchylony), 106na ust. 1, 3 i 4, 106nda ust. 10 i 16"
     url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
   - label: "Podręcznik KSeF 2.0, cz. II: wystawianie i otrzymywanie faktur (wyd. 6.08.2026)"
     url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
@@ -36,11 +37,11 @@ translations:
 
 Faktury, której KSeF nadał numer, nie da się usunąć, anulować ani edytować: weszła do obrotu prawnego, a KSeF przechowuje ją przez 10 lat od końca roku wystawienia. Błąd poprawia wystawca fakturą korygującą, a jeśli KSeF odrzucił plik i nie nadał numeru, faktury w ogóle nie wystawiono, więc poprawiasz dane i wysyłasz ją jeszcze raz. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 1.6.1–1.6.3 i 7" />
 
-Stan prawny na 20 października 2026.
+Stan prawny na 26 października 2026.
 
 ## Numer KSeF oznacza, że faktura już istnieje
 
-Ustawa o VAT nazywa fakturą ustrukturyzowaną fakturę wystawioną przy użyciu KSeF wraz z przydzielonym numerem. Za wystawioną uznaje się ją w dniu przesłania do KSeF, a za otrzymaną w dniu nadania numeru. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="Ustawa o VAT, tekst jednolity (Dz.U. 2026 poz. 1263), art. 2 pkt 32a i art. 106na ust. 1 i 3" />
+Ustawa o VAT nazywa fakturą ustrukturyzowaną fakturę wystawioną przy użyciu KSeF wraz z przydzielonym numerem. Za wystawioną uznaje się ją w dniu przesłania do KSeF, jeśli [data wystawienia](/blog/terminy-ksef-data-wystawienia) w polu P_1 to ten sam dzień, a przy wcześniejszej dacie jest traktowana jako faktura offline24 z datą z P_1. Za otrzymaną uznaje się ją w dniu nadania numeru, a gdy nabywca to np. konsument lub firma zagraniczna bez siedziby ani stałego miejsca prowadzenia działalności w Polsce i dostał ją poza KSeF, w dniu faktycznego otrzymania. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="Ustawa o VAT, tekst jednolity (Dz.U. 2026 poz. 1263), art. 2 pkt 32a, art. 106na ust. 1, 3 i 4, art. 106nda ust. 10 i 16" /> <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 1.4 i 5.1" />
 
 Od tej chwili faktury nie cofniesz. Według MF podatnicy nie mogą samodzielnie usuwać faktur, nawet gdy nabywca jest błędny. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 1.6.3" /> Takiej operacji nie ma też w API KSeF, z którego korzystają programy do fakturowania. <Source href="https://github.com/CIRFMF/ksef-api" label="KSeF API, open-api.json i api-changelog.md (do wersji 2.9.0)" /> Faktura wysłana 5 lutego 2026 zostaje w systemie do 31 grudnia 2036. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 7" /> <Source href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/" label="MF, Najczęstsze pytania, pyt. 21" />
 
