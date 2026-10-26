@@ -35,12 +35,9 @@ wystawiona, więc poprawiasz dane i wysyłasz ją ponownie (cz. II, pkt 1.6.1).
 **Reason:** the published sentence „Za wystawioną uznaje się ją w dniu przesłania do KSeF, a za
 otrzymaną w dniu nadania numeru.” omits the P_1 condition and the art. 106gb ust. 4 buyers.
 
-**Live status:** one curl attempt each on 2026-10-26 to
-https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf and
-https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf
-→ both `CONNECT tunnel failed, response 403` (proxy `connect_rejected`). Nothing below was
-re-fetched; all facts are **[KB]**, baseline per `WATCHLIST.md` (VAT Act t.j. Dz.U. 2026 poz. 1263;
-Podręcznik KSeF 2.0 editions of 2026-08-06).
+**Live status:** Re-verified live 2026-10-26 by constitutional judge: art. 106na ust. 1, 3, 4;
+106nda ust. 10, 16; 106gb ust. 4 (Dz.U. 2026 poz. 1263); Podręcznik cz. II pkt 1.4 (s. 13), 1.6.1
+(s. 18), 5.1 (s. 79).
 
 **Target query:** „usunięcie faktury KSeF" (unchanged).
 
@@ -49,8 +46,9 @@ się za wystawioną w dniu przesłania do KSeF, jeśli data w P_1 jest tą samą
 wcześniejsza, faktura jest traktowana jako offline24 z datą wystawienia z P_1, a P_1 późniejsza niż
 dzień przyjęcia do KSeF powoduje odrzucenie pliku (ustawa o VAT art. 106na ust. 1, art. 106nda ust.
 10 i 16; Podręcznik KSeF 2.0 cz. II pkt 1.4, 1.6.1). Nabywca otrzymuje fakturę w dniu nadania numeru
-KSeF, a nabywca z art. 106gb ust. 4 (np. konsument, podmiot zagraniczny bez siedziby lub stałego
-miejsca w Polsce, podmiot bez NIP), któremu udostępniono ją poza KSeF, w dniu faktycznego otrzymania
+KSeF, a nabywca z art. 106gb ust. 4 (np. konsument, podmiot bez siedziby i stałego miejsca
+prowadzenia działalności w Polsce (albo z takim stałym miejscem, które nie uczestniczy w
+transakcji), podmiot bez NIP), któremu udostępniono ją poza KSeF, w dniu faktycznego otrzymania
 (art. 106na ust. 3 i 4; cz. II pkt 5.1).
 
 **What changes the answer:**
@@ -69,7 +67,7 @@ miejsca w Polsce, podmiot bez NIP), któremu udostępniono ją poza KSeF, w dniu
     jej przesłania do Krajowego Systemu e-Faktur." KB: `pusta-faktura-pdf-xml.md` fakt 3 and H4
     (ust. 1 „confirmed identical in the 2026 t.j.", live 2026-10-16). The statutory sentence itself
     carries no P_1 condition; the condition comes from art. 106nda ust. 16 (U2) as read by MF.
-  - MF, KB extract text (cz. II pkt 1.4, s. 14; not MF verbatim): „Zgodnie z art. 106na ust. 1
+  - MF, KB extract text (cz. II pkt 1.4, s. 13; not MF verbatim): „Zgodnie z art. 106na ust. 1
     ustawy — datą wystawienia jest data przesłania do KSeF, pod warunkiem że data w polu P_1 jest
     tożsama z datą przesłania." Same condition in FA(3) information sheet §9.2 (EN).
   - KB: `terminy-ksef-data-wystawienia.md` fakt 1. Tier 1 + 2. Confidence: HIGH. [KB]
@@ -79,8 +77,14 @@ miejsca w Polsce, podmiot bez NIP), któremu udostępniono ją poza KSeF, w dniu
     uznana za wystawioną w trybie offline24, a datą wystawienia jest data z P_1." Pkt 1.6.1 (s. 18):
     „Nie jest przesłanką odrzucenia: data P_1 wcześniejsza niż data przesłania (faktura uznawana za
     offline24)."
-  - Statute text of art. 106nda ust. 10/16: **not verbatim in KB** (cited via Podręcznik, broszura
-    §9.2 and `awaria-ksef-offline.md` fakt 4). Do not quote it.
+  - Statute verbatim (art. 106nda ust. 10): „Za datę wystawienia faktury, o której mowa w ust. 1,
+    uznaje się datę, o której mowa w art. 106e ust. 1 pkt 1, wskazaną przez podatnika na tej
+    fakturze."
+  - Statute verbatim (art. 106nda ust. 16): „Za fakturę, o której mowa w ust. 1, uznaje się także
+    fakturę ustrukturyzowaną, jeżeli data jej przesłania do Krajowego Systemu e-Faktur jest
+    późniejsza niż data, o której mowa w art. 106e ust. 1 pkt 1, wskazana na tej fakturze. Przepisy
+    ust. 4, ust. 6 pkt 1, ust. 8–10, 12 i 13 stosuje się odpowiednio."
+  - Source: https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf (verified live 2026-10-26).
   - KB: `terminy-ksef-data-wystawienia.md` fakt 2. Tier 1 (via Tier 2) + 2. Confidence: HIGH. [KB]
 - **U3. P_1 later than the day of acceptance into KSeF → file rejected; no KSeF number, invoice not
   issued.** MF (no statutory provision on rejection in KB).
@@ -101,7 +105,9 @@ miejsca w Polsce, podmiot bez NIP), któremu udostępniono ją poza KSeF, w dniu
     faktury uznaje się datę jej faktycznego otrzymania przez tego nabywcę." KB:
     `pusta-faktura-pdf-xml.md` H4. Art. 106gb ust. 4 pkt 1–6 (H3): place of supply abroad; no seat /
     fixed establishment in PL; fixed establishment not participating; art. 113a ust. 1 (SME); no tax
-    ID; consumer. MF: cz. II pkt 5.1 (KB extract text: „zagraniczni, konsumenci, bez NIP itp.").
+    ID; consumer. MF: cz. II pkt 5.1 (verbatim: „czyli np. nabywcy zagranicznemu, podatnikowi z
+    innego kraju UE, korzystającemu ze zwolnienia w ramach procedury SME, podmiotowi, który nie
+    posługuje się numerem NIP, czy konsumentowi").
   - Note: ust. 4 is conditioned on making the invoice available outside KSeF („w sposób inny niż
     przy użyciu Krajowego Systemu e-Faktur"), not on buyer type alone.
   - KB: `terminy-ksef-data-wystawienia.md` fakt 7. Tier 1. Confidence: HIGH. [KB]
