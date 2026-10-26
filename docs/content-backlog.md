@@ -42,7 +42,9 @@ a Tier 1–3 source.
 - [ ] **UPDATE** `ksef-scisla-walidacja-xml-19-10` — rejection was announced for PROD from
       2026-10-19; once CIRFMF confirms it is live, switch the post from future to present tense and
       lead with „KSeF odrzuca…” · M, K · now · CIRFMF `faktury/weryfikacja-faktury.md`,
-      `api-changelog.md`
+      `api-changelog.md` · Interim update 2026-10-24 (`content/ksef-scisla-walidacja-xml`): date
+      passed, post now says the docs have not confirmed enforcement. Skip until 2026-11-07, then
+      re-check the changelog and issue #718 before the present-tense switch.
 - [ ] **UPDATE** `najczestsze-bledy-walidacji-fa3` — open with a direct answer to „co znaczy błąd
       walidacji” in the first 100 words, then the list; mention the strict-XML rejections from 19.10
       and link that post · „błąd walidacji co to znaczy” · A · GSC ~74 impr at pos 7–14 · brief

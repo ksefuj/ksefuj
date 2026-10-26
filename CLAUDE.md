@@ -200,9 +200,10 @@ that can cause real tax/accounting problems after a successful submission.
 - **Negative quantities** — only valid in corrective invoice context
 - **Strict XML (KSeF API 2.4.0)** — raw-text check in `src/xml-strictness.ts`: XML processing
   instructions, W3C-discouraged Unicode characters (`[#x7F-#x84]`, `[#x86-#x9F]`, `[#xFDD0-#xFDEF]`,
-  `[#xNFFFE-#xNFFFF]` for planes 1-16), leading BOM, non-UTF-8 declared encoding. KSeF PROD rejects
-  these from 2026-10-19 (warnings via `X-System-Warning` until then). Source:
-  https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md
+  `[#xNFFFE-#xNFFFF]` for planes 1-16), leading BOM, non-UTF-8 declared encoding. The API team
+  announced PROD rejection from 2026-10-19 (CIRFMF/ksef-api#718); the changelog still says
+  16.07.2026 and nothing confirms enforcement as of 2026-10-26 (PROD returns `X-System-Warning`).
+  Source: https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md
 
 ## KSeF FA(3) Key Gotchas
 

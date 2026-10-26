@@ -1,7 +1,8 @@
 ---
-title: "KSeF od 19.10.2026 odrzuci XML z instrukcjami"
-description: "Od 19 października 2026 KSeF odrzuci fakturę z instrukcją przetwarzania XML lub niezalecanym znakiem Unicode. Do tej daty ostrzega nagłówkiem X-System-Warning."
+title: "KSeF od 19.10 miał odrzucać XML z instrukcjami"
+description: "Od 19.10.2026 KSeF miał odrzucać XML z instrukcjami przetwarzania i niezalecanymi znakami. Dokumentacja API nie potwierdza tej daty. Usuń je z pliku."
 date: 2026-10-07
+updated: 2026-10-24
 section: blog
 locale: pl
 slug: "ksef-scisla-walidacja-xml"
@@ -10,7 +11,7 @@ tags: ["KSeF", "FA(3)", "Walidacja"]
 sources:
   - label: "MF / CIRF: Weryfikacja faktury (09.04.2026), sekcja „Weryfikacja XML”"
     url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md"
-  - label: "CIRFMF/ksef-api: changelog API (wersje 2.3.0, 2.4.0, 2.6.0)"
+  - label: "CIRFMF/ksef-api: changelog API (wersje 2.3.0, 2.4.0, 2.6.0, 2.9.0)"
     url: "https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md"
   - label: "CIRFMF/ksef-api: issue #718 (komentarz z 24.06.2026 o terminie 19.10.2026)"
     url: "https://github.com/CIRFMF/ksef-api/issues/718"
@@ -27,17 +28,17 @@ translations:
   en: "ksef-strict-xml-validation"
 ---
 
-Od 19 października 2026 r. KSeF na środowisku produkcyjnym zacznie odrzucać faktury, w których plik XML zawiera instrukcje przetwarzania (np. `<?xml-stylesheet ...?>`) albo niezalecane znaki Unicode. Jeśli utrzymujesz integrację z API, usuń je z generowanego pliku i zapisuj w logach nagłówek `X-System-Warning` z odpowiedzi KSeF: do tej daty (według zespołu API KSeF) system tylko ostrzega.
+Według zespołu API KSeF produkcyjny KSeF miał od 19 października 2026 r. odrzucać faktury, w których plik XML zawiera instrukcje przetwarzania (np. `<?xml-stylesheet ...?>`) albo niezalecane znaki Unicode. Do 24 października dokumentacja API tego nie potwierdziła ani nie podała nowej daty, więc traktuj takie pliki jako odrzucane: jeśli utrzymujesz integrację z API, usuń je z generowanego pliku i zapisuj w logach nagłówek `X-System-Warning` z odpowiedzi KSeF.
 
-Stan na 7 października 2026 r.
+Stan na 24 października 2026 r.
 
 ## Skąd ta reguła i od kiedy obowiązuje
 
-To nie przepis ustawy, tylko wymóg techniczny z dokumentacji API KSeF, którą prowadzi Centrum Informatyki Resortu Finansów (CIRF). Opisuje go strona „Weryfikacja faktury” z 9 kwietnia 2026 r. Zaostrzenie wprowadziła wersja API 2.4.0 (wdrożona na TEST 10 kwietnia, na DEMO 13 kwietnia i na produkcję 16 kwietnia 2026 r.), a egzekwować miała ją produkcja od 16 lipca 2026 r. Opiekun repozytorium napisał 24 czerwca 2026 r., że termin przesunięto na 19 października 2026 r. Changelog nadal podaje 16 lipca, więc jedynym źródłem nowej daty jest ten komentarz.
+To nie przepis ustawy, tylko wymóg techniczny z dokumentacji API KSeF, którą prowadzi Centrum Informatyki Resortu Finansów (CIRF). Opisuje go strona „Weryfikacja faktury” z 9 kwietnia 2026 r. Zaostrzenie wprowadziła wersja API 2.4.0 (wdrożona na TEST 10 kwietnia, na DEMO 13 kwietnia i na produkcję 16 kwietnia 2026 r.), a egzekwować miała ją produkcja od 16 lipca 2026 r. Opiekun repozytorium napisał 24 czerwca 2026 r., że termin przesunięto na 19 października 2026 r. Changelog nadal podaje 16 lipca, więc jedynym źródłem nowej daty jest ten komentarz. Termin 19 października minął, a do 24 października ani changelog (ostatnia wersja 2.9.0 trafiła na produkcję 15 października), ani strona „Weryfikacja faktury” nie potwierdziły, że produkcja odrzuca już takie pliki.
 
 <Source href="https://github.com/CIRFMF/ksef-api/issues/718" label="CIRFMF/ksef-api, issue #718" />
 
-Według opiekuna repozytorium środowiska TEST i DEMO odrzucają takie pliki od wdrożenia wersji 2.4.0. Reguł nie znaleźliśmy w Podręczniku KSeF 2.0, broszurze FA(3), FAQ MF ani w komunikatach technicznych z ostatnich miesięcy na ksef.podatki.gov.pl.
+Według opiekuna repozytorium środowiska TEST i DEMO odrzucają takie pliki od wdrożenia wersji 2.4.0 (kwiecień 2026 r.). Reguł nie znaleźliśmy w Podręczniku KSeF 2.0, broszurze FA(3), FAQ MF ani w komunikatach technicznych z ostatnich miesięcy na ksef.podatki.gov.pl.
 
 ## Co dokładnie zostanie odrzucone
 
@@ -64,7 +65,7 @@ Data 19 października dotyczy zaostrzenia z wersji 2.4.0, czyli instrukcji przet
 
 ## Jak sprawdzić, czy Twoje pliki są dotknięte
 
-Do 19 października produkcja nie odrzuca takich plików, ale może zwrócić w odpowiedzi HTTP nagłówek `X-System-Warning`. Nie zmienia on wyniku operacji i nie oznacza błędu. Dodała go wersja 2.6.0, a w specyfikacji OpenAPI jest zadeklarowany m.in. dla wysyłki faktury i statusu faktury w sesji. Format to `[kod]: komunikat | [kod]: komunikat`, a wartość nie zawiera polskich znaków. Przykład od opiekuna repozytorium:
+Według opiekuna repozytorium przed 19 października produkcja nie odrzucała takich plików, tylko mogła zwrócić w odpowiedzi HTTP nagłówek `X-System-Warning` (changelog nadal podaje termin 16 lipca). Dokumentacja nie mówi, czy po tej dacie produkcja nadal tylko ostrzega. Sam nagłówek nie zmienia wyniku operacji i nie oznacza błędu. Dodała go wersja 2.6.0, a w specyfikacji OpenAPI jest zadeklarowany m.in. dla wysyłki faktury i statusu faktury w sesji. Format to `[kod]: komunikat | [kod]: komunikat`, a wartość nie zawiera polskich znaków. Przykład od opiekuna repozytorium:
 
 > Faktura o numerze KSeF 2026041400-20260514-5A9845400000-55 zawiera niedozwolone znaki Unicode, ktore po 16.07.2026 beda odrzucane.
 
@@ -117,7 +118,7 @@ Instrukcję `xml-stylesheet` dodawaną przez integratora opisuje zgłoszenie w i
 
 Producenci oprogramowania i integratorzy, bo to ich kod generuje XML. Jeśli wystawiasz faktury w programie do fakturowania, nie naprawisz tego sam: zapytaj dostawcę, czy program dodaje do pliku instrukcje wizualizacji i czy sprawdził wysyłkę na środowisku TEST po wersji 2.4.0. Możesz też otworzyć w edytorze tekstu wystawioną wcześniej fakturę (XML pobrany z KSeF) i poszukać `<?xml-stylesheet`.
 
-Opiekun repozytorium API zaleca też uzupełnianie opcjonalnego pola `SystemInfo` w nagłówku faktury (`Naglowek/SystemInfo`). Według jego komentarza z 24 czerwca 2026 r., jeśli problem nadal będzie widoczny przed terminem, istnieje duża szansa, że inżynier MF odezwie się wprost do producentów, których uda się rozpoznać po tym polu.
+Opiekun repozytorium API zaleca też uzupełnianie opcjonalnego pola `SystemInfo` w nagłówku faktury (`Naglowek/SystemInfo`). W komentarzu z 24 czerwca 2026 r. napisał, że jeśli problem będzie nadal widoczny przed terminem, istnieje duża szansa, że inżynier MF odezwie się wprost do producentów, których uda się rozpoznać po tym polu.
 
 ## Co się dzieje z odrzuconą fakturą
 
