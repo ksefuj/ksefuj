@@ -1,8 +1,8 @@
 ---
 title: "KSeF miał od 19 października ostrzej sprawdzać XML"
-description: "Od 19 października 2026 r. KSeF miał odrzucać XML z dopiskami dla programów (np. arkusz stylów) i niezalecanymi znakami. Dokumentacja API nie potwierdza daty."
+description: "Od 19.10.2026 KSeF miał odrzucać XML z dopiskami dla programów (np. odwołaniem do arkusza stylów) i niezalecanymi znakami. Dokumentacja API nie potwierdza daty."
 date: 2026-10-07
-updated: 2026-10-24
+updated: 2026-10-26
 section: blog
 locale: pl
 slug: "ksef-scisla-walidacja-xml"
@@ -28,7 +28,7 @@ translations:
   en: "ksef-strict-xml-validation"
 ---
 
-Według zespołu API KSeF system miał od 19 października 2026 r. odrzucać faktury, których plik XML zawiera dopiski dla programów, które go otwierają, albo niezalecane znaki Unicode. Takie dopiski to instrukcje przetwarzania, np. `<?xml-stylesheet ...?>` wskazujące arkusz stylów do wyświetlania faktury. Do 24 października dokumentacja API tego nie potwierdziła ani nie podała nowej daty, więc traktuj takie pliki jako odrzucane. Jeśli wystawiasz faktury w programie, zapytaj o to jego dostawcę. Jeśli odpowiadasz za integrację z API, usuń te elementy z generowanego pliku i zapisuj w logach nagłówek `X-System-Warning` z odpowiedzi KSeF.
+Według zespołu API KSeF produkcyjny KSeF miał od 19 października 2026 r. odrzucać faktury, których plik XML zawiera dopiski dla programów, które go otwierają, albo niezalecane znaki Unicode. Takie dopiski to instrukcje przetwarzania, np. `<?xml-stylesheet ...?>` wskazujące arkusz stylów do wyświetlania faktury. Do 24 października dokumentacja API tego nie potwierdziła ani nie podała nowej daty, więc traktuj takie pliki jako odrzucane. Jeśli wystawiasz faktury w programie, zapytaj o to jego dostawcę. Jeśli odpowiadasz za integrację z API, usuń te elementy z generowanego pliku i zapisuj w logach nagłówek `X-System-Warning` z odpowiedzi KSeF.
 
 Stan na 24 października 2026 r.
 
