@@ -23,6 +23,17 @@ Planned 2026-10-20 from Search Console (2026-09-19 to 2026-10-16) and a scan of 
 sites published in the last month. Trade-press items are topic signals only: every fact still needs
 a Tier 1–3 source.
 
+- [ ] **UPDATE** `usuniecie-faktury-ksef`: the sentence „Za wystawioną uznaje się ją w dniu
+      przesłania do KSeF, a za otrzymaną w dniu nadania numeru” drops the condition that P_1 equals
+      the send day (art. 106na ust. 1; otherwise offline24 dated P_1) and the art. 106gb ust. 4
+      receipt exception (art. 106na ust. 4) (source:
+      https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf,
+      pkt 1.4 and 5.1)
+- [ ] **UPDATE** `faktura-zagraniczna-ksef`: the `P_18A` section says MPP „nie ma zastosowania w
+      transakcjach zagranicznych” and calls `2` the „domyślna wartość”; no source supports the
+      blanket rule. Replace it with the schema conditions (over 15 000 zł, Annex 15, supply „na
+      rzecz podatnika”) and mark WDT/export/reverse-charge `2` as following from them (source:
+      https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd)
 - [x] **UPDATE** `ksef-checklist-przygotowanie` — refresh as „KSeF: checklista na 1 stycznia 2027” ·
       date-driven · A, K · 2026-12-01 · brief `checklist-przygotowanie.md` (its penalty facts are
       stale), `sankcje-ksef-ud477.md` · End of art. 145m limit and 145n cash-register invoices,
@@ -36,7 +47,7 @@ a Tier 1–3 source.
       walidacji” in the first 100 words, then the list; mention the strict-XML rejections from 19.10
       and link that post · „błąd walidacji co to znaczy” · A · GSC ~74 impr at pos 7–14 · brief
       `bledy-walidacji-fa3.md`
-- [ ] `mpp-split-payment-ksef` — Split payment (MPP) na fakturze w KSeF · „MPP KSeF” / „split
+- [x] `mpp-split-payment-ksef` — Split payment (MPP) na fakturze w KSeF · „MPP KSeF” / „split
       payment KSeF” · K, A · Broszura FA(3) `P_18A`, KIS interpretation
       0114-KDIP1-1.4012.566.2026.1.MM of 22.09.2026 (UNVERIFIED, via infor.pl 2026-10-17) · No
       coverage on our side; strong validator fit (Adnotacje rules).
@@ -48,7 +59,7 @@ a Tier 1–3 source.
       mieszkaniowa KSeF” · K, A (zarządca) · FAQ, MF training PDF `/media/hb0mye13/` · Signal:
       infor.pl 2026-09-01; MF answer to interpelacja 17044 reportedly rules out an exclusion
       (UNVERIFIED). Cover VAT-exempt wspólnoty and the art. 145m limit.
-- [ ] `terminy-ksef-data-wystawienia` — Data wystawienia, przesłania i otrzymania faktury w KSeF ·
+- [x] `terminy-ksef-data-wystawienia` — Data wystawienia, przesłania i otrzymania faktury w KSeF ·
       „data wystawienia faktury KSeF” · A, K · P2, art. 106na ust. 3 · Signal: infor.pl 2026-10-13.
       Link `awaria-ksef-offline` and `jak-odebrac-fakture-ksef`.
 - [ ] `najem-lokalu-ksef` — Najem lokalu firmie a KSeF (bez działalności) · „najem KSeF” · A · FAQ,
