@@ -98,9 +98,9 @@ facts joined, no single source sentence states it (do not attribute to MF).
      (tryb offline24)."
    - „Przykład 3 (odrzucenie): Przesłanie 2.02.2026, P_1 = 3.02.2026 (przyszłość). Plik XML
      odrzucony."
-   - Receipt date in Przykład 1 is not stated by MF; by art. 106na ust. 3 (fakt 6) it would be
-     2.02.2026 (the day the number was assigned): COMBINATION, MEDIUM. Copywriter may present it as
-     two rules side by side, not as an MF statement.
+   - Receipt date for the 2.02.2026 case: MF, HIGH. Podręcznik cz. II pkt 5.1 Przykład 10 (sent
+     23:56, number assigned 00:01): „Datą otrzymania faktury jest w tym przypadku data przydzielenia
+     fakturze numeru KSeF, czyli 2 lutego 2026 r.".
    - Just-before-midnight technical behaviour (sesja interaktywna vs wsadowa): see fakt 14. Tier 2.
      Confidence: HIGH. [KB] Ania: yes (example 1 and 3).
 
@@ -159,13 +159,15 @@ facts joined, no single source sentence states it (do not attribute to MF).
 
 ### C. Skutki (pytanie 3)
 
-10. **Odliczenie VAT a data otrzymania.** MF states the rule only for invoices outside KSeF and the
-    offline24 double-issue case.
+10. **Odliczenie VAT a data otrzymania.** MF/LAW, HIGH. Podręcznik cz. II pkt 1.8 (s. 31-32) states:
+    „Za datę otrzymania faktury w KSeF uznaje się datę przydzielenia numeru". Confirmed by pkt 5.1
+    Przykład 10.
     - KB extract text (cz. II pkt 1.7, s. 29-30): „Prawo do odliczenia VAT naliczonego z faktury
       wystawionej poza KSeF powstaje w okresie, w którym powstał obowiązek podatkowy, nie wcześniej
       niż w okresie otrzymania faktury (art. 86 ust. 10b pkt 1)."
     - Applying art. 86 ust. 10b pkt 1 + art. 106na ust. 3 to an ordinary online KSeF invoice (period
-      of the KSeF-number date) is COMBINATION, MEDIUM (`jak-odebrac-fakture-ksef.md` fakt 4;
+      of the KSeF-number date) is now stated by MF (pkt 1.8, see above); earlier labelled
+      COMBINATION, MEDIUM (`jak-odebrac-fakture-ksef.md` fakt 4;
       `faktura-poza-ksef-odliczenie-vat.md` fakt 10). Verbatim of art. 86 ust. 10b: NOT IN KB.
       Published post `faktura-poza-ksef-odliczenie-vat.mdx` already presents the two rules side by
       side. Tier 1/2. [KB] Ania: yes if VAT-czynna; no if zwolniona (no deduction).
@@ -309,7 +311,8 @@ facts joined, no single source sentence states it (do not attribute to MF).
 4. **Data otrzymania w trybie awaryjnym (106nf) i awarii całkowitej (106ng):** SETTLED for 106nf by
    art. 106nf ust. 10 (Dz.U. 2026 poz. 1263, verified 2026-10-23, see fakt 4); 106ng has no separate
    rule.
-5. **Odliczenie dla zwykłej faktury online w okresie daty numeru KSeF:** COMBINATION only (fakt 10).
+5. **Odliczenie dla zwykłej faktury online w okresie daty numeru KSeF:** RESOLVED by pkt 1.8 and pkt
+   5.1 Przykład 10 (fakt 10).
 6. **Odrzucona faktura online a termin z art. 106i:** no source on whether a rejected first attempt
    on the deadline day and a resend the next day is late. Do not answer.
 7. **„Dzień roboczy" (sobota)** undefined in the VAT Act (`awaria-ksef-offline.md` Unsettled 1); use
@@ -328,7 +331,8 @@ All URLs below already appear in `docs/knowledge-base/` or published posts.
 
 - Ustawa o VAT, tekst jednolity Dz.U. 2026 poz. 1263 (art. 106i, 106na, 106nda, 106nf, 106nh, 145m):
   https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf
-- Podręcznik KSeF 2.0, cz. II (06.08.2026), pkt 1.4, 1.6.1, 1.8, 4.2, 5.1:
+- Podręcznik KSeF 2.0, cz. II (06.08.2026), pkt 1.4, 1.6.1, 1.6.7 (Przykład 5, numbering), 1.8, 4.2,
+  5.1:
   https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf
 - Broszura informacyjna FA(3) (P_1, P_6):
   https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf

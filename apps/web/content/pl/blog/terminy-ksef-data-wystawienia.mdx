@@ -14,7 +14,7 @@ related:
 sources:
   - label: "Ustawa o VAT, tekst jednolity Dz.U. 2026 poz. 1263 (art. 106i, 106na, 106nda, 106nf, 106nh, 145m)"
     url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
-  - label: "Podręcznik KSeF 2.0, cz. II (06.08.2026), pkt 1.4, 1.6.1, 1.7, 1.8, 4.2, 5.1"
+  - label: "Podręcznik KSeF 2.0, cz. II (06.08.2026), pkt 1.4, 1.6.1, 1.6.7, 1.8, 4.2, 5.1"
     url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
   - label: "Broszura informacyjna dotycząca struktury logicznej FA(3)"
     url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
@@ -79,7 +79,7 @@ Odwrotna sytuacja kończy się odrzuceniem. Jeśli wysyłasz fakturę 2 lutego z
   label="Dokumentacja API KSeF: walidacja dat"
 />
 
-Odrzucona faktura nie dostaje numeru KSeF, a MF pisze w podręczniku wprost, że przy negatywnej weryfikacji faktura nie została wystawiona (pkt 1.6.1, wśród przyczyn odrzucenia jest P_1 z przyszłości). Poprawiasz datę i wysyłasz ponownie. KSeF nie sprawdza numeracji, więc wcześniejszy numer faktury może trafić do systemu po późniejszych, ale sama numeracja nadal musi być kolejna (narastająca) (art. 106e ust. 1 pkt 2).
+Odrzucona faktura nie dostaje numeru KSeF, a MF pisze w podręczniku wprost, że przy negatywnej weryfikacji faktura nie została wystawiona (pkt 1.6.1, wśród przyczyn odrzucenia jest P_1 z przyszłości). Poprawiasz datę i wysyłasz ponownie. KSeF nie sprawdza numeracji, więc wcześniejszy numer faktury może trafić do systemu po późniejszych, ale sama numeracja nadal musi być kolejna (narastająca) (art. 106e ust. 1 pkt 2; Podręcznik cz. II pkt 1.6.7).
 
 Jeśli wystawiasz w Aplikacji Podatnika w trybie skróconym, ryzyko rozjazdu jest niewielkie: aplikacja sama wpisuje datę wystawienia i nie pozwala jej zmienić, więc P_1 zgadza się z dniem wysłania (to nasz wniosek z instrukcji aplikacji; dla trybu rozszerzonego instrukcja tego nie opisuje). Jeśli formularz zaczniesz przed północą, a wyślesz po niej, faktura może i tak stać się offline24.
 
@@ -118,11 +118,11 @@ Jeśli sprzedawca wyśle Ci fakturę offline24 mailem, zanim trafi do KSeF, MF n
 
 ## Co zależy od tych dat
 
-**Odliczenie VAT.** Prawo do odliczenia powstaje w okresie powstania obowiązku podatkowego, ale nie wcześniej niż w okresie otrzymania faktury (art. 86 ust. 10b pkt 1). Podręcznik MF (pkt 1.7) ujmuje to tak: odliczenie przysługuje „nie wcześniej niż w rozliczeniu za okres, w którym tę fakturę otrzymał”, a „za datę otrzymania faktury w KSeF uznaje się datę przydzielenia numeru”. Faktura z numerem nadanym 1 listopada trafia więc do odliczenia najwcześniej za listopad, nawet jeśli wysłano ją 31 października przed północą. Przy fakturach z przełomu miesiąca liczy się data nadania numeru, a nie data wystawienia (art. 106na ust. 3 i art. 86 ust. 10b pkt 1).
+**Odliczenie VAT.** Prawo do odliczenia powstaje w okresie powstania obowiązku podatkowego, ale nie wcześniej niż w okresie otrzymania faktury (art. 86 ust. 10b pkt 1). Podręcznik MF (pkt 1.8) ujmuje to tak: odliczenie przysługuje „nie wcześniej niż w rozliczeniu za okres, w którym tę fakturę otrzymał”, a „za datę otrzymania faktury w KSeF uznaje się datę przydzielenia numeru”. Faktura z numerem nadanym 1 listopada trafia więc do odliczenia najwcześniej za listopad, nawet jeśli wysłano ją 31 października przed północą. Przy fakturach z przełomu miesiąca liczy się data nadania numeru, a nie data wystawienia (art. 106na ust. 3 i art. 86 ust. 10b pkt 1).
 
 <Source
   href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
-  label="Podręcznik KSeF 2.0, cz. II, pkt 1.7 (s. 30–31) i 5.1"
+  label="Podręcznik KSeF 2.0, cz. II, pkt 1.8 (s. 31–32) i 5.1"
 />
 
 **Termin wystawienia faktury.** KSeF nie zmienia art. 106i: fakturę wystawia się co do zasady najpóźniej 15. dnia miesiąca po miesiącu dostawy lub wykonania usługi. Jeśli wyślesz fakturę z P_1 równą ostatniemu dniu terminu tego samego dnia, jest wystawiona online w terminie. Jeśli wyślesz ją następnego dnia roboczego, staje się fakturą offline24 z datą wystawienia z P_1, jak w przykładzie Ani (to nasze zestawienie przepisów). Brak przepisu, który rozstrzygałby, czy faktura odrzucona w ostatnim dniu terminu i wysłana ponownie następnego dnia jest spóźniona, więc lepiej nie zostawiać jej na ostatni wieczór.
@@ -131,7 +131,7 @@ Jeśli sprzedawca wyśle Ci fakturę offline24 mailem, zanim trafi do KSeF, MF n
 
 <Source href="https://ksef.podatki.gov.pl/ponizej-10-000-zl/" label="MF: Poniżej 10 000 zł" />
 
-**Kurs waluty.** Gdy faktura poprzedza obowiązek podatkowy, kurs NBP (albo kurs EBC, jeśli wybrałeś tę metodę; art. 31a ust. 2 zd. 2) bierzesz z ostatniego dnia roboczego przed dniem wystawienia (art. 31a ust. 2). Datą wystawienia jest P_1 zarówno online (gdzie P_1 równa się dniowi wysłania), jak i w trybach offline24, niedostępności i awaryjnym, więc kurs ustalasz od P_1, a nie od daty nadania numeru.
+**Kurs waluty.** Gdy faktura poprzedza obowiązek podatkowy, kurs NBP bierzesz z ostatniego dnia roboczego przed dniem wystawienia (art. 31a ust. 2). Jeśli wybrałeś kurs EBC, bierzesz ostatni kurs opublikowany na ostatni dzień przed dniem wystawienia (art. 31a ust. 2 zd. 2 w zw. z ust. 1 zd. 2). Datą wystawienia jest P_1 zarówno online (gdzie P_1 równa się dniowi wysłania), jak i w trybach offline24, niedostępności i awaryjnym, więc kurs ustalasz od P_1, a nie od daty nadania numeru.
 
 ## Daty na fakturze w skrócie
 
