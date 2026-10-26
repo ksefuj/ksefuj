@@ -1,0 +1,116 @@
+---
+title: "Paying over PLN 15,000? Check the VAT white list"
+description: "Pay over PLN 15,000 to an account missing from the VAT white list and you share liability for the seller's VAT and lose the cost. MPP or ZAW-NR protects you."
+date: 2026-10-27
+updated: 2026-10-27
+section: blog
+locale: en
+slug: "white-list-vat-transfer-over-15000-pln"
+topic: "invoicing"
+tags: ["VAT", "Invoice", "JDG"]
+sources:
+  - label: "Tax Ordinance (Ordynacja podatkowa), consolidated text Dz.U. 2026 item 622, art. 117ba"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/622/text.pdf"
+  - label: "Act of 29 May 2026 amending the Tax Ordinance, Dz.U. 2026 item 846 (art. 117ba § 3a)"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/846/text.pdf"
+  - label: "PIT Act, consolidated text Dz.U. 2026 item 592, art. 22p"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/592/text.pdf"
+  - label: "CIT Act, consolidated text Dz.U. 2026 item 554, art. 15d"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/554/text.pdf"
+  - label: "Act of 18 September 2026 amending the PIT and CIT Acts, Dz.U. 2026 item 1371"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1371/text.pdf"
+  - label: "Entrepreneurs' Law (Prawo przedsiębiorców), consolidated text Dz.U. 2025 item 1480, art. 19"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2025/1480/text.pdf"
+  - label: "VAT Act, consolidated text Dz.U. 2026 item 1263, art. 96b"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  - label: "podatki.gov.pl: ZAW-NR notification"
+    url: "https://www.podatki.gov.pl/eurzad-skarbowy-zalatw-sprawy-podatkowe-online/konto-organizacji-w-eurzedzie-skarbowym/zawiadomienie-zaw-nr"
+  - label: "VAT taxpayer register search (biała lista, the white list)"
+    url: "https://www.podatki.gov.pl/wykaz-podatnikow-vat-wyszukiwarka"
+  - label: "VAT taxpayer register API (documentation)"
+    url: "https://wl-api.mf.gov.pl/"
+  - label: "FA(3) schema, elements RachunekBankowy and RachunekWlasnyBanku"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+translations:
+  pl: "biala-lista-vat-przelew-15000-zl"
+  en: "white-list-vat-transfer-over-15000-pln"
+  uk: "bilyi-spysok-pdv-perekaz-ponad-15000-zl"
+---
+
+If you pay a business more than PLN 15,000 for an invoice from an active VAT taxpayer and the recipient's account is not in the VAT taxpayer register (the _biała lista_, or white list) on the day you order the transfer, you become jointly liable for the seller's VAT arrears in the part attributable to that transaction. On top of that, you can't book the payment as a tax-deductible cost. You avoid both by paying through the split payment mechanism (MPP, _mechanizm podzielonej płatności_) or by filing a ZAW-NR notification with your own tax office within 7 days of ordering the transfer.
+
+Legal position as of 26 October 2026. For invoices issued from 1 January 2027 the cost sanction goes away, while joint liability stays (details below).
+
+## When do you have to check the account on the white list?
+
+The consequences under art. 117ba of the Tax Ordinance (Ordynacja podatkowa) and art. 22p of the PIT Act apply to a transfer when three conditions are met at once:
+
+- the other party to the transaction is a **business** (_przedsiębiorca_),
+- **the one-off value of the transaction exceeds PLN 15,000**, "regardless of the number of payments arising from it" (art. 19 of the Entrepreneurs' Law, Prawo przedsiębiorców); exactly PLN 15,000 does not exceed the threshold,
+- you are paying an invoice from a seller registered as an **active VAT taxpayer** (_podatnik VAT czynny_).
+
+<Source
+  href="https://api.sejm.gov.pl/eli/acts/DU/2025/1480/text.pdf"
+  label="Entrepreneurs' Law, art. 19"
+/>
+
+The threshold applies to the value of the transaction, not to a single transfer. Ania, a graphic designer running a JDG (_jednoosobowa działalność gospodarcza_, a Polish sole trader business), orders an online shop from a software studio for PLN 18,450 and pays in three instalments of PLN 6,150. Each instalment is below PLN 15,000, but the transaction exceeds the threshold, so she checks the account before every transfer. Foreign-currency transactions are converted at the NBP (National Bank of Poland) average rate from the last business day before the transaction date (art. 19 pkt 2).
+
+If the seller is VAT-exempt, neither provision applies, because both refer to a supplier registered as an active VAT taxpayer. The rules also exclude payments for invoices documenting an intra-Community acquisition of goods, an import of goods or services, and a supply settled by the buyer (art. 117ba § 3 pkt 5).
+
+## What happens if the account is not on the list?
+
+**Joint liability for the seller's VAT.** You are liable "with all your assets", together with the seller, for the seller's VAT arrears, in the part of the tax proportionally attributable to your transaction (art. 117ba § 1 of the Tax Ordinance). If the seller doesn't pay the VAT on Ania's invoice, the tax office can claim that tax from her. The provision covers every taxpayer within the meaning of art. 15 of the VAT Act, so VAT-exempt businesses too. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/622/text.pdf" label="Tax Ordinance, art. 117ba (Dz.U. 2026 item 622)" />
+
+**The expense drops out of your costs.** You can't count as a tax-deductible cost the part of the expense you paid to an account outside the register (art. 22p ust. 1 pkt 2 of the PIT Act; for companies, the equivalent art. 15d ust. 1 pkt 2 of the CIT Act). If you have already booked the cost, you reduce your costs, and where that isn't possible you increase your revenue in the month you ordered the transfer (ust. 2). On the flat-rate scheme (_ryczałt_) you don't deduct costs, so this consequence usually doesn't affect you, but joint liability does. One exception: if, on the flat-rate scheme, you pay for an expense booked as a cost before you changed your form of taxation, you correct the costs for the year before the change (ust. 3). <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/592/text.pdf" label="PIT Act, art. 22p (Dz.U. 2026 item 592)" />
+
+### What changes from 1 January 2027?
+
+The act of 18 September 2026 (Dz.U. 2026 item 1371, published on 21 October 2026) leaves only payment made without a payment account in art. 22p ust. 1 of the PIT Act and art. 15d ust. 1 of the CIT Act. A transfer to an account outside the register and a payment that bypasses mandatory MPP drop out of those provisions. The invoice issue date decides: payments for an invoice issued before 1 January 2027 follow the old rules (art. 3 ust. 2), even if you pay it in 2027. This act does not amend art. 117ba of the Tax Ordinance. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1371/text.pdf" label="Dz.U. 2026 item 1371, art. 1–3 and 6" />
+
+| Invoice issued         | PIT/CIT cost when the account is off the list | Liability for the seller's VAT |
+| ---------------------- | --------------------------------------------- | ------------------------------ |
+| up to 31 December 2026 | excluded (unless MPP or ZAW-NR)               | yes (unless MPP or ZAW-NR)     |
+| from 1 January 2027    | no sanction                                   | yes (unless MPP or ZAW-NR)     |
+
+The ZAW-NR page on podatki.gov.pl (updated 30 September 2026) still describes both consequences, because it predates this act.
+
+## How do you avoid the consequences? Pay with MPP or file ZAW-NR
+
+**Pay with MPP.** A split payment transfer rules out both joint liability and the cost sanction, even if the account is not in the register (art. 117ba § 3 pkt 4 of the Tax Ordinance, art. 22p ust. 4 pkt 3 of the PIT Act). When MPP is mandatory and how it is marked on the invoice is covered in our post on [split payment in KSeF](/en/blog/split-payment-mpp-ksef).
+
+**File ZAW-NR within 7 days.** If you paid by ordinary transfer to an account outside the register, you notify the head of the tax office **that handles your own taxes** (the payer's), not the seller's, within 7 days of the day you ordered the transfer. You file the notification with the first payment to a given account (art. 117ba § 3 pkt 2). The notification includes:
+
+- your details: NIP, full name or business name, business address,
+- the invoice issuer's details as shown on the invoice (NIP, name, address),
+- the account number you paid to,
+- the transfer amount and the date you ordered it.
+
+<Source
+  href="https://api.sejm.gov.pl/eli/acts/DU/2026/622/text.pdf"
+  label="Tax Ordinance, art. 117ba § 3 and 4"
+/>
+
+According to podatki.gov.pl, you can file ZAW-NR online in e-Urząd Skarbowy (the tax office's online portal) after logging in through login.gov.pl. To file it for someone else, e.g. an accounting firm filing for a client, you need a PPO-1 or PPS-1 power of attorney (PPO-1 in e-Urząd Skarbowy). From 1 October 2026 a power of attorney to sign tax returns also covers signing ZAW-NR (art. 117ba § 3a, added by the act Dz.U. 2026 item 846). <Source href="https://www.podatki.gov.pl/eurzad-skarbowy-zalatw-sprawy-podatkowe-online/konto-organizacji-w-eurzedzie-skarbowym/zawiadomienie-zaw-nr" label="podatki.gov.pl: ZAW-NR notification" />
+
+There are also no consequences when you pay to a special account of a bank or SKOK (a credit union), e.g. when the bank or SKOK has bought the receivable through factoring, provided the bank, the SKOK or the invoice issuer told you it is such an account (art. 117ba § 3 pkt 3).
+
+## How do you check the account and keep proof?
+
+You check **on the day you order the transfer**, because the law refers to an account "included in the register on the day the transfer is ordered". The register is updated once a day on business days (art. 96b ust. 8 of the VAT Act), so a result from a week ago may already be out of date. Ania, paying in three instalments, therefore checks the account three times.
+
+Enter the seller's NIP or the account number in the [VAT taxpayer register search](https://www.podatki.gov.pl/wykaz-podatnikow-vat-wyszukiwarka). The register shows the status (active or exempt) and the account numbers the taxpayer has reported. You can also check the status on a chosen day in the current year and the previous 5 years (art. 96b ust. 2 and 3). The search is also available through CEIDG, the Polish business register (ust. 9). <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="VAT Act, art. 96b (Dz.U. 2026 item 1263)" />
+
+The law doesn't require you to keep proof of the check, but it makes it easier to show in a dispute with the tax office that the number was on the list. Save a screenshot or printout of the result with the date and attach it to the invoice. Accounting software and businesses with many transfers use the register API: a query with a NIP and account number returns "TAK" or "NIE" (yes or no), the query date and its identifier (`requestId`), which you can keep in your records. <Source href="https://wl-api.mf.gov.pl/" label="VAT taxpayer register API" />
+
+## Check the account number on the KSeF invoice too
+
+On an FA(3) invoice in KSeF (Krajowy System e-Faktur, Poland's National e-Invoicing System), the seller gives the account in the `Platnosc/RachunekBankowy` element (the full number in `NrRB`). The field is optional, and the schema doesn't link it to the white list: KSeF accepts an invoice with any correctly formatted number. So receiving an invoice through KSeF doesn't mean the account is on the list. Fake invoices carrying a fraudster's account number also turn up; how to spot them is covered in our post on [fake invoices in KSeF](/en/blog/fake-invoices-ksef). <Source href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd" label="FA(3) schema, TRachunekBankowy" />
+
+The schema also has a `RachunekWlasnyBanku` flag with values 1–3, whose descriptions match the bank and SKOK accounts in art. 117ba § 3 pkt 3. MF (the Ministry of Finance) hasn't explained whether that flag on the invoice counts as the notice the provision refers to.
+
+## What does the law leave open?
+
+Art. 19 of the Entrepreneurs' Law refers to the "one-off value of the transaction", but doesn't say whether that means the gross or the net amount. We found no answer in the sources we checked. If the gross amount exceeds PLN 15,000 and the net doesn't, check the account anyway. It takes a minute.
+
+When, from 1 January 2027, you pay a KSeF invoice with MPP, you include its KSeF number in the transfer message. How to do that is covered in our post on [the KSeF number in a bank transfer](/en/blog/ksef-number-in-bank-transfer).

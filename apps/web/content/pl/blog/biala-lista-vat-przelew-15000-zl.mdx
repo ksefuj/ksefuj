@@ -1,0 +1,122 @@
+---
+title: "Sprawdź białą listę przed przelewem ponad 15 000 zł"
+description: "Przelew ponad 15 000 zł na konto spoza białej listy grozi odpowiedzialnością za VAT sprzedawcy i utratą kosztu. Chroni cię MPP albo ZAW-NR złożony w 7 dni."
+date: 2026-10-27
+updated: 2026-10-27
+section: blog
+locale: pl
+slug: "biala-lista-vat-przelew-15000-zl"
+topic: "invoicing"
+tags: ["VAT", "Faktura", "JDG"]
+difficulty: beginner
+audience: [jdg, accountant]
+translations:
+  pl: "biala-lista-vat-przelew-15000-zl"
+  en: "white-list-vat-transfer-over-15000-pln"
+  uk: "bilyi-spysok-pdv-perekaz-ponad-15000-zl"
+sources:
+  - label: "Ordynacja podatkowa, tekst jednolity Dz.U. 2026 poz. 622, art. 117ba"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/622/text.pdf"
+  - label: "Ustawa z 29 maja 2026 r. o zmianie Ordynacji podatkowej, Dz.U. 2026 poz. 846 (art. 117ba § 3a)"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/846/text.pdf"
+  - label: "Ustawa o PIT, tekst jednolity Dz.U. 2026 poz. 592, art. 22p"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/592/text.pdf"
+  - label: "Ustawa o CIT, tekst jednolity Dz.U. 2026 poz. 554, art. 15d"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/554/text.pdf"
+  - label: "Ustawa z 18 września 2026 r. o zmianie ustaw o PIT i CIT, Dz.U. 2026 poz. 1371"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1371/text.pdf"
+  - label: "Prawo przedsiębiorców, tekst jednolity Dz.U. 2025 poz. 1480, art. 19"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2025/1480/text.pdf"
+  - label: "Ustawa o VAT, tekst jednolity Dz.U. 2026 poz. 1263, art. 96b"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  - label: "podatki.gov.pl: Zawiadomienie ZAW-NR"
+    url: "https://www.podatki.gov.pl/eurzad-skarbowy-zalatw-sprawy-podatkowe-online/konto-organizacji-w-eurzedzie-skarbowym/zawiadomienie-zaw-nr"
+  - label: "Wyszukiwarka wykazu podatników VAT (biała lista)"
+    url: "https://www.podatki.gov.pl/wykaz-podatnikow-vat-wyszukiwarka"
+  - label: "API wykazu podatników VAT (dokumentacja)"
+    url: "https://wl-api.mf.gov.pl/"
+  - label: "Schemat FA(3), elementy RachunekBankowy i RachunekWlasnyBanku"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+related:
+  - "blog/mpp-split-payment-ksef"
+  - "blog/falszywe-faktury-ksef"
+  - "blog/numer-ksef-w-przelewie"
+---
+
+Jeśli płacisz firmie ponad 15 000 zł za fakturę od czynnego podatnika VAT, a rachunku odbiorcy nie ma w wykazie podatników VAT (białej liście) w dniu zlecenia przelewu, odpowiadasz solidarnie za zaległości VAT sprzedawcy w części, która przypada na tę transakcję. Do tego nie zaliczysz tej płatności do kosztów. Obu skutków unikniesz, płacąc w mechanizmie podzielonej płatności (MPP) albo składając zawiadomienie ZAW-NR do swojego urzędu skarbowego w ciągu 7 dni od zlecenia przelewu.
+
+Stan prawny na 26 października 2026 r. Od faktur wystawionych od 1 stycznia 2027 r. sankcja w kosztach znika, odpowiedzialność solidarna zostaje (szczegóły niżej).
+
+## Kiedy musisz sprawdzić rachunek na białej liście?
+
+Skutki z art. 117ba Ordynacji podatkowej i art. 22p ustawy o PIT dotyczą przelewu, gdy jednocześnie spełnione są trzy warunki:
+
+- druga strona transakcji jest **przedsiębiorcą**,
+- **jednorazowa wartość transakcji przekracza 15 000 zł**, „bez względu na liczbę wynikających z niej płatności” (art. 19 Prawa przedsiębiorców); dokładnie 15 000 zł progu nie przekracza,
+- płacisz za fakturę od sprzedawcy zarejestrowanego jako **podatnik VAT czynny**.
+
+<Source
+  href="https://api.sejm.gov.pl/eli/acts/DU/2025/1480/text.pdf"
+  label="Prawo przedsiębiorców, art. 19"
+/>
+
+Próg dotyczy wartości transakcji, a nie pojedynczego przelewu. Ania, graficzka na JDG, zamawia w studiu programistycznym sklep internetowy za 18 450 zł i płaci w trzech ratach po 6 150 zł. Każda rata jest mniejsza niż 15 000 zł, ale transakcja przekracza próg, więc rachunek sprawdza przed każdym przelewem. Transakcje w walucie obcej przeliczasz po średnim kursie NBP z ostatniego dnia roboczego przed dniem transakcji (art. 19 pkt 2).
+
+Gdy sprzedawca jest zwolniony z VAT, żadnego z tych przepisów nie stosujesz, bo oba mówią o dostawcy zarejestrowanym jako podatnik VAT czynny. Przepisy wyłączają też płatności za faktury dokumentujące wewnątrzwspólnotowe nabycie towarów, import towarów lub usług i dostawę rozliczaną przez nabywcę (art. 117ba § 3 pkt 5).
+
+## Co ci grozi, gdy konta nie ma na liście?
+
+**Odpowiedzialność solidarna za VAT sprzedawcy.** Odpowiadasz „całym swoim majątkiem” razem ze sprzedawcą za jego zaległości w VAT, w części podatku proporcjonalnie przypadającej na twoją transakcję (art. 117ba § 1 Ordynacji podatkowej). Jeśli sprzedawca nie zapłaci VAT od faktury Ani, urząd skarbowy może upomnieć się o ten podatek u niej. Przepis obejmuje każdego podatnika w rozumieniu art. 15 ustawy o VAT, więc także firmę zwolnioną z VAT. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/622/text.pdf" label="Ordynacja podatkowa, art. 117ba (Dz.U. 2026 poz. 622)" />
+
+**Wydatek poza kosztami.** Nie zaliczasz do kosztów uzyskania przychodów tej części kosztu, którą zapłaciłeś na rachunek spoza wykazu (art. 22p ust. 1 pkt 2 ustawy o PIT; spółek dotyczy analogiczny art. 15d ust. 1 pkt 2 ustawy o CIT). Jeśli koszt już ująłeś, zmniejszasz koszty, a gdy się nie da, zwiększasz przychody w miesiącu, w którym zleciłeś przelew (ust. 2). Na ryczałcie kosztów nie odliczasz, więc ten skutek zwykle cię nie dotyczy, ale odpowiedzialność solidarna już tak. Wyjątek: jeśli na ryczałcie płacisz za wydatek ujęty w kosztach przed zmianą formy opodatkowania, korygujesz koszty za rok poprzedzający zmianę (ust. 3). <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/592/text.pdf" label="Ustawa o PIT, art. 22p (Dz.U. 2026 poz. 592)" />
+
+### Co zmienia się od 1 stycznia 2027 r.?
+
+Ustawa z 18 września 2026 r. (Dz.U. 2026 poz. 1371, ogłoszona 21 października 2026 r.) zostawia w art. 22p ust. 1 ustawy o PIT i art. 15d ust. 1 ustawy o CIT tylko płatność bez pośrednictwa rachunku płatniczego. Wypadają z nich przelew na rachunek spoza wykazu i zapłata z pominięciem obowiązkowego MPP. Decyduje data wystawienia faktury: do płatności za fakturę wystawioną przed 1 stycznia 2027 r. stosuje się dotychczasowe przepisy (art. 3 ust. 2), także gdy płacisz ją w 2027 r. Ta ustawa nie zmienia art. 117ba Ordynacji podatkowej. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1371/text.pdf" label="Dz.U. 2026 poz. 1371, art. 1–3 i 6" />
+
+| Faktura wystawiona    | Koszt w PIT/CIT przy rachunku spoza listy | Odpowiedzialność za VAT sprzedawcy |
+| --------------------- | ----------------------------------------- | ---------------------------------- |
+| do 31 grudnia 2026 r. | wyłączony (chyba że MPP lub ZAW-NR)       | tak (chyba że MPP lub ZAW-NR)      |
+| od 1 stycznia 2027 r. | bez sankcji                               | tak (chyba że MPP lub ZAW-NR)      |
+
+Strona ZAW-NR na podatki.gov.pl (aktualizacja z 30 września 2026 r.) wciąż opisuje oba skutki, bo powstała przed tą ustawą.
+
+## Jak uniknąć skutków? Zapłać w MPP albo złóż ZAW-NR
+
+**Zapłać w MPP.** Przelew w mechanizmie podzielonej płatności wyłącza odpowiedzialność solidarną i sankcję w kosztach, nawet jeśli rachunku nie ma w wykazie (art. 117ba § 3 pkt 4 Ordynacji podatkowej, art. 22p ust. 4 pkt 3 ustawy o PIT). Kiedy MPP jest obowiązkowy i jak oznacza się go na fakturze, opisaliśmy w poście o [podzielonej płatności w KSeF](/blog/mpp-split-payment-ksef).
+
+**Złóż ZAW-NR w ciągu 7 dni.** Gdy zapłaciłeś zwykłym przelewem na rachunek spoza wykazu, zawiadamiasz o tym naczelnika urzędu skarbowego **właściwego dla ciebie** (płacącego), a nie dla sprzedawcy, w terminie 7 dni od dnia zlecenia przelewu. Zawiadomienie składasz przy pierwszej zapłacie na dany rachunek (art. 117ba § 3 pkt 2). W zawiadomieniu podajesz:
+
+- swoje dane: NIP, imię i nazwisko lub nazwę, adres prowadzenia działalności,
+- dane wystawcy faktury tak, jak są na fakturze (NIP, nazwa, adres),
+- numer rachunku, na który zapłaciłeś,
+- kwotę przelewu i dzień jego zlecenia.
+
+<Source
+  href="https://api.sejm.gov.pl/eli/acts/DU/2026/622/text.pdf"
+  label="Ordynacja podatkowa, art. 117ba § 3 i 4"
+/>
+
+Według podatki.gov.pl ZAW-NR złożysz online w e-Urzędzie Skarbowym po zalogowaniu przez login.gov.pl. Żeby złożyć je za kogoś innego, np. za klienta biura rachunkowego, potrzebujesz pełnomocnictwa PPO-1 lub PPS-1 (w e-Urzędzie Skarbowym PPO-1). Od 1 października 2026 r. pełnomocnictwo do podpisywania deklaracji obejmuje też podpisanie ZAW-NR (art. 117ba § 3a, dodany ustawą Dz.U. 2026 poz. 846). <Source href="https://www.podatki.gov.pl/eurzad-skarbowy-zalatw-sprawy-podatkowe-online/konto-organizacji-w-eurzedzie-skarbowym/zawiadomienie-zaw-nr" label="podatki.gov.pl: Zawiadomienie ZAW-NR" />
+
+Skutków nie ma też wtedy, gdy płacisz na specjalny rachunek banku lub SKOK (np. gdy bank lub SKOK kupił wierzytelność w faktoringu), o ile bank, SKOK albo wystawca faktury poinformował cię, że to taki rachunek (art. 117ba § 3 pkt 3).
+
+## Jak sprawdzić rachunek i zachować dowód?
+
+Sprawdzasz **w dniu zlecenia przelewu**, bo przepisy mówią o rachunku „zawartym na dzień zlecenia przelewu w wykazie”. Wykaz jest aktualizowany raz na dobę w dni robocze (art. 96b ust. 8 ustawy o VAT), więc wynik sprzed tygodnia może być już nieaktualny. Ania, która płaci w trzech ratach, sprawdza więc rachunek trzy razy.
+
+Wpisz NIP sprzedawcy albo numer rachunku w [wyszukiwarce wykazu podatników VAT](https://www.podatki.gov.pl/wykaz-podatnikow-vat-wyszukiwarka). Wykaz pokazuje status (czynny lub zwolniony) i numery rachunków, które zgłosił podatnik. Pozwala też sprawdzić stan na wybrany dzień z bieżącego roku i 5 poprzednich lat (art. 96b ust. 2 i 3). Wyszukiwarka jest dostępna również przez CEIDG (ust. 9). <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="Ustawa o VAT, art. 96b (Dz.U. 2026 poz. 1263)" />
+
+Przepisy nie każą przechowywać dowodu sprawdzenia, ale w sporze z urzędem łatwiej wtedy wykazać, że numer był na liście. Zapisz zrzut ekranu lub wydruk wyniku z datą i dołącz go do faktury. Programy księgowe i firmy z większą liczbą przelewów korzystają z API wykazu: zapytanie o NIP i numer rachunku zwraca odpowiedź „TAK” lub „NIE”, datę zapytania i jego identyfikator (`requestId`), który można zachować w dokumentacji. <Source href="https://wl-api.mf.gov.pl/" label="API wykazu podatników VAT" />
+
+## Sprawdź też numer konta z faktury w KSeF
+
+Na fakturze FA(3) sprzedawca podaje rachunek w elemencie `Platnosc/RachunekBankowy` (pełny numer w `NrRB`). Pole jest opcjonalne, a schemat nie łączy go z białą listą: KSeF przyjmie fakturę z dowolnym poprawnie zapisanym numerem. To, że fakturę dostałeś w KSeF, nie znaczy więc, że konto jest na liście. Zdarzają się też fałszywe faktury z numerem oszusta; jak je rozpoznać, piszemy w poście o [fałszywych fakturach w KSeF](/blog/falszywe-faktury-ksef). <Source href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd" label="Schemat FA(3), TRachunekBankowy" />
+
+Schemat ma też znacznik `RachunekWlasnyBanku` z wartościami 1–3, których opisy odpowiadają rachunkom banku i SKOK z art. 117ba § 3 pkt 3. MF nie wyjaśniło, czy taki znacznik na fakturze wystarcza jako informacja, o której mówi przepis.
+
+## Czego przepisy nie rozstrzygają?
+
+Art. 19 Prawa przedsiębiorców mówi o „jednorazowej wartości transakcji”, ale nie precyzuje, czy chodzi o kwotę brutto, czy netto. W źródłach, które sprawdziliśmy, nie znaleźliśmy odpowiedzi. Gdy kwota brutto przekracza 15 000 zł, a netto nie, i tak sprawdź rachunek. Zajmie ci to minutę.
+
+Gdy od 1 stycznia 2027 r. płacisz w MPP za fakturę z KSeF, w komunikacie przelewu podajesz jej numer KSeF. Jak to zrobić, opisaliśmy w poście o [numerze KSeF w przelewie](/blog/numer-ksef-w-przelewie).
