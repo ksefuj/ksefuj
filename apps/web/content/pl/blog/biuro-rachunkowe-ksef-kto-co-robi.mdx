@@ -1,0 +1,127 @@
+---
+title: "Ustal z biurem rachunkowym, kto co robi w KSeF"
+description: "Biuro z dostępem do faktur samo pobiera je z KSeF. Ty przekazujesz tylko dokumenty spoza systemu, a błędną fakturę zakupową koryguje sprzedawca."
+date: 2026-10-28
+updated: 2026-10-28
+section: blog
+locale: pl
+slug: "biuro-rachunkowe-ksef-kto-co-robi"
+topic: "access"
+tags: ["KSeF", "JDG", "Biuro rachunkowe"]
+related:
+  - "guides/uprawnienia-ksef-ksiegowa"
+  - "guides/jak-odebrac-fakture-ksef"
+  - "blog/faktura-poza-ksef-odliczenie-vat"
+sources:
+  - label: "Podręcznik KSeF 2.0, cz. I (wyd. 6.08.2026): modele współpracy z biurem, uprawnienia"
+    url: "https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  - label: "Podręcznik KSeF 2.0, cz. II (wyd. 6.08.2026): korekty, odbieranie faktur"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "Podręcznik KSeF 2.0, cz. III (wyd. 6.08.2026): zgłoszenie nadużycia"
+    url: "https://ksef.podatki.gov.pl/media/3ikdk3qm/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06082026.pdf"
+  - label: "Podręcznik użytkownika Aplikacji Podatnika KSeF 2.0 (wyd. 6.08.2026)"
+    url: "https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
+  - label: "Ustawa o VAT, tekst jednolity (Dz.U. 2026 poz. 1263)"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  - label: "Rozporządzenie MFiG w sprawie przypadków, w których nie ma obowiązku wystawiania faktur ustrukturyzowanych (Dz.U. 2025 poz. 1740)"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2025/1740/text.pdf"
+  - label: "MF: Najczęstsze pytania o KSeF (pyt. 17 i 18)"
+    url: "https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
+  - label: "MF: Pytania i odpowiedzi KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/"
+  - label: "MF: ulotka „Pracownicy i Księgowi”"
+    url: "https://ksef.podatki.gov.pl/media/oxaev3up/ksef_dostep_pracownicy-i-ksiegowi.pdf"
+translations:
+  pl: "biuro-rachunkowe-ksef-kto-co-robi"
+  en: "ksef-accounting-office-who-does-what"
+  uk: "bukhgalterske-biuro-ksef-khto-shcho-robyt"
+---
+
+Gdy dasz biuru rachunkowemu uprawnienie do faktur w KSeF, biuro samo pobiera z systemu wszystkie twoje faktury sprzedażowe i zakupowe, więc nie musisz mu ich już przesyłać. Dostarczasz tylko dokumenty, których w KSeF nie ma. Faktury wystawia ten, komu dasz uprawnienie do wystawiania: ty, biuro albo oboje.
+
+Stan prawny na 26 października 2026 r.
+
+## Jak MF opisuje podział pracy z biurem?
+
+W cz. I Podręcznika KSeF 2.0 Ministerstwo Finansów opisuje trzy warianty i zaznacza, że „różnią się zakresem odpowiedzialności stron”. <Source href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. I, s. 20" />
+
+| Wariant | Kto wystawia faktury              | Kto pobiera faktury z KSeF   | Co nadajesz biuru                     |
+| ------- | --------------------------------- | ---------------------------- | ------------------------------------- |
+| 1       | ty, w programie połączonym z KSeF | ty, potem przekazujesz biuru | nic                                   |
+| 2       | ty, w programie połączonym z KSeF | biuro                        | dostęp do faktur                      |
+| 3       | biuro                             | biuro                        | wystawianie faktur i dostęp do faktur |
+
+Ania, graficzka na JDG, wystawia trzy faktury w miesiącu w swoim programie. Najwygodniejszy jest dla niej wariant 2: sama wystawia, a pani Krystyna z biura pobiera z KSeF i jej sprzedaż, i zakupy. Wariant 3 ma sens, gdy nie chcesz wystawiać faktur samodzielnie albo nie masz dostępu do internetu. Ten drugi powód MF wymienia wprost: wtedy uprawnienie do wystawiania możesz dać na przykład pracownikowi biura. <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/" label="FAQ KSeF 2.0, pytanie o osoby bez dostępu do internetu" />
+
+## Jakie uprawnienia dać biuru?
+
+MF wymienia trzy uprawnienia, które możesz dać pracownikom i firmom, z którymi współpracujesz: wystawianie faktur, przeglądanie faktur i zarządzanie uprawnieniami. <Source href="https://ksef.podatki.gov.pl/media/oxaev3up/ksef_dostep_pracownicy-i-ksiegowi.pdf" label="MF: ulotka „Pracownicy i Księgowi”" />
+
+- **Przeglądanie faktur** (w Podręczniku KSeF „dostęp do faktur”) obejmuje wszystkie twoje faktury, sprzedażowe i zakupowe. Nie da się go ograniczyć do samych zakupów.
+- **Wystawianie faktur** to osobne uprawnienie. Obejmuje też wystawianie w trybach offline (offline24, niedostępność, tryb awaryjny). Możesz dać jedno bez drugiego. <Source href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. I, s. 54-55" />
+- **Zarządzanie uprawnieniami** pozwala nadawać i odbierać dostęp w twoim imieniu. Biuru jako firmie go nie nadasz, tylko konkretnej osobie. Do prowadzenia księgowości nie jest potrzebne, więc lepiej zostaw je sobie. <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Podręcznik Aplikacji Podatnika KSeF 2.0, pkt 5.5.2.7, tabela 32" />
+
+Uprawnienie nadajesz biuru jako firmie, po NIP, albo konkretnej księgowej. Gdy nadasz je biuru i zaznaczysz „z prawem do dalszego przekazywania uprawnienia”, biuro samo wskaże pracowników, którzy cię obsługują, a przy zmianach kadrowych nie musisz nic robić. <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/" label="FAQ KSeF 2.0, pytanie o pracowników biura" /> Jako JDG robisz to elektronicznie, w Aplikacji Podatnika KSeF albo w programie połączonym z KSeF, bez zawiadomienia ZAW-FA. Kolejne kroki opisaliśmy w przewodniku, [jak dać księgowej uprawnienia do KSeF](/guides/uprawnienia-ksef-ksiegowa).
+
+<Warning>
+  Nie przekazuj księgowej swojego certyfikatu KSeF. MF pisze, że certyfikat JDG jest osobistym
+  poświadczeniem tożsamości i może z niego korzystać tylko jego właścicielka, a księgowej trzeba
+  nadać uprawnienia.
+  <Source
+    href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/"
+    label="FAQ KSeF 2.0, pytanie o udostępnienie certyfikatu księgowej"
+  />
+</Warning>
+
+## Czy biuro, które wystawia za ciebie, poradzi sobie z awarią?
+
+Uprawnienie do wystawiania obejmuje tryby offline, więc biuro może wystawić fakturę także wtedy, gdy KSeF nie działa. Faktura offline, którą przekazuje się poza KSeF, musi mieć kod QR, a do jego wygenerowania potrzebny jest certyfikat KSeF typu 2. Certyfikatów wydanych na osobę nie wolno udostępniać, więc w przykładzie MF księgowa używa przy wystawianiu offline własnego certyfikatu. <Source href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. I, s. 48 (przykład 18)" />
+
+Ustal więc z biurem, kto przy awarii wystawia fakturę offline i kto potem pilnuje terminu wysłania jej do KSeF. Terminy dla poszczególnych trybów są w przewodniku o [awarii KSeF i trybie offline](/guides/awaria-ksef-offline). Faktura offline dostaje numer KSeF dopiero po wysłaniu i do tego czasu nie ma jej w systemie.
+
+## Co nadal musisz przekazać biuru?
+
+Biuro widzi w KSeF tylko to, co do KSeF trafiło. Resztę dostarczasz jak dotąd: mailem, przez program albo w segregatorze.
+
+- **Twoje faktury dla osób prywatnych**, jeśli wystawiasz je poza KSeF. Faktura dla konsumenta nie musi trafić do systemu, choć może (art. 106ga ust. 2 pkt 4 i ust. 4 ustawy o VAT).
+- **Faktury od zagranicznych sprzedawców** bez siedziby i stałego miejsca prowadzenia działalności w Polsce (art. 106ga ust. 2 pkt 1 i 2), na przykład za oprogramowanie czy reklamy.
+- **Bilety jednorazowe na przejazd** (kolej, autobus, samolot) i uproszczone faktury za autostradę (art. 106ga ust. 2 pkt 5, rozporządzenie Dz.U. 2025 poz. 1740, § 2).
+- **Faktury wystawione poza KSeF do 31 grudnia 2026 r.**: w limicie 10 000 zł miesięcznie (art. 145m), z kasy rejestrującej i paragony z NIP uznane za faktury (art. 145n). Dotyczy to twojej sprzedaży i twoich zakupów od takich sprzedawców.
+- **Dokumenty, które nie są fakturami w KSeF**: faktury pro forma, noty obciążeniowe i uznaniowe, dowody wewnętrzne. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 1.1, s. 6" />
+
+<Source
+  href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  label="Ustawa o VAT, art. 106ga, 145m i 145n"
+/>
+
+Przy fakturze zakupowej spoza KSeF datą otrzymania jest dzień, w którym faktycznie do ciebie dotarła. Dlatego biuro potrzebuje nie tylko pliku, ale też informacji, kiedy go dostałaś. Jak wpływa to na odliczenie VAT, opisaliśmy w tekście o [odliczeniu VAT z faktury spoza KSeF](/blog/faktura-poza-ksef-odliczenie-vat).
+
+## Kto reaguje na błędną albo obcą fakturę zakupową?
+
+KSeF nie ma przycisku „odrzuć” i nie wysyła powiadomień o nowych fakturach. Program, z którego korzysta biuro albo ty, musi sam sprawdzać, czy coś przyszło. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 6.3-6.4" /> Jeśli biuro pobiera faktury raz w miesiącu, obcą fakturę zobaczy dopiero przy zamknięciu okresu.
+
+**Błędną fakturę poprawia tylko sprzedawca, fakturą korygującą.** Od 1 lutego 2026 r. not korygujących już nie ma, więc ani ty, ani biuro nie wystawicie noty do cudzej faktury. Gdy sprzedawca wpisał twój NIP przez pomyłkę, wystawia korektę do zera i nową fakturę dla właściwego nabywcy. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 1.6.2-1.6.4" /> Ze sprzedawcą kontaktujesz się ty, bo biuro nie wie, co zamawiałaś.
+
+Fakturę podejrzaną o oszustwo może zgłosić w Aplikacji Podatnika każdy, kto ma w twoim kontekście dostęp do faktur, czyli także biuro. Według MF zwykła pomyłka, spór o cenę czy przedłużony abonament to jeszcze nie nadużycie. <Source href="https://ksef.podatki.gov.pl/media/3ikdk3qm/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. III, pkt 7.1-7.2" /> Co zrobić z taką fakturą, piszemy w poście o [fałszywych fakturach w KSeF](/blog/falszywe-faktury-ksef).
+
+## Co zapisać w umowie z biurem?
+
+MF nie podaje wzoru takiej umowy. Proponujemy, żeby pani Krystyna i Ania spisały kilka rzeczy:
+
+1. Który wariant stosujecie i jakie uprawnienia dostało biuro (z prawem do przekazywania pracownikom czy bez).
+2. Kto wystawia faktury, a jeśli biuro, to na podstawie jakich danych i w jakim terminie od twojego zgłoszenia.
+3. Kto i jak często sprawdza faktury zakupowe w KSeF oraz kto zatwierdza fakturę od nowego dostawcy.
+4. Jak i do kiedy przekazujesz dokumenty spoza KSeF z listy wyżej.
+5. Kto kontaktuje się ze sprzedawcą w sprawie korekty i kto zgłasza nadużycie.
+6. Kto przy awarii wystawia faktury offline i pilnuje ich wysłania do KSeF.
+7. Co dzieje się z uprawnieniami po zakończeniu współpracy.
+
+Podział obowiązków między tobą a biurem wynika z umowy, nie z przepisów o KSeF. Jeśli biuro ma wystawiać faktury, tę część umowy pokaż prawnikowi.
+
+## Jak zmienić biuro i nie zostawić mu dostępu?
+
+Gdy kończysz współpracę, odbierz biuru uprawnienia w Aplikacji Podatnika albo w swoim programie. Może to zrobić tylko ktoś z prawem do zarządzania uprawnieniami, czyli zwykle ty jako właścicielka JDG. <Source href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/" label="FAQ MF, pyt. 18" /> Gdy odbierzesz uprawnienia biuru, wszyscy jego pracownicy naraz tracą dostęp do twojej firmy: ich uprawnienia formalnie zostają, ale przestają działać. <Source href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. I, s. 77-78" /> Jeśli nadałaś dostęp konkretnej księgowej, odbierasz go jej osobno. Jej certyfikat KSeF pozostaje ważny, ale w twoim imieniu już nim nie zadziała.
+
+Nowemu biuru nadajesz uprawnienia od nowa. MF opisuje dostęp do faktur jako dostęp do wszystkich faktur podatnika (cz. I, s. 55) i nie znaleźliśmy zastrzeżenia, że obejmuje tylko faktury od dnia nadania. Faktury nie znikają z KSeF przy zmianie biura, bo system przechowuje je przez 10 lat od końca roku wystawienia. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 1.6.3" />
+
+Zanim podpiszesz nową umowę, sprawdź na liście nadanych uprawnień w Aplikacji Podatnika, kto dziś ma dostęp do twoich faktur. Jeśli w ogóle nie masz z biurem uzgodnionego wariantu, zacznij od przewodnika, [jak odebrać fakturę w KSeF](/guides/jak-odebrac-fakture-ksef).
