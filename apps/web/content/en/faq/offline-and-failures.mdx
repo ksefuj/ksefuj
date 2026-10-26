@@ -2,6 +2,7 @@
 title: Offline Mode and Failures
 description: What to do when KSeF is down, and how offline and emergency modes work.
 date: 2026-03-22
+updated: 2026-10-26
 section: faq
 locale: en
 slug: offline-and-failures
@@ -14,16 +15,18 @@ translations:
 ## Offline Mode and Failures
 
 <Question q="What should I do if KSeF is down?">
-  When KSeF is unavailable, the Ministry of Finance officially announces emergency mode. During this
-  time you can issue invoices outside the system with appropriate markings. After KSeF is restored,
-  you have a set time to submit the pending invoices. Check status at ksef.podatki.gov.pl.
+  You can issue the invoice outside KSeF in offline mode. If MF announces that KSeF is unavailable
+  or declares an outage, separate rules and deadlines apply for sending those invoices to KSeF. In a
+  total outage, invoices are not sent to KSeF at all (Art. 106ng of the VAT Act).
 </Question>
 
 <Question q="What is offline mode?">
-  Offline mode allows you to issue invoices outside KSeF when you have no internet access or the
-  system is unavailable. An offline invoice gets a special QR code downloaded in advance from MF and
-  must be submitted to KSeF once connectivity is restored. You can use offline mode proactively, not
-  just during failures.
+  In offline mode (offline24) you issue the invoice outside KSeF and send it to KSeF no later than
+  the next business day after the issue date (Art. 106nda of the VAT Act). The law does not tie this
+  mode to an outage, so you can use it at any time. If you hand an offline invoice to the buyer
+  outside KSeF, it carries two QR codes, and you need a type 2 KSeF certificate to generate the
+  second one. The Taxpayer Application issues only online invoices, so offline mode requires
+  software that supports it.
 </Question>
 
 <Question q="What is emergency mode?">
@@ -34,21 +37,25 @@ translations:
 </Question>
 
 <Question q="How long do I have to submit invoices after an outage?">
-  After emergency mode ends, you generally have until the next business day to submit invoices
-  issued in offline or emergency mode. The exact deadline depends on the length of the outage and
-  may be announced by the MF along with the system restoration notice. We recommend sending pending
-  invoices as soon as possible.
+  You send an invoice issued in emergency mode to KSeF within 7 business days of the day the outage
+  ended, as stated in the MF announcement (Art. 106nf ust. 4 of the VAT Act). If MF announces
+  another outage during that time, the period starts again. An invoice issued while KSeF was
+  unavailable goes to KSeF no later than the next business day after the unavailability ends (Art.
+  106nh ust. 2), and an offline24 invoice no later than the next business day after its issue date
+  (Art. 106nda ust. 2). Invoices issued during a total outage are not sent to KSeF (Art. 106ng).
 </Question>
 
-<Question q="What does the QR code in offline mode look like?">
-  The QR code on an offline invoice is a special token downloaded in advance from the KSeF system —
-  each business can download a pool of codes in case of connectivity loss. The code identifies the
-  invoice and enables its later association with KSeF after the document is uploaded. Without a
-  valid QR code, an offline invoice may be challenged.
+<Question q="What QR codes does an offline invoice carry?">
+  An offline invoice that does not yet have a KSeF number carries two QR codes. The first, labelled
+  "OFFLINE", links to the invoice in KSeF and lets the reader check its data. The second, labelled
+  "CERTYFIKAT", confirms the issuer's identity. Your invoicing software generates both codes, and
+  the second one requires a type 2 KSeF certificate that you must obtain in advance (Podręcznik KSeF
+  2.0, cz. II, pkt 5.4).
 </Question>
 
 <Question q="How do I know if KSeF is unavailable?">
-  The official KSeF system status is published at ksef.podatki.gov.pl. Your invoicing software
-  should also display a notification when it cannot connect to the MF API. Planned outages are
-  usually announced in advance; unplanned ones — immediately.
+  MF publishes outage announcements in the Public Information Bulletin (BIP) and in the KSeF
+  interface software, unavailability announcements in the Bulletin, and total outage announcements
+  in the mass media (Art. 106ne of the VAT Act). Your invoicing software should also display a
+  message when it cannot connect to the MF API.
 </Question>

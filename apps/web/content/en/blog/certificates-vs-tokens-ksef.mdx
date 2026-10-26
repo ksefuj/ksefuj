@@ -2,7 +2,7 @@
 title: "KSeF token or certificate: how to log in (2026)"
 description: "Profil Zaufany is enough for manual login. Invoicing software connects to KSeF with a token or a KSeF certificate. What to pick in your situation."
 date: 2026-03-29
-updated: 2026-10-07
+updated: 2026-10-26
 section: blog
 locale: en
 slug: "certificates-vs-tokens-ksef"
@@ -25,7 +25,7 @@ translations:
   uk: "sertyfikaty-proty-tokeniv-ksef"
 ---
 
-If you issue invoices by hand in the Aplikacja Podatnika (the taxpayer web app of KSeF, Poland's National e-Invoicing System), log in with Profil Zaufany, Poland's free trusted identity profile. If software sends your invoices (Fakturownia, inFakt, wFirma, your own ERP), it connects through the API and needs a **token** or a **KSeF certificate**. Profil Zaufany does not work there.
+If you issue invoices by hand in the Aplikacja Podatnika (the taxpayer web app of KSeF, Poland's National e-Invoicing System), log in with Profil Zaufany, Poland's free trusted identity profile. If software sends your invoices (Fakturownia, inFakt, wFirma, your own ERP), it connects through the API and needs a **token** or a **KSeF certificate**. Software does not log in with Profil Zaufany.
 
 ## Login methods at a glance
 
@@ -35,7 +35,7 @@ If you issue invoices by hand in the Aplikacja Podatnika (the taxpayer web app o
 | e-dowód (e-ID card, via login.gov.pl)                      | browser | anyone with an activated chip-enabled ID              | free                |
 | Qualified signature / seal                                 | browser | individuals and entities with a qualified certificate | paid (subscription) |
 | KSeF certificate (type 1: authentication, type 2: offline) | API     | ERP systems, integrators                              | free                |
-| Authentication token                                       | API     | invoicing software, integrators                       | free                |
+| KSeF token                                                 | API     | invoicing software, integrators                       | free                |
 
 ## Profil Zaufany and e-ID card: manual login
 
