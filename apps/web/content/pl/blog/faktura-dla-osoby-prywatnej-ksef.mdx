@@ -1,6 +1,6 @@
 ---
-title: "Faktura dla osoby prywatnej: KSeF czy PDF?"
-description: "Nie musisz jej wystawiać w KSeF, także od 2027 r.: wystarczy PDF. Jeśli wystawisz ją tam dobrowolnie, klient pobierze ją bez logowania, przez kod QR."
+title: "Czy faktura dla osoby prywatnej musi być w KSeF?"
+description: "Nie musi, także od 2027 r. Wystarczy PDF. Jeśli wystawisz ją w KSeF dobrowolnie, klient pobierze ją przez kod QR, bez logowania."
 date: 2026-10-08
 section: blog
 locale: pl
@@ -24,16 +24,16 @@ translations:
   uk: "rakhunok-dlya-pryvatnoyi-osoby-ksef"
 ---
 
-Fakturę dla osoby prywatnej (osoby fizycznej nieprowadzącej działalności gospodarczej) możesz wystawić poza KSeF, bo art. 106ga ust. 2 pkt 4 ustawy o VAT wyłącza ją z obowiązku. Jeśli chcesz, wystawisz ją w KSeF dobrowolnie, ale klient i tak nie znajdzie jej w systemie sam: przekazujesz mu ją w uzgodniony sposób, z kodem QR.
+Fakturę dla osoby prywatnej (osoby fizycznej nieprowadzącej działalności gospodarczej) możesz wystawić poza KSeF, bo art. 106ga ust. 2 pkt 4 ustawy o VAT wyłącza ją z obowiązku. Jeśli chcesz, wystawisz ją w KSeF dobrowolnie, ale klient i tak sam jej w systemie nie znajdzie: przekazujesz mu ją w uzgodniony sposób, z kodem QR.
 
-Stan prawny na 8 października 2026.
+Stan prawny na 8 października 2026 r.
 
 <Source
   href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/"
   label="FAQ MF: „Wystawianie w KSeF faktur na rzecz konsumentów nie jest obowiązkowe”"
 />
 
-## Poza KSeF: papier albo PDF, jak dotąd
+## Poza KSeF wystarczy papier albo PDF, jak dotąd
 
 Faktura poza KSeF może być papierowa albo elektroniczna. Elektroniczna nie musi mieć struktury FA(3) ani trafiać do systemu: wystarczy PDF wysłany e-mailem.
 
@@ -46,9 +46,9 @@ Jeśli korzystasz ze zwolnienia z VAT (art. 113), fakturę dla osoby prywatnej w
   label="Podręcznik KSeF 2.0, cz. II, pkt 1.1: faktura elektroniczna może być dowolnym plikiem, np. PDF"
 />
 
-## Wystawiasz w KSeF: jak klient dostaje fakturę
+## Jak klient dostaje fakturę wystawioną w KSeF
 
-Dobrowolna faktura konsumencka w KSeF nie trafia do klienta automatycznie. Nabywca dostaje fakturę w systemie na podstawie NIP-u, a osoba prywatna go na fakturze nie ma. Dlatego art. 106gb ust. 4 każe Ci przekazać ją w sposób uzgodniony z klientem (mailem, wydrukiem), a faktura przekazana poza KSeF musi mieć kod QR. Ustawa nie narzuca formy tego uzgodnienia.
+Dobrowolna faktura konsumencka w KSeF nie trafia do klienta automatycznie. Nabywca dostaje fakturę w systemie na podstawie NIP-u, a osoba prywatna go na fakturze nie ma. Dlatego art. 106gb ust. 4 każe ci przekazać ją w sposób uzgodniony z klientem (mailem, wydrukiem), a faktura przekazana poza KSeF musi mieć kod QR. Ustawa nie narzuca formy tego uzgodnienia.
 
 Na fakturze wystawionej w KSeF w trybie online jest jeden kod QR, a pod nim numer KSeF (faktura offline, jeszcze bez numeru, ma dwa kody). Klient pobiera z niego fakturę bez logowania, w dwóch krokach:
 
@@ -63,21 +63,21 @@ Kilka błędnych prób w drugim kroku blokuje dostęp na jakiś czas. Bez kodu Q
 />
 
 <Info>
-  **Dla developerów.** Dla nabywcy-konsumenta w `Podmiot2/DaneIdentyfikacyjne` wpisujesz `BrakID` =
+  **Dla programistów.** Dla nabywcy-konsumenta w `Podmiot2/DaneIdentyfikacyjne` wpisujesz `BrakID` =
   `1` zamiast `NIP`, a `JST` i `GV` w `Podmiot2` dostają wartość `2`. `Nazwa` (imię i nazwisko) w
   XSD jest opcjonalna, ale według adnotacji schematu tylko dla faktury uproszczonej (art. 106e ust.
   5 pkt 3), a broszura FA(3) oznacza ją jako obowiązkową. Podręcznik podaje dla konsumenta tylko
-  `BrakID`. Czy można zamiast tego wpisać PESEL w `NrID`, materiały MF, które sprawdziliśmy, nie
-  rozstrzygają.
+  `BrakID`. Materiały MF, które sprawdziliśmy, nie rozstrzygają, czy zamiast tego można wpisać PESEL
+  w `NrID`.
 </Info>
 
-## Klient podaje NIP: to już faktura dla firmy
+## Klient podaje NIP? To już faktura dla firmy
 
 Gdy nabywca ma NIP i kupuje na firmę, faktura podlega obowiązkowi KSeF z art. 106ga ust. 1. Do 31 grudnia 2026 r. możesz ją jeszcze wystawić poza systemem, jeśli mieścisz się w limicie 10 000 zł miesięcznie, liczonym z VAT (art. 145m). Faktur dla osób prywatnych nie wliczasz do tego limitu.
 
-NIP wpisany w fakturę w KSeF decyduje, komu system ją udostępni. Błędny NIP przypisze fakturę firmie, do której ten numer należy, więc przepisuj go uważnie.
+NIP wpisany na fakturze w KSeF decyduje, komu system ją udostępni. Błędny NIP przypisze fakturę firmie, do której ten numer należy, więc przepisuj go uważnie.
 
-Kilku sytuacji granicznych materiały MF, które sprawdziliśmy, nie rozstrzygają:
+Materiały MF, które sprawdziliśmy, nie rozstrzygają kilku sytuacji granicznych:
 
 - klient prowadzi JDG, ale kupuje prywatnie i mimo to podaje NIP (albo kupuje na firmę i NIP-u nie podaje): kto decyduje o charakterze zakupu i czy wystarczy jego deklaracja;
 - klient prowadzi działalność nierejestrowaną albo najem prywatny: czy przy zakupie liczy się jako osoba nieprowadząca działalności;
