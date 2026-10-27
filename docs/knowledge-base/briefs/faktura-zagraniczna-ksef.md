@@ -93,7 +93,7 @@ brief.
    obejmujących dokonaną na rzecz podatnika dostawę towarów lub świadczenie usług, o których mowa w
    załączniku nr 15 do ustawy - wyrazy "mechanizm podzielonej płatności", (...) należy podać wartość
    "1", w przeciwnym przypadku - wartość "2"" — bundled
-   `packages/validator/src/schemas/ schemat.xsd`, `Fa/Adnotacje/P_18A`, l. 2662-2667. Three
+   `packages/validator/src/schemas/schemat.xsd`, `Fa/Adnotacje/P_18A`, l. 2662-2667. Three
    cumulative conditions: amount > 15 000 zł (or equivalent), Annex 15 goods/services, supply „na
    rzecz podatnika". Confidence: HIGH. Fetched live: no (bundled XSD; crd.gov.pl 403 this run).
 2. **The schema text names no transaction-type exclusion.** The `P_18A` annotation does not mention
@@ -144,11 +144,11 @@ brief.
    `P_12` `0 WDT`, KodUE DE, KodWaluty EUR, P_15 4000, goods „lodówka Zimnotech mk1") and
    `FA_3_Przykład_23.xml` (export, `P_12` `0 EX`, buyer US, KodWaluty USD, P_15 8000, same goods)
    both have `<P_18>2</P_18>` and `<P_18A>2</P_18A>`, no `P_12_Zal_15` —
-   `test-fixtures/ official-examples/` (Podręcznik cz. II §2.11 refers to „przykład nr 22, 23").
-   None of the 26 bundled MF examples uses `P_18A` = `1`. These examples show values, not a rule:
-   they do not say why `2` was chosen, and the KB has no Annex 15 item list to check whether the
-   goods are on it. Confidence: HIGH (file content); MEDIUM-LOW as evidence of a foreign-transaction
-   rule (none stated). Fetched live: no.
+   `test-fixtures/official-examples/` (Podręcznik cz. II §2.11 refers to „przykład nr 22, 23"). None
+   of the 26 bundled MF examples uses `P_18A` = `1`. These examples show values, not a rule: they do
+   not say why `2` was chosen, and the KB has no Annex 15 item list to check whether the goods are
+   on it. Confidence: HIGH (file content); MEDIUM-LOW as evidence of a foreign-transaction rule
+   (none stated). Fetched live: no.
 10. **Firm conclusion supported by the schema alone:** for a foreign invoice with no Annex 15 item
     (e.g. typical services with `np I` / `np II`, IT, consulting) or with kwota należności ogółem ≤
     15 000 zł (PLN equivalent), the schema condition is not met → `P_18A` = `2` (fact 1, „w
