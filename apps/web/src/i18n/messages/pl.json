@@ -877,14 +877,6 @@
       "claudeCode": {
         "title": "Wtyczka do Claude Code",
         "intro": "Wolisz wtyczkę? Wpisz w Claude Code dwa polecenia:"
-      },
-      "marketplaces": {
-        "title": "Katalogi umiejętności",
-        "text": "Obie umiejętności znajdziesz też w katalogach dla asystentów AI:",
-        "links": {
-          "invoice": "ksef-invoice w skills.sh",
-          "correction": "ksef-correction w skills.sh"
-        }
       }
     },
     "examplePrompt": {

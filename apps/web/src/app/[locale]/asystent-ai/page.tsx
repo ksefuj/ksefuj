@@ -16,11 +16,6 @@ interface Props {
 const REPO_URL = "https://github.com/ksefuj/skills";
 const RELEASES_URL = "https://github.com/ksefuj/skills/releases/latest";
 
-const MARKETPLACE_LINKS = [
-  { key: "invoice", url: "https://skills.sh/ksefuj/skills/ksef-invoice" },
-  { key: "correction", url: "https://skills.sh/ksefuj/skills/ksef-correction" },
-] as const;
-
 // Product names are not translated; the localized default name is prepended per locale.
 const ASSISTANT_NAMES = ["Claude", "Codex", "Copilot"] as const;
 const NAME_SENTINEL = "@@NAME@@";
@@ -194,7 +189,7 @@ export default async function AssistantPage({ params }: Props) {
                 <p className="max-w-2xl text-lg text-slate-600">{t("install.intro")}</p>
               </div>
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 md:p-8">
+                <div className="space-y-4 rounded-2xl md:col-span-2 border border-slate-200 bg-white p-6 md:p-8">
                   <h3 className="text-xl font-bold text-slate-900 font-display">
                     {t("install.anyAgent.title")}
                   </h3>
@@ -233,28 +228,6 @@ export default async function AssistantPage({ params }: Props) {
                       {"/plugin marketplace add ksefuj/skills\n/plugin install ksef@ksefuj"}
                     </code>
                   </pre>
-                </div>
-                <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 md:p-8">
-                  <h3 className="text-xl font-bold text-slate-900 font-display">
-                    {t("install.marketplaces.title")}
-                  </h3>
-                  <p className="text-slate-700">{t("install.marketplaces.text")}</p>
-                  <ul className="space-y-2">
-                    {MARKETPLACE_LINKS.map(({ key, url }) => (
-                      <li key={key}>
-                        <TrackedLink
-                          href={url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="font-medium text-violet-700 underline underline-offset-2 hover:text-violet-800"
-                          event="skills_install_clicked"
-                          eventProps={{ target: "skills_sh", locale }}
-                        >
-                          {t(`install.marketplaces.links.${key}`)}
-                        </TrackedLink>
-                      </li>
-                    ))}
-                  </ul>
                 </div>
               </div>
             </div>

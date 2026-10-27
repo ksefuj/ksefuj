@@ -878,14 +878,6 @@
       "claudeCode": {
         "title": "Claude Code plugin",
         "intro": "Prefer a plugin? Run these two commands in Claude Code:"
-      },
-      "marketplaces": {
-        "title": "Skill directories",
-        "text": "You'll also find both skills in directories for AI assistants:",
-        "links": {
-          "invoice": "ksef-invoice on skills.sh",
-          "correction": "ksef-correction on skills.sh"
-        }
       }
     },
     "examplePrompt": {
