@@ -564,7 +564,9 @@
         },
         "assistant": {
           "title": "AI invoice assistant",
-          "description": "Free skills that let an AI assistant turn a PDF or a description into invoice XML and help you issue a corrective invoice."
+          "description": "Free skills that let an AI assistant turn a PDF or a description into invoice XML and help you issue a corrective invoice.",
+          "badge": "New",
+          "cta": "See how it works"
         }
       },
       "validatorChecks": [
@@ -808,7 +810,8 @@
     },
     "hero": {
       "eyebrow": "Free skills for your AI assistant",
-      "title": "Describe the invoice. Your AI assistant writes the KSeF file.",
+      "title": "Describe the invoice. Get the KSeF file from {name}.",
+      "defaultName": "your AI assistant",
       "subtitle": "Two free skills for your AI assistant. Give it a PDF or a few sentences and it prepares an FA(3) invoice for KSeF (Poland's National e-Invoicing System). If you make a mistake, it walks you through the correction.",
       "primaryCta": "Install for free",
       "secondaryCta": "View on GitHub"

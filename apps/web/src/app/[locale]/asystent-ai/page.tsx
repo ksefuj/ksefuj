@@ -5,6 +5,7 @@ import { withSiteSuffix } from "@/lib/page-title";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SectionContainer } from "@/components/section-container";
+import { RotatingWord } from "@/components/rotating-word";
 import { TrackedLink } from "@/components/tracked-link";
 import { LanguagePicker } from "../language-picker";
 
@@ -19,6 +20,10 @@ const MARKETPLACE_LINKS = [
   { key: "invoice", url: "https://skills.sh/ksefuj/skills/ksef-invoice" },
   { key: "correction", url: "https://skills.sh/ksefuj/skills/ksef-correction" },
 ] as const;
+
+// Product names are not translated; the localized default name is prepended per locale.
+const ASSISTANT_NAMES = ["Claude", "Codex", "Copilot"] as const;
+const NAME_SENTINEL = "@@NAME@@";
 
 const STEP_KEYS = ["describe", "generate", "check"] as const;
 const SKILL_KEYS = ["invoice", "correction"] as const;
@@ -64,6 +69,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function AssistantPage({ params }: Props) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "asystentAi" });
+  const [titleBefore, titleAfter = ""] = t("hero.title", { name: NAME_SENTINEL }).split(
+    NAME_SENTINEL,
+  );
 
   const p = locale === "pl" ? "" : `/${locale}`;
 
@@ -92,7 +100,14 @@ export default async function AssistantPage({ params }: Props) {
               {t("hero.eyebrow")}
             </span>
             <h1 className="max-w-3xl text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 font-display">
-              {t("hero.title")}
+              <span className="sr-only">{t("hero.title", { name: t("hero.defaultName") })}</span>
+              <span aria-hidden="true">
+                {titleBefore}
+                <RotatingWord
+                  words={[t("hero.defaultName"), ...ASSISTANT_NAMES]}
+                  suffix={titleAfter}
+                />
+              </span>
             </h1>
             <p className="max-w-2xl text-lg text-slate-600">{t("hero.subtitle")}</p>
             <div className="flex flex-wrap gap-3 pt-2">

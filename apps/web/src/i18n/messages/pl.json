@@ -564,7 +564,9 @@
         },
         "assistant": {
           "title": "Asystent AI do faktur",
-          "description": "Darmowe umiejętności, dzięki którym asystent AI przygotuje plik XML faktury z PDF-a albo opisu i pomoże wystawić korektę."
+          "description": "Darmowe umiejętności, dzięki którym asystent AI przygotuje plik XML faktury z PDF-a albo opisu i pomoże wystawić korektę.",
+          "badge": "Nowość",
+          "cta": "Zobacz, jak to działa"
         }
       },
       "validatorChecks": [
@@ -807,7 +809,8 @@
     },
     "hero": {
       "eyebrow": "Darmowe umiejętności dla asystenta AI",
-      "title": "Opisz fakturę. Plik do KSeF przygotuje asystent AI.",
+      "title": "Opisz fakturę. Plik do KSeF przygotuje {name}.",
+      "defaultName": "asystent AI",
       "subtitle": "Dwie darmowe umiejętności (skille) dla Twojego asystenta AI. Z PDF-a albo kilku zdań przygotuje fakturę w formacie FA(3), a przy pomyłce przeprowadzi Cię przez korektę.",
       "primaryCta": "Zainstaluj za darmo",
       "secondaryCta": "Zobacz na GitHubie"
