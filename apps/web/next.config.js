@@ -21,6 +21,13 @@ const movedToGuidesRedirects = Object.entries(movedToGuides).flatMap(([prefix, s
   })),
 );
 
+// Short alias for the AI assistant page. PL has no locale prefix.
+const claudeRedirects = ["", "/en", "/uk"].map((prefix) => ({
+  source: `${prefix}/claude`,
+  destination: `${prefix}/asystent-ai`,
+  permanent: true,
+}));
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Ensure logo-og.svg is bundled into all serverless functions.
@@ -40,6 +47,7 @@ const nextConfig = {
       { source: "/poradniki/:path*", destination: "/guides/:path*", permanent: true },
       { source: "/kurs-nbp", destination: "/waluty", permanent: true },
       ...movedToGuidesRedirects,
+      ...claudeRedirects,
     ];
   },
   transpilePackages: ["@ksefuj/validator", "@ksefuj/pdf"],

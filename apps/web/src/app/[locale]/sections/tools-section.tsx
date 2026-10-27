@@ -1,11 +1,13 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/routing";
+import { Badge } from "@/components/badge";
 import { homeLinkClasses, HomeSection } from "./home-section";
 
 const TOOLS = [
   { id: "validator", href: "/validator" },
   { id: "preview", href: "/podglad" },
   { id: "rates", href: "/waluty" },
+  { id: "assistant", href: "/asystent-ai" },
 ] as const;
 
 /** Homepage tools row: validator, invoice preview, NBP rates, and what the validator checks. */
@@ -15,9 +17,21 @@ export async function ToolsSection({ locale }: { locale: string }) {
 
   return (
     <HomeSection id="tools" title={t("title")}>
-      <div className="grid gap-x-10 gap-y-8 md:grid-cols-3">
+      <div className="grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
         {TOOLS.map(({ id, href }) => (
-          <div key={id}>
+          <div
+            key={id}
+            className={
+              id === "assistant"
+                ? "relative self-start rounded-2xl border border-violet-200 bg-violet-50/60 p-4 sm:-m-5 sm:p-5"
+                : undefined
+            }
+          >
+            {id === "assistant" && (
+              <Badge variant="info" className="absolute -top-3 left-4 bg-violet-50 sm:left-5">
+                {t("items.assistant.badge")}
+              </Badge>
+            )}
             <h3 className="font-display text-lg font-bold tracking-tight text-slate-900">
               <Link
                 href={href}
@@ -33,6 +47,13 @@ export async function ToolsSection({ locale }: { locale: string }) {
                   <li key={check}>{check}</li>
                 ))}
               </ul>
+            )}
+            {id === "assistant" && (
+              <p className="mt-3 text-sm">
+                <Link href={href} className={homeLinkClasses}>
+                  {t("items.assistant.cta")} →
+                </Link>
+              </p>
             )}
           </div>
         ))}

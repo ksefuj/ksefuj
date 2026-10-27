@@ -5,7 +5,7 @@ import { listContentItems } from "@/lib/content";
 const BASE_URL = "https://ksefuj.to";
 
 // Pages available in all locales
-const pages = ["/", "/validator", "/podglad", "/waluty", "/privacy", "/terms"];
+const pages = ["/", "/validator", "/podglad", "/waluty", "/asystent-ai", "/privacy", "/terms"];
 
 // Derive URL prefixes per locale from central i18n routing configuration
 const localePrefixes =

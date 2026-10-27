@@ -118,6 +118,27 @@ body {
   }
 }
 
+@keyframes caret-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.rotating-caret {
+  animation: caret-blink 1s step-end infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rotating-caret {
+    animation: none;
+  }
+}
+
 .animate-fade-up {
   animation: fade-up 400ms ease-out;
 }

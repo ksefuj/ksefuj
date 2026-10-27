@@ -56,6 +56,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ValidatorPage({ params }: Props) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "validatorPage" });
+  const ta = await getTranslations({ locale, namespace: "asystentAi" });
   const referencePages = await listValidatorPages(locale);
   const issueHelpLinks = buildIssueHelpLinks(locale, referencePages);
   const issueHelpAnchors = buildIssueHelpAnchors(referencePages);
@@ -91,6 +92,15 @@ export default async function ValidatorPage({ params }: Props) {
                   className="font-medium text-violet-600 hover:text-violet-700 underline transition-colors"
                 >
                   {t("previewLink")}
+                </Link>
+              </p>
+              <p className="text-sm text-slate-500">
+                {ta("validatorHint.text")}{" "}
+                <Link
+                  href={locale === "pl" ? "/asystent-ai" : `/${locale}/asystent-ai`}
+                  className="font-medium text-violet-600 hover:text-violet-700 underline transition-colors"
+                >
+                  {ta("validatorHint.link")}
                 </Link>
               </p>
             </div>

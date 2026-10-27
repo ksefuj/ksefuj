@@ -91,6 +91,11 @@ export function SiteFooter() {
                   {t("waluty")}
                 </Link>
               </li>
+              <li>
+                <Link href={`${p}/asystent-ai`} className="hover:text-slate-300 transition-colors">
+                  {t("assistant")}
+                </Link>
+              </li>
             </ul>
           </div>
 

@@ -397,6 +397,7 @@
     "docs": "Dokumentacja",
     "guides": "Poradniki",
     "waluty": "Kursy walut",
+    "assistant": "Asystent AI",
     "content": "Treści",
     "legal": "Informacje prawne",
     "contact": "Kontakt",
@@ -560,6 +561,12 @@
         "rates": {
           "title": "Kursy walut NBP",
           "description": "Podaje średni kurs NBP do przeliczenia faktury w obcej walucie (art. 31a ustawy o VAT)."
+        },
+        "assistant": {
+          "title": "Asystent AI do faktur",
+          "description": "Darmowe umiejętności, dzięki którym asystent AI przygotuje plik XML faktury z PDF-a albo opisu i pomoże wystawić korektę.",
+          "badge": "Nowość",
+          "cta": "Zobacz, jak to działa"
         }
       },
       "validatorChecks": [
@@ -794,5 +801,141 @@
       "text": "Sprawdź plik XML przed wysyłką do KSeF. Pokażemy, co trzeba poprawić.",
       "button": "Otwórz walidator"
     }
+  },
+  "asystentAi": {
+    "meta": {
+      "title": "Darmowe skille AI do faktur i korekt KSeF (Agent Skills)",
+      "description": "Opisz fakturę albo załącz PDF, a asystent AI przygotuje plik XML FA(3) do KSeF i pomoże w korekcie. Darmowe skille, wynik sprawdzisz w walidatorze."
+    },
+    "hero": {
+      "eyebrow": "Darmowe umiejętności dla asystenta AI",
+      "title": "Opisz fakturę. Plik do KSeF przygotuje {name}.",
+      "defaultName": "asystent AI",
+      "subtitle": "Dwie darmowe umiejętności (skille) dla Twojego asystenta AI. Z PDF-a albo kilku zdań przygotuje fakturę w formacie FA(3), a przy pomyłce przeprowadzi Cię przez korektę.",
+      "primaryCta": "Zainstaluj za darmo",
+      "secondaryCta": "Zobacz na GitHubie"
+    },
+    "howItWorks": {
+      "title": "Jak to działa?",
+      "steps": {
+        "describe": {
+          "title": "Opisz fakturę",
+          "text": "Załącz PDF, wklej dane albo napisz zwykłymi słowami, komu i za co wystawiasz fakturę."
+        },
+        "generate": {
+          "title": "Asystent przygotuje plik",
+          "text": "Dostajesz plik XML w formacie FA(3), którego wymaga KSeF."
+        },
+        "check": {
+          "title": "Sprawdź i wyślij",
+          "text": "Wrzuć plik do naszego walidatora, a potem wyślij go do KSeF, na przykład w Aplikacji Podatnika KSeF."
+        }
+      }
+    },
+    "skills": {
+      "title": "Jedna wystawia, druga poprawia",
+      "invoice": {
+        "name": "ksef-invoice",
+        "title": "Nowa faktura",
+        "description": "Zamienia dane z PDF-a, wiadomości albo formularza w plik XML do KSeF.",
+        "items": [
+          "Sprzedaż w kraju",
+          "Odwrotne obciążenie dla nabywców z UE i spoza UE",
+          "WDT i eksport",
+          "Zwolnienie z VAT i procedura marży",
+          "Faktury zaliczkowe"
+        ]
+      },
+      "correction": {
+        "name": "ksef-correction",
+        "title": "Korekta faktury",
+        "description": "Prowadzi Cię krok po kroku przez wystawienie faktury korygującej.",
+        "items": [
+          "Korekta zwykłej faktury (KOR)",
+          "Korekta faktury zaliczkowej (KOR_ZAL)",
+          "Korekta faktury rozliczeniowej (KOR_ROZ)",
+          "Błędny NIP nabywcy, który wymaga dwóch dokumentów"
+        ]
+      }
+    },
+    "install": {
+      "title": "Jak zainstalować?",
+      "intro": "Wybierz, z jakiego asystenta korzystasz. Umiejętności instalujesz raz.",
+      "anyAgent": {
+        "title": "Asystenci AI do programowania",
+        "intro": "Wpisz w terminalu jedno polecenie. Wykryje Twojego asystenta (Claude Code, Codex, Copilot i inne) i zainstaluje obie umiejętności. Wymaga Node.js."
+      },
+      "claudeApp": {
+        "title": "Claude.ai i aplikacja na komputer",
+        "steps": [
+          "Pobierz pliki .skill z GitHuba (zakładka Releases).",
+          "Otwórz ustawienia Claude'a i przejdź do sekcji Skills.",
+          "Wgraj oba pliki."
+        ],
+        "downloadCta": "Pobierz pliki"
+      },
+      "claudeCode": {
+        "title": "Wtyczka do Claude Code",
+        "intro": "Wolisz wtyczkę? Wpisz w Claude Code dwa polecenia:"
+      },
+      "marketplaces": {
+        "title": "Katalogi umiejętności",
+        "text": "Obie umiejętności znajdziesz też w katalogach dla asystentów AI:",
+        "links": {
+          "invoice": "ksef-invoice w skills.sh",
+          "correction": "ksef-correction w skills.sh"
+        }
+      }
+    },
+    "examplePrompt": {
+      "title": "Co możesz napisać?",
+      "foreignClient": {
+        "label": "Faktura dla klienta z Niemiec",
+        "text": "Przygotuj fakturę dla Müller GmbH z Berlina (VAT UE: DE123456789) za projekt logo: 1200 EUR netto, odwrotne obciążenie. Sprzedaż 15 października 2026 r., płatne przelewem w ciągu 14 dni. Moje dane są na załączonej poprzedniej fakturze."
+      },
+      "wrongNip": {
+        "label": "Błędny NIP nabywcy",
+        "text": "Na fakturze z 3 października 2026 r. wpisałam klientowi zły NIP: zamieniłam dwie ostatnie cyfry. Faktura ma już numer KSeF. Jak to poprawić?"
+      }
+    },
+    "privacy": {
+      "title": "Co dzieje się z Twoimi danymi?",
+      "text": "Umiejętności to same instrukcje i teksty pomocnicze: niczego nie zapisują i nigdzie niczego nie wysyłają. Dane faktury, które podasz asystentowi, przetwarza jego dostawca na swoich zasadach. Do ksefuj.to nie trafiają."
+    },
+    "caveat": {
+      "title": "Sprawdź, zanim wyślesz",
+      "text": "AI może się pomylić, a za fakturę odpowiadasz Ty. Zanim wyślesz plik do KSeF, wrzuć go do walidatora i przejrzyj kwoty oraz dane nabywcy.",
+      "cta": "Otwórz walidator"
+    },
+    "faq": {
+      "title": "Częste pytania",
+      "free": {
+        "q": "Czy to kosztuje?",
+        "a": "Nie. Obie umiejętności są darmowe, a cały kod jest publiczny na GitHubie. Korzystasz z nich w swoim asystencie AI, na warunkach jego dostawcy."
+      },
+      "xml": {
+        "q": "Czy muszę znać XML?",
+        "a": "Nie. Opisujesz fakturę zwykłymi słowami albo załączasz PDF, a plik XML przygotowuje asystent AI. Wynik sprawdzisz w naszym walidatorze, który pokaże, co poprawić."
+      },
+      "send": {
+        "q": "Czy asystent wyśle fakturę do KSeF za mnie?",
+        "a": "Nie. Dostajesz plik XML i wysyłasz go do KSeF samodzielnie, na przykład w Aplikacji Podatnika KSeF."
+      },
+      "which": {
+        "q": "Czy zadziała w moim asystencie AI?",
+        "a": "Tak, jeśli Twój asystent obsługuje umiejętności w otwartym formacie Agent Skills (pliki SKILL.md). Obsługują go m.in. Claude (Claude.ai, aplikacja na komputer i Claude Code), OpenAI Codex i GitHub Copilot. Jeśli korzystasz z innego asystenta, na przykład ChatGPT, sprawdź w jego pomocy, czy obsługuje skille."
+      }
+    },
+    "disclaimer": "Claude, Codex i GitHub Copilot należą do swoich właścicieli (Anthropic, OpenAI i GitHub). ksefuj.to nie jest powiązany z żadną z tych firm.",
+    "validatorHint": {
+      "text": "Wolisz nie pisać XML ręcznie? Asystent AI przygotuje go z PDF-a albo opisu faktury.",
+      "link": "Zobacz, jak"
+    },
+    "homeCard": {
+      "title": "Asystent AI do faktur",
+      "description": "Darmowe umiejętności, dzięki którym asystent AI przygotuje plik XML faktury z PDF-a albo opisu i pomoże wystawić korektę."
+    },
+    "footerLink": "Asystent AI",
+    "ogImageTitle": "Asystent AI do faktur"
   }
 }
