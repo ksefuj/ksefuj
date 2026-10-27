@@ -878,14 +878,6 @@
       "claudeCode": {
         "title": "Плагін для Claude Code",
         "intro": "Волієш плагін? Введи в Claude Code дві команди:"
-      },
-      "marketplaces": {
-        "title": "Каталоги навичок",
-        "text": "Обидві навички також є в каталогах для ШІ-асистентів:",
-        "links": {
-          "invoice": "ksef-invoice на skills.sh",
-          "correction": "ksef-correction на skills.sh"
-        }
       }
     },
     "examplePrompt": {
