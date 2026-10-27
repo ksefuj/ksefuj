@@ -318,6 +318,7 @@
     "layout": {
       "backToDocs": "Documentation",
       "readingTime": "{minutes} min read",
+      "aiNote": "Written by AI",
       "lastVerified": "Last verified: {date}",
       "guideTime": "Time",
       "guideLevel": "Level",

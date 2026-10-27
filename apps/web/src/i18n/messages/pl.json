@@ -318,6 +318,7 @@
     "layout": {
       "backToDocs": "Dokumentacja",
       "readingTime": "{minutes} min czytania",
+      "aiNote": "Napisała sztuczna inteligencja",
       "lastVerified": "Ostatnia weryfikacja: {date}",
       "guideTime": "Czas",
       "guideLevel": "Poziom",

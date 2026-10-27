@@ -83,6 +83,10 @@ properties carry counts, locale, slugs and issue codes, never invoice content, f
 personal data. New features may add events in the same style (`amplitude.track` in the component).
 Any change here must be reflected in the privacy page (`privacy.*` in the locale messages).
 
+**AI disclosure:** content pages are AI-written and say so (EU AI Act Art. 50(4)): a "Napisała
+sztuczna inteligencja" note in the meta row links to the ContributeFooter box (`#ai-open-source`).
+Any new content layout must render both.
+
 ### Freelancer-first, developer-friendly
 
 The primary audience is Polish freelancers, JDG (sole traders), small businesses, and developers who

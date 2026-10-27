@@ -76,7 +76,12 @@ export default async function DocsPage({ params }: Props) {
             />
           </div>
         )}
-        <DocsLayout frontmatter={item.frontmatter} headings={headings} locale={locale}>
+        <DocsLayout
+          frontmatter={item.frontmatter}
+          headings={headings}
+          locale={locale}
+          contentLocale={contentLocale}
+        >
           {content}
         </DocsLayout>
       </main>
