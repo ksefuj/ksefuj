@@ -801,9 +801,9 @@ export const SEMANTIC_ERRORS = {
       severity: "warning",
     },
     description:
-      "Reverse charge: P_13_8/P_13_10 requires P_18 = '1', and at least one FaWiersz with P_12 in (np I, np II, oo) (§9.4, §9.6)",
+      "Reverse charge: P_13_10 requires P_18 = '1', and P_18 = '1' requires at least one FaWiersz with P_12 in (np I, np II, oo) (§9.4, §9.6)",
     commonCauses: [
-      "Reverse charge amounts but P_18 not set to 1",
+      "Domestic reverse charge amount (P_13_10) but P_18 not set to 1",
       "P_18 = 1 but no reverse charge tax rates in line items",
     ],
     fixTemplates: [],
@@ -969,6 +969,22 @@ export const SEMANTIC_ERRORS = {
       "Incorrect tax amount calculation",
       "Rounding errors in tax calculations",
       "Total amount does not match sum of base amounts and taxes",
+    ],
+    fixTemplates: [],
+  },
+
+  AMOUNT_IN_WRONG_P13_FIELD: {
+    code: {
+      domain: "semantic",
+      category: "business_logic",
+      code: "AMOUNT_IN_WRONG_P13_FIELD",
+      severity: "error",
+    },
+    description:
+      "Amount in a P_13_1/P_13_2/P_13_3 rate field, but no invoice line has a rate belonging to it; the amount sits in the wrong summary field (§9.3, §9.4, §10.3)",
+    commonCauses: [
+      "Net total of lines with np I, np II, oo, zw or 0% rates entered in P_13_1 (23%/22%) instead of P_13_8, P_13_9, P_13_10, P_13_7 or P_13_6_x",
+      "Summary copied from a template for a taxed sale while the lines carry a different rate",
     ],
     fixTemplates: [],
   },

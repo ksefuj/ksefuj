@@ -19,11 +19,11 @@ translations:
 
 ## What this message means
 
-Two parts of the invoice disagree about reverse charge, that is, about whether the buyer accounts for the VAT. Either the summary contains sales outside Poland or under domestic reverse charge while the "reverse charge" flag is off, or the flag is on and no line has a matching rate. The FA(3) schema doesn't link these fields, which is why this is a warning rather than a blocking error.
+Two parts of the invoice disagree about reverse charge, that is, about whether the buyer accounts for the VAT. Either the summary contains sales under domestic reverse charge while the "reverse charge" flag is off, or the flag is on and no line has a matching rate. The FA(3) schema doesn't link these fields, which is why this is a warning rather than a blocking error.
 
 The validator raises it in two situations:
 
-- `Fa` contains `P_13_8` (supplies outside Poland) or `P_13_10` (domestic reverse charge), but `Adnotacje/P_18` isn't `1`;
+- `Fa` contains `P_13_10` (domestic reverse charge), but `Adnotacje/P_18` isn't `1`;
 - `P_18` is `1`, but no invoice line has the rate `np I`, `np II` or `oo` (in `FaWiersz` the field is `P_12`; on an advance invoice, `ZamowienieWiersz` uses `P_12Z`).
 
 ## Why these fields must agree
@@ -35,7 +35,7 @@ The validator raises it in two situations:
   label="MF FA(3) information brochure, descriptions of P_18, P_12, P_13_8, P_13_9 and P_13_10"
 />
 
-The description of `P_13_8`, however, doesn't depend on who accounts for the tax: the field covers supplies outside Poland other than the amounts in `P_13_5` and `P_13_9`, and the brochure gives services taxed where determined under Art. 28e of the VAT Act as an example. If you, not the buyer, account for the tax on such a sale, `P_18` = `2` is consistent with the field description and you can ignore the warning. That won't be the case with `P_13_10`, because there the buyer is the taxpayer. If you're not sure which case applies to your invoice, ask your accountant.
+The validator doesn't compare `P_13_8` with `P_18`. That field's description doesn't depend on who accounts for the tax: it covers supplies outside Poland other than the amounts in `P_13_5` and `P_13_9`, and the brochure gives services taxed where determined under Art. 28e of the VAT Act as an example. If you account for the tax yourself on such a sale, `P_18` = `2` is fine. That isn't the case with `P_13_10`, because there the buyer is the taxpayer. If you're not sure which case applies to your invoice, ask your accountant.
 
 ## How to fix it
 
@@ -43,16 +43,16 @@ The description of `P_13_8`, however, doesn't depend on who accounts for the tax
 2. If they do, set `P_18` to `1` and check that the lines have the rate `np I`, `np II` or `oo`.
 3. If they don't, set `P_18` to `2` and keep the rate that actually applies in the lines (for example `23` or `0 WDT`).
 
-Example: a service for a business outside the EU that accounts for the tax in its own country.
+Example: a domestic sale where the buyer accounts for the VAT.
 
 <XmlExample copyable>
   ```xml
-  <!-- ❌ Amount in P_13_8, but P_18 = 2 -->
+  <!-- ❌ Amount in P_13_10, but P_18 = 2 -->
   <Fa>
     <KodWaluty>PLN</KodWaluty>
     <P_1>2026-10-08</P_1>
     <P_2>FV/10/2026</P_2>
-    <P_13_8>4000.00</P_13_8>
+    <P_13_10>4000.00</P_13_10>
     <P_15>4000.00</P_15>
     <Adnotacje>
       <P_16>2</P_16>
@@ -63,12 +63,12 @@ Example: a service for a business outside the EU that accounts for the tax in it
     <RodzajFaktury>VAT</RodzajFaktury>
     <FaWiersz>
       <NrWierszaFa>1</NrWierszaFa>
-      <P_7>Projekt identyfikacji wizualnej</P_7>
+      <P_7>Towar objęty krajowym odwrotnym obciążeniem</P_7>
       <P_11>4000.00</P_11>
-      <P_12>np I</P_12>
+      <P_12>oo</P_12>
     </FaWiersz>
   </Fa>
-  <!-- ✅ P_18 = 1, consistent with the np I rate in the line -->
+  <!-- ✅ P_18 = 1, consistent with the oo rate in the line -->
   <Adnotacje>
     <P_16>2</P_16>
     <P_17>2</P_17>

@@ -5,7 +5,7 @@ date: 2026-10-08
 section: validator
 locale: pl
 slug: "blad-kalkulacji-vat-p14-p15"
-codes: ["TAX_CALCULATION_MISMATCH"]
+codes: ["TAX_CALCULATION_MISMATCH", "AMOUNT_IN_WRONG_P13_FIELD"]
 sources:
   - label: "Broszura informacyjna FA(3), opisy pól P_13_x, P_14_x, P_15 i P_11Vat"
     url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
@@ -34,7 +34,8 @@ Tej reguły nie ma w broszurze MF. To nasze dodatkowe sprawdzenie, oparte na zna
 - przyjmuje też podatek policzony od każdego wiersza i zsumowany w danej stawce;
 - porównuje `P_15` z sumą wszystkich kwot netto (`P_13_x`, także `P_13_6_1`–`P_13_6_3` dla stawek 0%) i podatku (`P_14_x`) z podsumowania; podatek przeliczony na złote (`P_14_xW`) do tej sumy nie wchodzi;
 - przy obu sposobach liczenia dopuszcza różnicę do 1 grosza;
-- pomija faktury korygujące (`KOR`, `KOR_ZAL`, `KOR_ROZ`), bo zawierają różnice, nie pełne kwoty.
+- jeśli kwota stoi w `P_13_1`, `P_13_2` lub `P_13_3`, a żaden wiersz nie ma stawki z tej grupy (na przykład wszystkie mają `np I`), nie liczy podatku, tylko zgłasza osobny błąd: kwota jest w złym polu;
+- w fakturach korygujących `KOR` i `KOR_ZAL` sprawdza tylko, czy `P_15` zgadza się z sumą kwot netto i podatku, także ujemnych; podatku według stawki nie przelicza, bo korekta może zmienić stawkę; faktury `KOR_ROZ` pomija.
 
 Stawkę spoza katalogu w `P_12` zgłasza osobny komunikat, opisany na stronie o [nieprawidłowej stawce VAT](/validator/nieprawidlowa-stawka-vat-p12).
 
@@ -76,6 +77,7 @@ Stawkę spoza katalogu w `P_12` zgłasza osobny komunikat, opisany na stronie o 
 
 - **Podatek liczony od brutto.** 4920,00 × 23% daje 1131,60 zamiast 920,00.
 - **P_15 wypełnione kwotą netto** albo kwotą sprzed rabatu.
+- **Kwota w polu stawki 23%, choć wiersze mają inną stawkę.** Gdy wszystkie wiersze mają stawkę `np I`, kwota netto należy do `P_13_8`, a nie do `P_13_1`. Pozostałe stawki też mają własne pola: sprzedaż `np II` trafia do `P_13_9`, `oo` do `P_13_10`, `zw` do `P_13_7`, a `0 KR`, `0 WDT` i `0 EX` do `P_13_6_1`, `P_13_6_2` i `P_13_6_3`.
 - **Podatek z wierszy nie zgadza się z podsumowaniem.** Art. 106e ust. 10 ustawy o VAT pozwala liczyć podatek od każdego wiersza i sumować wyniki, więc walidator przyjmie `P_14_x` równe sumie zaokrąglonych podatków z wierszy w danej stawce (`P_11` × stawka) albo sumie pól `P_11Vat` (broszura FA(3), opis pola `P_11Vat`). Komunikat pojawi się, gdy `P_14_x` nie zgadza się z żadnym z tych wyliczeń ani z podatkiem od całej podstawy, na przykład po ręcznej zmianie kwoty w podsumowaniu.
 
 Krótszy opis z innym przykładem jest w [przeglądzie najczęstszych błędów FA(3)](/blog/najczestsze-bledy-walidacji-fa3#10-p15-nie-zgadza-sie-z-sumami). Po poprawce [sprawdź fakturę ponownie](/validator).
