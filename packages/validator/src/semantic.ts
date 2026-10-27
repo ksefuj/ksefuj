@@ -1087,12 +1087,13 @@ function checkReverseChargeConsistency(doc: XmlDocument): ValidationIssue[] {
   // Rule 30: REVERSE_CHARGE_CONSISTENCY - Reverse charge field consistency (§9.4, §9.6)
   const issues: ValidationIssue[] = [];
 
-  const p13_8 = text(doc, "string(//ns:Fa/ns:P_13_8)");
   const p13_10 = text(doc, "string(//ns:Fa/ns:P_13_10)");
   const p18 = text(doc, "string(//ns:Fa/ns:Adnotacje/ns:P_18)");
 
-  // If P_13_8 or P_13_10 present, P_18 should be "1"
-  if ((p13_8 || p13_10) && p18 !== "1") {
+  // If P_13_10 is present, P_18 should be "1". P_13_8 is deliberately not tied to P_18: it is
+  // "sales outside the country" (e.g. services under Art. 28e), where the buyer does not
+  // necessarily account for the tax (§9.4). Only P_13_10 is reverse charge by definition.
+  if (p13_10 && p18 !== "1") {
     const errorDef = ERROR_CODES.REVERSE_CHARGE_CONSISTENCY;
     issues.push({
       code: errorDef.code,
@@ -1103,7 +1104,7 @@ function checkReverseChargeConsistency(doc: XmlDocument): ValidationIssue[] {
         },
         actualValue: p18 || undefined,
       },
-      message: "Reverse charge amounts (P_13_8/P_13_10) present but P_18 not set to 1",
+      message: "Domestic reverse charge amount (P_13_10) present but P_18 not set to 1",
       fixSuggestions: [],
     });
   }
@@ -1823,17 +1824,124 @@ function perLineTaxGrosze(doc: XmlDocument, rates: number[]): number | null {
   return count > 0 ? total : null;
 }
 
+// Fa-level summary base field for each P_12 value on a line (§9.3, §9.4, §10.3). The 4% and 3%
+// rates are left out on purpose: the sheet does not say which summary field takes them, so invoices
+// using them keep the plain P_14_x arithmetic check.
+const P12_TO_P13_FIELD: Record<string, string> = {
+  "23": "P_13_1",
+  "22": "P_13_1",
+  "8": "P_13_2",
+  "7": "P_13_2",
+  "5": "P_13_3",
+  "0 KR": "P_13_6_1",
+  "0 WDT": "P_13_6_2",
+  "0 EX": "P_13_6_3",
+  zw: "P_13_7",
+  "np I": "P_13_8",
+  "np II": "P_13_9",
+  oo: "P_13_10",
+};
+
+/**
+ * Rate buckets (P_13_1..P_13_3) holding an amount while no line has a P_12 rate of that bucket.
+ * Typical cause: a net total of "np I" lines put in P_13_1. Only returned when the invoice has
+ * lines, every line's P_12 is a known rate (unknown values are P12_ENUMERATION's business) and at
+ * least one other summary field matches the rates actually used.
+ */
+function findMisplacedBuckets(
+  doc: XmlDocument,
+  rateChecks: Array<{ base: string; tax: string; rates: number[] }>,
+): Map<string, { amount: string; usedRates: string[]; suggestedFields: string[] }> {
+  const result = new Map<
+    string,
+    { amount: string; usedRates: string[]; suggestedFields: string[] }
+  >();
+  // P_12 may be omitted (margin scheme, Art. 106b ust. 3 pkt 2, simplified invoices, §10.1), so a
+  // line without it could belong to any bucket: give up rather than guess.
+  const usedRates = els(doc, "//ns:FaWiersz").map(
+    (wiersz) => text(wiersz, "string(ns:P_12)") ?? "",
+  );
+  if (usedRates.length === 0 || usedRates.some((rate) => !rate || !(rate in P12_TO_P13_FIELD))) {
+    return result;
+  }
+  const distinctRates = [...new Set(usedRates)];
+  for (const { base, rates } of rateChecks) {
+    const amount = text(doc, `string(//ns:Fa/ns:${base})`);
+    if (!amount) {
+      continue;
+    }
+    const value = parseFloat(amount);
+    if (Number.isNaN(value) || value === 0) {
+      continue;
+    }
+    if (distinctRates.some((rate) => rates.map(String).includes(rate))) {
+      continue;
+    }
+    const suggestedFields = [...new Set(distinctRates.map((rate) => P12_TO_P13_FIELD[rate]))];
+    result.set(base, { amount, usedRates: distinctRates, suggestedFields });
+  }
+  return result;
+}
+
+/**
+ * P_15 = sum of all P_13_x and P_14_x summary fields, when any is present (1 grosz tolerance).
+ */
+function checkP15Total(doc: XmlDocument, issues: ValidationIssue[]): void {
+  // Validate total P_15 = sum of all net amounts (P_13_*) and tax amounts (P_14_*), only when
+  // summary fields are present. P_15 is the "total amount due" (§9.4). The sheet defines no
+  // explicit formula; P_13_* are net values and P_14_* the matching VAT, so gross total is their
+  // sum. The P_14_*W fields are PLN conversions of P_14_* (§9.3) and are never added.
+  const p15 = text(doc, "string(//ns:Fa/ns:P_15)");
+  if (p15) {
+    const amountFields = [...P13_FIELDS, ...P14_FIELDS];
+    const present = amountFields
+      .map((field) => text(doc, `string(//ns:Fa/ns:${field})`))
+      .filter((value): value is string => Boolean(value));
+
+    // Only validate totals if we have summary tax fields (not simplified invoice). Malformed
+    // numbers are reported by AMOUNT_NO_SEPARATORS, so skip the sum rather than mis-parse them.
+    const isPlainDecimal = (value: string) => /^-?\d+(\.\d+)?$/.test(value);
+    if (present.length > 0 && present.every(isPlainDecimal) && isPlainDecimal(p15)) {
+      const expectedGrosze = present.reduce((sum, value) => sum + toGrosze(parseFloat(value)), 0);
+      const expectedTotal = expectedGrosze / 100;
+
+      if (Math.abs(toGrosze(parseFloat(p15)) - expectedGrosze) > 1) {
+        // Allow 1 grosz tolerance, compared as integers
+        const errorDef = ERROR_CODES.TAX_CALCULATION_MISMATCH;
+        issues.push({
+          code: errorDef.code,
+          context: {
+            location: {
+              xpath: "/Faktura/Fa/P_15",
+              element: "P_15",
+            },
+            actualValue: p15,
+            expectedValues: [expectedTotal.toFixed(2)],
+          },
+          message: `${errorDef.description}: P_15 should be ${expectedTotal.toFixed(2)} (sum of all P_13_x + P_14_x)`,
+          fixSuggestions: [],
+        });
+      }
+    }
+  }
+}
+
 function checkTaxCalculations(doc: XmlDocument): ValidationIssue[] {
   // Rule 39: TAX_CALCULATION_MISMATCH - Validate arithmetic consistency of tax calculations
   const issues: ValidationIssue[] = [];
 
-  // Skip tax calculation validation for corrective invoices
+  // Corrective invoices get only the P_15 sum check: rates may change on a correction, so the
+  // per-rate P_14_x = P_13_x × rate arithmetic does not apply. KOR_ROZ is skipped entirely: for
+  // settlement invoices P_15 is the remaining amount after advances (Art. 106f ust. 3, §9.4), not
+  // the sum of the summary fields. KOR_ZAL keeps the advance-invoice semantics of ZAL, where P_15
+  // is the payment amount and equals the sum of the summary fields, so it is checked like KOR.
   const rodzajFaktury = text(doc, "string(//ns:Fa/ns:RodzajFaktury)");
-  if (
-    rodzajFaktury &&
-    (rodzajFaktury === "KOR" || rodzajFaktury === "KOR_ZAL" || rodzajFaktury === "KOR_ROZ")
-  ) {
-    return issues; // Corrective invoices have different calculation structure
+  if (rodzajFaktury === "KOR_ROZ") {
+    return issues;
+  }
+  if (rodzajFaktury === "KOR" || rodzajFaktury === "KOR_ZAL") {
+    checkP15Total(doc, issues);
+    return issues;
   }
 
   // Invalid P_12 values are reported by P12_ENUMERATION (Rule 25, §10.3), not here.
@@ -1848,7 +1956,26 @@ function checkTaxCalculations(doc: XmlDocument): ValidationIssue[] {
     { base: "P_13_3", tax: "P_14_3", rates: [5] },
   ];
 
+  const misplaced = findMisplacedBuckets(doc, rateChecks);
   for (const { base, tax, rates } of rateChecks) {
+    const misplacement = misplaced.get(base);
+    if (misplacement) {
+      const errorDef = ERROR_CODES.AMOUNT_IN_WRONG_P13_FIELD;
+      issues.push({
+        code: errorDef.code,
+        context: {
+          location: {
+            xpath: `/Faktura/Fa/${base}`,
+            element: base,
+          },
+          actualValue: misplacement.amount,
+          expectedValues: misplacement.suggestedFields,
+        },
+        message: `${errorDef.description}: ${base} is filled but no line uses a ${rates.map((rate) => `${rate}%`).join(" or ")} rate; the lines use ${misplacement.usedRates.join(", ")}, so the amount belongs in ${misplacement.suggestedFields.join(" or ")}`,
+        fixSuggestions: [],
+      });
+      continue; // One clear error instead of a misleading P_14_x arithmetic error
+    }
     const baseText = text(doc, `string(//ns:Fa/ns:${base})`);
     const taxText = text(doc, `string(//ns:Fa/ns:${tax})`);
     if (!baseText || !taxText) {
@@ -1889,43 +2016,7 @@ function checkTaxCalculations(doc: XmlDocument): ValidationIssue[] {
     }
   }
 
-  // Validate total P_15 = sum of all net amounts (P_13_*) and tax amounts (P_14_*), only when
-  // summary fields are present. P_15 is the "total amount due" (§9.4). The sheet defines no
-  // explicit formula; P_13_* are net values and P_14_* the matching VAT, so gross total is their
-  // sum. The P_14_*W fields are PLN conversions of P_14_* (§9.3) and are never added.
-  const p15 = text(doc, "string(//ns:Fa/ns:P_15)");
-  if (p15) {
-    const amountFields = [...P13_FIELDS, ...P14_FIELDS];
-    const present = amountFields
-      .map((field) => text(doc, `string(//ns:Fa/ns:${field})`))
-      .filter((value): value is string => Boolean(value));
-
-    // Only validate totals if we have summary tax fields (not simplified invoice). Malformed
-    // numbers are reported by AMOUNT_NO_SEPARATORS, so skip the sum rather than mis-parse them.
-    const isPlainDecimal = (value: string) => /^-?\d+(\.\d+)?$/.test(value);
-    if (present.length > 0 && present.every(isPlainDecimal) && isPlainDecimal(p15)) {
-      const expectedGrosze = present.reduce((sum, value) => sum + toGrosze(parseFloat(value)), 0);
-      const expectedTotal = expectedGrosze / 100;
-
-      if (Math.abs(toGrosze(parseFloat(p15)) - expectedGrosze) > 1) {
-        // Allow 1 grosz tolerance, compared as integers
-        const errorDef = ERROR_CODES.TAX_CALCULATION_MISMATCH;
-        issues.push({
-          code: errorDef.code,
-          context: {
-            location: {
-              xpath: "/Faktura/Fa/P_15",
-              element: "P_15",
-            },
-            actualValue: p15,
-            expectedValues: [expectedTotal.toFixed(2)],
-          },
-          message: `${errorDef.description}: P_15 should be ${expectedTotal.toFixed(2)} (sum of all P_13_x + P_14_x)`,
-          fixSuggestions: [],
-        });
-      }
-    }
-  }
+  checkP15Total(doc, issues);
 
   return issues;
 }

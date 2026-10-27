@@ -1003,6 +1003,107 @@ describe("Semantic Validation", () => {
       expect(codes(without)).toContain("REVERSE_CHARGE_CONSISTENCY");
     });
 
+    describe("amount in the wrong P_13_x bucket (#72)", () => {
+      const npLines = (n = 2) =>
+        Array.from(
+          { length: n },
+          (_, i) => `<FaWiersz><NrWierszaFa>${i + 1}</NrWierszaFa><P_7>Usluga</P_7>
+            <P_11>100.00</P_11><P_12>np I</P_12></FaWiersz>`,
+        ).join("");
+
+      it("reports AMOUNT_IN_WRONG_P13_FIELD instead of the P_14_1 arithmetic error", () => {
+        const xml = invoiceWith(
+          `<P_13_1>200.00</P_13_1><P_14_1>0.0</P_14_1><P_15>200.00</P_15>`,
+          npLines(),
+        );
+        const result = validateXml(xml).issues;
+        const wrong = result.filter((i) => i.code.code === "AMOUNT_IN_WRONG_P13_FIELD");
+        expect(wrong).toHaveLength(1);
+        expect(wrong[0].context.expectedValues).toEqual(["P_13_8"]);
+        expect(
+          result.filter(
+            (i) =>
+              i.code.code === "TAX_CALCULATION_MISMATCH" && i.context.location.element === "P_14_1",
+          ),
+        ).toHaveLength(0);
+      });
+
+      it("accepts the amount in P_13_8 with P_18 = 2 without tax or reverse charge issues", () => {
+        const xml = invoiceWith(`<P_13_8>200.00</P_13_8><P_15>200.00</P_15>`, npLines());
+        const found = codes(xml);
+        expect(found).not.toContain("AMOUNT_IN_WRONG_P13_FIELD");
+        expect(found).not.toContain("TAX_CALCULATION_MISMATCH");
+        expect(found).not.toContain("REVERSE_CHARGE_CONSISTENCY");
+      });
+
+      it("keeps the P_14_x arithmetic check when a line has a matching rate", () => {
+        const lines = `<FaWiersz><NrWierszaFa>1</NrWierszaFa><P_7>X</P_7><P_11>100.00</P_11>
+          <P_12>23</P_12></FaWiersz>`;
+        const xml = invoiceWith(
+          `<P_13_1>100.00</P_13_1><P_14_1>0.00</P_14_1><P_15>100.00</P_15>`,
+          lines,
+        );
+        const found = codes(xml);
+        expect(found).toContain("TAX_CALCULATION_MISMATCH");
+        expect(found).not.toContain("AMOUNT_IN_WRONG_P13_FIELD");
+      });
+
+      it("stays silent when a line omits P_12 (simplified invoice)", () => {
+        const lines = `<FaWiersz><NrWierszaFa>1</NrWierszaFa><P_7>X</P_7><P_11>100.00</P_11>
+          </FaWiersz><FaWiersz><NrWierszaFa>2</NrWierszaFa><P_7>Y</P_7><P_11>100.00</P_11>
+          <P_12>8</P_12></FaWiersz>`;
+        const xml = invoiceWith(
+          `<P_13_1>100.00</P_13_1><P_14_1>23.00</P_14_1><P_13_2>100.00</P_13_2>` +
+            `<P_14_2>8.00</P_14_2><P_15>231.00</P_15>`,
+          lines,
+        );
+        expect(codes(xml)).not.toContain("AMOUNT_IN_WRONG_P13_FIELD");
+      });
+
+      it("stays silent without lines (advance invoice)", () => {
+        const xml = invoiceWith(`<P_13_1>100.00</P_13_1><P_14_1>0.00</P_14_1><P_15>100.00</P_15>`);
+        expect(codes(xml)).not.toContain("AMOUNT_IN_WRONG_P13_FIELD");
+      });
+    });
+
+    describe("reverse charge and P_13_8 / P_13_10", () => {
+      it("still requires P_18 = 1 for P_13_10", () => {
+        const xml = invoiceWith(`<P_13_10>100.00</P_13_10><P_15>100.00</P_15>`);
+        expect(codes(xml)).toContain("REVERSE_CHARGE_CONSISTENCY");
+      });
+
+      it("does not require P_18 = 1 for P_13_8", () => {
+        const xml = invoiceWith(`<P_13_8>100.00</P_13_8><P_15>100.00</P_15>`);
+        expect(codes(xml)).not.toContain("REVERSE_CHARGE_CONSISTENCY");
+      });
+    });
+
+    describe("corrective invoices: P_15 sum only", () => {
+      const asKor = (xml: string) =>
+        xml.replace("<RodzajFaktury>VAT</RodzajFaktury>", "<RodzajFaktury>KOR</RodzajFaktury>");
+
+      it("accepts consistent negative totals", () => {
+        const xml = asKor(
+          invoiceWith(`<P_13_1>-100.00</P_13_1><P_14_1>-23.00</P_14_1><P_15>-123.00</P_15>`),
+        );
+        expect(codes(xml)).not.toContain("TAX_CALCULATION_MISMATCH");
+      });
+
+      it("flags P_15 not matching the sum", () => {
+        const xml = asKor(
+          invoiceWith(`<P_13_1>-100.00</P_13_1><P_14_1>-23.00</P_14_1><P_15>-100.00</P_15>`),
+        );
+        expect(codes(xml)).toContain("TAX_CALCULATION_MISMATCH");
+      });
+
+      it("does not apply per-rate arithmetic to corrections", () => {
+        const xml = asKor(
+          invoiceWith(`<P_13_1>-100.00</P_13_1><P_14_1>-8.00</P_14_1><P_15>-108.00</P_15>`),
+        );
+        expect(codes(xml)).not.toContain("TAX_CALCULATION_MISMATCH");
+      });
+    });
+
     it("detects a wrong P_15 total", () => {
       const xml = invoiceWith(`
         <P_13_1>100.00</P_13_1><P_14_1>23.00</P_14_1>
@@ -1825,6 +1926,7 @@ describe("Semantic Validation", () => {
         "TRANSPORT_MINIMUM_DATA",
         "AMOUNT_NO_SEPARATORS",
         "TAX_CALCULATION_MISMATCH",
+        "AMOUNT_IN_WRONG_P13_FIELD",
         "INVALID_BANK_ACCOUNT_FORMAT",
         "DUPLICATE_LINE_NUMBERS",
         "NEGATIVE_QUANTITY_NOT_ALLOWED",

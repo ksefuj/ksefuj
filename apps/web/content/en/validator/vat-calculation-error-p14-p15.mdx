@@ -5,7 +5,7 @@ date: 2026-10-08
 section: validator
 locale: en
 slug: "vat-calculation-error-p14-p15"
-codes: ["TAX_CALCULATION_MISMATCH"]
+codes: ["TAX_CALCULATION_MISMATCH", "AMOUNT_IN_WRONG_P13_FIELD"]
 sources:
   - label: "MF FA(3) information brochure, descriptions of P_13_x, P_14_x, P_15 and P_11Vat"
     url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
@@ -34,7 +34,8 @@ This rule isn't in the Ministry of Finance's FA(3) information brochure (broszur
 - also accepts tax calculated per line and summed for each rate;
 - compares `P_15` with the sum of all net amounts (`P_13_x`, including `P_13_6_1`–`P_13_6_3` for 0% rates) and tax amounts (`P_14_x`) in the summary; tax converted to PLN (`P_14_xW`) is not part of that sum;
 - allows a difference of up to 0.01 PLN with either calculation method;
-- skips corrective invoices (`KOR`, `KOR_ZAL`, `KOR_ROZ`), because they contain differences rather than full amounts.
+- if there's an amount in `P_13_1`, `P_13_2` or `P_13_3` but no line has a rate from that group (for example every line is `np I`), doesn't calculate the tax and reports a separate error instead: the amount is in the wrong field;
+- on `KOR` and `KOR_ZAL` corrective invoices, checks only that `P_15` matches the sum of the net and tax amounts, negative ones included; it doesn't recalculate tax by rate, because a correction can change the rate; `KOR_ROZ` invoices are skipped.
 
 A rate outside the catalogue in `P_12` triggers a separate message, covered on the page about an [invalid VAT rate](/en/validator/invalid-vat-rate-p12).
 
@@ -76,6 +77,7 @@ A rate outside the catalogue in `P_12` triggers a separate message, covered on t
 
 - **Tax calculated on the gross amount.** 4,920.00 × 23% gives 1,131.60 instead of 920.00.
 - **P_15 filled with the net amount**, or with the amount before a discount.
+- **Amount in the 23% field when the lines have a different rate.** If every line has the rate `np I`, the net amount belongs in `P_13_8`, not `P_13_1`. The other rates have their own fields too: `np II` sales go in `P_13_9`, `oo` in `P_13_10`, `zw` in `P_13_7`, and `0 KR`, `0 WDT` and `0 EX` in `P_13_6_1`, `P_13_6_2` and `P_13_6_3`.
 - **Line-level tax doesn't match the summary.** Art. 106e ust. 10 of the Polish VAT Act allows tax to be calculated per line and the results summed, so the validator accepts a `P_14_x` equal to the sum of rounded line taxes at that rate (`P_11` × rate) or to the sum of the `P_11Vat` fields (FA(3) brochure, description of `P_11Vat`). The message appears when `P_14_x` matches none of these calculations, nor the tax on the whole base, for example after someone edits an amount in the summary by hand.
 
 A shorter description with a different example is in our [overview of the most common FA(3) errors](/en/blog/most-common-fa3-validation-errors#10-p15-doesnt-match-the-totals). Once you've fixed it, [check the invoice again](/en/validator).

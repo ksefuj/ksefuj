@@ -7,7 +7,23 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+
+- New code `AMOUNT_IN_WRONG_P13_FIELD` (#72). When `P_13_1`, `P_13_2` or `P_13_3` holds an amount
+  but no `FaWiersz` has a rate of that group (for example every line is `np I`), the validator now
+  says the amount is in the wrong summary field and names the right one (`np I` to `P_13_8`, `np II`
+  to `P_13_9`, `oo` to `P_13_10`, `zw` to `P_13_7`, `0 KR`/`0 WDT`/`0 EX` to `P_13_6_1`/`_2`/`_3`).
+  It replaces the `TAX_CALCULATION_MISMATCH` on `P_14_x`, which pushed users to add VAT that should
+  not exist
+- `TAX_CALCULATION_MISMATCH` now checks the `P_15` total on corrective invoices `KOR` and `KOR_ZAL`
+  (#71): `P_15` must equal the sum of all `P_13_x` and `P_14_x`, negative values included. The
+  per-rate `P_14_x = P_13_x × rate` checks still skip corrections, and `KOR_ROZ` is still skipped
+
 ### Fixed
+
+- `REVERSE_CHARGE_CONSISTENCY` no longer requires `P_18 = 1` when `P_13_8` is present. `P_13_8` is
+  sales outside the country (for example services under Art. 28e), not necessarily reverse charge
+  (§9.4). The requirement stays for `P_13_10`
 
 - A `Faktura` root in no or a wrong namespace (`WRONG_NAMESPACE`), or a root element other than
   `Faktura`, no longer also runs the semantic layer. It found no FA(3) elements and reported false
