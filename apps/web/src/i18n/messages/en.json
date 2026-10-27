@@ -397,6 +397,7 @@
     "docs": "Docs",
     "guides": "Guides",
     "waluty": "Exchange rates",
+    "assistant": "AI assistant",
     "content": "Content",
     "legal": "Legal",
     "contact": "Contact",
@@ -560,6 +561,10 @@
         "rates": {
           "title": "NBP exchange rates",
           "description": "Gives the NBP mid-rate for converting a foreign-currency invoice (art. 31a of the VAT Act)."
+        },
+        "assistant": {
+          "title": "AI invoice assistant",
+          "description": "Free Claude skills turn a PDF or a description into invoice XML and help you issue a corrective invoice."
         }
       },
       "validatorChecks": [
@@ -795,5 +800,132 @@
       "text": "Check your XML file before you send it to KSeF. We'll show you what needs fixing.",
       "button": "Open the validator"
     }
+  },
+  "asystentAi": {
+    "meta": {
+      "title": "KSeF invoice AI: Claude turns a PDF into FA(3) XML",
+      "description": "Describe an invoice or attach a PDF and Claude prepares the FA(3) XML file for KSeF and guides your corrections. Free skills, checked in our validator."
+    },
+    "hero": {
+      "eyebrow": "Free skills for Claude",
+      "title": "Describe the invoice. Claude writes the KSeF file.",
+      "subtitle": "Two free skills for Claude, the AI assistant from Anthropic. Give it a PDF or a few sentences and it prepares an FA(3) invoice for KSeF (Poland's National e-Invoicing System). If you make a mistake, it walks you through the correction.",
+      "primaryCta": "Install for free",
+      "secondaryCta": "View on GitHub"
+    },
+    "howItWorks": {
+      "title": "How it works",
+      "steps": {
+        "describe": {
+          "title": "Describe the invoice",
+          "text": "Attach a PDF, paste the details, or just say in plain words who you're invoicing and for what."
+        },
+        "generate": {
+          "title": "Claude prepares the file",
+          "text": "You get an XML file in the FA(3) format that KSeF requires."
+        },
+        "check": {
+          "title": "Check it and send it",
+          "text": "Drop the file into our validator, then send it to KSeF, for example through the KSeF Taxpayer App (Aplikacja Podatnika KSeF)."
+        }
+      }
+    },
+    "skills": {
+      "title": "One issues, the other corrects",
+      "invoice": {
+        "name": "ksef-invoice",
+        "title": "New invoice",
+        "description": "Turns details from a PDF, a message or a form into an XML file for KSeF.",
+        "items": [
+          "Domestic sales",
+          "Reverse charge for buyers in and outside the EU",
+          "Intra-Community supply of goods (WDT) and exports",
+          "VAT exemption and the margin scheme",
+          "Advance invoices"
+        ]
+      },
+      "correction": {
+        "name": "ksef-correction",
+        "title": "Corrective invoice",
+        "description": "Guides you step by step through issuing a corrective invoice.",
+        "items": [
+          "Correcting a standard invoice (KOR)",
+          "Correcting an advance invoice (KOR_ZAL)",
+          "Correcting a final settlement invoice (KOR_ROZ)",
+          "A wrong buyer NIP, which takes two documents to fix"
+        ]
+      }
+    },
+    "install": {
+      "title": "How to install",
+      "intro": "Pick where you use Claude. You only install the skills once.",
+      "claudeApp": {
+        "title": "Claude.ai and the desktop app",
+        "steps": [
+          "Download the .skill files from GitHub (the Releases tab).",
+          "Open Claude's settings and go to the Skills section.",
+          "Upload both files."
+        ],
+        "downloadCta": "Download the files"
+      },
+      "claudeCode": {
+        "title": "Claude Code",
+        "intro": "Run these two commands in Claude Code:"
+      },
+      "otherAssistants": {
+        "title": "Other AI coding tools",
+        "text": "The same SKILL.md files work in OpenAI Codex, GitHub Copilot and other tools that support Agent Skills."
+      }
+    },
+    "examplePrompt": {
+      "title": "What you can ask",
+      "foreignClient": {
+        "label": "Invoice for a client in Germany",
+        "text": "Prepare an invoice for Müller GmbH in Berlin (EU VAT number: DE123456789) for a logo design project: 1200 EUR net, reverse charge. Date of sale 15 October 2026, payment by bank transfer within 14 days. My details are on the previous invoice I've attached."
+      },
+      "wrongNip": {
+        "label": "Wrong buyer NIP",
+        "text": "On my invoice from 3 October 2026 I entered the wrong NIP for my client: I swapped the last two digits. The invoice already has a KSeF number. How do I fix it?"
+      }
+    },
+    "privacy": {
+      "title": "What happens to your data?",
+      "text": "The skills are only instructions and reference texts: they store nothing and send nothing anywhere. Invoice details you give Claude become part of your conversation with it, under the terms of your Claude plan. They never reach ksefuj.to."
+    },
+    "caveat": {
+      "title": "Check before you send",
+      "text": "AI can make mistakes, and you're responsible for the invoice. Before you send the file to KSeF, run it through the validator and review the amounts and the buyer's details.",
+      "cta": "Open the validator"
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "free": {
+        "q": "Does it cost anything?",
+        "a": "No. Both skills are free and all the code is public on GitHub. You only need a Claude account."
+      },
+      "xml": {
+        "q": "Do I need to know XML?",
+        "a": "No. You describe the invoice in plain words or attach a PDF, and Claude prepares the XML file. Our validator then checks the result and shows you what to fix."
+      },
+      "send": {
+        "q": "Will Claude send the invoice to KSeF for me?",
+        "a": "No. You get an XML file and send it to KSeF yourself, for example through the KSeF Taxpayer App (Aplikacja Podatnika KSeF)."
+      },
+      "which": {
+        "q": "Which Claude do I need? Does it work in ChatGPT?",
+        "a": "We built the skills for Claude, not ChatGPT. They work in Claude.ai, the desktop app and Claude Code. You can also use the same files in tools that support Agent Skills, such as OpenAI Codex and GitHub Copilot."
+      }
+    },
+    "disclaimer": "Claude is a product of Anthropic. ksefuj.to is not affiliated with Anthropic.",
+    "validatorHint": {
+      "text": "Rather not write XML by hand? Claude can prepare it from a PDF or a description of the invoice.",
+      "link": "See how"
+    },
+    "homeCard": {
+      "title": "AI invoice assistant",
+      "description": "Free Claude skills turn a PDF or a description into invoice XML and help you issue a corrective invoice."
+    },
+    "footerLink": "AI assistant",
+    "ogImageTitle": "AI invoice assistant"
   }
 }

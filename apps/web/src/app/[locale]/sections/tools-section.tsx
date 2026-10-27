@@ -6,6 +6,7 @@ const TOOLS = [
   { id: "validator", href: "/validator" },
   { id: "preview", href: "/podglad" },
   { id: "rates", href: "/waluty" },
+  { id: "assistant", href: "/asystent-ai" },
 ] as const;
 
 /** Homepage tools row: validator, invoice preview, NBP rates, and what the validator checks. */
@@ -15,7 +16,7 @@ export async function ToolsSection({ locale }: { locale: string }) {
 
   return (
     <HomeSection id="tools" title={t("title")}>
-      <div className="grid gap-x-10 gap-y-8 md:grid-cols-3">
+      <div className="grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
         {TOOLS.map(({ id, href }) => (
           <div key={id}>
             <h3 className="font-display text-lg font-bold tracking-tight text-slate-900">
