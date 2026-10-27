@@ -1,50 +1,100 @@
 # @ksefuj/validator
 
-KSeF FA(3) XML validator with full XSD schema validation and semantic business rules.
+[![npm version](https://img.shields.io/npm/v/@ksefuj/validator)](https://www.npmjs.com/package/@ksefuj/validator)
 
-## Features
+Validates KSeF FA(3) invoice XML before you submit it: the official XSD schema, the Ministry of
+Finance business rules, and extra checks KSeF does not do. It runs in Node.js and in the browser,
+with no network requests (the schemas are bundled). This is the engine behind
+[ksefuj.to](https://ksefuj.to).
 
-- **Full XSD validation** using libxml2-wasm (WebAssembly)
-- **Semantic business rules** that catch errors XSD can't express
-- **NBP currency rate validation** — checks `KursWaluty`, and the advance-invoice rates
-  `KursWalutyZ` and `KursWalutyZW`, against official NBP Table A mid-rates (Art. 31a VAT Act)
-- **Works everywhere** - Node.js, browser, CLI
-- **Zero network requests** - bundled schemas for offline use
-- **TypeScript support** with full type definitions
-
-## Installation
+## Install
 
 ```bash
-npm install @ksefuj/validator@0.4.0
-# or
-pnpm add @ksefuj/validator@0.4.0
-# or
-yarn add @ksefuj/validator@0.4.0
+npm install @ksefuj/validator
+# or: pnpm add @ksefuj/validator
 ```
 
-## Usage
+## CLI
+
+```bash
+npx @ksefuj/validator invoice.xml
+npx @ksefuj/validator --batch ./invoices/   # every *.xml in the directory
+```
+
+| Option         | Effect                                                    |
+| -------------- | --------------------------------------------------------- |
+| `--json`       | print each result as JSON                                 |
+| `--verbose`    | show error codes, fix suggestions and timing              |
+| `--assertions` | count the checks that passed (list them with `--verbose`) |
+
+The exit code is `0` when every file is valid and `1` otherwise. Installed as a dependency, the same
+CLI is available as `ksef-validate`.
+
+## API
 
 ```typescript
 import { validate } from "@ksefuj/validator";
 
-const result = await validate(xmlString, {
-  locale: "en", // 'pl' (default) | 'en' | 'uk'
-  enableXsdValidation: true, // default: true
-  enableSemanticValidation: true, // default: true
-});
+const result = await validate(xmlString);
 
 if (!result.valid) {
-  // Separate XSD and semantic errors
-  const xsdErrors = result.errors.filter((e) => e.source === "xsd");
-  const semanticErrors = result.errors.filter((e) => e.source === "semantic");
-
-  for (const error of result.errors) {
-    console.error(`${error.source}: ${error.message}`, error.path);
+  for (const issue of result.issues) {
+    const { severity, code, domain } = issue.code;
+    const { xpath, lineNumber } = issue.context.location;
+    console.log(`${severity} ${code} [${domain}] ${xpath ?? ""}:${lineNumber ?? ""}`);
+    console.log(issue.message);
   }
 }
 ```
 
-### Currency rate validation
+`validate()` never throws. Problems with the input (not XML, wrong namespace) come back as issues
+too.
+
+- `result.valid` is `false` when there is at least one issue with severity `error`. Warnings and
+  info do not make an invoice invalid.
+- Each issue has a stable `code.code` (e.g. `CURRENCY_RATE_MISMATCH`), a `code.domain` (`parse`,
+  `xsd`, `semantic` or `infrastructure`), a location (`xpath`, `element`, `lineNumber`,
+  `columnNumber`), an English `message` and `fixSuggestions`. Use the code to show your own
+  translated messages; ksefuj.to does this in Polish, English and Ukrainian.
+- `result.metadata` holds the schema and validator version and timings.
+
+Options:
+
+| Option                     | Default | Effect                                                  |
+| -------------------------- | ------- | ------------------------------------------------------- |
+| `enableXsdValidation`      | `true`  | run the XSD layer                                       |
+| `enableSemanticValidation` | `true`  | run the business rules                                  |
+| `collectAssertions`        | `false` | fill `result.assertions` with the checks that passed    |
+| `maxIssues`                | none    | stop collecting after this many issues                  |
+| `currencyRates`            | none    | NBP rate tables for the exchange-rate check (see below) |
+
+Lower-level exports (`validateXsd`, `checkSemantics`, `semanticRules`, `checkStrictXml`,
+`ERROR_CODES`, `getErrorDefinition`) are available for tools that need one layer only. In long-lived
+processes, `disposeValidator()` frees the WebAssembly XSD validator.
+
+## What it checks
+
+1. **XSD schema**: the official FA(3) schemas from `crd.gov.pl`, run through libxml2-wasm. Errors
+   carry the line number and element.
+2. **Ministry of Finance rules**: what the XSD cannot express, each rule citing its section of the
+   official FA(3) information sheet
+   ([`docs/fa3-information-sheet.md`](docs/fa3-information-sheet.md)). Examples: mandatory
+   `Adnotacje` fields and their single-choice groups (`Zwolnienie`, `NoweSrodkiTransportu`,
+   `PMarzy`), `Podmiot3` roles required by `JST` and `GV`, a Polish NIP put in `NrVatUE`,
+   `np I`/`np II` for foreign buyers, GTU format, decimal precision, currency fields, corrective
+   invoice references.
+3. **Extra checks**: things KSeF accepts but that cause trouble later: tax arithmetic (`P_14_x`
+   against `P_13_x` and the rate, `P_15` against the totals), Polish bank account format, duplicate
+   `NrWierszaFa`, negative quantities outside corrective invoices, and the NBP rate check below.
+4. **Strict XML (KSeF API 2.4.0)**: raw-text checks for XML processing instructions
+   (`XML_PROCESSING_INSTRUCTION`), Unicode characters the W3C XML spec discourages
+   (`XML_DISCOURAGED_CHARACTER`: `[#x7F-#x84]`, `[#x86-#x9F]`, `[#xFDD0-#xFDEF]`,
+   `[#xNFFFE-#xNFFFF]`), a leading BOM (`XML_BOM_PRESENT`) and a non-UTF-8 encoding declaration
+   (`XML_ENCODING_NOT_UTF8`). The KSeF API team announced that production would reject these from
+   2026-10-19; for now production still answers with an `X-System-Warning` header. Source:
+   [Weryfikacja faktury](https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md).
+
+## NBP exchange rates
 
 Optionally validate that the invoice's exchange rates match the official NBP Table A mid-rate (Art.
 31a VAT Act). Pass a rate table per currency — the validator picks the correct date itself.
@@ -92,141 +142,22 @@ before fetching it.
 If `currencyRates` is omitted entirely, all currency checks are skipped (backwards-compatible with
 `0.2.0`).
 
-## CLI Usage
+## Bundled schemas
+
+The XSD files in `src/schemas/` are downloaded from `crd.gov.pl` and compiled into
+`schemas-data.ts`; only the compiled bundle ships in the npm package. To refresh them, run
+`pnpm update-schemas` from the repository root and review the diff.
+
+## Development
 
 ```bash
-npx @ksefuj/validator invoice.xml
+pnpm --filter @ksefuj/validator build
+pnpm --filter @ksefuj/validator test
 ```
 
-## Architecture
-
-### Schema Management
-
-The validator uses bundled XSD schemas from the Polish Ministry of Finance to ensure:
-
-- **No CORS issues** - schemas are embedded, not fetched
-- **Offline capability** - works without internet connection
-- **Consistent validation** - always uses the same schema version
-
-#### How schemas are organized:
-
-```
-src/schemas/
-├── *.xsd                    # Source XSD files (development only)
-├── schemas-data.ts          # Generated bundle with all schemas
-└── bundle.ts                # Bundle loader
-```
-
-#### Development vs Runtime:
-
-- **Development**: Individual `.xsd` files are the source of truth, downloaded from government
-  servers
-- **Build time**: TypeScript compiles `schemas-data.ts` → `schemas-data.js`
-- **Runtime**: Only `schemas-data.js` is used - XSD files are never accessed
-- **npm package**: Excludes `.xsd` and `.ts` files to minimize size (~760KB saved)
-
-#### Updating schemas:
-
-From the project root:
-
-```bash
-pnpm update-schemas
-```
-
-This downloads the latest schemas from crd.gov.pl and regenerates the bundle.
-
-### Package Optimization
-
-The published npm package is optimized to exclude redundant files:
-
-| Files          | Purpose            | Included in npm?    |
-| -------------- | ------------------ | ------------------- |
-| `*.xsd`        | Source schemas     | ❌ No (saved 442KB) |
-| `*.ts` in dist | TypeScript sources | ❌ No (saved 318KB) |
-| `*.js`         | Compiled code      | ✅ Yes              |
-| `*.d.ts`       | Type definitions   | ✅ Yes              |
-
-**Result**: Package size reduced from ~1.4MB to ~100KB (compressed).
-
-## Validation Layers
-
-### 1. XSD Schema Validation
-
-Full compliance with official Ministry of Finance FA(3) schemas using libxml2-wasm.
-
-### 2. Semantic Business Rules
-
-**44 comprehensive validation rules** based on the official FA(3) information sheet from the
-Ministry of Finance.
-
-#### Rule Categories
-
-1. **Podmiot Rules** (8 rules) — Entity validation, JST/GV requirements, NIP placement
-2. **Fa Core Rules** (5 rules) — P_15 requirement, mutual exclusions, currency handling
-3. **Adnotacje Rules** (11 rules) — All mandatory fields, selection logic for exemptions/margin
-   procedures
-4. **FaWiersz Rules** (4 rules) — Tax rate validation, GTU format, decimal precision
-5. **Corrective Invoice Rules** (2 rules) — KSeF number consistency, reverse charge validation
-6. **Payment & Transaction Rules** (8 rules) — Payment dates, bank accounts, currency pairs, NBP
-   rate validation
-7. **Format Rules** (2 rules) — Number formatting, separator validation
-8. **Additional Business Logic Rules** (4 rules) — Tax calculations, bank account format, line
-   number uniqueness, negative quantities
-
-#### Key Validations
-
-- **Constitution-based**: Each rule references specific sections from the official FA(3) information
-  sheet
-- **Precise error reporting**: Exact XPath locations, error context, and fix suggestions
-- **Common gotchas**: NIP field placement, GTU format, decimal precision, selection logic
-- **Business logic**: Currency conversions, tax rate consistency, entity relationships
-
-### 3. Strict XML checks (KSeF API 2.4.0)
-
-Raw-text checks that KSeF PROD enforces from **2026-10-19** (until then the API only returns
-`X-System-Warning`). An invoice is rejected when it contains XML processing instructions
-(`XML_PROCESSING_INSTRUCTION`), Unicode characters discouraged by the W3C XML spec
-(`XML_DISCOURAGED_CHARACTER`: `[#x7F-#x84]`, `[#x86-#x9F]`, `[#xFDD0-#xFDEF]`, `[#xNFFFE-#xNFFFF]`),
-a leading BOM (`XML_BOM_PRESENT`) or an XML declaration with a non-UTF-8 encoding
-(`XML_ENCODING_NOT_UTF8`). Issues carry line/column, and the code point or PI target. Source:
-[Weryfikacja faktury](https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md)
-
-## Testing
-
-Comprehensive test suite ensuring 100% compliance with government standards:
-
-### Test Coverage
-
-The validator is tested against official MF examples and common invoice patterns:
-
-- Standard VAT invoices
-- Correction invoices (KOR) - both universal and difference methods
-- Advance invoices (ZAL) and settlements (ROZ)
-- Simplified invoices (≤450 PLN)
-- WDT (intra-community) and export invoices
-- VAT margin procedures
-- Foreign currency invoices
-- Invoices with attachments and edge cases
-
-### Semantic Rule Testing
-
-**100+ targeted test cases** for each semantic validation rule:
-
-- Positive tests (valid cases that should pass)
-- Negative tests (invalid cases with specific error expectations)
-- Edge cases and boundary conditions
-- Constitution-based test scenarios from FA(3) information sheet
-
-### Test Framework
-
-- **Vitest** for fast, modern testing
-- **XSD + Semantic dual validation** for each test case
-- **Detailed error assertions** with exact error codes and locations
-- **CI/CD integration** ensuring all tests pass before deployment
-
-All tests guarantee compatibility with the KSeF 2.0 system and adherence to Ministry of Finance
-specifications.
+Tests run each rule against valid and invalid cases and against the official MF example invoices in
+[`test-fixtures/`](../../test-fixtures). Changes are logged in [CHANGELOG.md](CHANGELOG.md).
 
 ## License
 
-Apache 2.0
+[Apache 2.0](../../LICENSE). Part of [ksefuj](https://github.com/ksefuj/ksefuj).
