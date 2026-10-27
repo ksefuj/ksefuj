@@ -564,7 +564,7 @@
         },
         "assistant": {
           "title": "AI invoice assistant",
-          "description": "Free Claude skills turn a PDF or a description into invoice XML and help you issue a corrective invoice."
+          "description": "Free skills that let an AI assistant turn a PDF or a description into invoice XML and help you issue a corrective invoice."
         }
       },
       "validatorChecks": [
@@ -803,13 +803,13 @@
   },
   "asystentAi": {
     "meta": {
-      "title": "KSeF invoice AI: Claude turns a PDF into FA(3) XML",
-      "description": "Describe an invoice or attach a PDF and Claude prepares the FA(3) XML file for KSeF and guides your corrections. Free skills, checked in our validator."
+      "title": "Free AI agent skills for KSeF invoices and corrections",
+      "description": "Describe an invoice or attach a PDF and your AI assistant prepares FA(3) XML for KSeF and helps with corrections. Free skills, checked in our validator."
     },
     "hero": {
-      "eyebrow": "Free skills for Claude",
-      "title": "Describe the invoice. Claude writes the KSeF file.",
-      "subtitle": "Two free skills for Claude, the AI assistant from Anthropic. Give it a PDF or a few sentences and it prepares an FA(3) invoice for KSeF (Poland's National e-Invoicing System). If you make a mistake, it walks you through the correction.",
+      "eyebrow": "Free skills for your AI assistant",
+      "title": "Describe the invoice. Your AI assistant writes the KSeF file.",
+      "subtitle": "Two free skills for your AI assistant. Give it a PDF or a few sentences and it prepares an FA(3) invoice for KSeF (Poland's National e-Invoicing System). If you make a mistake, it walks you through the correction.",
       "primaryCta": "Install for free",
       "secondaryCta": "View on GitHub"
     },
@@ -821,7 +821,7 @@
           "text": "Attach a PDF, paste the details, or just say in plain words who you're invoicing and for what."
         },
         "generate": {
-          "title": "Claude prepares the file",
+          "title": "Your assistant prepares the file",
           "text": "You get an XML file in the FA(3) format that KSeF requires."
         },
         "check": {
@@ -858,7 +858,11 @@
     },
     "install": {
       "title": "How to install",
-      "intro": "Pick where you use Claude. You only install the skills once.",
+      "intro": "Pick the assistant you use. You only install the skills once.",
+      "anyAgent": {
+        "title": "AI coding assistants",
+        "intro": "Run one command in your terminal. It detects your assistant (Claude Code, Codex, Copilot and others) and installs both skills. Requires Node.js."
+      },
       "claudeApp": {
         "title": "Claude.ai and the desktop app",
         "steps": [
@@ -869,12 +873,16 @@
         "downloadCta": "Download the files"
       },
       "claudeCode": {
-        "title": "Claude Code",
-        "intro": "Run these two commands in Claude Code:"
+        "title": "Claude Code plugin",
+        "intro": "Prefer a plugin? Run these two commands in Claude Code:"
       },
-      "otherAssistants": {
-        "title": "Other AI coding tools",
-        "text": "The same SKILL.md files work in OpenAI Codex, GitHub Copilot and other tools that support Agent Skills."
+      "marketplaces": {
+        "title": "Skill directories",
+        "text": "You'll also find both skills in directories for AI assistants:",
+        "links": {
+          "invoice": "ksef-invoice on skills.sh",
+          "correction": "ksef-correction on skills.sh"
+        }
       }
     },
     "examplePrompt": {
@@ -890,7 +898,7 @@
     },
     "privacy": {
       "title": "What happens to your data?",
-      "text": "The skills are only instructions and reference texts: they store nothing and send nothing anywhere. Invoice details you give Claude become part of your conversation with it, under the terms of your Claude plan. They never reach ksefuj.to."
+      "text": "The skills are only instructions and reference texts: they store nothing and send nothing anywhere. Invoice details you give your assistant are processed by its provider under the provider's own terms. They never reach ksefuj.to."
     },
     "caveat": {
       "title": "Check before you send",
@@ -901,29 +909,29 @@
       "title": "Frequently asked questions",
       "free": {
         "q": "Does it cost anything?",
-        "a": "No. Both skills are free and all the code is public on GitHub. You only need a Claude account."
+        "a": "No. Both skills are free and all the code is public on GitHub. You use them in your own AI assistant, under its provider's terms."
       },
       "xml": {
         "q": "Do I need to know XML?",
-        "a": "No. You describe the invoice in plain words or attach a PDF, and Claude prepares the XML file. Our validator then checks the result and shows you what to fix."
+        "a": "No. You describe the invoice in plain words or attach a PDF, and your AI assistant prepares the XML file. Our validator then checks the result and shows you what to fix."
       },
       "send": {
-        "q": "Will Claude send the invoice to KSeF for me?",
+        "q": "Will the assistant send the invoice to KSeF for me?",
         "a": "No. You get an XML file and send it to KSeF yourself, for example through the KSeF Taxpayer App (Aplikacja Podatnika KSeF)."
       },
       "which": {
-        "q": "Which Claude do I need? Does it work in ChatGPT?",
-        "a": "We built the skills for Claude, not ChatGPT. They work in Claude.ai, the desktop app and Claude Code. You can also use the same files in tools that support Agent Skills, such as OpenAI Codex and GitHub Copilot."
+        "q": "Will it work in my AI assistant?",
+        "a": "Yes, if your assistant supports skills in the open Agent Skills format (SKILL.md files). Claude (Claude.ai, the desktop app and Claude Code), OpenAI Codex and GitHub Copilot all do, among others. If you use a different assistant, such as ChatGPT, check its help pages to see whether it supports skills."
       }
     },
-    "disclaimer": "Claude is a product of Anthropic. ksefuj.to is not affiliated with Anthropic.",
+    "disclaimer": "Claude, Codex and GitHub Copilot belong to their respective owners (Anthropic, OpenAI and GitHub). ksefuj.to is not affiliated with any of these companies.",
     "validatorHint": {
-      "text": "Rather not write XML by hand? Claude can prepare it from a PDF or a description of the invoice.",
+      "text": "Rather not write XML by hand? An AI assistant can prepare it from a PDF or a description of the invoice.",
       "link": "See how"
     },
     "homeCard": {
       "title": "AI invoice assistant",
-      "description": "Free Claude skills turn a PDF or a description into invoice XML and help you issue a corrective invoice."
+      "description": "Free skills that let an AI assistant turn a PDF or a description into invoice XML and help you issue a corrective invoice."
     },
     "footerLink": "AI assistant",
     "ogImageTitle": "AI invoice assistant"
