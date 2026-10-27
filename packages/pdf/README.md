@@ -55,11 +55,11 @@ Also exported: `KsefNumberMismatchError` (typed error, no fields).
   KOD I QR code is added
   (`https://qr.ksef.mf.gov.pl/invoice/{NIP}/{DD-MM-YYYY}/{SHA-256 Base64URL}`; hosts
   `qr-test.ksef.mf.gov.pl` and `qr-demo.ksef.mf.gov.pl` for `test` and `demo`; format from
-  CIRFMF/ksef-docs `kody-qr.md`). The hash covers the exact bytes passed in. If the NIP prefix of
-  the number differs from `Podmiot1/DaneIdentyfikacyjne/NIP`, `KsefNumberMismatchError` is thrown
-  rather than rendering a wrong QR. An invalid `ksefNumber` (pattern or checksum) is ignored: no
-  number, no QR, watermark on by default, and the result has `ksefNumberIgnored: true` so the UI can
-  tell the user. KOD II (offline certificate) is never generated.
+  CIRFMF/ksef-api `kody-qr.md`). The hash covers the exact bytes passed in. If the NIP prefix of the
+  number differs from `Podmiot1/DaneIdentyfikacyjne/NIP`, `KsefNumberMismatchError` is thrown rather
+  than rendering a wrong QR. An invalid `ksefNumber` (pattern or checksum) is ignored: no number, no
+  QR, watermark on by default, and the result has `ksefNumberIgnored: true` so the UI can tell the
+  user. KOD II (offline certificate) is never generated.
 - **`isValidKsefNumber`**: the `TNumerKSeF` pattern of the FA(3) schema plus the CRC-8 checksum
   (polynomial 0x07, initial value 0x00, over the first 32 characters) from CIRFMF/ksef-api
   `faktury/numer-ksef.md`. Only the 35-character layout the document defines is accepted; the
@@ -123,3 +123,8 @@ pnpm --filter @ksefuj/pdf exec tsx scripts/dump-pdf.mjs in.xml out.pdf [ksefNumb
 
 Tests assert on the pdfmake document definition (through the test-only `src/testing.ts` hook) and
 read three real PDFs back with pdfjs-dist.
+
+## License
+
+Apache 2.0 for the adapter; the vendored generator is MIT. Part of
+[ksefuj](https://github.com/ksefuj/ksefuj).

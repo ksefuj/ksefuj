@@ -4,233 +4,119 @@
 [![npm version](https://img.shields.io/npm/v/@ksefuj/validator)](https://www.npmjs.com/package/@ksefuj/validator)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue)](LICENSE)
 
-Open source toolkit for Polish KSeF FA(3) e-invoicing.
+Free, open-source tools for KSeF, Poland's mandatory e-invoicing system. This repository holds the
+[ksefuj.to](https://ksefuj.to) website and the [`@ksefuj/validator`](packages/validator) npm
+package.
 
-- **100% free forever** — no limits, no signup, no hidden costs
-- **Privacy-first** — everything runs locally in your browser
-- **Official compliance** — full XSD validation against Ministry of Finance schemas
-- **Multilingual** — Polish, English, Ukrainian
-
-🌐 **[ksefuj.to](https://ksefuj.to)** — free online validator 📦
-**[@ksefuj/validator](https://www.npmjs.com/package/@ksefuj/validator)** — npm package + CLI
+Invoice files are processed in the browser and never uploaded. No account, no usage limits. The UI
+is in Polish, English and Ukrainian.
 
 ## What is KSeF?
 
-KSeF (Krajowy System e-Faktur) is Poland's mandatory e-invoicing system. Starting April 1, 2026
-(February 1, 2026 for large companies), all VAT taxpayers must issue structured XML invoices through
-KSeF using the FA(3) schema.
+KSeF (Krajowy System e-Faktur) is the Ministry of Finance system through which VAT taxpayers issue
+structured XML invoices in the FA(3) schema: since February 1, 2026 for companies whose 2024 sales
+exceeded 200 mln zł, since April 1, 2026 for everyone else. KSeF itself has no standalone validator;
+an invoice is only checked when it is submitted.
 
-## Features
+## What's on ksefuj.to
 
-### Three-Layer Validation
+- **[Validator](https://ksefuj.to/validator)**: drop one or more FA(3) XML files and get a list of
+  problems, each with its location in the file and a suggested fix.
+- **[PDF preview](https://ksefuj.to/podglad)**: render an invoice as a PDF visualisation, with the
+  KOD I QR code when you have its KSeF number.
+- **[NBP rates](https://ksefuj.to/waluty)**: the exchange rate to use on a foreign-currency invoice,
+  picked from the date rules of art. 31a of the VAT Act.
+- **Guides, blog, docs and FAQ**: KSeF rules explained in plain language, with sources.
 
-- **XSD Schema Validation** — full compliance with official Ministry of Finance schemas
-- **MF Semantic Rules** — catches errors that XSD can't express, per the official FA(3) information
-  sheet
-- **Extra checks** — tax calculation math, NBP currency rates, IBAN format: things KSeF won't catch
+## What the validator checks
 
-### Privacy & Performance
+1. **XSD schema**: the official FA(3) schemas from `crd.gov.pl`, bundled and run through
+   [libxml2-wasm](https://github.com/jameslan/libxml2-wasm), so nothing is fetched at runtime.
+2. **Ministry of Finance rules**: business rules from the official FA(3) information sheet that the
+   XSD cannot express (mandatory `Adnotacje` fields, JST/GV roles in `Podmiot3`, NIP placement, tax
+   rates for foreign buyers, GTU format, decimal precision, currency fields, corrective invoices).
+   Each rule cites its section of the sheet.
+3. **Extra checks**: things KSeF accepts but that cause trouble later: tax arithmetic (`P_14_x`,
+   `P_15`), the NBP rate in `KursWaluty`, Polish bank account format, duplicate line numbers,
+   negative quantities outside corrective invoices, and the strict XML rules of KSeF API 2.4.0
+   (processing instructions, discouraged Unicode characters, BOM, non-UTF-8 encoding).
 
-- **100% client-side** — your invoice data never leaves your browser
-- **Offline capable** — bundled schemas, no network requests needed
-- **Fast validation** — WebAssembly-powered, optimized for multiple validations
+The full list of rules is in
+[`packages/validator/docs/fa3-information-sheet.md`](packages/validator/docs/fa3-information-sheet.md)
+and [`packages/validator/src/semantic.ts`](packages/validator/src/semantic.ts).
 
-### Developer Tools
-
-- **npm package** — `@ksefuj/validator` with TypeScript support
-- **CLI tool** — `npx @ksefuj/validator invoice.xml`
-- **Claude Skills** — ready-made skills for generating e-invoices in Claude Projects
-- **Minimal dependencies** — only libxml2-wasm for XSD validation, TypeScript, ESM modules
-
-## Quick Start
-
-### Web
-
-Visit [ksefuj.to](https://ksefuj.to), drop your XML file, done.
-
-### CLI
+## Command line and npm
 
 ```bash
 npx @ksefuj/validator invoice.xml
 ```
 
-### As a dependency
-
-```bash
-pnpm add @ksefuj/validator
-# or npm install @ksefuj/validator
-# or yarn add @ksefuj/validator
-```
-
 ```typescript
 import { validate } from "@ksefuj/validator";
 
-// Full validation with XSD + semantic rules (default)
 const result = await validate(xmlString);
 
-// With options
-const result = await validate(xmlString, {
-  locale: "en", // 'pl' (default) | 'en' | 'uk'
-  enableXsdValidation: true, // default: true
-  enableSemanticValidation: true, // default: true
-});
-
-if (!result.valid) {
-  // Check XSD errors
-  const xsdErrors = result.errors.filter((e) => e.source === "xsd");
-
-  // Check semantic errors
-  const semanticErrors = result.errors.filter((e) => e.source === "semantic");
-
-  for (const error of result.errors) {
-    console.error(`${error.source}: ${error.message}`, error.path);
-  }
+for (const issue of result.issues) {
+  console.log(issue.code.severity, issue.code.code, issue.message);
 }
 ```
 
-## Repository Structure
+Options, the issue format and NBP rate checking are documented in the
+[package README](packages/validator/README.md).
+
+## Repository layout
 
 ```
 ksefuj/
-├── packages/
-│   └── validator/       ← @ksefuj/validator (npm + CLI)
-│       └── src/schemas/ ← Bundled XSD schemas from Ministry of Finance
-├── apps/
-│   └── web/             ← ksefuj.to (Next.js app)
-└── scripts/
-    └── update-schemas.ts ← Schema maintenance tool
+├── apps/web/            ← ksefuj.to (Next.js, App Router, next-intl)
+│   └── content/         ← blog posts, guides and docs (MDX, PL/EN/UK)
+├── packages/validator/  ← @ksefuj/validator (npm + CLI)
+├── packages/pdf/        ← @ksefuj/pdf, PDF visualisation (private, used by the web app)
+├── docs/knowledge-base/ ← extracts of official MF documents the rules and content rely on
+├── test-fixtures/       ← official MF example invoices and error cases
+└── scripts/             ← schema updates, content checks, screenshots
 ```
-
-## What the Validator Checks
-
-### XSD Schema Validation
-
-Full validation against official Ministry of Finance FA(3) XSD schemas:
-
-- **libxml2-wasm** — WebAssembly-powered validation in the browser
-- **Bundled schemas** — no network requests, CORS-free, offline capable
-- **Official compliance** — uses exact schemas from crd.gov.pl
-- **Detailed error reporting** — line numbers, element paths, specific violations
-
-### Semantic Business Rules
-
-**44 comprehensive validation rules** based on the official FA(3) information sheet from the
-Ministry of Finance:
-
-#### Rule Categories
-
-1. **Podmiot Rules** (8 rules) — Entity validation, JST/GV requirements, NIP placement
-2. **Fa Core Rules** (5 rules) — P_15 requirement, mutual exclusions, currency handling
-3. **Adnotacje Rules** (11 rules) — All mandatory fields, selection logic for exemptions/margin
-   procedures
-4. **FaWiersz Rules** (4 rules) — Tax rate validation, GTU format, decimal precision
-5. **Corrective Invoice Rules** (2 rules) — KSeF number consistency, reverse charge validation
-6. **Payment & Transaction Rules** (8 rules) — Payment dates, bank accounts, currency pairs, NBP
-   rate validation
-7. **Format Rules** (2 rules) — Number formatting, separator validation
-8. **Additional Business Logic Rules** (4 rules) — Tax calculations, bank account format, line
-   number uniqueness, negative quantities
-
-#### Common Issues Caught
-
-- Missing mandatory Adnotacje fields (P_16, P_17, P_18, P_18A, Zwolnienie, etc.)
-- Incorrect JST/GV setup requiring specific Podmiot3 roles
-- Polish NIP in wrong field (should be in NIP field, not NrVatUE)
-- Wrong tax rates for foreign buyers ('np I'/'np II' vs 'oo')
-- GTU format errors (`<GTU>GTU_12</GTU>` not `<GTU_12>1</GTU_12>`)
-- Decimal precision violations (amounts >2, prices >8, quantities >6 decimals)
-- Selection logic violations in Zwolnienie, NoweSrodkiTransportu, PMarzy
-- Currency inconsistencies (foreign currency needs PLN conversions)
-- Number formatting issues (thousand separators, wrong decimal separator)
-- Tax calculation errors (incorrect VAT amounts, wrong totals)
-- Invalid Polish bank account format (IBAN must be 28 chars: PL + 26 digits; NRB must be 26 digits)
-- Duplicate invoice line numbers
-- Negative quantities in non-corrective invoices
-
-## Claude Skills
-
-Claude skills live in [ksefuj/skills](https://github.com/ksefuj/skills):
-
-- **ksef-invoice** — generates FA(3) XML invoices from input data (PDF, text, form)
-- **ksef-correction** — interactive wizard for corrective invoices (KOR, KOR_ZAL, KOR_ROZ)
-
-Install in Claude Code with `/plugin marketplace add ksefuj/skills`, or download the `.skill` files
-from [Releases](https://github.com/ksefuj/skills/releases).
 
 ## Development
 
-Requires Node.js 18+ and pnpm:
+Requires Node.js 20+ and pnpm 9.
 
 ```bash
 git clone https://github.com/ksefuj/ksefuj.git
 cd ksefuj
 pnpm install
-pnpm dev              # runs web app on localhost:3000
-pnpm build            # builds all packages
-pnpm test             # runs tests in all packages
-pnpm update-schemas   # updates XSD schemas from government sources
+pnpm dev              # web app on localhost:3000
+pnpm build            # validator, pdf, then the web app
+pnpm test             # tests in all packages
+pnpm lint && pnpm typecheck
 ```
 
-### Schema Maintenance
+The XSD schemas are bundled in the validator. `pnpm update-schemas` downloads the current ones from
+`crd.gov.pl`, shows what changed and regenerates the bundle. Review the diff before committing:
+schema changes can change validation results.
 
-The validator uses bundled XSD schemas to avoid CORS issues. To update them:
-
-```bash
-pnpm update-schemas
-```
-
-This downloads the latest schemas from `crd.gov.pl`, compares with existing files, and updates the
-bundle if changes are detected. Run this:
-
-- Monthly to check for updates
-- Before releases
-- After Ministry of Finance announces schema changes
+See [CONTRIBUTING.md](CONTRIBUTING.md) for commit conventions and the PR process.
 
 ## Roadmap
 
-### Phase 1: Validator ✅
+Shipped: the validator (web, CLI, npm), PDF preview with KOD I, NBP rate calculator, guides and blog
+in three languages.
 
-- [x] Full XSD schema validation (libxml2-wasm)
-- [x] Semantic business rules engine
-- [x] Bundled schemas (CORS-free, offline capable)
-- [x] Visual validation badges (XSD + semantic)
-- [x] CLI tool
-- [x] Web app with drag & drop
-- [x] npm package
-- [x] Schema update tool
-- [x] i18n setup (PL + EN + UK)
-- [x] Deploy to production
+Next:
 
-### Phase 1.5: Launch Sprint (in progress)
+- [ ] QR codes for invoices issued outside KSeF (offline mode, KOD II)
+- [ ] One-click fixes for common errors
+- [ ] Invoice form that produces FA(3) XML
+- [ ] Buyer lookup by NIP (GUS/VIES)
 
-- [x] Validator UI improvements (multi-file upload, better error output)
-- [x] Human-readable error messages with fix instructions
-- [x] Landing page with trust signals and feature sections
-- [x] MDX content pipeline (docs, guides, blog)
-- [x] FAQ page (full MDX content, PL/EN/UK, JSON-LD FAQPage schema)
-- [x] Blog (first article live: KSeF od 1 kwietnia 2026)
-- [x] Sitemap, OG images, hreflang, Twitter cards across all content
-- [x] Behavioral analytics
-- [x] RSS feed
-- [x] Global validation counter (Vercel KV)
-- [x] Publish @ksefuj/validator to npm registry
+## Related repositories
 
-### Phase 2: Preview
-
-- [ ] XML → HTML invoice visualization
-- [ ] Autofix suggestions (one-click error fixes)
-- [ ] PDF export (client-side via browser print / jsPDF)
-- [ ] QR code generation (required for invoices sent outside KSeF)
-
-### Phase 3: Generator
-
-- [ ] Form-based XML generation
-- [x] Auto NBP exchange rates
-- [ ] Auto NIP lookup (GUS/VIES)
+- [ksefuj/skills](https://github.com/ksefuj/skills): Claude skills that generate FA(3) invoices and
+  corrective invoices
+- [ksefuj/awesome-ksef](https://github.com/ksefuj/awesome-ksef): a curated list of KSeF tools and
+  resources
 
 ## License
 
-Apache 2.0
-
-A permissive open source license that allows commercial use, modification, and distribution.
-Requires preservation of copyright and license notices.
+[Apache 2.0](LICENSE). Third-party licences are listed in
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
