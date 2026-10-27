@@ -23,13 +23,18 @@ Planned 2026-10-20 from Search Console (2026-09-19 to 2026-10-16) and a scan of 
 sites published in the last month. Trade-press items are topic signals only: every fact still needs
 a Tier 1–3 source.
 
+- [ ] **UPDATE** `faktura-zagraniczna-ksef`: the `P_18` = `1` table row says reverse charge applies
+      to „usługi ze stawką `np I` lub `np II`”; the schema ties `P_18` to whether the buyer settles
+      the tax, and `np I` also covers goods and supplies (e.g. art. 28e) where the buyer does not.
+      Same over-generalisation in EN/UK and in `fa3-information-sheet.md` l. 702-704 (source:
+      https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd, P_18 and P_13_8 annotations)
 - [x] **UPDATE** `usuniecie-faktury-ksef`: the sentence „Za wystawioną uznaje się ją w dniu
       przesłania do KSeF, a za otrzymaną w dniu nadania numeru” drops the condition that P_1 equals
       the send day (art. 106na ust. 1; otherwise offline24 dated P_1) and the art. 106gb ust. 4
       receipt exception (art. 106na ust. 4) (source:
       https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf,
       pkt 1.4 and 5.1)
-- [ ] **UPDATE** `faktura-zagraniczna-ksef`: the `P_18A` section says MPP „nie ma zastosowania w
+- [x] **UPDATE** `faktura-zagraniczna-ksef`: the `P_18A` section says MPP „nie ma zastosowania w
       transakcjach zagranicznych” and calls `2` the „domyślna wartość”; no source supports the
       blanket rule. Replace it with the schema conditions (over 15 000 zł, Annex 15, supply „na
       rzecz podatnika”) and mark WDT/export/reverse-charge `2` as following from them (source:

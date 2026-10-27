@@ -2,7 +2,7 @@
 title: "Faktura dla zagranicznej firmy też trafia do KSeF"
 description: "Trafia do KSeF jak krajowa. Firmie z UE wpisujesz KodUE i NrVatUE zamiast NIP-u, nabywcy spoza UE KodKraju i NrID. Stawki to np I, np II, 0 WDT i 0 EX."
 date: 2026-03-30
-updated: 2026-10-12
+updated: 2026-10-27
 section: blog
 locale: pl
 slug: "faktura-zagraniczna-ksef"
@@ -21,6 +21,8 @@ sources:
     url: "https://ec.europa.eu/taxation_customs/vies/"
   - label: "Broszura informacyjna FA(3), s. 92"
     url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "Schemat FA(3), adnotacja P_18A"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
 translations:
   pl: "faktura-zagraniczna-ksef"
   en: "foreign-invoice-ksef"
@@ -178,15 +180,19 @@ W wartościach stawek FA(3) liczą się wielkość liter i spacje. Poprawnie: `n
 
 Wszystkie osiem pól bloku Adnotacje jest obowiązkowych, nawet gdy wartość to „nie dotyczy”. Dwa z nich łatwo pomylić, a dotyczą faktur zagranicznych:
 
-| Pole    | Wartość | Znaczenie                                                                                                    |
-| :------ | :------ | :----------------------------------------------------------------------------------------------------------- |
-| `P_18`  | `1`     | Odwrotne obciążenie — nabywca rozlicza VAT (usługi ze stawką `np I` lub `np II`)                             |
-| `P_18`  | `2`     | Brak odwrotnego obciążenia (np. WDT ze stawką `0 WDT`, eksport ze stawką `0 EX`)                             |
-| `P_18A` | `1`     | Mechanizm podzielonej płatności (MPP) — kwota powyżej 15 000 zł i towary/usługi z załącznika 15 ustawy o VAT |
-| `P_18A` | `2`     | Brak MPP — domyślna wartość przy transakcjach zagranicznych                                                  |
+| Pole    | Wartość | Znaczenie                                                                                                                                                                                                  |
+| :------ | :------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `P_18`  | `1`     | Odwrotne obciążenie — nabywca rozlicza VAT (usługi ze stawką `np I` lub `np II`)                                                                                                                           |
+| `P_18`  | `2`     | Brak odwrotnego obciążenia (np. WDT ze stawką `0 WDT`, eksport ze stawką `0 EX`)                                                                                                                           |
+| `P_18A` | `1`     | Mechanizm podzielonej płatności (MPP): kwota należności ogółem powyżej 15 000 zł (lub jej równowartość w walucie obcej), towary lub usługi z załącznika nr 15 do ustawy o VAT, sprzedaż na rzecz podatnika |
+| `P_18A` | `2`     | Brak MPP: brakuje choćby jednego z trzech warunków z wiersza wyżej                                                                                                                                         |
 
-`P_18` to odwrotne obciążenie, `P_18A` to MPP, który dotyczy płatności krajowych i nie ma zastosowania w transakcjach zagranicznych. Dla usług: `P_18` = `1`, `P_18A` = `2`. Dla WDT i eksportu towarów: `P_18` = `2`, `P_18A` = `2`. Pełną strukturę Adnotacji opisaliśmy w artykule o [najczęstszych błędach walidacji FA(3)](/blog/najczestsze-bledy-walidacji-fa3).
+`P_18` oznacza odwrotne obciążenie, a `P_18A` [mechanizm podzielonej płatności](/blog/mpp-split-payment-ksef). To dwa niezależne pola, każde z własnym warunkiem. Schemat FA(3) nie wyłącza z MPP WDT, eksportu ani nabywców zagranicznych. Wpisujesz `P_18A` = `2`, gdy brakuje któregoś warunku, np. faktura nie obejmuje nic z załącznika nr 15 albo kwota należności ogółem, przeliczona na złote jak podstawa opodatkowania, nie przekracza 15 000 zł. Materiały MF, do których dotarliśmy, nie rozstrzygają, czy zagraniczny nabywca spełnia warunek „na rzecz podatnika”, a więc czy `1` wpisujesz przy towarach z załącznika nr 15 sprzedanych powyżej progu jako WDT lub eksport albo przy usługach z tego załącznika dla zagranicznej firmy. Pełną strukturę Adnotacji opisaliśmy w artykule o [najczęstszych błędach walidacji FA(3)](/blog/najczestsze-bledy-walidacji-fa3).
 
+<Source
+  href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+  label="Schemat FA(3), adnotacja do pola P_18A"
+/>
 <Source
   href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
   label="Broszura informacyjna FA(3), opisy pól P_18 i P_18A w elemencie Adnotacje"
