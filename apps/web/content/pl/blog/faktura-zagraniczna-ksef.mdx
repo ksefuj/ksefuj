@@ -2,7 +2,7 @@
 title: "Faktura dla zagranicznej firmy też trafia do KSeF"
 description: "Trafia do KSeF jak krajowa. Firmie z UE wpisujesz KodUE i NrVatUE zamiast NIP-u, nabywcy spoza UE KodKraju i NrID. Stawki to np I, np II, 0 WDT i 0 EX."
 date: 2026-03-30
-updated: 2026-10-27
+updated: 2026-10-28
 section: blog
 locale: pl
 slug: "faktura-zagraniczna-ksef"
@@ -21,8 +21,10 @@ sources:
     url: "https://ec.europa.eu/taxation_customs/vies/"
   - label: "Broszura informacyjna FA(3), s. 92"
     url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
-  - label: "Schemat FA(3), adnotacja P_18A"
+  - label: "Schemat FA(3), adnotacje P_18 i P_18A"
     url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+  - label: "Podręcznik KSeF 2.0 cz. II, pkt 2.11 (przykłady nr 22 i 23)"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
 translations:
   pl: "faktura-zagraniczna-ksef"
   en: "foreign-invoice-ksef"
@@ -149,12 +151,12 @@ Klient z USA, Szwajcarii, Kanady czy Wielkiej Brytanii (po Brexicie nie jest w U
 
 Stawka zależy od tego, **co** sprzedajesz (towar czy usługę) i **komu** (nabywca z UE czy spoza UE).
 
-| Typ transakcji           | Stawka (P_12) | Pole kwoty netto | Kiedy stosować                                                                                                     |
-| :----------------------- | :------------ | :--------------- | :----------------------------------------------------------------------------------------------------------------- |
-| WDT — towary do UE       | `0 WDT`       | `P_13_6_2`       | Sprzedaż towarów nabywcy z numerem VAT-UE                                                                          |
-| Eksport towarów          | `0 EX`        | `P_13_6_3`       | Sprzedaż towarów nabywcy spoza UE                                                                                  |
-| Usługi dla firm z UE     | `np II`       | `P_13_9`         | Usługi z art. 100 ust. 1 pkt 4 ustawy o VAT (art. 28b, B2B dla podatnika z UE); nabywca rozlicza VAT w swoim kraju |
-| Usługi dla firm spoza UE | `np I`        | `P_13_8`         | Dostawa towarów lub usługi poza Polską, inne niż usługi z `np II` i OSS                                            |
+| Typ transakcji           | Stawka (P_12) | Pole kwoty netto | Kiedy stosować                                                                 |
+| :----------------------- | :------------ | :--------------- | :----------------------------------------------------------------------------- |
+| WDT — towary do UE       | `0 WDT`       | `P_13_6_2`       | Sprzedaż towarów nabywcy z numerem VAT-UE                                      |
+| Eksport towarów          | `0 EX`        | `P_13_6_3`       | Sprzedaż towarów nabywcy spoza UE                                              |
+| Usługi dla firm z UE     | `np II`       | `P_13_9`         | Usługi z art. 100 ust. 1 pkt 4 ustawy o VAT (art. 28b, B2B dla podatnika z UE) |
+| Usługi dla firm spoza UE | `np I`        | `P_13_8`         | Dostawa towarów lub usługi poza Polską, inne niż usługi z `np II` i OSS        |
 
 <Source
   href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
@@ -164,9 +166,9 @@ Stawka zależy od tego, **co** sprzedajesz (towar czy usługę) i **komu** (naby
 W praktyce: strona internetowa dla klienta z Niemiec z numerem VAT-UE to usługa, stawka `np II`. Ta sama strona dla klienta z USA to `np I`. Towar wysłany do firmy z Holandii z numerem VAT-UE to WDT (`0 WDT`), a do klienta z Wielkiej Brytanii to eksport (`0 EX`).
 
 <Warning>
-  Stawka `oo` (odwrotne obciążenie krajowe) **nigdy** nie dotyczy kontrahentów zagranicznych. To
-  jeden z najczęstszych powodów odrzucenia faktury; dla zagranicznych nabywców stosuj `np I` lub `np
-  II`.
+  Stawka `oo` dotyczy wyłącznie krajowego odwrotnego obciążenia. Przy sprzedaży za granicę stosujesz
+  `np I`, `np II`, `0 WDT` albo `0 EX`. KSeF nie wychwyci tej pomyłki: plik z `oo` przejdzie
+  walidację, ale stawka będzie zła.
 </Warning>
 
 W wartościach stawek FA(3) liczą się wielkość liter i spacje. Poprawnie: `np I`, `np II`, `0 WDT`, `0 EX`. Niepoprawnie: `NP I`, `npI`, `0WDT`.
@@ -180,18 +182,22 @@ W wartościach stawek FA(3) liczą się wielkość liter i spacje. Poprawnie: `n
 
 Wszystkie osiem pól bloku Adnotacje jest obowiązkowych, nawet gdy wartość to „nie dotyczy”. Dwa z nich łatwo pomylić, a dotyczą faktur zagranicznych:
 
-| Pole    | Wartość | Znaczenie                                                                                                                                                                                                  |
-| :------ | :------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `P_18`  | `1`     | Odwrotne obciążenie — nabywca rozlicza VAT (usługi ze stawką `np I` lub `np II`)                                                                                                                           |
-| `P_18`  | `2`     | Brak odwrotnego obciążenia (np. WDT ze stawką `0 WDT`, eksport ze stawką `0 EX`)                                                                                                                           |
-| `P_18A` | `1`     | Mechanizm podzielonej płatności (MPP): kwota należności ogółem powyżej 15 000 zł (lub jej równowartość w walucie obcej), towary lub usługi z załącznika nr 15 do ustawy o VAT, sprzedaż na rzecz podatnika |
-| `P_18A` | `2`     | Brak MPP: brakuje choćby jednego z trzech warunków z wiersza wyżej                                                                                                                                         |
+| Pole    | Wartość | Znaczenie                                                                                                                                                                                                             |
+| :------ | :------ | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `P_18`  | `1`     | Odwrotne obciążenie: VAT lub podobny podatek rozlicza nabywca, według przepisów o miejscu opodatkowania transakcji. Sama stawka `np I` lub `np II` tego nie przesądza                                                 |
+| `P_18`  | `2`     | W pozostałych przypadkach, np. przy dostawie lub usłudze ze stawką `np I`, przy której podatek za granicą rozliczasz sam. Przy WDT (`0 WDT`) i eksporcie (`0 EX`) przykładowe faktury MF nr 22 i 23 mają `P_18` = `2` |
+| `P_18A` | `1`     | Mechanizm podzielonej płatności (MPP): kwota należności ogółem powyżej 15 000 zł (lub jej równowartość w walucie obcej), towary lub usługi z załącznika nr 15 do ustawy o VAT, sprzedaż na rzecz podatnika            |
+| `P_18A` | `2`     | Brak MPP: brakuje choćby jednego z trzech warunków z wiersza wyżej                                                                                                                                                    |
 
-`P_18` oznacza odwrotne obciążenie, a `P_18A` [mechanizm podzielonej płatności](/blog/mpp-split-payment-ksef). To dwa niezależne pola, każde z własnym warunkiem. Schemat FA(3) nie wyłącza z MPP WDT, eksportu ani nabywców zagranicznych. Wpisujesz `P_18A` = `2`, gdy brakuje któregoś warunku, np. faktura nie obejmuje nic z załącznika nr 15 albo kwota należności ogółem, przeliczona na złote jak podstawa opodatkowania, nie przekracza 15 000 zł. Materiały MF, do których dotarliśmy, nie rozstrzygają, czy zagraniczny nabywca spełnia warunek „na rzecz podatnika”, a więc czy `1` wpisujesz przy towarach z załącznika nr 15 sprzedanych powyżej progu jako WDT lub eksport albo przy usługach z tego załącznika dla zagranicznej firmy. Pełną strukturę Adnotacji opisaliśmy w artykule o [najczęstszych błędach walidacji FA(3)](/blog/najczestsze-bledy-walidacji-fa3).
+`P_18` oznacza odwrotne obciążenie, a `P_18A` [mechanizm podzielonej płatności](/blog/mpp-split-payment-ksef). To dwa niezależne pola, każde z własnym warunkiem. O `P_18` decyduje to, kto rozlicza podatek, a nie stawka `np`; przy usługach ze stawką `np II` zależy to od przepisów o miejscu świadczenia. Jeśli nie wiesz, kto rozlicza podatek za granicą, zapytaj księgową lub doradcę podatkowego. Schemat FA(3) nie wyłącza z MPP WDT, eksportu ani nabywców zagranicznych. Wpisujesz `P_18A` = `2`, gdy brakuje któregoś warunku, np. faktura nie obejmuje nic z załącznika nr 15 albo kwota należności ogółem, przeliczona na złote jak podstawa opodatkowania, nie przekracza 15 000 zł. Materiały MF, do których dotarliśmy, nie rozstrzygają, czy zagraniczny nabywca spełnia warunek „na rzecz podatnika”, a więc czy `1` wpisujesz przy towarach z załącznika nr 15 sprzedanych powyżej progu jako WDT lub eksport albo przy usługach z tego załącznika dla zagranicznej firmy. Pełną strukturę Adnotacji opisaliśmy w artykule o [najczęstszych błędach walidacji FA(3)](/blog/najczestsze-bledy-walidacji-fa3).
 
 <Source
   href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
-  label="Schemat FA(3), adnotacja do pola P_18A"
+  label="Schemat FA(3), adnotacje do pól P_18 i P_18A"
+/>
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0 cz. II, pkt 2.11: przykłady faktur nr 22 (WDT) i 23 (eksport)"
 />
 <Source
   href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
