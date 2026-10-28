@@ -197,3 +197,83 @@ brief.
 schema or brochure is published (`pnpm update-schemas`), or MF publishes guidance on MPP and
 WDT/export; also when api.sejm.gov.pl becomes reachable (quote art. 108a ust. 2 and art. 106e ust. 1
 pkt 18a verbatim).
+
+## Addendum 2026-10-28: P_18 on foreign invoices
+
+**Requested by:** content backlog UPDATE item (2026-10-28), Adnotacje table in
+`apps/web/content/pl/blog/faktura-zagraniczna-ksef.mdx` („`P_18` = `1` dla usług ze stawką np I lub
+np II")
+
+**Target query:** „P_18 odwrotne obciążenie faktura zagraniczna"
+
+**Answer in two sentences:** `P_18` = `1` when the buyer is the person obliged to settle VAT „lub
+podatku o podobnym charakterze" for the supply, otherwise `2` (`schemat.xsd` l. 2657-2661). The rate
+codes `np I` / `np II` only say the supply is not taxable in Poland (l. 1901-1909); they do not say
+who settles the tax abroad, so `P_18` cannot be derived from the rate code alone.
+
+**What changes the answer:** who is obliged to settle the foreign VAT/similar tax under the
+place-of-supply rules (buyer → `1`, seller or nobody on the buyer's side → `2`). The KB holds no
+statutory or MF text mapping `np I` / `np II` / art. 28b to buyer settlement (fact 4).
+
+**Fetch status (this run):** no fetch attempted (official hosts blocked, proxy connect_rejected).
+Every fact below: Fetched live: no.
+
+### Key Facts
+
+1. **`P_18` schema condition (Tier 2).** „W przypadku dostawy towarów lub wykonania usługi, dla
+   których obowiązanym do rozliczenia podatku od wartości dodanej lub podatku o podobnym charakterze
+   jest nabywca towaru lub usługi - wyrazy "odwrotne obciążenie"; należy podać wartość "1", w
+   przeciwnym przypadku - wartość "2"" — https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd
+   (bundled `packages/validator/src/schemas/schemat.xsd`, l. 2657-2661). No rate code is named.
+   Confidence: HIGH. Fetched live: no.
+2. **`np I` / `np II` enumerations.** `np I`: „niepodlegające opodatkowaniu- dostawy towarów oraz
+   świadczenia usług poza terytorium kraju, z wyłączeniem transakcji, o których mowa w art. 100 ust.
+   1 pkt 4 ustawy oraz OSS" (l. 1901-1904); `np II`: „niepodlegajace opodatkowaniu na terytorium
+   kraju, świadczenie usług o których mowa w art. 100 ust. 1 pkt 4 ustawy" (l. 1906-1909). Neither
+   mentions the buyer or reverse charge. Confidence: HIGH. Fetched live: no.
+3. **`P_13_8` / `P_13_9`.** `P_13_8`: „Suma wartości sprzedaży w przypadku dostawy towarów oraz
+   świadczenia usług poza terytorium kraju, z wyłączeniem kwot wykazanych w polach P_13_5 i P_13_9"
+   (l. 2611-2614); `P_13_9`: „Suma wartości świadczenia usług, o których mowa w art. 100 ust. 1 pkt
+   4 ustawy" (l. 2616-2619). `np I` / `P_13_8` thus covers goods too. Confidence: HIGH. Fetched
+   live: no.
+4. **Statutory counterpart and art. 28b: not in KB.** Grep of `docs/knowledge-base/` and
+   `fa3-information-sheet.md` (2026-10-28): art. 106e ust. 1 pkt 18 is not quoted anywhere; the
+   wording of art. 100 ust. 1 pkt 4 is not quoted; no source states who settles tax on art. 28b B2B
+   services. Art. 28b appears only as the „PL" prefix case (`podrecznik-ksef-20-czesc-ii.md` l. 349)
+   and as import of services in art. 31a context (`kurs-waluty-art-31a.md` l. 382-406). Confidence:
+   HIGH (absence). Fetched live: no.
+5. **Brochure conversion, `P_13_8` (l. 471):** „E.g. services where place of taxation per Art. 28e,
+   not settled under EU OSS." Confirms `np I` includes real-property services; says nothing on
+   `P_18`. Confidence: HIGH. Fetched live: no.
+6. **Brochure conversion, `P_18` (l. 510):** „"1" = reverse charge; "2" = no reverse charge. Also
+   applies to domestic reverse charge (Art. 145e, Art. 17 sec. 1 item 7/8)." Does not tie `P_18` to
+   `np I` / `np II`. Confidence: HIGH. Fetched live: no.
+7. **Brochure conversion, l. 702-704 („CRITICAL RULE — "oo" vs "np I"/"np II"")**: „For invoices
+   with foreign entities where the purchaser settles VAT in their country, use "np I" or "np II" —
+   NOT "oo"." Over-general if read backwards: it says buyer-settled foreign supplies take `np`, not
+   that every `np` supply is buyer-settled. EN conversion; original Polish wording not in KB.
+   Confidence: MEDIUM. Fetched live: no.
+8. **MF examples:** none of the 26 bundled `test-fixtures/official-examples/*.xml` uses `np I` /
+   `np II`; all have `<P_18>2</P_18>`. No official example of `P_18` on an `np` invoice. Confidence:
+   HIGH (file content). Fetched live: no.
+
+### Claims not supported
+
+- (a) „`P_18` = `1` for every `np I` / `np II` invoice" — contradicted by facts 1-3 (test is buyer
+  settlement; `np I` includes goods and e.g. art. 28e services).
+- (b) Any rule that `P_18` follows from the rate code alone — no source (facts 1, 2, 6).
+
+### What the post may safely say
+
+- `P_18` = `1` when, under the rules of the place of supply, the buyer must settle the VAT or a
+  similar tax; `2` otherwise (fact 1). Safe.
+- `np II` (art. 28b B2B services to EU taxpayers) as the typical `1` case: **KB cannot source**
+  (fact 4). Phrase as dependent on the place-of-supply rules, not as a rule.
+- `np I` supplies where the seller settles the foreign tax, or no tax is due on the buyer's side →
+  `2`: follows from „w przeciwnym przypadku" (fact 1); which concrete `np I` supplies fall here is
+  not in KB.
+- WDT / export: same test; MF examples 22-23 have `P_18` = `2` (2026-10-27 addendum, fact 9). Safe
+  as the example value; no source states a WDT/export reason.
+
+**Freshness:** 2026-10-28. Re-check on a new FA schema/brochure, or when art. 106e ust. 1 pkt 18 and
+art. 100 ust. 1 pkt 4 can be quoted from Dz.U. 2026 poz. 1263.

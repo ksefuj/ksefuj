@@ -2,7 +2,7 @@
 title: "Invoicing a foreign buyer in KSeF"
 description: "EU buyer: KodUE + NrVatUE, not NIP. Non-EU: KodKraju + NrID. Plus the np I, np II, 0 WDT and 0 EX rates and ready-to-use XML examples."
 date: 2026-03-30
-updated: 2026-10-27
+updated: 2026-10-28
 section: blog
 locale: en
 slug: "foreign-invoice-ksef"
@@ -26,8 +26,10 @@ sources:
     url: "https://ec.europa.eu/taxation_customs/vies/"
   - label: "FA(3) information brochure, p. 92"
     url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
-  - label: "FA(3) schema, annotation on P_18A"
+  - label: "FA(3) schema, annotations on P_18 and P_18A"
     url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+  - label: "Podręcznik KSeF 2.0 (KSeF 2.0 manual), part II, section 2.11 (examples 22 and 23)"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
 ---
 
 An invoice to a foreign buyer goes through KSeF (Poland's National e-Invoicing System) just like a domestic one, even if the buyer has no Polish NIP and will never log in. In the buyer's data you never put a foreign number in the NIP field: for EU companies use `KodUE` + `NrVatUE`, for everyone else `KodKraju` + `NrID`, and when there is no number, `BrakID`.
@@ -146,12 +148,12 @@ A client from the USA, Switzerland, Canada or the UK (not in the EU since Brexit
 
 The rate depends on **what** you sell (goods or services) and **to whom** (EU or non-EU buyer).
 
-| Transaction type              | Rate (P_12) | Net amount field | When to use                                                                                                        |
-| :---------------------------- | :---------- | :--------------- | :----------------------------------------------------------------------------------------------------------------- |
-| WDT — goods to the EU         | `0 WDT`     | `P_13_6_2`       | Goods sold to a buyer with a VAT-EU number                                                                         |
-| Export of goods               | `0 EX`      | `P_13_6_3`       | Goods sold to a non-EU buyer                                                                                       |
-| Services to EU businesses     | `np II`     | `P_13_9`         | Services under Art. 100(1)(4) of the VAT Act (Art. 28b, B2B to an EU taxpayer); the buyer accounts for VAT at home |
-| Services to non-EU businesses | `np I`      | `P_13_8`         | Supply of goods or services outside Poland, other than `np II` services and OSS                                    |
+| Transaction type              | Rate (P_12) | Net amount field | When to use                                                                     |
+| :---------------------------- | :---------- | :--------------- | :------------------------------------------------------------------------------ |
+| WDT — goods to the EU         | `0 WDT`     | `P_13_6_2`       | Goods sold to a buyer with a VAT-EU number                                      |
+| Export of goods               | `0 EX`      | `P_13_6_3`       | Goods sold to a non-EU buyer                                                    |
+| Services to EU businesses     | `np II`     | `P_13_9`         | Services under Art. 100(1)(4) of the VAT Act (Art. 28b, B2B to an EU taxpayer)  |
+| Services to non-EU businesses | `np I`      | `P_13_8`         | Supply of goods or services outside Poland, other than `np II` services and OSS |
 
 <Source
   href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
@@ -161,8 +163,9 @@ The rate depends on **what** you sell (goods or services) and **to whom** (EU or
 In practice: a website built for a German client with a VAT-EU number is a service, rate `np II`. The same website for a US client is `np I`. Goods shipped to a Dutch company with a VAT-EU number are a WDT (`0 WDT`), and goods shipped to a UK client are an export (`0 EX`).
 
 <Warning>
-  The `oo` rate (domestic reverse charge) **never** applies to foreign buyers. It is one of the most
-  common reasons for rejection; for foreign buyers use `np I` or `np II`.
+  The `oo` rate covers domestic reverse charge only. For sales abroad use `np I`, `np II`, `0 WDT`
+  or `0 EX`. KSeF won't catch this mistake: a file with `oo` passes validation, but the rate is
+  wrong.
 </Warning>
 
 Rate values in FA(3) are case- and space-sensitive. Correct: `np I`, `np II`, `0 WDT`, `0 EX`. Incorrect: `NP I`, `npI`, `0WDT`.
@@ -176,18 +179,22 @@ Rate values in FA(3) are case- and space-sensitive. Correct: `np I`, `np II`, `0
 
 All eight fields of the Adnotacje block are mandatory, even when the value is "not applicable". Two of them are easy to mix up and both matter for foreign invoices:
 
-| Field   | Value | Meaning                                                                                                                                                             |
-| :------ | :---- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `P_18`  | `1`   | Reverse charge — the buyer accounts for VAT (services at `np I` or `np II`)                                                                                         |
-| `P_18`  | `2`   | No reverse charge (e.g. WDT at `0 WDT`, export at `0 EX`)                                                                                                           |
-| `P_18A` | `1`   | Split payment (MPP): total amount due over PLN 15,000 (or the equivalent in a foreign currency), goods or services from Annex 15 to the VAT Act, sold to a taxpayer |
-| `P_18A` | `2`   | No MPP: at least one of the three conditions in the row above is not met                                                                                            |
+| Field   | Value | Meaning                                                                                                                                                                                   |
+| :------ | :---- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `P_18`  | `1`   | Reverse charge: the buyer accounts for VAT or a similar tax under the place-of-taxation rules. The `np I` or `np II` rate alone does not decide this                                      |
+| `P_18`  | `2`   | All other cases, e.g. a supply or service at `np I` where you account for the foreign tax yourself. For WDT (`0 WDT`) and export (`0 EX`), MF sample invoices 22 and 23 have `P_18` = `2` |
+| `P_18A` | `1`   | Split payment (MPP): total amount due over PLN 15,000 (or the equivalent in a foreign currency), goods or services from Annex 15 to the VAT Act, sold to a taxpayer                       |
+| `P_18A` | `2`   | No MPP: at least one of the three conditions in the row above is not met                                                                                                                  |
 
-`P_18` marks reverse charge and `P_18A` marks [split payment](/en/blog/split-payment-mpp-ksef). They are two independent fields, each with its own condition. The FA(3) schema does not exclude WDT, exports or foreign buyers from MPP. You enter `P_18A` = `2` when any condition is missing, for example when nothing on the invoice is from Annex 15, or when the total amount due, converted to PLN the same way as the taxable amount, does not exceed PLN 15,000. The MF materials we found don't settle whether a foreign buyer meets the "sold to a taxpayer" condition, so it is unclear whether you enter `1` for Annex 15 goods sold above the threshold as WDT or export, or for Annex 15 services supplied to a foreign company. We describe the full Adnotacje structure in the article on [the most common FA(3) validation errors](/en/blog/most-common-fa3-validation-errors).
+`P_18` marks reverse charge and `P_18A` marks [split payment](/en/blog/split-payment-mpp-ksef). They are two independent fields, each with its own condition. What decides `P_18` is who accounts for the tax, not the `np` rate; for services at `np II` that depends on the place-of-supply rules. If you don't know who accounts for the tax abroad, ask your accountant or tax adviser. The FA(3) schema does not exclude WDT, exports or foreign buyers from MPP. You enter `P_18A` = `2` when any condition is missing, for example when nothing on the invoice is from Annex 15, or when the total amount due, converted to PLN the same way as the taxable amount, does not exceed PLN 15,000. The MF materials we found don't settle whether a foreign buyer meets the "sold to a taxpayer" condition, so it is unclear whether you enter `1` for Annex 15 goods sold above the threshold as WDT or export, or for Annex 15 services supplied to a foreign company. We describe the full Adnotacje structure in the article on [the most common FA(3) validation errors](/en/blog/most-common-fa3-validation-errors).
 
 <Source
   href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
-  label="FA(3) schema, annotation on the P_18A field"
+  label="FA(3) schema, annotations on the P_18 and P_18A fields"
+/>
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, part II, section 2.11: sample invoices 22 (WDT) and 23 (export)"
 />
 <Source
   href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"

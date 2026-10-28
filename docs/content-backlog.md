@@ -23,7 +23,7 @@ Planned 2026-10-20 from Search Console (2026-09-19 to 2026-10-16) and a scan of 
 sites published in the last month. Trade-press items are topic signals only: every fact still needs
 a Tier 1–3 source.
 
-- [ ] **UPDATE** `faktura-zagraniczna-ksef`: the `P_18` = `1` table row says reverse charge applies
+- [x] **UPDATE** `faktura-zagraniczna-ksef`: the `P_18` = `1` table row says reverse charge applies
       to „usługi ze stawką `np I` lub `np II`”; the schema ties `P_18` to whether the buyer settles
       the tax, and `np I` also covers goods and supplies (e.g. art. 28e) where the buyer does not.
       Same over-generalisation in EN/UK and in `fa3-information-sheet.md` l. 702-704 (source:
