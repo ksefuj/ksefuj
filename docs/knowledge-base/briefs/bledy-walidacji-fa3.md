@@ -14,6 +14,74 @@ validator
 >   only); PROD enforcement from 2026-10-19; error `21184` and 410 Gone are new API behaviours. See
 >   `api-ksef-zmiany-cirfmf.md`. FA(3) XSD on crd.gov.pl unchanged on 2026-10-07.
 
+## Update 2026-10-29: „błąd walidacji co to znaczy”
+
+Persona A (Ania, JDG, nietechniczna). Checked 2026-10-29: CIRFMF/ksef-api HEAD `ce3670e` (as on
+2026-10-24); `api-changelog.md`, `faktury/weryfikacja-faktury.md`, `open-api.json` re-read via
+raw.githubusercontent.com. NOT reachable from this environment (403/timeout): github.com issues
+(#718, #807), ksef.podatki.gov.pl (Podręcznik PDF not re-read), crd.gov.pl.
+
+**Target query:** „błąd walidacji co to znaczy” (also „błąd walidacji KSeF”)
+
+**Answer in two sentences:** Błąd walidacji znaczy, że plik XML faktury nie spełnia wymagań KSeF,
+najczęściej nie zgadza się ze wzorem FA(3) (brak pola, zła kolejność, zły format wartości), więc
+KSeF go odrzuca. Odrzucona faktura nie dostaje numeru KSeF i nie jest wystawiona: poprawiasz plik i
+wysyłasz go jeszcze raz. — Podręcznik KSeF 2.0 cz. II (06.08.2026), pkt 1.6.1, s. 18, verbatim: „W
+przypadku negatywnej weryfikacji system nie przydziela numeru KSeF faktury. Oznacza to, że faktura
+nie została wystawiona. Należy więc zweryfikować poprawność wprowadzonych danych i ponowić wysyłkę.”
+(quoted in `ksef-scisla-walidacja-xml.md` fakt 11 and `usuniecie-faktury-ksef.md` fakt 8; local
+extract `podrecznik-ksef-20-czesc-ii.md` 1.6.1 is the 02.2026 edition and lists the grounds but not
+this sentence; PDF not re-read today). Tier 2. Confidence: HIGH. The post's pkt 1.6.1 citation is
+correct.
+
+**What changes the answer:**
+
+- **(a) Schema (XSD) and strict-XML failures → rejection, no number.** Grounds per cz. II pkt 1.6.1
+  (local extract): „Niezgodność struktury pliku ze wzorem”, brak uprawnień, P_1 z przyszłości,
+  załącznik bez zgłoszenia w e-US. `weryfikacja-faktury.md` (09.04.2026), „Weryfikacja XML”:
+  „Niespełnienie któregokolwiek z powyższych wymagań spowoduje odrzucenie faktury.” Same doc adds
+  duplicate (kod 440 „Duplikat faktury”) and NIP checksum for Podmiot1/2/3/PodmiotUpowazniony
+  „Dotyczy tylko środowiska produkcyjnego.” Tier 2. Confidence: HIGH.
+- **(b) Errors KSeF does not check → invoice accepted, numbered, issued; fix by korekta.**
+  Arithmetic: cz. II 1.6.1 WAŻNE „KSeF nie dokonuje weryfikacji obliczeń matematycznych” (HIGH); no
+  edit after sending, only faktura korygująca: cz. II 1.6.2 (HIGH). P_6 together with P_6A and the
+  country prefix in `NrVatUE`: neither appears among the checks in cz. II 1.6.1 or
+  `weryfikacja-faktury.md`, and P_6/P_6A are in separate subtrees (Error 12 below). Confidence:
+  MEDIUM (inferred from absence; no MF source says „KSeF przepuści P_6 + P_6A”). See also Unsettled
+  Q3 below: whether KSeF enforces Broszura rules beyond XSD is not confirmed.
+- **(c) Strict-XML rules** (UTF-8 bez BOM, prolog without non-UTF-8 encoding, no processing
+  instructions, no discouraged Unicode): rejection on PROD announced for 19.10.2026 only in a
+  kw-cirf comment in issue #718 (2026-06-24, Tier 3, MEDIUM). On 2026-10-29 `api-changelog.md`
+  (latest 2.9.0) still says „Zaostrzenie walidacji XML zacznie obowiązywać od **16.07.2026**”, and
+  no doc confirms PROD enforcement or a new date. TEST/DEMO reject since 2.4.0 (10/13.04.2026).
+  Status: **announced, not confirmed**; write „miał zacząć odrzucać od 19.10.2026”, not „odrzuca”.
+  Source: `ksef-scisla-walidacja-xml.md` (Update 2026-10-24, facts 1-4). Link the post
+  `apps/web/content/pl/blog/ksef-scisla-walidacja-xml.mdx` (slug `ksef-scisla-walidacja-xml`).
+- **(d) Offline invoices.** Cz. II pkt 1.6.1 rule applies; the law does not regulate rejection of an
+  offline invoice (`awaria-ksef-offline.md` fakt 5, MEDIUM). API `offline/korekta-techniczna.md`
+  allows resending an offline invoice „odrzucona z powodu błędów technicznych, np.: niezgodność ze
+  schematem […]”, without changing its content (`usuniecie-faktury-ksef.md` fakt 10, Tier 2, HIGH;
+  Ania: no, Aplikacja Podatnika issues online only). Legal effect of rejection after the art. 106nda
+  ust. 2 deadline: UNSETTLED, do not claim. Cz. II 1.4: P_1 earlier than sending date is not an
+  error (invoice becomes offline24); P_1 in the future is rejected (HIGH).
+
+**Error codes (developer detail, not for Ania):**
+
+- Invoice status table in `open-api.json` (`SessionInvoiceStatusResponse.status`) lists e.g. `430`
+  „Błąd weryfikacji pliku faktury”, `440` „Duplikat faktury”, `450` „Błąd weryfikacji semantyki
+  dokumentu faktury”, `200` „Sukces”. Which code an XSD or strict-XML failure returns is **not
+  documented**; do not map them. Confidence: HIGH (that the table exists), mapping: not found.
+- **Correction to the task premise:** `21184` is NOT a strict-XML code. Changelog 2.8.0: „kod błędu
+  `21184` ("Sesja tymczasowo niedostępna"), zwracany z HTTP 400 w przypadku czasowego wstrzymania
+  możliwości wysyłki faktur w ramach istniejącej sesji.” Strict-XML warning codes are free text, not
+  predefined (`ksef-scisla-walidacja-xml.md` fakt 8). Do not cite 21184 in this post.
+- The 2026-10-07 freshness note above („PROD enforcement from 2026-10-19”) is superseded by (c).
+
+**Sources for „Źródła”:**
+https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf
+(pkt 1.6.1, 1.6.2); https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md;
+https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md (2.4.0).
+
 ## Source Corpus Used
 
 | Source                                                               | Tier     | File / URL                                          | Status  |
