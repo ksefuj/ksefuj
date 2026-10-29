@@ -1,8 +1,8 @@
 ---
-title: "Co oznacza błąd walidacji w KSeF i jak go naprawić?"
-description: "Plik XML nie zgadza się ze wzorem FA(3), więc KSeF odrzuca fakturę i nie nadaje jej numeru. Opisujemy 12 częstych błędów, każdy z poprawką do skopiowania."
+title: "Co znaczy błąd walidacji KSeF i jak go naprawić?"
+description: "Plik XML nie spełnia wymagań KSeF, zwykle wzoru FA(3), więc KSeF odrzuca fakturę i nie nadaje jej numeru. Opisujemy 12 częstych błędów i ich poprawki."
 date: 2026-03-26
-updated: 2026-10-08
+updated: 2026-10-29
 section: blog
 locale: pl
 slug: "najczestsze-bledy-walidacji-fa3"
@@ -13,16 +13,22 @@ sources:
     url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
   - label: "Schemat XSD FA(3)"
     url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+  - label: "Podręcznik KSeF 2.0 cz. II (wydanie 06.08.2026), pkt 1.6.1 i 1.6.2"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "MF / CIRF: Weryfikacja faktury, sekcja „Weryfikacja XML”"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md"
+  - label: "CIRFMF/ksef-api: changelog API (wersje 2.3.0 i 2.4.0)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md"
 translations:
   pl: "najczestsze-bledy-walidacji-fa3"
   en: "most-common-fa3-validation-errors"
 ---
 
-Faktura FA(3) najczęściej nie przechodzi walidacji z powodu złego namespace’u, kolejności elementów, brakujących pól, formatu NIP i dat, nadmiarowych miejsc po przecinku, stawki w `P_12` albo niekompletnej sekcji `Adnotacje`. Każdy z 12 błędów poniżej ma przyczynę i poprawkę w XML do skopiowania.
+Błąd walidacji znaczy, że plik XML faktury nie spełnia wymagań KSeF (najczęściej nie zgadza się ze wzorem FA(3)), więc KSeF go odrzuca. Odrzucona faktura nie dostaje numeru KSeF i nie jest wystawiona: poprawiasz plik i wysyłasz go jeszcze raz. Zwykle chodzi o brakujące pole, element w złym miejscu albo wartość w złym formacie. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 1.6.1" />
 
-Błąd walidacji oznacza, że plik XML nie zgadza się ze wzorem FA(3): brakuje w nim wymaganego elementu, coś stoi w złym miejscu albo wartość ma zły format. Fakturę wysłaną online z takim błędem KSeF odrzuca i nie nadaje jej numeru, więc nie zostaje ona wystawiona. Poprawiasz XML i wysyłasz go jeszcze raz. Tak kończą się jednak błędy względem schematu (XSD). Błąd rachunkowy (nr 10, suma `P_15`) i błędy, których schemat nie wychwytuje (nr 9, prefiks kraju w `NrVatUE`, i nr 12, `P_6` razem z `P_6A`), KSeF przepuści. Faktura dostaje wtedy numer KSeF i jest wystawiona, więc poprawiasz ją fakturą korygującą, a nie ponowną wysyłką. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 1.6.1" />
+Części błędów KSeF nie sprawdza. Podręcznik mówi wprost, że system nie weryfikuje obliczeń, więc faktura ze złą sumą `P_15` (błąd nr 10) dostaje numer. Prefiksu kraju w `NrVatUE` (nr 9) ani `P_6` razem z `P_6A` (nr 12) schemat nie wychwytuje, więc KSeF może przyjąć taką fakturę. Fakturę, która dostała numer KSeF, poprawiasz [fakturą korygującą](/blog/faktura-korygujaca-ksef), a nie ponowną wysyłką. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 1.6.1 i 1.6.2" />
 
-Komunikaty walidacji bywają hermetyczne. Zamiast „brakuje numeru faktury” zobaczysz na przykład `Element 'P_6': This element is not expected. Expected is ( P_2 ).` Jeśli program do fakturowania generuje XML sam, większość tych błędów wyłapie za ciebie. Te opisy przydadzą się, gdy integrujesz KSeF przez API, piszesz własny eksport albo chcesz zrozumieć, dlaczego faktura wróciła. Przykłady opierają się na schemacie FA(3) obowiązującym od 1 lutego 2026 r.
+Komunikaty walidacji bywają hermetyczne: zamiast „brakuje numeru faktury” zobaczysz na przykład `Element 'P_6': This element is not expected. Expected is ( P_2 ).` Jeśli program do fakturowania generuje XML sam, większość tych błędów wyłapie za ciebie. Poniżej opisujemy 12 najczęstszych, od złego namespace’u po niekompletne `Adnotacje`, każdy z przyczyną i poprawką w XML do skopiowania. Te opisy przydadzą się, gdy integrujesz KSeF przez API, piszesz własny eksport albo chcesz zrozumieć, dlaczego faktura wróciła. Przykłady opierają się na schemacie FA(3) obowiązującym od 1 lutego 2026 r.
 
 <Source
   href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
@@ -399,6 +405,19 @@ W `Fa` pole **P_6 i element OkresFa wykluczają się** (`xs:choice` w XSD). Zaka
 </XmlExample>
 
 `P_6` to nie `P_1`. `P_1` to data wystawienia faktury i jest obowiązkowa zawsze. `P_6` to data dostawy lub wykonania usługi, często taka sama jak `P_1`, ale o innym znaczeniu prawnym.
+
+## Jakich wymagań technicznych XML nie sprawdza schemat FA(3)?
+
+Plik zgodny ze schematem musi spełnić jeszcze kilka wymagań technicznych z dokumentacji API KSeF. Nie może zaczynać się od BOM (niewidocznego znacznika kodowania na początku pliku), a prolog nie może wskazywać innego kodowania niż UTF-8 (np. `encoding="windows-1250"`). W pliku nie może też być instrukcji przetwarzania, czyli dopisków dla programów w rodzaju `<?xml-stylesheet ...?>`, ani niezalecanych znaków Unicode.
+
+Instrukcje przetwarzania i niezalecane znaki środowiska TEST i DEMO odrzucają od wersji API 2.4.0 (kwiecień 2026 r.). Według zapowiedzi zespołu API produkcyjny KSeF miał zacząć odrzucać pliki z nimi od 19 października 2026 r., ale do 29 października dokumentacja API tego nie potwierdziła. Regułę o kodowaniu w prologu changelog API przypisuje wcześniejszej wersji 2.3.0, a dla BOM nie podaje daty, więc nie wiadomo, od kiedy produkcja egzekwuje te dwa wymagania. Zakresy niezalecanych znaków i sposób sprawdzenia własnych plików opisujemy w tekście o [zaostrzonej walidacji XML w KSeF](/blog/ksef-scisla-walidacja-xml).
+
+Stan na 29 października 2026 r.
+
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md"
+  label="MF / CIRF, Weryfikacja faktury, sekcja „Weryfikacja XML”"
+/>
 
 ## Co dalej
 

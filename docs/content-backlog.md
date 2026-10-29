@@ -23,6 +23,10 @@ Planned 2026-10-20 from Search Console (2026-09-19 to 2026-10-16) and a scan of 
 sites published in the last month. Trade-press items are topic signals only: every fact still needs
 a Tier 1–3 source.
 
+- [ ] **UPDATE** `najczestsze-bledy-walidacji-fa3`: section 3 lists `Nazwa` as a required
+      `Podmiot2/DaneIdentyfikacyjne` field, but the XSD has it in an optional sequence (art. 106e
+      ust. 5 pkt 3 cases); `KodKraju` before `NrID` is optional too and `BrakID` is not mentioned.
+      Same in EN (source: https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd, `Podmiot2`)
 - [ ] **UPDATE** `faktura-zagraniczna-ksef`: the `P_18` = `1` table row says reverse charge applies
       to „usługi ze stawką `np I` lub `np II`”; the schema ties `P_18` to whether the buyer settles
       the tax, and `np I` also covers goods and supplies (e.g. art. 28e) where the buyer does not.
@@ -50,7 +54,7 @@ a Tier 1–3 source.
       `api-changelog.md` · Interim update 2026-10-24 (`content/ksef-scisla-walidacja-xml`): date
       passed, post now says the docs have not confirmed enforcement. Skip until 2026-11-07, then
       re-check the changelog and issue #718 before the present-tense switch.
-- [ ] **UPDATE** `najczestsze-bledy-walidacji-fa3` — open with a direct answer to „co znaczy błąd
+- [x] **UPDATE** `najczestsze-bledy-walidacji-fa3` — open with a direct answer to „co znaczy błąd
       walidacji” in the first 100 words, then the list; mention the strict-XML rejections from 19.10
       and link that post · „błąd walidacji co to znaczy” · A · GSC ~74 impr at pos 7–14 · brief
       `bledy-walidacji-fa3.md`
