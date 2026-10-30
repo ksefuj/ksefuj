@@ -62,7 +62,7 @@ a Tier 1–3 source.
       validity 1–365 days and renewal only with the owner's consent are reported by infor.pl
       (2026-10-07, citing interpelacja 19230) but UNVERIFIED; still no legal act · A, M · 2026-12-01
       · brief `rozporzadzenie-ksef-i-tokeny.md`
-- [ ] `wspolnota-mieszkaniowa-ksef` — Wspólnota mieszkaniowa i spółdzielnia a KSeF · „wspólnota
+- [x] `wspolnota-mieszkaniowa-ksef` — Wspólnota mieszkaniowa i spółdzielnia a KSeF · „wspólnota
       mieszkaniowa KSeF” · K, A (zarządca) · FAQ, MF training PDF `/media/hb0mye13/` · Signal:
       infor.pl 2026-09-01; MF answer to interpelacja 17044 reportedly rules out an exclusion
       (UNVERIFIED). Cover VAT-exempt wspólnoty and the art. 145m limit.
