@@ -2,7 +2,7 @@
 title: "Invoicing a foreign buyer in KSeF"
 description: "EU buyer: KodUE + NrVatUE, not NIP. Non-EU: KodKraju + NrID. Plus the np I, np II, 0 WDT and 0 EX rates and ready-to-use XML examples."
 date: 2026-03-30
-updated: 2026-10-28
+updated: 2026-11-02
 section: blog
 locale: en
 slug: "foreign-invoice-ksef"
@@ -20,7 +20,7 @@ sources:
     url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
   - label: "MF Tax Explanations 28.01.2026"
     url: "https://ksef.podatki.gov.pl/"
-  - label: "Polish VAT Act Art. 28b"
+  - label: "Polish VAT Act Art. 28b, Art. 100(1)(4) and Art. 106e(1)(18)"
     url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
   - label: "VIES — VAT number verification"
     url: "https://ec.europa.eu/taxation_customs/vies/"
@@ -181,13 +181,17 @@ All eight fields of the Adnotacje block are mandatory, even when the value is "n
 
 | Field   | Value | Meaning                                                                                                                                                                                   |
 | :------ | :---- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `P_18`  | `1`   | Reverse charge: the buyer accounts for VAT or a similar tax under the place-of-taxation rules. The `np I` or `np II` rate alone does not decide this                                      |
+| `P_18`  | `1`   | Reverse charge: the buyer accounts for VAT or a similar tax under the place-of-taxation rules. That is always the case at `np II`; the `np I` rate alone does not decide this             |
 | `P_18`  | `2`   | All other cases, e.g. a supply or service at `np I` where you account for the foreign tax yourself. For WDT (`0 WDT`) and export (`0 EX`), MF sample invoices 22 and 23 have `P_18` = `2` |
 | `P_18A` | `1`   | Split payment (MPP): total amount due over PLN 15,000 (or the equivalent in a foreign currency), goods or services from Annex 15 to the VAT Act, sold to a taxpayer                       |
 | `P_18A` | `2`   | No MPP: at least one of the three conditions in the row above is not met                                                                                                                  |
 
-`P_18` marks reverse charge and `P_18A` marks [split payment](/en/blog/split-payment-mpp-ksef). They are two independent fields, each with its own condition. What decides `P_18` is who accounts for the tax, not the `np` rate; for services at `np II` that depends on the place-of-supply rules. If you don't know who accounts for the tax abroad, ask your accountant or tax adviser. The FA(3) schema does not exclude WDT, exports or foreign buyers from MPP. You enter `P_18A` = `2` when any condition is missing, for example when nothing on the invoice is from Annex 15, or when the total amount due, converted to PLN the same way as the taxable amount, does not exceed PLN 15,000. The MF materials we found don't settle whether a foreign buyer meets the "sold to a taxpayer" condition, so it is unclear whether you enter `1` for Annex 15 goods sold above the threshold as WDT or export, or for Annex 15 services supplied to a foreign company. We describe the full Adnotacje structure in the article on [the most common FA(3) validation errors](/en/blog/most-common-fa3-validation-errors).
+`P_18` marks reverse charge and `P_18A` marks [split payment](/en/blog/split-payment-mpp-ksef). They are two independent fields, each with its own condition. What decides `P_18` is who accounts for the tax. The `np II` rate covers services under Art. 100(1)(4) of the VAT Act, those where the service recipient is liable for VAT, so you enter `1` (Art. 106e(1)(18)). At `np I`, check this separately. If you don't know who accounts for the tax abroad, ask your accountant or tax adviser. The FA(3) schema does not exclude WDT, exports or foreign buyers from MPP. You enter `P_18A` = `2` when any condition is missing, for example when nothing on the invoice is from Annex 15, or when the total amount due, converted to PLN the same way as the taxable amount, does not exceed PLN 15,000. The MF materials we found don't settle whether a foreign buyer meets the "sold to a taxpayer" condition, so it is unclear whether you enter `1` for Annex 15 goods sold above the threshold as WDT or export, or for Annex 15 services supplied to a foreign company. We describe the full Adnotacje structure in the article on [the most common FA(3) validation errors](/en/blog/most-common-fa3-validation-errors).
 
+<Source
+  href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
+  label="VAT Act, Art. 100(1)(4) and Art. 106e(1)(18)"
+/>
 <Source
   href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
   label="FA(3) schema, annotations on the P_18 and P_18A fields"

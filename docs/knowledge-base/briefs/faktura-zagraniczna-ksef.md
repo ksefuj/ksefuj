@@ -277,3 +277,26 @@ Every fact below: Fetched live: no.
 
 **Freshness:** 2026-10-28. Re-check on a new FA schema/brochure, or when art. 106e ust. 1 pkt 18 and
 art. 100 ust. 1 pkt 4 can be quoted from Dz.U. 2026 poz. 1263.
+
+## Addendum 2026-11-02: live verification, `np II` and `P_18`
+
+Supersedes fact 4 and the `np II` bullet of the 2026-10-28 addendum. Fetched live: yes (Dz.U. 2026
+poz. 1263 via https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf).
+
+- **Art. 100 ust. 1 pkt 4:** „usługach, do których stosuje się art. 28b, na rzecz podatników podatku
+  od wartości dodanej [...], świadczonych na terytorium państwa członkowskiego innym niż terytorium
+  kraju, innych niż zwolnionych od podatku od wartości dodanej lub opodatkowanych stawką 0 %, dla
+  których zobowiązanym do zapłaty podatku od wartości dodanej jest usługobiorca".
+- **Art. 100 ust. 10:** on the same point, the recipient is liable if the supplier has no seat or
+  participating fixed establishment in that member state.
+- **Art. 106e ust. 1 pkt 18:** „w przypadku dostawy towarów lub wykonania usługi, dla których
+  obowiązanym do rozliczenia podatku od wartości dodanej lub podatku o podobnym charakterze jest
+  nabywca towaru lub usługi – wyrazy „odwrotne obciążenie"".
+
+**Result:** `np II` is defined by art. 100 ust. 1 pkt 4 (schema l. 1906-1909), so the buyer settles
+the tax and `P_18` = `1`. `np I` stays undetermined by the rate alone. Art. 28b B2B services outside
+the EU are not covered by these provisions.
+
+Also checked live: `schemat.xsd` is identical to the bundled copy; the Podręcznik cz. II pkt 2.11
+cites examples 22 and 23; the brochure (August 2026) limits `oo` to „obrót krajowy"; a copy of
+example 22 with `P_12` = `oo` passes `xmllint` against the live schema.
