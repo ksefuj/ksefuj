@@ -37,7 +37,8 @@ wspólnoty w polu NIP nabywcy trafiają do niej w KSeF automatycznie.
 - **Invoice issued by 31.12.2026 and monthly invoiced sales ≤ 10 000 zł gross:** may be outside KSeF
   (art. 145m); from 1.01.2027 no limit.
 - **Wspólnota without NIP:** KSeF cannot issue an invoice without the seller's NIP (FAQ Q14); as a
-  buyer, a „podmiot bez NIP" gets invoices in an agreed way, not in KSeF (art. 106gb ust. 4).
+  buyer, a „podmiot bez NIP" gets invoices in an agreed way (art. 106gb ust. 4; KSeF access by code
+  possible, ust. 6).
 - **Document is a nota księgowa / obciążeniowa, not a faktura:** not sent to KSeF.
 
 ## Key Facts (ready to use)
@@ -54,19 +55,20 @@ wspólnoty w polu NIP nabywcy trafiają do niej w KSeF automatycznie.
    extract, not verbatim; the list illustrates who can be a podatnik, it does not say every
    wspólnota is one for every activity). Persona: both.
 2. **Spółdzielnie mieszkaniowe are not named in the KB.** The Podręcznik list (fact 1) names spółki
-   kapitałowe and „inne podmioty niebędące osobą fizyczną" but not spółdzielnie. The obligation in
-   art. 106ga ust. 1 is addressed to „Podatnicy" without listing legal forms (fact 3). The only
-   spółdzielnia reference in the KB is art. 19a ust. 8 (tax point for advances, including „wkład
-   budowlany lub mieszkaniowy przed ustanowieniem spółdzielczego prawa do lokalu mieszkalnego"),
-   quoted in `kurs-waluty-art-31a.md` from Dz.U. 2025 poz. 775, s. 30. Confidence: HIGH (absence in
-   KB). Persona: accountant.
+   kapitałowe and „inny podmiot niebędący osobą fizyczną np. fundacja, wspólnota mieszkaniowa czy
+   stowarzyszenie" (verbatim, edition 06.08.2026) but not spółdzielnie. The obligation in art. 106ga
+   ust. 1 is addressed to „Podatnicy" without listing legal forms (fact 3). The only spółdzielnia
+   reference in the KB is art. 19a ust. 8 (tax point for advances, including „wkład budowlany lub
+   mieszkaniowy przed ustanowieniem spółdzielczego prawa do lokalu mieszkalnego"), quoted in
+   `kurs-waluty-art-31a.md` from Dz.U. 2025 poz. 775, s. 30. Confidence: HIGH (absence in KB).
+   Persona: accountant.
 3. **KSeF obligation, exempt taxpayers included.** Art. 106ga ust. 1: „Podatnicy są obowiązani
    wystawiać faktury ustrukturyzowane przy użyciu Krajowego Systemu e-Faktur." FAQ MF KSeF 2.0 Q10:
-   „każdy podatnik (czynny i zwolniony), który ma obowiązek wystawienia faktury, będzie wystawiał ją
-   w KSeF". FAQ Q22: invoices of VAT-exempt taxpayers „na rzecz innych podatników, jeśli wobec tych
-   faktur nie istnieją żadne wyłączenia lub przepisy epizodyczne pozwalające na ich wystawienie poza
-   KSeF, należy wystawić przy użyciu KSeF." Source: Dz.U. 2026 poz. 1263, art. 106ga ust. 1 (Tier
-   1); https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/ (Tier 3). Per
+   „Co do zasady każdy podatnik (czynny i zwolniony), który ma obowiązek wystawienia faktury, będzie
+   wystawiał ją w KSeF". FAQ Q22: invoices of VAT-exempt taxpayers „na rzecz innych podatników,
+   jeśli wobec tych faktur nie istnieją żadne wyłączenia lub przepisy epizodyczne pozwalające na ich
+   wystawienie poza KSeF, należy wystawić przy użyciu KSeF." Source: Dz.U. 2026 poz. 1263, art.
+   106ga ust. 1 (Tier 1); https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/ (Tier 3). Per
    `zwolniony-z-vat-ksef.md` fact 6. Confidence: HIGH. Persona: both.
 4. **Stage dates:** 1.02.2026 for taxpayers with 2024 sales above 200 mln zł gross, 1.04.2026 for
    the rest. Source: Podręcznik cz. II pkt 1.2 (KB extract text: „Od 1 kwietnia 2026 r. — pozostali
@@ -170,12 +172,13 @@ wspólnoty w polu NIP nabywcy trafiają do niej w KSeF automatycznie.
     Up to 100% of tax on an invoice issued outside KSeF, „a w przypadku faktury bez wykazanego
     podatku – … do 18,7 % kwoty należności ogółem". MF announcement 2026-09-16: deferral to the end
     of 2027. Bill UD477 (Sejm druk 3245, first reading 2026-10-21) moves art. 106ni ust. 1–3, 5–7 to
-    1.01.2028; not passed or published (status checked 2026-10-23). Source: Dz.U. 2026 poz. 1263,
-    art. 106ni;
+    1.01.2028; not passed or published (status checked 2026-11-02: Komisja FPB sitting 347 planned
+    2026-11-04, committee report on the agenda of Sejm sitting 68, 5–6.11.2026). Source: Dz.U. 2026
+    poz. 1263, art. 106ni;
     https://www.gov.pl/web/finanse/przedluzenie-odroczenia-kar-za-bledy-w-stosowaniu-ksef-do-konca-2027-r;
     https://legislacja.rcl.gov.pl/projekt/12414954;
     https://api.sejm.gov.pl/sejm/term10/prints/3245/3245.pdf. Per `sankcje-ksef-ud477.md` facts 1,
-    4, 5. Confidence: HIGH (state as of 2026-10-23). Persona: both.
+    4, 5. Confidence: HIGH (state as of 2026-11-02). Persona: both.
 
 ## Unsettled Questions
 
@@ -193,9 +196,10 @@ wspólnoty w polu NIP nabywcy trafiają do niej w KSeF automatycznie.
   to every podatnik, but no MF statement on spółdzielnie is in the corpus.
 - **Wspólnota without NIP:** KB does not say whether wspólnoty in general hold a NIP or what a
   wspólnota without one must do to issue in KSeF (FAQ Q14 is framed for natural persons).
-- **Ania as owner with a JDG:** whether an invoice from the wspólnota to an owner who runs a JDG is
-  a consumer invoice (pkt 4) or a mandatory KSeF invoice is not settled
-  (`faktura-dla-osoby-prywatnej-ksef.md` fact 10: no MF source on who decides).
+- **Ania as owner with a JDG:** FAQ MF KSeF 2.0 (Wystawianie i otrzymywanie faktur, Q8, checked
+  2026-11-02): invoices to natural persons running a business „na użytek prywatny (czyli stanowiące
+  w istocie transakcję B2C)" are voluntary in KSeF. MF does not apply this to wspólnoty specifically
+  or say who decides the purpose (`faktura-dla-osoby-prywatnej-ksef.md` fact 10).
 - **Zarządca as Podmiot3 or entity grantee:** KB has no MF statement on how a professional zarządca
   should be set up (entity permission vs ZAW-FA person); only the general mechanisms (facts 15–16).
 - **Whether UD477 is enacted** before 31.12.2026; do not state 2028 as law.
@@ -256,6 +260,6 @@ All of the following are relied on via the KB only; none was fetched in this run
   obligation (fact 6); noty księgowe never go to KSeF (fact 17).
 - „Kary od 1.01.2027 są odwołane": still the law until UD477 is published (fact 19).
 
-**Freshness:** 2026-10-30 (KB baseline 2026-10-07; UD477 status 2026-10-23). Recheck after:
-publication of UD477, 1.01.2027 (expiry of art. 145m/145n), any MF FAQ entry on wspólnoty or
-spółdzielnie, a KB extract of the interpelacja 17044 answer.
+**Freshness:** 2026-10-30 (KB baseline 2026-10-07; UD477 status 2026-11-02; MF sources checked live
+2026-11-02). Recheck after: publication of UD477, 1.01.2027 (expiry of art. 145m/145n), any MF FAQ
+entry on wspólnoty or spółdzielnie, a KB extract of the interpelacja 17044 answer.
