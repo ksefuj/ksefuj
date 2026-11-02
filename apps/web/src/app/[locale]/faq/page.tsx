@@ -62,9 +62,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function FaqPage({ params }: Props) {
   const { locale } = await params;
-  const [items, t] = await Promise.all([
+  const [items, t, tLayout] = await Promise.all([
     listContentItems(locale, "faq"),
     getTranslations({ locale, namespace: "content.faq" }),
+    getTranslations({ locale, namespace: "content.layout" }),
   ]);
 
   const faqItems = items.flatMap((item) => extractFaqItems(item.content));
@@ -109,6 +110,14 @@ export default async function FaqPage({ params }: Props) {
                 {t("title")}
               </h1>
               <p className="text-lg text-slate-600">{t("description")}</p>
+              <p className="text-sm text-slate-500">
+                <a
+                  href="#ai-open-source"
+                  className="underline-offset-2 hover:text-violet-600 hover:underline transition-colors"
+                >
+                  {tLayout("aiNote")}
+                </a>
+              </p>
             </div>
             {compiled.length > 0 ? (
               <div className="space-y-8">{compiled}</div>

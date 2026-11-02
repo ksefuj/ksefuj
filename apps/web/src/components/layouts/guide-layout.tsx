@@ -94,6 +94,13 @@ export async function GuideLayout({
               <span aria-hidden>·</span>
               <span>{t("layout.readingTime", { minutes: readingTime })}</span>
               <span aria-hidden>·</span>
+              <a
+                href="#ai-open-source"
+                className="underline-offset-2 hover:text-violet-600 hover:underline transition-colors"
+              >
+                {t("layout.aiNote")}
+              </a>
+              <span aria-hidden>·</span>
               <ShareButton title={frontmatter.title} locale={locale} />
             </div>
           </header>

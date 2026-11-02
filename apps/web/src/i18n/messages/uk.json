@@ -318,6 +318,7 @@
     "layout": {
       "backToDocs": "Документація",
       "readingTime": "{minutes} хв читання",
+      "aiNote": "Написано ШІ",
       "lastVerified": "Остання перевірка: {date}",
       "guideTime": "Час",
       "guideLevel": "Рівень",
