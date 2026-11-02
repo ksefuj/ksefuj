@@ -27,7 +27,7 @@ a Tier 1–3 source.
       `Podmiot2/DaneIdentyfikacyjne` field, but the XSD has it in an optional sequence (art. 106e
       ust. 5 pkt 3 cases); `KodKraju` before `NrID` is optional too and `BrakID` is not mentioned.
       Same in EN (source: https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd, `Podmiot2`)
-- [ ] **UPDATE** `faktura-zagraniczna-ksef`: the `P_18` = `1` table row says reverse charge applies
+- [x] **UPDATE** `faktura-zagraniczna-ksef`: the `P_18` = `1` table row says reverse charge applies
       to „usługi ze stawką `np I` lub `np II`”; the schema ties `P_18` to whether the buyer settles
       the tax, and `np I` also covers goods and supplies (e.g. art. 28e) where the buyer does not.
       Same over-generalisation in EN/UK and in `fa3-information-sheet.md` l. 702-704 (source:
