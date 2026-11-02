@@ -2,7 +2,7 @@
 title: "Co znaczy błąd walidacji KSeF i jak go naprawić?"
 description: "Plik XML nie spełnia wymagań KSeF, zwykle wzoru FA(3), więc KSeF odrzuca fakturę i nie nadaje jej numeru. Opisujemy 12 częstych błędów i ich poprawki."
 date: 2026-03-26
-updated: 2026-10-29
+updated: 2026-11-02
 section: blog
 locale: pl
 slug: "najczestsze-bledy-walidacji-fa3"
@@ -19,6 +19,10 @@ sources:
     url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md"
   - label: "CIRFMF/ksef-api: changelog API (wersje 2.3.0 i 2.4.0)"
     url: "https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md"
+  - label: "CIRFMF/ksef-api: issue #718 (termin 19.10.2026)"
+    url: "https://github.com/CIRFMF/ksef-api/issues/718#issuecomment-4789679671"
+  - label: "CIRFMF/ksef-api: issue #700 (niezalecane znaki a wersja 2.0)"
+    url: "https://github.com/CIRFMF/ksef-api/issues/700#issuecomment-4892559377"
 translations:
   pl: "najczestsze-bledy-walidacji-fa3"
   en: "most-common-fa3-validation-errors"
@@ -410,9 +414,9 @@ W `Fa` pole **P_6 i element OkresFa wykluczają się** (`xs:choice` w XSD). Zaka
 
 Plik zgodny ze schematem musi spełnić jeszcze kilka wymagań technicznych z dokumentacji API KSeF. Nie może zaczynać się od BOM (niewidocznego znacznika kodowania na początku pliku), a prolog nie może wskazywać innego kodowania niż UTF-8 (np. `encoding="windows-1250"`). W pliku nie może też być instrukcji przetwarzania, czyli dopisków dla programów w rodzaju `<?xml-stylesheet ...?>`, ani niezalecanych znaków Unicode.
 
-Instrukcje przetwarzania i niezalecane znaki środowiska TEST i DEMO odrzucają od wersji API 2.4.0 (kwiecień 2026 r.). Według zapowiedzi zespołu API produkcyjny KSeF miał zacząć odrzucać pliki z nimi od 19 października 2026 r., ale do 29 października dokumentacja API tego nie potwierdziła. Regułę o kodowaniu w prologu changelog API przypisuje wcześniejszej wersji 2.3.0, a dla BOM nie podaje daty, więc nie wiadomo, od kiedy produkcja egzekwuje te dwa wymagania. Zakresy niezalecanych znaków i sposób sprawdzenia własnych plików opisujemy w tekście o [zaostrzonej walidacji XML w KSeF](/blog/ksef-scisla-walidacja-xml).
+Instrukcje przetwarzania i niezalecane znaki środowiska TEST i DEMO odrzucają od wersji API 2.4.0 (kwiecień 2026 r.). Według zapowiedzi zespołu API z 24 czerwca produkcyjny KSeF miał zacząć odrzucać pliki z nimi od 19 października 2026 r., ale do 2 listopada dokumentacja API tego nie potwierdziła. <Source href="https://github.com/CIRFMF/ksef-api/issues/718#issuecomment-4789679671" label="CIRFMF/ksef-api, issue #718" /> Później, 6 lipca, opiekun repozytorium API napisał o walidacji niezalecanych znaków: „obawiam się, że ostatecznie nie trafi ona do wersji 2.0 na środowisku produkcyjnym”, i wskazał ją jako kandydata do wersji 3.0. O instrukcjach przetwarzania ten komentarz nie mówi. <Source href="https://github.com/CIRFMF/ksef-api/issues/700#issuecomment-4892559377" label="CIRFMF/ksef-api, issue #700" /> Regułę o kodowaniu w prologu changelog API przypisuje wcześniejszej wersji 2.3.0, a dla BOM nie podaje daty, więc nie wiadomo, od kiedy produkcja egzekwuje te dwa wymagania. Zakresy niezalecanych znaków i sposób sprawdzenia własnych plików opisujemy w tekście o [zaostrzonej walidacji XML w KSeF](/blog/ksef-scisla-walidacja-xml).
 
-Stan na 29 października 2026 r.
+Stan na 2 listopada 2026 r.
 
 <Source
   href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md"

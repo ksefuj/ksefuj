@@ -2,7 +2,7 @@
 title: "KSeF validation error: what it means, how to fix"
 description: "The XML fails KSeF requirements, usually the FA(3) schema, so KSeF rejects the invoice and assigns no number. The 12 most common errors and their fixes."
 date: 2026-03-26
-updated: 2026-10-29
+updated: 2026-11-02
 section: blog
 locale: en
 slug: "most-common-fa3-validation-errors"
@@ -22,6 +22,10 @@ sources:
     url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md"
   - label: "CIRFMF/ksef-api: API changelog (versions 2.3.0 and 2.4.0)"
     url: "https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md"
+  - label: "CIRFMF/ksef-api: issue #718 (19 October 2026 date)"
+    url: "https://github.com/CIRFMF/ksef-api/issues/718#issuecomment-4789679671"
+  - label: "CIRFMF/ksef-api: issue #700 (discouraged characters and version 2.0)"
+    url: "https://github.com/CIRFMF/ksef-api/issues/700#issuecomment-4892559377"
 translationOf: "najczestsze-bledy-walidacji-fa3"
 ---
 
@@ -411,9 +415,9 @@ In `Fa`, **P_6 and OkresFa are mutually exclusive** (`xs:choice` in the XSD). Th
 
 A file that matches the schema must also meet a few technical requirements from the KSeF API documentation. It can't start with a BOM (an invisible encoding marker at the beginning of the file), and the prolog can't declare an encoding other than UTF-8 (for example `encoding="windows-1250"`). The file also can't contain processing instructions, i.e. notes for other programs such as `<?xml-stylesheet ...?>`, or discouraged Unicode characters.
 
-The TEST and DEMO environments have rejected processing instructions and discouraged characters since API version 2.4.0 (April 2026). The API team announced that production KSeF would start rejecting such files from 19 October 2026, but as of 29 October the API documentation hadn't confirmed it. The API changelog attributes the prolog encoding rule to the earlier version 2.3.0 and gives no date for the BOM rule, so it's unclear since when production enforces these two requirements. The ranges of discouraged characters and how to check your own files are covered in our post on [stricter XML validation in KSeF](/en/blog/ksef-strict-xml-validation).
+The TEST and DEMO environments have rejected processing instructions and discouraged characters since API version 2.4.0 (April 2026). On 24 June the API team announced that production KSeF would start rejecting such files from 19 October 2026, but as of 2 November the API documentation hadn't confirmed it. <Source href="https://github.com/CIRFMF/ksef-api/issues/718#issuecomment-4789679671" label="CIRFMF/ksef-api, issue #718" /> Later, on 6 July, the API repository maintainer wrote about the discouraged-character check that they fear it will ultimately not reach version 2.0 in production, and named it a candidate for version 3.0. That comment doesn't cover processing instructions. <Source href="https://github.com/CIRFMF/ksef-api/issues/700#issuecomment-4892559377" label="CIRFMF/ksef-api, issue #700" /> The API changelog attributes the prolog encoding rule to the earlier version 2.3.0 and gives no date for the BOM rule, so it's unclear since when production enforces these two requirements. The ranges of discouraged characters and how to check your own files are covered in our post on [stricter XML validation in KSeF](/en/blog/ksef-strict-xml-validation).
 
-Status as of 29 October 2026.
+Status as of 2 November 2026.
 
 <Source
   href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md"
