@@ -5,6 +5,32 @@ effect. Record the date, the page, what changed (old -> new for titles and descr
 metric that motivated it. After 28 days, add a **Results** line comparing current CTR/position with
 the baseline.
 
+## 2026-10-28
+
+Digest: `gsc-data` 2026-10-27 (GSC 2026-09-27 to 2026-10-24: 125 clicks, 9,217 impressions, CTR
+1.36%, avg position 6.8). No title or description changes: every page in the low-CTR list had its
+title or description rewritten on 2026-10-26 (commits "sharpen low-CTR titles" and follow-ups) or
+has frontmatter `updated` within 28 days (`/blog/faktura-zagraniczna-ksef` 2026-10-27, also in open
+content PR #179). No crawl Problems (all 164 sitemap URLs 200, no broken links, no canonical, robots
+or hreflang issues); sitemap still 0 errors, 6 warnings. No Results lines yet: the oldest logged
+change is from 2026-10-07 (21 days).
+
+- **Pages:** `/guides/aplikacja-podatnika-ksef-pierwsza-faktura`,
+  `/en/guides/ksef-taxpayer-app-first-invoice`,
+  `/uk/guides/pershyy-rakhunok-v-aplikatsiyi-podatnyka`
+  - **Change:** body only. One sentence after the payment bullet in the form walkthrough (enter the
+    account number without spaces: 26 digits, or 28 characters as an IBAN with "PL") linking
+    `/validator/bledny-numer-rachunku-bankowego`,
+    `/en/validator/invalid-bank-account-number-invoice` and
+    `/uk/validator/nevirnyy-nomer-bankivskogo-rakhunku`.
+  - **Motivation:** `/validator/bledny-numer-rachunku-bankowego` is still "Discovered - currently
+    not indexed" (since at least 2026-10-17) and has the fewest internal links of any not-indexed
+    URL: 3 (`/validator`, the FA(3) errors post, and `/blog/pusta-faktura-pdf-xml`, itself not
+    indexed). The Aplikacja Podatnika guides are indexed (PL 46 impr, pos 9.1; EN 37 impr, pos 5.4)
+    and the bullet is where a reader types the account number. EN validator page: 76 impr, pos 10.9.
+  - **Baseline to compare:** URL Inspection state of the PL page (Discovered - not indexed); EN 76
+    impr / pos 10.9, UK 2 impr / pos 5.5.
+
 ## 2026-10-21
 
 Digest: `gsc-data` 2026-10-20 (GSC 2026-09-20 to 2026-10-17: 105 clicks, 8,629 impressions, CTR
