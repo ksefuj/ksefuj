@@ -1,5 +1,5 @@
 /**
- * Strict XML checks required by KSeF API 2.4.0 (enforced on PROD from 2026-10-19).
+ * Strict XML checks required by KSeF API 2.4.0 (PROD rejection announced for 2026-10-19).
  * Source: https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md
  */
 
@@ -61,7 +61,8 @@ describe("checkStrictXml", () => {
       expect(issue.context.actualValue).toBe("xml-stylesheet");
       expect(issue.context.metadata?.target).toBe("xml-stylesheet");
       expect(issue.context.location).toEqual({ lineNumber: 2, columnNumber: 1 });
-      expect(issue.message).toContain("2026-10-19");
+      expect(issue.message).toContain("may reject");
+      expect(issue.message).toContain("announced PROD rejection from 2026-10-19");
     });
 
     it("flags a PI inside the document and one before the root", () => {
