@@ -32,26 +32,26 @@ const copy: Record<
   }
 > = {
   pl: {
-    heading: "Ten artykuł jest open source",
-    body: "ksefuj to projekt społecznościowy na licencji Apache 2.0. Jeśli zauważysz błąd, nieścisłość lub chcesz zaproponować zmiany — możesz edytować ten artykuł bezpośrednio na GitHubie. Każdy wkład jest mile widziany.",
-    editLabel: "Edytuj na GitHubie",
-    issueLabel: "Zgłoś problem",
+    heading: "Ten tekst napisała sztuczna inteligencja. Poprawić może każdy.",
+    body: "Podstawą są oficjalne dokumenty Ministerstwa Finansów. Mogą się w nim zdarzyć błędy, więc sprawy ważne dla twojej firmy sprawdź w dokumentach MF albo zapytaj księgową. Ten tekst, tak jak cały kod ksefuj.to, jest publiczny na GitHubie.",
+    editLabel: "Popraw na GitHubie",
+    issueLabel: "Zgłoś błąd",
   },
   en: {
-    heading: "This article is open source",
-    body: "ksefuj is a community project released under Apache 2.0. If you spot an error, an inaccuracy, or want to suggest improvements — you can edit this article directly on GitHub. All contributions are welcome.",
+    heading: "This page was written by AI. Anyone can correct it.",
+    body: "It's based on official documents from the Polish Ministry of Finance. AI can get things wrong, so check anything that matters for your business against those documents or ask your accountant. This text, like all of the ksefuj.to code, is public on GitHub.",
     editLabel: "Edit on GitHub",
-    issueLabel: "Open an issue",
+    issueLabel: "Report an error",
     translationNote:
-      "Translation improvements are especially welcome for English and Ukrainian content.",
+      "The English translation was also made by AI, so corrections to it are especially welcome.",
   },
   uk: {
-    heading: "Ця стаття — відкритий код",
-    body: "ksefuj — це спільний проєкт із ліцензією Apache 2.0. Якщо помітиш помилку або захочеш запропонувати покращення — можеш відредагувати цю статтю прямо на GitHub. Особливо вітаємо покращення перекладу.",
-    editLabel: "Редагувати на GitHub",
-    issueLabel: "Повідомити про проблему",
+    heading: "Цей текст написав штучний інтелект. Виправити його може кожен.",
+    body: "Він спирається на офіційні документи Міністерства фінансів Польщі (MF). У ньому можуть бути помилки, тож усе важливе для твого бізнесу перевір у документах MF або запитай у бухгалтера. Цей текст, як і весь код ksefuj.to, відкритий на GitHub.",
+    editLabel: "Виправити на GitHub",
+    issueLabel: "Повідомити про помилку",
     translationNote:
-      "Покращення перекладу цієї статті особливо вітаються — допоможи зробити KSeF доступнішим для україномовних користувачів.",
+      "Український переклад теж зробив ШІ, тож виправлення перекладу особливо вітаємо.",
   },
 };
 
@@ -72,8 +72,9 @@ export function ContributeFooter({
 
   return (
     <aside
+      id="ai-open-source"
       aria-label={strings.heading}
-      className="mt-12 rounded-2xl border border-violet-200 bg-violet-50/60 p-6 md:p-8"
+      className="mt-12 scroll-mt-24 rounded-2xl border border-violet-200 bg-violet-50/60 p-6 md:p-8"
     >
       <div className="flex items-start gap-4">
         {/* GitHub mark */}
@@ -86,7 +87,7 @@ export function ContributeFooter({
 
           <p className="text-sm text-slate-600 leading-relaxed">{strings.body}</p>
 
-          {strings.translationNote && (
+          {strings.translationNote && fileLocale !== "pl" && (
             <p className="text-sm text-violet-700 font-medium">{strings.translationNote}</p>
           )}
 
