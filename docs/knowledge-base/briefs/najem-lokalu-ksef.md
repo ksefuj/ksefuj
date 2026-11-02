@@ -31,6 +31,30 @@ zł brutto miesięcznie (art. 145m); od 1 stycznia 2027 r. limitu nie ma (Podrę
 - **Kary:** art. 106ni od 1.01.2027 wg obowiązującej ustawy; MF zapowiedział odroczenie do końca
   2027 r., projekt UD477 (druk 3245) nieuchwalony (fakt 12).
 
+## Live verification (2026-11-02)
+
+Checked against Dz.U. 2026 poz. 1263 and the 2026-08-06 manuals; this overrides the KB-based notes
+below.
+
+- **Fact 5, no invoice on request.** Podręcznik cz. II pkt 1.2.1 (s. 9–10) says it for rental „przez
+  osobę fizyczną na rzecz innej osoby fizycznej", citing art. 106b ust. 3 pkt 1 lit. a. The
+  statute's lit. a excepts art. 19a ust. 5 pkt 4 from pkt 1 only; pkt 2 (exempt sales) has no rental
+  exception. Pkt 1.3 gives no buyer scope. It stays an MF statement, not a statutory quote.
+- **Fact 14, NIP.** Cz. II s. 11 names najem prywatny outright: VAT-R „a następnie" NIP-7, status
+  „VAT zwolniony"; FAQ KSeF 2.0 Q14 is a rental case. S. 9: obligation to apply for NIP „zasadniczo
+  dopiero 1 stycznia 2027 r." (said of działalność nierejestrowana). Confidence: HIGH.
+- **Fact 16, owner permissions.** Cz. I pkt 3.2.1 says „Podatnik będący osobą fizyczną", not only
+  JDG; FAQ: „Osoba fizyczna (podatnik) posiadający NIP ma dostęp do KSeF automatycznie". Private
+  rental is not named there.
+- **Flat rented to a company.** The cz. II bullets don't cover it, but s. 9 says generally that art.
+  43 ust. 1 pkt 36 sellers invoice on the buyer's request. FAQ KSeF 2.0 Q2 on „wynajmuje firmie
+  lokal" doesn't distinguish flats.
+- **Later amendments.** Dz.U. 2026 poz. 1270 (mostly from 1.01.2027): art. 106b ust. 3 pkt 2
+  cross-reference only; art. 113 ust. 1a (art. 13 ust. 3 supplies) is not relevant to rental.
+- **UD477.** Sejm process 3245 on 2026-11-02: first reading 2026-10-21, referred to FPB,
+  `passed: false`. FPB sitting 347 planned for 2026-11-04; the agenda of Sejm sitting 68 (5–6.11)
+  lists the committee report. Re-check before merging if those dates have passed.
+
 ## Provenance and limits
 
 - Built **only from the repo knowledge base**. Baseline per `docs/knowledge-base/WATCHLIST.md` (last
