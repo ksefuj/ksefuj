@@ -7,7 +7,11 @@
  *   - contains Unicode characters discouraged by the W3C XML spec (ranges listed below),
  *   - starts with a UTF-8 BOM,
  *   - has an XML declaration that names an encoding other than UTF-8.
- * Production enforcement starts on 2026-10-19; until then KSeF only returns X-System-Warning.
+ * Enforcement on PROD differs per rule. The API team announced rejection of processing instructions
+ * and discouraged characters from 2026-10-19 (API 2.4.0), but the changelog still says 16.07.2026 and
+ * nothing confirms enforcement (PROD returns X-System-Warning). A maintainer comment in #700 says the
+ * discouraged-character check may not reach API 2.0 on PROD. The prolog rule came with 2.3.0; BOM has
+ * no date.
  *
  * These constructs can be dropped or normalised by XML parsers, so the checks run on the raw
  * input string rather than on a parsed document.
@@ -15,7 +19,8 @@
  * Sources:
  *   https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md
  *   https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md (version 2.4.0)
- *   https://github.com/CIRFMF/ksef-api/issues/718 (enforcement date moved to 2026-10-19)
+ *   https://github.com/CIRFMF/ksef-api/issues/718 (announced PROD rejection from 2026-10-19)
+ *   https://github.com/CIRFMF/ksef-api/issues/700 (discouraged-character check may not reach API 2.0)
  */
 
 import { ERROR_CODES } from "./error-codes.js";
@@ -24,7 +29,7 @@ import type { ValidationIssue } from "./types.js";
 export const KSEF_XML_RULES_URL =
   "https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md";
 
-/** Date from which KSeF PROD rejects these constructs (issue #718). */
+/** Date from which the API team announced PROD rejection of processing instructions and discouraged characters (issue #718). Not confirmed as enforced. */
 export const KSEF_STRICT_XML_ENFORCEMENT_DATE = "2026-10-19";
 
 /**
@@ -95,7 +100,6 @@ export function checkStrictXml(xml: string): ValidationIssue[] {
   const issues: ValidationIssue[] = [];
   const common = {
     source: KSEF_XML_RULES_URL,
-    enforcedFrom: KSEF_STRICT_XML_ENFORCEMENT_DATE,
   };
 
   // --- BOM ---
@@ -105,7 +109,7 @@ export function checkStrictXml(xml: string): ValidationIssue[] {
     issues.push({
       code: errorDef.code,
       context: { location: { lineNumber: 1, columnNumber: 1 }, metadata: { ...common } },
-      message: `The file starts with a UTF-8 byte order mark (BOM). KSeF requires UTF-8 without BOM and rejects such invoices from ${KSEF_STRICT_XML_ENFORCEMENT_DATE}.`,
+      message: `The file starts with a UTF-8 byte order mark (BOM). KSeF requires UTF-8 without BOM and may reject such invoices (the API documentation gives no date for enforcement on PROD).`,
       fixSuggestions: [],
     });
   }
@@ -131,7 +135,7 @@ export function checkStrictXml(xml: string): ValidationIssue[] {
             actualValue: label,
             metadata: { codePoint: label, snippet: `${before}[${label}]${after}`, ...common },
           },
-          message: `Character ${label} (discouraged by the W3C XML spec) at line ${line}, column ${column}: "${before}[${label}]${after}". KSeF rejects invoices containing it from ${KSEF_STRICT_XML_ENFORCEMENT_DATE}.`,
+          message: `Character ${label} (discouraged by the W3C XML spec) at line ${line}, column ${column}: "${before}[${label}]${after}". KSeF may reject invoices containing it: the API team announced PROD rejection from ${KSEF_STRICT_XML_ENFORCEMENT_DATE}, which the documentation does not confirm.`,
           fixSuggestions: [],
         });
       }
@@ -205,7 +209,7 @@ export function checkStrictXml(xml: string): ValidationIssue[] {
             actualValue: encoding[2]!,
             metadata: { encoding: encoding[2]!, ...common },
           },
-          message: `The XML declaration names encoding "${encoding[2]!}". KSeF requires UTF-8; invoices declaring another encoding are rejected from ${KSEF_STRICT_XML_ENFORCEMENT_DATE}.`,
+          message: `The XML declaration names encoding "${encoding[2]!}". KSeF requires UTF-8; invoices declaring another encoding may be rejected (the API changelog attributes this rule to version 2.3.0).`,
           fixSuggestions: [],
         });
       }
@@ -225,7 +229,7 @@ export function checkStrictXml(xml: string): ValidationIssue[] {
         actualValue: target,
         metadata: { target, ...common },
       },
-      message: `XML processing instruction <?${target} …?> at line ${line}, column ${column}. KSeF rejects invoices containing processing instructions from ${KSEF_STRICT_XML_ENFORCEMENT_DATE}.`,
+      message: `XML processing instruction <?${target} …?> at line ${line}, column ${column}. KSeF may reject invoices containing processing instructions: the API team announced PROD rejection from ${KSEF_STRICT_XML_ENFORCEMENT_DATE}, which the documentation does not confirm.`,
       fixSuggestions: [],
     });
   }

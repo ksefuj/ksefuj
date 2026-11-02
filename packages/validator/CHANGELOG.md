@@ -21,6 +21,13 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- Strict XML messages no longer state as fact that KSeF PROD rejects these files from 2026-10-19.
+  The API team announced that date for processing instructions and discouraged characters (#718),
+  but the API changelog still says 16.07.2026, nothing confirms enforcement, and a maintainer
+  comment in #700 says the discouraged-character check may not reach API 2.0 on PROD. The BOM and
+  encoding messages now say KSeF may reject the file. The `enforcedFrom` metadata key is removed
+  from these issues
+
 - `REVERSE_CHARGE_CONSISTENCY` no longer requires `P_18 = 1` when `P_13_8` is present. `P_13_8` is
   sales outside the country (for example services under Art. 28e), not necessarily reverse charge
   (§9.4). The requirement stays for `P_13_10`

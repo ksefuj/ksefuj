@@ -130,7 +130,7 @@ export const PARSE_ERRORS = {
       severity: "error",
     },
     description:
-      "Character discouraged by the W3C XML spec ([#x7F-#x84], [#x86-#x9F], [#xFDD0-#xFDEF], [#xNFFFE-#xNFFFF]); KSeF rejects such invoices from 2026-10-19 (KSeF API 2.4.0, Weryfikacja faktury)",
+      "Character discouraged by the W3C XML spec ([#x7F-#x84], [#x86-#x9F], [#xFDD0-#xFDEF], [#xNFFFE-#xNFFFF]); KSeF may reject such invoices (KSeF API 2.4.0, Weryfikacja faktury); PROD rejection from 2026-10-19 was announced, and a maintainer comment says this check may not reach API 2.0 on PROD",
     commonCauses: [
       "C1 control characters (U+0080-U+009F) pasted from Word, PDF or a legacy system",
       "Noncharacters from a corrupted export or a wrong text conversion",
@@ -146,7 +146,7 @@ export const PARSE_ERRORS = {
       severity: "error",
     },
     description:
-      "XML processing instruction (e.g. xml-stylesheet); KSeF rejects such invoices from 2026-10-19 (KSeF API 2.4.0, Weryfikacja faktury)",
+      "XML processing instruction (e.g. xml-stylesheet); KSeF may reject such invoices (KSeF API 2.4.0, Weryfikacja faktury); PROD rejection from 2026-10-19 was announced but the documentation does not confirm it",
     commonCauses: [
       "An integrator adds <?xml-stylesheet ...?> to attach a visualisation",
       "Another tool injects a custom processing instruction",

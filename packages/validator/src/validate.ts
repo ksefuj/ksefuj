@@ -187,8 +187,8 @@ class ValidationOrchestrator {
     }
 
     // Step 1b: Strict XML checks on the raw text (KSeF API 2.4.0: processing instructions,
-    // discouraged Unicode characters, BOM, non-UTF-8 declaration). Always on — KSeF rejects
-    // these from 2026-10-19 regardless of schema validity.
+    // discouraged Unicode characters, BOM, non-UTF-8 declaration). Always on — KSeF may reject
+    // these regardless of schema validity (PROD enforcement is announced, not confirmed).
     for (const strictIssue of checkStrictXml(xml)) {
       issues.push(strictIssue);
     }
