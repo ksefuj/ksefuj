@@ -1,4 +1,4 @@
-import { notFound, redirect } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import type { Metadata } from "next";
 import { withSiteSuffix } from "@/lib/page-title";
 import { getTranslations } from "next-intl/server";
@@ -86,7 +86,7 @@ export default async function GuidePage({ params }: Props) {
     item.frontmatter,
   );
   if (redirectPath) {
-    redirect(redirectPath);
+    permanentRedirect(redirectPath);
   }
 
   const headings = extractHeadings(item.content);
