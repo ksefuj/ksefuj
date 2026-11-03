@@ -16,7 +16,7 @@ last 1-3 weeks. No Results lines yet: the oldest logged change (2026-10-07) is 2
 site could not be reached from the routine's environment.
 
 - **Pages:** all `/{locale}/blog/<slug>` and `/{locale}/guides/<slug>` URLs that use another
-  locale's slug (`src/app/[locale]/{blog,guides}/[slug]/page.tsx`)
+  locale's slug (`apps/web/src/app/[locale]/{blog,guides}/[slug]/page.tsx`)
   - **Change:** the redirect to the correct locale slug (`resolveContentRedirect`) now uses
     `permanentRedirect` (308) instead of `redirect` (307).
   - **Motivation:** Search Console reports impressions on wrong-locale URLs that only redirect:
@@ -26,7 +26,7 @@ site could not be reached from the routine's environment.
     source URL, so it competes with the real page; a permanent one moves the signals to the target.
   - **Baseline to compare:** these five URLs should stop getting impressions, and the target pages
     (`/en/blog/delete-invoice-ksef`, `/blog/faktura-z-kasy-fiskalnej-ksef-2027`,
-    `/en/guides/ksef-accountant-access`, `/uk/blog/vydalennya-rakhunku-ksef`) keep or gain them.
+    `/guides/uprawnienia-ksef-ksiegowa`, `/uk/blog/vydalennya-rakhunku-ksef`) keep or gain them.
 
 ## 2026-10-28
 
