@@ -2,7 +2,7 @@
 title: "KSeF validation error: what it means, how to fix"
 description: "The XML fails KSeF requirements, usually the FA(3) schema, so KSeF rejects the invoice and assigns no number. The 12 most common errors and their fixes."
 date: 2026-03-26
-updated: 2026-11-02
+updated: 2026-11-03
 section: blog
 locale: en
 slug: "most-common-fa3-validation-errors"
@@ -97,9 +97,11 @@ FA(3) has dozens of mandatory fields at different levels, and the validator name
 - **Naglowek:** `KodFormularza` (with attributes `kodSystemowy="FA (3)"` and `wersjaSchemy="1-0E"`), `WariantFormularza`, `DataWytworzeniaFa`
 - **Podmiot1/DaneIdentyfikacyjne:** `NIP`, `Nazwa`
 - **Podmiot1/Adres:** `KodKraju`, `AdresL1`
-- **Podmiot2/DaneIdentyfikacyjne:** `NIP` (or `KodUE` + `NrVatUE`, or `KodKraju` + `NrID`), `Nazwa`
+- **Podmiot2/DaneIdentyfikacyjne:** exactly one buyer identifier: `NIP`, `KodUE` + `NrVatUE`, `NrID` (the `KodKraju` before it is optional) or `BrakID` = `1` (a buyer with no identifier, such as a consumer)
 - **Podmiot2:** `JST`, `GV`
 - **Fa:** `KodWaluty`, `P_1`, `P_2`, `P_15`, `Adnotacje`, `RodzajFaktury`
+
+The buyer's `Nazwa` is optional in the schema, so leaving it out won't cause a schema validation error. The annotation in the schema and the KSeF Handbook tie omitting the name to the simplified invoice of up to PLN 450 or EUR 100 (`RodzajFaktury` = `UPR`), so on a regular invoice enter the buyer's name. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Handbook, part II: simplified invoice up to PLN 450" />
 
 <XmlExample copyable>
   ```xml
@@ -269,18 +271,20 @@ More about this error: [Invalid VAT rate in P_12: allowed values](/en/validator/
 
 ## 9. Wrong identification of a foreign buyer
 
-FA(3) identifies the buyer differently depending on the country:
+FA(3) identifies the buyer differently depending on the country and on whether the buyer is a business:
 
 - **Poland:** the `NIP` field (10 digits, no prefix),
 - **EU:** `KodUE` + `NrVatUE` (country code separate, VAT number without prefix),
-- **outside the EU:** `KodKraju` + `NrID`.
+- **outside the EU:** no identifier is required, `BrakID` = `1` is enough; if you give one, put it in `NrID` and the country code separately in `KodKraju`,
+- **consumer:** `BrakID` = `1`.
 
-A common mistake is putting the country code inside the VAT number (`DE123456789` in `NrVatUE`). `KodKraju` in `DaneIdentyfikacyjne` is about tax identification, and `KodKraju` in `Adres` is about the address. They are two separate fields.
+A common mistake is putting the country code inside the VAT number (`DE123456789` in `NrVatUE`) or inside `NrID`. `KodKraju` in `DaneIdentyfikacyjne` is about tax identification, and `KodKraju` in `Adres` is about the address. They are two separate fields.
 
 <XmlExample copyable>
   ```xml
   <!-- ❌ Country prefix in VAT number -->
   <DaneIdentyfikacyjne>
+    <KodUE>DE</KodUE>
     <NrVatUE>DE123456789</NrVatUE>
     <Nazwa>Deutsche Firma GmbH</Nazwa>
   </DaneIdentyfikacyjne>
@@ -296,8 +300,18 @@ A common mistake is putting the country code inside the VAT number (`DE123456789
     <NrID>12-3456789</NrID>
     <Nazwa>American Corp</Nazwa>
   </DaneIdentyfikacyjne>
+  <!-- ✅ Consumer / buyer with no identifier -->
+  <DaneIdentyfikacyjne>
+    <BrakID>1</BrakID>
+    <Nazwa>Jan Kowalski</Nazwa>
+  </DaneIdentyfikacyjne>
   ```
 </XmlExample>
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="KSeF 2.0 Handbook, part II: buyer identification"
+/>
 
 ## 10. P_15 doesn't match the totals
 

@@ -82,6 +82,49 @@ https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-
 (pkt 1.6.1, 1.6.2); https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md;
 https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md (2.4.0).
 
+## Update 2026-11-03: Podmiot2/DaneIdentyfikacyjne required fields
+
+Checked 2026-11-03 against local copies only: crd.gov.pl, ksef.podatki.gov.pl and api.sejm.gov.pl
+return proxy 403 from this environment. XSD = bundled `packages/validator/src/schemas/schemat.xsd`
+(copy of https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd); Podręcznik = local extract
+`podrecznik-ksef-20-czesc-ii.md` (02.2026 edition). Corrects the row in „Mandatory elements by
+level” below and the post `najczestsze-bledy-walidacji-fa3.mdx` (sekcja 3 i 9).
+
+**Target query:** „Podmiot2 Nazwa wymagane” (also „dane nabywcy FA(3) obowiązkowe pola”)
+
+**Answer in two sentences:** W `Podmiot2/DaneIdentyfikacyjne` schemat FA(3) wymaga dokładnie jednego
+identyfikatora nabywcy: `NIP`, `KodUE`+`NrVatUE`, `NrID` (z opcjonalnym `KodKraju`) albo `BrakID`=1.
+`Nazwa` jest w XSD opcjonalna. — XSD `TPodmiot2` (l. 1558-1615), Tier 2, HIGH.
+
+**What changes the answer:**
+
+- **XSD structure (Tier 2, HIGH).** `TPodmiot2`: `xsd:choice` of `NIP` | `KodUE`+`NrVatUE` |
+  `KodKraju` (minOccurs="0") + `NrID` | `BrakID` (`etd:TWybor1`, „1”); then
+  `<xsd:sequence minOccurs="0">` (l. 1605) holding `Nazwa`, annotated verbatim: „Dane opcjonalne dla
+  przypadków, o których mowa w art. 106e ust. 5 pkt 3 ustawy”. `BrakID`: „Podmiot nie posiada
+  identyfikatora podatkowego lub identyfikator nie występuje na fakturze: 1- tak”. The choice
+  annotation includes: „Pole opcjonalne dla przypadku określonego w art. 106e ust. 5 pkt 2 ustawy.”
+  Type used by `Podmiot2/DaneIdentyfikacyjne` (l. 2205).
+- **Schema does not check the case (HIGH, structural).** Omitting `Nazwa` passes XSD on any invoice;
+  nothing ties the optional sequence to art. 106e ust. 5 pkt 3 or to `RodzajFaktury`. Whether KSeF
+  rejects it semantically: not found in corpus. That the name may be omitted legally only in the
+  art. 106e ust. 5 pkt 3 case: MEDIUM (annotation + Podręcznik 2.10; Ustawa not re-read).
+- **Faktura uproszczona (Podręcznik cz. II pkt 2.10, Tier 2, HIGH).** Art. 106e ust. 5 pkt 3:
+  należność ogółem ≤ 450 zł (lub 100 EUR); „Może nie zawierać danych nabywcy (poza NIP)”; „Podmiot2
+  → tylko NIP nabywcy”; `RodzajFaktury = „UPR"`; „Aplikacja Podatnika KSeF nie ma funkcjonalności
+  wystawiania faktur uproszczonych do 450 zł.”
+- **Nabywca z kraju trzeciego (pkt 2.1.5, HIGH).** „Wystarczy `BrakID = 1`”; if an ID is given:
+  `NrID` + `KodKraju`, „Nie łączyć kodu kraju z identyfikatorem w polu NrID” (`CH` + `9999999999`,
+  not `CH9999999999`). The post's „KodKraju + NrID” is one option, not a requirement.
+- **Konsument (pkt 2.1.6, HIGH).** „Konsument → `BrakID = 1`.”
+- **Podmiot1 unaffected (HIGH).** `TPodmiot1` (l. 1541-1557): `NIP`, `Nazwa`, neither has
+  minOccurs="0", so both required.
+
+**KB inconsistency (for a human, not edited here):**
+`packages/validator/docs/fa3-information-sheet.md` §6.2 marks `Nazwa` „Mandatory”; this contradicts
+XSD `TPodmiot2`. Broszura PDF page not re-checked (converted file only). Candidate for
+`contradictions.md`.
+
 ## Source Corpus Used
 
 | Source                                                               | Tier     | File / URL                                          | Status  |
@@ -396,7 +439,7 @@ both).
 | `Naglowek`                     | `KodFormularza` (with attributes), `WariantFormularza`, `DataWytworzeniaFa`             | §4.1             |
 | `Podmiot1/DaneIdentyfikacyjne` | `NIP`, `Nazwa`                                                                          | §5.3             |
 | `Podmiot1/Adres`               | `KodKraju`, `AdresL1`                                                                   | §5.4             |
-| `Podmiot2/DaneIdentyfikacyjne` | At least one of: `NIP`, `KodUE`+`NrVatUE`, `KodKraju`+`NrID`, `BrakID`; plus `Nazwa`    | §6.2             |
+| `Podmiot2/DaneIdentyfikacyjne` | One of: `NIP` / `KodUE`+`NrVatUE` / `NrID` (+opt. `KodKraju`) / `BrakID`; `Nazwa` opt.  | XSD TPodmiot2    |
 | `Podmiot2`                     | `JST`, `GV`                                                                             | §6.1             |
 | `Fa`                           | `KodWaluty`, `P_1`, `P_2`, `P_15`, `Adnotacje`, `RodzajFaktury`                         | §9.2, §9.4, §9.5 |
 | `Fa/Adnotacje`                 | `P_16`, `P_17`, `P_18`, `P_18A`, `Zwolnienie`, `NoweSrodkiTransportu`, `P_23`, `PMarzy` | §9.6             |

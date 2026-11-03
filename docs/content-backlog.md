@@ -23,7 +23,7 @@ Planned 2026-10-20 from Search Console (2026-09-19 to 2026-10-16) and a scan of 
 sites published in the last month. Trade-press items are topic signals only: every fact still needs
 a Tier 1–3 source.
 
-- [ ] **UPDATE** `najczestsze-bledy-walidacji-fa3`: section 3 lists `Nazwa` as a required
+- [x] **UPDATE** `najczestsze-bledy-walidacji-fa3`: section 3 lists `Nazwa` as a required
       `Podmiot2/DaneIdentyfikacyjne` field, but the XSD has it in an optional sequence (art. 106e
       ust. 5 pkt 3 cases); `KodKraju` before `NrID` is optional too and `BrakID` is not mentioned.
       Same in EN (source: https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd, `Podmiot2`)
