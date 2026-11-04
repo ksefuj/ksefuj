@@ -49,6 +49,7 @@ export function SiteHeader({ locale, languagePicker }: SiteHeaderProps) {
     { href: `${p}/validator`, label: t("validator") },
     { href: `${p}/podglad`, label: t("preview") },
     { href: `${p}/waluty`, label: t("waluty") },
+    { href: `${p}/asystent-ai`, label: t("asystentAi") },
   ];
 
   return (
@@ -62,13 +63,13 @@ export function SiteHeader({ locale, languagePicker }: SiteHeaderProps) {
         </Link>
 
         {/* Desktop nav */}
-        <nav aria-label={t("mainNav")} className="hidden md:flex items-center gap-6">
+        <nav aria-label={t("mainNav")} className="hidden md:flex items-center gap-3 lg:gap-6">
           {contentLinks.map(({ href, label }) => (
             <Link
               key={href}
               href={href}
               onClick={() => amplitude.track("nav_clicked", { destination: href, locale })}
-              className="text-sm font-medium text-slate-600 hover:text-violet-700 hover:underline underline-offset-4"
+              className="whitespace-nowrap text-sm font-medium text-slate-600 hover:text-violet-700 hover:underline underline-offset-4"
             >
               {label}
             </Link>
@@ -79,7 +80,7 @@ export function SiteHeader({ locale, languagePicker }: SiteHeaderProps) {
               key={href}
               href={href}
               onClick={() => amplitude.track("nav_clicked", { destination: href, locale })}
-              className="text-sm font-medium text-slate-600 hover:text-violet-700 hover:underline underline-offset-4"
+              className="whitespace-nowrap text-sm font-medium text-slate-600 hover:text-violet-700 hover:underline underline-offset-4"
             >
               {label}
             </Link>
