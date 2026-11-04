@@ -425,11 +425,11 @@
   "terms": {
     "meta": {
       "title": "Terms of Use — ksefuj.to",
-      "description": "Terms of use for ksefuj.to — a free, open-source KSeF FA(3) invoice validator."
+      "description": "Terms of use for ksefuj.to: free, open-source tools for KSeF FA(3) invoices on the website and skills for the AI assistant."
     },
     "title": "Terms of Use",
-    "lastUpdated": "Last updated: March 2026",
-    "intro": "ksefuj.to is a free, open-source tool for validating KSeF FA(3) invoices. By using this tool, you accept the following terms.",
+    "lastUpdated": "Last updated: November 2026",
+    "intro": "ksefuj.to provides free, open-source tools for KSeF FA(3) invoices: the validator and other tools on the website, and skills for the AI assistant. By using them, you accept the following terms.",
     "sections": {
       "license": {
         "title": "1. Open Source License (Apache 2.0)",
@@ -453,14 +453,18 @@
       },
       "privacy": {
         "title": "6. Privacy",
-        "content": "Your XML files never leave your browser. All processing happens locally — no invoice data is sent to any server. See the Privacy Policy for details."
+        "content": "XML files you check with the tools on the website never leave your browser. We process them locally and send no invoice data to any server. Data you give an AI assistant is processed by its provider (section 7). See the Privacy Policy for details."
+      },
+      "aiAssistant": {
+        "title": "7. AI Assistant",
+        "content": "The AI assistant skills (ksef-invoice and ksef-correction) are free and released under the Apache 2.0 license. The source code is at github.com/ksefuj/skills. You use an AI assistant under its provider's terms (for example Anthropic, OpenAI or GitHub). ksefuj.to is not affiliated with any of these companies. AI can make mistakes, so treat an XML file prepared by the assistant as a draft. Before you send it to KSeF, check it in the validator at ksefuj.to/validator, and if you're not sure how to tax a sale, ask an accountant. The skills send nothing to KSeF. The assistant's answers are not tax or legal advice. For help, email hej@ksefuj.to or open an issue at github.com/ksefuj/skills/issues."
       },
       "governingLaw": {
-        "title": "7. Governing Law",
+        "title": "8. Governing Law",
         "content": "These terms are governed by Polish law. Any disputes will be resolved by the competent Polish courts."
       },
       "contact": {
-        "title": "8. Contact",
+        "title": "9. Contact",
         "content": "Questions about these terms? Contact us at:"
       }
     }
@@ -604,17 +608,22 @@
   },
   "privacy": {
     "metaTitle": "Privacy Policy — ksefuj",
-    "metaDescription": "Privacy policy for ksefuj.to — your invoice data never leaves the browser.",
+    "metaDescription": "Privacy policy for ksefuj.to. Invoices you check on the website never leave your browser, and the AI assistant skills send nothing to us.",
     "title": "Privacy Policy",
-    "lastUpdated": "Last updated: October 2026",
-    "intro": "Your privacy matters. ksefuj is designed so that your invoice data never leaves your browser. Here's exactly what that means.",
+    "lastUpdated": "Last updated: November 2026",
+    "intro": "We built the tools on ksefuj.to so that your invoice data never leaves your browser. How the AI assistant works is covered in a separate section.",
     "noCollection": {
       "title": "No Data Collection",
       "description": "ksefuj's tools (the validator, invoice preview and exchange rates) do not collect, store, or process any personal data. The only exception is the email address of people who sign up for the newsletter. All XML invoice validation happens entirely in your browser using JavaScript. Your files are never uploaded to any server."
     },
     "noStorage": {
       "title": "No Server Storage",
-      "description": "Your XML invoice files never leave your device. Invoices never reach any server or database. Once you close the browser tab, the data is gone — we never had access to it in the first place."
+      "description": "XML invoice files you drop into the tools on the website never leave your device. Invoices never reach any server or database. Once you close the browser tab, the data is gone, and we never had access to it."
+    },
+    "aiAssistant": {
+      "title": "AI Assistant",
+      "description": "The AI assistant skills (ksef-invoice and ksef-correction) are text files with instructions and reference material. They contain no program that we run, and we operate no server for them. You install them in your own AI assistant, such as Claude (claude.ai, the desktop app, Claude Code), ChatGPT, Codex or GitHub Copilot. Everything you give the assistant (invoice data, PDF and XML files) is processed by its provider, for example Anthropic, OpenAI or GitHub, under the provider's own terms and privacy policy.",
+      "extra": "The skills send nothing to us. ksefuj.to does not receive, see or store your conversations with the assistant or the files you give it. On ksefuj.to/asystent-ai we only count clicks on the installation links: the Amplitude event contains nothing but where the link leads and the page language."
     },
     "cookies": {
       "title": "Cookies",
@@ -634,7 +643,7 @@
     },
     "changes": {
       "title": "Changes to This Policy",
-      "description": "If we ever change this privacy policy, the update will be reflected on this page with a new date. Since our core principle is that no data leaves your browser, significant changes are unlikely."
+      "description": "If we ever change this privacy policy, the update will be reflected on this page with a new date. Since our core principle is that your invoice data never reaches us, significant changes are unlikely."
     },
     "contact": {
       "title": "Contact",
@@ -896,6 +905,12 @@
     "privacy": {
       "title": "What happens to your data?",
       "text": "The skills are only instructions and reference texts: they store nothing and send nothing anywhere. Invoice details you give your assistant are processed by its provider under the provider's own terms. They never reach ksefuj.to."
+    },
+    "support": {
+      "title": "Help and contact",
+      "description": "Have a question about the skills, or is something not working as it should? We answer emails and GitHub issues.",
+      "emailLabel": "hej@ksefuj.to",
+      "issuesLabel": "Report an issue on GitHub"
     },
     "caveat": {
       "title": "Check before you send",

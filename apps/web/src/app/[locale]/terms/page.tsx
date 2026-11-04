@@ -43,6 +43,7 @@ export default async function TermsPage({ params }: Props) {
     "userResponsibility",
     "freeForever",
     "privacy",
+    "aiAssistant",
     "governingLaw",
     "contact",
   ] as const;
@@ -62,7 +63,7 @@ export default async function TermsPage({ params }: Props) {
 
           <div className="space-y-8">
             {sections.map((section) => (
-              <section key={section}>
+              <section key={section} id={section} className="scroll-mt-24">
                 <h2 className="text-lg font-semibold text-slate-900 mb-2">
                   {t(`sections.${section}.title`)}
                 </h2>

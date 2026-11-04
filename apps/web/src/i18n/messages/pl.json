@@ -425,11 +425,11 @@
   "terms": {
     "meta": {
       "title": "Warunki użytkowania — ksefuj.to",
-      "description": "Warunki korzystania z ksefuj.to, darmowego walidatora faktur KSeF FA(3) z otwartym kodem źródłowym."
+      "description": "Warunki korzystania z ksefuj.to, czyli darmowych narzędzi do faktur KSeF FA(3) na stronie i skilli Asystenta AI, z otwartym kodem źródłowym."
     },
     "title": "Warunki użytkowania",
-    "lastUpdated": "Ostatnia aktualizacja: marzec 2026",
-    "intro": "ksefuj.to to bezpłatne narzędzie z otwartym kodem źródłowym do sprawdzania faktur KSeF FA(3). Korzystając z narzędzia, akceptujesz poniższe warunki.",
+    "lastUpdated": "Ostatnia aktualizacja: listopad 2026",
+    "intro": "ksefuj.to udostępnia bezpłatne narzędzia z otwartym kodem źródłowym do faktur KSeF FA(3): walidator i inne narzędzia na stronie oraz skille Asystenta AI. Korzystając z nich, akceptujesz poniższe warunki.",
     "sections": {
       "license": {
         "title": "1. Otwarta licencja Apache 2.0",
@@ -453,14 +453,18 @@
       },
       "privacy": {
         "title": "6. Prywatność",
-        "content": "Twoje pliki XML nie opuszczają przeglądarki. Przetwarzamy je lokalnie i nie wysyłamy danych faktur na żaden serwer. Szczegóły znajdziesz w Polityce prywatności."
+        "content": "Pliki XML, które sprawdzasz w narzędziach na stronie, nie opuszczają przeglądarki. Przetwarzamy je lokalnie i nie wysyłamy danych faktur na żaden serwer. Dane, które przekazujesz asystentowi AI, przetwarza jego dostawca (punkt 7). Szczegóły znajdziesz w Polityce prywatności."
+      },
+      "aiAssistant": {
+        "title": "7. Asystent AI",
+        "content": "Skille Asystenta AI (ksef-invoice i ksef-correction) są bezpłatne i udostępniamy je na licencji Apache 2.0. Kod źródłowy znajdziesz na github.com/ksefuj/skills. Z asystenta AI korzystasz na warunkach jego dostawcy (np. Anthropic, OpenAI lub GitHub). ksefuj.to nie jest powiązany z żadną z tych firm. AI może się pomylić, dlatego plik XML przygotowany przez asystenta traktuj jako projekt. Zanim wyślesz go do KSeF, sprawdź go w walidatorze na ksefuj.to/validator, a gdy nie wiesz, jak opodatkować sprzedaż, zapytaj księgowego. Skille niczego nie wysyłają do KSeF. Odpowiedzi asystenta nie są poradą podatkową ani prawną. Pomoc uzyskasz pod adresem hej@ksefuj.to lub przez zgłoszenie na github.com/ksefuj/skills/issues."
       },
       "governingLaw": {
-        "title": "7. Prawo właściwe",
+        "title": "8. Prawo właściwe",
         "content": "Te warunki podlegają prawu polskiemu. Wszelkie spory rozstrzygają polskie sądy właściwe miejscowo."
       },
       "contact": {
-        "title": "8. Kontakt",
+        "title": "9. Kontakt",
         "content": "Pytania o warunki użytkowania wyślij na adres:"
       }
     }
@@ -604,17 +608,22 @@
   },
   "privacy": {
     "metaTitle": "Polityka prywatności — ksefuj",
-    "metaDescription": "Polityka prywatności ksefuj.to — Twoje dane fakturowe nie opuszczają przeglądarki.",
+    "metaDescription": "Polityka prywatności ksefuj.to. Faktury, które sprawdzasz na stronie, nie opuszczają przeglądarki, a skille Asystenta AI niczego do nas nie wysyłają.",
     "title": "Polityka prywatności",
-    "lastUpdated": "Ostatnia aktualizacja: październik 2026",
-    "intro": "Zaprojektowaliśmy ksefuj tak, żeby dane z Twoich faktur nigdy nie opuszczały Twojej przeglądarki.",
+    "lastUpdated": "Ostatnia aktualizacja: listopad 2026",
+    "intro": "Narzędzia na stronie ksefuj.to zaprojektowaliśmy tak, żeby dane z Twoich faktur nigdy nie opuszczały Twojej przeglądarki. Jak działa Asystent AI, opisujemy w osobnej części.",
     "noCollection": {
       "title": "Nie zbieramy danych",
       "description": "Narzędzia ksefuj (walidator, podgląd faktury, kursy walut) nie zbierają, nie przechowują ani nie przetwarzają żadnych danych osobowych. Jedyny wyjątek to adres e-mail osób, które zapiszą się na newsletter. Faktury XML sprawdzamy wyłącznie w Twojej przeglądarce, za pomocą JavaScriptu. Nigdy nie wysyłamy Twoich plików na żaden serwer."
     },
     "noStorage": {
       "title": "Faktury nie trafiają na serwer",
-      "description": "Twoje pliki XML z fakturami nigdy nie opuszczają Twojego urządzenia. Faktury nie trafiają na żaden serwer ani do żadnej bazy danych. Po zamknięciu karty przeglądarki dane znikają — nigdy nie mieliśmy do nich dostępu."
+      "description": "Pliki XML z fakturami, które wrzucasz do narzędzi na stronie, nigdy nie opuszczają Twojego urządzenia. Faktury nie trafiają na żaden serwer ani do żadnej bazy danych. Po zamknięciu karty przeglądarki dane znikają, a my nigdy nie mieliśmy do nich dostępu."
+    },
+    "aiAssistant": {
+      "title": "Asystent AI",
+      "description": "Skille Asystenta AI (ksef-invoice i ksef-correction) to pliki tekstowe z instrukcjami i materiałami pomocniczymi. Nie ma w nich programu, który byśmy uruchamiali, i nie prowadzimy dla nich żadnego serwera. Instalujesz je we własnym asystencie AI, takim jak Claude (claude.ai, aplikacja na komputer, Claude Code), ChatGPT, Codex czy GitHub Copilot. Wszystko, co przekażesz asystentowi (dane faktury, pliki PDF i XML), przetwarza jego dostawca, np. Anthropic, OpenAI lub GitHub, zgodnie ze swoim regulaminem i polityką prywatności.",
+      "extra": "Skille niczego do nas nie wysyłają. ksefuj.to nie otrzymuje, nie widzi ani nie przechowuje Twoich rozmów z asystentem ani przekazanych mu plików. Na stronie ksefuj.to/asystent-ai liczymy tylko kliknięcia w linki do instalacji: zdarzenie w Amplitude zawiera wyłącznie informację, dokąd prowadzi link, i język strony."
     },
     "cookies": {
       "title": "Pliki cookie",
@@ -634,7 +643,7 @@
     },
     "changes": {
       "title": "Zmiany w polityce",
-      "description": "Jeśli kiedykolwiek zmienimy tę politykę prywatności, opublikujemy nową wersję na tej stronie, z nową datą. Naszą podstawową zasadą jest to, że żadne dane nie opuszczają Twojej przeglądarki, więc istotne zmiany są mało prawdopodobne."
+      "description": "Jeśli kiedykolwiek zmienimy tę politykę prywatności, opublikujemy nową wersję na tej stronie, z nową datą. Naszą podstawową zasadą jest to, że dane z Twoich faktur do nas nie trafiają, więc istotne zmiany są mało prawdopodobne."
     },
     "contact": {
       "title": "Kontakt",
@@ -895,6 +904,12 @@
     "privacy": {
       "title": "Co dzieje się z Twoimi danymi?",
       "text": "Umiejętności to same instrukcje i teksty pomocnicze: niczego nie zapisują i nigdzie niczego nie wysyłają. Dane faktury, które podasz asystentowi, przetwarza jego dostawca na swoich zasadach. Do ksefuj.to nie trafiają."
+    },
+    "support": {
+      "title": "Pomoc i kontakt",
+      "description": "Masz pytanie o skille albo coś nie działa tak, jak powinno? Odpowiadamy na e-maile i zgłoszenia na GitHubie.",
+      "emailLabel": "hej@ksefuj.to",
+      "issuesLabel": "Zgłoś problem na GitHubie"
     },
     "caveat": {
       "title": "Sprawdź, zanim wyślesz",
