@@ -158,7 +158,7 @@ KSeF nie wysyła.
 
 **Requested by:** Orchestrator **Date:** 2026-11-04 **For content:** update of guide
 `apps/web/content/pl/guides/awaria-ksef-offline.mdx` **Target query:** „KSeF nie można pobrać
-faktur" (warianty: „KSeF nie działa pobieranie faktur", „nie widzę faktury w KSeF")
+faktur” (warianty: „KSeF nie działa pobieranie faktur”, „nie widzę faktury w KSeF”)
 
 **Answer in two sentences:** Jeśli wysyłka do KSeF działa, sprzedawca wystawia fakturę online jak
 zwykle: tryby awarii i niedostępności zależą od ogłoszenia MF z art. 106ne, a offline24 jest zawsze
@@ -166,43 +166,51 @@ dostępny bez warunku (fakty 1-2 wyżej). Nabywca z polskim NIP otrzymuje faktur
 numeru KSeF, niezależnie od tego, kiedy ją pobierze (art. 106na ust. 3; Podręcznik cz. II pkt 5.1).
 
 **What changes the answer:** czy MF ogłosiło awarię/niedostępność w trybie art. 106ne (fakt 9
-wyżej); czy wysyłka faktycznie działa (bez numeru KSeF i UPO faktura online nie jest wystawiona,
-fakt 5 wyżej); czy nabywca jest z art. 106gb ust. 4 (wtedy data faktycznego otrzymania, art. 106na
-ust. 4).
+wyżej); czy wysyłka faktycznie działa (bez numeru KSeF faktura online nie jest wystawiona, fakt 5
+wyżej; UPO to potwierdzenie, nie warunek wystawienia, cz. II pkt 4); czy nabywca jest z art. 106gb
+ust. 4 (wtedy data faktycznego otrzymania, art. 106na ust. 4).
 
 ### Key Facts
 
 U1. **Problem z pobieraniem nie uruchamia trybów awaryjnych.** Awaria (106nf) i niedostępność
 (106nh) wymagają ogłoszenia z art. 106ne ust. 1/3/4; offline24 nie ma warunku ustawowego (Tabela:
-„Brak ograniczeń ustawowych"). Source: ten brief, fakty 1, 2, 9. Confidence: HIGH (tekst). That a
+„Brak ograniczeń ustawowych”). Source: ten brief, fakty 1, 2, 9. Confidence: HIGH (tekst). That a
 download-only problem does not by itself trigger 106nf/106nh: our reading of these facts, no MF
-sentence on download outages in KB. Ania: yes. U2. **Data otrzymania = dzień nadania numeru KSeF,
-nie dzień pobrania.** LAW (art. 106na ust. 3). KB: „Art. 106na ust. 3 — data otrzymania = dzień
-przydzielenia numeru KSeF" (cz. II pkt 5.1); UPO element 9: „Data nadania numeru KSeF = data
-otrzymania e-Faktury przez nabywcę" (pkt 4.2). [API, fetched 2026-11-04 via
-raw.githubusercontent.com] `limity/limity-api.md`: „Numer ten jest przypisywany automatycznie przez
-system w chwili przetworzenia faktury i nie zależy od momentu jej pobrania do systemu księgowego.";
-`pobieranie-faktur/przyrostowe-pobieranie-faktur.md`: „nie zależy od momentu pobrania do systemu
-zewnętrznego." Confidence: HIGH. Ania: yes. U3. **Wydruk/PDF poza KSeF z jednym kodem QR i numerem
-KSeF.** Faktura ONLINE użyta poza KSeF: „jeden kod QR z numerem KSeF" (cz. II pkt 1.6.5); „Faktura
-ONLINE → 1 kod QR + numer KSeF pod kodem" (pkt 5.4.1); wizualizacja musi być spójna z XML (pkt
-1.6.5). Confidence: HIGH. Ania: yes. - **NOT IN KB:** any sentence that handing a NIP buyer a
-visualization does not change the receipt date. For NIP buyers the KB has only art. 106na ust. 3
-(U2); ust. 4 (faktyczne otrzymanie) covers only 106gb ust. 4 buyers. „Date stays = KSeF number date"
-is our reading, MEDIUM. Cz. II s. 31-32 (fakt 6 wyżej) concerns documents received before the KSeF
-number (offline), not this case; do not transpose it. U4. **Nie wysyłać faktury ponownie.** Same NIP
-sprzedawcy + P_2 + RodzajFaktury → odrzucenie, kod 440 „Duplikat faktury", unikalność 10 lat wstecz
-(cz. II pkt 3.4). Confidence: HIGH. Ania: yes. U5. **Numer KSeF i UPO potwierdzają wystawienie.**
-UPO = „formalne potwierdzenie odbioru dokumentu elektronicznego przez KSeF"; zawiera numer KSeF,
-P_2, NIP sprzedawcy, datę nadania numeru KSeF, tryb wysyłki (cz. II pkt 4.2); UPO do pobrania bez
-uwierzytelnienia po nadaniu numeru (pkt 4.2). Krok 5 wystawienia: „Uzyskanie numeru KSeF i UPO" (pkt
-1.5). Confidence: HIGH. Whether UPO download itself works during a download outage: NOT IN KB. Ania:
-yes. U6. **Nabywca nie musi akceptować faktury.** Art. 106na ust. 2 uchylony od 1.02.2026 (cz. II
-pkt 5). Confidence: HIGH. Ania: yes.
+sentence on download outages in KB. Ania: yes.
+
+U2. **Data otrzymania = dzień nadania numeru KSeF, nie dzień pobrania.** LAW (art. 106na ust. 3).
+KB: „Art. 106na ust. 3 — data otrzymania = dzień przydzielenia numeru KSeF” (cz. II pkt 5.1); UPO
+element 9: „Data nadania numeru KSeF = data otrzymania e-Faktury przez nabywcę” (pkt 4.2). [API,
+fetched 2026-11-04 via raw.githubusercontent.com] `limity/limity-api.md`: „Numer ten jest
+przypisywany automatycznie przez system w chwili przetworzenia faktury i nie zależy od momentu jej
+pobrania do systemu księgowego.”; `pobieranie-faktur/przyrostowe-pobieranie-faktur.md`: „nie zależy
+od momentu pobrania do systemu zewnętrznego.” Confidence: HIGH. Ania: yes.
+
+U3. **Wydruk/PDF poza KSeF z jednym kodem QR i numerem KSeF.** Faktura ONLINE użyta poza KSeF:
+„jeden kod QR z numerem KSeF” (cz. II pkt 1.6.5); „Faktura ONLINE → 1 kod QR + numer KSeF pod kodem”
+(pkt 5.4.1); wizualizacja musi być spójna z XML (pkt 1.6.5). Confidence: HIGH. Ania: yes.
+
+- **NOT IN KB:** any sentence that handing a NIP buyer a visualization does not change the receipt
+  date. For NIP buyers the KB has only art. 106na ust. 3 (U2); ust. 4 (faktyczne otrzymanie) covers
+  only 106gb ust. 4 buyers. „Date stays = KSeF number date” is our reading, MEDIUM. Cz. II s. 31-32
+  (fakt 6 wyżej) concerns documents received before the KSeF number (offline), not this case; do not
+  transpose it.
+
+U4. **Nie wysyłać faktury ponownie.** Same NIP sprzedawcy + P_2 + RodzajFaktury → odrzucenie, kod
+440 „Duplikat faktury”, unikalność 10 lat wstecz (cz. II pkt 3.4). Confidence: HIGH. Ania: yes.
+
+U5. **Numer KSeF i UPO potwierdzają wystawienie.** UPO = „formalne potwierdzenie odbioru dokumentu
+elektronicznego przez KSeF”; zawiera numer KSeF, P_2, NIP sprzedawcy, datę nadania numeru KSeF, tryb
+wysyłki (cz. II pkt 4.2); UPO do pobrania bez uwierzytelnienia po nadaniu numeru (pkt 4.2). Krok 5
+wystawienia: „Uzyskanie numeru KSeF i UPO” (pkt 1.5). Confidence: HIGH. Whether UPO download itself
+works during a download outage: NOT IN KB. Ania: yes.
+
+U6. **Nabywca nie musi akceptować faktury.** Art. 106na ust. 2 uchylony od 1.02.2026 (cz. II pkt 5).
+Confidence: HIGH. Ania: yes.
 
 ### Unverified: komunikat MF z 2026-10-13 (awaria 16-17.10.2026)
 
-- Backlog mentions an MF „komunikaty techniczne" notice (2026-10-13) about 16-17.10.2026 where
+- Backlog mentions an MF „komunikaty techniczne” notice (2026-10-13) about 16-17.10.2026 where
   downloading was unavailable and sending worked. NOT IN KB, could not be fetched (gov hosts 403).
   Content, dates and whether it was an announcement under art. 106ne: UNKNOWN. The post must not
   describe it, date it, or cite it.
