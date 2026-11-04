@@ -292,6 +292,32 @@ export default async function AssistantPage({ params }: Props) {
             </p>
           </div>
         </SectionContainer>
+
+        {/* Support */}
+        <div id="pomoc" className="scroll-mt-20">
+          <SectionContainer background="slate">
+            <div className="space-y-4">
+              <h2 className={H2_CLASSES}>{t("support.title")}</h2>
+              <p className="max-w-2xl text-lg text-slate-600">{t("support.description")}</p>
+              <div className="flex flex-wrap gap-x-6 gap-y-2">
+                <a
+                  href="mailto:hej@ksefuj.to"
+                  className="font-medium text-violet-600 hover:text-violet-700 transition-colors"
+                >
+                  {t("support.emailLabel")}
+                </a>
+                <a
+                  href={`${REPO_URL}/issues`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-medium text-violet-600 hover:text-violet-700 transition-colors"
+                >
+                  {t("support.issuesLabel")}
+                </a>
+              </div>
+            </div>
+          </SectionContainer>
+        </div>
       </main>
       <SiteFooter />
     </>
