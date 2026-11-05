@@ -83,7 +83,7 @@ a Tier 1–3 source.
 Ordered by Search Console demand (2026-10-20); the items from `faktura-zaliczkowa-ksef` down had no
 matching queries.
 
-- [ ] `walidacja-xml-fa3` — Jak sprawdzić XML FA(3) przed wysyłką · „walidacja XML FA(3)” /
+- [x] `walidacja-xml-fa3` — Jak sprawdzić XML FA(3) przed wysyłką · „walidacja XML FA(3)” /
       „walidator KSeF” · M · `/ksef-na-okres-obligatoryjny/wsparcie-dla-integratorow` · Core product
       fit; developer voice allowed. ~20 impr of tool intent land on `/` and `/guides`. Also cover
       where the official XSD lives („ksef xml schema”, ~11 impr, no PL page).

@@ -1,0 +1,158 @@
+---
+title: "Validate FA(3) XML before you send it to KSeF"
+description: "KSeF checks a file only when you send it. Before that, validate the XML against the FA(3) schema with xmllint or our validator; KSeF's verdict comes on TEST."
+date: 2026-11-05
+section: guides
+locale: en
+slug: "fa3-xml-validation"
+topic: "errors"
+tags: ["KSeF", "FA(3)", "Validation"]
+translationOf: "walidacja-xml-fa3"
+translations:
+  pl: "walidacja-xml-fa3"
+  en: "fa3-xml-validation"
+sources:
+  - label: "MF / CIRF: Weryfikacja faktury (invoice verification), 09.04.2026"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md"
+  - label: "CIRFMF/ksef-api: FA(3) schema v1-0E"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/schemy/FA/schemat_FA(3)_v1-0E.xsd"
+  - label: "FA(3) logical structure on crd.gov.pl (schemat.xsd)"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+  - label: "MF / CIRF: KSeF API 2.0 environments (16.03.2026)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/srodowiska.md"
+  - label: "MF / CIRF: Interactive session, opening a session"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/sesja-interaktywna.md"
+  - label: "CIRFMF/ksef-api: OpenAPI specification (invoice statuses)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
+  - label: "CIRFMF/ksef-api: KSeF API 2.0 changelog"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md"
+  - label: "CIRFMF/ksef-api: issue #718 (19.10.2026 date)"
+    url: "https://github.com/CIRFMF/ksef-api/issues/718"
+  - label: "KSeF 2.0 Handbook part II (06.08.2026), section 1.6.1 (Polish)"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "FA(3) information sheet, section 1.2 (Polish)"
+    url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+---
+
+The KSeF API 2.0 (Krajowy System e-Faktur, Poland's National e-Invoicing System) has no operation that only checks a file: KSeF verifies an invoice when you send it in a session, and you can see its verdict without legal effect only in the test environment. Locally you can validate the XML against the official FA(3) XSD schema, for example with xmllint, or with our validator, but neither checks everything KSeF does.
+
+Status as of 5 November 2026, FA(3) schema version `1-0E`.
+
+## Where does the Ministry of Finance publish the FA(3) XSD?
+
+The FA(3) structure uses the namespace `http://crd.gov.pl/wzor/2025/06/25/13775/`, and the main file lives at `https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd`. The root element is `Faktura`. In `KodFormularza` the attributes have fixed values `kodSystemowy="FA (3)"` and `wersjaSchemy="1-0E"`, with `WariantFormularza` set to `3`. <Source href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd" label="crd.gov.pl, schemat.xsd" /> If the validator reports a wrong `xmlns`, our page on the [wrong FA(3) namespace](/en/validator/wrong-namespace-fa3-invoice) explains the fix.
+
+The main schema is not enough on its own, because it depends on three domain schemas from the Ministry (MF):
+
+- `schemat.xsd` imports `StrukturyDanych_v10-0E.xsd`,
+- `StrukturyDanych_v10-0E.xsd` includes `ElementarneTypyDanych_v10-0E.xsd`,
+- `ElementarneTypyDanych_v10-0E.xsd` includes `KodyKrajow_v10-0E.xsd`.
+
+All three sit in `https://crd.gov.pl/xml/schematy/dziedzinowe/mf/2022/01/05/eD/DefinicjeTypy/`. In the crd.gov.pl copies every `schemaLocation` is an absolute URL starting with **`http://`**, not `https://`.
+
+MF also publishes the same files in the `CIRFMF/ksef-api` repository, under `faktury/schemy/FA/`: the main schema as `schemat_FA(3)_v1-0E.xsd` and the three domain schemas in the `bazowe/` subdirectory. The OpenAPI specification points to this copy when you open a session. We compared it with the crd.gov.pl files on 5 November 2026: the content is the same. The differences are whitespace and the fact that includes in `bazowe/` use relative paths. The main schema on GitHub still imports `StrukturyDanych` from `http://crd.gov.pl/...`. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/schemy/FA/schemat_FA(3)_v1-0E.xsd" label="CIRFMF/ksef-api, schemat_FA(3)_v1-0E.xsd" />
+
+MF announces schema changes in the API changelog, which it says lists "only changes that affect integration", XSD schema changes among them. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/srodowiska.md" label="CIRFMF/ksef-api, srodowiska.md" />
+
+## What does KSeF check when you send an invoice?
+
+You declare the schema version when you open a session, and KSeF validates the invoices you send against it. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/sesja-interaktywna.md" label="CIRFMF/ksef-api, sesja-interaktywna.md" /> The "Weryfikacja faktury" (invoice verification) page lists what a file must meet:
+
+- **Well-formed XML 1.0 that conforms to the schema** declared when the session was opened.
+- **UTF-8 encoding without a BOM**, meaning no `0xEF 0xBB 0xBF` bytes at the start. An `<?xml ...?>` prolog is allowed, but it must not declare an encoding other than UTF-8.
+- **No processing instructions**, the `<?...?>` directives aimed at software (e.g. `<?xml-stylesheet ...?>`), and no Unicode characters on the W3C discouraged list.
+- **No duplicate.** The key is `Podmiot1/NIP`, `RodzajFaktury` and `P_2`. For a duplicate KSeF returns code `440` ("Duplikat faktury", duplicate invoice) and enforces uniqueness for 10 full years from the end of the year of issue.
+- **The `P_1` date** cannot be later than the date KSeF accepts the file. An earlier date is not an error.
+- **The NIP checksum** in `Podmiot1`, `Podmiot2`, `Podmiot3`, `PodmiotUpowazniony` and in the NIP inside `InternalId`. Production only.
+- **Size:** up to 1 MB (1,000,000 bytes) without attachments and up to 3 MB (3,000,000 bytes) with attachments. One session takes at most 10,000 invoices. If these limits are too tight, MF asks you to contact KSeF support.
+- **Permissions** to issue the invoice in the context of the given entity.
+
+Invoices with `Zalacznik` (attachment) can only go through a batch session (the exception is a technical correction of an offline invoice), and only after you have registered this option in e-Urząd Skarbowy, the tax office's online portal. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md" label="CIRFMF/ksef-api, weryfikacja-faktury.md" />
+
+The documentation does not say which status code you get for a schema error, a BOM, the `P_1` date or the NIP checksum. The OpenAPI specification has separate codes `430` ("Błąd weryfikacji pliku faktury", invoice file verification error) and `450` ("Błąd weryfikacji semantyki dokumentu faktury", invoice semantic verification error), but does not map them to specific rules. Error descriptions are in the `details` field. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json" label="CIRFMF/ksef-api, open-api.json" />
+
+If verification fails, KSeF assigns no number, so the invoice is not issued and you have to fix it and send it again. KSeF does not check the arithmetic, though: it will accept an invoice with a wrong VAT amount. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Handbook part II, section 1.6.1" /> Once it is in, only a corrective invoice can fix that kind of mistake.
+
+### Does KSeF already reject BOMs and processing instructions?
+
+The ban on processing instructions and discouraged Unicode characters arrived with API version 2.4.0, deployed to TEST and DEMO in April 2026. Production was to start rejecting such files from 19 October 2026, but that date comes only from a repository maintainer's comment on GitHub. <Source href="https://github.com/CIRFMF/ksef-api/issues/718" label="CIRFMF/ksef-api, issue #718" /> The changelog still says 16 July 2026, and neither it nor the "Weryfikacja faktury" page confirms that production rejects these files. For the BOM the changelog gives no date at all: the ban is on the "Weryfikacja faktury" page, but it is unknown since when production enforces it. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md" label="CIRFMF/ksef-api, api-changelog.md" /> The history of the deadlines and how to find these constructs in a file are covered in our post on [stricter XML validation in KSeF](/en/blog/ksef-strict-xml-validation).
+
+## How do you validate a file against the schema with xmllint?
+
+Download the schemas from the MF repository and go to the FA directory:
+
+```bash
+git clone https://github.com/CIRFMF/ksef-api.git
+cd ksef-api/faktury/schemy/FA
+```
+
+A plain `xmllint --schema` will not work here. The main schema imports `StrukturyDanych` from `http://crd.gov.pl/...`, so with `--nonet` xmllint cannot compile the schema and reports, among other things, `The QName value '{…DefinicjeTypy/}TNrKRS' does not resolve to a(n) type definition`. Without `--nonet` it will try to fetch the import over plain `http`; we have not tested that variant.
+
+The fix is an XML catalog that redirects the crd.gov.pl URLs to the local `bazowe/` directory. Save a `catalog.xml` file next to the schema:
+
+<XmlExample copyable>
+```xml
+<?xml version="1.0"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+  <rewriteSystem
+    systemIdStartString="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2022/01/05/eD/DefinicjeTypy/"
+    rewritePrefix="bazowe/"/>
+  <rewriteURI
+    uriStartString="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2022/01/05/eD/DefinicjeTypy/"
+    rewritePrefix="bazowe/"/>
+</catalog>
+```
+</XmlExample>
+
+Then run the validation:
+
+```bash
+XML_CATALOG_FILES=catalog.xml xmllint --noout --nonet \
+  --schema "schemat_FA(3)_v1-0E.xsd" ~/faktury/faktura.xml
+```
+
+For a valid file xmllint prints its path followed by `validates`. We checked this on the MF sample `FA_3_Przykład_1.xml` (libxml 2.9.14).
+
+**xmllint only checks the schema.** The same sample with an added `<?xml-stylesheet ...?>`, with a BOM at the start, or with `P_15` changed to `999999.99` also returned "validates". The first two break the requirements on the "Weryfikacja faktury" page (TEST and DEMO have rejected processing instructions since API version 2.4.0), and KSeF would accept the third with the wrong amount.
+
+## How do you validate a file with the ksefuj.to validator?
+
+In the browser, drop the file onto the [validator](/en/validator) page. The file never leaves your browser and the schemas are built in. In the terminal:
+
+```bash
+npx @ksefuj/validator faktura.xml
+npx @ksefuj/validator --batch ./faktury/
+npx @ksefuj/validator --verbose faktura.xml
+npx @ksefuj/validator --json faktura.xml
+```
+
+`--batch` checks every `*.xml` file in a directory (not subdirectories), `--json` returns the result for further processing, and `--verbose` adds error codes and hints. Exit code `0` means all files are valid, `1` means they are not. In application code use `validate()` from the `@ksefuj/validator` package; the function does not throw, and the result has a `valid` field and a list of issues with XPath and line number.
+
+On the three files that passed xmllint, the validator reported `XML_PROCESSING_INSTRUCTION`, `XML_BOM_PRESENT` and `TAX_CALCULATION_MISMATCH` at `/Faktura/Fa/P_15`. It also checks rules XSD cannot express, such as a single selection in the `Zwolnienie`, `NoweSrodkiTransportu` and `PMarzy` groups, `Podmiot3` with `Rola` 8 when `JST` = 1, or a Polish NIP entered in `NrVatUE`. MF defines these rules in the FA(3) information sheet, but the KSeF documentation does not confirm that KSeF enforces them. <Source href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf" label="FA(3) information sheet" /> The most common ones, with fixes, are collected in our post on [FA(3) validation errors](/en/blog/most-common-fa3-validation-errors).
+
+## What can neither xmllint nor our validator check?
+
+Neither tool knows KSeF's data or your session, so neither can check:
+
+- file size against the 1 MB and 3 MB limits,
+- the NIP checksum,
+- the `P_1` date against the moment KSeF accepts the file,
+- duplicates,
+- permissions to issue invoices on behalf of an entity,
+- whether you have registered sending invoices with attachments in e-Urząd Skarbowy.
+
+A file that passes local validation can still be rejected.
+
+## How do you test a file in the KSeF test environment?
+
+You get KSeF's own verdict, without legal effect, by sending the file to the TEST environment, which is meant for testing API integrations (documentation: `api-test.ksef.mf.gov.pl/docs/v2`). DEMO is for final validation of an integration in near-production conditions. MF stresses that you must not send production invoices or real entity data to either. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/srodowiska.md" label="CIRFMF/ksef-api, srodowiska.md" />
+
+Three things about TEST mean its results do not carry over directly to production:
+
+- it does not check the NIP checksum, so a file with a bad NIP passes there and is rejected in production,
+- it still accepts FA(2), which DEMO and production no longer accept,
+- data is not isolated between integrators, so use random NIP numbers for testing.
+
+In a batch session KSeF rejects only the faulty files and accepts the rest. You can fetch the list of rejected files, with status and error details, via `GET /sessions/{referenceNumber}/invoices/failed`.
+
+If you are starting from scratch, walk through the whole sending process step by step in our guide to [your first test invoice in KSeF](/en/guides/first-fa3-invoice).

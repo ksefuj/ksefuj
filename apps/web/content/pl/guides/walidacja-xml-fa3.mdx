@@ -1,0 +1,161 @@
+---
+title: "Sprawdź plik XML FA(3), zanim wyślesz go do KSeF"
+description: "KSeF sprawdza plik dopiero przy wysyłce. Wcześniej sprawdzisz XML schematem FA(3) w xmllint lub naszym walidatorem, a werdykt KSeF zobaczysz na TEST."
+date: 2026-11-05
+section: guides
+locale: pl
+slug: "walidacja-xml-fa3"
+topic: "errors"
+tags: ["KSeF", "FA(3)", "Walidacja"]
+translations:
+  pl: "walidacja-xml-fa3"
+  en: "fa3-xml-validation"
+related:
+  - "blog/najczestsze-bledy-walidacji-fa3"
+  - "blog/ksef-scisla-walidacja-xml"
+  - "guides/pierwsza-faktura-fa3"
+sources:
+  - label: "MF / CIRF: Weryfikacja faktury (09.04.2026)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md"
+  - label: "CIRFMF/ksef-api: schemat FA(3) v1-0E"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/schemy/FA/schemat_FA(3)_v1-0E.xsd"
+  - label: "Struktura logiczna FA(3) na crd.gov.pl (schemat.xsd)"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+  - label: "MF / CIRF: Środowiska KSeF API 2.0 (16.03.2026)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/srodowiska.md"
+  - label: "MF / CIRF: Sesja interaktywna, otwarcie sesji"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/sesja-interaktywna.md"
+  - label: "CIRFMF/ksef-api: specyfikacja OpenAPI (statusy faktur)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
+  - label: "CIRFMF/ksef-api: changelog API KSeF 2.0"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md"
+  - label: "CIRFMF/ksef-api: issue #718 (termin 19.10.2026)"
+    url: "https://github.com/CIRFMF/ksef-api/issues/718"
+  - label: "Podręcznik KSeF 2.0 cz. II (06.08.2026), pkt 1.6.1"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "Broszura informacyjna FA(3), pkt 1.2"
+    url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+---
+
+API KSeF 2.0 nie ma operacji, która tylko sprawdza plik: KSeF weryfikuje fakturę dopiero wtedy, gdy wysyłasz ją w sesji, a jego werdykt bez skutków prawnych zobaczysz tylko w środowisku testowym. Lokalnie sprawdzisz XML oficjalnym schematem XSD FA(3), np. w xmllint, albo naszym walidatorem, ale żadne z tych narzędzi nie sprawdza wszystkiego, co KSeF.
+
+Stan na 5 listopada 2026 r., schemat FA(3) w wersji `1-0E`.
+
+## Gdzie MF publikuje schemat XSD FA(3)?
+
+Struktura FA(3) ma przestrzeń nazw `http://crd.gov.pl/wzor/2025/06/25/13775/`, a plik główny leży pod adresem `https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd`. Element główny to `Faktura`, a w `KodFormularza` atrybuty mają stałe wartości `kodSystemowy="FA (3)"` i `wersjaSchemy="1-0E"`, przy `WariantFormularza` równym `3`. <Source href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd" label="crd.gov.pl, schemat.xsd" /> Jeśli walidator zgłasza zły `xmlns`, poprawkę opisujemy na stronie o [złym namespace w FA(3)](/validator/zly-namespace-faktura-fa3).
+
+Schemat główny nie wystarczy, bo korzysta z trzech schematów dziedzinowych MF:
+
+- `schemat.xsd` importuje `StrukturyDanych_v10-0E.xsd`,
+- `StrukturyDanych_v10-0E.xsd` włącza `ElementarneTypyDanych_v10-0E.xsd`,
+- `ElementarneTypyDanych_v10-0E.xsd` włącza `KodyKrajow_v10-0E.xsd`.
+
+Wszystkie trzy leżą w katalogu `https://crd.gov.pl/xml/schematy/dziedzinowe/mf/2022/01/05/eD/DefinicjeTypy/`. W kopiach z crd.gov.pl każde `schemaLocation` jest bezwzględnym adresem zaczynającym się od **`http://`**, nie `https://`.
+
+Te same pliki MF udostępnia w repozytorium `CIRFMF/ksef-api`, w katalogu `faktury/schemy/FA/`: schemat główny jako `schemat_FA(3)_v1-0E.xsd`, a trzy dziedzinowe w podkatalogu `bazowe/`. Do tej kopii odsyła też specyfikacja OpenAPI przy otwieraniu sesji. Porównaliśmy ją 5 listopada 2026 r. z plikami z crd.gov.pl: treść jest ta sama, różnią się białe znaki i to, że w `bazowe/` dołączenia mają ścieżki względne. Schemat główny z GitHuba nadal importuje `StrukturyDanych` z adresu `http://crd.gov.pl/...`. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/schemy/FA/schemat_FA(3)_v1-0E.xsd" label="CIRFMF/ksef-api, schemat_FA(3)_v1-0E.xsd" />
+
+Zmiany schematów MF ogłasza w changelogu API, w którym publikuje „wyłącznie zmiany mające wpływ na integrację”, w tym zmiany schematów XSD. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/srodowiska.md" label="CIRFMF/ksef-api, srodowiska.md" />
+
+## Co KSeF sprawdza, gdy wysyłasz fakturę?
+
+Wersję schematu wskazujesz przy otwarciu sesji i według niej KSeF waliduje przesyłane faktury. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/sesja-interaktywna.md" label="CIRFMF/ksef-api, sesja-interaktywna.md" /> Dokument „Weryfikacja faktury” wymienia, co musi spełnić plik:
+
+- **Poprawny XML 1.0 zgodny ze schematem** zadeklarowanym przy otwarciu sesji.
+- **Kodowanie UTF-8 bez BOM**, czyli bez bajtów `0xEF 0xBB 0xBF` na początku. Prolog `<?xml ...?>` jest dozwolony, ale nie może wskazywać innego kodowania niż UTF-8.
+- **Brak instrukcji przetwarzania**, czyli wstawek `<?...?>` dla programów (np. `<?xml-stylesheet ...?>`), i brak niezalecanych znaków Unicode z listy W3C.
+- **Brak duplikatu.** Kluczem jest `Podmiot1/NIP`, `RodzajFaktury` i `P_2`. Za duplikat KSeF zwraca kod `440` („Duplikat faktury”) i pilnuje unikalności przez 10 pełnych lat od końca roku wystawienia.
+- **Data `P_1`** nie może być późniejsza niż data przyjęcia pliku do KSeF. Wcześniejsza data błędem nie jest.
+- **Suma kontrolna NIP** w `Podmiot1`, `Podmiot2`, `Podmiot3`, `PodmiotUpowazniony` i w NIP wewnątrz `InternalId`. Tylko na produkcji.
+- **Rozmiar:** do 1 MB (1 000 000 bajtów) bez załączników i do 3 MB (3 000 000 bajtów) z załącznikami. W jednej sesji wyślesz najwyżej 10 000 faktur. Gdy limity nie wystarczają, MF prosi o kontakt z działem wsparcia KSeF.
+- **Uprawnienia** do wystawienia faktury w kontekście danego podmiotu.
+
+Faktury z `Zalacznik` wyślesz tylko w sesji wsadowej (wyjątkiem jest korekta techniczna faktury offline) i dopiero po zgłoszeniu tej opcji w e-Urzędzie Skarbowym. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md" label="CIRFMF/ksef-api, weryfikacja-faktury.md" />
+
+Dokumentacja nie mówi, który kod statusu dostaniesz za błąd schematu, BOM, datę `P_1` czy sumę kontrolną NIP. Specyfikacja OpenAPI ma osobno `430` („Błąd weryfikacji pliku faktury”) i `450` („Błąd weryfikacji semantyki dokumentu faktury”), ale ich nie przypisuje do konkretnych reguł. Opisy błędów są w polu `details`. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json" label="CIRFMF/ksef-api, open-api.json" />
+
+Gdy weryfikacja wypadnie negatywnie, KSeF nie nadaje numeru, więc faktura nie jest wystawiona i trzeba ją poprawić i wysłać ponownie. KSeF nie sprawdza natomiast rachunków: przyjmie fakturę ze złą kwotą VAT. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0 cz. II, pkt 1.6.1" /> Taki błąd poprawisz już tylko fakturą korygującą.
+
+### Czy KSeF odrzuca już BOM i instrukcje przetwarzania?
+
+Zakaz instrukcji przetwarzania i niezalecanych znaków Unicode wprowadziła wersja API 2.4.0, wdrożona na TEST i DEMO w kwietniu 2026 r. Produkcja miała zacząć odrzucać takie pliki od 19 października 2026 r., ale tę datę podał tylko opiekun repozytorium w komentarzu na GitHubie. <Source href="https://github.com/CIRFMF/ksef-api/issues/718" label="CIRFMF/ksef-api, issue #718" /> Changelog nadal podaje 16 lipca 2026 r. i ani on, ani dokument „Weryfikacja faktury” nie potwierdzają, że produkcja odrzuca te pliki. Dla BOM changelog nie podaje żadnej daty: zakaz jest w dokumencie „Weryfikacja faktury”, ale nie wiadomo, od kiedy egzekwuje go produkcja. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md" label="CIRFMF/ksef-api, api-changelog.md" /> Historię terminów i to, jak znaleźć takie wstawki w pliku, opisujemy w tekście o [ostrzejszej walidacji XML w KSeF](/blog/ksef-scisla-walidacja-xml).
+
+## Jak sprawdzić plik schematem w xmllint?
+
+Pobierz schematy z repozytorium MF i wejdź do katalogu FA:
+
+```bash
+git clone https://github.com/CIRFMF/ksef-api.git
+cd ksef-api/faktury/schemy/FA
+```
+
+Samo `xmllint --schema` tu nie zadziała. Schemat główny importuje `StrukturyDanych` z adresu `http://crd.gov.pl/...`, więc z opcją `--nonet` xmllint nie skompiluje schematu i zgłosi m.in. `The QName value '{…DefinicjeTypy/}TNrKRS' does not resolve to a(n) type definition`. Bez `--nonet` spróbuje pobrać import zwykłym `http`; tego wariantu nie sprawdzaliśmy.
+
+Rozwiązaniem jest katalog XML, który przekierowuje adresy crd.gov.pl do lokalnego `bazowe/`. Zapisz obok schematu plik `catalog.xml`:
+
+<XmlExample copyable>
+```xml
+<?xml version="1.0"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+  <rewriteSystem
+    systemIdStartString="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2022/01/05/eD/DefinicjeTypy/"
+    rewritePrefix="bazowe/"/>
+  <rewriteURI
+    uriStartString="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2022/01/05/eD/DefinicjeTypy/"
+    rewritePrefix="bazowe/"/>
+</catalog>
+```
+</XmlExample>
+
+Potem uruchom walidację:
+
+```bash
+XML_CATALOG_FILES=catalog.xml xmllint --noout --nonet \
+  --schema "schemat_FA(3)_v1-0E.xsd" ~/faktury/faktura.xml
+```
+
+Dla poprawnego pliku xmllint wypisze jego ścieżkę i słowo `validates`. Sprawdziliśmy to na przykładzie MF `FA_3_Przykład_1.xml` (libxml 2.9.14).
+
+**xmllint sprawdza tylko schemat.** Ten sam przykład z dopisanym `<?xml-stylesheet ...?>`, z BOM na początku albo z `P_15` zmienionym na `999999.99` też dał „validates”. Pierwsze dwa łamią wymagania z dokumentu „Weryfikacja faktury” (instrukcje przetwarzania TEST i DEMO odrzucają od wersji API 2.4.0), a trzeci KSeF przyjmie z błędną kwotą.
+
+## Jak sprawdzić plik walidatorem ksefuj.to?
+
+W przeglądarce wrzuć plik na stronę [walidatora](/validator). Plik nie opuszcza przeglądarki, schematy są wbudowane. W terminalu:
+
+```bash
+npx @ksefuj/validator faktura.xml
+npx @ksefuj/validator --batch ./faktury/
+npx @ksefuj/validator --verbose faktura.xml
+npx @ksefuj/validator --json faktura.xml
+```
+
+`--batch` sprawdza każdy plik `*.xml` w katalogu (bez podkatalogów), `--json` zwraca wynik do dalszej obróbki, a `--verbose` dodaje kody błędów i podpowiedzi. Kod wyjścia `0` oznacza, że wszystkie pliki są poprawne, `1`, że nie. W kodzie aplikacji użyjesz `validate()` z pakietu `@ksefuj/validator`; funkcja nie rzuca wyjątków, a wynik ma pole `valid` i listę problemów z XPath i numerem linii.
+
+Na trzech plikach, które przeszły w xmllint, walidator zgłosił `XML_PROCESSING_INSTRUCTION`, `XML_BOM_PRESENT` i `TAX_CALCULATION_MISMATCH` w `/Faktura/Fa/P_15`. Sprawdza też reguły, których XSD nie wyrazi, np. jeden wybór w grupach `Zwolnienie`, `NoweSrodkiTransportu` i `PMarzy`, `Podmiot3` z `Rola` 8 przy `JST` = 1 czy polski NIP wpisany w `NrVatUE`. Te reguły określa MF w broszurze FA(3), ale dokumentacja KSeF nie potwierdza, że KSeF je egzekwuje. <Source href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf" label="Broszura informacyjna FA(3)" /> Najczęstsze z nich, z poprawkami, zebraliśmy w tekście o [błędach walidacji FA(3)](/blog/najczestsze-bledy-walidacji-fa3).
+
+## Czego nie sprawdzi ani xmllint, ani nasz walidator?
+
+Żadne z tych narzędzi nie zna danych KSeF ani twojej sesji, więc nie sprawdzi:
+
+- rozmiaru pliku względem limitów 1 MB i 3 MB,
+- sumy kontrolnej NIP,
+- daty `P_1` względem chwili przyjęcia przez KSeF,
+- duplikatów,
+- uprawnień do wystawiania w imieniu podmiotu,
+- tego, czy masz zgłoszoną w e-Urzędzie Skarbowym wysyłkę faktur z załącznikami.
+
+Plik, który przechodzi lokalną walidację, może więc zostać odrzucony.
+
+## Jak sprawdzić plik w środowisku testowym KSeF?
+
+Werdykt samego KSeF bez skutków prawnych dostaniesz po wysyłce do środowiska TEST, przeznaczonego do testowania integracji z API (dokumentacja: `api-test.ksef.mf.gov.pl/docs/v2`). DEMO służy do końcowej walidacji integracji w warunkach zbliżonych do produkcji. MF zastrzega, że do obu nie wolno wysyłać faktur produkcyjnych ani prawdziwych danych podmiotów. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/srodowiska.md" label="CIRFMF/ksef-api, srodowiska.md" />
+
+TEST ma trzy cechy, przez które wynik z niego nie przenosi się wprost na produkcję:
+
+- nie sprawdza sumy kontrolnej NIP, więc plik ze złym NIP-em przejdzie tam, a na produkcji zostanie odrzucony,
+- przyjmuje też FA(2), którego DEMO i produkcja już nie przyjmują,
+- dane nie są odizolowane między integratorami, dlatego do testów należy używać losowych numerów NIP.
+
+W sesji wsadowej KSeF odrzuca tylko błędne pliki, a pozostałe przyjmuje. Listę odrzuconych, ze statusem i szczegółami błędów, pobierzesz przez `GET /sessions/{referenceNumber}/invoices/failed`.
+
+Jeśli zaczynasz od zera, przejdź cały proces wysyłki krok po kroku w poradniku o [pierwszej fakturze testowej w KSeF](/guides/pierwsza-faktura-fa3).
