@@ -2,7 +2,7 @@
 title: "Awaria KSeF nie blokuje wystawiania faktur"
 description: "Przy ogłoszonej awarii KSeF wysyłasz fakturę w 7 dni roboczych od jej końca, w offline24 najpóźniej następnego dnia roboczego, przy awarii całkowitej wcale."
 date: 2026-10-07
-updated: 2026-10-26
+updated: 2026-11-04
 section: guides
 locale: pl
 slug: "awaria-ksef-offline"
@@ -119,6 +119,19 @@ Konsument, podmiot zagraniczny lub nabywca bez NIP (art. 106gb ust. 4) dostaje f
 Jeśli nabywca z krajowym NIP dostanie fakturę offline24 poza KSeF przed jej wysłaniem do KSeF, ma według Podręcznika prawo do odliczenia z dniem faktycznego otrzymania dokumentu. MF nazywa to jednak „działaniem nieprawidłowym" sprzedawcy i zaleca odbieranie faktur w KSeF (Podręcznik cz. II, pkt 1.8, s. 31–32). To określenie dotyczy tylko takiej sytuacji.
 
 Od 2027 r. numer KSeF ma być w tytule przelewu między czynnymi podatnikami VAT (obowiązek z art. 108g dotyczy czynnych podatników, Podręcznik pkt 4.1.5). Obowiązek nie dotyczy faktur z art. 106nda i 106nh, których z powodu komunikatu o awarii nie wprowadzono do KSeF (art. 108g ust. 4).
+
+## Co, gdy wysyłka działa, ale nie pobierzesz faktury?
+
+Jeśli KSeF przyjmuje faktury, wystawiasz je online jak zwykle. Według nas sam problem z pobieraniem nie uruchamia trybu awaryjnego ani niedostępności, bo oba wymagają ogłoszenia MF z art. 106ne ([zobacz tabelę](#trzy-sytuacje-w-jednej-tabeli)). MF nie wyjaśniło, czy komunikat o niedziałającym samym pobieraniu jest takim ogłoszeniem. Offline24 możesz wybrać zawsze.
+
+Jeśli faktura dostała numer KSeF, jest wystawiona, nawet gdy nie możesz jeszcze pobrać UPO, a datą wystawienia jest dzień wysłania, jeśli zgadza się z P_1 (art. 106na ust. 1). Nie wysyłaj jej ponownie: plik z tym samym NIP sprzedawcy, numerem faktury (P_2) i rodzajem faktury KSeF odrzuci z kodem 440 „Duplikat faktury”, a z nowym numerem byłaby to druga faktura, której nie anulujesz.
+
+Nabywca z polskim NIP [otrzymuje fakturę](/guides/jak-odebrac-fakture-ksef) w dniu nadania numeru KSeF, a nie w dniu, w którym ją pobierze (art. 106na ust. 3). Jeśli potrzebuje jej od razu, możesz mu dać wizualizację poza KSeF z jednym kodem QR i numerem KSeF (Podręcznik cz. II, pkt 1.6.5). Naszym zdaniem nie zmienia to daty otrzymania, ale MF nie napisało tego wprost.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. II, pkt 1.4, 1.6.3, 1.6.5, 3.4, 4.2 i 5.1"
+/>
 
 ## Przygotuj się, zanim coś się zepsuje
 

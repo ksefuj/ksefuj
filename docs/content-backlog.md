@@ -75,7 +75,7 @@ a Tier 1–3 source.
       Link `awaria-ksef-offline` and `jak-odebrac-fakture-ksef`.
 - [x] `najem-lokalu-ksef` — Najem lokalu firmie a KSeF (bez działalności) · „najem KSeF” · A · FAQ,
       PRAWO · Signal: infor.pl 2026-09-11; dates for private landlords UNVERIFIED.
-- [ ] **UPDATE** `awaria-ksef-offline` — add the case where downloading invoices is unavailable but
+- [x] **UPDATE** `awaria-ksef-offline` — add the case where downloading invoices is unavailable but
       sending works (KOM notice of 2026-10-13 on the 16–17.10 outage) · A, K · KOM
 
 ## Evergreen
