@@ -5,6 +5,29 @@ effect. Record the date, the page, what changed (old -> new for titles and descr
 metric that motivated it. After 28 days, add a **Results** line comparing current CTR/position with
 the baseline.
 
+## 2026-11-03
+
+Digest: `gsc-data` 2026-11-02 (GSC 2026-10-03 to 2026-10-30: 129 clicks, 10,368 impressions, CTR
+1.24%, avg position 6.8). No title or description changes: every page in the low-CTR list had its
+title or description changed on 2026-10-08 or later (most on 2026-10-26, the FA(3) errors post on
+2026-10-29 and in open content PR #186), so none has had 28 days yet. All 181 sitemap URLs 200;
+sitemap still 0 errors, 6 warnings. The 24 not-indexed URLs are posts published or updated in the
+last 1-3 weeks. No Results lines yet: the oldest logged change (2026-10-07) is 27 days old. The live
+site could not be reached from the routine's environment.
+
+- **Pages:** all `/{locale}/blog/<slug>` and `/{locale}/guides/<slug>` URLs that use another
+  locale's slug (`apps/web/src/app/[locale]/{blog,guides}/[slug]/page.tsx`)
+  - **Change:** the redirect to the correct locale slug (`resolveContentRedirect`) now uses
+    `permanentRedirect` (308) instead of `redirect` (307).
+  - **Motivation:** Search Console reports impressions on wrong-locale URLs that only redirect:
+    `/en/blog/usuniecie-faktury-ksef` (30 impr), `/blog/cash-register-invoices-ksef-2027` (13),
+    `/blog/rakhunok-z-kasovogo-aparata-ksef-2027` (13), `/guides/ksef-accountant-access` (9, pos
+    11.6), `/uk/blog/usuniecie-faktury-ksef` (2). A temporary redirect tells Google to keep the
+    source URL, so it competes with the real page; a permanent one moves the signals to the target.
+  - **Baseline to compare:** these five URLs should stop getting impressions, and the target pages
+    (`/en/blog/delete-invoice-ksef`, `/blog/faktura-z-kasy-fiskalnej-ksef-2027`,
+    `/guides/uprawnienia-ksef-ksiegowa`, `/uk/blog/vydalennya-rakhunku-ksef`) keep or gain them.
+
 ## 2026-10-28
 
 Digest: `gsc-data` 2026-10-27 (GSC 2026-09-27 to 2026-10-24: 125 clicks, 9,217 impressions, CTR
