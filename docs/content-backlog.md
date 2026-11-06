@@ -87,7 +87,7 @@ matching queries.
       „walidator KSeF” · M · `/ksef-na-okres-obligatoryjny/wsparcie-dla-integratorow` · Core product
       fit; developer voice allowed. ~20 impr of tool intent land on `/` and `/guides`. Also cover
       where the official XSD lives („ksef xml schema”, ~11 impr, no PL page).
-- [ ] `kody-bledow-ksef` — Kody błędów KSeF i co znaczą · „błąd 450 KSeF" · M · integrator docs ·
+- [x] `kody-bledow-ksef` — Kody błędów KSeF i co znaczą · „błąd 450 KSeF" · M · integrator docs ·
       Error codes UNVERIFIED.
 - [ ] `numer-ksef-gdzie-znalezc` — Numer KSeF: gdzie go znaleźć · „numer KSeF faktury" · A, M · FAQ
 - [ ] `aplikacja-mobilna-ksef` — Aplikacja mobilna KSeF · „aplikacja mobilna KSeF" · A ·
