@@ -22,7 +22,7 @@ sources:
     url: "https://github.com/CIRFMF/ksef-api/blob/main/limity/limity-api.md"
   - label: "MF / CIRF: Uwierzytelnianie (authentication)"
     url: "https://github.com/CIRFMF/ksef-api/blob/main/uwierzytelnianie.md"
-  - label: "KSeF 2.0 Handbook part II (edition of 06.08.2026), sections 1.6.1, 1.6.7 and 3.3 (Polish)"
+  - label: "KSeF 2.0 Handbook part II (edition of 06.08.2026), sections 1.6.1, 1.6.2 and 1.6.7 (Polish)"
     url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
 translationOf: "kody-bledow-ksef"
 translations:
@@ -86,7 +86,7 @@ The invoice status gives the reason: the `description` field holds the descripti
   label="MF / CIRF, Weryfikacja faktury (09.04.2026)"
 />
 
-KSeF does not check calculations, so a mistake in the amounts gets through and you can fix it only with a corrective invoice. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Handbook part II, section 1.6.1" /> We cover the requirements for the XML itself in our post on [stricter file checks](/en/blog/ksef-strict-xml-validation). If you have a rejected XML file, drop it into the [validator](/en/validator): it shows schema errors and MF rule violations, and your file never leaves your browser. It cannot check permissions or duplicates.
+KSeF does not check calculations, so a mistake in the amounts gets through and you can fix it only with a corrective invoice. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Handbook part II, section 1.6.2" /> We cover the requirements for the XML itself in our post on [stricter file checks](/en/blog/ksef-strict-xml-validation). If you have a rejected XML file, drop it into the [validator](/en/validator): it shows schema errors and MF rule violations, and your file never leaves your browser. It cannot check permissions or duplicates.
 
 ## What does code 440 mean for an invoice?
 

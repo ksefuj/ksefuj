@@ -358,7 +358,8 @@ wymaganej roli lub uprawnieniom" (uprawnienia). The KB already noted the 440 spl
 - „21184 = błąd walidacji XML": it is „Sesja tymczasowo niedostępna" (open a new session).
 - „Odrzucona faktura ma UPO / numer KSeF": no; UPO only for a correctly accepted invoice, and no
   number means the invoice was not issued (Fakty 12, 14).
-- „KSeF sprawdza rachunki": it does not (cz. II 1.6.1); arithmetic errors pass and need a korekta.
+- „KSeF sprawdza rachunki": it does not (cz. II 1.6.2, "WAŻNE" box); arithmetic errors pass and need
+  a korekta.
 - „Jest oficjalna lista wszystkich kodów błędów KSeF": there is no single list; codes are spread
   over per-operation tables and per-endpoint 400 tables in `open-api.json`.
 - KSeF 1.0 codes (ksef.mf.gov.pl, dead since 1.02.2026) do not apply to the KSeF 2.0 API; do not
