@@ -439,7 +439,7 @@ both).
 | `Naglowek`                     | `KodFormularza` (with attributes), `WariantFormularza`, `DataWytworzeniaFa`             | §4.1             |
 | `Podmiot1/DaneIdentyfikacyjne` | `NIP`, `Nazwa`                                                                          | §5.3             |
 | `Podmiot1/Adres`               | `KodKraju`, `AdresL1`                                                                   | §5.4             |
-| `Podmiot2/DaneIdentyfikacyjne` | One of: `NIP` / `KodUE`+`NrVatUE` / `NrID` (+opt. `KodKraju`) / `BrakID`; `Nazwa` opt.  | XSD TPodmiot2    |
+| `Podmiot2/DaneIdentyfikacyjne` | One of: `NIP` / `KodUE`+`NrVatUE` / opt. `KodKraju`+`NrID` / `BrakID`; `Nazwa` opt.     | XSD TPodmiot2    |
 | `Podmiot2`                     | `JST`, `GV`                                                                             | §6.1             |
 | `Fa`                           | `KodWaluty`, `P_1`, `P_2`, `P_15`, `Adnotacje`, `RodzajFaktury`                         | §9.2, §9.4, §9.5 |
 | `Fa/Adnotacje`                 | `P_16`, `P_17`, `P_18`, `P_18A`, `Zwolnienie`, `NoweSrodkiTransportu`, `P_23`, `PMarzy` | §9.6             |
