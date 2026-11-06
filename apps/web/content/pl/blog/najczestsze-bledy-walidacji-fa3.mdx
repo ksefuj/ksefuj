@@ -2,7 +2,7 @@
 title: "Co znaczy błąd walidacji KSeF i jak go naprawić?"
 description: "Plik XML nie spełnia wymagań KSeF, zwykle wzoru FA(3), więc KSeF odrzuca fakturę i nie nadaje jej numeru. Opisujemy 12 częstych błędów i ich poprawki."
 date: 2026-03-26
-updated: 2026-11-02
+updated: 2026-11-03
 section: blog
 locale: pl
 slug: "najczestsze-bledy-walidacji-fa3"
@@ -96,9 +96,11 @@ FA(3) ma kilkadziesiąt pól obowiązkowych na różnych poziomach, a walidator 
 - **Naglowek:** `KodFormularza` (z atrybutami `kodSystemowy="FA (3)"` i `wersjaSchemy="1-0E"`), `WariantFormularza`, `DataWytworzeniaFa`
 - **Podmiot1/DaneIdentyfikacyjne:** `NIP`, `Nazwa`
 - **Podmiot1/Adres:** `KodKraju`, `AdresL1`
-- **Podmiot2/DaneIdentyfikacyjne:** `NIP` (lub `KodUE` + `NrVatUE`, lub `KodKraju` + `NrID`), `Nazwa`
+- **Podmiot2/DaneIdentyfikacyjne:** dokładnie jeden identyfikator nabywcy: `NIP`, `KodUE` + `NrVatUE`, `NrID` (poprzedzający go `KodKraju` jest opcjonalny) albo `BrakID` = `1` (nabywca bez identyfikatora, np. konsument)
 - **Podmiot2:** `JST`, `GV`
 - **Fa:** `KodWaluty`, `P_1`, `P_2`, `P_15`, `Adnotacje`, `RodzajFaktury`
+
+`Nazwa` nabywcy jest w schemacie opcjonalna, więc jej brak nie da błędu walidacji schematu. Adnotacja w schemacie i Podręcznik KSeF wiążą pominięcie nazwy z fakturą uproszczoną do 450 zł albo 100 euro (`RodzajFaktury` = `UPR`), więc na zwykłej fakturze wpisz nazwę nabywcy. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, faktura uproszczona do 450 zł" />
 
 <XmlExample copyable>
   ```xml
@@ -268,18 +270,20 @@ Więcej o tym błędzie: [Nieprawidłowa stawka VAT w P_12: co wpisać](/validat
 
 ## 9. Zła identyfikacja zagranicznego nabywcy
 
-W FA(3) nabywcę identyfikuje się inaczej w zależności od kraju:
+W FA(3) nabywcę identyfikuje się inaczej w zależności od kraju i tego, czy to firma:
 
 - **Polska:** pole `NIP` (10 cyfr, bez prefiksu),
 - **UE:** `KodUE` + `NrVatUE` (kod kraju osobno, numer VAT bez prefiksu),
-- **poza UE:** `KodKraju` + `NrID`.
+- **poza UE:** identyfikator nie jest wymagany, wystarczy `BrakID` = `1`; jeśli go podajesz, wpisz go w `NrID`, a kod kraju osobno w `KodKraju`,
+- **konsument:** `BrakID` = `1`.
 
-Częsty błąd to kod kraju wewnątrz numeru VAT (`DE123456789` w `NrVatUE`). `KodKraju` w `DaneIdentyfikacyjne` dotyczy identyfikacji podatkowej, a `KodKraju` w `Adres` adresu. To dwa osobne pola.
+Częsty błąd to kod kraju wewnątrz numeru VAT (`DE123456789` w `NrVatUE`) albo w `NrID`. `KodKraju` w `DaneIdentyfikacyjne` dotyczy identyfikacji podatkowej, a `KodKraju` w `Adres` adresu. To dwa osobne pola.
 
 <XmlExample copyable>
   ```xml
   <!-- ❌ Prefiks kraju w numerze VAT -->
   <DaneIdentyfikacyjne>
+    <KodUE>DE</KodUE>
     <NrVatUE>DE123456789</NrVatUE>
     <Nazwa>Deutsche Firma GmbH</Nazwa>
   </DaneIdentyfikacyjne>
@@ -295,8 +299,18 @@ Częsty błąd to kod kraju wewnątrz numeru VAT (`DE123456789` w `NrVatUE`). `K
     <NrID>12-3456789</NrID>
     <Nazwa>American Corp</Nazwa>
   </DaneIdentyfikacyjne>
+  <!-- ✅ Konsument / nabywca bez identyfikatora -->
+  <DaneIdentyfikacyjne>
+    <BrakID>1</BrakID>
+    <Nazwa>Jan Kowalski</Nazwa>
+  </DaneIdentyfikacyjne>
   ```
 </XmlExample>
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. II, identyfikacja nabywcy"
+/>
 
 ## 10. P_15 nie zgadza się z sumami
 
