@@ -208,12 +208,16 @@ works during a download outage: NOT IN KB. Ania: yes.
 U6. **Nabywca nie musi akceptować faktury.** Art. 106na ust. 2 uchylony od 1.02.2026 (cz. II pkt 5).
 Confidence: HIGH. Ania: yes.
 
-### Unverified: komunikat MF z 2026-10-13 (awaria 16-17.10.2026)
+### Komunikat MF z 2026-10-13 (utrudnienia 16-17.10.2026)
 
-- Backlog mentions an MF „komunikaty techniczne” notice (2026-10-13) about 16-17.10.2026 where
-  downloading was unavailable and sending worked. NOT IN KB, could not be fetched (gov hosts 403).
-  Content, dates and whether it was an announcement under art. 106ne: UNKNOWN. The post must not
-  describe it, date it, or cite it.
+- Verified 2026-11-06 (Constitutional Judge, fetched from this machine): „Możliwe utrudnienia w
+  dostępie do faktur w Krajowym Systemie e-Faktur”, opublikowano 13.10.2026,
+  https://ksef.podatki.gov.pl/komunikaty-techniczne/mozliwe-utrudnienia-w-dostepie-do-faktur-w-krajowym-systemie-e-faktur/
+  Verbatim: „16 października 2026 r. od godz. 22:00 do 17 października 2026 r. do godz. 3:00 mogą
+  występować przejściowe utrudnienia w działaniu API KSeF 2.0 w zakresie pobierania faktur.”;
+  „proces wysyłki faktur będzie działać prawidłowo i bez zakłóceń.” The notice does not cite art.
+  106ne and says nothing about offline modes, so whether it is an art. 106ne announcement stays
+  UNKNOWN (Unsettled 1 below).
 
 ### Unsettled Questions (update)
 
