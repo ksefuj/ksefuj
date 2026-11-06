@@ -1,0 +1,146 @@
+---
+title: "KSeF error 450: rejected invoice or bad token?"
+description: "On an invoice, 450 means semantic verification failed: KSeF assigns no number, so fix the file and resend it. At login, 450 means an invalid token."
+date: 2026-11-06
+section: blog
+locale: en
+slug: "ksef-error-codes"
+topic: "errors"
+tags: ["KSeF", "Validation", "FA(3)"]
+sources:
+  - label: "CIRFMF/ksef-api: OpenAPI specification (status tables, HTTP 400 error codes)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
+  - label: "CIRFMF/ksef-api: API changelog (versions 2.0.0 RC5 to 2.9.0)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md"
+  - label: "MF / CIRF: Weryfikacja faktury (invoice verification), 09.04.2026"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md"
+  - label: "MF / CIRF: Sesja: sprawdzenie stanu i pobranie UPO (session status and UPO download), 20.04.2026"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/sesje/sesja-sprawdzenie-stanu-i-pobranie-upo.md"
+  - label: "MF / CIRF: Korekta techniczna faktury offline (technical correction of offline invoices), 20.08.2025"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/offline/korekta-techniczna.md"
+  - label: "MF / CIRF: Limity żądań API (API request limits), 14.09.2026"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/limity/limity-api.md"
+  - label: "MF / CIRF: Uwierzytelnianie (authentication)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/uwierzytelnianie.md"
+  - label: "KSeF 2.0 Handbook part II (edition of 06.08.2026), sections 1.6.1, 1.6.2 and 1.6.7 (Polish)"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+translationOf: "kody-bledow-ksef"
+translations:
+  pl: "kody-bledow-ksef"
+  en: "ksef-error-codes"
+---
+
+In KSeF (Krajowy System e-Faktur, Poland's national e-invoicing system), code 450 depends on the operation that returned it: for a submitted invoice it means "Błąd weryfikacji semantyki dokumentu faktury" (semantic verification of the invoice document failed), and at login it means an invalid token. An invoice with that status gets no KSeF number and has not been issued, so you fix the file using the description in the `details` field and send it again.
+
+Status as of 6 November 2026 (KSeF API version 2.9.0).
+
+## Why does the same code mean different things?
+
+The KSeF API specification (the `open-api.json` file) has no single list of codes. Each operation has its own status table, and the numbers repeat across them. Codes from the old KSeF 1.0 do not apply.
+
+| Code | Invoice in a session                                                          | Session                                                                                | Permissions                                                                                                                                  |
+| ---- | ----------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| 430  | "Błąd weryfikacji pliku faktury" (invoice file verification failed)           | "Błąd dekompresji pierwotnego archiwum" (original archive decompression failed, batch) | "Kontekst identyfikatora nie odpowiada wymaganej roli lub uprawnieniom" (identifier context does not match the required role or permissions) |
+| 440  | "Duplikat faktury" (duplicate invoice)                                        | "Sesja anulowana" (session cancelled)                                                  | "Operacja niedozwolona dla wskazanych powiązań identyfikatorów" (operation not allowed for the given identifier relationships)               |
+| 450  | "Błąd weryfikacji semantyki dokumentu faktury" (semantic verification failed) | (none)                                                                                 | "Operacja niedozwolona dla wskazanego identyfikatora lub jego typu" (operation not allowed for the given identifier or its type)             |
+
+During authentication (when your software logs in to KSeF), 450 means something else again: "Uwierzytelnianie zakończone niepowodzeniem z powodu błędnego tokenu" (authentication failed because of an invalid token). <Source href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json" label="CIRFMF/ksef-api, open-api.json" />
+
+If your software shows only the number, check where it appeared: on invoice submission, at login or when granting permissions. A three-digit code is the status of an operation, which your software polls KSeF for after sending a request. Four- and five-digit codes (such as `21405`) and 401, 403 and 429 are a different family, covered below in the developer section.
+
+## What do the statuses of a submitted invoice mean?
+
+| Code | Description in the specification                                                              |
+| ---- | --------------------------------------------------------------------------------------------- |
+| 100  | "Faktura przyjęta do dalszego przetwarzania" (invoice accepted for further processing)        |
+| 150  | "Trwa przetwarzanie" (processing in progress)                                                 |
+| 200  | "Sukces" (success)                                                                            |
+| 405  | "Przetwarzanie anulowane z powodu błędu sesji" (processing cancelled due to a session error)  |
+| 410  | "Nieprawidłowy zakres uprawnień" (invalid scope of permissions)                               |
+| 415  | "Brak możliwości wysyłania faktury z załącznikiem" (invoices with attachments cannot be sent) |
+| 430  | "Błąd weryfikacji pliku faktury" (invoice file verification failed)                           |
+| 435  | "Błąd odszyfrowania pliku" (file decryption failed)                                           |
+| 440  | "Duplikat faktury" (duplicate invoice)                                                        |
+| 450  | "Błąd weryfikacji semantyki dokumentu faktury" (semantic verification failed)                 |
+| 500  | "Nieznany błąd" (unknown error) (`{statusCode}`)                                              |
+| 550  | "Operacja została anulowana przez system" (operation cancelled by the system)                 |
+
+For 550 the specification adds: "Przetwarzanie zostało przerwane z przyczyn wewnętrznych systemu. Spróbuj ponownie" (processing was interrupted for internal system reasons; try again). Only 200 means the invoice has a KSeF number. The UPO (Urzędowe Poświadczenie Odbioru, the official receipt) can be downloaded only "dla pojedynczej, poprawnie przyjętej faktury" (for a single, correctly accepted invoice), so a 4xx status comes with no receipt. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/sesje/sesja-sprawdzenie-stanu-i-pobranie-upo.md" label="MF / CIRF, Sesja: sprawdzenie stanu i pobranie UPO, section 5" />
+
+## What should you do when KSeF rejects an invoice with 430 or 450?
+
+Fix the file and send it again. The Ministry of Finance (MF) says so directly: "W przypadku negatywnej weryfikacji system nie przydziela numeru KSeF faktury. Oznacza to, że faktura nie została wystawiona." (If verification fails, the system assigns no KSeF number, which means the invoice has not been issued.) <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Handbook part II, section 1.6.1" /> You do not issue a corrective invoice, because there is nothing to correct. Resending may disturb the order of invoice numbers in KSeF, and that is allowed. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Handbook part II, section 1.6.7" />
+
+The invoice status gives the reason: the `description` field holds the description and `details` holds additional detail. Krystyna, an accountant whose client's software shows only "450", should ask the software vendor for the content of `details`, because the number alone does not say what to fix.
+
+**The documentation does not say which errors produce 430 and which produce 450**, nor what text goes into `details` (the field is empty in the specification table). So don't guess from the code alone. Check the reasons KSeF rejects an invoice according to the "Weryfikacja faktury" (invoice verification) page:
+
+- the file does not match the schema declared when the session was opened, is not UTF-8 or has a BOM, or contains processing instructions (`<?...?>`) or discouraged Unicode characters;
+- the issue date `P_1` is later than the day KSeF accepted the file;
+- a NIP (Polish tax identification number) with an invalid checksum in `Podmiot1`, `Podmiot2`, `Podmiot3` or `PodmiotUpowazniony` (checked only in production);
+- the file exceeds the size limit, encryption fails, or the hash and size in the metadata do not match;
+- missing permissions.
+
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md"
+  label="MF / CIRF, Weryfikacja faktury (09.04.2026)"
+/>
+
+KSeF does not check calculations, so a mistake in the amounts gets through and you can fix it only with a corrective invoice. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Handbook part II, section 1.6.2" /> We cover the requirements for the XML itself in our post on [stricter file checks](/en/blog/ksef-strict-xml-validation). If you have a rejected XML file, drop it into the [validator](/en/validator): it shows schema errors and MF rule violations, and your file never leaves your browser. It cannot check permissions or duplicates.
+
+## What does code 440 mean for an invoice?
+
+Duplicate: KSeF already holds an invoice with the same seller NIP (`Podmiot1`), invoice type (`RodzajFaktury`) and number (`P_2`). It enforces this uniqueness for 10 full years from the end of the year in which the invoice was issued. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md" label="MF / CIRF, Weryfikacja faktury, section on duplicates" />
+
+**Do not send this invoice again.** The first copy has been issued, and the duplicate status points to it in the `extensions` field: `originalKsefNumber` is the KSeF number of the original, and `originalSessionReferenceNumber` is the session in which it was accepted. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json" label="CIRFMF/ksef-api, open-api.json (InvoiceStatusInfo)" /> If it is a different invoice that got the same number and type by mistake, KSeF will accept it only with a different number in `P_2`. If the same invoice reached KSeF twice under different numbers, see our post on [why you cannot delete an invoice from KSeF](/en/blog/delete-invoice-ksef).
+
+## What should you do when KSeF rejects an invoice issued offline?
+
+Send a technical correction (korekta techniczna). It lets you resubmit an offline invoice that KSeF rejected for technical reasons, such as a schema mismatch, a file that is too large, or a duplicate. You may not change the invoice content in it, it does not cover rejections for missing permissions, it works only in an interactive session, and it fails if KSeF has already accepted another valid technical correction of that invoice (exception `21166`). You cannot send a technical correction for an invoice that was processed successfully (`21167`). <Source href="https://github.com/CIRFMF/ksef-api/blob/main/offline/korekta-techniczna.md" label="MF / CIRF, Korekta techniczna faktury offline" /> Deadlines for submitting offline invoices are in our [guide to KSeF outages](/en/guides/ksef-outage-offline-mode).
+
+## What do 450 and other codes mean at login?
+
+| Code | Description in the specification (detail in brackets)                                                                                                                                    |
+| ---- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 415  | "Uwierzytelnianie zakończone niepowodzeniem (brak przypisanych uprawnień)" (authentication failed: no permissions assigned)                                                              |
+| 425  | "Uwierzytelnienie unieważnione" (authentication revoked)                                                                                                                                 |
+| 450  | "Uwierzytelnianie zakończone niepowodzeniem z powodu błędnego tokenu" (authentication failed because of an invalid token)                                                                |
+| 460  | "Uwierzytelnianie zakończone niepowodzeniem z powodu błędu certyfikatu" (authentication failed because of a certificate error)                                                           |
+| 470  | "Uwierzytelnianie zakończone niepowodzeniem (próba wykorzystania metod autoryzacyjnych osoby zmarłej)" (authentication failed: attempt to use a deceased person's authorisation methods) |
+| 480  | "Uwierzytelnienie zablokowane" (authentication blocked)                                                                                                                                  |
+
+For 450 the `details` field narrows down the cause, for example "Token unieważniony" (token revoked), "Token nieaktywny" (token inactive) or "Nieprawidłowe wyzwanie autoryzacyjne" (invalid authorisation challenge). Since API version 2.6.1 these messages are in Polish. For 460 you learn whether the certificate is invalid, revoked or suspended. For 480 the specification tells you to contact MF through the submission form (suspected security incident). <Source href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json" label="CIRFMF/ksef-api, open-api.json (authentication status)" /> <Source href="https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md" label="CIRFMF/ksef-api, changelog 2.6.1" />
+
+## For developers: HTTP 400 codes and rate limits
+
+### Where do the five-digit codes come from?
+
+KSeF returns them in an HTTP 400 response to the request itself (for example an invoice submission), not in an operation status. There is no official consolidated list: each endpoint in `open-api.json` has its own `ExceptionCode | ExceptionDescription | Details` table, and the specification does not say whether the API returns codes outside those tables. The 2.9.0 changelog admits that the API returned code `21001` ("Nieczytelna treść", unreadable content) before it was documented. The default `ExceptionResponse` format (`exceptionDetailList[]`) is marked `deprecated`. Since version 2.4.0 the `X-Error-Format: problem-details` header switches to the Problem Details format with an `errors[]` list (`code`, `description`, `details`), in which errors are not aggregated. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md" label="CIRFMF/ksef-api, changelog 2.4.0" />
+
+The codes most often misread:
+
+- `21405` "Błąd walidacji danych wejściowych." (input data validation error) is the generic request validation code, which according to the RC5 changelog was added to all endpoints; the error text is in `details`.
+- `21184` "Sesja tymczasowo niedostępna." (session temporarily unavailable) is not an invoice error. It appears when submission in an existing session is temporarily suspended, and MF recommends opening a new session and continuing there. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md" label="CIRFMF/ksef-api, changelog 2.8.0" />
+- `21401` "Dokument nie jest zgodny ze schemą (xsd)." (document does not match the XSD schema) refers to the signed authentication request (`POST /auth/xades-signature`), not the invoice file.
+- `21402` and `21403` on invoice submission mean the file size or hash does not match the request metadata.
+
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
+  label="CIRFMF/ksef-api, open-api.json (400 responses)"
+/>
+
+You can fetch all rejected invoices of a session from `GET /sessions/{referenceNumber}/invoices/failed`: the endpoint returns their count plus the status and error details of each one. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/sesje/sesja-sprawdzenie-stanu-i-pobranie-upo.md" label="MF / CIRF, Sesja: sprawdzenie stanu i pobranie UPO, section 6" /> When KSeF managed to read the invoice number, as with 440, the response also includes `invoiceNumber`. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md" label="CIRFMF/ksef-api, changelog RC5.3" />
+
+### What do 401, 403, 429 and 410 mean?
+
+You get 401 ("Wymagane jest uwierzytelnienie.", authentication required) when the request carries no valid authentication. The access token is short-lived (the `exp` field), the refresh token lasts up to 7 days. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/uwierzytelnianie.md" label="MF / CIRF, Uwierzytelnianie, section 4" /> With 403 the `reasonCode` field says why, for example `missing-permissions` (the `security` object then lists the required and held permissions) or `ip-not-allowed`, when the request came from a different IP address than the one given during authentication. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json" label="CIRFMF/ksef-api, open-api.json (ForbiddenProblemDetails)" />
+
+429 means you exceeded the rate limit. The block duration is dynamic: the `Retry-After` header gives it in seconds, and repeated violations can extend it considerably. Limits apply per context and IP address pair, and the per-second, per-minute and per-hour thresholds run in parallel. Invoice submission in an interactive session is limited to 10 requests per second, 30 per minute and 180 per hour; invoice status polling to 30, 120 and 1200. DEMO has the same limits as production. For the test environment the documentation is inconsistent: the limits page says the values are ten times higher, while the 2.5.0 changelog says they were aligned with production. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/limity/limity-api.md" label="MF / CIRF, Limity żądań API (14.09.2026)" />
+
+You get 410 Gone when you ask for a status after its retention period: 7 days for authentication and export, 30 days for certificates and permissions. No retention period is currently planned for session and invoice submission statuses. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md" label="CIRFMF/ksef-api, changelog 2.4.0" />
+
+## What does the KSeF documentation not explain yet?
+
+We found no official information on whether the Aplikacja Podatnika (the MF Taxpayer App) shows numeric error codes, or in what form it gives the reason for a rejection. Nor is there a separate status code for files that break the strict XML rules. The changelog still gives 16 July 2026 as the start of enforcement in production, and the documentation gives neither a newer date nor confirmation that production already rejects such files. It does describe the `X-System-Warning` header, which carries a technical warning that does not change the outcome of the operation. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md" label="CIRFMF/ksef-api, changelog (up to version 2.9.0)" />
+
+If `details` points to the invoice content, fixes for the most common faults are in our overview of [FA(3) validation errors](/en/blog/most-common-fa3-validation-errors).

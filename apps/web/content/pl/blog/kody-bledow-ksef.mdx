@@ -1,0 +1,149 @@
+---
+title: "Błąd 450 w KSeF znaczy co innego przy fakturze"
+description: "Przy fakturze 450 to błąd weryfikacji semantyki: KSeF nie nadaje numeru, więc poprawiasz plik i wysyłasz go ponownie. Przy logowaniu 450 to błędny token."
+date: 2026-11-06
+section: blog
+locale: pl
+slug: "kody-bledow-ksef"
+topic: "errors"
+tags: ["KSeF", "Walidacja", "FA(3)"]
+related:
+  - "blog/najczestsze-bledy-walidacji-fa3"
+  - "blog/ksef-scisla-walidacja-xml"
+  - "guides/awaria-ksef-offline"
+sources:
+  - label: "CIRFMF/ksef-api: specyfikacja OpenAPI (tabele statusów, kody błędów HTTP 400)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
+  - label: "CIRFMF/ksef-api: changelog API (wersje 2.0.0 RC5–2.9.0)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md"
+  - label: "MF / CIRF: Weryfikacja faktury (09.04.2026)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md"
+  - label: "MF / CIRF: Sesja – sprawdzenie stanu i pobranie UPO (20.04.2026)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/sesje/sesja-sprawdzenie-stanu-i-pobranie-upo.md"
+  - label: "MF / CIRF: Korekta techniczna faktury offline (20.08.2025)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/offline/korekta-techniczna.md"
+  - label: "MF / CIRF: Limity żądań API (14.09.2026)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/limity/limity-api.md"
+  - label: "MF / CIRF: Uwierzytelnianie"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/uwierzytelnianie.md"
+  - label: "Podręcznik KSeF 2.0 cz. II (wydanie 06.08.2026), pkt 1.6.1, 1.6.2 i 1.6.7"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+translations:
+  pl: "kody-bledow-ksef"
+  en: "ksef-error-codes"
+---
+
+Kod 450 w KSeF zależy od operacji, która go zwróciła: przy wysłanej fakturze oznacza „Błąd weryfikacji semantyki dokumentu faktury”, a przy logowaniu błędny token. Faktura z takim statusem nie dostaje numeru KSeF i nie jest wystawiona, więc poprawiasz plik według opisu w polu `details` i wysyłasz go ponownie.
+
+Stan na 6 listopada 2026 r. (API KSeF w wersji 2.9.0).
+
+## Dlaczego ten sam kod znaczy co innego?
+
+Specyfikacja API KSeF (plik `open-api.json`) nie ma jednej listy kodów. Każda operacja ma własną tabelę statusów i numery w nich się powtarzają. Kody z dawnego KSeF 1.0 nie mają tu zastosowania.
+
+| Kod | Faktura w sesji                              | Sesja                                           | Uprawnienia                                                           |
+| --- | -------------------------------------------- | ----------------------------------------------- | --------------------------------------------------------------------- |
+| 430 | Błąd weryfikacji pliku faktury               | Błąd dekompresji pierwotnego archiwum (wsadowa) | Kontekst identyfikatora nie odpowiada wymaganej roli lub uprawnieniom |
+| 440 | Duplikat faktury                             | Sesja anulowana                                 | Operacja niedozwolona dla wskazanych powiązań identyfikatorów         |
+| 450 | Błąd weryfikacji semantyki dokumentu faktury | (brak)                                          | Operacja niedozwolona dla wskazanego identyfikatora lub jego typu     |
+
+Przy uwierzytelnianiu (logowaniu programu do KSeF) 450 to jeszcze coś innego: „Uwierzytelnianie zakończone niepowodzeniem z powodu błędnego tokenu”. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json" label="CIRFMF/ksef-api, open-api.json" />
+
+Jeśli twój program pokazuje sam numer, sprawdź, przy czym się pojawił: przy wysyłce faktury, przy logowaniu czy przy nadawaniu uprawnień. Trzycyfrowy kod to status operacji, o który program pyta KSeF po wysłaniu żądania. Kody cztero- i pięciocyfrowe (np. `21405`) oraz 401, 403 i 429 to inna rodzina, opisana niżej w części dla programistów.
+
+## Co oznaczają statusy wysłanej faktury?
+
+| Kod | Opis w specyfikacji                              |
+| --- | ------------------------------------------------ |
+| 100 | Faktura przyjęta do dalszego przetwarzania       |
+| 150 | Trwa przetwarzanie                               |
+| 200 | Sukces                                           |
+| 405 | Przetwarzanie anulowane z powodu błędu sesji     |
+| 410 | Nieprawidłowy zakres uprawnień                   |
+| 415 | Brak możliwości wysyłania faktury z załącznikiem |
+| 430 | Błąd weryfikacji pliku faktury                   |
+| 435 | Błąd odszyfrowania pliku                         |
+| 440 | Duplikat faktury                                 |
+| 450 | Błąd weryfikacji semantyki dokumentu faktury     |
+| 500 | Nieznany błąd (`{statusCode}`)                   |
+| 550 | Operacja została anulowana przez system          |
+
+Przy 550 specyfikacja dopisuje: „Przetwarzanie zostało przerwane z przyczyn wewnętrznych systemu. Spróbuj ponownie”. Tylko 200 oznacza fakturę z numerem KSeF. UPO można pobrać tylko „dla pojedynczej, poprawnie przyjętej faktury”, więc przy 4xx potwierdzenia nie będzie. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/sesje/sesja-sprawdzenie-stanu-i-pobranie-upo.md" label="MF / CIRF, Sesja – sprawdzenie stanu i pobranie UPO, pkt 5" />
+
+## Co zrobić, gdy KSeF odrzucił fakturę z kodem 430 lub 450?
+
+Poprawić plik i wysłać go jeszcze raz. MF pisze wprost: „W przypadku negatywnej weryfikacji system nie przydziela numeru KSeF faktury. Oznacza to, że faktura nie została wystawiona.” <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0 cz. II, pkt 1.6.1" /> Nie wystawiasz korekty, bo nie ma czego korygować. Ponowna wysyłka może zaburzyć kolejność numerów faktur w KSeF i jest to dopuszczalne. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0 cz. II, pkt 1.6.7" />
+
+Przyczynę podaje status faktury: pole `description` z opisem i `details` z dodatkowymi szczegółami. Pani Krystyna, której program klienta pokazuje tylko „450”, powinna poprosić jego dostawcę o treść `details`, bo sam numer nie mówi, co poprawić.
+
+**Dokumentacja nie mówi, które błędy dają 430, a które 450**, ani jaki tekst trafia wtedy do `details` (w tabeli specyfikacji to pole jest puste). Nie zgaduj więc na podstawie samego kodu. Sprawdź listę tego, za co KSeF odrzuca fakturę według strony „Weryfikacja faktury”:
+
+- plik niezgodny ze schematem zadeklarowanym przy otwarciu sesji, nie w UTF-8 albo z BOM, z instrukcjami przetwarzania (`<?...?>`) lub niezalecanymi znakami Unicode;
+- data wystawienia `P_1` późniejsza niż dzień przyjęcia pliku przez KSeF;
+- błędna suma kontrolna NIP w `Podmiot1`, `Podmiot2`, `Podmiot3` lub `PodmiotUpowazniony` (sprawdzana tylko w środowisku produkcyjnym);
+- przekroczony dopuszczalny rozmiar pliku, błędy szyfrowania albo niezgodny skrót i rozmiar w metadanych;
+- brak uprawnień.
+
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md"
+  label="MF / CIRF, Weryfikacja faktury (09.04.2026)"
+/>
+
+KSeF nie sprawdza obliczeń, więc pomyłka w kwotach przejdzie i poprawisz ją dopiero korektą. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0 cz. II, pkt 1.6.2" /> Wymogi dotyczące samego XML opisujemy w artykule o [ostrzejszym sprawdzaniu plików](/blog/ksef-scisla-walidacja-xml). Jeśli masz odrzucony plik XML, wrzuć go do [walidatora](/validator): pokaże błędy schematu i reguł MF, a twój plik nie opuszcza przeglądarki. Uprawnień ani duplikatów nie sprawdzi.
+
+## Co oznacza kod 440 przy fakturze?
+
+Duplikat: KSeF ma już fakturę z tym samym NIP sprzedawcy (`Podmiot1`), rodzajem faktury (`RodzajFaktury`) i numerem (`P_2`). Pilnuje tej unikalności przez 10 pełnych lat od końca roku, w którym fakturę wystawiono. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md" label="MF / CIRF, Weryfikacja faktury, sekcja o duplikatach" />
+
+**Nie wysyłaj tej faktury ponownie.** Pierwszy egzemplarz jest wystawiony, a status duplikatu wskazuje go w polu `extensions`: `originalKsefNumber` to numer KSeF oryginału, a `originalSessionReferenceNumber` to sesja, w której go przyjęto. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json" label="CIRFMF/ksef-api, open-api.json (InvoiceStatusInfo)" /> Jeśli to inna faktura, która przez pomyłkę dostała ten sam numer i rodzaj, KSeF przyjmie ją dopiero z innym numerem w `P_2`. Co zrobić, gdy ta sama faktura trafiła do KSeF dwa razy pod różnymi numerami, piszemy w tekście o tym, [dlaczego faktury z KSeF nie usuniesz](/blog/usuniecie-faktury-ksef).
+
+## Co zrobić, gdy KSeF odrzuci fakturę wystawioną offline?
+
+Wysłać korektę techniczną. Pozwala ona ponownie przesłać fakturę offline, którą KSeF odrzucił z powodu błędów technicznych, np. niezgodności ze schematem, zbyt dużego pliku albo duplikatu. Nie wolno w niej zmieniać treści faktury, nie obejmuje odrzuceń za brak uprawnień, działa tylko w sesji interaktywnej i nie przejdzie, jeśli KSeF przyjął już inną prawidłową korektę techniczną tej faktury (wyjątek `21166`). Do faktury przetworzonej poprawnie korekty technicznej nie wyślesz (`21167`). <Source href="https://github.com/CIRFMF/ksef-api/blob/main/offline/korekta-techniczna.md" label="MF / CIRF, Korekta techniczna faktury offline" /> Terminy dosyłania faktur offline opisuje [poradnik o awarii KSeF](/guides/awaria-ksef-offline).
+
+## Co oznacza 450 i inne kody przy logowaniu?
+
+| Kod | Opis w specyfikacji (szczegóły w nawiasie)                                                           |
+| --- | ---------------------------------------------------------------------------------------------------- |
+| 415 | Uwierzytelnianie zakończone niepowodzeniem (brak przypisanych uprawnień)                             |
+| 425 | Uwierzytelnienie unieważnione                                                                        |
+| 450 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędnego tokenu                                  |
+| 460 | Uwierzytelnianie zakończone niepowodzeniem z powodu błędu certyfikatu                                |
+| 470 | Uwierzytelnianie zakończone niepowodzeniem (próba wykorzystania metod autoryzacyjnych osoby zmarłej) |
+| 480 | Uwierzytelnienie zablokowane                                                                         |
+
+Przy 450 pole `details` precyzuje przyczynę, np. „Token unieważniony”, „Token nieaktywny” albo „Nieprawidłowe wyzwanie autoryzacyjne”. Od wersji API 2.6.1 te komunikaty są po polsku. Przy 460 dowiesz się, czy certyfikat jest nieważny, odwołany czy zawieszony. Przy 480 specyfikacja każe skontaktować się z MF przez formularz zgłoszeniowy (podejrzenie incydentu bezpieczeństwa). <Source href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json" label="CIRFMF/ksef-api, open-api.json (status uwierzytelniania)" /> <Source href="https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md" label="CIRFMF/ksef-api, changelog 2.6.1" />
+
+## Dla programistów: kody HTTP 400 i limity
+
+### Skąd biorą się kody pięciocyfrowe?
+
+KSeF zwraca je w odpowiedzi HTTP 400 na samo żądanie (np. wysyłkę faktury), a nie w statusie operacji. Oficjalnej zbiorczej listy nie ma: każdy endpoint w `open-api.json` ma własną tabelę `ExceptionCode | ExceptionDescription | Details`, a specyfikacja nie mówi, czy API zwraca kody spoza tych tabel. Changelog 2.9.0 przyznaje, że kod `21001` („Nieczytelna treść”) API zwracało, zanim trafił do dokumentacji. Domyślny format `ExceptionResponse` (`exceptionDetailList[]`) jest oznaczony jako `deprecated`. Od wersji 2.4.0 nagłówkiem `X-Error-Format: problem-details` włączysz format Problem Details z listą `errors[]` (`code`, `description`, `details`), w której błędy nie są agregowane. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md" label="CIRFMF/ksef-api, changelog 2.4.0" />
+
+Kody, które najczęściej mylą:
+
+- `21405` „Błąd walidacji danych wejściowych.” to uniwersalny kod walidacji żądania, który według changelogu RC5 dodano do wszystkich endpointów; treść błędu jest w `details`.
+- `21184` „Sesja tymczasowo niedostępna.” to nie błąd faktury. Pojawia się przy czasowym wstrzymaniu wysyłki w istniejącej sesji, a MF zaleca otworzyć nową sesję i wysyłać dalej. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md" label="CIRFMF/ksef-api, changelog 2.8.0" />
+- `21401` „Dokument nie jest zgodny ze schemą (xsd).” dotyczy podpisanego żądania uwierzytelnienia (`POST /auth/xades-signature`), a nie pliku faktury.
+- `21402` i `21403` przy wysyłce faktury oznaczają niezgodny rozmiar albo skrót pliku z metadanymi żądania.
+
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
+  label="CIRFMF/ksef-api, open-api.json (odpowiedzi 400)"
+/>
+
+Odrzucone faktury całej sesji pobierzesz z `GET /sessions/{referenceNumber}/invoices/failed`: endpoint zwraca ich liczbę oraz status i szczegóły błędów każdej z nich. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/sesje/sesja-sprawdzenie-stanu-i-pobranie-upo.md" label="MF / CIRF, Sesja – sprawdzenie stanu i pobranie UPO, pkt 6" /> Gdy KSeF zdołał odczytać numer faktury, np. przy 440, odpowiedź zawiera też `invoiceNumber`. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md" label="CIRFMF/ksef-api, changelog RC5.3" />
+
+### Co znaczą 401, 403, 429 i 410?
+
+401 („Wymagane jest uwierzytelnienie.”) dostajesz, gdy żądanie nie ma ważnego uwierzytelnienia. Token dostępowy jest ważny krótko (pole `exp`), refresh token do 7 dni. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/uwierzytelnianie.md" label="MF / CIRF, Uwierzytelnianie, pkt 4" /> Przy 403 pole `reasonCode` mówi dlaczego, np. `missing-permissions` (obiekt `security` wymienia wtedy wymagane i posiadane uprawnienia) albo `ip-not-allowed`, gdy żądanie przyszło z innego adresu IP niż wskazany podczas uwierzytelnienia. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json" label="CIRFMF/ksef-api, open-api.json (ForbiddenProblemDetails)" />
+
+429 to przekroczony limit żądań. Czas blokady jest dynamiczny, podaje go nagłówek `Retry-After` w sekundach, a powtarzane przekroczenia mogą ją znacznie wydłużyć. Limity liczą się dla pary kontekst i adres IP, a progi na sekundę, minutę i godzinę działają równolegle. Wysyłka faktury w sesji interaktywnej ma limit 10 żądań na sekundę, 30 na minutę i 180 na godzinę, a odpytywanie o status faktury 30, 120 i 1200. W DEMO limity są takie jak na produkcji. Co do środowiska testowego dokumentacja jest niespójna: strona o limitach mówi o wartościach dziesięciokrotnie wyższych, a changelog 2.5.0 o zrównaniu ich z produkcją. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/limity/limity-api.md" label="MF / CIRF, Limity żądań API (14.09.2026)" />
+
+410 Gone dostaniesz, gdy pytasz o status po okresie przechowywania: 7 dni dla uwierzytelnienia i eksportu, 30 dni dla certyfikatu i uprawnień. Dla statusów sesji i wysyłki faktur okresu przechowywania obecnie nie planuje się. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md" label="CIRFMF/ksef-api, changelog 2.4.0" />
+
+## Czego dokumentacja KSeF jeszcze nie wyjaśnia?
+
+Nie znaleźliśmy oficjalnej informacji, czy Aplikacja Podatnika pokazuje numeryczne kody błędów, ani w jakiej formie podaje przyczynę odrzucenia. Nie ma też osobnego kodu statusu dla plików, które łamią zasady ścisłej walidacji XML. Changelog nadal podaje 16 lipca 2026 r. jako początek egzekwowania na produkcji, a nowszej daty ani potwierdzenia, że produkcja już odrzuca takie pliki, dokumentacja nie podaje. Opisuje za to nagłówek `X-System-Warning` z ostrzeżeniem technicznym, które nie zmienia wyniku operacji. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md" label="CIRFMF/ksef-api, changelog (do wersji 2.9.0)" />
+
+Jeśli `details` wskazuje na treść faktury, poprawki najczęstszych usterek znajdziesz w opisie [błędów walidacji FA(3)](/blog/najczestsze-bledy-walidacji-fa3).
