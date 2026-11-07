@@ -5,6 +5,31 @@ effect. Record the date, the page, what changed (old -> new for titles and descr
 metric that motivated it. After 28 days, add a **Results** line comparing current CTR/position with
 the baseline.
 
+## 2026-11-07
+
+GSC 28-day data supplied by hand (pages that rank but get almost no clicks). `updated` left
+unchanged: metadata-only edits are not significant content updates.
+
+- **Page:** `/guides/logowanie-ksef`
+  - **Change:** title "Do KSeF zalogujesz się Profilem Zaufanym" -> "Logowanie do KSeF Profilem
+    Zaufanym lub podpisem"; description now lists the login.gov.pl methods and the qualified
+    signature, token note kept.
+  - **Motivation:** "ksef logowanie" 213 impr pos 9.4, "kse logowanie" 152 pos 9.2, "ksef logowanie
+    przez profil zaufany" 178 pos 5.1 (4 clicks), "ksef 2.0 logowanie przez profil zaufany" 43 pos
+    8.2. The old title lacked the head term.
+- **Page:** `/en/guides/ksef-login`
+  - **Change:** title "KSeF login: Profil Zaufany or qualified signature" -> "KSeF login with Profil
+    Zaufany or e-signature"; description leads with "KSeF login goes through login.gov.pl".
+  - **Motivation:** "ksef login" 231 impr pos 4.8 (1 click), "ksef logowanie" 146 pos 8.4, "ksef log
+    in" 36 pos 5.0.
+- **Page:** `/blog/najczestsze-bledy-walidacji-fa3`
+  - **Change:** title "Co znaczy błąd walidacji KSeF i jak go naprawić?" -> "Błąd walidacji w KSeF
+    oznacza odrzucony plik XML"; description now opens with the definition ("Błąd walidacji znaczy,
+    że plik XML faktury nie spełnia wymagań KSeF...").
+  - **Motivation:** 1,086 impr, CTR 0.37%; "błąd walidacji co to" 117 pos 8.6, "błąd walidacji" 109
+    pos 6.7, "co oznacza błąd walidacji" 19, "co to jest błąd walidacji" 20, "błędy walidacji co to
+    znaczy" 17.
+
 ## 2026-11-03
 
 Digest: `gsc-data` 2026-11-02 (GSC 2026-10-03 to 2026-10-30: 129 clicks, 10,368 impressions, CTR
