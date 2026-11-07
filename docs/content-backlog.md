@@ -52,8 +52,9 @@ a Tier 1–3 source.
       2026-10-19; once CIRFMF confirms it is live, switch the post from future to present tense and
       lead with „KSeF odrzuca…” · M, K · now · CIRFMF `faktury/weryfikacja-faktury.md`,
       `api-changelog.md` · Interim update 2026-10-24 (`content/ksef-scisla-walidacja-xml`): date
-      passed, post now says the docs have not confirmed enforcement. Skip until 2026-11-07, then
-      re-check the changelog and issue #718 before the present-tense switch.
+      passed, post now says the docs have not confirmed enforcement. Re-checked 2026-11-07: no
+      ksef-api commit since 2026-10-14 (changelog still 2.9.0, still says 16.07.2026); issue #718
+      not reachable from the routine. Skip until 2026-11-21, then re-check again.
 - [x] **UPDATE** `najczestsze-bledy-walidacji-fa3` — open with a direct answer to „co znaczy błąd
       walidacji” in the first 100 words, then the list; mention the strict-XML rejections from 19.10
       and link that post · „błąd walidacji co to znaczy” · A · GSC ~74 impr at pos 7–14 · brief
@@ -89,7 +90,7 @@ matching queries.
       where the official XSD lives („ksef xml schema”, ~11 impr, no PL page).
 - [x] `kody-bledow-ksef` — Kody błędów KSeF i co znaczą · „błąd 450 KSeF" · M · integrator docs ·
       Error codes UNVERIFIED.
-- [ ] `numer-ksef-gdzie-znalezc` — Numer KSeF: gdzie go znaleźć · „numer KSeF faktury" · A, M · FAQ
+- [x] `numer-ksef-gdzie-znalezc` — Numer KSeF: gdzie go znaleźć · „numer KSeF faktury" · A, M · FAQ
 - [ ] `aplikacja-mobilna-ksef` — Aplikacja mobilna KSeF · „aplikacja mobilna KSeF" · A ·
       `/mobilna-ksef-20/`, APP · infor.pl 2026-10-07 covers offline use in 2027 (UNVERIFIED).
 - [ ] `ryczalt-ksef` — Ryczałt a KSeF · „ryczałt KSeF" · A · P2

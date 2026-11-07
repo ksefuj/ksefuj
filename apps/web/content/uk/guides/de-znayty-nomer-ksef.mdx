@@ -1,0 +1,105 @@
+---
+title: "Номер KSeF шукай у KSeF, а не в XML"
+description: "Номер KSeF має 35 знаків, і його присвоює система. Продавець бачить його після надсилання й в UPO, покупець у списку рахунків і під QR-кодом."
+date: 2026-11-07
+section: guides
+locale: uk
+slug: "de-znayty-nomer-ksef"
+topic: "invoicing"
+tags: ["KSeF", "Faktura", "JDG"]
+sources:
+  - label: "Посібник KSeF 2.0, ч. II: виставлення й отримання рахунків (вид. 6.08.2026) (PL)"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "Посібник користувача Aplikacja Podatnika KSeF 2.0 (вид. 6.08.2026) (PL)"
+    url: "https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
+  - label: "Мінфін: номер KSeF і зведений ідентифікатор (PL)"
+    url: "https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/numer-ksef-i-zbiorczy-identyfikator/"
+  - label: "Мінфін: питання й відповіді KSeF 2.0 (PL)"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/"
+  - label: "Мінфін: найчастіші питання про KSeF (PL)"
+    url: "https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
+  - label: "Інформаційна брошура щодо логічної структури FA(3) (PL)"
+    url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "Закон про ПДВ, консолідований текст (Dz.U. 2026 poz. 1263) (PL)"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  - label: "CIRFMF/ksef-api: номер KSeF"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/numer-ksef.md"
+  - label: "CIRFMF/ksef-api: QR-коди"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/kody-qr.md"
+  - label: "CIRFMF/ksef-api: статус сесії та завантаження UPO"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/sesje/sesja-sprawdzenie-stanu-i-pobranie-upo.md"
+  - label: "CIRFMF/ksef-api: завантаження рахунків"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/pobieranie-faktur/pobieranie-faktur.md"
+  - label: "CIRFMF/ksef-api: специфікація API (open-api.json)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
+translations:
+  pl: "numer-ksef-gdzie-znalezc"
+  en: "where-to-find-ksef-number"
+  uk: "de-znayty-nomer-ksef"
+---
+
+Номер KSeF — це 35-значний ідентифікатор, який система присвоює рахунку (faktura) після того, як прийме його, тож у файлі XML чи в полі з номером рахунку ти його не знайдеш. Продавець бачить його в Aplikacja Podatnika одразу після надсилання, у списку рахунків і в UPO, а покупець у списку рахунків у KSeF, у назві завантаженого файлу та під QR-кодом на PDF чи роздруківці рахунку.
+
+Стан на 7 листопада 2026 р.
+
+## Як виглядає номер KSeF і що з нього можна прочитати
+
+Номер завжди має 35 знаків, наприклад `5265877635-20250826-0100001AF629-AF` (приклад із документації Мінфіну). Він складається з чотирьох частин, розділених дефісами:
+
+- NIP **продавця** (10 цифр), а не покупця,
+- дата у форматі РРРРММДД,
+- 12 технічних знаків (цифри й літери від A до F),
+- 2 знаки контрольної суми.
+
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/numer-ksef.md"
+  label="CIRFMF/ksef-api: номер KSeF"
+/>
+
+Дата в номері — це день, коли KSeF прийняв рахунок до подальшої обробки. **Це не дата виставлення рахунку (поле P_1).** Для рахунку offline24, який продавець надсилає наступного дня після виставлення, дата в номері буде пізнішою за дату виставлення; так випливає з визначення Мінфіну. Не вважай її й датою отримання рахунку: нею є день присвоєння номера KSeF (ст. 106na ust. 3 закону про ПДВ), який KSeF показує окремо. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json" label="CIRFMF/ksef-api: open-api.json" /> <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 5.1" />
+
+Номер KSeF ти не вписуєш у рахунок. У структурі FA(3) немає для нього поля, а поле P_2 — це твій власний номер рахунку, наприклад FV/12/2026. KSeF присвоює номер лише після того, як прийме файл, і повертає його в UPO. <Source href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/" label="Мінфін: найчастіші питання, пит. 7" /> <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 4.1" />
+
+У старіших матеріалах іноді трапляється номер із 36 знаків. Це формат KSeF 1.0: API приймає його лише для зворотної сумісності, а KSeF 2.0 присвоює тільки 35-значні номери. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json" label="CIRFMF/ksef-api: open-api.json, схема KsefNumber" />
+
+## Де номер KSeF знайде продавець
+
+**В Aplikacja Podatnika KSeF** (безкоштовний застосунок Мінфіну) після натискання «Wyślij do KSeF» (Надіслати до KSeF) система перевіряє рахунок і показує його номер KSeF із кнопкою «Kopiuj» (Копіювати). Пізніше знайдеш його в списку рахунків: коли позначиш рахунок і натиснеш «Pobierz» (Завантажити), файл отримає назву з номером KSeF. <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Посібник Aplikacja Podatnika, с. 32–33 і 116–117" />
+
+**В UPO** (urzędowe poświadczenie odbioru, офіційне підтвердження отримання). UPO окремого рахунку завантажиш із меню біля рахунку в списку, а зведене UPO всієї сесії в розділі «Historia sesji» (Історія сесій, кнопка «Pobierz UPO zbiorcze»), коли сесію вже завершено. <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Посібник Aplikacja Podatnika, с. 125–126" /> Поруч із номером KSeF в UPO є, зокрема, твій номер рахунку (P_2), NIP продавця, дата виставлення й дата присвоєння номера KSeF, яка водночас є датою отримання рахунку для покупця, що отримує його в KSeF. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 4.2" />
+
+**У програмі для рахунків.** Програма, підключена до KSeF, зчитує номер зі статусу надісланого рахунку. Де саме вона його показує, залежить від програми.
+
+Зазвичай номер з'являється одразу після надсилання. Мінфін попереджає, що за великого навантаження система може присвоїти його з невеликою затримкою. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/kody-qr.md" label="CIRFMF/ksef-api: QR-коди" />
+
+Не плутай номер KSeF із референсним номером сесії чи відправлення, який програма або зведене UPO показує поруч, наприклад `20250901-SB-47FA636000-5960B49115-9D`. Референсний номер починається з дати, номер KSeF з NIP продавця. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/sesje/sesja-sprawdzenie-stanu-i-pobranie-upo.md" label="CIRFMF/ksef-api: статус сесії та UPO" />
+
+## Де номер KSeF знайде покупець
+
+Продавцю не треба надсилати тобі номер KSeF, бо рахунок із твоїм NIP у полі NIP покупця з'являється в твоєму KSeF автоматично. <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/" label="Мінфін: питання й відповіді KSeF 2.0" /> Номер бачиш у списку рахунків в Aplikacja Podatnika або в програмі, яка завантажує рахунки на закупівлю з KSeF. Файл, завантажений зі списку рахунків в Aplikacja Podatnika, теж названо номером KSeF. Як дістатися до рахунків на закупівлю крок за кроком, ми пишемо в інструкції про [отримання рахунків у KSeF](/uk/guides/yak-otrymaty-rakhunok-v-ksef).
+
+Якщо рахунок у тебе у вигляді PDF чи роздруківки, шукай **номер під QR-кодом**. Він там є, коли рахунок уже має номер: виставлений онлайн або офлайн і вже надісланий до KSeF. Напис «OFFLINE» на цьому місці означає, що на момент створення PDF номера ще не було, бо офлайн-рахунок чекав на надсилання або онлайн-рахунок чекав на присвоєння номера. Саме посилання в QR-коді номера не містить, але після сканування коду побачиш дані рахунку з KSeF, зокрема номер, якщо рахунок уже в системі. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/kody-qr.md" label="CIRFMF/ksef-api: QR-коди" /> <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 5.4–5.5" />
+
+Анонімний доступ в Aplikacja Podatnika (без входу й без QR-коду) не допоможе знайти номер, бо там його треба ввести самому. Залишається обліковий запис у KSeF або QR-код. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 5.7" />
+
+## Навіщо тобі номер KSeF
+
+**Банківський переказ.** З 1 січня 2027 р. активний платник VAT (czynny podatnik VAT), оплачуючи іншому активному платнику VAT рахунок із KSeF, вписує в призначення платежу його номер KSeF (ст. 108g закону про ПДВ). За кілька рахунків одного продавця вказує зведений ідентифікатор, який генерує продавець або покупець в Aplikacja Podatnika чи в програмі. У разі розщепленого платежу (split payment) номер вписують у повідомлення переказу (ст. 108a ust. 3 pkt 3). <Source href="https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/numer-ksef-i-zbiorczy-identyfikator/" label="Мінфін: номер KSeF і зведений ідентифікатор" /> Винятки й подробиці описуємо в статті про [номер KSeF у призначенні платежу](/uk/blog/nomer-ksef-u-perekazi).
+
+**Коригувальний рахунок.** У коригуванні ти вказуєш номер KSeF рахунку, який виправляєш (поле `NrKSeFFaKorygowanej`, разом із позначкою `NrKSeF` = 1). Так само рахунок, що закриває авансові платежі, вказує номери KSeF авансових рахунків. <Source href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf" label="Брошура FA(3), с. 69–70" /> <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 4.1.1–4.1.2" /> Усе коригування крок за кроком описуємо в статті про [коригувальний рахунок у KSeF](/uk/blog/koryguvalna-faktura-ksef).
+
+**JPK_VAT.** З лютого 2026 р. у звітах JPK_V7M і JPK_V7K вказують номери KSeF рахунків на продаж і закупівлю, а якщо рахунок номера не має, відповідну позначку. Зазвичай це робить бухгалтерська програма або бухгалтер. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 4.1.6" />
+
+## Коли рахунок не має номера KSeF
+
+- **Рахунок, виставлений поза KSeF.** До 31 грудня 2026 р. так можна виставляти в межах ліміту 10 000 PLN на місяць (ст. 145m) і з касового апарата (ст. 145n), а рахунок для приватної особи поза KSeF і пізніше (ст. 106ga ust. 2 pkt 4). Такий рахунок номера не має і не отримає. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="Закон про ПДВ, ст. 106ga, 145m і 145n" />
+- **Офлайн-рахунок до надсилання.** Рахунок, виставлений у режимі offline24, під час недоступності або під час збою KSeF (ст. 106nf), отримує номер лише тоді, коли продавець надішле його до системи. До того він може дати тобі «potwierdzenie transakcji» (підтвердження транзакції) з двома QR-кодами, яке не є рахунком. Строки надсилання описуємо в інструкції про [збій KSeF і режим офлайн](/uk/guides/zbiy-ksef-offlayn). <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 1.6.6" />
+- **Рахунок, відхилений KSeF.** Він не отримує номера й не вважається виставленим. Продавець виправляє файл і надсилає його знову. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 1.6.1" />
+
+Що це означає для переказу: ст. 108g не охоплює рахунків поза KSeF і рахунків, виставлених під час збою KSeF (ст. 106nf), а рахунки offline24 і з періоду недоступності виключає лише тоді, коли їх не внесли до KSeF через оголошений збій (ust. 4). <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 4.1.5" /> Закон не визначає, що вписати в призначення платежу, коли офлайн-рахунок ще не має номера, а збою не оголошували.
+
+Що це означає для коригування: коли виправляєш рахунок, виставлений поза KSeF, замість номера ставиш `NrKSeFN` = 1. З офлайн-рахунком інакше: Мінфін вимагає номер KSeF коригованого рахунку й тоді, коли його виставили в режимі offline24, під час недоступності або під час збою KSeF (ст. 106nf). <Source href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf" label="Брошура FA(3), опис поля NrKSeF, с. 70" /> Як коригувати офлайн-рахунок до того, як він отримає номер, Мінфін не пояснив.
+
+## Що зробити зараз
+
+Відкрий в Aplikacja Podatnika останній виставлений або отриманий рахунок і скопіюй його номер KSeF. Якщо ти оплачуєш рахунки як активний платник VAT, запитай постачальника бухгалтерської чи банківської програми, чи до 1 січня 2027 р. вона підказуватиме цей номер у призначенні платежу.
