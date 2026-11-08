@@ -2,7 +2,7 @@
 title: "KSeF miał od 19 października ostrzej sprawdzać XML"
 description: "Od 19.10.2026 KSeF miał odrzucać XML z dopiskami dla programów (np. odwołaniem do arkusza stylów) i niezalecanymi znakami. Dokumentacja API nie potwierdza daty."
 date: 2026-10-07
-updated: 2026-10-26
+updated: 2026-11-08
 section: blog
 locale: pl
 slug: "ksef-scisla-walidacja-xml"
@@ -28,13 +28,13 @@ translations:
   en: "ksef-strict-xml-validation"
 ---
 
-Według zespołu API KSeF produkcyjny KSeF miał od 19 października 2026 r. odrzucać faktury, których plik XML zawiera dopiski dla programów, które go otwierają, albo niezalecane znaki Unicode. Takie dopiski to instrukcje przetwarzania, np. `<?xml-stylesheet ...?>` wskazujące arkusz stylów do wyświetlania faktury. Do 24 października dokumentacja API tego nie potwierdziła ani nie podała nowej daty, więc traktuj takie pliki jako odrzucane. Jeśli wystawiasz faktury w programie, zapytaj o to jego dostawcę. Jeśli odpowiadasz za integrację z API, usuń te elementy z generowanego pliku i zapisuj w logach nagłówek `X-System-Warning` z odpowiedzi KSeF.
+Według zespołu API KSeF produkcyjny KSeF miał od 19 października 2026 r. odrzucać faktury, których plik XML zawiera dopiski dla programów, które go otwierają, albo niezalecane znaki Unicode. Takie dopiski to instrukcje przetwarzania, np. `<?xml-stylesheet ...?>` wskazujące arkusz stylów do wyświetlania faktury. Do 8 listopada dokumentacja API tego nie potwierdziła ani nie podała nowej daty, więc traktuj takie pliki jako odrzucane. Jeśli wystawiasz faktury w programie, zapytaj o to jego dostawcę. Jeśli odpowiadasz za integrację z API, usuń te elementy z generowanego pliku i zapisuj w logach nagłówek `X-System-Warning` z odpowiedzi KSeF.
 
-Stan na 24 października 2026 r.
+Stan na 8 listopada 2026 r.
 
 ## Skąd ta reguła i od kiedy obowiązuje
 
-To nie przepis ustawy, tylko wymóg techniczny z dokumentacji API KSeF, którą prowadzi Centrum Informatyki Resortu Finansów (CIRF). Opisuje go strona „Weryfikacja faktury” z 9 kwietnia 2026 r. Zaostrzenie wprowadziła wersja API 2.4.0 (wdrożona na TEST 10 kwietnia, na DEMO 13 kwietnia i na produkcję 16 kwietnia 2026 r.), a egzekwować miała ją produkcja od 16 lipca 2026 r. Opiekun repozytorium napisał 24 czerwca 2026 r., że termin przesunięto na 19 października 2026 r. Changelog nadal podaje 16 lipca, więc jedynym źródłem nowej daty jest ten komentarz. Termin 19 października minął, a do 24 października ani changelog (ostatnia wersja 2.9.0 trafiła na produkcję 15 października), ani strona „Weryfikacja faktury” nie potwierdziły, że produkcja odrzuca już takie pliki.
+To nie przepis ustawy, tylko wymóg techniczny z dokumentacji API KSeF, którą prowadzi Centrum Informatyki Resortu Finansów (CIRF). Opisuje go strona „Weryfikacja faktury” z 9 kwietnia 2026 r. Zaostrzenie wprowadziła wersja API 2.4.0 (wdrożona na TEST 10 kwietnia, na DEMO 13 kwietnia i na produkcję 16 kwietnia 2026 r.), a egzekwować miała ją produkcja od 16 lipca 2026 r. Opiekun repozytorium napisał 24 czerwca 2026 r., że termin przesunięto na 19 października 2026 r. Changelog nadal podaje 16 lipca, więc jedynym źródłem nowej daty jest ten komentarz. Termin 19 października minął, a do 8 listopada ani changelog (ostatnia wersja 2.9.0 trafiła na produkcję 15 października), ani strona „Weryfikacja faktury” nie potwierdziły, że produkcja odrzuca już takie pliki. W wątku #718 nikt nic nie dopisał od 24 czerwca.
 
 <Source href="https://github.com/CIRFMF/ksef-api/issues/718" label="CIRFMF/ksef-api, issue #718" />
 
