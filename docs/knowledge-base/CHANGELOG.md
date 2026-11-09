@@ -6,6 +6,35 @@ validator, none).
 
 ---
 
+## 2026-10-19 → 2026-11-09 (partial run, GitHub only; `Last checked` not updated)
+
+Official hosts were unreachable from the run environment again (proxy refused CONNECT with HTTP
+403): ksef.podatki.gov.pl, api.sejm.gov.pl, legislacja.rcl.gov.pl, dziennikustaw.gov.pl,
+isap.sejm.gov.pl, www.sejm.gov.pl, www.senat.gov.pl, www.gov.pl, eureka.mf.gov.pl, crd.gov.pl. Law,
+MF guidance and schemas were not checked by this run; this is not a "no changes" entry. (The Sejm
+vote on UD477 of 2026-11-06 was recorded separately in `sankcje-ksef-ud477.md` on 2026-11-07.) Open
+issue: https://github.com/ksefuj/ksefuj/issues/127.
+
+### Technical (API/schemas/GitHub)
+
+- Draft of new KSeF token rules published for discussion by the API team (2026-11-06, comments to
+  2026-11-20): `rev2` endpoints from 2027-01-01, validity default 90 days / max 365, approval of
+  tokens requested after a token login, 100 tokens per context, old-endpoint tokens valid 90 days
+  from 2027-01-01, pre-2027 tokens valid to 2027-11-30, old endpoints withdrawn 2027-09-30:
+  https://github.com/CIRFMF/ksef-api/issues/885. Issues #834 and #461 closed the same day. Impact:
+  briefs `tokeny-ksef-po-2026.md`, `rozporzadzenie-ksef-i-tokeny.md`, `api-ksef-zmiany-cirfmf.md`;
+  posts `tokeny-ksef-po-2026` (backlog UPDATE); validator none.
+- ksef-pdf-generator 1.1.48 (changelog 2026-11-06): PDF `Producer`/`Creator` metadata, watermark on
+  PEF invoices and UPO: https://github.com/CIRFMF/ksef-pdf-generator/blob/main/changelog.md. Impact:
+  brief only.
+- ksef-api / ksef-docs (HEAD `ce3670e`, 2.9.0 of 2026-10-14), ksef-client-csharp (2.9.0),
+  ksef-client-java (3.0.29), ksef-schematy, ksef-latarnia: no commits or releases since the
+  2026-10-19 run. Impact: none.
+- `pnpm update-schemas`: crd.gov.pl unreachable, every download `fetch failed`, script fell back to
+  bundled files (and still printed "All schemas are up to date"); schemas not verified.
+
+---
+
 ## 2026-10-07 → 2026-10-19 (partial run, GitHub only; `Last checked` not updated)
 
 Official hosts were unreachable from the run environment (proxy refused CONNECT with HTTP 403):
