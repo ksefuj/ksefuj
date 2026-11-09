@@ -1,7 +1,8 @@
 # Research Brief: Rozporządzenie w sprawie KSeF (Dz.U. 2025 poz. 1815) i przyszłość tokenów
 
-**Requested by:** weekly knowledge refresh **Date:** 2026-10-07 **Freshness:** 2026-10-07 **For
-content:** updates of posts and briefs on tokens vs certificates
+**Requested by:** weekly knowledge refresh **Date:** 2026-10-07 **Freshness:** 2026-11-09 (fact 6,
+GitHub only; law at the 2026-10-07 check) **For content:** updates of posts and briefs on tokens vs
+certificates
 
 **Target query:** "tokeny KSeF po 2026", "czy tokeny KSeF będą działać w 2027"
 
@@ -41,9 +42,17 @@ governs.
    MEDIUM
 5. **Older MF pages still say tokens end 2026** (FAQ KSeF 2.0, AP page as of issue #834). Treat as
    outdated once the regulation is amended; flag the conflict. Confidence: MEDIUM
+6. **Draft token rules, 2026-11-06 (CIRFMF/ksef-api issue 885, account kw-cirf):** from 2027-01-01
+   new `rev2` token endpoints: default validity 90 days, max 365; tokens requested after a token
+   login need approval within 24 h; 100 tokens per context; tokens from the old endpoints valid 90
+   days from 2027-01-01; tokens generated before 2027-01-01 valid until end of 2027-11-30; old
+   endpoints withdrawn 2027-09-30. Open for comments until 2026-11-20.
+   https://github.com/CIRFMF/ksef-api/issues/885 Tier 3 (a proposal, not law) Confidence: HIGH that
+   it was published. Details: brief `tokeny-ksef-po-2026.md` fact 15.
 
 ## Unsettled Questions
 
+- Whether the amending regulation takes over the issue 885 draft (90/365 days, approval step).
 - Final date of the amending regulation and whether 30.11.2027 is an MF decision or only a plan.
 - Whether "na czas nieokreślony" (cz. I) conflicts with the limited validity of old tokens.
 
@@ -55,6 +64,7 @@ governs.
 - Podręcznik KSeF 2.0 cz. I (06.08.2026):
   https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf
 - CIRFMF/ksef-api issue #834: https://github.com/CIRFMF/ksef-api/issues/834
+- CIRFMF/ksef-api issue #885 (draft token rules): https://github.com/CIRFMF/ksef-api/issues/885
 
 ## Warning: Common Misconceptions
 
