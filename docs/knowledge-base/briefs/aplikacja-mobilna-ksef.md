@@ -10,8 +10,8 @@ baseline is the one in `WATCHLIST.md` (verified 2026-10-07) plus the mobile manu
 **Target query:** „aplikacja mobilna KSeF”
 
 **Answer in two sentences:** MF provides the Aplikacja Mobilna KSeF for free, alongside the
-Aplikacja Podatnika KSeF and e-mikrofirma. It issues and receives e-invoices (Podręcznik KSeF 2.0 cz.
-II, pkt 3.1), but according to the MF mobile app manual (pkt 1.1) it issues only basic domestic
+Aplikacja Podatnika KSeF and e-mikrofirma. It issues and receives e-invoices (Podręcznik KSeF 2.0
+cz. II, pkt 3.1), but according to the MF mobile app manual (pkt 1.1) it issues only basic domestic
 invoices in PLN, plus corrections of invoices that were issued in the mobile app itself.
 
 **What changes the answer:**
@@ -34,49 +34,49 @@ invoices in PLN, plus corrections of invoices that were issued in the mobile app
    lists: AP KSeF, „Aplikacja Mobilna KSeF — wystawianie, odbieranie w czasie rzeczywistym,
    zarządzanie z dowolnego miejsca”, e-mikrofirma.
    - Source: Podręcznik KSeF 2.0 cz. II (06.08.2026), pkt 3.1 (KB: `podrecznik-ksef-20-czesc-ii.md`
-     l. 785-795); https://ksef.podatki.gov.pl/pliki-do-pobrania-ksef-20/ . Tier 2. Confidence:
-     HIGH. Ania: yes.
-2. **No paid program is needed.** MF page: „Nie. Ministerstwo Finansów zapewnia bezpłatne
-   narzędzia – Aplikację Podatnika KSeF … i Aplikację Mobilną KSeF.”
-   - Source: https://ksef.podatki.gov.pl/czy-trzeba-miec-platny-program-zeby-wystawiac-faktury-w-ksef/
-     (KB: `zwolniony-z-vat-ksef.md` fact 15). Also FAQ KSeF 2.0
+     l. 785-795); https://ksef.podatki.gov.pl/pliki-do-pobrania-ksef-20/ . Tier 2. Confidence: HIGH.
+     Ania: yes.
+2. **No paid program is needed.** MF page: „Nie. Ministerstwo Finansów zapewnia bezpłatne narzędzia
+   – Aplikację Podatnika KSeF … i Aplikację Mobilną KSeF.”
+   - Source:
+     https://ksef.podatki.gov.pl/czy-trzeba-miec-platny-program-zeby-wystawiac-faktury-w-ksef/ (KB:
+     `zwolniony-z-vat-ksef.md` fact 15). Also FAQ KSeF 2.0
      (https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20; KB:
      `faktura-z-kasy-fiskalnej-ksef-2027.md` fact 14). Tier 3. HIGH. Ania: yes.
 3. **Issuing scope: basic invoices and their corrections, domestic transactions, PLN only.
    Corrections only for invoices issued in the mobile app.**
-   - Source: Podręcznik Aplikacji Mobilnej KSeF, pkt 1.1 (edition 2026-08-31 per `CHANGELOG.md`;
-     KB: `aplikacja-podatnika-ksef-pierwsza-faktura.md` fact 14);
+   - Source: Podręcznik Aplikacji Mobilnej KSeF, pkt 1.1 (edition 2026-08-31 per `CHANGELOG.md`; KB:
+     `aplikacja-podatnika-ksef-pierwsza-faktura.md` fact 14);
      https://ksef.podatki.gov.pl/pliki-do-pobrania-ksef-20/ . Tier 2. HIGH. Ania: yes. The KB has
      only the summary, no verbatim Polish quote.
 4. **Receiving: the mobile app is listed as a tool for receiving invoices ("odbieranie w czasie
-   rzeczywistym").** Receiving in KSeF has been mandatory since 1.02.2026, regardless of the deferral
-   of issuing. Without an integrated program the free MF tools (AP, Aplikacja Mobilna, e-mikrofirma)
-   are enough.
-   - Source: Podręcznik cz. II pkt 3.1 and pkt 6.2 (s. 96) (KB: `podrecznik-ksef-20-czesc-ii.md`
-     l. 1105-1115; `jak-odebrac-fakture-ksef.md` fact 7; `koniec-limitu-10000-zl.md` fact 8). Tier
-     2. HIGH for "the tool exists for receiving". HOW receiving works in the app: NOT IN KB.
+   rzeczywistym").** Receiving in KSeF has been mandatory since 1.02.2026, regardless of the
+   deferral of issuing. Without an integrated program the free MF tools (AP, Aplikacja Mobilna,
+   e-mikrofirma) are enough.
+   - Source: Podręcznik cz. II pkt 3.1 and pkt 6.2 (s. 96) (KB: `podrecznik-ksef-20-czesc-ii.md` l.
+     1105-1115; `jak-odebrac-fakture-ksef.md` fact 7; `koniec-limitu-10000-zl.md` fact 8). Tier 2.
+     HIGH for "the tool exists for receiving". HOW receiving works in the app: NOT IN KB.
 5. **The free MF tools "mogą być docelowym narzędziem" for issuing from 2027.**
    - Source: Podręcznik cz. I s. 21; cz. II s. 96 (KB: `koniec-limitu-10000-zl.md` fact 9;
      `ksef-checklist-przygotowanie.md` fact 24). Tier 2. HIGH. Ania: yes.
 6. **Official MF page for the mobile app exists:**
    https://ksef.podatki.gov.pl/aplikacja-podatnika-ksef-i-inne-narzedzia/aplikacja-mobilna-ksef/
-   (status 200 on 2026-10-07 per `aplikacja-podatnika-ksef-pierwsza-faktura.md` source table).
-   Its contents (store links, requirements) are NOT extracted in the KB. Tier 3. HIGH (existence
-   only).
-7. **The AP (web) issues only online.** „W Aplikacji Podatnika KSeF 2.0 wystawiamy jedynie faktury
-   w trybie online.”
+   (status 200 on 2026-10-07 per `aplikacja-podatnika-ksef-pierwsza-faktura.md` source table). Its
+   contents (store links, requirements) are NOT extracted in the KB. Tier 3. HIGH (existence only).
+7. **The AP (web) issues only online.** „W Aplikacji Podatnika KSeF 2.0 wystawiamy jedynie faktury w
+   trybie online.”
    - Source: FAQ „Najczęstsze pytania”, Q11 (modified 2026-04-29),
      https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/ (KB: `mf-faq-podreczniki-2026.md`;
      `awaria-ksef-offline.md` fact 7). Tier 3. HIGH. **This statement is about the AP, NOT the
      mobile app.** Do not transfer it to the mobile app.
-8. **Offline issuing prerequisites (all tools): KOD II (CERTYFIKAT) requires a KSeF certificate
-   typ 2, generated in advance, valid up to 2 years; the taxpayer obtains it from KSeF (art. 106nda
-   ust. 7).** Offline needs software that supports the mode.
+8. **Offline issuing prerequisites (all tools): KOD II (CERTYFIKAT) requires a KSeF certificate typ
+   2, generated in advance, valid up to 2 years; the taxpayer obtains it from KSeF (art. 106nda ust.
+   7).** Offline needs software that supports the mode.
    - Source: Podręcznik cz. II s. 85, pkt 5.6 s. 90; FAQ; ustawa o VAT art. 106nda ust. 7 (KB:
      `awaria-ksef-offline.md` fact 7). Tier 1/2. HIGH. Related: Podręcznik cz. I s. 42 says a KSeF
      certificate cannot be used to authenticate in MF's free tools such as the AP (KB:
-     `logowanie-ksef.md` fact 3). The KB does not say whether this applies to the mobile app.
-     Do not draw a conclusion about mobile offline from these two facts.
+     `logowanie-ksef.md` fact 3). The KB does not say whether this applies to the mobile app. Do not
+     draw a conclusion about mobile offline from these two facts.
 9. **Offline modes have no change from 1.01.2027 in KB (statute or mobile app).** Offline24,
    niedostępność, awaria (7 dni roboczych), awaria całkowita stay. „Zmiany dla aplikacji mobilnej
    offline: not found in KB.”
@@ -88,8 +88,8 @@ invoices in PLN, plus corrections of invoices that were issued in the mobile app
       `faktura-z-kasy-fiskalnej-ksef-2027.md` fact 14). Tier 3. HIGH. Applies to KSeF in general.
       The KB has no mobile-specific confirmation.
 11. **Mobile manual edition: 2026-08-31** (AP manual and Podręcznik cz. I-IV: 2026-08-06).
-    - Source: `CHANGELOG.md` l. 73; `WATCHLIST.md` l. 38. HIGH. Freshness: check for a newer
-      edition before publishing.
+    - Source: `CHANGELOG.md` l. 73; `WATCHLIST.md` l. 38. HIGH. Freshness: check for a newer edition
+      before publishing.
 
 ---
 
@@ -185,10 +185,10 @@ The backlog path `/mobilna-ksef-20/` does NOT appear in the KB or any post. Do n
 ## KB inconsistency noted (not resolved here)
 
 - `certyfikaty-tokeny.md` §4 (Fact 4.3) describes certificate typ 2 as one "dla podmiotu
-  upoważnionego" (accounting firms/ERP). `awaria-ksef-offline.md` fact 7 (Podręcznik cz. II s. 85,
-  90) describes typ 2 as what the taxpayer needs for offline KOD II. Check against Podręcznik cz. I
-  before the post mentions certificate types. Safer: link to `/guides/awaria-ksef-offline` instead
-  of explaining.
+  upoważnionego" (accounting firms/ERP). `awaria-ksef-offline.md` fact 7 (Podręcznik cz. II s.
+  85, 90) describes typ 2 as what the taxpayer needs for offline KOD II. Check against Podręcznik
+  cz. I before the post mentions certificate types. Safer: link to `/guides/awaria-ksef-offline`
+  instead of explaining.
 
 ## Freshness Markers
 
