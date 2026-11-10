@@ -1,8 +1,8 @@
 ---
-title: "Czy tokeny KSeF zadziałają po 31 grudnia 2026?"
-description: "Rozporządzenie dopuszcza tokeny KSeF do 31 grudnia 2026 r. MF i zespół API zapowiadają, że zostaną, ale przepisu nie zmieniono, a nowego endpointu nie ma."
+title: "Do kiedy działają tokeny KSeF?"
+description: "Rozporządzenie dopuszcza tokeny KSeF do 31 grudnia 2026 r. Projekt nowelizacji, znany z opisów w mediach, przedłuża ważność obecnych do 30 listopada 2027 r."
 date: 2026-10-07
-updated: 2026-10-26
+updated: 2026-11-10
 section: blog
 locale: pl
 slug: "tokeny-ksef-po-2026"
@@ -23,21 +23,28 @@ sources:
     url: "https://github.com/CIRFMF/ksef-api/issues/834#issuecomment-5619765888"
   - label: "Zespół API KSeF: tokeny zostają na nowych zasadach (CIRFMF/ksef-api, issue 565)"
     url: "https://github.com/CIRFMF/ksef-api/issues/565"
+  - label: "Zespół API KSeF: propozycja zmian w zarządzaniu tokenami z 6.11.2026 (CIRFMF/ksef-api, issue 885)"
+    url: "https://github.com/CIRFMF/ksef-api/issues/885"
   - label: "Changelog API KSeF 2.0 (CIRFMF/ksef-api)"
     url: "https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md"
   - label: "FAQ MF: KSeF 2.0"
     url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
+  - label: "Prawo.pl (serwis branżowy, nie źródło urzędowe): MF o wykorzystaniu tokenów w KSeF w 2027 r."
+    url: "https://www.prawo.pl/podatki/mf-wykorzystanie-tokenow-w-ksef-w-2027-r,1555908.html"
+  - label: "Fakturownia (serwis branżowy, nie źródło urzędowe): zmiany w KSeF"
+    url: "https://fakturownia.pl/krajowy-system-e-faktur/zmiany-w-ksef"
 translations:
   pl: "tokeny-ksef-po-2026"
   en: "ksef-tokens-after-2026"
+  uk: "tokeny-ksef-pislia-2026"
 ---
 
-Obowiązujące rozporządzenie pozwala uwierzytelniać się tokenem KSeF tylko do 31 grudnia 2026 r. Ministerstwo Finansów i zespół API KSeF zapowiadają, że tokeny zostaną w użyciu, ale do 26 października przepisu nie zmieniono.
+Obowiązujące rozporządzenie pozwala logować się do KSeF tokenem do 31 grudnia 2026 r. Według serwisów branżowych pod koniec października 2026 r. Ministerstwo Finansów skierowało do konsultacji projekt nowelizacji, który ma przedłużyć ważność tokenów wygenerowanych przed 2027 r. do 30 listopada 2027 r. Projekt nie jest jeszcze prawem.
 
 <Info>
-  Stan prawny, wypowiedzi zespołu API i changelog API sprawdziliśmy 26 października 2026 r. Jedyną
-  nowelizacją rozporządzenia jest Dz.U. 2026 poz. 169, która tokenów nie dotyczy, a projektu
-  kolejnej zmiany nie znaleźliśmy.{" "}
+  Stan na 10 listopada 2026 r. Wykaz zmian rozporządzenia sprawdziliśmy 26 października: jedyną
+  nowelizacją jest Dz.U. 2026 poz. 169, która tokenów nie dotyczy. Tekstu projektu nowej zmiany nie
+  udało nam się przeczytać, więc jego treść podajemy za serwisami branżowymi.{" "}
   <Source href="https://api.sejm.gov.pl/eli/acts/DU/2025/1815" label="wykaz zmian, ELI" />
 </Info>
 
@@ -55,33 +62,49 @@ W sierpniowym Podręczniku KSeF 2.0 cz. I (s. 26) MF poszło dalej: „zdecydowa
 
 Zespół odpowiedzialny za specyfikację API KSeF napisał 10 września 2026 r. w oficjalnym repozytorium API, że technicznie przygotowuje wydawanie tokenów na nowych zasadach od 1 stycznia 2027 r. Tokeny wydane do 31 grudnia 2026 r. nadal będą działać, ale ich ważność zostanie ograniczona do 30 listopada 2027 r. Obecny endpoint tworzenia tokenów ma działać „w trybie zgodności” i wydawać tokeny o ograniczonej ważności. Obok powstanie jego nowa wersja, a format tokena się nie zmieni. <Source href="https://github.com/CIRFMF/ksef-api/issues/834#issuecomment-5619765888" label="CIRFMF/ksef-api, issue 834" /> Ten sam autor zastrzegł, że decyzja o wycofaniu tokenów jest zapisana w rozporządzeniu, więc jej zmiana wymaga zmiany przepisów, a formalny komunikat należy do MF. <Source href="https://github.com/CIRFMF/ksef-api/issues/834#issuecomment-5003022923" label="komentarz z 17 lipca" />
 
-23 września 2026 r. ten sam autor zamknął inne zgłoszenie w repozytorium słowami: „tokeny zostają ale na nowych zasadach. Dopracowujemy propozycję.” Nie napisał, na czym te zasady polegają. <Source href="https://github.com/CIRFMF/ksef-api/issues/565" label="CIRFMF/ksef-api, issue 565" /> Zapowiedzianego endpointu też jeszcze nie ma: w changelogu API do wersji 2.9.0 (produkcja od 15 października 2026 r.) nie pojawiła się ani nowa wersja endpointu tworzenia tokenów, ani ważność tokenów. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md" label="API changelog" />
+23 września 2026 r. ten sam autor zamknął inne zgłoszenie w repozytorium słowami: „tokeny zostają ale na nowych zasadach. Dopracowujemy propozycję.” Nie napisał, na czym te zasady polegają. <Source href="https://github.com/CIRFMF/ksef-api/issues/565" label="CIRFMF/ksef-api, issue 565" /> W changelogu API do wersji 2.9.0 (produkcja od 15 października 2026 r.) nie ma ani nowej wersji endpointu tworzenia tokenów, ani ważności tokenów. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md" label="API changelog" />
 
-Wszystko to są zapowiedzi, nie przepis: prawem jest § 13 w obecnym brzmieniu. Nie wiemy:
+Szczegóły nowych zasad zespół API opublikował 6 listopada 2026 r. jako propozycję do dyskusji, którą chce zamknąć do 20 listopada. Od 1 stycznia 2027 r. mają działać nowe wersje endpointów (`rev2`), a w nich token będzie ważny domyślnie 90 dni, najwyżej 365 dni. Token, o który program poprosi po zalogowaniu tokenem, trzeba będzie zatwierdzić w ciągu 24 godzin, logując się węzłem krajowym albo podpisem elektronicznym (XAdES). Tokeny wygenerowane przed 1 stycznia 2027 r. mają działać do końca 30 listopada 2027 r. <Source href="https://github.com/CIRFMF/ksef-api/issues/885" label="CIRFMF/ksef-api, issue 885" />
 
-- jak będzie brzmiała zmiana i kiedy wejdzie w życie,
-- jakie zasady obejmą tokeny wydawane od 2027 r. (MF proponowało ważność od 1 do 365 dni i odnawianie za zgodą właściciela) i czy limit 30 listopada 2027 r. dla tokenów wydanych do końca 2026 r. potwierdzi MF albo rozporządzenie. Dziś token działa do unieważnienia,
+### Co przewiduje projekt nowelizacji rozporządzenia?
+
+Według serwisów branżowych, m.in. Prawo.pl i Fakturowni, MF opublikowało pod koniec października 2026 r. na portalu Rządowego Centrum Legislacji projekt zmiany rozporządzenia o KSeF. Samego tekstu projektu nie przeczytaliśmy, więc opieramy się na tych opisach. Wynika z nich, że projekt:
+
+- przedłuża ważność tokenów wygenerowanych przed 1 stycznia 2027 r. do 30 listopada 2027 r. (ten przepis miałby wejść w życie 31 grudnia 2026 r., reszta zmian 1 stycznia 2027 r.),
+- ogranicza ważność tokenów wygenerowanych od 1 stycznia 2027 r. do najwyżej 365 dni, liczonych od wygenerowania albo od daty wybranej przez podatnika,
+- pozwala ograniczyć certyfikat KSeF do jednego NIP-u albo jednego oddziału,
+- reguluje od 1 stycznia 2027 r. obsługę identyfikatora zbiorczego, czyli oznaczenia jednej płatności za kilka faktur (serwisy różnią się co do tego, czy to osobne uprawnienie, czy część uprawnień do wystawiania lub dostępu do faktur).
+
+Data 30 listopada 2027 r. zgadza się z wpisami zespołu API z września i listopada, a limit 365 dni z propozycją z 6 listopada i z czerwcowymi konsultacjami MF.
+
+**Projekt to jeszcze nie prawo.** Dopóki zmiana nie zostanie opublikowana w Dzienniku Ustaw i nie wejdzie w życie, obowiązuje § 13 ust. 1 pkt 1 w obecnym brzmieniu, czyli tokeny tylko do 31 grudnia 2026 r. Nie wiemy:
+
+- czy podpisane rozporządzenie zachowa daty z projektu i kiedy zostanie opublikowane,
+- czy przepisy przejmą resztę propozycji zespołu API (domyślne 90 dni, zatwierdzanie w ciągu 24 godzin). Opisy projektu, do których dotarliśmy, o tym nie wspominają,
 - co zrobi system 1 stycznia 2027 r., jeśli zmiana się spóźni. Przy obecnym brzmieniu § 13 token od tej daty nie jest w rozporządzeniu dopuszczony.
 
 ## Co zrobić już teraz
 
-**Biuro rachunkowe.** Pani Krystyna powinna sprawdzić, które programy klientów logują się do KSeF tokenem. Aplikacja Podatnika pokazuje wygenerowane tokeny w menu „Lista tokenów”. <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Podręcznik Aplikacji Podatnika, rozdz. 5.6" /> Warto zapytać dostawcę, czy obsługuje certyfikat KSeF i co zakłada po 31 grudnia. Tokenem wygenerowanym przez osobę fizyczną (np. właściciela JDG) może się posługiwać tylko ona sama, więc biuro nie użyje tokena wygenerowanego przez klienta. <Source href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. I, s. 38" />
+Nie ma powodu do paniki: na podstawie obecnych przepisów token działa do 31 grudnia 2026 r. Sprawę przesądzi dopiero rozporządzenie podpisane i opublikowane w Dzienniku Ustaw. Jeśli twój program loguje się do KSeF tokenem, przygotuj jeszcze przed 31 grudnia certyfikat KSeF jako zapasowy sposób logowania i zaplanuj odnawianie tokenów, bo ani propozycja zespołu API, ani opisywany projekt nie przewidują już tokenów bezterminowych.
+
+**Biuro rachunkowe.** Pani Krystyna powinna sprawdzić, które programy klientów logują się do KSeF tokenem i kiedy te tokeny wygenerowano. Aplikacja Podatnika pokazuje wygenerowane tokeny w menu „Lista tokenów”. <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Podręcznik Aplikacji Podatnika, rozdz. 5.6" /> Powinna też zapytać dostawcę, czy obsługuje certyfikat KSeF i co zakłada po 31 grudnia. Tokenem wygenerowanym przez osobę fizyczną (np. właściciela JDG) może się posługiwać tylko ona sama, więc biuro nie użyje tokena wygenerowanego przez klienta. <Source href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. I, s. 38" />
 
 ### Dla integratorów
 
-Marek, który ma integrację opartą na tokenie, nie powinien czekać na nowelizację. Proponujemy dodać uwierzytelnianie certyfikatem KSeF typu 1 obok tokena i schować oba za jednym interfejsem. Dzięki temu termin 1 stycznia nie wymusi przepisywania integracji. Zespół API stawia sobie za cel przejście przez 2026/2027 „bez dotykania kodu po stronie integratora”, ale zapowiada też, że tokeny dostaną datę wygaśnięcia, więc warto przygotować obsługę odnawiania.
+Marek, który ma integrację opartą na tokenie, nie powinien czekać na nowelizację. Proponujemy dodać uwierzytelnianie certyfikatem KSeF typu 1 obok tokena i schować oba za jednym interfejsem. Dzięki temu termin 1 stycznia nie wymusi przepisywania integracji. Zespół API stawia sobie za cel przejście przez 2026/2027 „bez dotykania kodu po stronie integratora”. <Source href="https://github.com/CIRFMF/ksef-api/issues/834#issuecomment-5619765888" label="CIRFMF/ksef-api, issue 834" /> Według propozycji z 6 listopada token wygenerowany od 1 stycznia 2027 r. starym endpointem będzie jednak ważny tylko 90 dni, a stare endpointy mają zniknąć 30 września 2027 r. Przygotuj więc odnawianie tokenów, przejście na `rev2` i obsługę nowych statusów (`NotYetActive`, `AwaitingApproval`, `ApprovalExpired`, `Expired`). <Source href="https://github.com/CIRFMF/ksef-api/issues/885" label="CIRFMF/ksef-api, issue 885" />
 
-| Cecha                        | Token                  | Certyfikat KSeF (typ 1)     |
-| ---------------------------- | ---------------------- | --------------------------- |
-| Uprawnienia                  | zapisane w tokenie     | brak, bierze się je z konta |
-| Kontekst                     | jeden, w którym wydano | różne                       |
-| Ważność                      | dziś do unieważnienia  | do 2 lat                    |
-| Sesja interaktywna i wsadowa | tak                    | tak                         |
+| Cecha                        | Token                                                      | Certyfikat KSeF (typ 1)     |
+| ---------------------------- | ---------------------------------------------------------- | --------------------------- |
+| Uprawnienia                  | zapisane w tokenie                                         | brak, bierze się je z konta |
+| Kontekst                     | jeden, w którym wydano                                     | różne                       |
+| Ważność                      | do unieważnienia (od 2027 r. wg propozycji: maks. 365 dni) | do 2 lat                    |
+| Sesja interaktywna i wsadowa | tak                                                        | tak                         |
 
 <Source
   href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
   label="Podręcznik KSeF 2.0, cz. I, tabela 3 i rozdz. 2.5"
 />
+<Source href="https://github.com/CIRFMF/ksef-api/issues/885" label="limit 365 dni: issue 885" />
 
 Certyfikat trzeba odnawiać przed końcem ważności, a liczba aktywnych certyfikatów na jeden PESEL lub NIP jest ograniczona. Wniosek składa się w API albo w Aplikacji Podatnika, po zalogowaniu węzłem krajowym, podpisem lub pieczęcią kwalifikowaną. Po zalogowaniu tokenem certyfikatu nie wygenerujesz (§ 13 ust. 2), więc potrzebujesz jednego z tych trzech sposobów.
 
