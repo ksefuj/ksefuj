@@ -19,6 +19,14 @@ what is not yet settled.
 
 ## Next up
 
+- [ ] **UPDATE** blog/tokeny-ksef-po-2026 (PL, EN): the API team published draft token rules on
+      2026-11-06: from 2027-01-01 new `rev2` endpoints, default validity 90 days (max 365), approval
+      step for tokens requested after a token login, 100 tokens per context, tokens from the old
+      endpoints valid 90 days, pre-2027 tokens valid to 2027-11-30, old endpoints withdrawn
+      2027-09-30. Draft open to 2026-11-20, not law; update the „what is still open” list and the
+      comparison table note (source: https://github.com/CIRFMF/ksef-api/issues/885) · brief
+      `tokeny-ksef-po-2026.md` fact 15 · wait until after 2026-11-20 if the draft may change
+
 Planned 2026-10-20 from Search Console (2026-09-19 to 2026-10-16) and a scan of what Polish tax
 sites published in the last month. Trade-press items are topic signals only: every fact still needs
 a Tier 1–3 source.
