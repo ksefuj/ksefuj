@@ -19,6 +19,14 @@ what is not yet settled.
 
 ## Next up
 
+- [ ] **UPDATE** blog/tokeny-ksef-po-2026 (PL, EN): the API team published draft token rules on
+      2026-11-06: from 2027-01-01 new `rev2` endpoints, default validity 90 days (max 365), approval
+      step for tokens requested after a token login, 100 tokens per context, tokens from the old
+      endpoints valid 90 days, pre-2027 tokens valid to 2027-11-30, old endpoints withdrawn
+      2027-09-30. Draft open to 2026-11-20, not law; update the „what is still open” list and the
+      comparison table note (source: https://github.com/CIRFMF/ksef-api/issues/885) · brief
+      `tokeny-ksef-po-2026.md` fact 15 · wait until after 2026-11-20 if the draft may change
+
 Planned 2026-10-20 from Search Console (2026-09-19 to 2026-10-16) and a scan of what Polish tax
 sites published in the last month. Trade-press items are topic signals only: every fact still needs
 a Tier 1–3 source.
@@ -53,7 +61,9 @@ a Tier 1–3 source.
       lead with „KSeF odrzuca…” · M, K · now · CIRFMF `faktury/weryfikacja-faktury.md`,
       `api-changelog.md` · Interim update 2026-10-24 (`content/ksef-scisla-walidacja-xml`): date
       passed, post now says the docs have not confirmed enforcement. Skip until 2026-11-07, then
-      re-check the changelog and issue #718 before the present-tense switch.
+      re-check the changelog and issue #718 before the present-tense switch. Re-checked 2026-11-08
+      (`content/ksef-scisla-walidacja-xml-19-10`): changelog still 2.9.0, #718 no posts since 24.06;
+      post dated „stan na 8 listopada”. Skip until 2026-11-22, then re-check again.
 - [x] **UPDATE** `najczestsze-bledy-walidacji-fa3` — open with a direct answer to „co znaczy błąd
       walidacji” in the first 100 words, then the list; mention the strict-XML rejections from 19.10
       and link that post · „błąd walidacji co to znaczy” · A · GSC ~74 impr at pos 7–14 · brief

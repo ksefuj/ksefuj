@@ -30,6 +30,44 @@ unchanged: metadata-only edits are not significant content updates.
     pos 6.7, "co oznacza błąd walidacji" 19, "co to jest błąd walidacji" 20, "błędy walidacji co to
     znaczy" 17.
 
+## 2026-11-07
+
+Digest: `gsc-data` 2026-11-06 (GSC 2026-10-07 to 2026-11-03: 141 clicks, 11,754 impressions, CTR
+1.20%, avg position 6.8; previous 28 days 70 clicks, CTR 0.73%). No crawl Problems: all 188 sitemap
+URLs 200, no broken internal links, canonical, noindex or hreflang issues; sitemap still 0 errors, 6
+warnings. The 25 not-indexed URLs are posts published or updated in the last 1-3 weeks plus the
+`/uk/blog` and `/uk/faq` listings (Crawled - currently not indexed, 58 internal links each, no
+fixable cause found). No title or description changes: every page in the low-CTR list had its title
+or description changed on 2026-10-26 or later, or has frontmatter `updated` within 28 days
+(`/en/guides/ksef-login` 2026-10-26). The only eligible one, `/en/blog/vat-exempt-ksef` (358 impr, 0
+clicks, pos 6.4, last changed 2026-10-08), ranks almost only for Polish queries („jestem zwolniony z
+vat", „zwolnienie podmiotowe", „w ksef"), so an English title rewrite would not help.
+
+- **Pages:** `/blog/ksef-dla-jdg`, `/blog/certyfikaty-vs-tokeny-ksef`,
+  `/guides/aplikacja-podatnika-ksef-pierwsza-faktura`, `/en/blog/ksef-for-sole-traders`,
+  `/en/blog/certificates-vs-tokens-ksef`, `/en/guides/ksef-taxpayer-app-first-invoice`
+  - **Change:** body only. One link each to `/guides/logowanie-ksef` (PL) or `/en/guides/ksef-login`
+    (EN), in the sentence where the post already tells the reader to log in with Profil Zaufany.
+  - **Motivation:** login queries rank the guides at positions 5-9 with few clicks: „ksef logowanie"
+    (213 impr, pos 9.4, 0 clicks -> PL guide; 146 impr, pos 8.4 -> EN guide), „kse logowanie" (152,
+    pos 9.2, 0 clicks), „ksef logowanie przez profil zaufany" (178, pos 5.1, 4 clicks), "ksef login"
+    (231, pos 4.8, 1 click). The health crawl found only 10 internal links to
+    `/guides/logowanie-ksef`; none came from the sole-trader hub post, the tokens/certificates post
+    (the site's login-methods comparison) or the Aplikacja Podatnika guide.
+  - **Baseline to compare:** `/guides/logowanie-ksef` 1,019 impr, 7 clicks, CTR 0.69%, pos 8.1;
+    `/en/guides/ksef-login` 690 impr, 5 clicks, CTR 0.72%, pos 6.6; positions of the queries above.
+    Title and description changes can be considered from 2026-11-23 (28 days after `updated`).
+
+### Results
+
+- **2026-10-07, blog listing titles:** no GSC baseline. Now `/blog` 7 impr, 0 clicks, pos 7.0
+  (previous 28 days 5 impr, pos 16.8); `/en/blog` 2 impr, pos 7.5 (6, pos 10.8); `/uk/blog` no
+  impressions and Crawled - currently not indexed. Listings are not search landing pages; the
+  duplicate-title Problem is gone.
+- **2026-10-09, `/waluty` descriptions:** no GSC baseline (no impressions then). Now `/waluty` 51
+  impr, 1 click, pos 6.3 (previous 28 days 38 impr, 0 clicks, pos 7.6); `/en/waluty` 34 impr, 0
+  clicks, pos 4.0 (146, pos 6.8); `/uk/waluty` no impressions. Description-length Problem gone.
+
 ## 2026-11-03
 
 Digest: `gsc-data` 2026-11-02 (GSC 2026-10-03 to 2026-10-30: 129 clicks, 10,368 impressions, CTR
