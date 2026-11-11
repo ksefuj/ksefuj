@@ -1,0 +1,141 @@
+---
+title: "Gdzie w 2027 r. skorygujesz fakturę spoza KSeF?"
+description: "Korekta wystawiona firmie od 1 stycznia 2027 r. powinna trafić do KSeF, bo art. 145m i 145n pozwalają na faktury poza KSeF tylko do końca 2026 r."
+date: 2026-11-11
+section: blog
+locale: pl
+slug: "korekta-faktury-poza-ksef-2027"
+topic: "invoicing"
+tags: ["KSeF", "Faktura", "JDG"]
+related:
+  - "blog/faktura-korygujaca-ksef"
+  - "blog/koniec-limitu-10000-zl"
+  - "blog/nota-korygujaca-ksef"
+sources:
+  - label: "Ustawa o VAT, tekst jednolity Dz.U. 2026 poz. 1263 (art. 106ga, 106j, 106na, 106nf, 106nh, 106ng, 145m, 145n)"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  - label: "Ustawa o VAT, tekst jednolity Dz.U. 2025 poz. 775 (art. 29a ust. 13 i 17)"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2025/775/text.pdf"
+  - label: "Podręcznik KSeF 2.0, cz. I (6.08.2026), s. 14"
+    url: "https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  - label: "Podręcznik KSeF 2.0, cz. II (6.08.2026), pkt 1.6.2, 1.6.4, 2.13, 4.1.3"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "Broszura informacyjna FA(3), opis pól DaneFaKorygowanej, NrKSeFN, Podmiot2K"
+    url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "Struktura logiczna FA(3)"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/"
+  - label: "MF, Pytania i odpowiedzi KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/"
+translations:
+  pl: "korekta-faktury-poza-ksef-2027"
+  en: "correcting-invoice-issued-outside-ksef-2027"
+  uk: "koryguvannya-faktury-poza-ksef-2027"
+---
+
+Jeśli w 2026 r. wystawiłeś firmie fakturę PDF lub papierową w limicie 10 000 zł albo fakturę z kasy, a korygujesz ją od 1 stycznia 2027 r., korekta powinna trafić do KSeF. Faktura korygująca jest fakturą, a art. 145m i 145n ustawy o VAT pozwalają wystawiać faktury poza KSeF tylko do 31 grudnia 2026 r. W samej korekcie zaznaczasz, że oryginał nie ma numeru KSeF (`NrKSeFN` = 1).
+
+<Source
+  href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  label="Ustawa o VAT, art. 106ga ust. 1, 106j ust. 1, 145m, 145n"
+/>
+
+Tak wynika z brzmienia przepisów. Art. 106ga ust. 1 mówi: „Podatnicy są obowiązani wystawiać faktury ustrukturyzowane przy użyciu Krajowego Systemu e-Faktur” i nie wyłącza z tego korekt. Art. 106j ust. 1 każe w razie zmiany lub pomyłki wystawić fakturę korygującą, a oba przepisy przejściowe obowiązują „do dnia 31 grudnia 2026 r.”. W przepisach, które sprawdziliśmy, nie ma reguły, że korektę wystawia się w tej samej formie co oryginał.
+
+Ministerstwo Finansów nie napisało tego wprost w materiałach, które przejrzeliśmy. Najbliżej tego jest odpowiedź z FAQ MF o korekcie faktury z 2025 r., czyli sprzed obowiązku: „System KSeF zapewnia wystawianie faktur korygujących, w tym korekty faktury z ubiegłego roku”. Ustawa i schemat FA(3) przewidują taką korektę wprost: art. 106j ust. 2 pkt 2a zwalnia z podawania numeru KSeF „faktur korygujących wystawianych do faktur, dla których nie został nadany numer”, a pole `NrKSeFN` opisano jako „Znacznik faktury korygowanej wystawionej poza KSeF”.
+
+<Source
+  href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/"
+  label="FAQ MF — KSeF 2.0"
+/>
+<Source href="https://crd.gov.pl/wzor/2025/06/25/13775/" label="Schemat FA(3): pole NrKSeFN" />
+
+Stan prawny na 11 listopada 2026 r.
+
+## Jak Marek skoryguje fakturę z listopada?
+
+Marek jest programistą na JDG i czynnym podatnikiem VAT. 20 listopada 2026 r. wystawił spółce fakturę FV/12/2026 na 4 000 zł netto, 920 zł VAT, 4 920 zł brutto. Wysłał ją mailem jako PDF, bo jego listopadowa sprzedaż udokumentowana fakturami zmieściła się w 10 000 zł brutto (art. 145m). W styczniu 2027 r. umawia się z klientem na rabat 500 zł netto za ten projekt.
+
+15 stycznia 2027 r. Marek wystawia w KSeF fakturę korygującą (`RodzajFaktury` = `KOR`) i wpisuje w niej różnicę kwot: −500 zł netto, −115 zł VAT, −615 zł brutto. Oryginał wskazuje w bloku `DaneFaKorygowanej`, w kolejności, jakiej wymaga schemat:
+
+<XmlExample copyable>
+  ```xml
+  <DaneFaKorygowanej>
+    <DataWystFaKorygowanej>2026-11-20</DataWystFaKorygowanej>
+    <NrFaKorygowanej>FV/12/2026</NrFaKorygowanej>
+    <NrKSeFN>1</NrKSeFN>
+  </DaneFaKorygowanej>
+  ```
+</XmlExample>
+
+Numer i data oryginału są obowiązkowe, a `NrKSeFN` zastępuje parę `NrKSeF` i `NrKSeFFaKorygowanej`. Jeśli podasz oba warianty naraz, plik nie przejdzie walidacji schematu. Marek wpisuje datę z PDF-u, bo tak najprościej odczytać to pole. Nie znaleźliśmy zdania MF, które potwierdzałoby to dla faktur spoza KSeF. Pozostałe pola korekty (przyczyna, `TypKorekty`, kwoty) wypełniasz tak samo jak przy każdej korekcie, co opisaliśmy w części o [korekcie faktury bez numeru KSeF](/blog/faktura-korygujaca-ksef#korekta-faktury-bez-numeru-ksef).
+
+Gdyby Marek skorygował FV/12/2026 już w 2026 r. na papierze, styczniowa korekta i tak wskazywałaby oryginał, a kwoty Marek liczyłby od stanu po pierwszej korekcie. MF opisuje tę zasadę dla kolejnych korekt, ale nie dla takiego mieszanego przypadku.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. II, pkt 2.13.2, 2.13.3"
+/>
+
+## W którym okresie rozliczysz korektę?
+
+Obniżenie podstawy opodatkowania sprzedawca ujmuje „za okres rozliczeniowy, w którym podatnik wystawił fakturę korygującą w postaci faktury ustrukturyzowanej” (art. 29a ust. 13 ustawy o VAT). Rabat przyznany po sprzedaży to jeden z przypadków, do których odsyła ten przepis. Przepis nie odwołuje się do formy oryginału, więc Marek, który rozlicza VAT miesięcznie, zmniejsza podstawę w rozliczeniu za styczeń 2027 r. Korektę „w górę” ujmuje się za okres, w którym powstała przyczyna zwiększenia (art. 29a ust. 17).
+
+<Source
+  href="https://api.sejm.gov.pl/eli/acts/DU/2025/775/text.pdf"
+  label="Ustawa o VAT (t.j. Dz.U. 2025 poz. 775), art. 29a ust. 13 i 17"
+/>
+
+Klient Marka znajdzie korektę w KSeF i niczego nie musi akceptować. Fakturę uznaje się za otrzymaną „w dniu przydzielenia w tym systemie numeru identyfikującego tę fakturę” (art. 106na ust. 3). Nie podajemy okresu, w którym klient zmniejsza odliczony VAT, bo nie znaleźliśmy jego potwierdzenia w źródłach. Ustali go księgowa klienta.
+
+<Source
+  href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  label="Ustawa o VAT, art. 106na ust. 3"
+/>
+
+## Kiedy korekta może zostać poza KSeF?
+
+**Kupującym jest osoba prywatna.** Obowiązek KSeF nie obejmuje faktur dla konsumentów (art. 106ga ust. 2 pkt 4), a ten wyjątek obowiązuje także po 2026 r. Korekta takiej faktury jest fakturą dla tej samej osoby, więc może zostać poza KSeF albo trafić tam dobrowolnie (art. 106ga ust. 4). To wniosek z przepisu. MF nie pisze osobno o korektach faktur konsumenckich.
+
+**Sprzedaż objęta innym stałym wyłączeniem.** Art. 106ga ust. 2 wyłącza też m.in. sprzedawców bez siedziby i stałego miejsca prowadzenia działalności w Polsce, procedury szczególne i procedurę z art. 113a. Te wyjątki, podobnie jak [koniec limitu 10 000 zł](/blog/koniec-limitu-10000-zl), opisaliśmy osobno. Korekta faktury objętej takim wyłączeniem może, jak przy konsumencie, zostać poza KSeF.
+
+**Korektę wystawiasz jeszcze w grudniu 2026 r.** Mieści się wtedy w okresie z art. 145m i 145n, jeśli spełniasz ich warunki. Nie znaleźliśmy w źródłach, czy taka korekta liczy się do limitu 10 000 zł.
+
+**W dniu korekty KSeF nie działa.** Korektę wystawiasz wtedy jak każdą fakturę: w trybie niedostępności (art. 106nh) albo awaryjnym (art. 106nf), ewentualnie offline24, a potem dosyłasz ją do KSeF w terminie. Przy awarii całkowitej (art. 106ng) faktur nie przesyła się do KSeF. MF nie opisuje korekt w tych trybach osobno, więc to także wniosek z ogólnych przepisów.
+
+## Co z korektą faktury z kasy i paragonu z NIP?
+
+Od 1 stycznia 2027 r. kasa nie wystawia faktur, a paragon z NIP przestaje być fakturą uproszczoną, więc korekty nie zrobisz już przy kasie. MF odpowiada w FAQ: „Od 2027 r., jeśli do transakcji zaewidencjonowanej przy użyciu kasy fiskalnej online będzie wystawiana faktura, to będzie musiała ona zostać wystawiona w KSeF, jeśli dotyczy sprzedaży na rzecz podatnika”. Z tego i z przepisów opisanych wyżej wynika, że korekta dla firmy też powinna trafić do KSeF, choć o korektach MF nie wspomina. Korekta faktury uproszczonej ma `RodzajFaktury` = `KOR`.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. I, s. 14"
+/>
+<Source
+  href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/"
+  label="FAQ MF: faktury z kas fiskalnych online"
+/>
+
+Nie wiadomo, co wpisać w `NrFaKorygowanej` i `DataWystFaKorygowanej` przy paragonie z NIP: numer paragonu, numer unikatowy kasy czy coś innego. Schemat wymaga obu pól, a MF tego nie opisało. Co zmienia się przy kasie od 2027 r., opisaliśmy w tekście o [fakturach do paragonu](/blog/faktura-z-kasy-fiskalnej-ksef-2027).
+
+## Co zrobić, gdy na oryginale jest błędny NIP?
+
+Schemat FA(3) nie pozwala poprawić korektą NIP nabywcy: „wówczas wymagana jest korekta faktury do wartości zerowych”, a potem nowa faktura z właściwym NIP. MF uzasadnia to tym, że faktura w KSeF trafia do podmiotu o wpisanym NIP. Przy oryginale z PDF-u ten argument nie działa, ale ani schemat, ani broszura nie robią wyjątku dla faktur spoza KSeF.
+
+<Source href="https://crd.gov.pl/wzor/2025/06/25/13775/" label="Schemat FA(3): pole Podmiot2K" />
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. II, pkt 1.6.4"
+/>
+
+W 2027 r. oznaczałoby to korektę do zera w KSeF z błędnym NIP, która trafiłaby do firmy o tym numerze, i nową fakturę w KSeF dla właściwego nabywcy. MF tego przypadku nie opisało. Jak wygląda sama [korekta do zera](/blog/faktura-korygujaca-ksef#korekta-do-zera-gdy-nip-nabywcy-jest-pomylony), pokazaliśmy osobno. Tu decyzję warto podjąć razem z księgową.
+
+## Co sprawdzić przed wystawieniem korekty?
+
+1. Znajdź oryginał, jego numer i datę wystawienia. Oba pola są w korekcie obowiązkowe. KSeF przechowuje tylko faktury, które do niego trafiły, więc PDF z 2026 r. przechowujesz sam.
+2. Sprawdź, czy oryginał na pewno nie ma numeru KSeF. Jeśli wystawiłeś go w KSeF dobrowolnie albo po przekroczeniu limitu, korekta wskazuje `NrKSeF` i numer KSeF, a nie `NrKSeFN`.
+3. Poprawiane dane nabywcy (nazwę, adres) podajesz w `Podmiot2K` w wersji z oryginału. Błędnego NIP w ten sposób nie poprawisz.
+4. Upewnij się, że twój program pozwala oznaczyć oryginał jako wystawiony poza KSeF. Nie sprawdziliśmy, czy umożliwia to Aplikacja Podatnika KSeF.
+5. Nie czekaj na notę od klienta. Korektę wystawia tylko sprzedawca, bo [noty korygującej już nie ma](/blog/nota-korygujaca-ksef), także dla faktur spoza KSeF.
+6. Sprawdź plik przed wysłaniem. KSeF sprawdza zgodność XML ze schematem i odrzuci korektę, w której są naraz `NrKSeF` i `NrKSeFN`.
+
+Jeśli masz plik XML korekty, wrzuć go do [walidatora ksefuj.to](/validator). Sprawdzi schemat FA(3) i reguły MF w przeglądarce, bez wysyłania pliku.
