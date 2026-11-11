@@ -7,6 +7,32 @@ from this environment on 2026-11-09 (proxy 403 / DNS failure), so nothing was re
 baseline is the one in `WATCHLIST.md` (verified 2026-10-07) plus the mobile manual edition of
 2026-08-31 recorded in `CHANGELOG.md`.
 
+## Local verification 2026-11-11 (supersedes the "Not in KB" items below)
+
+Read live: the MF app page, its change log, and the current mobile manual
+(https://ksef.podatki.gov.pl/media/cf0pmve4/podrecznik-uzytkownika-aplikacji-mobilnej-ksef-29102026.pdf,
+"Wersja [2.4.0]", "październik, 2026"; page modified 29.10.2026).
+
+- **Scope (pkt 1.1), unchanged:** „Aplikacja Mobilna KSeF umożliwia wystawianie faktur podstawowych
+  oraz ich korekt (w transakcjach krajowych w walucie PLN). Możliwość wystawienia korekty dotyczy
+  wyłącznie faktur wystawionych w Aplikacji Mobilnej KSeF.”
+- **Offline: YES since 2.4.0.** Change log, wersja 2.4.0: „obsługę trybu offline, który umożliwia
+  wystawianie faktur w przypadku braku dostępu do Internetu lub niedostępności usług API KSeF” and
+  „generowania certyfikatów dla trybu offline (tzw. podpisu linku)”; „Wystawione faktury zostaną
+  przesłane do KSeF po zalogowaniu do profilu już w trybie online.” Manual pkt 6.11: the „certyfikat
+  trybu offline” is requested in the app, is valid 2 years, max 6 active certificates, max 12
+  requests per 30 days. Pkt 6.12.1: without the certificate the offline form does not open; offline
+  issues the basic invoice form.
+- **Download and login:** pkt 1.1 „Pobranie … jest możliwe w sklepach Google Play oraz App Store …
+  wyłącznie na telefon z systemem Android lub iOS”; „Autoryzacja w aplikacji jest wykonywana poprzez
+  Węzeł Krajowy” (pkt 3); daily login with PIN or biometrics (pkt 4). The MF page lists mObywatel,
+  mojeID (bankowość elektroniczna), e-dowód, profil zaufany.
+- **Owner permissions:** pkt 3 (s. 23-24): „W przypadku podatników będących osobami fizycznymi
+  pierwotne uprawnienie o charakterze właścicielskim jest przypisane automatycznie. Osoba taka nie
+  musi nic zgłaszać.”
+- **Receiving:** pkt 6.9.1: invoices from all of KSeF are searchable; tabs „Faktury offline”,
+  „Sprzedażowe”, „Zakupowe” (received as buyer or via self-billing), „Podmiotu Innego”.
+
 **Target query:** „aplikacja mobilna KSeF”
 
 **Answer in two sentences:** MF provides the Aplikacja Mobilna KSeF for free, alongside the
