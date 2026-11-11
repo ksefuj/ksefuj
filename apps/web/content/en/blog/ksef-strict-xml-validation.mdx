@@ -2,7 +2,7 @@
 title: "Strict KSeF XML checks: 19 Oct date unconfirmed"
 description: "KSeF was to reject XML with processing instructions or discouraged characters from 19.10.2026. The API docs don't confirm the date. Remove them from files."
 date: 2026-10-07
-updated: 2026-10-24
+updated: 2026-11-08
 section: blog
 locale: en
 slug: "ksef-strict-xml-validation"
@@ -29,13 +29,13 @@ translations:
   en: "ksef-strict-xml-validation"
 ---
 
-According to the KSeF API team, production KSeF (Krajowy System e-Faktur, Poland's national e-invoicing system) was to start rejecting invoices from 19 October 2026 if their XML contains processing instructions (for example `<?xml-stylesheet ...?>`) or discouraged Unicode characters. As of 24 October the API documentation has neither confirmed this nor given a new date, so treat such files as rejected: if you maintain an API integration, remove them from the files you generate and log the `X-System-Warning` header from KSeF responses.
+According to the KSeF API team, production KSeF (Krajowy System e-Faktur, Poland's national e-invoicing system) was to start rejecting invoices from 19 October 2026 if their XML contains processing instructions (for example `<?xml-stylesheet ...?>`) or discouraged Unicode characters. As of 8 November the API documentation has neither confirmed this nor given a new date, so treat such files as rejected: if you maintain an API integration, remove them from the files you generate and log the `X-System-Warning` header from KSeF responses.
 
-Status as of 24 October 2026.
+Status as of 8 November 2026.
 
 ## Where the rule comes from and when it applies
 
-This is not a statute. It is a technical requirement from the KSeF API documentation maintained by the Ministry of Finance's IT centre (CIRF). It is described on the "Weryfikacja faktury" (invoice verification) page dated 9 April 2026. API version 2.4.0 (deployed to TEST on 10 April, to DEMO on 13 April and to production on 16 April 2026) introduced the stricter check, which production was to enforce from 16 July 2026. On 24 June 2026 a repository maintainer wrote that the date had moved to 19 October 2026. The changelog still says 16 July, so that comment is the only source of the new date. The 19 October date has passed, and as of 24 October neither the changelog (the latest version, 2.9.0, reached production on 15 October) nor the "Weryfikacja faktury" page has confirmed that production now rejects such files.
+This is not a statute. It is a technical requirement from the KSeF API documentation maintained by the Ministry of Finance's IT centre (CIRF). It is described on the "Weryfikacja faktury" (invoice verification) page dated 9 April 2026. API version 2.4.0 (deployed to TEST on 10 April, to DEMO on 13 April and to production on 16 April 2026) introduced the stricter check, which production was to enforce from 16 July 2026. On 24 June 2026 a repository maintainer wrote that the date had moved to 19 October 2026. The changelog still says 16 July, so that comment is the only source of the new date. The 19 October date has passed, and as of 8 November neither the changelog (the latest version, 2.9.0, reached production on 15 October) nor the "Weryfikacja faktury" page has confirmed that production now rejects such files. Issue #718 has had no new posts since 24 June.
 
 <Source href="https://github.com/CIRFMF/ksef-api/issues/718" label="CIRFMF/ksef-api, issue #718" />
 

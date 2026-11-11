@@ -1,11 +1,37 @@
 # Research Brief: Ścisła walidacja XML w KSeF od 19.10.2026
 
 **Requested by:** human (content backlog item `ksef-scisla-walidacja-xml-19-10`) **Date:**
-2026-10-07 (updated 2026-10-24) **Freshness:** 2026-10-24 (stan repo CIRFMF/ksef-api: HEAD
-`ce3670e`, 2026-10-14; issues i strony MF nieodczytane na żywo, zob. „Update 2026-10-24") **For
-content:** „KSeF od 19.10.2026 odrzuci XML z instrukcjami" (PL), „Strict XML validation in KSeF from
-19 Oct 2026" (EN); aktualizacja opublikowanego posta
+2026-10-07 (updated 2026-11-08) **Freshness:** 2026-11-08 (stan repo CIRFMF/ksef-api: HEAD
+`ce3670e`, 2026-10-14; metadane issues przez GitHub search API; strony MF nieodczytane na żywo, zob.
+„Update 2026-11-08") **For content:** „KSeF od 19.10.2026 odrzuci XML z instrukcjami" (PL), „Strict
+XML validation in KSeF from 19 Oct 2026" (EN); aktualizacja opublikowanego posta
 `apps/web/content/pl/blog/ksef-scisla-walidacja-xml.mdx`
+
+## Update 2026-11-08
+
+Ponowne sprawdzenie warunku z backlogu („once CIRFMF confirms it is live"). Stan na 2026-11-08:
+
+- **Repozytorium bez zmian od 2026-10-14.** Płytki klon CIRFMF/ksef-api: HEAD nadal `ce3670e`
+  („update version", 2026-10-14). `api-changelog.md`: najnowsza wersja nadal 2.9.0 (PROD
+  15.10.2026), wpis 2.4.0 nadal „Zaostrzenie walidacji XML zacznie obowiązywać od **16.07.2026**".
+  `faktury/weryfikacja-faktury.md`: ostatnia zmiana nadal `f1f68ba` (2026-04-21). Ciąg „19.10.2026"
+  / „2026-10-19" nie występuje w żadnym pliku `.md` repozytorium.
+- **Issue #718 bez nowych komentarzy.** GitHub search API (`search/issues`, repo:CIRFMF/ksef-api)
+  zwraca #718 jako `open`, 28 komentarzy, `updated_at` 2026-06-24T13:15:51Z, czyli po 24.06.2026
+  (dzień komentarza kw-cirf o terminie 19.10.2026) nic nie dopisano; czy ten komentarz był ostatnim
+  wpisem tego dnia, nie wiemy. Upstream HEAD potwierdzony `git ls-remote` 2026-11-08. Treści
+  komentarzy nie odczytaliśmy (api.github.com i github.com: 403 z tego środowiska); `updated_at`
+  wystarcza, by stwierdzić brak nowych wpisów.
+- **Brak nowych zgłoszeń o odrzucaniu na PROD.** Issues zaktualizowane od 2026-10-19 (#349, #461,
+  #622, #681, #808, #834, #866, #874, #878, #881, #882, #883, #884, #885, wg tytułów) nie dotyczą
+  instrukcji przetwarzania ani niezalecanych znaków; wyszukiwanie „stylesheet" zwraca tylko #718 i
+  #807 (zamknięte 2026-07-06). To sygnał, nie dowód: brak zgłoszeń nie potwierdza ani nie wyklucza
+  egzekwowania.
+- **Nieodczytane na żywo:** komunikaty techniczne https://ksef.podatki.gov.pl/komunikaty-techniczne/
+  (proxy CONNECT 403), treść komentarzy w #718 i #807.
+- **Wniosek:** warunek z backlogu nadal **nie jest spełniony**. W poście zmienić tylko datę stanu
+  (24.10 → 8.11) i dopisać, że wątek #718 nie ma nowych wpisów od 24.06.2026. Bez czasu
+  teraźniejszego „PROD odrzuca".
 
 ## Update 2026-10-24
 
@@ -153,8 +179,9 @@ od 10.04.2026.
   nie mówi.
 - Czy 19.10.2026 obejmuje także BOM i kodowanie w prologu: patrz „What changes the answer".
 - Czy data 19.10.2026 zostanie jeszcze zmieniona: changelog nadal podaje 16.07.2026; jedyne źródło
-  daty to komentarz w issue #718. Stan 2026-10-24: data minęła, changelog (do 2.9.0) i
-  `weryfikacja-faktury.md` nadal bez potwierdzenia; issue #718 nieodczytane ponownie (403).
+  daty to komentarz w issue #718. Stan 2026-11-08: data minęła, changelog (do 2.9.0) i
+  `weryfikacja-faktury.md` nadal bez potwierdzenia; issue #718 bez nowych komentarzy od 24.06.2026
+  (`updated_at` z search API).
 - Nie znaleziono wzmianki o tych regułach w: Podręcznik KSeF 2.0 cz. I-IV (wydania 06.08.2026),
   broszura FA(3), FAQ KSeF 2.0, komunikaty techniczne na ksef.podatki.gov.pl (strona 1, stan
   2026-10-07). Podręcznik cz. II (pkt 1.6.1) wymienia przesłanki odrzucenia bez tych reguł.
