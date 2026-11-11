@@ -70,9 +70,9 @@ return 403 from this environment); the KB brief named in the fact holds the orig
 
 6. **Aplikacja Podatnika:** po „Wyślij do KSeF" system waliduje i pokazuje numer KSeF z przyciskiem
    „Kopiuj"; lista faktur → zaznacz → „Pobierz" → plik nazwany numerem KSeF (1–10 faktur, kilka =
-   ZIP); UPO pojedynczej faktury z menu kontekstowego, UPO zbiorcze w „Historia sesji" po „Zakończ
-   sesję". — Podręcznik AP (06.08.2026) s. 32–33, 116–117, 125–126 per
-   `aplikacja-podatnika-ksef-pierwsza-faktura.md` fakty 8–10. URL:
+   ZIP); UPO pojedynczej faktury z menu kontekstowego w „Szczegóły wysyłki” w „Historia sesji” (nie
+   z listy faktur), UPO zbiorcze w „Historia sesji" po „Zakończ sesję". — Podręcznik AP (06.08.2026)
+   s. 32–33, 116–117, 125–126 per `aplikacja-podatnika-ksef-pierwsza-faktura.md` fakty 8–10. URL:
    https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf
    [KB] Confidence: HIGH Ania-relevant: yes
 7. **UPO zawiera numer KSeF.** Elementy UPO wg MF: numer referencyjny sesji, kontekst, numer KSeF,
@@ -164,8 +164,10 @@ return 403 from this environment); the KB brief named in the fact holds the orig
     Ania: yes. Full topic: link `/blog/numer-ksef-w-przelewie`, don't restate.
 18. **Identyfikator zbiorczy (IZ):** 35 znaków (NIP, „IZ", rok i miesiąc, 12 znaków, 2 znaki
     kontrolne), np. `9999999999-IZ202602-FFFFFFFFFFFF-FF`, dla co najmniej dwóch faktur tego samego
-    sprzedawcy, generuje wystawca lub odbiorca w AP lub przez API (`numer-ksef-w-przelewie.md` fakt
-    6; https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/numer-ksef-i-zbiorczy-identyfikator/
+    sprzedawcy, generuje wystawca lub odbiorca przez API / program (w AP tylko zapowiedź MF: „będzie
+    także dostępna”; Podręcznik AP 06.08.2026 tej funkcji nie opisuje, sprawdzone 2026-11-11)
+    (`numer-ksef-w-przelewie.md` fakt 6;
+    https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/numer-ksef-i-zbiorczy-identyfikator/
     [KB]). API: „Jedna faktura może zostać przypisana do maksymalnie 132 identyfikatorów zbiorczych
     w ramach jednego kontekstu" (`CollectiveIdentifierInvoice.ksefNumber`);
     `GET /collective-identifiers/ksef/{ksefNumber}` „Zwraca listę identyfikatorów zbiorczych
@@ -216,8 +218,9 @@ return 403 from this environment); the KB brief named in the fact holds the orig
   numery KSeF 1.0 miały 36 znaków, ani jak je podawać w `NrKSeFFaKorygowanej` / w przelewie.
 - **Co wpisać w tytule przelewu (od 2027), gdy faktura offline jeszcze nie ma numeru, a awarii nie
   ogłoszono:** ust. 4 art. 108g wyłącza tylko przypadek awarii (`numer-ksef-w-przelewie.md`).
-- **Korekta faktury offline przed nadaniem numeru:** NOT IN KB (`faktura-korygujaca-ksef.md` fakt
-  6).
+- **Korekta faktury offline przed nadaniem numeru:** SETTLED 2026-11-11 (Dz.U. 2026 poz. 1263):
+  korektę wystawia się dopiero po przydzieleniu numeru KSeF (art. 106nda ust. 12; art. 106nh ust. 4
+  w zw. z art. 106nda ust. 12; art. 106nf ust. 11).
 - **Awaria całkowita (art. 106ng) → `NrKSeFN`:** tylko wniosek (LOW).
 - **Nazwy menu AP dla faktur otrzymanych** (filtr „nabywca", pola wyszukiwania, czy „Pobierz" daje
   PDF): NOT IN KB / NOT SETTLED (`jak-odebrac-fakture-ksef.md` fakt 9). Nie podawać nazw menu poza
