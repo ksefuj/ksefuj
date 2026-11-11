@@ -1,0 +1,127 @@
+---
+title: "Find your KSeF number in KSeF, not in the XML"
+description: "KSeF assigns the 35-character number itself. Sellers see it after sending and in the UPO; buyers see it in the invoice list and under the QR code."
+date: 2026-11-07
+section: guides
+locale: en
+slug: "where-to-find-ksef-number"
+topic: "invoicing"
+tags: ["KSeF", "Invoice", "JDG"]
+sources:
+  - label: "KSeF 2.0 Manual, part II: issuing and receiving invoices (ed. 6 Aug 2026) (PL)"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "KSeF 2.0 Taxpayer Application user manual (ed. 6 Aug 2026) (PL)"
+    url: "https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
+  - label: "Ministry of Finance: KSeF number and collective identifier (PL)"
+    url: "https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/numer-ksef-i-zbiorczy-identyfikator/"
+  - label: "Ministry of Finance: KSeF 2.0 questions and answers (PL)"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/"
+  - label: "Ministry of Finance: KSeF FAQ (PL)"
+    url: "https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
+  - label: "FA(3) logical structure information brochure (PL)"
+    url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "VAT Act, consolidated text (Dz.U. 2026 item 1263) (PL)"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  - label: "CIRFMF/ksef-api: KSeF number"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/numer-ksef.md"
+  - label: "CIRFMF/ksef-api: QR codes"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/kody-qr.md"
+  - label: "CIRFMF/ksef-api: session status and UPO download"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/sesje/sesja-sprawdzenie-stanu-i-pobranie-upo.md"
+  - label: "CIRFMF/ksef-api: downloading invoices"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/pobieranie-faktur/pobieranie-faktur.md"
+  - label: "CIRFMF/ksef-api: API specification (open-api.json)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
+translations:
+  pl: "numer-ksef-gdzie-znalezc"
+  en: "where-to-find-ksef-number"
+  uk: "de-znayty-nomer-ksef"
+---
+
+The KSeF number is a 35-character identifier that KSeF (Krajowy System e-Faktur, Poland's National e-Invoicing System) assigns to an invoice once it accepts it, so you won't find it in the XML file or in the invoice number field. The seller sees it in the Taxpayer Application right after sending, in the invoice list and in the UPO; the buyer sees it in the KSeF invoice list, in the name of the downloaded file and under the QR code on the invoice PDF or printout.
+
+As of 7 November 2026.
+
+## What a KSeF number looks like and what it tells you
+
+The number always has 35 characters, for example `5265877635-20250826-0100001AF629-AF` (an example from the Ministry of Finance documentation). It has four parts separated by hyphens:
+
+- the **seller's** NIP (Polish tax ID, 10 digits), not the buyer's,
+- a date in YYYYMMDD format,
+- 12 technical characters (digits and the letters A to F),
+- 2 checksum characters.
+
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/numer-ksef.md"
+  label="CIRFMF/ksef-api: KSeF number"
+/>
+
+The date in the number is the day KSeF accepted the invoice for further processing. **It is not the invoice issue date (field P_1).** For an offline24 invoice that the seller sends the day after issuing it, the date in the number will therefore be later than the issue date; that follows from the Ministry's definition. Don't treat it as the date of receipt either: that is the day the KSeF number was assigned (Art. 106na ust. 3 of the VAT Act), which KSeF reports separately. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json" label="CIRFMF/ksef-api: open-api.json" /> <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, part II, section 5.1" />
+
+You don't put the KSeF number on the invoice. The FA(3) structure has no field for it, and field P_2 holds your own invoice number, such as FV/12/2026. KSeF assigns the number only after accepting the file and returns it in the UPO. <Source href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/" label="Ministry of Finance: KSeF FAQ, question 7" /> <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, part II, section 4.1" />
+
+Older material sometimes shows a 36-character number. That is the KSeF 1.0 format: the API accepts it only for backward compatibility, and KSeF 2.0 assigns 35-character numbers only. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json" label="CIRFMF/ksef-api: open-api.json, KsefNumber schema" />
+
+## Where the seller finds the KSeF number
+
+**In the Taxpayer Application** (Aplikacja Podatnika KSeF), after you click "Wyślij do KSeF" (Send to KSeF), the system checks the invoice and shows its KSeF number with a "Kopiuj" (Copy) button. Later you'll find it in the invoice list: when you select an invoice and click "Pobierz" (Download), the file is named after its KSeF number. <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Taxpayer Application manual, pp. 32–33 and 116–117" />
+
+**In the UPO** (urzędowe poświadczenie odbioru, the official receipt confirmation). You download it under "Historia sesji" (Session history), in the submission details: the UPO for a single invoice from the menu next to that invoice, and the collective UPO for a whole session with the "Pobierz UPO zbiorcze" button, once the session is closed. <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Taxpayer Application manual, pp. 125–126" /> Alongside the KSeF number, the UPO shows among other things your invoice number (P_2), the seller's NIP, the issue date and the date the KSeF number was assigned, which is also the date of receipt for a buyer who receives the invoice in KSeF. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, part II, section 4.2" />
+
+**In your invoicing software.** Software connected to KSeF reads the number from the status of the sent invoice. Where it displays the number depends on the software.
+
+The number usually appears straight after sending. The Ministry warns that under heavy system load it may be assigned with a short delay. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/kody-qr.md" label="CIRFMF/ksef-api: QR codes" />
+
+Don't confuse the KSeF number with the session or submission reference number that your software or the collective UPO shows next to it, such as `20250901-SB-47FA636000-5960B49115-9D`. A reference number starts with a date; a KSeF number starts with the seller's NIP. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/sesje/sesja-sprawdzenie-stanu-i-pobranie-upo.md" label="CIRFMF/ksef-api: session status and UPO" />
+
+## Where the buyer finds the KSeF number
+
+The seller doesn't have to send you the KSeF number, because an invoice with your NIP in the buyer's NIP field appears in your KSeF automatically. <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/" label="Ministry of Finance: KSeF 2.0 questions and answers" /> You see the number in the invoice list in the Taxpayer Application or in software that downloads purchase invoices from KSeF. A file downloaded from the invoice list in the Taxpayer Application is also named after the KSeF number. Our guide to [receiving invoices in KSeF](/en/guides/receiving-invoices-in-ksef) walks through getting to your purchase invoices step by step.
+
+If you have the invoice as a PDF or printout, look for the **number under the QR code**. It's there when the invoice already has a number: issued online, or issued offline and already sent to KSeF. The word "OFFLINE" in that spot means there was no number yet when the PDF was created, because an offline invoice was waiting to be sent or an online invoice was waiting for its number. The QR code link itself doesn't contain the number, but scanning the code shows you the invoice data from KSeF, including the number, provided the invoice is already in the system. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/kody-qr.md" label="CIRFMF/ksef-api: QR codes" /> <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, part II, sections 5.4–5.5" />
+
+Anonymous access in the Taxpayer Application (no login, no QR code) won't help you find the number, because you have to enter it there. That leaves your KSeF account or the QR code. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, part II, section 5.7" />
+
+## What you need the KSeF number for
+
+**Bank transfers.** From 1 January 2027, an active VAT payer paying another active VAT payer for an invoice issued in KSeF puts its KSeF number in the transfer title (Art. 108g of the VAT Act). When paying several invoices from one seller, they give a collective identifier instead, which either the issuer or the recipient generates in software connected to KSeF. The Ministry says the Taxpayer Application will offer this too. With split payment, the number goes into the transfer message (Art. 108a ust. 3 pkt 3). <Source href="https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/numer-ksef-i-zbiorczy-identyfikator/" label="Ministry of Finance: KSeF number and collective identifier" /> We cover the exceptions and details in our post on [the KSeF number in the transfer title](/en/blog/ksef-number-in-bank-transfer).
+
+**Corrective invoices.** A correction states the KSeF number of the invoice it corrects (field `NrKSeFFaKorygowanej`, together with the flag `NrKSeF` = 1). In the same way, a settlement invoice for advance payments lists the KSeF numbers of the advance invoices. <Source href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf" label="FA(3) brochure, pp. 69–70 and 84–85" /> <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, part II, sections 4.1.1–4.1.2" /> Our post on [corrective invoices in KSeF](/en/blog/corrective-invoice-ksef) takes you through a full correction.
+
+**JPK_VAT.** Since February 2026, the JPK_V7M and JPK_V7K VAT returns list the KSeF numbers of sales and purchase invoices, or the relevant marker when an invoice has no number. Your accounting software or accountant usually handles this. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, part II, section 4.1.6" />
+
+## When an invoice has no KSeF number
+
+- **Invoice issued outside KSeF.** Until 31 December 2026 this is allowed within the 10,000 PLN monthly limit (Art. 145m) and for invoices from a cash register (Art. 145n), and for an invoice to a private individual also after that date (Art. 106ga ust. 2 pkt 4). Such an invoice has no number and never gets one. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="VAT Act, Art. 106ga, 145m and 145n" />
+- **Offline invoice not yet sent.** An invoice issued in offline24 mode (Art. 106nda), during KSeF unavailability (Art. 106nh) or during a KSeF outage (Art. 106nf) gets its number only when the seller sends it to the system. Until then the seller may give you a "potwierdzenie transakcji" (transaction confirmation) with two QR codes, which is not an invoice. Our guide to [KSeF outages and offline mode](/en/guides/ksef-outage-offline-mode) covers the sending deadlines. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, part II, section 1.6.6" />
+- **Invoice rejected by KSeF.** It gets no number and is not issued. The seller fixes the file and sends it again. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, part II, section 1.6.1" />
+
+What this means for bank transfers: Art. 108g doesn't cover invoices issued outside KSeF or invoices issued during a KSeF outage (Art. 106nf), and it excludes offline24 and unavailability invoices only when they weren't entered into KSeF because of an announced outage (ust. 4). <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, part II, section 4.1.5" /> The law doesn't say what to put in the transfer title when an offline invoice has no number yet and no outage has been announced.
+
+What this means for corrections: when you correct an invoice issued outside KSeF, you set `NrKSeFN` = 1 instead of giving a number. Offline invoices are different: the Ministry requires the KSeF number of the corrected invoice even when it was issued in offline24 mode, during unavailability or during a KSeF outage. <Source href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf" label="FA(3) brochure, description of the NrKSeF field, p. 70" /> So you can't correct an offline invoice before it gets its number: the VAT Act says the correction is issued only after the number is assigned (Art. 106nda ust. 12, Art. 106nh ust. 4 and Art. 106nf ust. 11). <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="VAT Act, Arts. 106nda, 106nf and 106nh (PL)" />
+
+## For developers: the KSeF number in the API and UPO
+
+- **After sending:** `GET /sessions/{referenceNumber}/invoices/{invoiceReferenceNumber}` returns `ksefNumber` (`nullable` until the number exists) and `acquisitionDate` (when the number was assigned). `GET /sessions/{referenceNumber}/invoices` lists a session's invoices, and `GET /sessions/{referenceNumber}/invoices/failed` lists the rejected ones.
+- **UPO:** `.../invoices/{invoiceReferenceNumber}/upo` or `.../invoices/ksef/{ksefNumber}/upo`. In the UPO XML (schema v4-3) the number sits in `Dokument/NumerKSeFDokumentu`, next to `NumerFaktury`, `NipSprzedawcy` and `DataNadaniaNumeruKSeF`.
+- **Purchase invoices:** `POST /invoices/query/metadata` returns `InvoiceMetadata.ksefNumber`, and `GET /invoices/ksef/{ksefNumber}` returns the invoice itself. In an export package the numbers are in `_metadata.json`.
+- **Three dates in `InvoiceMetadata`:** `issueDate` (issue date), `invoicingDate` (accepted for processing; this is the date in the number) and `acquisitionDate` (number assigned). Don't assume any two of them are always equal.
+- **Validation:** the checksum is CRC-8 (polynomial `0x07`, initial value `0x00`) over the first 32 characters. The `KsefNumber` schema accepts 35 or 36 characters, but KSeF 2.0 only generates 35.
+- The `referenceNumber` of an invoice or session is not the KSeF number.
+
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/sesje/sesja-sprawdzenie-stanu-i-pobranie-upo.md"
+  label="CIRFMF/ksef-api: session status and UPO"
+/>
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/pobieranie-faktur/pobieranie-faktur.md"
+  label="CIRFMF/ksef-api: downloading invoices"
+/>
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
+  label="CIRFMF/ksef-api: open-api.json"
+/>
+
+## What to do now
+
+Open the last invoice you issued or received in the Taxpayer Application and copy its KSeF number. If you pay invoices as an active VAT payer, ask your accounting software or bank provider whether it will suggest this number in the transfer title before 1 January 2027.
