@@ -124,7 +124,9 @@ approval step, 100 tokens per context, from 2027-01-01); it is a proposal, not l
     said; an announcement, not law. It does not state what the „nowe zasady" are.
 13. **Amending regulation status.** Verified live 2026-10-26: the ELI record for Dz.U. 2025 poz.
     1815 lists only DU/2026/169 (changeDate 2026-02-16); RCL title search „e-Faktur" shows no 2026
-    draft; no MF news on tokens. Confidence: HIGH for 2026-10-26.
+    draft; no MF news on tokens. Confidence: HIGH for 2026-10-26. Superseded: the draft appeared on
+    RCL on 2026-10-27 (https://legislacja.gov.pl/projekt/12416152); see brief
+    `rozporzadzenie-ksef-i-tokeny.md` fact 7. ELI still lists only DU/2026/169 on 2026-11-11.
 14. **API changelog, 2026-10-25:** latest version 2.9.0 (TEST/DEMO 13.10.2026, PROD 15.10.2026). No
     release contains an entry on token validity/expiry or a new version of the token-creation
     endpoint. Source: https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md (fetched

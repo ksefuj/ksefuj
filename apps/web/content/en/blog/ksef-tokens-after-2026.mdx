@@ -1,8 +1,8 @@
 ---
 title: "KSeF tokens: how long do they work?"
-description: "The KSeF regulation allows tokens until 31 Dec 2026. A draft amendment, known only from press reports, extends existing tokens to 30 Nov 2027."
+description: "The KSeF regulation allows tokens until 31 Dec 2026. A draft amendment of October 2026 extends existing tokens to 30 Nov 2027."
 date: 2026-10-07
-updated: 2026-11-10
+updated: 2026-11-11
 section: blog
 locale: en
 slug: "ksef-tokens-after-2026"
@@ -29,22 +29,19 @@ sources:
     url: "https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md"
   - label: "MF FAQ: KSeF 2.0"
     url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
-  - label: "Prawo.pl (trade publication, not an official source): MF on using tokens in KSeF in 2027 (Polish)"
-    url: "https://www.prawo.pl/podatki/mf-wykorzystanie-tokenow-w-ksef-w-2027-r,1555908.html"
-  - label: "Fakturownia (trade publication, not an official source): changes in KSeF (Polish)"
-    url: "https://fakturownia.pl/krajowy-system-e-faktur/zmiany-w-ksef"
+  - label: "Draft regulation amending the regulation on using KSeF, no. 138/2026 (RCL, draft of 26.10.2026, Polish)"
+    url: "https://legislacja.gov.pl/projekt/12416152"
 translations:
   pl: "tokeny-ksef-po-2026"
   en: "ksef-tokens-after-2026"
   uk: "tokeny-ksef-pislia-2026"
 ---
 
-The regulation in force lets you log in to KSeF (Krajowy System e-Faktur, Poland's national e-invoicing system) with a token until 31 December 2026. According to Polish trade press, at the end of October 2026 the Ministry of Finance (MF) put out for consultation a draft amendment that would extend tokens generated before 2027 until 30 November 2027. The draft is not law yet.
+The regulation in force lets you log in to KSeF (Krajowy System e-Faktur, Poland's national e-invoicing system) with a token until 31 December 2026. On 27 October 2026 the Ministry of Finance (MF) put out for consultation a draft amendment that would extend tokens generated before 2027 until 30 November 2027. The draft is not law yet.
 
 <Info>
-  Status as of 10 November 2026. We checked the list of amendments to the regulation on 26 October:
-  the only amendment is Dz.U. 2026 item 169, which does not concern tokens. We could not read the
-  text of the new draft, so we describe it as reported by trade publications.{" "}
+  Status as of 11 November 2026. We checked the list of amendments to the regulation that day: the
+  only amendment is still Dz.U. 2026 item 169, which does not concern tokens.{" "}
   <Source href="https://api.sejm.gov.pl/eli/acts/DU/2025/1815" label="list of amendments, ELI" />
 </Info>
 
@@ -68,24 +65,24 @@ The API team published the details of the new rules on 6 November 2026 as a prop
 
 ### What does the draft amendment to the regulation say?
 
-According to Polish trade publications, including Prawo.pl and Fakturownia, at the end of October 2026 MF published a draft amendment to the KSeF regulation on the portal of the Government Legislation Centre (Rządowe Centrum Legislacji). We have not read the draft itself, so we rely on those reports. They say the draft:
+On 27 October 2026 MF published a draft amendment to the KSeF regulation (no. 138/2026 in its list of legislative work) on the portal of the Government Legislation Centre (Rządowe Centrum Legislacji) and set 14 days for comments. <Source href="https://legislacja.gov.pl/projekt/12416152" label="draft on the RCL portal" /> The draft:
 
-- extends the validity of tokens generated before 1 January 2027 to 30 November 2027 (this provision would take effect on 31 December 2026, the other changes on 1 January 2027),
-- limits tokens generated from 1 January 2027 to at most 365 days, counted from generation or from a date the taxpayer chooses,
-- allows a KSeF certificate to be restricted to a single NIP (Polish tax ID) or a single branch,
-- regulates, from 1 January 2027, the use of the collective identifier, which marks one payment covering several invoices (the reports differ on whether this is a separate permission or part of the permissions to issue or access invoices).
+- extends the validity of tokens generated before 1 January 2027 to 30 November 2027 (the change to § 13 is to take effect on 31 December 2026, the other changes on 1 January 2027),
+- adds the KSeF token to the permanent methods in § 6 ust. 1, but only a token generated after logging in with one of the other four methods. Such a token will be valid for at most 365 days from generation or from a start date the taxpayer chooses (§ 6 ust. 2d),
+- allows a KSeF certificate that works only within a single NIP (Polish tax ID) or branch identifier (§ 6 ust. 2c),
+- adds a permission to handle collective identifiers, which mark one payment covering several invoices (§ 3 ust. 1 pkt 5). Everyone authorised to issue or access invoices has it automatically, but it can also be granted on its own.
 
 The 30 November 2027 date matches the API team's posts from September and November, and the 365-day limit matches the 6 November proposal and MF's June consultations.
 
 **The draft is not law yet.** Until the amendment is published in the Dziennik Ustaw (Journal of Laws) and takes effect, § 13 ust. 1 pkt 1 applies as it stands, which means tokens only until 31 December 2026. We do not know:
 
 - whether the signed regulation will keep the draft's dates, and when it will be published,
-- whether the rules will adopt the rest of the API team's proposal (90 days by default, approval within 24 hours). The descriptions of the draft we found do not mention it,
+- whether the rules will adopt the rest of the API team's proposal (90 days by default, approval within 24 hours). The draft is silent on this and leaves the token's technical details to the API specification (§ 6 ust. 3),
 - what the system will do on 1 January 2027 if the amendment is late. With § 13 as it stands, tokens are not permitted by the regulation from that date.
 
 ## What to do now
 
-There is no reason to panic: under the current rules a token works until 31 December 2026. Only a regulation signed and published in the Dziennik Ustaw will settle the question. If your software logs in to KSeF with a token, set up a KSeF certificate as a fallback login method before 31 December and plan for token renewal, because neither the API team's proposal nor the reported draft provides for tokens without an expiry date any more.
+There is no reason to panic: under the current rules a token works until 31 December 2026. Only a regulation signed and published in the Dziennik Ustaw will settle the question. If your software logs in to KSeF with a token, set up a KSeF certificate as a fallback login method before 31 December and plan for token renewal, because neither the API team's proposal nor the draft provides for tokens without an expiry date any more.
 
 **Accounting offices.** Pani Krystyna should check which of her clients' programs log in to KSeF with a token, and when those tokens were generated. The Taxpayer Application lists generated tokens under "Lista tokenów". <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Taxpayer Application manual, ch. 5.6" /> She should also ask the software vendor whether it supports KSeF certificates and what it plans after 31 December. A token generated by a natural person (for example a sole trader) may be used only by that person, so an office cannot use a token generated by a client. <Source href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf" label="KSeF 2.0 Handbook, part I, p. 38" />
 

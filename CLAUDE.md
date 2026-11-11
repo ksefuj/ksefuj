@@ -257,7 +257,7 @@ Follow official FA(3) specification (§2.6) decimal precision limits:
   `web2te-ksef.mf.gov.pl` does not resolve.
 - Official API spec and changelog: https://github.com/CIRFMF/ksef-api (docs merged from ksef-docs)
 - KSeF tokens: the regulation (Dz.U. 2025 poz. 1815 §13) ends them 2026-12-31, but MF decided to
-  keep them; a draft amendment (RCL, late Oct 2026, not law) would keep pre-2027 tokens until
+  keep them; a draft amendment (RCL 12416152, 27 Oct 2026, not law) would keep pre-2027 tokens until
   2027-11-30; see `docs/knowledge-base/briefs/rozporzadzenie-ksef-i-tokeny.md`
 - Documentation portal: https://ksef.podatki.gov.pl/
 - Schema namespace: `http://crd.gov.pl/wzor/2025/06/25/13775/`
