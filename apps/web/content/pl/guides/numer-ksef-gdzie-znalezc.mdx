@@ -1,0 +1,131 @@
+---
+title: "Numer KSeF faktury znajdziesz w KSeF, nie w XML"
+description: "Numer KSeF ma 35 znaków i nadaje go system. Wystawca widzi go po wysłaniu i w UPO, nabywca na liście faktur i pod kodem QR."
+date: 2026-11-07
+section: guides
+locale: pl
+slug: "numer-ksef-gdzie-znalezc"
+topic: "invoicing"
+tags: ["KSeF", "Faktura", "JDG"]
+related:
+  - "blog/numer-ksef-w-przelewie"
+  - "guides/jak-odebrac-fakture-ksef"
+  - "blog/faktura-korygujaca-ksef"
+sources:
+  - label: "Podręcznik KSeF 2.0, cz. II: wystawianie i otrzymywanie faktur (wyd. 6.08.2026)"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "Podręcznik użytkownika Aplikacji Podatnika KSeF 2.0 (wyd. 6.08.2026)"
+    url: "https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
+  - label: "MF: Numer KSeF i zbiorczy identyfikator"
+    url: "https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/numer-ksef-i-zbiorczy-identyfikator/"
+  - label: "MF: Pytania i odpowiedzi KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/"
+  - label: "MF: Najczęstsze pytania o KSeF"
+    url: "https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
+  - label: "Broszura informacyjna dotycząca struktury logicznej FA(3)"
+    url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "Ustawa o VAT, tekst jednolity (Dz.U. 2026 poz. 1263)"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  - label: "CIRFMF/ksef-api: numer KSeF"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/numer-ksef.md"
+  - label: "CIRFMF/ksef-api: kody QR"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/kody-qr.md"
+  - label: "CIRFMF/ksef-api: status sesji i pobranie UPO"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/sesje/sesja-sprawdzenie-stanu-i-pobranie-upo.md"
+  - label: "CIRFMF/ksef-api: pobieranie faktur"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/pobieranie-faktur/pobieranie-faktur.md"
+  - label: "CIRFMF/ksef-api: specyfikacja API (open-api.json)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
+translations:
+  pl: "numer-ksef-gdzie-znalezc"
+  en: "where-to-find-ksef-number"
+  uk: "de-znayty-nomer-ksef"
+---
+
+Numer KSeF to 35-znakowy identyfikator, który system nadaje fakturze po jej przyjęciu, więc nie znajdziesz go w pliku XML ani w polu z numerem faktury. Wystawca widzi go w Aplikacji Podatnika zaraz po wysłaniu, na liście faktur i w UPO, a nabywca na liście faktur w KSeF, w nazwie pobranego pliku i pod kodem QR na PDF lub wydruku faktury.
+
+Stan na 7 listopada 2026 r.
+
+## Jak wygląda numer KSeF i co z niego odczytasz
+
+Numer ma zawsze 35 znaków, na przykład `5265877635-20250826-0100001AF629-AF` (przykład z dokumentacji MF). Składa się z czterech części oddzielonych łącznikami:
+
+- NIP **sprzedawcy** (10 cyfr), nie nabywcy,
+- data w formacie RRRRMMDD,
+- 12 znaków technicznych (cyfry i litery od A do F),
+- 2 znaki sumy kontrolnej.
+
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/numer-ksef.md"
+  label="CIRFMF/ksef-api: numer KSeF"
+/>
+
+Data w numerze to dzień, w którym KSeF przyjął fakturę do dalszego przetwarzania. **Nie jest to data wystawienia faktury (pole P_1).** Przy fakturze offline24, którą sprzedawca wysyła dzień po wystawieniu, data w numerze będzie więc późniejsza niż data wystawienia; tak wynika z definicji MF. Nie traktuj jej też jako daty otrzymania faktury: tą jest dzień nadania numeru KSeF (art. 106na ust. 3 ustawy o VAT), który KSeF podaje osobno. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json" label="CIRFMF/ksef-api: open-api.json" /> <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 5.1" />
+
+Numeru KSeF nie wpisujesz do faktury. Struktura FA(3) nie ma na niego pola, a pole P_2 to twój własny numer faktury, np. FV/12/2026. KSeF nadaje numer dopiero po przyjęciu pliku i zwraca go w UPO. <Source href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/" label="MF: najczęstsze pytania, pyt. 7" /> <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 4.1" />
+
+W starszych materiałach trafisz czasem na numer z 36 znakami. To format z KSeF 1.0: API przyjmuje go tylko dla zgodności wstecznej, a KSeF 2.0 nadaje wyłącznie numery 35-znakowe. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json" label="CIRFMF/ksef-api: open-api.json, schemat KsefNumber" />
+
+## Gdzie numer KSeF znajdzie wystawca
+
+**W Aplikacji Podatnika** po kliknięciu „Wyślij do KSeF” system sprawdza fakturę i pokazuje jej numer KSeF z przyciskiem „Kopiuj”. Później znajdziesz go na liście faktur: gdy zaznaczysz fakturę i klikniesz „Pobierz”, plik dostaje nazwę z numerem KSeF. <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Podręcznik AP, s. 32–33 i 116–117" />
+
+**W UPO**, czyli urzędowym poświadczeniu odbioru. Pobierzesz je w „Historia sesji”, w szczegółach wysyłki: UPO pojedynczej faktury z menu przy tej fakturze, a UPO zbiorcze całej sesji przyciskiem „Pobierz UPO zbiorcze”, gdy sesja jest już zakończona. <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Podręcznik AP, s. 125–126" /> Obok numeru KSeF UPO pokazuje m.in. twój numer faktury (P_2), NIP sprzedawcy, datę wystawienia i datę nadania numeru KSeF, która jest zarazem datą otrzymania faktury przez nabywcę odbierającego ją w KSeF. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 4.2" />
+
+**W programie fakturowym.** Program połączony z KSeF odczytuje numer ze statusu wysłanej faktury. Miejsce, w którym go pokazuje, zależy od programu.
+
+Numer zwykle pojawia się od razu po wysłaniu. MF zastrzega, że przy dużym obciążeniu systemu może zostać nadany z niewielkim opóźnieniem. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/kody-qr.md" label="CIRFMF/ksef-api: kody QR" />
+
+Nie pomyl numeru KSeF z numerem referencyjnym sesji albo wysyłki, który program lub UPO zbiorcze pokazuje obok, np. `20250901-SB-47FA636000-5960B49115-9D`. Numer referencyjny zaczyna się od daty, numer KSeF od NIP sprzedawcy. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/sesje/sesja-sprawdzenie-stanu-i-pobranie-upo.md" label="CIRFMF/ksef-api: status sesji i UPO" />
+
+## Gdzie numer KSeF znajdzie nabywca
+
+Sprzedawca nie musi przysyłać ci numeru KSeF, bo faktura z twoim NIP w polu NIP nabywcy pojawia się w twoim KSeF automatycznie. <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/" label="MF: Pytania i odpowiedzi KSeF 2.0" /> Numer widzisz na liście faktur w Aplikacji Podatnika albo w programie, który pobiera faktury zakupowe z KSeF. Plik pobrany z listy faktur w Aplikacji Podatnika też nosi nazwę numeru KSeF. Drogę do faktur zakupowych krok po kroku opisujemy w przewodniku o [odbieraniu faktur w KSeF](/guides/jak-odebrac-fakture-ksef).
+
+Jeśli masz fakturę jako PDF albo wydruk, szukaj **numeru pod kodem QR**. Jest tam, gdy faktura ma już numer: wystawiona online albo offline i już wysłana do KSeF. Napis „OFFLINE” w tym miejscu znaczy, że w chwili tworzenia PDF numeru jeszcze nie było, bo faktura offline czekała na wysłanie albo faktura online na nadanie numeru. Sam link w kodzie QR numeru nie zawiera, ale po zeskanowaniu kodu zobaczysz dane faktury z KSeF, w tym numer, o ile faktura jest już w systemie. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/kody-qr.md" label="CIRFMF/ksef-api: kody QR" /> <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 5.4–5.5" />
+
+Dostęp anonimowy w Aplikacji Podatnika (bez logowania i bez kodu QR) nie pomoże ci znaleźć numeru, bo trzeba go tam wpisać. Zostaje konto w KSeF albo kod QR. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 5.7" />
+
+## Do czego potrzebujesz numeru KSeF
+
+**Przelew.** Od 1 stycznia 2027 r. czynny podatnik VAT, płacąc innemu czynnemu podatnikowi VAT za fakturę z KSeF, wpisuje w tytule przelewu jej numer KSeF (art. 108g ustawy o VAT). Za kilka faktur jednego sprzedawcy podaje identyfikator zbiorczy, który generuje wystawca albo odbiorca w programie połączonym z KSeF. MF zapowiada tę funkcję także w Aplikacji Podatnika. Przy podzielonej płatności numer trafia do komunikatu przelewu (art. 108a ust. 3 pkt 3). <Source href="https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/numer-ksef-i-zbiorczy-identyfikator/" label="MF: Numer KSeF i zbiorczy identyfikator" /> Wyjątki i szczegóły opisujemy w poście o [numerze KSeF w tytule przelewu](/blog/numer-ksef-w-przelewie).
+
+**Faktura korygująca.** W korekcie podajesz numer KSeF faktury, którą poprawiasz (pole `NrKSeFFaKorygowanej`, obok znacznika `NrKSeF` = 1). Tak samo faktura rozliczająca zaliczki wskazuje numery KSeF faktur zaliczkowych. <Source href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf" label="Broszura FA(3), s. 69–70 i 84–85" /> <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 4.1.1–4.1.2" /> Całą korektę krok po kroku opisujemy w poście o [fakturze korygującej w KSeF](/blog/faktura-korygujaca-ksef).
+
+**JPK_VAT.** Od lutego 2026 r. w JPK_V7M i JPK_V7K podaje się numery KSeF faktur sprzedażowych i zakupowych, a gdy faktura numeru nie ma, odpowiednie oznaczenie. Zwykle robi to program księgowy albo księgowa. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 4.1.6" />
+
+## Kiedy faktura nie ma numeru KSeF
+
+- **Faktura wystawiona poza KSeF.** Do 31 grudnia 2026 r. wolno tak wystawiać w limicie 10 000 zł (art. 145m) i z kasy fiskalnej (art. 145n), a fakturę dla osoby prywatnej poza KSeF także później (art. 106ga ust. 2 pkt 4). Taka faktura numeru nie ma i go nie dostanie. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="Ustawa o VAT, art. 106ga, 145m i 145n" />
+- **Faktura offline przed wysłaniem.** Faktura z trybu offline24 (art. 106nda), z niedostępności (art. 106nh) albo z awarii KSeF (art. 106nf) dostaje numer dopiero, gdy sprzedawca wyśle ją do systemu. Zanim to zrobi, może ci dać „potwierdzenie transakcji” z dwoma kodami QR, które nie jest fakturą. Terminy wysyłki opisujemy w przewodniku o [awarii KSeF i trybie offline](/guides/awaria-ksef-offline). <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 1.6.6" />
+- **Faktura odrzucona przez KSeF.** Nie dostaje numeru i nie jest wystawiona. Sprzedawca poprawia plik i wysyła go ponownie. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 1.6.1" />
+
+Co to znaczy dla przelewu: art. 108g nie wymienia faktur spoza KSeF ani faktur z awarii KSeF (art. 106nf), a faktury offline24 i z niedostępności wyłącza tylko wtedy, gdy nie wprowadzono ich do KSeF z powodu ogłoszonej awarii (ust. 4). <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 4.1.5" /> Przepisy nie rozstrzygają, co wpisać w tytule, gdy faktura offline jeszcze nie ma numeru, a awarii nie ogłoszono.
+
+Co to znaczy dla korekty: gdy poprawiasz fakturę wystawioną poza KSeF, zamiast numeru zaznaczasz `NrKSeFN` = 1. Przy fakturze offline jest inaczej: MF wymaga numeru KSeF korygowanej faktury także wtedy, gdy wystawiono ją offline24, przy niedostępności albo w czasie awarii KSeF. <Source href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf" label="Broszura FA(3), opis pola NrKSeF, s. 70" /> Dlatego faktury offline nie skorygujesz, zanim dostanie numer: ustawa każe wystawić korektę dopiero po jego nadaniu (art. 106nda ust. 12, art. 106nh ust. 4 i art. 106nf ust. 11). <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="Ustawa o VAT, art. 106nda, 106nf i 106nh" />
+
+## Dla programistów: numer KSeF w API i UPO
+
+- **Po wysyłce:** `GET /sessions/{referenceNumber}/invoices/{invoiceReferenceNumber}` zwraca `ksefNumber` (`nullable`, dopóki numeru nie ma) i `acquisitionDate` (data nadania numeru). Listę faktur sesji daje `GET /sessions/{referenceNumber}/invoices`, a odrzuconych `GET /sessions/{referenceNumber}/invoices/failed`.
+- **UPO:** `.../invoices/{invoiceReferenceNumber}/upo` albo `.../invoices/ksef/{ksefNumber}/upo`. W XML UPO (schemat v4-3) numer jest w `Dokument/NumerKSeFDokumentu`, obok `NumerFaktury`, `NipSprzedawcy` i `DataNadaniaNumeruKSeF`.
+- **Faktury zakupowe:** `POST /invoices/query/metadata` zwraca `InvoiceMetadata.ksefNumber`, a `GET /invoices/ksef/{ksefNumber}` samą fakturę. W paczce eksportu numery są w `_metadata.json`.
+- **Trzy daty w `InvoiceMetadata`:** `issueDate` (data wystawienia), `invoicingDate` (przyjęcie do przetwarzania, ta data jest w numerze) i `acquisitionDate` (nadanie numeru). Nie zakładaj, że któreś dwie są zawsze równe.
+- **Walidacja:** suma kontrolna to CRC-8 (wielomian `0x07`, wartość początkowa `0x00`) z pierwszych 32 znaków. Schemat `KsefNumber` przyjmuje 35 lub 36 znaków, ale KSeF 2.0 generuje tylko 35.
+- `referenceNumber` faktury i sesji to nie numer KSeF.
+
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/sesje/sesja-sprawdzenie-stanu-i-pobranie-upo.md"
+  label="CIRFMF/ksef-api: status sesji i UPO"
+/>
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/pobieranie-faktur/pobieranie-faktur.md"
+  label="CIRFMF/ksef-api: pobieranie faktur"
+/>
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
+  label="CIRFMF/ksef-api: open-api.json"
+/>
+
+## Co zrobić teraz
+
+Otwórz ostatnią wystawioną albo otrzymaną fakturę w Aplikacji Podatnika i skopiuj jej numer KSeF. Jeśli płacisz za faktury jako czynny podatnik VAT, zapytaj dostawcę programu księgowego lub bankowego, czy przed 1 stycznia 2027 r. podpowie ten numer w tytule przelewu.

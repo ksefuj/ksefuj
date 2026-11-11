@@ -1,0 +1,162 @@
+---
+title: "Advance invoices in KSeF: ZAL, then ROZ"
+description: "In KSeF you document an advance with a ZAL invoice, then settle it with a ROZ invoice citing its KSeF number. A same-month advance needs no ZAL."
+date: 2026-11-11
+section: blog
+locale: en
+slug: "advance-invoice-ksef"
+topic: "invoicing"
+translationOf: "faktura-zaliczkowa-ksef"
+tags: ["KSeF", "FA(3)", "Invoice", "VAT"]
+sources:
+  - label: "Polish VAT Act, consolidated text Dz.U. 2026 poz. 1263 (Art. 19a ust. 8, 31a, 106b, 106e ust. 1a, 106f, 106i, 145m)"
+    url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
+  - label: "KSeF 2.0 Manual, Part II (6 August 2026)"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "MF: FA(3) logical structure information sheet"
+    url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "FA(3) schema: RodzajFaktury, Zamowienie, ZaliczkaCzesciowa, FakturaZaliczkowa"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+translations:
+  pl: "faktura-zaliczkowa-ksef"
+  en: "advance-invoice-ksef"
+---
+
+Once KSeF (Krajowy System e-Faktur, Poland's National e-Invoicing System) applies to you, an advance invoice goes through KSeF like any other invoice, as an FA(3) file of type `ZAL`. After the service or delivery you issue a final settlement invoice of type `ROZ` that lists the KSeF numbers of all the advance invoices; if the advance and the service fall in the same month, you don't need a separate advance invoice at all.
+
+Legal position as of 11 November 2026.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="KSeF 2.0 Manual, Part II: advance and settlement invoices"
+/>
+
+## When do you have to issue an advance invoice?
+
+You issue one when you receive all or part of the payment before performing the service or delivering the goods (Art. 106b ust. 1 pkt 4 of the VAT Act). The tax point arises on the day the advance is received, for the amount received (Art. 19a ust. 8). The exceptions in Art. 19a ust. 1b and ust. 5 pkt 4 have their own rules; they include rental, leasing, telecommunications services and energy supplies.
+
+The deadline has two limits. You issue the invoice **no later than the 15th day of the month after the month in which you received the advance** (Art. 106i ust. 2), and no earlier than 60 days before receiving it (Art. 106i ust. 7 pkt 2).
+
+<Source
+  href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
+  label="VAT Act: Art. 19a ust. 8, Art. 106b ust. 1 pkt 4, Art. 106i ust. 2 and 7"
+/>
+
+An advance on an intra-Community supply of goods (WDT) is an exception: no advance invoice is required (Art. 106b ust. 1 pkt 4 lit. a). Nor do you need one if you are VAT-exempt, unless the buyer asks for an invoice within 3 months (Art. 106b ust. 2 and ust. 3 pkt 2).
+
+## What goes on the advance invoice?
+
+An advance invoice has no ordinary line items. Instead of rows for goods or services, you give the details of the order or contract the advance relates to: its full gross value and its items with net value, tax and VAT rate. The total amount due is the advance you received, not the value of the whole order.
+
+You calculate VAT from the gross advance using the formula in the KSeF Manual: **tax = gross advance × rate / (100 + rate)**. If the advance arrived on a different day from the invoice issue date, you also give the date it was received.
+
+Example: Tomasz is a carpenter running a JDG (jednoosobowa działalność gospodarcza, a Polish sole proprietorship) and an active VAT payer. He is fitting out an office for a company for 12,300 PLN gross (10,000 PLN net plus 2,300 PLN VAT at 23%). On 10 September 2026 the client pays a 3,690 PLN advance. Tomasz issues the advance invoice on 15 September (the deadline is 15 October 2026):
+
+| Field on the advance invoice         | Amount     |
+| ------------------------------------ | ---------- |
+| Order value (gross)                  | 12,300 PLN |
+| Advance amount (total amount due)    | 3,690 PLN  |
+| VAT on the advance: 3,690 × 23 / 123 | 690 PLN    |
+| Net advance: 3,690 − 690             | 3,000 PLN  |
+
+Krystyna, who keeps Tomasz's books, reports the 690 PLN VAT in the September return, because that is when the advance came in. KSeF assigns the invoice a number, which Tomasz will later enter on the settlement invoice.
+
+## What goes on the settlement invoice?
+
+Once the service is done, you issue the settlement invoice (Art. 106f ust. 3) within the usual deadline, which we cover in [dates on a KSeF invoice](/en/blog/ksef-invoice-issue-date). The line items show the full value of the transaction, but **the VAT rate summary and the total amount due cover only what is left to pay**.
+
+Tomasz installs the fit-out on 20 November 2026. His settlement invoice looks like this:
+
+| Field on the settlement invoice | Amount                                  |
+| ------------------------------- | --------------------------------------- |
+| Item "office fit-out"           | 10,000 PLN net, VAT 23%                 |
+| Net to settle: 10,000 − 3,000   | 7,000 PLN                               |
+| VAT to settle: 2,300 − 690      | 1,610 PLN                               |
+| Total amount due                | 8,610 PLN                               |
+| Advance invoice                 | KSeF number of the 15 September invoice |
+
+This matches the formula: 8,610 × 23 / 123 = 1,610 PLN. The order details no longer appear on the settlement invoice.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="KSeF 2.0 Manual, Part II: settlement invoice"
+/>
+
+## What if the advance and the service fall in the same month?
+
+If the client pays the advance in the same month in which you perform the service, you don't need a separate advance invoice (Art. 106b ust. 1a). You issue a single invoice after the service, marked as a `ROZ` settlement invoice, and show the date and amount of the advance on it (Art. 106e ust. 1a). According to the description of the `ZaliczkaCzesciowa` element in the FA(3) schema, the difference between the total amount due and the sum of the advances is the amount still to be paid, so in this case the total amount due covers the whole sale.
+
+This exception does not apply to sales for which the Act sets its own invoicing deadline (Art. 106i ust. 3–8), such as construction and construction-assembly services (Art. 106b ust. 1b). For those you issue the advance invoice even when the advance and the service fall in the same month.
+
+Had Tomasz received 3,690 PLN on 3 November and installed the fit-out on 20 November, he would issue one `ROZ` invoice for 12,300 PLN showing the 3,690 PLN advance of 3 November. That holds as long as his fitting work is not a construction-assembly service.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  label="FA(3) information sheet: ROZ invoice under Art. 106b ust. 1a"
+/>
+
+## The client paid everything up front
+
+If the client paid 100% before the service and you documented it with advance invoices, **you don't have to issue a settlement invoice**. On the last advance invoice, the one after which the advances cover the full price, you list the KSeF numbers of the earlier advance invoices (Art. 106f ust. 4). That invoice is still of type `ZAL`.
+
+You may issue a settlement invoice voluntarily. It then has a total amount due of zero, the full line items and the advance invoice numbers.
+
+## How do you settle an advance invoiced outside KSeF?
+
+Until 31 December 2026 you may issue invoices outside KSeF if the value of sales including tax documented by invoices issued outside KSeF does not exceed 10,000 PLN a month (Art. 145m). If you documented the advance with such an invoice and issue the settlement invoice in KSeF (for example in January 2027, after the [limit ends](/en/blog/end-of-10000-pln-limit)), there is no KSeF number to enter. On the settlement invoice you mark that the advance invoice was issued outside KSeF and give its number from your own numbering.
+
+<Source
+  href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+  label="FA(3) schema: FakturaZaliczkowa, NrKSeFZN, NrFaZaliczkowej"
+/>
+
+The same applies to an advance invoice issued before the date KSeF became mandatory for you, if it was issued outside KSeF (on paper or as a PDF). If you issued it in KSeF, even voluntarily, it has a KSeF number and you enter it on the settlement invoice: the schema requires that field for every advance invoice issued in KSeF. A settlement invoice for an advance documented in the old FA(2) structure must already be in FA(3). MF has not said explicitly whether a KSeF 1.0 number goes in the KSeF number field. The schema accepts such a number, and we read the rules for corrections the same way, but that is our interpretation.
+
+## Correcting an advance invoice uses KOR_ZAL
+
+You correct a mistake on an advance invoice with a corrective invoice of type `KOR_ZAL`, and on a settlement invoice with `KOR_ROZ`, not the ordinary `KOR`. You reference the original invoice as with any [KSeF correction](/en/blog/corrective-invoice-ksef). On a corrected advance invoice you give the advance amount before the correction, and the total amount due is the difference from the original invoice. MF also recommends showing the order details both before and after the correction, even when only the rate or the tax changes.
+
+## Which exchange rate applies to a foreign-currency advance?
+
+There is no separate exchange-rate rule for advances. Art. 31a of the VAT Act applies, and the tax point is the day the advance is received (Art. 19a ust. 8), so you use the NBP (National Bank of Poland) mid-rate from the last business day before the day the advance arrived. If you issue the advance invoice before the client pays, Art. 31a ust. 2 applies: the rate from the last business day before the invoice issue date.
+
+The amounts on the invoice stay in the foreign currency; only the tax is shown in PLN. When one invoice documents several payments, each may have its own rate.
+
+<Source
+  href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
+  label="VAT Act: Art. 19a ust. 8, Art. 31a ust. 1 and 2"
+/>
+
+## For developers: advance fields in FA(3)
+
+- `RodzajFaktury`: `ZAL` (including the last advance invoice under Art. 106f ust. 4), `ROZ`, `KOR_ZAL`, `KOR_ROZ`.
+- On `ZAL`: `FaWiersz` omitted, `Zamowienie` with `WartoscZamowienia` and `ZamowienieWiersz` (up to 10,000 rows, in the advance invoice currency), `P_15` = amount of payment received, `P_6` = payment receipt date when it differs from `P_1`. GTU codes and procedures on a `ZAL` go in `ZamowienieWiersz` as `GTUZ` and `ProceduraZ`.
+- Several payments on one invoice: `ZaliczkaCzesciowa` (up to 31 occurrences) with `P_6Z` (date), `P_15Z` (amount) and optional `KursWalutyZW`. The same element is used on a `ROZ` under Art. 106b ust. 1a. Rate for the whole advance invoice: `KursWalutyZ`.
+- On `ROZ`: `FakturaZaliczkowa` (up to 100 occurrences, one per advance invoice) with `NrKSeFFaZaliczkowej`, or the pair `NrKSeFZN` = `1` and `NrFaZaliczkowej` for an invoice issued outside KSeF. `Zamowienie` omitted.
+- On `KOR_ZAL`: `P_15ZK` (amount before correction), `KursWalutyZK` (rate before correction, for a foreign-currency invoice), "before" rows in `ZamowienieWiersz` flagged with `StanPrzedZ`.
+
+The `Fa` fragment of Tomasz's settlement invoice (`FakturaZaliczkowa` comes after `P_15` and `Adnotacje`, before `FaWiersz`):
+
+<XmlExample copyable>
+  ```xml
+  <P_13_1>7000.00</P_13_1>
+  <P_14_1>1610.00</P_14_1>
+  <P_15>8610.00</P_15>
+  <Adnotacje>...</Adnotacje>
+  <RodzajFaktury>ROZ</RodzajFaktury>
+  <FakturaZaliczkowa>
+    <NrKSeFFaZaliczkowej>7811234567-20260915-0A1B2C3D4E5F-1C</NrKSeFFaZaliczkowej>
+  </FakturaZaliczkowa>
+  <FaWiersz>
+    <NrWierszaFa>1</NrWierszaFa>
+    <P_7>Zabudowa biura</P_7>
+    <P_8A>szt.</P_8A>
+    <P_8B>1</P_8B>
+    <P_9A>10000.00</P_9A>
+    <P_11>10000.00</P_11>
+    <P_12>23</P_12>
+  </FaWiersz>
+  ```
+</XmlExample>
+
+The KSeF number in the example is made up. You can check your advance invoice file in the [validator](/en/validator), and we explain what `P_15` means for each invoice type under the [missing total amount due](/en/validator/missing-p15-total-amount-due) error.

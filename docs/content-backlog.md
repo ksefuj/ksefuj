@@ -99,11 +99,11 @@ matching queries.
       where the official XSD lives („ksef xml schema”, ~11 impr, no PL page).
 - [x] `kody-bledow-ksef` — Kody błędów KSeF i co znaczą · „błąd 450 KSeF" · M · integrator docs ·
       Error codes UNVERIFIED.
-- [ ] `numer-ksef-gdzie-znalezc` — Numer KSeF: gdzie go znaleźć · „numer KSeF faktury" · A, M · FAQ
+- [x] `numer-ksef-gdzie-znalezc` — Numer KSeF: gdzie go znaleźć · „numer KSeF faktury" · A, M · FAQ
 - [ ] `aplikacja-mobilna-ksef` — Aplikacja mobilna KSeF · „aplikacja mobilna KSeF" · A ·
       `/mobilna-ksef-20/`, APP · infor.pl 2026-10-07 covers offline use in 2027 (UNVERIFIED).
-- [ ] `ryczalt-ksef` — Ryczałt a KSeF · „ryczałt KSeF" · A · P2
-- [ ] `faktura-zaliczkowa-ksef` — Faktura zaliczkowa w KSeF · „faktura zaliczkowa KSeF" · K, M · P2
+- [x] `ryczalt-ksef` — Ryczałt a KSeF · „ryczałt KSeF" · A · P2
+- [x] `faktura-zaliczkowa-ksef` — Faktura zaliczkowa w KSeF · „faktura zaliczkowa KSeF" · K, M · P2
 - [ ] `samofakturowanie-ksef` — Samofakturowanie w KSeF · „samofakturowanie KSeF" · K · FAQ, P3
 - [ ] `zalaczniki-ksef` — Załączniki do faktury w KSeF · „załącznik do faktury KSeF" · M, A · FAQ
 - [ ] `faktura-po-angielsku-ksef` — Faktura KSeF po angielsku · „faktura KSeF po angielsku" · A ·
