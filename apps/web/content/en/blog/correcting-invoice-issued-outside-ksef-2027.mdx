@@ -1,0 +1,134 @@
+---
+title: "Where do you correct a non-KSeF invoice in 2027?"
+description: "A correction issued to a business from 1 January 2027 should go to KSeF, because art. 145m and 145n allow invoices outside KSeF only until the end of 2026."
+date: 2026-11-11
+section: blog
+locale: en
+slug: "correcting-invoice-issued-outside-ksef-2027"
+topic: "invoicing"
+tags: ["KSeF", "Faktura", "JDG"]
+sources:
+  - label: "VAT Act, consolidated text Dz.U. 2026 item 1263 (art. 106ga, 106j, 106na, 106nf, 106nh, 106ng, 145m, 145n)"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  - label: "VAT Act, consolidated text Dz.U. 2025 item 775 (art. 29a ust. 13 and 17)"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2025/775/text.pdf"
+  - label: "KSeF 2.0 Handbook, part I (6 Aug 2026), p. 14"
+    url: "https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  - label: "KSeF 2.0 Handbook, part II (6 Aug 2026), sections 1.6.2, 1.6.4, 2.13, 4.1.3"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "FA(3) information brochure, description of the DaneFaKorygowanej, NrKSeFN and Podmiot2K fields"
+    url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "FA(3) logical structure"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/"
+  - label: "MF FAQ: KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/"
+translations:
+  pl: "korekta-faktury-poza-ksef-2027"
+  en: "correcting-invoice-issued-outside-ksef-2027"
+  uk: "koryguvannya-faktury-poza-ksef-2027"
+---
+
+If in 2026 you issued a business a PDF or paper invoice under the PLN 10,000 limit, or an invoice from a cash register, and you correct it on or after 1 January 2027, the correction should go to KSeF (Krajowy System e-Faktur, Poland's national e-invoicing system). A corrective invoice is an invoice, and art. 145m and 145n of the VAT Act allow invoices outside KSeF only until 31 December 2026. In the correction itself you flag that the original has no KSeF number (`NrKSeFN` = 1).
+
+<Source
+  href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  label="VAT Act, art. 106ga ust. 1, 106j ust. 1, 145m, 145n"
+/>
+
+That is what the wording of the law says. Art. 106ga ust. 1 provides that taxpayers "are obliged to issue structured invoices using the National e-Invoicing System" and does not exclude corrections. Art. 106j ust. 1 requires a corrective invoice after a change or a mistake, and both transitional provisions apply "until 31 December 2026". The provisions we checked contain no rule that a correction must take the same form as the original.
+
+The Ministry of Finance (MF) has not said this outright in the materials we reviewed. The closest is an answer in the MF FAQ about correcting a 2025 invoice, i.e. one from before the obligation: "KSeF supports issuing corrective invoices, including corrections of an invoice from the previous year". The Act and the FA(3) schema provide for such a correction expressly: art. 106j ust. 2 pkt 2a exempts from giving the KSeF number "corrective invoices issued for invoices that were not assigned a number", and the `NrKSeFN` field is described as a "flag for a corrected invoice issued outside KSeF" (_Znacznik faktury korygowanej wystawionej poza KSeF_). The quotes are our translations.
+
+<Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/" label="MF FAQ: KSeF 2.0" />
+<Source href="https://crd.gov.pl/wzor/2025/06/25/13775/" label="FA(3) schema: NrKSeFN field" />
+
+Legal status as of 11 November 2026.
+
+## How Marek corrects his November invoice
+
+Marek is a developer running a JDG (jednoosobowa działalność gospodarcza, a Polish sole trader business) and an active VAT payer. On 20 November 2026 he issued invoice FV/12/2026 to a company for PLN 4,000 net, PLN 920 VAT, PLN 4,920 gross. He emailed it as a PDF, because his November sales documented by invoices stayed within PLN 10,000 gross (art. 145m). In January 2027 he agrees a PLN 500 net discount on that project with the client.
+
+On 15 January 2027 Marek issues a corrective invoice in KSeF (`RodzajFaktury` = `KOR`) and enters the difference in amounts: −PLN 500 net, −PLN 115 VAT, −PLN 615 gross. He identifies the original in the `DaneFaKorygowanej` block, in the order the schema requires:
+
+<XmlExample copyable>
+  ```xml
+  <DaneFaKorygowanej>
+    <DataWystFaKorygowanej>2026-11-20</DataWystFaKorygowanej>
+    <NrFaKorygowanej>FV/12/2026</NrFaKorygowanej>
+    <NrKSeFN>1</NrKSeFN>
+  </DaneFaKorygowanej>
+  ```
+</XmlExample>
+
+The number and date of the original are mandatory, and `NrKSeFN` replaces the pair `NrKSeF` and `NrKSeFFaKorygowanej`. If you give both variants at once, the file fails schema validation. Marek enters the date from the PDF, as that is the simplest reading of the field. We found no MF statement confirming this for invoices issued outside KSeF. The other correction fields (reason, `TypKorekty`, amounts) are filled in as for any correction, which we cover in the section on [correcting an invoice without a KSeF number](/en/blog/corrective-invoice-ksef#correcting-an-invoice-without-a-ksef-number).
+
+Had Marek already corrected FV/12/2026 on paper in 2026, the January correction would still identify the original, and he would calculate the amounts from the state after the first correction. MF describes this rule for subsequent corrections, but not for a mixed case like this one.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="KSeF 2.0 Handbook, part II, sections 2.13.2, 2.13.3"
+/>
+
+## Which period does the correction go into?
+
+The seller records a reduction of the taxable amount "for the settlement period in which the taxpayer issued the corrective invoice in the form of a structured invoice" (art. 29a ust. 13 of the VAT Act). A discount granted after the sale is one of the cases that provision refers to. The provision does not mention the form of the original, so Marek, who settles VAT monthly, reduces the taxable amount in his January 2027 return. An upward correction goes into the period in which the reason for the increase arose (art. 29a ust. 17).
+
+<Source
+  href="https://api.sejm.gov.pl/eli/acts/DU/2025/775/text.pdf"
+  label="VAT Act (consolidated text Dz.U. 2025 item 775), art. 29a ust. 13 and 17"
+/>
+
+Marek's client finds the correction in KSeF and does not have to accept anything. An invoice is deemed received "on the day this system assigns the number identifying the invoice" (art. 106na ust. 3). We don't state the period in which the client reduces the deducted VAT, because we found no confirmation of it in the sources. The client's accountant will determine it.
+
+<Source
+  href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  label="VAT Act, art. 106na ust. 3"
+/>
+
+## When can a correction stay outside KSeF?
+
+**The buyer is a private individual.** The KSeF obligation does not cover invoices for consumers (art. 106ga ust. 2 pkt 4), and this exception continues after 2026. A correction of such an invoice is an invoice for the same person, so it can stay outside KSeF or go there voluntarily (art. 106ga ust. 4). This is our reading of the provision. MF does not write separately about corrections of consumer invoices.
+
+**The sale falls under another permanent exclusion.** Art. 106ga ust. 2 also excludes, among others, sellers with no registered office or fixed establishment in Poland, special procedures and the art. 113a procedure. We cover these exceptions, like the [end of the PLN 10,000 limit](/en/blog/end-of-10000-pln-limit), separately. A correction of an invoice covered by such an exclusion can, as with a consumer, stay outside KSeF.
+
+**You issue the correction while it's still December 2026.** It then falls within the period of art. 145m and 145n, provided you meet their conditions. We found nothing in the sources on whether such a correction counts towards the PLN 10,000 limit.
+
+**KSeF is down on the day of the correction.** You then issue the correction like any invoice: in unavailability mode (art. 106nh) or emergency mode (art. 106nf), or in offline24, and send it to KSeF afterwards within the deadline. During a total failure (art. 106ng) invoices are not sent to KSeF. MF does not describe corrections in these modes separately, so this too is our reading of the general provisions.
+
+## Correcting a cash-register invoice or a receipt with a NIP
+
+From 1 January 2027 a cash register cannot issue invoices and a receipt carrying the buyer's NIP stops being a simplified invoice, so you can no longer issue the correction at the till. The MF FAQ answers: "From 2027, if an invoice is issued for a transaction recorded on an online cash register, it will have to be issued in KSeF if the sale is to a taxpayer". From this and the provisions described above it follows that a correction for a business should go to KSeF as well, though MF does not mention corrections. A correction of a simplified invoice has `RodzajFaktury` = `KOR`.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  label="KSeF 2.0 Handbook, part I, p. 14"
+/>
+<Source
+  href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/"
+  label="MF FAQ: invoices from online cash registers"
+/>
+
+It is unclear what to enter in `NrFaKorygowanej` and `DataWystFaKorygowanej` for a receipt with a NIP: the receipt number, the cash register's unique number or something else. The schema requires both fields, and MF has not described this. What changes at the till from 2027 is covered in our post on [cash-register invoices and NIP receipts](/en/blog/cash-register-invoices-ksef-2027).
+
+## What if the original has the wrong NIP?
+
+The FA(3) schema does not let you fix the buyer's NIP with a correction: "a correction of the invoice to zero values is then required", followed by a new invoice with the right NIP. MF's reasoning is that an invoice in KSeF reaches the entity whose NIP it carries. With a PDF original that argument doesn't apply, but neither the schema nor the brochure makes an exception for invoices issued outside KSeF.
+
+<Source href="https://crd.gov.pl/wzor/2025/06/25/13775/" label="FA(3) schema: Podmiot2K field" />
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="KSeF 2.0 Handbook, part II, section 1.6.4"
+/>
+
+In 2027 that would mean a zero-value correction in KSeF with the wrong NIP, which would reach the company with that number, and a new invoice in KSeF for the right buyer. MF has not described this case. We show what the [zero-value correction](/en/blog/corrective-invoice-ksef#zero-value-correction-when-the-buyers-nip-is-wrong) itself looks like separately. Make this decision together with your accountant.
+
+## What to check before issuing the correction
+
+1. Find the original, its number and issue date. Both fields are mandatory in the correction. KSeF only stores invoices that reached it, so you keep the 2026 PDF yourself.
+2. Check that the original really has no KSeF number. If you issued it in KSeF voluntarily or after exceeding the limit, the correction gives `NrKSeF` and the KSeF number, not `NrKSeFN`.
+3. Buyer details you are correcting (name, address) go in `Podmiot2K` as they appeared on the original. You can't fix a wrong NIP this way.
+4. Make sure your software lets you mark the original as issued outside KSeF. We have not checked whether Aplikacja Podatnika KSeF (MF's free taxpayer app) allows it.
+5. Don't wait for a note from the client. Only the seller issues a correction, because the [corrective note is gone](/en/blog/corrective-note-ksef), for invoices issued outside KSeF too.
+6. Check the file before sending. KSeF checks the XML against the schema and will reject a correction that contains both `NrKSeF` and `NrKSeFN`.
+
+If you have the correction's XML file, drop it into the [ksefuj.to validator](/en/validator). It checks the FA(3) schema and MF rules in your browser, without uploading the file.
