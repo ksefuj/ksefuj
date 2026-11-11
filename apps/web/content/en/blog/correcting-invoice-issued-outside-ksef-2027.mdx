@@ -8,7 +8,7 @@ slug: "correcting-invoice-issued-outside-ksef-2027"
 topic: "invoicing"
 tags: ["KSeF", "Faktura", "JDG"]
 sources:
-  - label: "VAT Act, consolidated text Dz.U. 2026 item 1263 (art. 106ga, 106j, 106na, 106nf, 106nh, 106ng, 145m, 145n)"
+  - label: "VAT Act, consolidated text Dz.U. 2026 item 1263 (art. 86, 106ga, 106j, 106na, 106nf, 106nh, 106ng, 145m, 145n)"
     url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
   - label: "VAT Act, consolidated text Dz.U. 2025 item 775 (art. 29a ust. 13 and 17)"
     url: "https://api.sejm.gov.pl/eli/acts/DU/2025/775/text.pdf"
@@ -60,7 +60,12 @@ On 15 January 2027 Marek issues a corrective invoice in KSeF (`RodzajFaktury` = 
   ```
 </XmlExample>
 
-The number and date of the original are mandatory, and `NrKSeFN` replaces the pair `NrKSeF` and `NrKSeFFaKorygowanej`. If you give both variants at once, the file fails schema validation. Marek enters the date from the PDF, as that is the simplest reading of the field. We found no MF statement confirming this for invoices issued outside KSeF. The other correction fields (reason, `TypKorekty`, amounts) are filled in as for any correction, which we cover in the section on [correcting an invoice without a KSeF number](/en/blog/corrective-invoice-ksef#correcting-an-invoice-without-a-ksef-number).
+The number and date of the original are mandatory, and `NrKSeFN` replaces the pair `NrKSeF` and `NrKSeFFaKorygowanej`. If you give both variants at once, the file fails schema validation. Marek enters the issue date from the PDF. That is how the FA(3) brochure describes this field for an invoice issued outside KSeF. The other correction fields (reason, `TypKorekty`, amounts) are filled in as for any correction, which we cover in the section on [correcting an invoice without a KSeF number](/en/blog/corrective-invoice-ksef#correcting-an-invoice-without-a-ksef-number).
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  label="FA(3) brochure: DataWystFaKorygowanej field"
+/>
 
 Had Marek already corrected FV/12/2026 on paper in 2026, the January correction would still identify the original, and he would calculate the amounts from the state after the first correction. MF describes this rule for subsequent corrections, but not for a mixed case like this one.
 
@@ -78,18 +83,18 @@ The seller records a reduction of the taxable amount "for the settlement period 
   label="VAT Act (consolidated text Dz.U. 2025 item 775), art. 29a ust. 13 and 17"
 />
 
-Marek's client finds the correction in KSeF and does not have to accept anything. An invoice is deemed received "on the day this system assigns the number identifying the invoice" (art. 106na ust. 3). We don't state the period in which the client reduces the deducted VAT, because we found no confirmation of it in the sources. The client's accountant will determine it.
+Marek's client finds the correction in KSeF and does not have to accept anything. An invoice is deemed received "on the day this system assigns the number identifying the invoice" (art. 106na ust. 3). The client reduces the deducted VAT in the return for the period in which it received the correction (art. 86 ust. 19a).
 
 <Source
   href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
-  label="VAT Act, art. 106na ust. 3"
+  label="VAT Act, art. 86 ust. 19a, art. 106na ust. 3"
 />
 
 ## When can a correction stay outside KSeF?
 
 **The buyer is a private individual.** The KSeF obligation does not cover invoices for consumers (art. 106ga ust. 2 pkt 4), and this exception continues after 2026. A correction of such an invoice is an invoice for the same person, so it can stay outside KSeF or go there voluntarily (art. 106ga ust. 4). This is our reading of the provision. MF does not write separately about corrections of consumer invoices.
 
-**The sale falls under another permanent exclusion.** Art. 106ga ust. 2 also excludes, among others, sellers with no registered office or fixed establishment in Poland, special procedures and the art. 113a procedure. We cover these exceptions, like the [end of the PLN 10,000 limit](/en/blog/end-of-10000-pln-limit), separately. A correction of an invoice covered by such an exclusion can, as with a consumer, stay outside KSeF.
+**The sale falls under another permanent exclusion.** Art. 106ga ust. 2 also excludes, among others, sellers with no registered office or fixed establishment in Poland, special procedures and the art. 113a procedure. We cover these exceptions, like the [end of the PLN 10,000 limit](/en/blog/end-of-10000-pln-limit), separately. A correction of an invoice covered by such an exclusion also stays outside KSeF. You can issue it in KSeF voluntarily only when the seller has no registered office in Poland (art. 106ga ust. 4).
 
 **You issue the correction while it's still December 2026.** It then falls within the period of art. 145m and 145n, provided you meet their conditions. We found nothing in the sources on whether such a correction counts towards the PLN 10,000 limit.
 

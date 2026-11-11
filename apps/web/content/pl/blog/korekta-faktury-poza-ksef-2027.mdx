@@ -12,7 +12,7 @@ related:
   - "blog/koniec-limitu-10000-zl"
   - "blog/nota-korygujaca-ksef"
 sources:
-  - label: "Ustawa o VAT, tekst jednolity Dz.U. 2026 poz. 1263 (art. 106ga, 106j, 106na, 106nf, 106nh, 106ng, 145m, 145n)"
+  - label: "Ustawa o VAT, tekst jednolity Dz.U. 2026 poz. 1263 (art. 86, 106ga, 106j, 106na, 106nf, 106nh, 106ng, 145m, 145n)"
     url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
   - label: "Ustawa o VAT, tekst jednolity Dz.U. 2025 poz. 775 (art. 29a ust. 13 i 17)"
     url: "https://api.sejm.gov.pl/eli/acts/DU/2025/775/text.pdf"
@@ -67,7 +67,12 @@ Marek jest programistą na JDG i czynnym podatnikiem VAT. 20 listopada 2026 r. w
   ```
 </XmlExample>
 
-Numer i data oryginału są obowiązkowe, a `NrKSeFN` zastępuje parę `NrKSeF` i `NrKSeFFaKorygowanej`. Jeśli podasz oba warianty naraz, plik nie przejdzie walidacji schematu. Marek wpisuje datę z PDF-u, bo tak najprościej odczytać to pole. Nie znaleźliśmy zdania MF, które potwierdzałoby to dla faktur spoza KSeF. Pozostałe pola korekty (przyczyna, `TypKorekty`, kwoty) wypełniasz tak samo jak przy każdej korekcie, co opisaliśmy w części o [korekcie faktury bez numeru KSeF](/blog/faktura-korygujaca-ksef#korekta-faktury-bez-numeru-ksef).
+Numer i data oryginału są obowiązkowe, a `NrKSeFN` zastępuje parę `NrKSeF` i `NrKSeFFaKorygowanej`. Jeśli podasz oba warianty naraz, plik nie przejdzie walidacji schematu. Marek wpisuje datę wystawienia z PDF-u. Tak broszura FA(3) opisuje to pole dla faktury wystawionej poza KSeF. Pozostałe pola korekty (przyczyna, `TypKorekty`, kwoty) wypełniasz tak samo jak przy każdej korekcie, co opisaliśmy w części o [korekcie faktury bez numeru KSeF](/blog/faktura-korygujaca-ksef#korekta-faktury-bez-numeru-ksef).
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  label="Broszura FA(3): pole DataWystFaKorygowanej"
+/>
 
 Gdyby Marek skorygował FV/12/2026 już w 2026 r. na papierze, styczniowa korekta i tak wskazywałaby oryginał, a kwoty Marek liczyłby od stanu po pierwszej korekcie. MF opisuje tę zasadę dla kolejnych korekt, ale nie dla takiego mieszanego przypadku.
 
@@ -85,18 +90,18 @@ Obniżenie podstawy opodatkowania sprzedawca ujmuje „za okres rozliczeniowy, w
   label="Ustawa o VAT (t.j. Dz.U. 2025 poz. 775), art. 29a ust. 13 i 17"
 />
 
-Klient Marka znajdzie korektę w KSeF i niczego nie musi akceptować. Fakturę uznaje się za otrzymaną „w dniu przydzielenia w tym systemie numeru identyfikującego tę fakturę” (art. 106na ust. 3). Nie podajemy okresu, w którym klient zmniejsza odliczony VAT, bo nie znaleźliśmy jego potwierdzenia w źródłach. Ustali go księgowa klienta.
+Klient Marka znajdzie korektę w KSeF i niczego nie musi akceptować. Fakturę uznaje się za otrzymaną „w dniu przydzielenia w tym systemie numeru identyfikującego tę fakturę” (art. 106na ust. 3). Odliczony VAT klient zmniejsza w rozliczeniu za okres, w którym otrzymał korektę (art. 86 ust. 19a).
 
 <Source
   href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
-  label="Ustawa o VAT, art. 106na ust. 3"
+  label="Ustawa o VAT, art. 86 ust. 19a, art. 106na ust. 3"
 />
 
 ## Kiedy korekta może zostać poza KSeF?
 
 **Kupującym jest osoba prywatna.** Obowiązek KSeF nie obejmuje faktur dla konsumentów (art. 106ga ust. 2 pkt 4), a ten wyjątek obowiązuje także po 2026 r. Korekta takiej faktury jest fakturą dla tej samej osoby, więc może zostać poza KSeF albo trafić tam dobrowolnie (art. 106ga ust. 4). To wniosek z przepisu. MF nie pisze osobno o korektach faktur konsumenckich.
 
-**Sprzedaż objęta innym stałym wyłączeniem.** Art. 106ga ust. 2 wyłącza też m.in. sprzedawców bez siedziby i stałego miejsca prowadzenia działalności w Polsce, procedury szczególne i procedurę z art. 113a. Te wyjątki, podobnie jak [koniec limitu 10 000 zł](/blog/koniec-limitu-10000-zl), opisaliśmy osobno. Korekta faktury objętej takim wyłączeniem może, jak przy konsumencie, zostać poza KSeF.
+**Sprzedaż objęta innym stałym wyłączeniem.** Art. 106ga ust. 2 wyłącza też m.in. sprzedawców bez siedziby i stałego miejsca prowadzenia działalności w Polsce, procedury szczególne i procedurę z art. 113a. Te wyjątki, podobnie jak [koniec limitu 10 000 zł](/blog/koniec-limitu-10000-zl), opisaliśmy osobno. Korekta faktury objętej takim wyłączeniem też zostaje poza KSeF. Dobrowolnie wystawisz ją w KSeF tylko wtedy, gdy sprzedawca nie ma w Polsce siedziby działalności (art. 106ga ust. 4).
 
 **Korektę wystawiasz jeszcze w grudniu 2026 r.** Mieści się wtedy w okresie z art. 145m i 145n, jeśli spełniasz ich warunki. Nie znaleźliśmy w źródłach, czy taka korekta liczy się do limitu 10 000 zł.
 
