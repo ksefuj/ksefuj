@@ -1,6 +1,6 @@
 # Research Brief: Zmiany w API KSeF 2.x (CIRFMF) istotne dla integratorów, kwiecień–wrzesień 2026
 
-**Requested by:** weekly knowledge refresh **Date:** 2026-10-07 **Freshness:** 2026-10-19 (CIRFMF
+**Requested by:** weekly knowledge refresh **Date:** 2026-10-07 **Freshness:** 2026-11-09 (CIRFMF
 GitHub only) **For content:** developer-facing posts; validator context. INTERNAL reference.
 
 **Target query:** "KSeF API zmiany 2026", "limity API KSeF", "KSeF walidacja XML 19 października"
@@ -70,7 +70,17 @@ dates below are PROD unless stated.
     date 2026-10-14: invoice-number formatting in the header, PEF correction refactor, decimal
     separator fixes for Rabat and OSS tax amount, rounding fix; 1.1.40 of 2026-09-17 added PEF and
     UTF-16 handling; https://github.com/CIRFMF/ksef-pdf-generator/blob/main/changelog.md).
-    ksef-latarnia: no releases found by `gh release list`.
+    ksef-pdf-generator 1.1.48 (changelog date 2026-11-06, merged as PR #154): PDF metadata fields
+    `Producer` and `Creator`; watermark on PEF invoices and UPO visualisations. No change to FA(3)
+    content rendering. ksef-latarnia: no releases found by `gh release list`.
+
+12. **Draft token management changes (issue #885, 2026-11-06, kw-cirf):** new `rev2` token endpoints
+    from 2027-01-01 (validity `validFrom`/`validTo`, default 90 days, max 365; approval flow with
+    statuses `AwaitingApproval`/`ApprovalExpired`; 100 tokens per context; new statuses mapped to
+    `Active`/`Revoked` in old endpoints); old endpoints withdrawn 2027-09-30. Draft OpenAPI
+    attached; comments until 2026-11-20. No ksef-api commit or release since 2.9.0 (`ce3670e`,
+    2026-10-14) as of 2026-11-09. https://github.com/CIRFMF/ksef-api/issues/885 Tier 3 Confidence:
+    HIGH that it was published (proposal). Details: brief `tokeny-ksef-po-2026.md` fact 15.
 
 ## Unsettled Questions
 
@@ -81,7 +91,7 @@ dates below are PROD unless stated.
 
 - https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md
 - https://github.com/CIRFMF/ksef-api/releases
-- Issues #718, #834, #875 (links above)
+- Issues #718, #834, #875, #885 (links above)
 - Repo list: https://github.com/CIRFMF/ksef-docs (merged into ksef-api),
   https://github.com/CIRFMF/ksef-latarnia, https://github.com/CIRFMF/ksef-client-java,
   https://github.com/CIRFMF/ksef-client-csharp, https://github.com/CIRFMF/ksef-pdf-generator,
