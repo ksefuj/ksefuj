@@ -1,0 +1,165 @@
+---
+title: "Fakturę zaliczkową w KSeF wystawiasz jako ZAL"
+description: "Zaliczkę dokumentujesz w KSeF fakturą ZAL, a po wykonaniu usługi fakturą ROZ z numerami KSeF zaliczkowych. Zaliczka w miesiącu usługi nie wymaga ZAL."
+date: 2026-11-11
+section: blog
+locale: pl
+slug: "faktura-zaliczkowa-ksef"
+topic: "invoicing"
+tags: ["KSeF", "FA(3)", "Faktura", "VAT"]
+sources:
+  - label: "Ustawa o VAT, tekst jednolity Dz.U. 2026 poz. 1263 (art. 19a ust. 8, 31a, 106b, 106e ust. 1a, 106f, 106i, 145m)"
+    url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
+  - label: "Podręcznik KSeF 2.0, cz. II (6 sierpnia 2026)"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "MF: Broszura informacyjna dotycząca struktury logicznej FA(3)"
+    url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "Schemat FA(3): RodzajFaktury, Zamowienie, ZaliczkaCzesciowa, FakturaZaliczkowa"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+translations:
+  pl: "faktura-zaliczkowa-ksef"
+  en: "advance-invoice-ksef"
+related:
+  - "blog/faktura-korygujaca-ksef"
+  - "blog/koniec-limitu-10000-zl"
+  - "blog/terminy-ksef-data-wystawienia"
+---
+
+Od dnia, w którym obowiązuje cię KSeF, fakturę zaliczkową wystawiasz w KSeF jak każdą inną fakturę, w strukturze FA(3) z typem `ZAL`. Po wykonaniu usługi lub dostawie wystawiasz fakturę rozliczającą `ROZ`, w której wpisujesz numery KSeF wszystkich faktur zaliczkowych, a jeśli zaliczka i usługa przypadają w tym samym miesiącu, osobnej zaliczkowej nie musisz wystawiać.
+
+Stan prawny na 11 listopada 2026 r.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. II: faktura zaliczkowa i rozliczająca"
+/>
+
+## Kiedy musisz wystawić fakturę zaliczkową?
+
+Fakturę zaliczkową wystawiasz, gdy dostajesz całość lub część zapłaty przed wykonaniem usługi albo dostawą towaru (art. 106b ust. 1 pkt 4 ustawy o VAT). Obowiązek podatkowy powstaje w dniu otrzymania zaliczki, w odniesieniu do otrzymanej kwoty (art. 19a ust. 8). Własne zasady mają wyjątki z art. 19a ust. 1b i ust. 5 pkt 4, m.in. najem, leasing, usługi telekomunikacyjne i dostawy energii.
+
+Termin ma dwie granice. Fakturę wystawiasz **najpóźniej 15. dnia miesiąca następującego po miesiącu, w którym otrzymałeś zaliczkę** (art. 106i ust. 2), i nie wcześniej niż 60 dni przed jej otrzymaniem (art. 106i ust. 7 pkt 2).
+
+<Source
+  href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
+  label="Ustawa o VAT: art. 19a ust. 8, art. 106b ust. 1 pkt 4, art. 106i ust. 2 i 7"
+/>
+
+Zaliczka na wewnątrzwspólnotową dostawę towarów (WDT) to wyjątek: tu faktury zaliczkowej wystawiać nie musisz (art. 106b ust. 1 pkt 4 lit. a). Nie musisz jej wystawiać także wtedy, gdy korzystasz ze zwolnienia z VAT, chyba że nabywca zażąda faktury w ciągu 3 miesięcy (art. 106b ust. 2 i ust. 3 pkt 2).
+
+## Co wpisujesz na fakturze zaliczkowej?
+
+Faktura zaliczkowa nie ma zwykłych pozycji. Zamiast wierszy z towarami lub usługami podajesz dane zamówienia albo umowy, której dotyczy zaliczka: jego pełną wartość brutto i pozycje z wartością netto, podatkiem i stawką VAT. Kwota należności ogółem to kwota zaliczki, którą dostałeś, a nie wartość całego zamówienia.
+
+VAT liczysz od kwoty brutto zaliczki według wzoru z Podręcznika KSeF: **podatek = zaliczka brutto × stawka / (100 + stawka)**. Jeśli zaliczka wpłynęła w innym dniu niż data wystawienia faktury, podajesz też datę jej otrzymania.
+
+Przykład: pan Tomasz, stolarz na JDG i czynny podatnik VAT, robi zabudowę biura dla firmy za 12 300 zł brutto (10 000 zł netto i 2 300 zł VAT przy stawce 23%). 10 września 2026 r. klient wpłaca 3 690 zł zaliczki. Tomasz wystawia fakturę zaliczkową 15 września (termin mija 15 października 2026 r.):
+
+| Pole na fakturze zaliczkowej      | Kwota     |
+| --------------------------------- | --------- |
+| Wartość zamówienia (brutto)       | 12 300 zł |
+| Kwota zaliczki (należność ogółem) | 3 690 zł  |
+| VAT od zaliczki: 3 690 × 23 / 123 | 690 zł    |
+| Netto zaliczki: 3 690 − 690       | 3 000 zł  |
+
+Pani Krystyna, która prowadzi księgi Tomasza, wykazuje 690 zł VAT w rozliczeniu za wrzesień, bo wtedy wpłynęła zaliczka. KSeF nadaje fakturze numer, który Tomasz wpisze później na fakturze rozliczającej.
+
+## Co wpisujesz na fakturze rozliczającej?
+
+Po wykonaniu usługi wystawiasz fakturę rozliczającą (art. 106f ust. 3) w zwykłym terminie, o którym piszemy przy [datach na fakturze w KSeF](/blog/terminy-ksef-data-wystawienia). Pozycje pokazują pełną wartość transakcji, ale **podsumowanie stawek i kwota należności obejmują tylko to, co zostało do zapłaty**.
+
+Tomasz montuje zabudowę 20 listopada 2026 r. Jego faktura rozliczająca wygląda tak:
+
+| Pole na fakturze rozliczającej       | Kwota                            |
+| ------------------------------------ | -------------------------------- |
+| Pozycja „zabudowa biura”             | 10 000 zł netto, VAT 23%         |
+| Netto do rozliczenia: 10 000 − 3 000 | 7 000 zł                         |
+| VAT do rozliczenia: 2 300 − 690      | 1 610 zł                         |
+| Kwota należności ogółem              | 8 610 zł                         |
+| Faktura zaliczkowa                   | numer KSeF faktury z 15 września |
+
+Zgadza się to z wzorem: 8 610 × 23 / 123 = 1 610 zł. Danych zamówienia na fakturze rozliczającej już nie podajesz.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. II: faktura rozliczająca"
+/>
+
+## Co, gdy zaliczka i usługa są w tym samym miesiącu?
+
+Gdy klient płaci zaliczkę w tym samym miesiącu, w którym wykonujesz usługę, nie musisz wystawiać osobnej faktury zaliczkowej (art. 106b ust. 1a). Wystawiasz jedną fakturę po wykonaniu usługi, oznaczoną jako rozliczająca `ROZ`, i podajesz na niej datę i kwotę otrzymanej zaliczki (art. 106e ust. 1a). Według opisu elementu `ZaliczkaCzesciowa` w schemacie FA(3) różnica między kwotą należności ogółem a sumą zaliczek to kwota, która została do zapłaty, więc kwota należności ogółem obejmuje wtedy całą sprzedaż.
+
+Ten wyjątek nie działa przy sprzedaży, dla której ustawa wyznacza własny termin faktury (art. 106i ust. 3–8), na przykład przy usługach budowlanych i budowlano-montażowych (art. 106b ust. 1b). Przy nich fakturę zaliczkową wystawiasz, nawet gdy zaliczka i usługa przypadają w tym samym miesiącu.
+
+Jeśli Tomasz dostałby 3 690 zł 3 listopada i zamontował zabudowę 20 listopada, wystawiłby jedną fakturę `ROZ` na 12 300 zł z informacją o zaliczce 3 690 zł z 3 listopada. Tak jest, o ile jego montaż nie jest usługą budowlano-montażową.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  label="Broszura FA(3): faktura ROZ z art. 106b ust. 1a"
+/>
+
+## Klient zapłacił całość z góry
+
+Gdy klient zapłacił 100% przed wykonaniem usługi, a ty udokumentowałeś to fakturami zaliczkowymi, **faktury rozliczającej nie musisz wystawiać**. Na ostatniej fakturze zaliczkowej, czyli tej, po której zaliczki pokrywają już całą cenę, podajesz numery KSeF poprzednich faktur zaliczkowych (art. 106f ust. 4). Ta faktura nadal ma typ `ZAL`.
+
+Fakturę rozliczającą możesz wystawić dobrowolnie. Ma wtedy kwotę należności ogółem równą zero, pełne pozycje i numery faktur zaliczkowych.
+
+## Jak rozliczyć zaliczkową wystawioną poza KSeF?
+
+Do 31 grudnia 2026 r. możesz wystawiać faktury poza KSeF, jeśli wartość sprzedaży z podatkiem udokumentowana fakturami wystawionymi poza KSeF nie przekracza 10 000 zł w miesiącu (art. 145m). Gdy zaliczkę udokumentowałeś taką fakturą, a fakturę rozliczającą wystawiasz już w KSeF (na przykład w styczniu 2027 r., po [końcu limitu](/blog/koniec-limitu-10000-zl)), nie masz numeru KSeF, który mógłbyś wpisać. Na fakturze rozliczającej oznaczasz wtedy, że faktura zaliczkowa powstała poza KSeF, i podajesz jej numer z twojej numeracji.
+
+<Source
+  href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+  label="Schemat FA(3): FakturaZaliczkowa, NrKSeFZN, NrFaZaliczkowej"
+/>
+
+Tak samo postępujesz z fakturą zaliczkową wystawioną przed dniem, od którego obowiązuje cię KSeF, jeśli powstała poza KSeF (na papierze lub w PDF). Jeśli wystawiłeś ją w KSeF, choćby dobrowolnie, ma numer KSeF i wpisujesz go na fakturze rozliczającej: schemat wymaga tego pola dla każdej faktury zaliczkowej wystawionej w KSeF. Faktura rozliczająca do zaliczki udokumentowanej w starej strukturze FA(2) musi już być w FA(3). MF nie wyjaśniło wprost, czy numer z KSeF 1.0 wpisujesz w polu na numer KSeF. Schemat przyjmuje taki numer, i tak samo czytamy zasady dla korekt, ale to nasza interpretacja.
+
+## Korekta faktury zaliczkowej ma typ KOR_ZAL
+
+Błąd na fakturze zaliczkowej poprawiasz fakturą korygującą z typem `KOR_ZAL`, a na rozliczającej z typem `KOR_ROZ`, nie zwykłym `KOR`. Fakturę pierwotną wskazujesz tak samo jak przy każdej [korekcie w KSeF](/blog/faktura-korygujaca-ksef). Na korekcie zaliczkowej podajesz kwotę zaliczki przed korektą, a kwota należności ogółem to różnica względem faktury pierwotnej. MF zaleca też pokazać dane zamówienia w stanie przed korektą i po niej, nawet gdy zmienia się tylko stawka lub podatek.
+
+## Jaki kurs stosujesz do zaliczki w walucie obcej?
+
+Dla zaliczek nie ma osobnej reguły kursowej. Stosujesz art. 31a ustawy o VAT, a obowiązek podatkowy powstaje w dniu otrzymania zaliczki (art. 19a ust. 8), więc bierzesz kurs średni NBP z ostatniego dnia roboczego przed dniem, w którym wpłynęła zaliczka. Jeśli fakturę zaliczkową wystawiasz, zanim klient zapłaci, stosujesz art. 31a ust. 2, czyli kurs z ostatniego dnia roboczego przed dniem wystawienia faktury.
+
+Kwoty na fakturze zostają w walucie, a w złotych podajesz tylko podatek. Gdy na jednej fakturze dokumentujesz kilka wpłat, każda może mieć swój kurs.
+
+<Source
+  href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
+  label="Ustawa o VAT: art. 19a ust. 8, art. 31a ust. 1 i 2"
+/>
+
+## Dla programistów: pola zaliczek w FA(3)
+
+- `RodzajFaktury`: `ZAL` (także ostatnia zaliczkowa z art. 106f ust. 4), `ROZ`, `KOR_ZAL`, `KOR_ROZ`.
+- Na `ZAL`: `FaWiersz` pominięty, `Zamowienie` z `WartoscZamowienia` i `ZamowienieWiersz` (do 10 000 wierszy, w walucie faktury zaliczkowej), `P_15` = kwota otrzymanej zapłaty, `P_6` = data otrzymania zapłaty, gdy różni się od `P_1`. GTU i procedury na `ZAL` wpisujesz w `ZamowienieWiersz` jako `GTUZ` i `ProceduraZ`.
+- Kilka wpłat na jednej fakturze: `ZaliczkaCzesciowa` (do 31 wystąpień) z `P_6Z` (data), `P_15Z` (kwota) i opcjonalnym `KursWalutyZW`. Ten sam element stosujesz na `ROZ` z art. 106b ust. 1a. Kurs dla całej faktury zaliczkowej: `KursWalutyZ`.
+- Na `ROZ`: `FakturaZaliczkowa` (do 100 wystąpień, jedno na fakturę zaliczkową) z `NrKSeFFaZaliczkowej` albo parą `NrKSeFZN` = `1` i `NrFaZaliczkowej` dla faktury spoza KSeF. `Zamowienie` pominięty.
+- Na `KOR_ZAL`: `P_15ZK` (kwota przed korektą), `KursWalutyZK` (kurs przed korektą, przy fakturze w walucie obcej), wiersze „przed” w `ZamowienieWiersz` oznaczone `StanPrzedZ`.
+
+Fragment `Fa` faktury rozliczającej Tomasza (`FakturaZaliczkowa` stoi po `P_15` i `Adnotacje`, przed `FaWiersz`):
+
+<XmlExample copyable>
+  ```xml
+  <P_13_1>7000.00</P_13_1>
+  <P_14_1>1610.00</P_14_1>
+  <P_15>8610.00</P_15>
+  <Adnotacje>...</Adnotacje>
+  <RodzajFaktury>ROZ</RodzajFaktury>
+  <FakturaZaliczkowa>
+    <NrKSeFFaZaliczkowej>7811234567-20260915-0A1B2C3D4E5F-1C</NrKSeFFaZaliczkowej>
+  </FakturaZaliczkowa>
+  <FaWiersz>
+    <NrWierszaFa>1</NrWierszaFa>
+    <P_7>Zabudowa biura</P_7>
+    <P_8A>szt.</P_8A>
+    <P_8B>1</P_8B>
+    <P_9A>10000.00</P_9A>
+    <P_11>10000.00</P_11>
+    <P_12>23</P_12>
+  </FaWiersz>
+  ```
+</XmlExample>
+
+Numer KSeF w przykładzie jest zmyślony. Plik z fakturą zaliczkową sprawdzisz w [walidatorze](/validator), a co oznacza `P_15` przy każdym typie faktury, opisujemy przy błędzie [brak kwoty należności ogółem](/validator/brak-p15-kwota-naleznosci-ogolem).

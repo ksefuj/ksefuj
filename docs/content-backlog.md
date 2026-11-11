@@ -61,7 +61,9 @@ a Tier 1–3 source.
       lead with „KSeF odrzuca…” · M, K · now · CIRFMF `faktury/weryfikacja-faktury.md`,
       `api-changelog.md` · Interim update 2026-10-24 (`content/ksef-scisla-walidacja-xml`): date
       passed, post now says the docs have not confirmed enforcement. Skip until 2026-11-07, then
-      re-check the changelog and issue #718 before the present-tense switch.
+      re-check the changelog and issue #718 before the present-tense switch. Re-checked 2026-11-08
+      (`content/ksef-scisla-walidacja-xml-19-10`): changelog still 2.9.0, #718 no posts since 24.06;
+      post dated „stan na 8 listopada”. Skip until 2026-11-22, then re-check again.
 - [x] **UPDATE** `najczestsze-bledy-walidacji-fa3` — open with a direct answer to „co znaczy błąd
       walidacji” in the first 100 words, then the list; mention the strict-XML rejections from 19.10
       and link that post · „błąd walidacji co to znaczy” · A · GSC ~74 impr at pos 7–14 · brief
@@ -101,7 +103,7 @@ matching queries.
 - [ ] `aplikacja-mobilna-ksef` — Aplikacja mobilna KSeF · „aplikacja mobilna KSeF" · A ·
       `/mobilna-ksef-20/`, APP · infor.pl 2026-10-07 covers offline use in 2027 (UNVERIFIED).
 - [x] `ryczalt-ksef` — Ryczałt a KSeF · „ryczałt KSeF" · A · P2
-- [ ] `faktura-zaliczkowa-ksef` — Faktura zaliczkowa w KSeF · „faktura zaliczkowa KSeF" · K, M · P2
+- [x] `faktura-zaliczkowa-ksef` — Faktura zaliczkowa w KSeF · „faktura zaliczkowa KSeF" · K, M · P2
 - [ ] `samofakturowanie-ksef` — Samofakturowanie w KSeF · „samofakturowanie KSeF" · K · FAQ, P3
 - [ ] `zalaczniki-ksef` — Załączniki do faktury w KSeF · „załącznik do faktury KSeF" · M, A · FAQ
 - [ ] `faktura-po-angielsku-ksef` — Faktura KSeF po angielsku · „faktura KSeF po angielsku" · A ·
