@@ -320,3 +320,24 @@ Tags per fact: **Conf.** HIGH/MEDIUM/LOW · **Live: no** (all) · personas **K /
   per payment (~l. 1634) and uses `P_6Z` as a tax-point fallback (~l. 1402); that finding is stale.
 - **`test-fixtures/official-examples/README.md`** mislabels examples (10 is `ZAL`, 11-13 `KOR_ZAL`,
   14/17 `ROZ`, 18 `KOR_ROZ`, 21 is a `VAT` in EUR); do not cite the README.
+
+## Local verification (2026-11-11)
+
+Checked against the text of Dz.U. 2026 poz. 1263 (PDF from
+`https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf`; ELI metadata: obwieszczenie of 2026-09-01,
+status „obowiązujący”). The "NOT IN KB" items above are now verified:
+
+- Art. 106i ust. 2: „fakturę wystawia się niepóźniej niż 15. dnia miesiąca następującego po
+  miesiącu, w którym otrzymano całość lub część zapłaty od nabywcy”.
+- Art. 106i ust. 7 pkt 2: not earlier than the 60th day before receiving the payment.
+- Art. 19a ust. 8: tax point on receipt of the payment „w odniesieniu do otrzymanej kwoty”, except
+  ust. 1b and ust. 5 pkt 4. Art. 31a ust. 1 and 2 unchanged from the 2025 text.
+- Art. 106b ust. 1 pkt 4 lit. a–c (WDT, 19a ust. 5 pkt 4, 19a ust. 1b), ust. 1a (same month), ust. 2
+  and ust. 3 pkt 2 (exempt sales, 3 months), art. 106e ust. 1a, art. 106f ust. 1 pkt 3 (formula),
+  ust. 3 and ust. 4, art. 145m ust. 1.
+- **Art. 106b ust. 1b (added to the post):** „Przepisu ust. 1a nie stosuje się w przypadkach, dla
+  których terminy wystawienia faktury określone są w art. 106i ust. 3–8”, e.g. construction and
+  construction-assembly services (art. 106i ust. 3 pkt 1 with art. 19a ust. 5 pkt 3 lit. a). For
+  those the same-month waiver does not apply.
+- Podręcznik cz. II of 06.08.2026 (live PDF): pkt 2.8 (zero `ROZ`, `P_15` = 0) and pkt 2.13.5
+  („zaleca się” before/after rows) match the KB extract.

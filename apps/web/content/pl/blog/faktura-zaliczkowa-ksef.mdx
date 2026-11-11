@@ -89,7 +89,9 @@ Zgadza się to z wzorem: 8 610 × 23 / 123 = 1 610 zł. Danych zamówienia na fa
 
 Gdy klient płaci zaliczkę w tym samym miesiącu, w którym wykonujesz usługę, nie musisz wystawiać osobnej faktury zaliczkowej (art. 106b ust. 1a). Wystawiasz jedną fakturę po wykonaniu usługi, oznaczoną jako rozliczająca `ROZ`, i podajesz na niej datę i kwotę otrzymanej zaliczki (art. 106e ust. 1a). Według opisu elementu `ZaliczkaCzesciowa` w schemacie FA(3) różnica między kwotą należności ogółem a sumą zaliczek to kwota, która została do zapłaty, więc kwota należności ogółem obejmuje wtedy całą sprzedaż.
 
-Jeśli Tomasz dostałby 3 690 zł 3 listopada i zamontował zabudowę 20 listopada, wystawiłby jedną fakturę `ROZ` na 12 300 zł z informacją o zaliczce 3 690 zł z 3 listopada.
+Ten wyjątek nie działa przy sprzedaży, dla której ustawa wyznacza własny termin faktury (art. 106i ust. 3–8), na przykład przy usługach budowlanych i budowlano-montażowych (art. 106b ust. 1b). Przy nich fakturę zaliczkową wystawiasz, nawet gdy zaliczka i usługa przypadają w tym samym miesiącu.
+
+Jeśli Tomasz dostałby 3 690 zł 3 listopada i zamontował zabudowę 20 listopada, wystawiłby jedną fakturę `ROZ` na 12 300 zł z informacją o zaliczce 3 690 zł z 3 listopada. Tak jest, o ile jego montaż nie jest usługą budowlano-montażową.
 
 <Source
   href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
