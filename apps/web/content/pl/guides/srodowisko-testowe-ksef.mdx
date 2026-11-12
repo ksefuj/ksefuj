@@ -1,6 +1,6 @@
 ---
-title: "Środowisko testowe KSeF: TEST, DEMO i produkcja"
-description: "Testowa Aplikacja Podatnika działa pod ap-test.ksef.mf.gov.pl/web/. Dokumenty z niej nie są fakturami. Wpisuj fikcyjne dane, bo inni mogą je zobaczyć."
+title: "Jak korzystać ze środowiska testowego KSeF?"
+description: "Testowa Aplikacja Podatnika działa pod ap-test.ksef.mf.gov.pl/web/. Wysłane z niej dokumenty nie są fakturami. Wpisuj fikcyjne dane, bo inni mogą je zobaczyć."
 date: 2026-11-12
 updated: 2026-11-12
 section: guides
@@ -11,7 +11,7 @@ tags: ["KSeF", "JDG", "Faktura"]
 sources:
   - label: "CIRFMF ksef-api: środowiska KSeF"
     url: "https://github.com/CIRFMF/ksef-api/blob/main/srodowiska.md"
-  - label: "Podręcznik KSeF 2.0, cz. II (06.08.2026)"
+  - label: "Podręcznik KSeF 2.0, cz. II"
     url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
   - label: "MF: Aplikacja Podatnika KSeF 2.0"
     url: "https://ksef.podatki.gov.pl/aplikacja-podatnika-ksef-20/"
@@ -41,7 +41,7 @@ translations:
   uk: "testove-seredovyshche-ksef"
 ---
 
-Środowisko testowe KSeF to testowa wersja Aplikacji Podatnika pod adresem
+Środowisko testowe KSeF ma własną wersję Aplikacji Podatnika pod adresem
 [ap-test.ksef.mf.gov.pl/web/](https://ap-test.ksef.mf.gov.pl/web/). Dokumenty, które tam wyślesz,
 nie są fakturami i nie wywołują skutków prawnych, a wpisywać możesz wyłącznie fikcyjne dane.
 
@@ -59,7 +59,7 @@ Stan na 12 listopada 2026 r.
 ## Czym różnią się TEST, DEMO i produkcja?
 
 KSeF 2.0 ma trzy publiczne środowiska. TEST służy do testowania integracji i dostaje nowe wersje
-systemu jako pierwszy. DEMO (przedprodukcyjne) ma konfigurację jak produkcja i jest przeznaczone do
+systemu jako pierwszy. DEMO (środowisko przedprodukcyjne) jest skonfigurowane jak produkcja i służy do
 końcowego sprawdzenia integracji. Na produkcji (PROD) wystawiasz i odbierasz faktury o pełnej mocy
 prawnej.
 
@@ -71,11 +71,11 @@ prawnej.
 | Logowanie            | także samopodpisany certyfikat                                             | faktyczne dane logowania i uprawnienia, jak na produkcji                   | faktyczne dane logowania i uprawnienia                           |
 | Przyjmowane schematy | FA(2), FA(3), FA_PEF (3), FA_KOR_PEF (3)                                   | FA(3), FA_PEF (3), FA_KOR_PEF (3)                                          | FA(3), FA_PEF (3), FA_KOR_PEF (3)                                |
 
-Adresu DEMO Aplikacji Podatnika nie znaleźliśmy na stronach MF. Strona ap-demo.ksef.mf.gov.pl
-działała 7 października 2026 r. W starszych poradnikach krąży jeszcze adres web2te-ksef.mf.gov.pl.
-Strona MF o Aplikacji Podatnika podaje dla wersji testowej adres ap-test.ksef.mf.gov.pl/web/.
+Adresu Aplikacji Podatnika w DEMO nie znaleźliśmy na stronach MF. Strona ap-demo.ksef.mf.gov.pl
+działała 7 października 2026 r. Dla wersji testowej strona MF o Aplikacji Podatnika podaje adres
+ap-test.ksef.mf.gov.pl/web/. W starszych poradnikach krąży jeszcze adres web2te-ksef.mf.gov.pl, który już nie działa.
 
-TEST przyjmuje też starszy schemat FA(2), którego DEMO i produkcja nie przyjmują. **Plik przyjęty w
+TEST przyjmuje też starszy schemat FA(2), a DEMO i produkcja już nie. **Plik przyjęty w
 TEST nie musi więc przejść na produkcji.**
 
 <Source
@@ -85,8 +85,8 @@ TEST nie musi więc przejść na produkcji.**
 
 ## Co wolno wpisać w środowisku testowym?
 
-Tylko wymyślone dane. Dokumentacja MF zabrania wysyłania do TEST i DEMO faktur produkcyjnych oraz
-rzeczywistych danych firm, a do testów zaleca losowe numery NIP.
+Wpisuj tylko wymyślone dane. Dokumentacja MF zabrania wysyłania do TEST i DEMO faktur produkcyjnych oraz
+rzeczywistych danych firm, a do testów każe używać losowych numerów NIP.
 
 Powód jest praktyczny: TEST przyjmuje samopodpisane certyfikaty, więc wiele osób może zalogować się w
 kontekście tej samej firmy. **Dane wpisane w TEST nie są odizolowane i mogą je zobaczyć inni użytkownicy.** Nie wpisuj więc prawdziwego klienta ani jego adresu.
@@ -99,11 +99,11 @@ Dokumentacja nie mówi, czy i kiedy dane z TEST są usuwane.
 
 Co jeszcze odróżnia TEST od produkcji:
 
-- **Przerwy serwisowe.** Od 1 października 2025 r. w środowiskach testowych trwają cykliczne prace serwisowe w godzinach 16:00–18:00 i mogą wystąpić wtedy utrudnienia. Dodatkowe prace MF zapowiada w [komunikatach technicznych](https://ksef.podatki.gov.pl/komunikaty-techniczne/), np. 17 i 22 czerwca 2026 r.
+- **Przerwy serwisowe.** Od 1 października 2025 r. w środowiskach testowych mogą być prowadzone cykliczne prace serwisowe w godzinach 16:00–18:00 i mogą wtedy wystąpić utrudnienia. Dodatkowe prace MF zapowiada w [komunikatach technicznych](https://ksef.podatki.gov.pl/komunikaty-techniczne/) (tak było z pracami 17 i 22 czerwca 2026 r.).
 - **UPO z dopiskiem.** W UPO z TEST jako podmiot przyjmujący widnieje „Ministerstwo Finansów -
   środowisko testowe (TE)”, a z DEMO „Ministerstwo Finansów - środowisko przedprodukcyjne (TR)”. Na
   produkcji jest samo „Ministerstwo Finansów”.
-- **Kody QR na testowy adres.** Kod QR z faktury testowej prowadzi do qr-test.ksef.mf.gov.pl, a nie
+- **Kody QR prowadzą na testowy adres.** Kod QR z faktury testowej prowadzi do qr-test.ksef.mf.gov.pl, a nie
   do weryfikacji na produkcji (qr.ksef.mf.gov.pl).
 
 <Source
@@ -130,14 +130,14 @@ Taki certyfikat tworzy m.in. program `KSeF.Client.Tests.CertTestApp` z oficjalne
 (o niej niżej). To narzędzie dla programistów, nie dla osoby, która chce wystawić fakturę w
 przeglądarce.
 
-Czego dokumentacja nie mówi: czy do testowej Aplikacji Podatnika zalogujesz się przez login.gov.pl
-(Profilem Zaufanym, mObywatelem) i jakie sposoby logowania pokazuje jej ekran startowy. Opis
-logowania w podręczniku MF dotyczy aplikacji w ogóle, bez rozróżnienia środowisk. Jak logujesz się
-na produkcji, opisujemy w [poradniku o logowaniu do KSeF](/guides/logowanie-ksef).
+Dokumentacja nie mówi, czy do testowej Aplikacji Podatnika zalogujesz się przez login.gov.pl
+(Profilem Zaufanym, mObywatelem) ani jakie sposoby logowania pokazuje jej ekran startowy. Podręcznik
+MF opisuje logowanie do aplikacji ogólnie, bez rozróżnienia środowisk. Logowanie na produkcji
+opisujemy w [poradniku o logowaniu do KSeF](/guides/logowanie-ksef).
 
 DEMO wymaga faktycznych danych logowania i faktycznych uprawnień, tak jak produkcja. Podręcznik MF
-nazywa DEMO niedostępnym publicznie, a dokumentacja API wymienia je wśród środowisk publicznych. Czy
-może tam wejść każdy podatnik i czy widać tam uprawnienia nadane na produkcji, MF nie wyjaśnia.
+nazywa DEMO niedostępnym publicznie, a dokumentacja API wymienia je wśród środowisk publicznych. MF
+nie wyjaśnia, czy może tam wejść każdy podatnik i czy widać tam uprawnienia nadane na produkcji.
 
 <Source
   href="https://github.com/CIRFMF/ksef-api/blob/main/uwierzytelnianie.md"
@@ -160,7 +160,7 @@ Jeśli fakturujesz w programie, a nie w przeglądarce, przełącz go na środowi
 [wyślij z niego fakturę testową](/guides/pierwsza-faktura-fa3). Gdy masz już plik XML, możesz go
 przed wysyłką sprawdzić w [walidatorze](/validator) według schematu FA(3), którego wymaga produkcja.
 
-## Środowisko testowe KSeF dla programistów
+## Jak połączyć program z API środowiska testowego?
 
 Marek łączy system ERP z KSeF. Bazowy adres API w TEST to `https://api-test.ksef.mf.gov.pl/v2`
 (ścieżka `/v2`, nie `/api/v2`). Oficjalne biblioteki MF łączą się z DEMO i produkcją przez hosty
@@ -191,8 +191,8 @@ Endpointy `/testdata/*` przygotowują dane do scenariuszy testowych:
 - `PUT /testdata/certificates/{serialNumber}`: skrócenie ważności certyfikatu.
 - Endpointy `/testdata/limits/*` i `/testdata/rate-limits`: zmiana limitów, bez wpływu na produkcję.
 
-Część z nich ma w specyfikacji dopisek „Tylko na środowiskach testowych”. Czy obejmuje to DEMO,
-dokumentacja nie definiuje. `POST /testdata/rate-limits/production` działa wyłącznie w TEST.
+Część z nich ma w specyfikacji dopisek „Tylko na środowiskach testowych”. Dokumentacja nie
+definiuje, czy obejmuje to DEMO. `POST /testdata/rate-limits/production` działa wyłącznie w TEST.
 
 <Source
   href="https://github.com/CIRFMF/ksef-api/blob/main/dane-testowe-scenariusze.md"
@@ -201,7 +201,7 @@ dokumentacja nie definiuje. `POST /testdata/rate-limits/production` działa wył
 
 ### Jakie limity obowiązują w TEST?
 
-Dokumentacja MF przeczy sama sobie. Strona o limitach podaje, że w TEST są dziesięciokrotnie wyższe
+Dokumentacja MF przeczy sama sobie. Strona o limitach podaje, że limity w TEST są dziesięciokrotnie wyższe
 niż na produkcji, a historia zmian wersji 2.5.0 mówi, że zrównano je z produkcją. W DEMO limity są
 takie same jak na produkcji. Aktualne wartości odczytasz z `GET /rate-limits`.
 
@@ -210,11 +210,11 @@ takie same jak na produkcji. Aktualne wartości odczytasz z `GET /rate-limits`.
   label="CIRFMF: limity API"
 />
 
-### Co jeszcze działa tylko w TEST?
+### Co jeszcze działa w środowiskach testowych?
 
 - Nagłówek `X-Test-System-Warning` wymusza ostrzeżenie systemowe w odpowiedzi.
 - Nagłówek `X-KSeF-Feature: subject-identifier-validation` włącza sprawdzanie numerów NIP i
-  identyfikatorów wewnętrznych na fakturach.
+  identyfikatorów wewnętrznych na fakturach (dokumentacja nie precyzuje, czy działa też w DEMO).
 - Nowe wersje API trafiają najpierw do TEST, potem do DEMO i produkcji. Wersja 2.9.0 weszła do TEST i
   DEMO 13 października 2026 r., a na produkcję 15 października.
 
