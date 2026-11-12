@@ -1,0 +1,274 @@
+---
+title: "How to use the KSeF test environment"
+description: "The test Taxpayer Application runs at ap-test.ksef.mf.gov.pl/web/. Documents sent there are not invoices. Use made-up data: other users can see it."
+date: 2026-11-12
+updated: 2026-11-12
+section: guides
+locale: en
+slug: "ksef-test-environment"
+topic: "invoicing"
+tags: ["KSeF", "JDG", "Faktura"]
+sources:
+  - label: "CIRFMF ksef-api: KSeF environments"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/srodowiska.md"
+  - label: "KSeF 2.0 Manual, Part II"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "MF: Aplikacja Podatnika KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/aplikacja-podatnika-ksef-20/"
+  - label: "MF: Aplikacja Podatnika KSeF 2.0, test version"
+    url: "https://ksef.podatki.gov.pl/aplikacja-podatnika-ksef-20/aplikacja-podatnika-ksef-20-wersja-testowa/"
+  - label: "MF: Aplikacja Podatnika KSeF 2.0, pre-production version (Demo)"
+    url: "https://ksef.podatki.gov.pl/aplikacja-podatnika-ksef-20/aplikacja-podatnika-ksef-20-wersja-przedprodukcyjna-demo/"
+  - label: "MF: authentication guide for the test Aplikacja Podatnika KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/media/jxgjepcn/instrukcja-uwierzytelnienia-w-aplikacji-podatnika-ksef-20-wersja-testowa.pdf"
+  - label: "MF: KSeF technical notices"
+    url: "https://ksef.podatki.gov.pl/komunikaty-techniczne/"
+  - label: "CIRFMF ksef-api: authentication"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/uwierzytelnianie.md"
+  - label: "CIRFMF ksef-api: test certificates and XAdES signatures"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/auth/testowe-certyfikaty-i-podpisy-xades.md"
+  - label: "CIRFMF ksef-api: test data, scenarios"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/dane-testowe-scenariusze.md"
+  - label: "CIRFMF ksef-api: QR codes"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/kody-qr.md"
+  - label: "CIRFMF ksef-api: API limits"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/limity/limity-api.md"
+  - label: "CIRFMF ksef-api: API changelog"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md"
+  - label: "CIRFMF ksef-api: OpenAPI specification"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
+  - label: "CIRFMF: ksef-client-csharp"
+    url: "https://github.com/CIRFMF/ksef-client-csharp"
+  - label: "CIRFMF: ksef-client-java"
+    url: "https://github.com/CIRFMF/ksef-client-java"
+translations:
+  pl: "srodowisko-testowe-ksef"
+  en: "ksef-test-environment"
+  uk: "testove-seredovyshche-ksef"
+---
+
+The test environment of KSeF (Krajowy System e-Faktur, Poland's National e-Invoicing System) has its
+own version of the Taxpayer Application (Aplikacja Podatnika) at
+[ap-test.ksef.mf.gov.pl/web/](https://ap-test.ksef.mf.gov.pl/web/). Documents you send there are not
+invoices and have no legal effect, and you may enter only fictitious data.
+
+Status as of 12 November 2026.
+
+<Source
+  href="https://ksef.podatki.gov.pl/aplikacja-podatnika-ksef-20/"
+  label="MF: Aplikacja Podatnika KSeF 2.0"
+/>
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="KSeF 2.0 Manual, Part II, ch. 3.2.1"
+/>
+
+## How do TEST, DEMO and production differ?
+
+KSeF 2.0 has three public environments. TEST is for testing integrations and gets new system
+versions first. DEMO (the pre-production environment) is configured like production and is for the
+final check of an integration. Production (PROD) is where you issue and receive invoices with full
+legal effect.
+
+|                      | TEST                                                                       | DEMO                                                                       | PROD                                                             |
+| -------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| Taxpayer Application | [ap-test.ksef.mf.gov.pl/web/](https://ap-test.ksef.mf.gov.pl/web/)         | [ap-demo.ksef.mf.gov.pl](https://ap-demo.ksef.mf.gov.pl/)                  | [ap.ksef.mf.gov.pl](https://ap.ksef.mf.gov.pl/)                  |
+| API documentation    | [api-test.ksef.mf.gov.pl/docs/v2](https://api-test.ksef.mf.gov.pl/docs/v2) | [api-demo.ksef.mf.gov.pl/docs/v2](https://api-demo.ksef.mf.gov.pl/docs/v2) | [api.ksef.mf.gov.pl/docs/v2](https://api.ksef.mf.gov.pl/docs/v2) |
+| Legal effect         | none                                                                       | none                                                                       | full legal effect                                                |
+| Login                | test authentication, self-signed certificate also accepted                 | real login credentials and permissions, as in production                   | real login credentials and permissions                           |
+| Accepted schemas     | FA(2), FA(3), FA_PEF (3), FA_KOR_PEF (3)                                   | FA(3), FA_PEF (3), FA_KOR_PEF (3)                                          | FA(3), FA_PEF (3), FA_KOR_PEF (3)                                |
+
+MF (the Ministry of Finance) gives the addresses of the test and pre-production Taxpayer
+Application on the pages for each version. Older guides still mention
+web2te-ksef.mf.gov.pl, which no longer works.
+
+TEST also accepts the older FA(2) schema, while DEMO and production no longer do. **A file accepted
+in TEST may still fail in production.**
+
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/srodowiska.md"
+  label="CIRFMF: KSeF environments"
+/>
+
+## What can you enter in the test environment?
+
+Enter only made-up data. The MF documentation forbids sending production invoices and real company
+data to TEST and DEMO, and tells you to use random NIP numbers (Polish tax IDs) for testing.
+
+The reason is practical: TEST accepts self-signed certificates, so many people can log in in the
+context of the same company. **Data entered in TEST is not isolated and other users can see it.**
+So don't enter a real client or their address. MF says data in the test and pre-production
+Taxpayer Application is deleted periodically, but gives no schedule.
+
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/srodowiska.md"
+  label="CIRFMF: KSeF environments, note"
+/>
+<Source
+  href="https://ksef.podatki.gov.pl/aplikacja-podatnika-ksef-20/aplikacja-podatnika-ksef-20-wersja-testowa/"
+  label="MF: Aplikacja Podatnika KSeF 2.0, test version"
+/>
+
+Other ways TEST differs from production:
+
+- **Maintenance windows.** Since 1 October 2025, recurring maintenance may take place in the test
+  environments between 16:00 and 18:00, and disruptions may occur then. MF announces additional
+  work in its [technical notices](https://ksef.podatki.gov.pl/komunikaty-techniczne/) (for example
+  the notices of 17 and 22 June 2026).
+- **UPO with a suffix.** In a UPO (Urzędowe Poświadczenie Odbioru, the official confirmation of
+  receipt) from TEST, the receiving party reads "Ministerstwo Finansów - środowisko testowe (TE)"
+  (Ministry of Finance, test environment), and from DEMO "Ministerstwo Finansów - środowisko
+  przedprodukcyjne (TR)" (pre-production environment). In production it is just "Ministerstwo
+  Finansów".
+- **QR codes point to a test address.** The QR code on a test invoice leads to
+  qr-test.ksef.mf.gov.pl, not to verification in production (qr.ksef.mf.gov.pl).
+
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md"
+  label="CIRFMF: API changelog, 2.0.0 RC6.0"
+/>
+<Source href="https://github.com/CIRFMF/ksef-api/blob/main/kody-qr.md" label="CIRFMF: QR codes" />
+
+<Warning>
+  A test invoice sent to production by mistake and accepted with a KSeF number is a real invoice. It
+  may leave you liable to pay the tax shown on it (Art. 108 of the VAT Act). In that case, promptly
+  issue a [corrective invoice "to zero"](/en/blog/corrective-invoice-ksef).
+</Warning>
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="KSeF 2.0 Manual, Part II, ch. 3.2.3"
+/>
+
+## How do you log in to the test environment?
+
+You don't need a qualified certificate for the test Taxpayer Application. On the login screen,
+choose "Zaloguj uwierzytelnieniem testowym" (log in with test authentication), enter the context
+(e.g. the company's NIP, the Polish tax ID) and type a NIP or PESEL (Polish personal ID number). The
+server signs the request with a test certificate. You can't log in to TEST with Profil Zaufany (the
+Polish government e-ID); that option works only in DEMO and production. TEST accepts a qualified
+certificate, but MF advises against using signatures with real data there. We cover logging in to
+production in our [guide to KSeF login](/en/guides/ksef-login).
+
+Only TEST accepts a self-generated certificate instead of a qualified one. For API connections, one
+tool that creates such a certificate is `KSeF.Client.Tests.CertTestApp` from the official C# library
+(more on it below). It is a developer tool.
+
+DEMO requires real login credentials and real permissions, just like production. You log in there
+with e.g. Profil Zaufany, in the context of a NIP that matches the register of
+company owners. That is why the MF manual calls DEMO not publicly available, even though the API
+documentation lists it among the public environments. Permissions and certificates granted in the
+production Certificates and Permissions Module (MCU) are not available in DEMO, and nothing you do
+in DEMO changes anything in production.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/jxgjepcn/instrukcja-uwierzytelnienia-w-aplikacji-podatnika-ksef-20-wersja-testowa.pdf"
+  label="MF: authentication guide for the test Aplikacja Podatnika KSeF 2.0"
+/>
+<Source
+  href="https://ksef.podatki.gov.pl/aplikacja-podatnika-ksef-20/aplikacja-podatnika-ksef-20-wersja-przedprodukcyjna-demo/"
+  label="MF: Aplikacja Podatnika KSeF 2.0, pre-production version (Demo)"
+/>
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/uwierzytelnianie.md"
+  label="CIRFMF: authentication"
+/>
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="KSeF 2.0 Manual, Part II, ch. 3.2.2"
+/>
+
+## How do you practise issuing an invoice?
+
+1. Open [ap-test.ksef.mf.gov.pl/web/](https://ap-test.ksef.mf.gov.pl/web/) and check the address in
+   your browser: it should contain "ap-test". Log in with test authentication and a made-up NIP.
+2. Issue an invoice with a made-up buyer and amount. We walk through the form step by step in the
+   [guide to your first invoice in the Taxpayer Application](/en/guides/ksef-taxpayer-app-first-invoice).
+3. Download the UPO and check for the suffix "środowisko testowe (TE)" (test environment).
+
+If you invoice from software rather than the browser, switch it to the test environment and
+[send a test invoice from it](/en/guides/first-fa3-invoice). Once you have an XML file, you can
+check it in the [validator](/en/validator) before sending, against the FA(3) schema that production
+requires.
+
+## How do you connect software to the test environment API?
+
+Marek is connecting an ERP system to KSeF. The base API URL in TEST is
+`https://api-test.ksef.mf.gov.pl/v2` (path `/v2`, not `/api/v2`). The official MF libraries connect
+to DEMO and production through the hosts `api-demo.ksef.mf.gov.pl` and `api.ksef.mf.gov.pl` with the
+same `/v2/...` paths. URLs returned by the API always point to the environment that received the
+request.
+
+You can download the TEST specification as
+[openapi.json](https://api-test.ksef.mf.gov.pl/docs/v2/openapi.json), and the interactive
+documentation is at [docs/v2/index.html](https://api-test.ksef.mf.gov.pl/docs/v2/index.html).
+
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
+  label="CIRFMF: open-api.json (2.9.0)"
+/>
+
+### How do you set up test data?
+
+The `/testdata/*` endpoints prepare data for test scenarios:
+
+- `POST /testdata/person`: a natural person with owner permissions. With `isBailiff: false` this
+  corresponds to a JDG (jednoosobowa działalność gospodarcza, a Polish sole trader): the person
+  logging in with a PESEL (Polish personal ID number) or NIP gets the **Owner** permission. With
+  `isBailiff: true`, `EnforcementOperations` (bailiff) is added.
+- `POST /testdata/subject`: a VAT group or a JST (local government unit) with subordinate units,
+  followed by permissions via `POST /testdata/permissions`.
+- `POST /testdata/attachment` and `/revoke`: enabling and disabling attachments.
+- `POST /testdata/context/block` and `unblock`: a blocked context, where authentication fails with
+  error 480.
+- `PUT /testdata/certificates/{serialNumber}`: shortening a certificate's validity.
+- The `/testdata/limits/*` and `/testdata/rate-limits` endpoints: changing limits, with no effect on
+  production.
+
+Some of them carry the note "Tylko na środowiskach testowych" (Only in test environments) in the
+specification. The documentation doesn't define whether that includes DEMO.
+`POST /testdata/rate-limits/production` works only in TEST.
+
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/dane-testowe-scenariusze.md"
+  label="CIRFMF: test data, scenarios"
+/>
+
+### Which limits apply in TEST?
+
+The MF documentation contradicts itself. The limits page says limits in TEST are ten times higher
+than in production, while the changelog for version 2.5.0 says they were aligned with production.
+In DEMO the limits are the same as in production. You can read the current values from
+`GET /rate-limits`.
+
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/limity/limity-api.md"
+  label="CIRFMF: API limits"
+/>
+
+### What else works in the test environments?
+
+- The `X-Test-System-Warning` header forces a system warning in the response.
+- The `X-KSeF-Feature: subject-identifier-validation` header turns on checking of NIP numbers and
+  internal identifiers on invoices (the documentation doesn't specify whether it also works in
+  DEMO).
+- New API versions reach TEST first, then DEMO and production. Version 2.9.0 went live in TEST and
+  DEMO on 13 October 2026, and in production on 15 October.
+
+MF maintains two open source libraries:
+[ksef-client-csharp](https://github.com/CIRFMF/ksef-client-csharp) (C#) and
+[ksef-client-java](https://github.com/CIRFMF/ksef-client-java) (Java). You select the environment in their
+configuration, and the sample apps in both repositories connect to TEST by default. CertTestApp from the C# library
+requires the .NET 10 SDK and generates a random NIP by default.
+
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md"
+  label="CIRFMF: API changelog"
+/>
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/auth/testowe-certyfikaty-i-podpisy-xades.md"
+  label="CIRFMF: test certificates and XAdES signatures"
+/>
+
+Once a test invoice goes through and its UPO carries the "(TE)" suffix, issue the real invoice in
+the production application at [ap.ksef.mf.gov.pl](https://ap.ksef.mf.gov.pl/).
