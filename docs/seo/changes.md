@@ -5,6 +5,42 @@ effect. Record the date, the page, what changed (old -> new for titles and descr
 metric that motivated it. After 28 days, add a **Results** line comparing current CTR/position with
 the baseline.
 
+## 2026-11-12
+
+Digest: `gsc-data` 2026-11-11 (GSC 2026-10-12 to 2026-11-08: 158 clicks, 12,965 impressions, CTR
+1.22%, avg position 6.9; previous 28 days 76 clicks, CTR 0.89%). No crawl Problems: all 190 sitemap
+URLs 200; sitemap still 0 errors, 6 warnings. No title or description changes: every page in the
+low-CTR list had its title or description changed on 2026-10-26 or later, or has frontmatter
+`updated` within 28 days. Wrong-locale URLs (e.g. `/en/blog/najem-lokalu-ksef`, 59 impr) still get
+impressions; they 308 to the right slug since 2026-11-03 and no internal link points to them (all
+MDX links checked against the slug list), so no fix today. The live site could not be reached from
+the routine's environment.
+
+- **Pages:** `/blog/faktura-dla-osoby-prywatnej-ksef`, `/en/blog/invoice-for-private-person-ksef`,
+  `/uk/blog/rakhunok-dlya-pryvatnoyi-osoby-ksef`
+  - **Change:** body only. One sentence after the art. 106gb ust. 4 paragraph (invoice handed to a
+    consumer outside KSeF) saying MF requires the PDF or printout to be consistent with the XML,
+    linking `/blog/pusta-faktura-pdf-xml`, `/en/blog/pdf-different-from-xml-ksef` and
+    `/uk/blog/pdf-ne-zbigayetsya-z-xml-ksef`. The PDF post already links back and sources the claim
+    (Podręcznik KSeF 2.0 cz. II pkt 1.1, 1.6.5, 4.1).
+  - **Motivation:** the PDF-vs-XML post (published 2026-10-15) is still PL "Discovered - currently
+    not indexed", EN "URL is unknown to Google", UK "Discovered - currently not indexed", with 1, 1
+    and 0 inbound content links (only from the end-of-limit post). The private-person posts are
+    indexed (PL 303 impr, pos 7.4; EN 471 impr, pos 6.0).
+  - **Baseline to compare:** URL Inspection state of the three PDF-vs-XML posts above.
+
+### Results
+
+- **2026-10-13, FA(3) errors posts -> validator pages:** baseline was "URL is unknown to Google" for
+  `/validator/bledny-numer-rachunku-bankowego`, `/validator/xml-nie-jest-poprawnie-sformatowany` and
+  `/en/validator/missing-jst-gv-podmiot2`. All three are now "Submitted and indexed";
+  `/validator/xml-nie-jest-poprawnie-sformatowany` 26 impr, pos 4.4;
+  `/en/validator/missing-jst-gv-podmiot2` 33 impr, 1 click, pos 5.5; the PL bank-account page has no
+  impressions yet. Later runs added more links to the same pages, so the effect is not this change's
+  alone.
+- **2026-10-14, strict-XML posts -> malformed-XML pages:** PL page went from unknown to Google to
+  indexed (see above); `/en/validator/malformed-xml-invoice` indexed, 161 impr, 0 clicks, pos 9.2.
+
 ## 2026-11-07
 
 GSC 28-day data supplied by hand (pages that rank but get almost no clicks). `updated` left
