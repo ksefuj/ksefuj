@@ -1,0 +1,130 @@
+---
+title: "Samofakturowanie w KSeF wymaga uprawnienia"
+description: "Nabywca wystawia fakturę za sprzedawcę i sam wysyła ją do KSeF, gdy sprzedawca nada mu uprawnienie. Sprawdź, kto co robi i czego dokumenty MF nie rozstrzygają."
+date: 2026-11-12
+section: blog
+locale: pl
+slug: "samofakturowanie-ksef"
+topic: "invoicing"
+tags: ["KSeF", "Faktura", "FA(3)"]
+sources:
+  - label: "KSeF 2.0, dokumentacja API: Uprawnienia (MF)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/uprawnienia.md"
+  - label: "KSeF 2.0, dokumentacja API: Przegląd kluczowych zmian (samofakturowanie przez podmioty unijne)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/przeglad-kluczowych-zmian-ksef-api-2-0.md"
+  - label: "KSeF 2.0, dokumentacja API: Kontekst złożony NIP-VAT UE"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/auth/context-identifier-nip-vat-ue.md"
+  - label: "KSeF 2.0, dokumentacja API: Przyrostowe pobieranie faktur"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/pobieranie-faktur/przyrostowe-pobieranie-faktur.md"
+  - label: "KSeF 2.0, dokumentacja API: Kody QR (KOD II)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/kody-qr.md"
+  - label: "KSeF 2.0, dokumentacja API: Korekta techniczna faktury offline"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/offline/korekta-techniczna.md"
+  - label: "KSeF 2.0, dokumentacja API: Weryfikacja faktury (unikalność numeru)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md"
+  - label: "KSeF 2.0, specyfikacja OpenAPI (pole isSelfInvoicing)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
+  - label: "Schemat FA(3): Adnotacje/P_17 i Podmiot3/Rola"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+  - label: "MF: Broszura informacyjna dotycząca struktury logicznej FA(3)"
+    url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "MF: Podręcznik KSeF 2.0, cz. II (06.08.2026), pkt 1.6, 1.6.2, 2.12, 6.3"
+    url: "https://ksef.podatki.gov.pl/pliki-do-pobrania-ksef-20/"
+  - label: "Ustawa o VAT, tekst jednolity (Dz.U. 2026 poz. 1263), art. 106d, 145m"
+    url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
+translations:
+  pl: "samofakturowanie-ksef"
+  en: "self-billing-ksef"
+related:
+  - "guides/uprawnienia-ksef-ksiegowa"
+  - "blog/faktura-korygujaca-ksef"
+  - "guides/jak-odebrac-fakture-ksef"
+---
+
+Przy samofakturowaniu nabywca wystawia fakturę w imieniu sprzedawcy i sam wysyła ją do KSeF ze swojego kontekstu (pod swoim NIP-em), po tym, jak sprzedawca nada mu w KSeF uprawnienie do samofakturowania. W pliku FA(3) sprzedawca zostaje w `Podmiot1`, nabywca w `Podmiot2`, a pole `P_17` ma wartość „1”.
+
+Stan na 12 listopada 2026 r.
+
+Tak bywa np. wtedy, gdy duży odbiorca rozlicza wielu dostawców albo platforma rozlicza sprzedawców. Jeśli prowadzisz JDG i twój kontrahent sam wystawia ci faktury, piszemy niżej, co musisz zrobić po swojej stronie. Jeśli jesteś księgową, znajdziesz tu też to, czego przeczytane przez nas dokumenty MF nie rozstrzygają.
+
+## Co musi zrobić sprzedawca?
+
+Sprzedawca nadaje nabywcy w KSeF uprawnienie do samofakturowania. Wskazuje nabywcę jego NIP-em. Uprawnienie pozwala nabywcy wystawiać faktury „we własnym kontekście w imieniu podmiotu uprawniającego”, czyli w twoim imieniu, ale bez logowania na twoje konto. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/uprawnienia.md" label="MF, dokumentacja API: Uprawnienia" />
+
+Nadać je może tylko właściciel firmy albo osoba z uprawnieniem do zarządzania uprawnieniami. **Tego uprawnienia nie da się nadać pośrednio**, więc biuro rachunkowe nie przekaże go dalej w ramach dostępu, który od ciebie dostało. Jak działa nadawanie uprawnień w Aplikacji Podatnika, opisujemy w [poradniku o dostępie dla księgowej](/guides/uprawnienia-ksef-ksiegowa).
+
+Uprawnienie nie wygasa samo. Działa, dopóki go nie odbierzesz, a odebrać możesz je w każdej chwili. Skutek jest natychmiastowy: od tej chwili nabywca nie wyśle już do KSeF faktury w twoim imieniu. Obie strony widzą w KSeF listę takich uprawnień, sprzedawca jako nadane, nabywca jako otrzymane.
+
+Uprawnienie w KSeF to strona techniczna. Podstawą samofakturowania jest art. 106d ust. 1 ustawy o VAT, do którego odsyła opis pola `P_17` w schemacie FA(3). Ustawowe warunki samofakturowania ustal z księgową, zanim nabywca wystawi pierwszą fakturę.
+
+## Co robi nabywca?
+
+Nabywca loguje się do KSeF we własnym kontekście, wystawia fakturę ze sprzedawcą w `Podmiot1` i wysyła ją. Przy wysyłce KSeF sprawdza, czy ten kontekst ma prawo wystawiać faktury za NIP sprzedawcy; dokumentacja wymienia tu wprost samofakturowanie. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/uprawnienia.md" label="MF, dokumentacja API: Uprawnienia" />
+
+Bez uprawnienia KSeF fakturę odrzuci. Nie pomoże wtedy korekta techniczna, czyli ponowna wysyłka faktury offline odrzuconej z przyczyn technicznych: MF zastrzega, że nie dotyczy ona „sytuacji związanych z brakiem uprawnień podmiotów występujących na fakturze (np. samofakturowanie […])”. W praktyce sprzedawca nadaje wtedy uprawnienie, a nabywca wysyła fakturę jeszcze raz. Nadanie nie działa od razu (KSeF przetwarza je asynchronicznie), więc przed ponowną wysyłką sprawdź, czy uprawnienie jest już aktywne. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/offline/korekta-techniczna.md" label="MF, dokumentacja API: Korekta techniczna" />
+
+## Jak wypełnić fakturę przy samofakturowaniu?
+
+Struktura jest taka sama jak przy zwykłej fakturze. Różnią się dwie rzeczy:
+
+- `Adnotacje/P_17` = „1”. To adnotacja „samofakturowanie” dla faktur z art. 106d ust. 1. Pole jest obowiązkowe, więc na każdej innej fakturze ma wartość „2”.
+- **Nabywca zostaje w `Podmiot2`.** Nie wpisuje się dodatkowo w `Podmiot3` z rolą 5 („Wystawca faktury”). Schemat mówi wprost, że ta rola „nie dotyczy przypadku, gdy wystawcą faktury jest nabywca”.
+
+<Source
+  href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+  label="Schemat FA(3), P_17 i TRolaPodmiotu3"
+/>
+
+Samofakturowanie nie korzysta też z elementu `PodmiotUpowazniony`. Ten element jest dla organu egzekucyjnego, komornika i przedstawiciela podatkowego. <Source href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf" label="MF, broszura FA(3), Podmiot3 i PodmiotUpowazniony" />
+
+Jeśli masz już plik XML i chcesz sprawdzić, czy `P_17` nie kłóci się z `Podmiot3`, wrzuć go do [walidatora](/validator).
+
+## Jak sprzedawca znajdzie taką fakturę?
+
+Faktura trafia do KSeF pod NIP-em sprzedawcy, bo to on jest w `Podmiot1`. KSeF zapisuje w jej danych, że wystawiono ją w trybie samofakturowania, i pozwala wyszukiwać faktury po tej cesze. Dokumentacja API nie mówi jednym zdaniem, gdzie sprzedawca widzi faktury od nabywcy, ale wynika to z wyszukiwania według roli na fakturze: „Podmiot 1” to sprzedawca. Jak przeglądać i pobierać faktury w KSeF, opisujemy w [poradniku o odbieraniu faktur](/guides/jak-odebrac-fakture-ksef).
+
+<Info>
+  **Dla programistów.** Metadane faktury zawsze mają pole `isSelfInvoicing`, a filtr wyszukiwania
+  pozwala zawęzić wyniki do faktur z samofakturowania. Sprzedawca szuka ich z `subjectType` =
+  `Subject1`. Przy synchronizacji przyrostowej MF zaleca przejść po wszystkich typach podmiotu, bo
+  firma występuje na fakturach w różnych rolach.{" "}
+  <Source
+    href="https://github.com/CIRFMF/ksef-api/blob/main/pobieranie-faktur/przyrostowe-pobieranie-faktur.md"
+    label="MF, dokumentacja API: Przyrostowe pobieranie faktur"
+  />{" "}
+  Uprawnienie ma typ `SelfInvoicing`; nadaje się je przez `POST /permissions/authorizations/grants`,
+  odbiera przez `DELETE /permissions/authorizations/grants/{permissionId}`. Wymaga to
+  `CredentialsManage` po stronie sprzedawcy.{" "}
+  <Source
+    href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
+    label="KSeF OpenAPI (TE 2.9.0)"
+  />
+</Info>
+
+## Kto pilnuje numeracji faktur?
+
+KSeF wykrywa duplikaty po trzech danych: NIP sprzedawcy, rodzaj faktury i numer faktury (`P_2`). Fakturę z powtórzonym numerem KSeF odrzuci z błędem 440. Dokumentacja dodaje, że gdy za ten sam podmiot wystawia kilka jednostek albo „inne uprawnione podmioty”, muszą one uzgodnić zasady numeracji. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md" label="MF, dokumentacja API: Weryfikacja faktury" />
+
+Faktury nabywcy liczą się więc do tej samej puli numerów co twoje własne faktury tego samego rodzaju, bo stoi na nich twój NIP. Czy zdanie dokumentacji o „innych uprawnionych podmiotach” obejmuje nabywcę przy samofakturowaniu, dokumentacja nie mówi wprost. W praktyce, jeśli sam też wystawiasz faktury, uzgodnij z nabywcą osobną serię, np. z jego prefiksem.
+
+## Co się zmienia, gdy nabywca jest z innego kraju UE?
+
+Firma z UE też może wystawiać faktury w trybie samofakturowania w imieniu polskiego sprzedawcy. Działa wtedy w kontekście złożonym: NIP sprzedawcy plus numer VAT UE nabywcy, np. `5265877635-ATU12345678`. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/auth/context-identifier-nip-vat-ue.md" label="MF, dokumentacja API: kontekst NIP-VAT UE" />
+
+Taki kontekst powstaje, gdy polski sprzedawca (właściciel albo osoba z prawem zarządzania uprawnieniami) nada uprawnienie administratora podmiotu unijnego. Administrator nadaje potem uprawnienia swoim przedstawicielom, wskazanym odciskiem certyfikatu kwalifikowanego. Dla firm z UE dokumentacja opisuje tylko ten mechanizm. Zwykłe uprawnienie do samofakturowania wskazuje nabywcę NIP-em, nie numerem VAT UE. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/przeglad-kluczowych-zmian-ksef-api-2-0.md" label="MF, Przegląd kluczowych zmian KSeF 2.0" />
+
+Faktury VAT RR dla rolnika ryczałtowego mają osobne uprawnienie (`RRInvoicing`) i osobną strukturę FA_RR. Tu ich nie omawiamy.
+
+## Czego nie rozstrzygają przeczytane przez nas dokumenty MF?
+
+Poniższych spraw nie rozstrzygają ani dokumentacja API, ani część II podręcznika KSeF 2.0. Samofakturowanie MF opisuje w części III, do której część II odsyła; tej części jeszcze nie przeanalizowaliśmy, więc niektóre z tych spraw mogą być tam wyjaśnione.
+
+**Kto wystawia korektę.** Podręcznik mówi, że jedyną drogą korekty jest faktura korygująca „wystawiona przez podatnika – wystawcę faktury pierwotnej”. Przy samofakturowaniu podatnikiem jest sprzedawca, a wystawcą nabywca, więc z tego zdania nie wynika, który z nich koryguje. Noty korygującej nie ma od 1 lutego 2026 r. Jak wygląda sama korekta w FA(3), opisujemy w [tekście o fakturze korygującej](/blog/faktura-korygujaca-ksef).
+
+**Jak sprzedawca zatwierdza fakturę.** KSeF nie ma opcji zatwierdzania ani odrzucania faktur przez nabywcę. Żadne źródło nie opisuje też kroku, w którym sprzedawca akceptuje fakturę wystawioną za niego. MF nie wyjaśniło, czy nadanie uprawnienia w KSeF ma znaczenie dla warunków z art. 106d ust. 1. <Source href="https://ksef.podatki.gov.pl/pliki-do-pobrania-ksef-20/" label="MF, Podręcznik KSeF 2.0, cz. II, pkt 1.6.2 i 6.3" />
+
+**Limit 10 000 zł do końca 2026 r.** Art. 145m pozwala wystawiać faktury poza KSeF, jeśli sprzedaż udokumentowana nimi w miesiącu nie przekracza 10 000 zł z podatkiem. Przepis nie wspomina o samofakturowaniu. Źródła nie przesądzają, czy faktury od nabywcy liczą się do twojego limitu ani czy nabywca może z niego korzystać. Limit wygasa 31 grudnia 2026 r., co opisujemy w [tekście o końcu limitu](/blog/koniec-limitu-10000-zl).
+
+**Tryb offline.** Dokumentacja nie robi wyjątku dla samofakturowania. Kod QR weryfikujący wystawcę (KOD II) zawiera kontekst nabywcy i NIP sprzedawcy, a KSeF sprawdza, czy ten kontekst może wystawiać za sprzedawcę. Żadne źródło nie mówi jednak wprost, że nabywca może wystawić taką fakturę w trybie offline24.
+
+Jeśli zaczynasz współpracę w samofakturowaniu, zacznij od nadania uprawnienia nabywcy w Aplikacji Podatnika i sprawdź je potem na liście nadanych uprawnień.
