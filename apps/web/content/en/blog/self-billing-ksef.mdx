@@ -1,0 +1,137 @@
+---
+title: "Self-billing in KSeF requires a permission"
+description: "The buyer issues the invoice for the seller and sends it to KSeF once the seller grants a self-billing permission. Who does what, and what MF leaves open."
+date: 2026-11-12
+section: blog
+locale: en
+slug: "self-billing-ksef"
+topic: "invoicing"
+translationOf: "samofakturowanie-ksef"
+tags: ["KSeF", "Invoice", "FA(3)"]
+sources:
+  - label: "KSeF 2.0 API documentation: Permissions (MF)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/uprawnienia.md"
+  - label: "KSeF 2.0 API documentation: Overview of key changes (self-billing by EU entities)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/przeglad-kluczowych-zmian-ksef-api-2-0.md"
+  - label: "KSeF 2.0 API documentation: NIP-VAT UE composite context"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/auth/context-identifier-nip-vat-ue.md"
+  - label: "KSeF 2.0 API documentation: Incremental invoice retrieval"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/pobieranie-faktur/przyrostowe-pobieranie-faktur.md"
+  - label: "KSeF 2.0 API documentation: QR codes (KOD II)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/kody-qr.md"
+  - label: "KSeF 2.0 API documentation: Technical correction of an offline invoice"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/offline/korekta-techniczna.md"
+  - label: "KSeF 2.0 API documentation: Invoice verification (number uniqueness)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md"
+  - label: "KSeF 2.0 OpenAPI specification (isSelfInvoicing field)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
+  - label: "FA(3) schema: Adnotacje/P_17 and Podmiot3/Rola"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+  - label: "MF: FA(3) logical structure information sheet"
+    url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "MF: KSeF 2.0 Manual, Part II (6 August 2026), point 1.6.2"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "MF: KSeF 2.0 Manual, Part III (6 November 2026), point 2 (self-billing)"
+    url: "https://ksef.podatki.gov.pl/media/pr2dfos2/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06112026.pdf"
+  - label: "Regulation on KSeF exclusions (Dz.U. 2025 poz. 1740), § 2 pkt 5 and 6, § 3"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2025/1740/text.pdf"
+  - label: "Polish VAT Act, consolidated text (Dz.U. 2026 poz. 1263), Art. 106d, 145m"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+translations:
+  pl: "samofakturowanie-ksef"
+  en: "self-billing-ksef"
+---
+
+With self-billing, the buyer issues the invoice on the seller's behalf and sends it to KSeF (Krajowy System e-Faktur, Poland's National e-Invoicing System) from its own context, under its own NIP, once the seller has granted it a self-billing permission in KSeF. In the FA(3) file the seller stays in `Podmiot1`, the buyer in `Podmiot2`, and the `P_17` field is set to "1".
+
+As of 12 November 2026.
+
+Typical cases are a large customer settling with many suppliers, or a platform settling with its sellers. If you run a JDG (jednoosobowa działalność gospodarcza, a Polish sole trader business) and your customer issues your invoices for you, the sections below show what you need to do on your side. If you are an accountant, you will also find what the MF documents we have read leave unresolved.
+
+## What does the seller have to do?
+
+The seller grants the buyer a self-billing permission in KSeF, identifying the buyer by its NIP. The permission lets the buyer issue invoices "in its own context on behalf of the granting entity", that is on your behalf, without logging in to your account. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/uprawnienia.md" label="MF, API documentation: Permissions" />
+
+Only the business owner, or a person with the right to manage permissions, can grant it. **This permission cannot be granted indirectly**, so an accounting office cannot pass it on as part of the access you gave it. How granting permissions works in Aplikacja Podatnika (the MF's web app for taxpayers) is covered in our [guide to giving your accountant access](/en/guides/ksef-accountant-access).
+
+The permission does not expire on its own. It stays active until you revoke it, and you can revoke it at any time. Revocation takes effect immediately: from that moment the buyer can no longer send invoices to KSeF on your behalf. Both sides can see these permissions listed in KSeF, the seller as granted and the buyer as received.
+
+The KSeF permission is the technical side. The legal basis for self-billing is Art. 106d ust. 1 of the Polish VAT Act: the buyer may issue invoices in the seller's name and on its behalf if the parties have first concluded an agreement that sets out a procedure for the seller to approve each invoice. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="Polish VAT Act, Art. 106d ust. 1" />
+
+## What does the buyer do?
+
+The buyer logs in to KSeF in its own context, issues the invoice with the seller in `Podmiot1` and sends it. On submission KSeF checks whether that context is allowed to issue invoices for the seller's NIP; the documentation names self-billing explicitly here. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/uprawnienia.md" label="MF, API documentation: Permissions" />
+
+Without the permission, KSeF rejects the invoice. A technical correction does not help in that case. That procedure lets you resend an offline invoice rejected for technical reasons, but MF states that it does not cover "situations involving missing permissions of entities on the invoice (e.g. self-billing […])". In practice the seller grants the permission and the buyer sends the invoice again. Granting is not instant (KSeF processes it asynchronously), so check that the permission is active before resending. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/offline/korekta-techniczna.md" label="MF, API documentation: Technical correction" />
+
+## How do you fill in a self-billed invoice?
+
+The structure is the same as for a regular invoice, with two differences:
+
+- `Adnotacje/P_17` = "1". This is the "self-billing" annotation for invoices under Art. 106d ust. 1. The field is mandatory, so on every other invoice it is "2".
+- **The buyer stays in `Podmiot2`.** It is not added again in `Podmiot3` with role 5 ("Invoice issuer"). The schema says plainly that this role "does not apply where the invoice issuer is the buyer".
+
+<Source
+  href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+  label="FA(3) schema, P_17 and TRolaPodmiotu3"
+/>
+
+Self-billing does not use the `PodmiotUpowazniony` element either. That element is meant for an enforcement authority, a bailiff and a tax representative. <Source href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf" label="MF, FA(3) information sheet, Podmiot3 and PodmiotUpowazniony" />
+
+If you already have the XML file and want to check that `P_17` does not conflict with `Podmiot3`, drop it into the [validator](/en/validator).
+
+## How does the seller find the invoice?
+
+The invoice lands in KSeF under the seller's NIP, because the seller is in `Podmiot1`. KSeF records in the invoice data that it was issued in self-billing mode and lets you search invoices by that attribute. The seller sees it because it is a party to the transaction, so the buyer does not have to pass on the KSeF number. Of this seller's invoices, the buyer sees only those it issued itself and those the seller issued to it. <Source href="https://ksef.podatki.gov.pl/media/pr2dfos2/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06112026.pdf" label="MF, KSeF 2.0 Manual, Part III, point 2.4" /> How to browse and download invoices in KSeF is covered in our [guide to receiving invoices](/en/guides/receiving-invoices-in-ksef).
+
+<Info>
+  **For developers.** Invoice metadata always includes the `isSelfInvoicing` field, and the search
+  filter lets you narrow results to self-billed invoices. The seller searches for them with
+  `subjectType` = `Subject1`. For incremental synchronisation MF recommends iterating over all
+  subject types, because a company appears on invoices in different roles.{" "}
+  <Source
+    href="https://github.com/CIRFMF/ksef-api/blob/main/pobieranie-faktur/przyrostowe-pobieranie-faktur.md"
+    label="MF, API documentation: Incremental invoice retrieval"
+  />{" "}
+  The permission type is `SelfInvoicing`; you grant it with `POST
+  /permissions/authorizations/grants` and revoke it with `DELETE /permissions/authorizations/grants/
+  {permissionId}`. This requires `CredentialsManage` on the seller's side.{" "}
+  <Source
+    href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
+    label="KSeF OpenAPI (TE 2.9.0)"
+  />
+</Info>
+
+## Who keeps track of invoice numbering?
+
+KSeF detects duplicates using three pieces of data: the seller's NIP, the invoice type and the invoice number (`P_2`). It rejects an invoice with a repeated number with error 440. The documentation adds that when several units or "other authorised entities" issue invoices for the same entity, they must agree on numbering rules. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md" label="MF, API documentation: Invoice verification" />
+
+So the buyer's invoices draw on the same pool of numbers as your own invoices of the same type, because they carry your NIP. The documentation does not say outright whether "other authorised entities" includes a self-billing buyer. In practice, if you also issue invoices yourself, agree a separate series with the buyer, for example with its own prefix.
+
+## What changes when the buyer is in another EU country?
+
+An EU company can also issue self-billed invoices on behalf of a Polish seller. It then works in a composite context: the seller's NIP plus the buyer's EU VAT number, for example `5265877635-ATU12345678`. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/auth/context-identifier-nip-vat-ue.md" label="MF, API documentation: NIP-VAT UE context" />
+
+This is an option, not an obligation. When the buyer does not use a Polish NIP for the transaction, self-billed invoices do not have to go through KSeF. They may be issued there voluntarily only for an intra-Community supply of goods to a buyer with an EU VAT number. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2025/1740/text.pdf" label="Regulation on KSeF exclusions (Dz.U. 2025 poz. 1740), § 2 pkt 5 and § 3" /> In the other such cases, for example an export to Switzerland, the invoice must be issued outside KSeF and sending it to KSeF voluntarily is not allowed. <Source href="https://ksef.podatki.gov.pl/media/pr2dfos2/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06112026.pdf" label="MF, KSeF 2.0 Manual, Part III, point 2.5.1" />
+
+That context is created when the Polish seller (the owner or a person with the right to manage permissions) grants the EU entity an administrator permission. The administrator then grants permissions to its representatives, identified by the fingerprint of their qualified certificate. For EU companies this is the only mechanism the documentation describes. The regular self-billing permission identifies the buyer by NIP, not by EU VAT number. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/przeglad-kluczowych-zmian-ksef-api-2-0.md" label="MF, Overview of key changes in KSeF 2.0" />
+
+VAT RR invoices for flat-rate farmers (rolnik ryczałtowy) have a separate permission (`RRInvoicing`) and a separate FA_RR structure. We do not cover them here.
+
+## Who approves the invoice and who issues corrections?
+
+The agreement between the parties settles both, not KSeF. The seller should confirm the invoice just before it enters legal circulation, that is before it is sent to KSeF. Approval can be active, for example an email with comments or one saying there are none. It can also be passive: no comments within the agreed time means consent to the content of the XML file. The approval process itself does not take place in KSeF.
+
+The agreement also decides who issues corrective invoices. MF gives two example models: the buyer issues the original invoices and the seller the corrections, or the buyer issues both. The KSeF permission cannot be limited, for example to original invoices only; such a limit can come only from the agreement. Granting the permission also does not mean that every invoice has to be self-billed. <Source href="https://ksef.podatki.gov.pl/media/pr2dfos2/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06112026.pdf" label="MF, KSeF 2.0 Manual, Part III, point 2.1" />
+
+Corrective notes (nota korygująca) no longer exist since 1 February 2026. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="MF, KSeF 2.0 Manual, Part II, point 1.6.2" /> How the correction itself looks in FA(3) is covered in our [post on corrective invoices](/en/blog/corrective-invoice-ksef).
+
+## What do the MF documents we have read leave open?
+
+Neither the API documentation nor Parts II and III of the KSeF 2.0 Manual settle these two points.
+
+**The 10,000 PLN limit until the end of 2026.** Art. 145m allows invoices outside KSeF as long as the monthly sales they document do not exceed 10,000 PLN including tax. The provision does not mention self-billing. The sources do not settle whether invoices from the buyer count towards your limit, or whether the buyer can use it. The limit expires on 31 December 2026, as we explain in our [post on the end of the limit](/en/blog/end-of-10000-pln-limit).
+
+**Offline mode.** The documentation makes no exception for self-billing. The QR code that verifies the issuer (KOD II) contains the buyer's context and the seller's NIP, and KSeF checks whether that context may issue invoices for the seller. No source says explicitly, though, that the buyer may issue such an invoice in offline24 mode.
+
+If you are starting a self-billing arrangement, begin by granting the buyer the permission in Aplikacja Podatnika, then confirm it on the list of granted permissions.
