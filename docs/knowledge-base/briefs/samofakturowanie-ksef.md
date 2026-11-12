@@ -33,6 +33,38 @@ Krystyna (księgowa, obsługuje klientów, którzy wystawiają lub dostają fakt
   `connect_rejected`), gov.pl, crd.gov.pl, legislacja.rcl.gov.pl. **Nothing in this brief comes from
   Podręcznik KSeF 2.0 cz. III**, which is where MF describes self-billing (see section 5).
 
+**Local verification 2026-11-12 (supersedes the "blocked" notes below where they conflict):**
+
+- **Art. 106d ust. 1** (Dz.U. 2026 poz. 1263, read live from
+  https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf): „Podmiot, o którym mowa w art. 106b ust.
+  1 pkt 1, nabywający towary lub usługi od podatnika może wystawiać w imieniu i na rzecz tego
+  podatnika faktury […] – jeżeli ten podmiot i ten podatnik wcześniej zawarli umowę w sprawie
+  wystawiania faktur w imieniu i na rzecz tego podatnika, w której została określona procedura
+  zatwierdzania poszczególnych faktur przez podatnika dokonującego tych czynności." Art. 106e ust. 1
+  pkt 17: „w przypadku faktur, o których mowa w art. 106d ust. 1 – wyraz „samofakturowanie"". Art.
+  145m ust. 1 confirmed verbatim (1.04–31.12.2026, ≤ 10 000 zł incl. tax, monthly).
+- **Podręcznik KSeF 2.0 cz. III (06.11.2026)**, pkt 2 „Samofakturowanie w KSeF" (pp. 38–55),
+  https://ksef.podatki.gov.pl/media/pr2dfos2/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06112026.pdf
+  (replaces the 06.08.2026 edition on the downloads page). It settles open questions 1, 2 and 5:
+  - pkt 2.1: the agreement decides who issues corrections; MF's two example models are buyer issues
+    originals + seller corrections, or buyer issues both. KSeF cannot limit `SelfInvoicing` to
+    originals; only the agreement can. Approval „powinno nastąpić bezpośrednio przed jej
+    wprowadzeniem do obrotu prawnego", „nie jest on realizowany w KSeF", active or passive
+    („milcząca zgoda").
+  - pkt 2.2.2: the buyer's own `InvoiceWrite` grantees (employees, biuro rachunkowe, incl. indirect
+    grants) can issue self-billed invoices on the buyer's behalf.
+  - pkt 2.4: the seller sees the invoices as Podmiot1; the buyer need not pass on the KSeF number;
+    the buyer sees only that seller's invoices it issued itself or that the seller issued to it.
+  - pkt 2.5.1 with Dz.U. 2025 poz. 1740 § 2 pkt 5–6 and § 3 (read live from
+    https://api.sejm.gov.pl/eli/acts/DU/2025/1740/text.pdf): self-billed invoices are outside the
+    KSeF obligation when the buyer (pkt 5) or the seller (pkt 6) is not identified by NIP for the
+    transaction; voluntary KSeF issue only for WDT with an EU VAT number buyer (§ 3); otherwise
+    (e.g. export to Switzerland) „nie jest dopuszczalne dobrowolne jej wystawienie przy użyciu
+    systemu".
+  - pkt 2.6: EU-buyer self-billing via the EU administrator grant and the NIP-VAT UE context.
+  - Not addressed in cz. III: art. 145m and self-billing (open question 3), offline24 by a
+    self-billing buyer (open question 4).
+
 **Target query:** „samofakturowanie KSeF"
 
 ## Answer in two sentences

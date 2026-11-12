@@ -29,10 +29,14 @@ sources:
     url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
   - label: "MF: FA(3) logical structure information sheet"
     url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
-  - label: "MF: KSeF 2.0 Manual, Part II (6 August 2026), points 1.6, 1.6.2, 2.12, 6.3"
-    url: "https://ksef.podatki.gov.pl/pliki-do-pobrania-ksef-20/"
+  - label: "MF: KSeF 2.0 Manual, Part II (6 August 2026), point 1.6.2"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "MF: KSeF 2.0 Manual, Part III (6 November 2026), point 2 (self-billing)"
+    url: "https://ksef.podatki.gov.pl/media/pr2dfos2/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06112026.pdf"
+  - label: "Regulation on KSeF exclusions (Dz.U. 2025 poz. 1740), § 2 pkt 5 and 6, § 3"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2025/1740/text.pdf"
   - label: "Polish VAT Act, consolidated text (Dz.U. 2026 poz. 1263), Art. 106d, 145m"
-    url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
 translations:
   pl: "samofakturowanie-ksef"
   en: "self-billing-ksef"
@@ -52,7 +56,7 @@ Only the business owner, or a person with the right to manage permissions, can g
 
 The permission does not expire on its own. It stays active until you revoke it, and you can revoke it at any time. Revocation takes effect immediately: from that moment the buyer can no longer send invoices to KSeF on your behalf. Both sides can see these permissions listed in KSeF, the seller as granted and the buyer as received.
 
-The KSeF permission is the technical side. The legal basis for self-billing is Art. 106d ust. 1 of the Polish VAT Act, which the description of the `P_17` field in the FA(3) schema refers to. Agree the statutory conditions for self-billing with your accountant before the buyer issues the first invoice.
+The KSeF permission is the technical side. The legal basis for self-billing is Art. 106d ust. 1 of the Polish VAT Act: the buyer may issue invoices in the seller's name and on its behalf if the parties have first concluded an agreement that sets out a procedure for the seller to approve each invoice. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="Polish VAT Act, Art. 106d ust. 1" />
 
 ## What does the buyer do?
 
@@ -78,7 +82,7 @@ If you already have the XML file and want to check that `P_17` does not conflict
 
 ## How does the seller find the invoice?
 
-The invoice lands in KSeF under the seller's NIP, because the seller is in `Podmiot1`. KSeF records in the invoice data that it was issued in self-billing mode and lets you search invoices by that attribute. The API documentation does not say in one sentence where the seller sees invoices from the buyer, but it follows from searching by role on the invoice: "Podmiot 1" is the seller. How to browse and download invoices in KSeF is covered in our [guide to receiving invoices](/en/guides/receiving-invoices-in-ksef).
+The invoice lands in KSeF under the seller's NIP, because the seller is in `Podmiot1`. KSeF records in the invoice data that it was issued in self-billing mode and lets you search invoices by that attribute. The seller sees it because it is a party to the transaction, so the buyer does not have to pass on the KSeF number. Of this seller's invoices, the buyer sees only those it issued itself and those the seller issued to it. <Source href="https://ksef.podatki.gov.pl/media/pr2dfos2/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06112026.pdf" label="MF, KSeF 2.0 Manual, Part III, point 2.4" /> How to browse and download invoices in KSeF is covered in our [guide to receiving invoices](/en/guides/receiving-invoices-in-ksef).
 
 <Info>
   **For developers.** Invoice metadata always includes the `isSelfInvoicing` field, and the search
@@ -108,17 +112,23 @@ So the buyer's invoices draw on the same pool of numbers as your own invoices of
 
 An EU company can also issue self-billed invoices on behalf of a Polish seller. It then works in a composite context: the seller's NIP plus the buyer's EU VAT number, for example `5265877635-ATU12345678`. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/auth/context-identifier-nip-vat-ue.md" label="MF, API documentation: NIP-VAT UE context" />
 
+This is an option, not an obligation. When the buyer does not use a Polish NIP for the transaction, self-billed invoices do not have to go through KSeF. They may be issued there voluntarily only for an intra-Community supply of goods to a buyer with an EU VAT number. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2025/1740/text.pdf" label="Regulation on KSeF exclusions (Dz.U. 2025 poz. 1740), § 2 pkt 5 and § 3" /> In the other such cases, for example an export to Switzerland, the invoice must be issued outside KSeF and sending it to KSeF voluntarily is not allowed. <Source href="https://ksef.podatki.gov.pl/media/pr2dfos2/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06112026.pdf" label="MF, KSeF 2.0 Manual, Part III, point 2.5.1" />
+
 That context is created when the Polish seller (the owner or a person with the right to manage permissions) grants the EU entity an administrator permission. The administrator then grants permissions to its representatives, identified by the fingerprint of their qualified certificate. For EU companies this is the only mechanism the documentation describes. The regular self-billing permission identifies the buyer by NIP, not by EU VAT number. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/przeglad-kluczowych-zmian-ksef-api-2-0.md" label="MF, Overview of key changes in KSeF 2.0" />
 
 VAT RR invoices for flat-rate farmers (rolnik ryczałtowy) have a separate permission (`RRInvoicing`) and a separate FA_RR structure. We do not cover them here.
 
+## Who approves the invoice and who issues corrections?
+
+The agreement between the parties settles both, not KSeF. The seller should confirm the invoice just before it enters legal circulation, that is before it is sent to KSeF. Approval can be active, for example an email with comments or one saying there are none. It can also be passive: no comments within the agreed time means consent to the content of the XML file. The approval process itself does not take place in KSeF.
+
+The agreement also decides who issues corrective invoices. MF gives two example models: the buyer issues the original invoices and the seller the corrections, or the buyer issues both. The KSeF permission cannot be limited, for example to original invoices only; such a limit can come only from the agreement. Granting the permission also does not mean that every invoice has to be self-billed. <Source href="https://ksef.podatki.gov.pl/media/pr2dfos2/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06112026.pdf" label="MF, KSeF 2.0 Manual, Part III, point 2.1" />
+
+Corrective notes (nota korygująca) no longer exist since 1 February 2026. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="MF, KSeF 2.0 Manual, Part II, point 1.6.2" /> How the correction itself looks in FA(3) is covered in our [post on corrective invoices](/en/blog/corrective-invoice-ksef).
+
 ## What do the MF documents we have read leave open?
 
-Neither the API documentation nor Part II of the KSeF 2.0 Manual settles the points below. MF describes self-billing in Part III, which Part II refers to. We have not analysed that part yet, so some of these points may be explained there.
-
-**Who issues the correction.** The manual says the only way to correct an invoice is a corrective invoice "issued by the taxpayer who issued the original invoice". With self-billing the taxpayer is the seller and the issuer is the buyer, so that sentence does not tell you which of them corrects. Corrective notes (nota korygująca) no longer exist since 1 February 2026. How the correction itself looks in FA(3) is covered in our [post on corrective invoices](/en/blog/corrective-invoice-ksef).
-
-**How the seller approves the invoice.** KSeF has no option for the buyer to accept or reject invoices. No source describes a step in which the seller accepts an invoice issued on its behalf either. MF has not explained whether granting the permission in KSeF matters for the conditions in Art. 106d ust. 1. <Source href="https://ksef.podatki.gov.pl/pliki-do-pobrania-ksef-20/" label="MF, KSeF 2.0 Manual, Part II, points 1.6.2 and 6.3" />
+Neither the API documentation nor Parts II and III of the KSeF 2.0 Manual settle these two points.
 
 **The 10,000 PLN limit until the end of 2026.** Art. 145m allows invoices outside KSeF as long as the monthly sales they document do not exceed 10,000 PLN including tax. The provision does not mention self-billing. The sources do not settle whether invoices from the buyer count towards your limit, or whether the buyer can use it. The limit expires on 31 December 2026, as we explain in our [post on the end of the limit](/en/blog/end-of-10000-pln-limit).
 

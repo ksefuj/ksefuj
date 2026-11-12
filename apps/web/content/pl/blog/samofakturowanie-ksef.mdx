@@ -28,10 +28,14 @@ sources:
     url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
   - label: "MF: Broszura informacyjna dotycząca struktury logicznej FA(3)"
     url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
-  - label: "MF: Podręcznik KSeF 2.0, cz. II (06.08.2026), pkt 1.6, 1.6.2, 2.12, 6.3"
-    url: "https://ksef.podatki.gov.pl/pliki-do-pobrania-ksef-20/"
+  - label: "MF: Podręcznik KSeF 2.0, cz. II (06.08.2026), pkt 1.6.2"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "MF: Podręcznik KSeF 2.0, cz. III (06.11.2026), pkt 2 (samofakturowanie)"
+    url: "https://ksef.podatki.gov.pl/media/pr2dfos2/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06112026.pdf"
+  - label: "Rozporządzenie w sprawie wyłączeń z KSeF (Dz.U. 2025 poz. 1740), § 2 pkt 5 i 6, § 3"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2025/1740/text.pdf"
   - label: "Ustawa o VAT, tekst jednolity (Dz.U. 2026 poz. 1263), art. 106d, 145m"
-    url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
 translations:
   pl: "samofakturowanie-ksef"
   en: "self-billing-ksef"
@@ -55,7 +59,7 @@ Nadać je może tylko właściciel firmy albo osoba z uprawnieniem do zarządzan
 
 Uprawnienie nie wygasa samo. Działa, dopóki go nie odbierzesz, a odebrać możesz je w każdej chwili. Skutek jest natychmiastowy: od tej chwili nabywca nie wyśle już do KSeF faktury w twoim imieniu. Obie strony widzą w KSeF listę takich uprawnień, sprzedawca jako nadane, nabywca jako otrzymane.
 
-Uprawnienie w KSeF to strona techniczna. Podstawą samofakturowania jest art. 106d ust. 1 ustawy o VAT, do którego odsyła opis pola `P_17` w schemacie FA(3). Ustawowe warunki samofakturowania ustal z księgową, zanim nabywca wystawi pierwszą fakturę.
+Uprawnienie w KSeF to strona techniczna. Podstawą samofakturowania jest art. 106d ust. 1 ustawy o VAT: nabywca może wystawiać faktury w imieniu i na rzecz sprzedawcy, jeśli strony wcześniej zawarły umowę, która określa procedurę zatwierdzania poszczególnych faktur przez sprzedawcę. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="Ustawa o VAT, art. 106d ust. 1" />
 
 ## Co robi nabywca?
 
@@ -81,7 +85,7 @@ Jeśli masz już plik XML i chcesz sprawdzić, czy `P_17` nie kłóci się z `Po
 
 ## Jak sprzedawca znajdzie taką fakturę?
 
-Faktura trafia do KSeF pod NIP-em sprzedawcy, bo to on jest w `Podmiot1`. KSeF zapisuje w jej danych, że wystawiono ją w trybie samofakturowania, i pozwala wyszukiwać faktury po tej cesze. Dokumentacja API nie mówi jednym zdaniem, gdzie sprzedawca widzi faktury od nabywcy, ale wynika to z wyszukiwania według roli na fakturze: „Podmiot 1” to sprzedawca. Jak przeglądać i pobierać faktury w KSeF, opisujemy w [poradniku o odbieraniu faktur](/guides/jak-odebrac-fakture-ksef).
+Faktura trafia do KSeF pod NIP-em sprzedawcy, bo to on jest w `Podmiot1`. KSeF zapisuje w jej danych, że wystawiono ją w trybie samofakturowania, i pozwala wyszukiwać faktury po tej cesze. Sprzedawca widzi ją, bo jest stroną transakcji, więc nabywca nie musi przekazywać mu numeru KSeF. Nabywca widzi z faktur tego sprzedawcy tylko te, które sam wystawił, i te, które sprzedawca wystawił dla niego. <Source href="https://ksef.podatki.gov.pl/media/pr2dfos2/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06112026.pdf" label="MF, Podręcznik KSeF 2.0, cz. III, pkt 2.4" /> Jak przeglądać i pobierać faktury w KSeF, opisujemy w [poradniku o odbieraniu faktur](/guides/jak-odebrac-fakture-ksef).
 
 <Info>
   **Dla programistów.** Metadane faktury zawsze mają pole `isSelfInvoicing`, a filtr wyszukiwania
@@ -111,17 +115,23 @@ Faktury nabywcy liczą się więc do tej samej puli numerów co twoje własne fa
 
 Firma z UE też może wystawiać faktury w trybie samofakturowania w imieniu polskiego sprzedawcy. Działa wtedy w kontekście złożonym: NIP sprzedawcy plus numer VAT UE nabywcy, np. `5265877635-ATU12345678`. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/auth/context-identifier-nip-vat-ue.md" label="MF, dokumentacja API: kontekst NIP-VAT UE" />
 
+To możliwość, nie obowiązek. Gdy nabywca nie posługuje się przy danej transakcji polskim NIP-em, faktury z samofakturowania nie muszą trafiać do KSeF. Dobrowolnie można je tam wystawić tylko przy wewnątrzwspólnotowej dostawie towarów dla nabywcy z numerem VAT UE. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2025/1740/text.pdf" label="Rozporządzenie w sprawie wyłączeń z KSeF (Dz.U. 2025 poz. 1740), § 2 pkt 5 i § 3" /> W pozostałych takich przypadkach, np. przy eksporcie do Szwajcarii, fakturę trzeba wystawić poza KSeF, a dobrowolna wysyłka do KSeF nie jest dopuszczalna. <Source href="https://ksef.podatki.gov.pl/media/pr2dfos2/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06112026.pdf" label="MF, Podręcznik KSeF 2.0, cz. III, pkt 2.5.1" />
+
 Taki kontekst powstaje, gdy polski sprzedawca (właściciel albo osoba z prawem zarządzania uprawnieniami) nada uprawnienie administratora podmiotu unijnego. Administrator nadaje potem uprawnienia swoim przedstawicielom, wskazanym odciskiem certyfikatu kwalifikowanego. Dla firm z UE dokumentacja opisuje tylko ten mechanizm. Zwykłe uprawnienie do samofakturowania wskazuje nabywcę NIP-em, nie numerem VAT UE. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/przeglad-kluczowych-zmian-ksef-api-2-0.md" label="MF, Przegląd kluczowych zmian KSeF 2.0" />
 
 Faktury VAT RR dla rolnika ryczałtowego mają osobne uprawnienie (`RRInvoicing`) i osobną strukturę FA_RR. Tu ich nie omawiamy.
 
+## Kto zatwierdza fakturę i kto wystawia korektę?
+
+Oba te kroki ustala umowa między stronami, nie KSeF. Sprzedawca powinien potwierdzić fakturę tuż przed tym, jak trafi ona do obrotu, czyli przed wysyłką do KSeF. Akceptacja może być czynna, np. mail z uwagami albo informacja, że uwag nie ma. Może też być bierna: brak uwag w umówionym terminie oznacza zgodę na treść pliku XML. Sam proces akceptacji nie odbywa się w KSeF.
+
+Umowa rozstrzyga też, kto wystawia faktury korygujące. MF podaje dwa przykładowe modele: nabywca wystawia faktury pierwotne, a sprzedawca korekty, albo nabywca wystawia jedne i drugie. Uprawnienia w KSeF nie da się ograniczyć np. tylko do faktur pierwotnych; takie ograniczenie może wynikać wyłącznie z umowy. Nadanie uprawnienia nie oznacza też, że wszystkie faktury trzeba wystawiać w samofakturowaniu. <Source href="https://ksef.podatki.gov.pl/media/pr2dfos2/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06112026.pdf" label="MF, Podręcznik KSeF 2.0, cz. III, pkt 2.1" />
+
+Noty korygującej nie ma od 1 lutego 2026 r. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="MF, Podręcznik KSeF 2.0, cz. II, pkt 1.6.2" /> Jak wygląda sama korekta w FA(3), opisujemy w [tekście o fakturze korygującej](/blog/faktura-korygujaca-ksef).
+
 ## Czego nie rozstrzygają przeczytane przez nas dokumenty MF?
 
-Poniższych spraw nie rozstrzygają ani dokumentacja API, ani część II podręcznika KSeF 2.0. Samofakturowanie MF opisuje w części III, do której część II odsyła; tej części jeszcze nie przeanalizowaliśmy, więc niektóre z tych spraw mogą być tam wyjaśnione.
-
-**Kto wystawia korektę.** Podręcznik mówi, że jedyną drogą korekty jest faktura korygująca „wystawiona przez podatnika – wystawcę faktury pierwotnej”. Przy samofakturowaniu podatnikiem jest sprzedawca, a wystawcą nabywca, więc z tego zdania nie wynika, który z nich koryguje. Noty korygującej nie ma od 1 lutego 2026 r. Jak wygląda sama korekta w FA(3), opisujemy w [tekście o fakturze korygującej](/blog/faktura-korygujaca-ksef).
-
-**Jak sprzedawca zatwierdza fakturę.** KSeF nie ma opcji zatwierdzania ani odrzucania faktur przez nabywcę. Żadne źródło nie opisuje też kroku, w którym sprzedawca akceptuje fakturę wystawioną za niego. MF nie wyjaśniło, czy nadanie uprawnienia w KSeF ma znaczenie dla warunków z art. 106d ust. 1. <Source href="https://ksef.podatki.gov.pl/pliki-do-pobrania-ksef-20/" label="MF, Podręcznik KSeF 2.0, cz. II, pkt 1.6.2 i 6.3" />
+Dwóch spraw nie rozstrzygają ani dokumentacja API, ani części II i III podręcznika KSeF 2.0.
 
 **Limit 10 000 zł do końca 2026 r.** Art. 145m pozwala wystawiać faktury poza KSeF, jeśli sprzedaż udokumentowana nimi w miesiącu nie przekracza 10 000 zł z podatkiem. Przepis nie wspomina o samofakturowaniu. Źródła nie przesądzają, czy faktury od nabywcy liczą się do twojego limitu ani czy nabywca może z niego korzystać. Limit wygasa 31 grudnia 2026 r., co opisujemy w [tekście o końcu limitu](/blog/koniec-limitu-10000-zl).
 
