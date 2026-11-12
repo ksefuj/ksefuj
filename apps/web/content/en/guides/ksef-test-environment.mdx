@@ -15,6 +15,12 @@ sources:
     url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
   - label: "MF: Aplikacja Podatnika KSeF 2.0"
     url: "https://ksef.podatki.gov.pl/aplikacja-podatnika-ksef-20/"
+  - label: "MF: Aplikacja Podatnika KSeF 2.0, test version"
+    url: "https://ksef.podatki.gov.pl/aplikacja-podatnika-ksef-20/aplikacja-podatnika-ksef-20-wersja-testowa/"
+  - label: "MF: Aplikacja Podatnika KSeF 2.0, pre-production version (Demo)"
+    url: "https://ksef.podatki.gov.pl/aplikacja-podatnika-ksef-20/aplikacja-podatnika-ksef-20-wersja-przedprodukcyjna-demo/"
+  - label: "MF: authentication guide for the test Aplikacja Podatnika KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/media/jxgjepcn/instrukcja-uwierzytelnienia-w-aplikacji-podatnika-ksef-20-wersja-testowa.pdf"
   - label: "MF: KSeF technical notices"
     url: "https://ksef.podatki.gov.pl/komunikaty-techniczne/"
   - label: "CIRFMF ksef-api: authentication"
@@ -69,12 +75,11 @@ legal effect.
 | Taxpayer Application | [ap-test.ksef.mf.gov.pl/web/](https://ap-test.ksef.mf.gov.pl/web/)         | [ap-demo.ksef.mf.gov.pl](https://ap-demo.ksef.mf.gov.pl/)                  | [ap.ksef.mf.gov.pl](https://ap.ksef.mf.gov.pl/)                  |
 | API documentation    | [api-test.ksef.mf.gov.pl/docs/v2](https://api-test.ksef.mf.gov.pl/docs/v2) | [api-demo.ksef.mf.gov.pl/docs/v2](https://api-demo.ksef.mf.gov.pl/docs/v2) | [api.ksef.mf.gov.pl/docs/v2](https://api.ksef.mf.gov.pl/docs/v2) |
 | Legal effect         | none                                                                       | none                                                                       | full legal effect                                                |
-| Login                | self-signed certificate also accepted                                      | real login credentials and permissions, as in production                   | real login credentials and permissions                           |
+| Login                | test authentication, self-signed certificate also accepted                 | real login credentials and permissions, as in production                   | real login credentials and permissions                           |
 | Accepted schemas     | FA(2), FA(3), FA_PEF (3), FA_KOR_PEF (3)                                   | FA(3), FA_PEF (3), FA_KOR_PEF (3)                                          | FA(3), FA_PEF (3), FA_KOR_PEF (3)                                |
 
-We did not find the address of the DEMO Taxpayer Application on MF (Ministry of Finance) websites.
-The site ap-demo.ksef.mf.gov.pl was up on 7 October 2026. For the test version, the MF page about
-the Taxpayer Application gives ap-test.ksef.mf.gov.pl/web/. Older guides still mention
+MF (the Ministry of Finance) gives the addresses of the test and pre-production Taxpayer
+Application on the pages for each version. Older guides still mention
 web2te-ksef.mf.gov.pl, which no longer works.
 
 TEST also accepts the older FA(2) schema, while DEMO and production no longer do. **A file accepted
@@ -92,20 +97,24 @@ data to TEST and DEMO, and tells you to use random NIP numbers (Polish tax IDs) 
 
 The reason is practical: TEST accepts self-signed certificates, so many people can log in in the
 context of the same company. **Data entered in TEST is not isolated and other users can see it.**
-So don't enter a real client or their address. The documentation doesn't say whether or when TEST
-data is deleted.
+So don't enter a real client or their address. MF says data in the test and pre-production
+Taxpayer Application is deleted periodically, but gives no schedule.
 
 <Source
   href="https://github.com/CIRFMF/ksef-api/blob/main/srodowiska.md"
   label="CIRFMF: KSeF environments, note"
+/>
+<Source
+  href="https://ksef.podatki.gov.pl/aplikacja-podatnika-ksef-20/aplikacja-podatnika-ksef-20-wersja-testowa/"
+  label="MF: Aplikacja Podatnika KSeF 2.0, test version"
 />
 
 Other ways TEST differs from production:
 
 - **Maintenance windows.** Since 1 October 2025, recurring maintenance may take place in the test
   environments between 16:00 and 18:00, and disruptions may occur then. MF announces additional
-  work in its [technical notices](https://ksef.podatki.gov.pl/komunikaty-techniczne/) (as it did
-  for the work on 17 and 22 June 2026).
+  work in its [technical notices](https://ksef.podatki.gov.pl/komunikaty-techniczne/) (for example
+  the notices of 17 and 22 June 2026).
 - **UPO with a suffix.** In a UPO (Urzędowe Poświadczenie Odbioru, the official confirmation of
   receipt) from TEST, the receiving party reads "Ministerstwo Finansów - środowisko testowe (TE)"
   (Ministry of Finance, test environment), and from DEMO "Ministerstwo Finansów - środowisko
@@ -121,9 +130,9 @@ Other ways TEST differs from production:
 <Source href="https://github.com/CIRFMF/ksef-api/blob/main/kody-qr.md" label="CIRFMF: QR codes" />
 
 <Warning>
-  A test invoice sent to production by mistake and accepted with a KSeF number is a real invoice.
-  You must pay the tax shown on it (Art. 108 of the VAT Act). In that case, promptly issue a
-  [corrective invoice "to zero"](/en/blog/corrective-invoice-ksef).
+  A test invoice sent to production by mistake and accepted with a KSeF number is a real invoice. It
+  may leave you liable to pay the tax shown on it (Art. 108 of the VAT Act). In that case, promptly
+  issue a [corrective invoice "to zero"](/en/blog/corrective-invoice-ksef).
 </Warning>
 
 <Source
@@ -133,22 +142,33 @@ Other ways TEST differs from production:
 
 ## How do you log in to the test environment?
 
-In TEST, and only there, KSeF accepts a self-generated certificate instead of a qualified one. One
+You don't need a qualified certificate for the test Taxpayer Application. On the login screen,
+choose "Zaloguj uwierzytelnieniem testowym" (log in with test authentication), enter the context
+(e.g. the company's NIP, the Polish tax ID) and type a NIP or PESEL (Polish personal ID number). The
+server signs the request with a test certificate. You can't log in to TEST with Profil Zaufany (the
+Polish government e-ID); that option works only in DEMO and production. TEST accepts a qualified
+certificate, but MF advises against using signatures with real data there. We cover logging in to
+production in our [guide to KSeF login](/en/guides/ksef-login).
+
+Only TEST accepts a self-generated certificate instead of a qualified one. For API connections, one
 tool that creates such a certificate is `KSeF.Client.Tests.CertTestApp` from the official C# library
-(more on it below). It is a developer tool, not something for a person who wants to issue an invoice
-in the browser.
+(more on it below). It is a developer tool.
 
-The documentation doesn't say whether you can log in to the test Taxpayer Application through
-login.gov.pl (with Profil Zaufany or mObywatel, the Polish government e-ID options) or which login
-methods its start screen shows. The MF manual describes logging in to the application in general,
-without distinguishing environments. We cover logging in to production in our
-[guide to KSeF login](/en/guides/ksef-login).
+DEMO requires real login credentials and real permissions, just like production. You log in there
+with e.g. Profil Zaufany, in the context of a NIP that matches the register of
+company owners. That is why the MF manual calls DEMO not publicly available, even though the API
+documentation lists it among the public environments. Permissions and certificates granted in the
+production Certificates and Permissions Module (MCU) are not available in DEMO, and nothing you do
+in DEMO changes anything in production.
 
-DEMO requires real login credentials and real permissions, just like production. The MF manual
-calls DEMO not publicly available, while the API documentation lists it among the public
-environments. MF doesn't explain whether every taxpayer can get in or whether permissions granted in
-production are visible there.
-
+<Source
+  href="https://ksef.podatki.gov.pl/media/jxgjepcn/instrukcja-uwierzytelnienia-w-aplikacji-podatnika-ksef-20-wersja-testowa.pdf"
+  label="MF: authentication guide for the test Aplikacja Podatnika KSeF 2.0"
+/>
+<Source
+  href="https://ksef.podatki.gov.pl/aplikacja-podatnika-ksef-20/aplikacja-podatnika-ksef-20-wersja-przedprodukcyjna-demo/"
+  label="MF: Aplikacja Podatnika KSeF 2.0, pre-production version (Demo)"
+/>
 <Source
   href="https://github.com/CIRFMF/ksef-api/blob/main/uwierzytelnianie.md"
   label="CIRFMF: authentication"
@@ -161,7 +181,7 @@ production are visible there.
 ## How do you practise issuing an invoice?
 
 1. Open [ap-test.ksef.mf.gov.pl/web/](https://ap-test.ksef.mf.gov.pl/web/) and check the address in
-   your browser: it should contain "ap-test".
+   your browser: it should contain "ap-test". Log in with test authentication and a made-up NIP.
 2. Issue an invoice with a made-up buyer and amount. We walk through the form step by step in the
    [guide to your first invoice in the Taxpayer Application](/en/guides/ksef-taxpayer-app-first-invoice).
 3. Download the UPO and check for the suffix "środowisko testowe (TE)" (test environment).
@@ -237,8 +257,8 @@ In DEMO the limits are the same as in production. You can read the current value
 
 MF maintains two open source libraries:
 [ksef-client-csharp](https://github.com/CIRFMF/ksef-client-csharp) (C#) and
-[ksef-client-java](https://github.com/CIRFMF/ksef-client-java) (Java). Both connect to TEST by
-default, and you select DEMO or production in the configuration. CertTestApp from the C# library
+[ksef-client-java](https://github.com/CIRFMF/ksef-client-java) (Java). You select the environment in their
+configuration, and the sample apps in both repositories connect to TEST by default. CertTestApp from the C# library
 requires the .NET 10 SDK and generates a random NIP by default.
 
 <Source

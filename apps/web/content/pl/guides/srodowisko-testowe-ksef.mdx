@@ -15,6 +15,12 @@ sources:
     url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
   - label: "MF: Aplikacja Podatnika KSeF 2.0"
     url: "https://ksef.podatki.gov.pl/aplikacja-podatnika-ksef-20/"
+  - label: "MF: Aplikacja Podatnika KSeF 2.0, wersja testowa"
+    url: "https://ksef.podatki.gov.pl/aplikacja-podatnika-ksef-20/aplikacja-podatnika-ksef-20-wersja-testowa/"
+  - label: "MF: Aplikacja Podatnika KSeF 2.0, wersja przedprodukcyjna (Demo)"
+    url: "https://ksef.podatki.gov.pl/aplikacja-podatnika-ksef-20/aplikacja-podatnika-ksef-20-wersja-przedprodukcyjna-demo/"
+  - label: "MF: instrukcja uwierzytelnienia w Aplikacji Podatnika KSeF 2.0, wersja testowa"
+    url: "https://ksef.podatki.gov.pl/media/jxgjepcn/instrukcja-uwierzytelnienia-w-aplikacji-podatnika-ksef-20-wersja-testowa.pdf"
   - label: "MF: komunikaty techniczne KSeF"
     url: "https://ksef.podatki.gov.pl/komunikaty-techniczne/"
   - label: "CIRFMF ksef-api: uwierzytelnianie"
@@ -68,12 +74,10 @@ prawnej.
 | Aplikacja Podatnika  | [ap-test.ksef.mf.gov.pl/web/](https://ap-test.ksef.mf.gov.pl/web/)         | [ap-demo.ksef.mf.gov.pl](https://ap-demo.ksef.mf.gov.pl/)                  | [ap.ksef.mf.gov.pl](https://ap.ksef.mf.gov.pl/)                  |
 | Dokumentacja API     | [api-test.ksef.mf.gov.pl/docs/v2](https://api-test.ksef.mf.gov.pl/docs/v2) | [api-demo.ksef.mf.gov.pl/docs/v2](https://api-demo.ksef.mf.gov.pl/docs/v2) | [api.ksef.mf.gov.pl/docs/v2](https://api.ksef.mf.gov.pl/docs/v2) |
 | Skutki prawne        | brak                                                                       | brak                                                                       | pełna moc prawna                                                 |
-| Logowanie            | także samopodpisany certyfikat                                             | faktyczne dane logowania i uprawnienia, jak na produkcji                   | faktyczne dane logowania i uprawnienia                           |
+| Logowanie            | uwierzytelnienie testowe, także samopodpisany certyfikat                   | faktyczne dane logowania i uprawnienia, jak na produkcji                   | faktyczne dane logowania i uprawnienia                           |
 | Przyjmowane schematy | FA(2), FA(3), FA_PEF (3), FA_KOR_PEF (3)                                   | FA(3), FA_PEF (3), FA_KOR_PEF (3)                                          | FA(3), FA_PEF (3), FA_KOR_PEF (3)                                |
 
-Adresu Aplikacji Podatnika w DEMO nie znaleźliśmy na stronach MF. Strona ap-demo.ksef.mf.gov.pl
-działała 7 października 2026 r. Dla wersji testowej strona MF o Aplikacji Podatnika podaje adres
-ap-test.ksef.mf.gov.pl/web/. W starszych poradnikach krąży jeszcze adres web2te-ksef.mf.gov.pl, który już nie działa.
+Adresy testowej i przedprodukcyjnej Aplikacji Podatnika podaje MF na stronach obu wersji. W starszych poradnikach krąży jeszcze adres web2te-ksef.mf.gov.pl, który już nie działa.
 
 TEST przyjmuje też starszy schemat FA(2), a DEMO i produkcja już nie. **Plik przyjęty w
 TEST nie musi więc przejść na produkcji.**
@@ -90,16 +94,21 @@ rzeczywistych danych firm, a do testów każe używać losowych numerów NIP.
 
 Powód jest praktyczny: TEST przyjmuje samopodpisane certyfikaty, więc wiele osób może zalogować się w
 kontekście tej samej firmy. **Dane wpisane w TEST nie są odizolowane i mogą je zobaczyć inni użytkownicy.** Nie wpisuj więc prawdziwego klienta ani jego adresu.
-Dokumentacja nie mówi, czy i kiedy dane z TEST są usuwane.
+MF zapowiada, że dane w testowej i przedprodukcyjnej Aplikacji Podatnika są okresowo usuwane, ale
+nie podaje terminów.
 
 <Source
   href="https://github.com/CIRFMF/ksef-api/blob/main/srodowiska.md"
   label="CIRFMF: środowiska KSeF, Uwaga"
 />
+<Source
+  href="https://ksef.podatki.gov.pl/aplikacja-podatnika-ksef-20/aplikacja-podatnika-ksef-20-wersja-testowa/"
+  label="MF: Aplikacja Podatnika KSeF 2.0, wersja testowa"
+/>
 
 Co jeszcze odróżnia TEST od produkcji:
 
-- **Przerwy serwisowe.** Od 1 października 2025 r. w środowiskach testowych mogą być prowadzone cykliczne prace serwisowe w godzinach 16:00–18:00 i mogą wtedy wystąpić utrudnienia. Dodatkowe prace MF zapowiada w [komunikatach technicznych](https://ksef.podatki.gov.pl/komunikaty-techniczne/) (tak było z pracami 17 i 22 czerwca 2026 r.).
+- **Przerwy serwisowe.** Od 1 października 2025 r. w środowiskach testowych mogą być prowadzone cykliczne prace serwisowe w godzinach 16:00–18:00 i mogą wtedy wystąpić utrudnienia. Dodatkowe prace MF zapowiada w [komunikatach technicznych](https://ksef.podatki.gov.pl/komunikaty-techniczne/) (np. w komunikatach z 17 i 22 czerwca 2026 r.).
 - **UPO z dopiskiem.** W UPO z TEST jako podmiot przyjmujący widnieje „Ministerstwo Finansów -
   środowisko testowe (TE)”, a z DEMO „Ministerstwo Finansów - środowisko przedprodukcyjne (TR)”. Na
   produkcji jest samo „Ministerstwo Finansów”.
@@ -114,8 +123,8 @@ Co jeszcze odróżnia TEST od produkcji:
 
 <Warning>
   Faktura testowa wysłana przez pomyłkę na produkcję i przyjęta z numerem KSeF jest prawdziwą
-  fakturą. Podatek z niej musisz zapłacić (art. 108 ustawy o VAT). Wystaw wtedy niezwłocznie
-  [korektę „do zera”](/blog/faktura-korygujaca-ksef).
+  fakturą. Może z niej wyniknąć obowiązek zapłaty podatku (art. 108 ustawy o VAT). Wystaw wtedy
+  niezwłocznie [korektę „do zera”](/blog/faktura-korygujaca-ksef).
 </Warning>
 
 <Source
@@ -125,20 +134,32 @@ Co jeszcze odróżnia TEST od produkcji:
 
 ## Jak zalogować się do środowiska testowego?
 
-W TEST, i tylko tam, KSeF przyjmuje samodzielnie wygenerowany certyfikat zamiast kwalifikowanego.
-Taki certyfikat tworzy m.in. program `KSeF.Client.Tests.CertTestApp` z oficjalnej biblioteki C#
-(o niej niżej). To narzędzie dla programistów, nie dla osoby, która chce wystawić fakturę w
-przeglądarce.
+Do testowej Aplikacji Podatnika zalogujesz się bez certyfikatu kwalifikowanego. Na ekranie
+logowania wybierz „Zaloguj uwierzytelnieniem testowym”, podaj kontekst (np. NIP firmy) i wpisz NIP
+albo PESEL. Serwer sam podpisze żądanie certyfikatem testowym. Profilem Zaufanym w TEST się nie
+zalogujesz: ta opcja działa tylko w DEMO i na produkcji. Certyfikat kwalifikowany TEST przyjmie, ale MF odradza
+używanie tam podpisów z prawdziwymi danymi. Logowanie na produkcji opisujemy w
+[poradniku o logowaniu do KSeF](/guides/logowanie-ksef).
 
-Dokumentacja nie mówi, czy do testowej Aplikacji Podatnika zalogujesz się przez login.gov.pl
-(Profilem Zaufanym, mObywatelem) ani jakie sposoby logowania pokazuje jej ekran startowy. Podręcznik
-MF opisuje logowanie do aplikacji ogólnie, bez rozróżnienia środowisk. Logowanie na produkcji
-opisujemy w [poradniku o logowaniu do KSeF](/guides/logowanie-ksef).
+Samodzielnie wygenerowany certyfikat zamiast kwalifikowanego przyjmuje tylko TEST. Przy połączeniu
+przez API taki certyfikat tworzy m.in. program `KSeF.Client.Tests.CertTestApp` z oficjalnej
+biblioteki C# (o niej niżej). To narzędzie dla programistów.
 
-DEMO wymaga faktycznych danych logowania i faktycznych uprawnień, tak jak produkcja. Podręcznik MF
-nazywa DEMO niedostępnym publicznie, a dokumentacja API wymienia je wśród środowisk publicznych. MF
-nie wyjaśnia, czy może tam wejść każdy podatnik i czy widać tam uprawnienia nadane na produkcji.
+DEMO wymaga faktycznych danych logowania i faktycznych uprawnień, tak jak produkcja: logujesz się
+np. Profilem Zaufanym, w kontekście NIP-u zgodnego z rejestrem właścicieli firm. Dlatego podręcznik
+MF nazywa DEMO niedostępnym publicznie, choć dokumentacja API wymienia je wśród środowisk
+publicznych.
+Uprawnienia i certyfikaty nadane w produkcyjnym Module Certyfikatów i Uprawnień (MCU) nie są w DEMO
+dostępne, a to, co zrobisz w DEMO, nie zmienia niczego na produkcji.
 
+<Source
+  href="https://ksef.podatki.gov.pl/media/jxgjepcn/instrukcja-uwierzytelnienia-w-aplikacji-podatnika-ksef-20-wersja-testowa.pdf"
+  label="MF: instrukcja uwierzytelnienia w Aplikacji Podatnika KSeF 2.0, wersja testowa"
+/>
+<Source
+  href="https://ksef.podatki.gov.pl/aplikacja-podatnika-ksef-20/aplikacja-podatnika-ksef-20-wersja-przedprodukcyjna-demo/"
+  label="MF: Aplikacja Podatnika KSeF 2.0, wersja przedprodukcyjna (Demo)"
+/>
 <Source
   href="https://github.com/CIRFMF/ksef-api/blob/main/uwierzytelnianie.md"
   label="CIRFMF: uwierzytelnianie"
@@ -151,7 +172,7 @@ nie wyjaśnia, czy może tam wejść każdy podatnik i czy widać tam uprawnieni
 ## Jak przećwiczyć wystawienie faktury?
 
 1. Otwórz [ap-test.ksef.mf.gov.pl/web/](https://ap-test.ksef.mf.gov.pl/web/) i sprawdź adres w
-   przeglądarce: ma zawierać „ap-test”.
+   przeglądarce: ma zawierać „ap-test”. Zaloguj się uwierzytelnieniem testowym z wymyślonym NIP-em.
 2. Wystaw fakturę z wymyślonym nabywcą i kwotą. Formularz krok po kroku pokazujemy w
    [poradniku o pierwszej fakturze w Aplikacji Podatnika](/guides/aplikacja-podatnika-ksef-pierwsza-faktura).
 3. Pobierz UPO i sprawdź dopisek „środowisko testowe (TE)”.
@@ -219,8 +240,8 @@ takie same jak na produkcji. Aktualne wartości odczytasz z `GET /rate-limits`.
   DEMO 13 października 2026 r., a na produkcję 15 października.
 
 MF utrzymuje dwie biblioteki open source: [ksef-client-csharp](https://github.com/CIRFMF/ksef-client-csharp)
-(C#) i [ksef-client-java](https://github.com/CIRFMF/ksef-client-java) (Java). Obie domyślnie łączą
-się z TEST, a DEMO i produkcję wybierasz w konfiguracji. CertTestApp z biblioteki C# wymaga .NET 10
+(C#) i [ksef-client-java](https://github.com/CIRFMF/ksef-client-java) (Java). Środowisko wybierasz w ich
+konfiguracji, a przykładowe aplikacje z obu repozytoriów domyślnie łączą się z TEST. CertTestApp z biblioteki C# wymaga .NET 10
 SDK i domyślnie losuje NIP.
 
 <Source

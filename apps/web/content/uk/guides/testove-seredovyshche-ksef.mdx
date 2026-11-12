@@ -15,6 +15,12 @@ sources:
     url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
   - label: "МФ: Aplikacja Podatnika KSeF 2.0"
     url: "https://ksef.podatki.gov.pl/aplikacja-podatnika-ksef-20/"
+  - label: "МФ: Aplikacja Podatnika KSeF 2.0, тестова версія"
+    url: "https://ksef.podatki.gov.pl/aplikacja-podatnika-ksef-20/aplikacja-podatnika-ksef-20-wersja-testowa/"
+  - label: "МФ: Aplikacja Podatnika KSeF 2.0, передпродуктивна версія (Demo)"
+    url: "https://ksef.podatki.gov.pl/aplikacja-podatnika-ksef-20/aplikacja-podatnika-ksef-20-wersja-przedprodukcyjna-demo/"
+  - label: "МФ: інструкція з автентифікації в тестовій Aplikacja Podatnika KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/media/jxgjepcn/instrukcja-uwierzytelnienia-w-aplikacji-podatnika-ksef-20-wersja-testowa.pdf"
   - label: "МФ: технічні повідомлення KSeF"
     url: "https://ksef.podatki.gov.pl/komunikaty-techniczne/"
   - label: "CIRFMF ksef-api: автентифікація"
@@ -68,12 +74,10 @@ KSeF 2.0 має три публічні середовища. TEST призна�
 | Aplikacja Podatnika    | [ap-test.ksef.mf.gov.pl/web/](https://ap-test.ksef.mf.gov.pl/web/)         | [ap-demo.ksef.mf.gov.pl](https://ap-demo.ksef.mf.gov.pl/)                  | [ap.ksef.mf.gov.pl](https://ap.ksef.mf.gov.pl/)                  |
 | Документація API       | [api-test.ksef.mf.gov.pl/docs/v2](https://api-test.ksef.mf.gov.pl/docs/v2) | [api-demo.ksef.mf.gov.pl/docs/v2](https://api-demo.ksef.mf.gov.pl/docs/v2) | [api.ksef.mf.gov.pl/docs/v2](https://api.ksef.mf.gov.pl/docs/v2) |
 | Правові наслідки       | немає                                                                      | немає                                                                      | повна юридична сила                                              |
-| Вхід                   | також самопідписаний сертифікат                                            | справжні дані для входу й повноваження, як у продуктивному                 | справжні дані для входу й повноваження                           |
+| Вхід                   | тестова автентифікація, також самопідписаний сертифікат                    | справжні дані для входу й повноваження, як у продуктивному                 | справжні дані для входу й повноваження                           |
 | Схеми, які приймаються | FA(2), FA(3), FA_PEF (3), FA_KOR_PEF (3)                                   | FA(3), FA_PEF (3), FA_KOR_PEF (3)                                          | FA(3), FA_PEF (3), FA_KOR_PEF (3)                                |
 
-Адреси Aplikacja Podatnika в DEMO ми не знайшли на сайтах Мінфіну. Сторінка ap-demo.ksef.mf.gov.pl
-працювала 7 жовтня 2026 року. Для тестової версії сторінка Мінфіну про Aplikacja Podatnika подає
-адресу ap-test.ksef.mf.gov.pl/web/. У старіших порадниках ще трапляється адреса
+Адреси тестової та передпродуктивної Aplikacja Podatnika Мінфін подає на сторінках обох версій. У старіших порадниках ще трапляється адреса
 web2te-ksef.mf.gov.pl, яка вже не працює.
 
 TEST приймає ще й старішу схему FA(2), а DEMO і продуктивне середовище вже ні. **Файл, прийнятий у
@@ -91,20 +95,24 @@ TEST, не обов'язково пройде в продуктивному се
 
 Причина практична: TEST приймає самопідписані сертифікати, тож багато людей можуть увійти в
 контексті тієї самої фірми. **Дані, введені в TEST, не ізольовані, і їх можуть побачити інші
-користувачі.** Тому не вводь справжнього клієнта чи його адресу. Документація не каже, чи і коли
-дані з TEST видаляються.
+користувачі.** Тому не вводь справжнього клієнта чи його адресу. Мінфін повідомляє, що дані в
+тестовій і передпродуктивній Aplikacja Podatnika періодично видаляються, але не називає термінів.
 
 <Source
   href="https://github.com/CIRFMF/ksef-api/blob/main/srodowiska.md"
   label="CIRFMF: середовища KSeF, примітка"
+/>
+<Source
+  href="https://ksef.podatki.gov.pl/aplikacja-podatnika-ksef-20/aplikacja-podatnika-ksef-20-wersja-testowa/"
+  label="МФ: Aplikacja Podatnika KSeF 2.0, тестова версія"
 />
 
 Чим ще TEST відрізняється від продуктивного середовища:
 
 - **Технічні перерви.** Від 1 жовтня 2025 року в тестових середовищах можуть проводитися регулярні
   технічні роботи з 16:00 до 18:00, і тоді можливі збої. Додаткові роботи Мінфін анонсує в
-  [технічних повідомленнях](https://ksef.podatki.gov.pl/komunikaty-techniczne/) (так було з
-  роботами 17 і 22 червня 2026 року).
+  [технічних повідомленнях](https://ksef.podatki.gov.pl/komunikaty-techniczne/) (наприклад,
+  у повідомленнях від 17 і 22 червня 2026 року).
 - **UPO з приміткою.** В UPO (Urzędowe Poświadczenie Odbioru, офіційне підтвердження отримання) з
   TEST як суб'єкт, що приймає, вказано «Ministerstwo Finansów - środowisko testowe (TE)»
   («Міністерство фінансів, тестове середовище»), а з DEMO «Ministerstwo Finansów - środowisko
@@ -121,8 +129,9 @@ TEST, не обов'язково пройде в продуктивному се
 
 <Warning>
   Тестовий рахунок, помилково надісланий у продуктивне середовище й прийнятий із номером KSeF, є
-  справжнім рахунком. Податок із нього ти мусиш сплатити (ст. 108 закону про ПДВ). Тоді якнайшвидше
-  виставляй [коригувальний рахунок «до нуля»](/uk/blog/koryguvalna-faktura-ksef).
+  справжнім рахунком. Через нього може виникнути обов'язок сплатити податок (ст. 108 закону про
+  ПДВ). Тоді якнайшвидше виставляй [коригувальний рахунок «до
+  нуля»](/uk/blog/koryguvalna-faktura-ksef).
 </Warning>
 
 <Source
@@ -132,20 +141,33 @@ TEST, не обов'язково пройде в продуктивному се
 
 ## Як увійти до тестового середовища?
 
-У TEST, і лише там, KSeF приймає самостійно згенерований сертифікат замість кваліфікованого. Такий
-сертифікат створює, зокрема, програма `KSeF.Client.Tests.CertTestApp` з офіційної бібліотеки C# (про
-неї нижче). Це інструмент для програмістів, а не для людини, яка хоче виставити рахунок у браузері.
+Для тестової Aplikacja Podatnika кваліфікований сертифікат не потрібен. На екрані входу обери
+«Zaloguj uwierzytelnieniem testowym» (увійти через тестову автентифікацію), вкажи контекст
+(наприклад, NIP фірми) і введи NIP або PESEL. Запит підпише сервер тестовим сертифікатом. Через
+Profil Zaufany (польський довірений профіль) у TEST не увійдеш: ця опція працює лише в DEMO і в
+продуктивному середовищі. Кваліфікований сертифікат TEST прийме, але Мінфін не радить
+використовувати там підписи зі справжніми даними. Вхід у продуктивне середовище ми описуємо в
+[посібнику про вхід до KSeF](/uk/guides/vkhid-do-ksef).
 
-Документація не каже, чи увійдеш ти до тестової Aplikacja Podatnika через login.gov.pl (через
-Profil Zaufany, польський довірений профіль, чи mObywatel) і які способи входу показує її стартовий
-екран. Посібник Мінфіну описує вхід до застосунку загалом, без розрізнення середовищ. Вхід у
-продуктивне середовище ми описуємо в [посібнику про вхід до KSeF](/uk/guides/vkhid-do-ksef).
+Самостійно згенерований сертифікат замість кваліфікованого приймає лише TEST. Для під'єднання через
+API такий сертифікат створює, зокрема, програма `KSeF.Client.Tests.CertTestApp` з офіційної
+бібліотеки C# (про неї нижче). Це інструмент для програмістів.
 
 DEMO вимагає справжніх даних для входу й справжніх повноважень, так само як продуктивне середовище.
-Посібник Мінфіну називає DEMO публічно недоступним, а документація API зараховує його до публічних
-середовищ. Мінфін не пояснює, чи може туди увійти кожен платник і чи видно там повноваження, надані
-в продуктивному середовищі.
+Туди входиш, наприклад, через Profil Zaufany, у контексті NIP, що відповідає
+реєстру власників фірм. Тому посібник Мінфіну називає DEMO публічно недоступним, хоча документація
+API зараховує його до публічних середовищ. Повноваження й сертифікати, надані в продуктивному Модулі
+сертифікатів і повноважень (MCU), у DEMO недоступні, а дії в DEMO нічого не змінюють у продуктивному
+середовищі.
 
+<Source
+  href="https://ksef.podatki.gov.pl/media/jxgjepcn/instrukcja-uwierzytelnienia-w-aplikacji-podatnika-ksef-20-wersja-testowa.pdf"
+  label="МФ: інструкція з автентифікації в тестовій Aplikacja Podatnika KSeF 2.0"
+/>
+<Source
+  href="https://ksef.podatki.gov.pl/aplikacja-podatnika-ksef-20/aplikacja-podatnika-ksef-20-wersja-przedprodukcyjna-demo/"
+  label="МФ: Aplikacja Podatnika KSeF 2.0, передпродуктивна версія (Demo)"
+/>
 <Source
   href="https://github.com/CIRFMF/ksef-api/blob/main/uwierzytelnianie.md"
   label="CIRFMF: автентифікація"
@@ -158,7 +180,7 @@ DEMO вимагає справжніх даних для входу й спра�
 ## Як потренуватися виставляти рахунок?
 
 1. Відкрий [ap-test.ksef.mf.gov.pl/web/](https://ap-test.ksef.mf.gov.pl/web/) і перевір адресу в
-   браузері: вона має містити «ap-test».
+   браузері: вона має містити «ap-test». Увійди через тестову автентифікацію з вигаданим NIP.
 2. Виставляй рахунок із вигаданим покупцем і сумою. Форму крок за кроком ми показуємо в
    [посібнику про перший рахунок в Aplikacja Podatnika](/uk/guides/pershyy-rakhunok-v-aplikatsiyi-podatnyka).
 3. Завантаж UPO й перевір примітку «środowisko testowe (TE)» («тестове середовище»).
@@ -233,8 +255,8 @@ DEMO вимагає справжніх даних для входу й спра�
 
 Мінфін підтримує дві бібліотеки з відкритим кодом:
 [ksef-client-csharp](https://github.com/CIRFMF/ksef-client-csharp) (C#) і
-[ksef-client-java](https://github.com/CIRFMF/ksef-client-java) (Java). Обидві за замовчуванням
-під'єднуються до TEST, а DEMO чи продуктивне середовище обираєш у конфігурації. CertTestApp з
+[ksef-client-java](https://github.com/CIRFMF/ksef-client-java) (Java). Середовище обираєш у їхній
+конфігурації, а приклади застосунків з обох репозиторіїв за замовчуванням під'єднуються до TEST. CertTestApp з
 бібліотеки C# потребує .NET 10 SDK і за замовчуванням генерує випадковий NIP.
 
 <Source

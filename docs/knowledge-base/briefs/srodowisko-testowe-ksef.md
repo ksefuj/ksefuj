@@ -122,9 +122,9 @@ re-read; their facts below come from existing KB briefs (dates given per fact).
     Ania-relevant: yes.
 14. **PROD: real invoices; never send test invoices.** „Niedopuszczalne jest przesyłanie faktur
     testowych do środowiska produkcyjnego. Faktura przyjęta z numerem KSeF = pełnoprawna faktura →
-    obowiązek zapłaty podatku (art. 108). W razie błędu → niezwłocznie korekta „do zera"." (cz. II
-    §3.2.3 box „WAŻNE", per KB extract l. 814-816). Tier 2 (citing Tier 1 art. 108). HIGH.
-    Ania-relevant: yes, key warning.
+    może skutkować obowiązkiem zapłaty podatku (art. 108). W razie błędu → niezwłocznie korekta „do
+    zera"." (cz. II §3.2.3 box „WAŻNE", per KB extract l. 814-816). Tier 2 (citing Tier 1 art. 108).
+    HIGH. Ania-relevant: yes, key warning.
 15. **No production invoices or real data on TEST/DEMO.** „Środowiska testowe (TE/DEMO) służy
     wyłącznie do testowania integracji z API KSeF. Nie należy przesyłać do niego **faktur
     produkcyjnych** ani rzeczywistych danych podmiotów." — `srodowiska.md`, „Uwaga". Tier 2. HIGH.
@@ -253,6 +253,40 @@ re-read; their facts below come from existing KB briefs (dates given per fact).
 - **`web2te-ksef.mf.gov.pl` in official code.** Java SDK test comment (2026-11-10 HEAD) still
   references `https://web2te-ksef.mf.gov.pl/web/certificates/certificate-list`; MF AP page (per
   sibling run) uses `ap-test.ksef.mf.gov.pl/web/`. Current resolution of web2te: not verified today.
+
+## Local verification (2026-11-12)
+
+Checked from a normal network; supersedes facts 18, 24, 25 and the related unsettled questions.
+
+- **Podręcznik KSeF 2.0 cz. II (06.08.2026), §3.2.1–3.2.3, pp. 65–66:** wording confirmed. §3.2.3
+  box „WAŻNE": a test invoice accepted on PROD „jest to równoznaczne z wystawieniem pełnoprawnej
+  faktury […] Skutkować to **może** obowiązkiem zapłaty podatku, wynikającym z treści art. 108
+  ustawy" (may, not must); then „należy niezwłocznie wystawić fakturę korygującą »do zera«".
+- **Data purge:** „Dane w testowej wersji Aplikacji Podatnika będą okresowo usuwane" and the same
+  for DEMO —
+  https://ksef.podatki.gov.pl/aplikacja-podatnika-ksef-20/aplikacja-podatnika-ksef-20-wersja-testowa/
+  and
+  https://ksef.podatki.gov.pl/aplikacja-podatnika-ksef-20/aplikacja-podatnika-ksef-20-wersja-przedprodukcyjna-demo/
+  (no schedule given).
+- **AP addresses:** the MF test page links https://ap-test.ksef.mf.gov.pl, the DEMO page links
+  https://ap-demo.ksef.mf.gov.pl. All three AP hosts, all three `/docs/v2` and the TEST
+  `openapi.json` return HTTP 200. `web2te-ksef.mf.gov.pl`: NXDOMAIN.
+- **API base path:** live `openapi.json` `servers` are `https://api-demo.ksef.mf.gov.pl/v2` and
+  `https://api.ksef.mf.gov.pl/v2`.
+- **AP TEST login:** „Instrukcja uwierzytelnienia w Aplikacji Podatnika KSeF 2.0 wersja testowa"
+  (v1.0, 03.11.2025),
+  https://ksef.podatki.gov.pl/media/jxgjepcn/instrukcja-uwierzytelnienia-w-aplikacji-podatnika-ksef-20-wersja-testowa.pdf:
+  TEST offers „Zaloguj uwierzytelnieniem testowym" (server-side signing with a test certificate;
+  enter context and NIP/PESEL), not available on DEMO/PROD; „Logowanie Profilem Zaufanym możliwe
+  jest wyłącznie na środowisku przedprodukcyjnym (demo) oraz produkcyjnym"; qualified certificate
+  works on TEST, but „Nie zaleca się stosowania pieczęci i podpisów z prawdziwymi danymi na
+  środowisku testowym (TE)".
+- **DEMO and MCU:** „uprawnienia i certyfikaty nadane w MCU nie są dostępne w środowisku
+  przedprodukcyjnym Aplikacji Podatnika KSeF 2.0"; DEMO actions do not affect MCU (DEMO page).
+- **SDK defaults:** the C# library's `KSeFClientOptions.BaseUrl` defaults to empty; only the sample
+  apps (C# `KSeF.DemoWebApp`, Java `demo-web-app`) default to TEST.
+- **Komunikaty 17 and 22 June 2026:** those are publication dates of the maintenance notices, not
+  necessarily the work dates.
 
 ## Unsettled Questions
 
