@@ -34,7 +34,7 @@ sources:
 
 An invoice to a foreign buyer goes through KSeF (Poland's National e-Invoicing System) just like a domestic one, even if the buyer has no Polish NIP and will never log in. In the buyer's data you never put a foreign number in the NIP field: for EU companies use `KodUE` + `NrVatUE`, for everyone else `KodKraju` + `NrID`, and when there is no number, `BrakID`.
 
-The buyer won't receive the invoice from KSeF, so send them a readable copy (a PDF with the QR code) by email or post. Below: the fields for each buyer type, VAT rates and annotations. Since [1 April 2026](/en/blog/ksef-from-april-1-2026) every taxpayer issues invoices in KSeF, VAT-registered and VAT-exempt alike (the largest companies since 1 February). Until the end of 2026 you may still issue an invoice outside KSeF if your invoiced sales in that month stay at or below [10,000 PLN gross](/en/blog/ksef-10000-pln-limit).
+The buyer won't receive the invoice from KSeF, so send them a readable copy (a PDF with the QR code) by email or post. According to MF, that copy must be consistent with the XML file in KSeF; what happens when they differ is covered in [PDF doesn't match the XML in KSeF](/en/blog/pdf-different-from-xml-ksef). Below: the fields for each buyer type, VAT rates and annotations. Since [1 April 2026](/en/blog/ksef-from-april-1-2026) every taxpayer issues invoices in KSeF, VAT-registered and VAT-exempt alike (the largest companies since 1 February). Until the end of 2026 you may still issue an invoice outside KSeF if your invoiced sales in that month stay at or below [10,000 PLN gross](/en/blog/ksef-10000-pln-limit).
 
 ## EU buyer with a VAT-EU number
 

@@ -5,6 +5,33 @@ effect. Record the date, the page, what changed (old -> new for titles and descr
 metric that motivated it. After 28 days, add a **Results** line comparing current CTR/position with
 the baseline.
 
+## 2026-11-13
+
+Digest: `gsc-data` 2026-11-12 (GSC 2026-10-13 to 2026-11-09: 152 clicks, 13,133 impressions, CTR
+1.16%, avg position 6.9; previous 28 days 85 clicks, CTR 0.99%). No crawl Problems: all 203 sitemap
+URLs 200, no broken internal links or hreflang issues; sitemap still 0 errors, 6 warnings. No title
+or description changes: every page in the low-CTR list had its title or description changed on
+2026-10-26 or later, or has frontmatter `updated` within 28 days; `/blog/tokeny-ksef-po-2026`
+(„token ksef do kiedy" and variants, ~50 impr, pos 7-8, 0 clicks) was updated on 2026-11-11. The
+FA(2) vs FA(3) and test-invoice pages are in open content PR #207. No new Results lines: the next
+logged change old enough (2026-10-17) reaches 28 days tomorrow.
+
+- **Pages:** `/blog/faktura-zagraniczna-ksef`, `/en/blog/foreign-invoice-ksef`,
+  `/uk/blog/rakhunok-inozemnomu-kontrahenty-ksef`
+  - **Change:** body only. One sentence after „wyślij mu czytelną kopię (PDF z kodem QR)" (and its
+    EN and UK equivalents) saying MF requires that copy to be consistent with the XML in KSeF,
+    linking `/blog/pusta-faktura-pdf-xml`, `/en/blog/pdf-different-from-xml-ksef` and
+    `/uk/blog/pdf-ne-zbigayetsya-z-xml-ksef`. The PDF post's section „Nabywca bez NIP-u albo z
+    zagranicy" covers exactly this case and sources the claim (Podręcznik KSeF 2.0 cz. II pkt 1.6.5,
+    5.1, 5.3.1).
+  - **Motivation:** the PDF-vs-XML posts are still PL and UK "Discovered - currently not indexed",
+    EN "Discovered - currently not indexed" (was unknown to Google), with no impressions. The health
+    crawl finds 3 internal links to the PL and EN posts (blog listing, the private-person post added
+    2026-11-12, the end-of-limit post). The foreign-buyer post is the site's third PL page by
+    impressions (662 impr, 7 clicks, pos 6.0; EN 49 impr, pos 7.6).
+  - **Baseline to compare:** URL Inspection state of the three PDF-vs-XML posts (all Discovered -
+    not indexed, 0 impressions).
+
 ## 2026-11-12
 
 Digest: `gsc-data` 2026-11-11 (GSC 2026-10-12 to 2026-11-08: 158 clicks, 12,965 impressions, CTR
