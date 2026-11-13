@@ -1,0 +1,151 @@
+---
+title: "Załącznik do faktury w KSeF to nie PDF ani skan"
+description: "Pliku nie dołączysz. Element Zalacznik w FA(3) służy tylko danym podatkowym w tekście i tabelach, po zgłoszeniu w e-US i tylko w sesji wsadowej."
+date: 2026-11-13
+section: blog
+locale: pl
+slug: "zalaczniki-ksef"
+topic: "invoicing"
+tags: ["KSeF", "FA(3)", "Faktura"]
+sources:
+  - label: "Podręcznik KSeF 2.0, cz. II (06.08.2026), pkt 1.1, 1.6.1, 1.6.5, 2 i 3.3"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "MF: Broszura informacyjna dotycząca struktury logicznej FA(3), opis elementów Zalacznik i Stopka"
+    url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "Schemat FA(3), element Zalacznik"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+  - label: "CIRFMF: Weryfikacja faktury (limity rozmiaru, sesja wsadowa)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md"
+  - label: "CIRFMF: specyfikacja OpenAPI (status 415, /testdata/attachment)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
+  - label: "CIRFMF: Korekta techniczna"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/offline/korekta-techniczna.md"
+translations:
+  pl: "zalaczniki-ksef"
+  en: "ksef-invoice-attachments"
+related:
+  - "blog/fa2-vs-fa3-ksef"
+  - "blog/kody-bledow-ksef"
+  - "guides/srodowisko-testowe-ksef"
+---
+
+Do faktury w KSeF nie dołączysz PDF-a, skanu ani żadnego innego pliku, bo według Podręcznika KSeF 2.0 załączniki w formie nieustrukturyzowanej w ogóle nie trafiają do systemu. Jedyny załącznik, jaki KSeF przyjmie, to element `Zalacznik` w XML faktury FA(3): bloki danych (pary klucz i wartość, akapity tekstu, tabele) na dane podatkowe, których możesz użyć dopiero po zgłoszeniu w e-Urzędzie Skarbowym i które wyślesz tylko w sesji wsadowej.
+
+Stan na 13 listopada 2026 r.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. II, pkt 1.1 i 2"
+/>
+
+## Co możesz umieścić w załączniku, a czego nie?
+
+Element `Zalacznik` pojawił się dopiero w FA(3), w FA(2) go nie było ([inne różnice między wersjami](/blog/fa2-vs-fa3-ksef)). Faktury z załącznikiem możesz wystawiać od 1 lutego 2026 r. Broszura MF o strukturze FA(3) przeznacza go na faktury ze złożonymi danymi o jednostkach miary, ilościach lub cenach jednostkowych netto. Wpisujesz w nim wyłącznie dane z art. 106e ustawy o VAT, czyli te, które i tak musi zawierać faktura, albo dane ściśle z nimi związane. <Source href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf" label="Broszura FA(3), opis elementu Zalacznik" />
+
+Broszura wymienia też, czego w załączniku umieszczać nie wolno:
+
+- cenników, warunków gwarancji i instrukcji obsługi,
+- zamówień, umów, aneksów i protokołów odbioru,
+- promocji, materiałów reklamowych, indywidualnych ofert i newsletterów.
+
+Zapowiada również, że **za użycie załącznika niezgodnie z przeznaczeniem stracisz prawo do wystawiania faktur z załącznikiem**. Nie mówi, kto o tym decyduje, na jak długo ani czy można się odwołać.
+
+Ania jest graficzką i chce dołączyć do faktury za projekt logo protokół odbioru oraz umowę w PDF. Pliku do KSeF nie wyśle, a treści protokołu nie wolno przepisać do `Zalacznik`. Załącznik przyda się raczej hurtowni, która sprzedaje kilkaset pozycji w różnych jednostkach miary i chce pokazać ilości oraz ceny netto w tabeli.
+
+## Gdzie wpisać to, czego nie wolno dać do załącznika?
+
+Krótkie informacje dla klienta broszura przewiduje w stopce faktury, w polu `StopkaFaktury` (do 3500 znaków, najwyżej trzy bloki `Informacje`). Wymienia tam m.in. podziękowania, kody rabatowe, godziny otwarcia, infolinię, linki do formularzy zwrotu i reklamacji oraz informacje marketingowe. Broszura nie przedstawia stopki jako zamiennika załącznika, to nasze zestawienie. <Source href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf" label="Broszura FA(3), opis elementu Stopka" />
+
+Umowy, protokołu ani cennika w PDF nie prześlesz przez KSeF w żadnej postaci. W podręczniku ani w broszurze nie znaleźliśmy odpowiedzi, czy możesz wysłać taki dokument klientowi osobno, np. e-mailem razem z fakturą z KSeF, ani jaki ma on wtedy status. Podręcznik dopuszcza natomiast, by wizualizacja faktury zawierała dodatkowe dane bez znaczenia dla systemu, np. logo czy kontakt do obsługi klienta. Czym taki PDF różni się od faktury w XML, opisujemy [w tekście o rozbieżnościach między PDF a XML](/blog/pusta-faktura-pdf-xml).
+
+## Jak włączyć załączniki w e-Urzędzie Skarbowym?
+
+Zanim wyślesz pierwszą fakturę z `Zalacznik`, zgłaszasz w e-Urzędzie Skarbowym, że chcesz takie faktury wystawiać. Broszura podaje, że funkcja zgłoszenia „będzie dostępna od 1 stycznia 2026 r.”. Nie mamy potwierdzenia, że ruszyła dokładnie tego dnia. <Source href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf" label="Broszura FA(3), s. 149" />
+
+Bez zgłoszenia KSeF odrzuci fakturę z załącznikiem. Odrzucona faktura nie dostaje numeru KSeF, a podręcznik mówi wprost, że wtedy „faktura nie została wystawiona”. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 1.6.1" />
+
+Formularz ZAW-FA to co innego: według podręcznika KSeF (cz. I) służy do nadawania i odbierania uprawnień do KSeF w określonych sytuacjach, a materiały MF nie łączą go ze zgłoszeniem załączników.
+
+## Czego MF jeszcze nie wyjaśniło?
+
+Załącznik jest częścią tego samego pliku XML co faktura, a broszura nazywa go integralną częścią faktury. Reszta praktyki pozostaje otwarta. W materiałach MF nie znaleźliśmy odpowiedzi na pytania:
+
+- jak nazywa się zgłoszenie w e-Urzędzie Skarbowym i gdzie go szukać,
+- kto może je złożyć: tylko ty czy także pełnomocnik albo biuro rachunkowe,
+- od kiedy zgłoszenie działa i czy można je wycofać,
+- czy Aplikacja Podatnika i aplikacja mobilna pozwalają wystawić fakturę z załącznikiem,
+- jak nabywca zobaczy załącznik w Aplikacji Podatnika, w aplikacji mobilnej i na wizualizacji PDF,
+- czy zakaz cenników i umów oraz odebranie prawa wynikają wprost z ustawy, czy tylko z wytycznych MF (broszura powołuje się na art. 106gba ust. 1 ustawy o VAT).
+
+## Dla programistów: jak zbudować i wysłać `Zalacznik`?
+
+### W jakiej sesji i jak duży plik wyślesz?
+
+Fakturę z załącznikiem wyślesz wyłącznie w sesji wsadowej, bo sesja interaktywna jej nie przyjmie. Jedyny wyjątek to korekta techniczna faktury offline, czyli ponowne przesłanie w sesji interaktywnej faktury wystawionej offline, którą KSeF odrzucił z powodu błędów technicznych (np. niezgodności ze schematem albo za dużego pliku). Treści faktury nie wolno wtedy zmienić. Dokumentacja nie mówi, czy korekta techniczna obejmuje fakturę odrzuconą z powodu braku zgłoszenia w e-US. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/offline/korekta-techniczna.md" label="CIRFMF: Korekta techniczna" />
+
+Plik faktury bez załącznika może mieć najwyżej 1 MB, a z załącznikiem 3 MB. To megabajty dziesiętne: 3 000 000 bajtów, nie 3 MiB. Oba limity mają w dokumentacji gwiazdkę: jeśli nie wystarczają w twoich scenariuszach, MF prosi o kontakt z działem wsparcia KSeF. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md" label="CIRFMF: Weryfikacja faktury" />
+
+Sesja wsadowa nie działa na zasadzie „wszystko albo nic”. KSeF odrzuca tylko błędne pliki XML i podaje powód dla każdego z nich, więc jedna odrzucona faktura z załącznikiem nie blokuje reszty paczki. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 3.3" />
+
+W specyfikacji OpenAPI status faktury `415` ma opis „Brak możliwości wysyłania faktury z załącznikiem”. Dokumentacja nie podaje, kiedy dokładnie się pojawia, więc nie zakładaj, że oznacza wyłącznie brak zgłoszenia w e-US. Nie wiadomo też, jaki kod dostaniesz za plik powyżej 3 MB albo za błąd schematu wewnątrz `Zalacznik`. Pozostałe statusy objaśniamy [w przeglądzie kodów błędów KSeF](/blog/kody-bledow-ksef). <Source href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json" label="CIRFMF: open-api.json" />
+
+### Jak wygląda struktura elementu?
+
+`Zalacznik` to ostatni element `Faktura`, za `Stopka`. Zawiera od 1 do 1000 elementów `BlokDanych`, a każdy z nich, w tej kolejności:
+
+- `ZNaglowek`: nagłówek bloku, opcjonalny, do 512 znaków,
+- `MetaDane`: od 1 do 1000 par `ZKlucz` i `ZWartosc` (każde do 256 znaków), **obowiązkowe w każdym bloku**, także wtedy, gdy blok niesie tylko tabelę,
+- `Tekst`: opcjonalny, od 1 do 10 elementów `Akapit` po 512 znaków,
+- `Tabela`: od 0 do 1000 tabel; w każdej opcjonalne `TMetaDane` i `Opis`, potem `TNaglowek` z 1–20 kolumnami `Kol`, od 1 do 1000 elementów `Wiersz` z komórkami `WKom` i opcjonalna `Suma` z komórkami `SKom`.
+
+Każda kolumna `Kol` ma wymagany atrybut `Typ` (`date`, `datetime`, `dec`, `int`, `time` lub `txt`) i nazwę w `NKom`. Komórki `NKom`, `WKom` i `SKom` mają do 256 znaków i mogą być puste. Liczba 20 to limit kolumn i komórek w wierszu, nie długość komórki. Schemat nie sprawdza, czy w kolumnie `dec` stoją liczby, a dokumentacja nie mówi, czy robi to KSeF. Schemat nie ma pola na plik (typu binarnego). Pola tekstowe przyjmą dowolne znaki, ale wpisanie do nich zakodowanego pliku byłoby niezgodne z przeznaczeniem załącznika. <Source href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd" label="Schemat FA(3), element Zalacznik" />
+
+<XmlExample copyable>
+  ```xml
+  <Zalacznik>
+    <BlokDanych>
+      <ZNaglowek>Specyfikacja dostawy</ZNaglowek>
+      <MetaDane>
+        <ZKlucz>Liczba pozycji</ZKlucz>
+        <ZWartosc>2</ZWartosc>
+      </MetaDane>
+      <Tabela>
+        <TNaglowek>
+          <Kol Typ="txt">
+            <NKom>Towar</NKom>
+          </Kol>
+          <Kol Typ="txt">
+            <NKom>J.m.</NKom>
+          </Kol>
+          <Kol Typ="dec">
+            <NKom>Ilość</NKom>
+          </Kol>
+          <Kol Typ="dec">
+            <NKom>Cena netto</NKom>
+          </Kol>
+        </TNaglowek>
+        <Wiersz>
+          <WKom>Śruba M8</WKom>
+          <WKom>szt.</WKom>
+          <WKom>1200</WKom>
+          <WKom>0.35</WKom>
+        </Wiersz>
+        <Wiersz>
+          <WKom>Pręt gwintowany M8</WKom>
+          <WKom>mb</WKom>
+          <WKom>42.5</WKom>
+          <WKom>6.80</WKom>
+        </Wiersz>
+      </Tabela>
+    </BlokDanych>
+  </Zalacznik>
+  ```
+</XmlExample>
+
+[Walidator](/validator) sprawdzi `Zalacznik` ze schematem FA(3) tak jak resztę faktury. Nie sprawdza natomiast rozmiaru pliku ani tego, czy masz włączone załączniki.
+
+### Jak przetestować załączniki bez e-US?
+
+W środowisku testowym zamiast zgłoszenia w e-US załączniki włączasz przez `POST /testdata/attachment`, a wyłączasz przez `/testdata/attachment/revoke`. Endpointy `/testdata/*` służą do przygotowania danych w środowiskach testowych. Treści żądania nie podajemy, bo jej nie sprawdziliśmy. Nie wiemy też, czy przełącznik działa w środowisku DEMO. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json" label="CIRFMF: open-api.json, /testdata/attachment" />
+
+Zanim wyślesz pierwszą paczkę z załącznikami na produkcję, przećwicz ją w TEST. Jak połączyć program z API środowiska testowego, opisujemy [w przewodniku po środowisku testowym KSeF](/guides/srodowisko-testowe-ksef).
