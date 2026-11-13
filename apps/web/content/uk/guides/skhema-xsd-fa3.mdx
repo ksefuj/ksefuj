@@ -1,0 +1,211 @@
+---
+title: "Схема XSD FA(3) і приклад рахунку в XML"
+description: "Схема FA(3) складається з файлу schemat.xsd і трьох спільних схем MF. Подивись, як побудовано Faktura, які типи мають поля, і готовий XML без помилок."
+date: 2026-11-13
+section: guides
+locale: uk
+slug: "skhema-xsd-fa3"
+topic: "errors"
+tags: ["KSeF", "FA(3)", "Рахунок"]
+translationOf: "schemat-xsd-fa3"
+translations:
+  pl: "schemat-xsd-fa3"
+  en: "fa3-xsd-schema"
+  uk: "skhema-xsd-fa3"
+sources:
+  - label: "Логічна структура FA(3) на crd.gov.pl (schemat.xsd)"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+  - label: "CIRFMF/ksef-api: схема FA(3) v1-0E"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/schemy/FA/schemat_FA(3)_v1-0E.xsd"
+  - label: "CIRFMF/ksef-api: базові схеми (StrukturyDanych, ElementarneTypyDanych, KodyKrajow)"
+    url: "https://github.com/CIRFMF/ksef-api/tree/main/faktury/schemy/FA/bazowe"
+  - label: "CIRFMF/ksef-api: схема FA(2) v1-0E (для порівняння)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/schemy/FA/schemat_FA(2)_v1-0E.xsd"
+  - label: "Інформаційна брошура FA(3), п. 1.2 (польською)"
+    url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "MF / CIRF: Weryfikacja faktury (перевірка рахунку), 09.04.2026"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md"
+  - label: "Підручник KSeF 2.0, ч. II (06.08.2026), п. 1.6.1 (польською)"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+---
+
+FA(3) — це логічна структура структурованого рахунку, яку Міністерство фінансів (MF) публікує як схему XSD: за нею ти будуєш кожен XML-файл, що надсилаєш до KSeF (Krajowy System e-Faktur, Національна система е-рахунків Польщі). Простір імен схеми `http://crd.gov.pl/wzor/2025/06/25/13775/`, а головний файл можна завантажити за адресою `https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd`. <Source href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd" label="crd.gov.pl, schemat.xsd" />
+
+Станом на 13 листопада 2026 року, версія схеми `1-0E`.
+
+Простір імен починається з `http://`, хоча сам файл ти завантажуєш через `https://`. В атрибут `xmlns` вписуй варіант із `http`: якщо вписати туди `https://`, файл не пройде перевірку схемою. Як це виправити, пояснюємо на сторінці про [неправильний простір імен (namespace) у FA(3)](/uk/validator/nevirnyy-namespace-rakhunok-fa3).
+
+## З яких файлів складається схема FA(3)?
+
+Схема складається з чотирьох файлів. Рахунку FA(3) стосується лише `schemat.xsd`, а решта три є спільними доменними схемами MF з каталогу `http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2022/01/05/eD/DefinicjeTypy/`. Схема FA(2) імпортує той самий файл `StrukturyDanych_v10-0E.xsd`.
+
+1. `schemat.xsd` **імпортує** (`xsd:import`) `StrukturyDanych_v10-0E.xsd`, бо той має інший простір імен.
+2. `StrukturyDanych_v10-0E.xsd` **включає** (`xsd:include`) `ElementarneTypyDanych_v10-0E.xsd`.
+3. `ElementarneTypyDanych_v10-0E.xsd` включає `KodyKrajow_v10-0E.xsd`, який уже нічого не підключає.
+
+FA(3) бере зі спільних схем лише прості типи, наприклад `TNrNIP`, `TData`, `TKodKraju` і `TWybor1_2`. Тому жоден елемент рахунку не належить до простору імен `DefinicjeTypy`, і всі вони мають належати до простору FA(3). Достатньо типового `xmlns` в елементі `<Faktura>`. Файл, у якому префікс має лише кореневий елемент (`<tns:Faktura>`), а дочірні елементи без префікса, перевірку не пройде.
+
+Деякі типи головна схема визначає по-своєму під тією самою назвою. `TZnakowy` з FA(3) має від 1 до 256 символів, а `TZnakowy` з `ElementarneTypyDanych` від 1 до 240. `TAdres` з FA(3) (`KodKraju`, `AdresL1`, необов'язково `AdresL2` і `GLN`) не те саме, що `TAdres` у `StrukturyDanych`. Читаючи визначення типу, дивись на префікс: `tns:` означає FA(3), `etd:` спільні схеми.
+
+MF публікує ті самі файли в репозиторії `CIRFMF/ksef-api`, у каталозі `faktury/schemy/FA/`, а спільні схеми в підкаталозі `bazowe/`. <Source href="https://github.com/CIRFMF/ksef-api/tree/main/faktury/schemy/FA/bazowe" label="CIRFMF/ksef-api, каталог bazowe" /> Файли в `bazowe/` підключають одне одного за відносними шляхами. Проте головна схема імпортує `StrukturyDanych` з абсолютної адреси `http://crd.gov.pl/...`, тож для перевірки без доступу до мережі потрібні локальні копії і каталог XML. Як налаштувати xmllint, показуємо в [посібнику з валідації XML FA(3)](/en/guides/fa3-xml-validation) (англійською).
+
+### Відколи діє FA(3) і чим вона відрізняється від FA(2)?
+
+З 1 лютого 2026 року чинним зразком структурованого рахунку є FA(3). Попередню структуру, FA(2), застосовували з 1 вересня 2023 року до 31 січня 2026 року. У FA(3) ти також виставляєш коригування рахунків, які до 1 лютого 2026 року були створені у FA(2) або FA(1), і підсумкові рахунки до авансів, якщо авансовий рахунок виставили до цієї дати у FA(2) або FA(1). <Source href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf" label="Інформаційна брошура FA(3), п. 1.2" />
+
+Ми порівняли обидві схеми з репозиторію MF. FA(2) має простір імен `http://crd.gov.pl/wzor/2023/06/29/12648/`, `kodSystemowy="FA (2)"` і `WariantFormularza`, що дорівнює 2. **В обох атрибут `wersjaSchemy` має значення `1-0E`**, тож за ним версію не розрізниш. FA(3) додає, зокрема, елементи `JST`, `GV`, `Zalacznik` і `IPKSeF`, а в `P_12` замість ставок `0` і `np` має `0 KR`, `0 WDT`, `0 EX`, `np I` і `np II`. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/schemy/FA/schemat_FA(2)_v1-0E.xsd" label="CIRFMF/ksef-api, schemat_FA(2)_v1-0E.xsd" /> Що ці зміни означають для того, хто виставляє рахунки, пишемо в [порівнянні FA(2) і FA(3)](/en/blog/fa2-vs-fa3-ksef) (англійською).
+
+## Як побудовано елемент Faktura?
+
+`Faktura` є єдиним глобальним елементом схеми. Його дочірні елементи утворюють одну послідовність (`xsd:sequence`), тому мають стояти точно в порядку з таблиці нижче. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/schemy/FA/schemat_FA(3)_v1-0E.xsd" label="CIRFMF/ksef-api, schemat_FA(3)_v1-0E.xsd" /> Як виправити елемент, що стоїть не там, де треба, пояснюємо на сторінці про [елемент не на своєму місці](/uk/validator/element-ne-na-svoyemu-mistsi-fa3).
+
+| Елемент              | Скільки разів | Що містить                                                                            |
+| -------------------- | ------------- | ------------------------------------------------------------------------------------- |
+| `Naglowek`           | 1             | `KodFormularza`, `WariantFormularza`, `DataWytworzeniaFa`, необов'язково `SystemInfo` |
+| `Podmiot1`           | 1             | продавець: `DaneIdentyfikacyjne` (`NIP`, `Nazwa`) і обов'язковий `Adres`              |
+| `Podmiot2`           | 1             | покупець: `DaneIdentyfikacyjne`, необов'язковий `Adres`, обов'язкові `JST` і `GV`     |
+| `Podmiot3`           | 0–100         | третя особа, наприклад одержувач або фактор, з `Rola` або `RolaInna` і `OpisRoli`     |
+| `PodmiotUpowazniony` | 0–1           | уповноважена особа: `DaneIdentyfikacyjne`, `Adres`, `RolaPU`                          |
+| `Fa`                 | 1             | дати, номер, суми, анотації, позиції та оплата                                        |
+| `Stopka`             | 0–1           | `Informacje` (до 3) і `Rejestry` (KRS, REGON, BDO; до 100)                            |
+| `Zalacznik`          | 0–1           | додаток: `BlokDanych` (1–1000) з метаданими, текстом і таблицями                      |
+
+У `Naglowek` чотири значення сталі. `KodFormularza` містить `FA` і атрибути `kodSystemowy="FA (3)"` та `wersjaSchemy="1-0E"`. **У `FA (3)` є пробіл**, а значення `FA(3)` схема відхиляє. `WariantFormularza` приймає лише `3`, а `DataWytworzeniaFa` — це дата з часом, не раніше ніж `2025-09-01T00:00:00Z`.
+
+`Podmiot2/DaneIdentyfikacyjne` містить рівно один із чотирьох варіантів: `NIP`, пару `KodUE` і `NrVatUE`, `NrID` (необов'язково з `KodKraju`) або `BrakID`, що дорівнює 1. Схема не перевірить, чи польський NIP покупця потрапив у `NIP`, а не в `NrVatUE`. `JST` і `GV` приймають 1 (так) або 2 (ні). За документацією схеми, якщо `JST` дорівнює 1, треба додати `Podmiot3` з роллю 8, щоб рахунок став доступним підпорядкованій одиниці органу місцевого самоврядування (JST). Сам XSD цієї залежності не вимагає. Докладніше на сторінці про [відсутні JST і GV](/uk/validator/vidsutni-jst-gv-podmiot2).
+
+У схемі також немає обмежень `xsd:unique` чи `xsd:key`, тож вона не перевірить, наприклад, чи не повторюються номери позицій `NrWierszaFa`.
+
+### Що міститься в елементі Fa?
+
+Головні дочірні елементи `Fa` у порядку зі схеми:
+
+| Елемент                        | Обов'язковий | Що містить                                                                                                           |
+| ------------------------------ | ------------ | -------------------------------------------------------------------------------------------------------------------- |
+| `KodWaluty`                    | так          | код валюти зі списку 182 кодів, великими літерами (`PLN`, `EUR`)                                                     |
+| `P_1`                          | так          | дата виставлення                                                                                                     |
+| `P_2`                          | так          | номер рахунку, від 1 до 256 символів                                                                                 |
+| `P_6` або `OkresFa`            | ні           | спільна дата поставки, надання послуги чи отримання оплати, якщо вона відрізняється від дати виставлення, або період |
+| `P_13_1` і `P_14_1` … `P_13_5` | ні           | групи бази й податку для кожної ставки; у використаній групі обидві суми обов'язкові (крім `P_14_5`)                 |
+| `P_15`                         | так          | загальна сума до оплати                                                                                              |
+| `Adnotacje`                    | так          | `P_16`, `P_17`, `P_18`, `P_18A`, `Zwolnienie`, `NoweSrodkiTransportu`, `P_23`, `PMarzy`, усі обов'язкові             |
+| `RodzajFaktury`                | так          | `VAT`, `KOR`, `ZAL`, `ROZ`, `UPR`, `KOR_ZAL` або `KOR_ROZ`                                                           |
+| `FaWiersz`                     | 0–10 000     | позиції рахунку; усередині обов'язковий лише `NrWierszaFa`                                                           |
+| `Platnosc`                     | ні           | строки й спосіб оплати, банківські рахунки, знижка за дострокову оплату (skonto)                                     |
+
+За документацією схеми група `P_13_1` і `P_14_1` стосується основної ставки (зараз 23% або 22%). Наступні групи охоплюють знижені ставки та інші випадки, а `P_13_5` з необов'язковим `P_14_5` призначена для процедури OSS. Якщо вписуєш `P_13_1`, одразу після нього має стояти `P_14_1`. Однак усю групу можна пропустити, і схема цього не помітить.
+
+В `Adnotacje` поля `P_16`, `P_17`, `P_18`, `P_18A` і `P_23` приймають 1 (так) або 2 (ні). `Zwolnienie`, `NoweSrodkiTransportu` і `PMarzy` — елементи вибору: або позначка «так» із подальшими даними (наприклад, `P_19` і підстава звільнення), або позначка «ні» (`P_19N`, `P_22N`, `P_PMarzyN`), що дорівнює 1. Між `RodzajFaktury` і `FaWiersz` розташовані необов'язкові блоки коригування й авансів та кілька інших полів (наприклад, `FP`, `TP`, `DodatkowyOpis`).
+
+### Які типи мають суми, дати й NIP?
+
+| Тип              | Приклади полів                     | Що допускає                                                                               |
+| ---------------- | ---------------------------------- | ----------------------------------------------------------------------------------------- |
+| `TKwotowy`       | `P_11`, `P_13_1`, `P_14_1`, `P_15` | до 2 знаків після крапки, до 16 цифр перед нею                                            |
+| `TKwotowy2`      | `P_9A`, `P_9B`, `P_10`             | до 8 знаків після крапки                                                                  |
+| `TIlosci`        | `P_8B`, `KursWaluty`               | до 6 знаків після крапки                                                                  |
+| `TDataT`         | `P_1`, `P_6`, `P_6_Od`, `P_6_Do`   | дата `РРРР-ММ-ДД` від 2006-01-01 до 2050-01-01, без часового поясу                        |
+| `TNrNIP`         | `NIP`                              | 10 цифр, перша не 0, друга й третя не можуть водночас бути нулями                         |
+| `TStawkaPodatku` | `P_12`                             | `23`, `22`, `8`, `7`, `5`, `4`, `3`, `0 KR`, `0 WDT`, `0 EX`, `zw`, `oo`, `np I`, `np II` |
+
+Суми записуй із крапкою, без роздільників тисяч і без нулів на початку; знак мінус дозволений. Значення `1230,00` і `23%` схема відхиляє. Тип `TNrNIP` перевіряє лише шаблон: **контрольну суму NIP він не рахує**. Якщо отримав помилку формату суми, зазирни на сторінку про [суми без роздільників тисяч](/uk/validator/sumy-bez-rozdilyuvachiv-tysyach).
+
+## Як виглядає правильний рахунок FA(3) в XML?
+
+Файл нижче — звичайний рахунок `VAT` у злотих з однією позицією за ставкою 23%. Дані вигадані, а польською вони тому, що справжні рахунки в KSeF теж польською. Ми перевірили файл 13 листопада 2026 року в xmllint (libxml 2.9.14, схеми з репозиторію MF) і в нашому валідаторі: він пройшов без помилок і попереджень.
+
+<XmlExample copyable>
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<Faktura xmlns="http://crd.gov.pl/wzor/2025/06/25/13775/">
+  <Naglowek>
+    <KodFormularza kodSystemowy="FA (3)" wersjaSchemy="1-0E">FA</KodFormularza>
+    <WariantFormularza>3</WariantFormularza>
+    <DataWytworzeniaFa>2026-11-13T10:00:00Z</DataWytworzeniaFa>
+  </Naglowek>
+  <Podmiot1>
+    <DaneIdentyfikacyjne>
+      <NIP>1112223332</NIP>
+      <Nazwa>Jan Testowy Usługi IT</Nazwa>
+    </DaneIdentyfikacyjne>
+    <Adres>
+      <KodKraju>PL</KodKraju>
+      <AdresL1>ul. Przykładowa 1, 00-001 Warszawa</AdresL1>
+    </Adres>
+  </Podmiot1>
+  <Podmiot2>
+    <DaneIdentyfikacyjne>
+      <NIP>9876543210</NIP>
+      <Nazwa>Testowa Spółka z o.o.</Nazwa>
+    </DaneIdentyfikacyjne>
+    <Adres>
+      <KodKraju>PL</KodKraju>
+      <AdresL1>ul. Testowa 2, 30-001 Kraków</AdresL1>
+    </Adres>
+    <JST>2</JST>
+    <GV>2</GV>
+  </Podmiot2>
+  <Fa>
+    <KodWaluty>PLN</KodWaluty>
+    <P_1>2026-11-13</P_1>
+    <P_2>FV/1/11/2026</P_2>
+    <P_13_1>1000.00</P_13_1>
+    <P_14_1>230.00</P_14_1>
+    <P_15>1230.00</P_15>
+    <Adnotacje>
+      <P_16>2</P_16>
+      <P_17>2</P_17>
+      <P_18>2</P_18>
+      <P_18A>2</P_18A>
+      <Zwolnienie>
+        <P_19N>1</P_19N>
+      </Zwolnienie>
+      <NoweSrodkiTransportu>
+        <P_22N>1</P_22N>
+      </NoweSrodkiTransportu>
+      <P_23>2</P_23>
+      <PMarzy>
+        <P_PMarzyN>1</P_PMarzyN>
+      </PMarzy>
+    </Adnotacje>
+    <RodzajFaktury>VAT</RodzajFaktury>
+    <FaWiersz>
+      <NrWierszaFa>1</NrWierszaFa>
+      <P_7>Usługa programistyczna</P_7>
+      <P_8A>szt.</P_8A>
+      <P_8B>1</P_8B>
+      <P_9A>1000.00</P_9A>
+      <P_11>1000.00</P_11>
+      <P_12>23</P_12>
+    </FaWiersz>
+  </Fa>
+</Faktura>
+```
+</XmlExample>
+
+`P_6` ми пропустили, бо дата надання послуги тут збігається з датою виставлення. `P_18A` має значення 2, бо за документацією схеми 1 вписують лише тоді, коли сума до оплати перевищує 15 000 зл, а рахунок стосується товарів чи послуг з додатка № 15 до закону про VAT. Тут ідеться про 1230 зл за програмування. Адресу покупця й позицію ми залишили, хоча схема їх не вимагає. Коригувальний, авансовий рахунок або рахунок в іноземній валюті потребує додаткових елементів, яких цей приклад не показує.
+
+## Чого схема XSD не перевіряє?
+
+Схема стежить за порядком, наявністю елементів, типами, шаблонами і списками допустимих значень. Контрольних сум і сум вона не рахує. 13 листопада 2026 року ми перевірили на варіантах файлу вище, що схема пропускає:
+
+| Зміна у файлі                                        | xmllint (лише схема) | Валідатор ksefuj.to                |
+| ---------------------------------------------------- | -------------------- | ---------------------------------- |
+| NIP з неправильною контрольною цифрою (`1112223333`) | проходить            | проходить                          |
+| немає `FaWiersz`                                     | проходить            | проходить                          |
+| немає `P_13_1` і `P_14_1`, `P_15` без змін           | проходить            | проходить                          |
+| `P_15` дорівнює `-1230.00`                           | проходить            | помилка `TAX_CALCULATION_MISMATCH` |
+
+Контрольну суму NIP перевіряє лише KSeF, і тільки в продуктивному середовищі. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md" label="CIRFMF/ksef-api, weryfikacja-faktury.md" /> `FaWiersz` у схемі необов'язковий, бо документація схеми описує його як «необов'язковий вузол для авансового рахунку, рахунку, що коригує авансовий рахунок, і коригувальних рахунків (…), про які йдеться в art. 106j ust. 3» (наш переклад). З цього опису випливає, що звичайний рахунок `VAT` повинен мати позиції, але в документації KSeF (Підручник KSeF 2.0, ч. II, п. 1.6.1, і документ «Weryfikacja faktury») ми не знайшли інформації, чи KSeF відхилить рахунок без них. Арифметику KSeF не перевіряє: рахунок із неправильною сумою VAT він прийме. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Підручник KSeF 2.0, ч. II, п. 1.6.1" />
+
+## Як перевірити, чи файл відповідає схемі?
+
+Найпростіше завантажити файл у [валідатор](/uk/validator) або перевірити його в терміналі:
+
+```bash
+npx @ksefuj/validator faktura.xml
+```
+
+Пакет має вбудовані всі чотири схеми, тож перевірка працює без мережі, а файл не залишає твого комп'ютера. Для xmllint потрібні локальні копії трьох спільних схем і каталог XML; налаштування описано в згаданому вище посібнику з валідації. KSeF може відхилити й файл, що відповідає схемі. Повідомлення, які трапляються найчастіше, ми зібрали в тексті про [помилки валідації FA(3)](/en/blog/most-common-fa3-validation-errors) (англійською).
+
+Коли файл проходить перевірку локально, надішли його до тестового середовища KSeF: увесь процес показуємо в посібнику про [перший тестовий рахунок](/uk/guides/pershyy-rakhunok-fa3).

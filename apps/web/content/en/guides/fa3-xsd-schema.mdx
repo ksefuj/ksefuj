@@ -1,0 +1,211 @@
+---
+title: "FA(3) XSD schema and a sample XML invoice"
+description: "The FA(3) KSeF XML schema is schemat.xsd plus three shared MF schemas. See how Faktura is built, the field types and a sample XML that passes validation."
+date: 2026-11-13
+section: guides
+locale: en
+slug: "fa3-xsd-schema"
+topic: "errors"
+tags: ["KSeF", "FA(3)", "Invoice"]
+translationOf: "schemat-xsd-fa3"
+translations:
+  pl: "schemat-xsd-fa3"
+  en: "fa3-xsd-schema"
+  uk: "skhema-xsd-fa3"
+sources:
+  - label: "FA(3) logical structure on crd.gov.pl (schemat.xsd)"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+  - label: "CIRFMF/ksef-api: FA(3) schema v1-0E"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/schemy/FA/schemat_FA(3)_v1-0E.xsd"
+  - label: "CIRFMF/ksef-api: base schemas (StrukturyDanych, ElementarneTypyDanych, KodyKrajow)"
+    url: "https://github.com/CIRFMF/ksef-api/tree/main/faktury/schemy/FA/bazowe"
+  - label: "CIRFMF/ksef-api: FA(2) schema v1-0E (for comparison)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/schemy/FA/schemat_FA(2)_v1-0E.xsd"
+  - label: "FA(3) information sheet, section 1.2 (Polish)"
+    url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "MF / CIRF: Weryfikacja faktury (invoice verification), 09.04.2026"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md"
+  - label: "KSeF 2.0 Handbook part II (06.08.2026), section 1.6.1 (Polish)"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+---
+
+FA(3) is the logical structure of a structured invoice, published by the Polish Ministry of Finance (MF) as an XSD schema: every XML file you send to KSeF (Krajowy System e-Faktur, Poland's National e-Invoicing System) has to follow it. The schema's namespace is `http://crd.gov.pl/wzor/2025/06/25/13775/`, and you can download the main file from `https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd`. <Source href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd" label="crd.gov.pl, schemat.xsd" />
+
+Status as of 13 November 2026, schema version `1-0E`.
+
+The namespace starts with `http://`, even though you download the file over `https://`. The `xmlns` attribute takes the `http` version: put `https://` there and the file fails schema validation. Our page on the [wrong FA(3) namespace](/en/validator/wrong-namespace-fa3-invoice) shows the fix.
+
+## Which files make up the FA(3) schema?
+
+The schema is four files. Only `schemat.xsd` is specific to the FA(3) invoice. The other three are shared MF domain schemas from `http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2022/01/05/eD/DefinicjeTypy/`, and the FA(2) schema imports the same `StrukturyDanych_v10-0E.xsd`.
+
+1. `schemat.xsd` **imports** (`xsd:import`) `StrukturyDanych_v10-0E.xsd`, because that file has a different namespace.
+2. `StrukturyDanych_v10-0E.xsd` **includes** (`xsd:include`) `ElementarneTypyDanych_v10-0E.xsd`.
+3. `ElementarneTypyDanych_v10-0E.xsd` includes `KodyKrajow_v10-0E.xsd`, which includes nothing further.
+
+FA(3) takes only simple types from the shared schemas, such as `TNrNIP`, `TData`, `TKodKraju` and `TWybor1_2`. So no invoice element belongs to the `DefinicjeTypy` namespace, and all of them must be in the FA(3) namespace. A default `xmlns` on `<Faktura>` is enough. A file where only the root element has a prefix (`<tns:Faktura>`) and the child elements have none will fail validation.
+
+Some types are redefined in the main schema under the same name. `TZnakowy` in FA(3) allows 1 to 256 characters, while `TZnakowy` in `ElementarneTypyDanych` allows 1 to 240. `TAdres` in FA(3) (`KodKraju`, `AdresL1`, optionally `AdresL2` and `GLN`) is a different type from `TAdres` in `StrukturyDanych`. When you read a type definition, check the prefix: `tns:` is FA(3), `etd:` is the shared schemas.
+
+MF publishes the same files in the `CIRFMF/ksef-api` repository under `faktury/schemy/FA/`, with the shared schemas in the `bazowe/` subdirectory. <Source href="https://github.com/CIRFMF/ksef-api/tree/main/faktury/schemy/FA/bazowe" label="CIRFMF/ksef-api, bazowe directory" /> The files in `bazowe/` include each other by relative path. The main schema, however, imports `StrukturyDanych` from the absolute address `http://crd.gov.pl/...`, so to validate offline you need local copies and an XML catalog. Our guide to [validating FA(3) XML](/en/guides/fa3-xml-validation) shows how to set up xmllint.
+
+### When did FA(3) replace FA(2), and what changed?
+
+FA(3) has been the mandatory structured invoice template since 1 February 2026. Its predecessor, FA(2), was used from 1 September 2023 to 31 January 2026. You also use FA(3) for corrections of invoices issued in FA(2) or FA(1) before 1 February 2026, and for final invoices settling advances when the advance invoice was issued in FA(2) or FA(1) before that date. <Source href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf" label="FA(3) information sheet, section 1.2" />
+
+We compared both schemas from the MF repository. FA(2) has the namespace `http://crd.gov.pl/wzor/2023/06/29/12648/`, `kodSystemowy="FA (2)"` and `WariantFormularza` set to 2. **In both, the `wersjaSchemy` attribute is `1-0E`**, so it won't tell you which version a file uses. FA(3) adds elements such as `JST`, `GV`, `Zalacznik` and `IPKSeF`, and in `P_12` it replaces the rates `0` and `np` with `0 KR`, `0 WDT`, `0 EX`, `np I` and `np II`. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/schemy/FA/schemat_FA(2)_v1-0E.xsd" label="CIRFMF/ksef-api, schemat_FA(2)_v1-0E.xsd" /> What these changes mean for the issuer is covered in our [FA(2) vs FA(3) comparison](/en/blog/fa2-vs-fa3-ksef).
+
+## How is the Faktura element structured?
+
+`Faktura` is the only global element in the schema. Its children form a single sequence (`xsd:sequence`), so they must appear in exactly the order shown in the table below. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/schemy/FA/schemat_FA(3)_v1-0E.xsd" label="CIRFMF/ksef-api, schemat_FA(3)_v1-0E.xsd" /> If an element is in the wrong place, see our page on the [unexpected element error](/en/validator/unexpected-element-fa3).
+
+| Element              | Occurs | Contents                                                                           |
+| -------------------- | ------ | ---------------------------------------------------------------------------------- |
+| `Naglowek`           | 1      | `KodFormularza`, `WariantFormularza`, `DataWytworzeniaFa`, optionally `SystemInfo` |
+| `Podmiot1`           | 1      | seller: `DaneIdentyfikacyjne` (`NIP`, `Nazwa`) and a mandatory `Adres`             |
+| `Podmiot2`           | 1      | buyer: `DaneIdentyfikacyjne`, optional `Adres`, mandatory `JST` and `GV`           |
+| `Podmiot3`           | 0–100  | third party, e.g. recipient or factor, with `Rola` or `RolaInna` and `OpisRoli`    |
+| `PodmiotUpowazniony` | 0–1    | authorised entity: `DaneIdentyfikacyjne`, `Adres`, `RolaPU`                        |
+| `Fa`                 | 1      | dates, number, amounts, annotations, line items and payment                        |
+| `Stopka`             | 0–1    | `Informacje` (up to 3) and `Rejestry` (KRS, REGON, BDO; up to 100)                 |
+| `Zalacznik`          | 0–1    | attachment: `BlokDanych` (1–1000) with metadata, text and tables                   |
+
+Four values in `Naglowek` are fixed. `KodFormularza` contains `FA` and has the attributes `kodSystemowy="FA (3)"` and `wersjaSchemy="1-0E"`. **`FA (3)` contains a space**, and the schema rejects `FA(3)`. `WariantFormularza` accepts only `3`, and `DataWytworzeniaFa` is a date and time no earlier than `2025-09-01T00:00:00Z`.
+
+`Podmiot2/DaneIdentyfikacyjne` holds exactly one of four options: `NIP`, the pair `KodUE` and `NrVatUE`, `NrID` (optionally with `KodKraju`), or `BrakID` set to 1. The schema won't check whether a Polish buyer's NIP went into `NIP` rather than `NrVatUE`. `JST` and `GV` take 1 (yes) or 2 (no). According to the schema documentation, when `JST` is 1 you must add `Podmiot3` with role 8 so that the invoice is shared with the subordinate unit of the local government body (JST). The XSD itself does not enforce this dependency. Our page on [missing JST and GV](/en/validator/missing-jst-gv-podmiot2) has more.
+
+The schema also has no `xsd:unique` or `xsd:key` constraints, so it won't check, for example, whether `NrWierszaFa` line numbers repeat.
+
+### What goes inside Fa?
+
+The main children of `Fa`, in schema order:
+
+| Element                          | Required | Contents                                                                                                  |
+| -------------------------------- | -------- | --------------------------------------------------------------------------------------------------------- |
+| `KodWaluty`                      | yes      | currency code from a list of 182, in capitals (`PLN`, `EUR`)                                              |
+| `P_1`                            | yes      | issue date                                                                                                |
+| `P_2`                            | yes      | invoice number, 1 to 256 characters                                                                       |
+| `P_6` or `OkresFa`               | no       | a single date of delivery, service or payment when it differs from the issue date, or a period            |
+| `P_13_1` and `P_14_1` … `P_13_5` | no       | net amount and tax groups for each rate; in a group you use, both amounts are mandatory (except `P_14_5`) |
+| `P_15`                           | yes      | total amount due                                                                                          |
+| `Adnotacje`                      | yes      | `P_16`, `P_17`, `P_18`, `P_18A`, `Zwolnienie`, `NoweSrodkiTransportu`, `P_23`, `PMarzy`, all required     |
+| `RodzajFaktury`                  | yes      | `VAT`, `KOR`, `ZAL`, `ROZ`, `UPR`, `KOR_ZAL` or `KOR_ROZ`                                                 |
+| `FaWiersz`                       | 0–10,000 | line items; inside, only `NrWierszaFa` is required                                                        |
+| `Platnosc`                       | no       | payment terms and method, bank accounts, early payment discount                                           |
+
+According to the schema documentation, the `P_13_1` and `P_14_1` group covers the standard rate (currently 23% or 22%). The following groups cover reduced rates and other cases, and `P_13_5` with an optional `P_14_5` is for the OSS procedure. If you include `P_13_1`, `P_14_1` must come right after it. You can, however, leave the whole group out and the schema won't notice.
+
+In `Adnotacje`, the fields `P_16`, `P_17`, `P_18`, `P_18A` and `P_23` take 1 (yes) or 2 (no). `Zwolnienie`, `NoweSrodkiTransportu` and `PMarzy` are choice elements: either a "yes" marker with further data (e.g. `P_19` and the legal basis for the exemption), or a "no" marker (`P_19N`, `P_22N`, `P_PMarzyN`) set to 1. Between `RodzajFaktury` and `FaWiersz` sit optional blocks for corrections and advances, plus a few other fields (e.g. `FP`, `TP`, `DodatkowyOpis`).
+
+### Which types do amounts, dates and NIP use?
+
+| Type             | Example fields                     | What it allows                                                                            |
+| ---------------- | ---------------------------------- | ----------------------------------------------------------------------------------------- |
+| `TKwotowy`       | `P_11`, `P_13_1`, `P_14_1`, `P_15` | up to 2 decimal places, up to 16 digits before the point                                  |
+| `TKwotowy2`      | `P_9A`, `P_9B`, `P_10`             | up to 8 decimal places                                                                    |
+| `TIlosci`        | `P_8B`, `KursWaluty`               | up to 6 decimal places                                                                    |
+| `TDataT`         | `P_1`, `P_6`, `P_6_Od`, `P_6_Do`   | date `YYYY-MM-DD` from 2006-01-01 to 2050-01-01, no time zone                             |
+| `TNrNIP`         | `NIP`                              | 10 digits, the first not 0, the second and third not both zero                            |
+| `TStawkaPodatku` | `P_12`                             | `23`, `22`, `8`, `7`, `5`, `4`, `3`, `0 KR`, `0 WDT`, `0 EX`, `zw`, `oo`, `np I`, `np II` |
+
+Write amounts with a dot, no thousands separators and no leading zeros; a minus sign is allowed. The schema rejects `1230,00` and `23%`. `TNrNIP` only checks the pattern: **it does not verify the NIP checksum**. If you get an amount format error, see our page on [amounts without thousands separators](/en/validator/fa3-amount-format-no-separators).
+
+## What does a valid FA(3) invoice look like in XML?
+
+The file below is a plain `VAT` invoice in Polish złoty with one line item at 23%. The data is made up, and it is in Polish because real KSeF invoices are. We checked the file on 13 November 2026 with xmllint (libxml 2.9.14, schemas from the MF repository) and with our validator: it passed with no errors or warnings.
+
+<XmlExample copyable>
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<Faktura xmlns="http://crd.gov.pl/wzor/2025/06/25/13775/">
+  <Naglowek>
+    <KodFormularza kodSystemowy="FA (3)" wersjaSchemy="1-0E">FA</KodFormularza>
+    <WariantFormularza>3</WariantFormularza>
+    <DataWytworzeniaFa>2026-11-13T10:00:00Z</DataWytworzeniaFa>
+  </Naglowek>
+  <Podmiot1>
+    <DaneIdentyfikacyjne>
+      <NIP>1112223332</NIP>
+      <Nazwa>Jan Testowy Usługi IT</Nazwa>
+    </DaneIdentyfikacyjne>
+    <Adres>
+      <KodKraju>PL</KodKraju>
+      <AdresL1>ul. Przykładowa 1, 00-001 Warszawa</AdresL1>
+    </Adres>
+  </Podmiot1>
+  <Podmiot2>
+    <DaneIdentyfikacyjne>
+      <NIP>9876543210</NIP>
+      <Nazwa>Testowa Spółka z o.o.</Nazwa>
+    </DaneIdentyfikacyjne>
+    <Adres>
+      <KodKraju>PL</KodKraju>
+      <AdresL1>ul. Testowa 2, 30-001 Kraków</AdresL1>
+    </Adres>
+    <JST>2</JST>
+    <GV>2</GV>
+  </Podmiot2>
+  <Fa>
+    <KodWaluty>PLN</KodWaluty>
+    <P_1>2026-11-13</P_1>
+    <P_2>FV/1/11/2026</P_2>
+    <P_13_1>1000.00</P_13_1>
+    <P_14_1>230.00</P_14_1>
+    <P_15>1230.00</P_15>
+    <Adnotacje>
+      <P_16>2</P_16>
+      <P_17>2</P_17>
+      <P_18>2</P_18>
+      <P_18A>2</P_18A>
+      <Zwolnienie>
+        <P_19N>1</P_19N>
+      </Zwolnienie>
+      <NoweSrodkiTransportu>
+        <P_22N>1</P_22N>
+      </NoweSrodkiTransportu>
+      <P_23>2</P_23>
+      <PMarzy>
+        <P_PMarzyN>1</P_PMarzyN>
+      </PMarzy>
+    </Adnotacje>
+    <RodzajFaktury>VAT</RodzajFaktury>
+    <FaWiersz>
+      <NrWierszaFa>1</NrWierszaFa>
+      <P_7>Usługa programistyczna</P_7>
+      <P_8A>szt.</P_8A>
+      <P_8B>1</P_8B>
+      <P_9A>1000.00</P_9A>
+      <P_11>1000.00</P_11>
+      <P_12>23</P_12>
+    </FaWiersz>
+  </Fa>
+</Faktura>
+```
+</XmlExample>
+
+We left out `P_6` because the service date is the same as the issue date here. `P_18A` is 2 because, according to the schema documentation, you enter 1 only when the amount due exceeds PLN 15,000 and the invoice covers goods or services listed in Annex 15 to the VAT Act. This one is for PLN 1,230 of programming services. We kept the buyer's address and the line item even though the schema doesn't require them. A corrective invoice, an advance invoice or one in a foreign currency needs additional elements that this example doesn't show.
+
+## What doesn't the XSD schema check?
+
+The schema enforces order, presence of elements, types, patterns and lists of allowed values. It does not compute checksums or amounts. On 13 November 2026 we tested variants of the file above to see what the schema lets through:
+
+| Change to the file                          | xmllint (schema only) | ksefuj.to validator              |
+| ------------------------------------------- | --------------------- | -------------------------------- |
+| NIP with a wrong check digit (`1112223333`) | passes                | passes                           |
+| no `FaWiersz`                               | passes                | passes                           |
+| no `P_13_1` and `P_14_1`, `P_15` unchanged  | passes                | passes                           |
+| `P_15` set to `-1230.00`                    | passes                | error `TAX_CALCULATION_MISMATCH` |
+
+The NIP checksum is checked only by KSeF, and only in production. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md" label="CIRFMF/ksef-api, weryfikacja-faktury.md" /> `FaWiersz` is optional in the schema because the schema documentation describes it as "an optional node for an advance invoice, an invoice correcting an advance invoice and corrective invoices (…) referred to in Art. 106j ust. 3" (our translation). That wording implies a plain `VAT` invoice should have line items, but we found nothing in the KSeF documentation (KSeF 2.0 Handbook part II, section 1.6.1, and the "Weryfikacja faktury" page) saying whether KSeF rejects an invoice without them. KSeF does not check the arithmetic: it will accept an invoice with a wrong VAT amount. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Handbook part II, section 1.6.1" />
+
+## How do you check a file against the schema?
+
+The simplest way is to drop the file onto the [validator](/en/validator) or check it in the terminal:
+
+```bash
+npx @ksefuj/validator faktura.xml
+```
+
+The package has all four schemas built in, so validation works offline and the file never leaves your computer. For xmllint you need local copies of the three shared schemas and an XML catalog; the validation guide linked above walks through the setup. KSeF can still reject a file that conforms to the schema. The messages you are most likely to see are collected in our post on [FA(3) validation errors](/en/blog/most-common-fa3-validation-errors).
+
+Once the file passes locally, send it to the KSeF test environment: our guide to [your first test invoice](/en/guides/first-fa3-invoice) walks through the whole process.

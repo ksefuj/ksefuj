@@ -1,0 +1,214 @@
+---
+title: "Schemat XSD FA(3) i przykładowa faktura XML"
+description: "Schemat FA(3) to plik schemat.xsd i trzy wspólne schematy MF. Zobacz strukturę elementu Faktura, typy pól i przykładowy XML, który przechodzi walidację."
+date: 2026-11-13
+section: guides
+locale: pl
+slug: "schemat-xsd-fa3"
+topic: "errors"
+tags: ["KSeF", "FA(3)", "Faktura"]
+translations:
+  pl: "schemat-xsd-fa3"
+  en: "fa3-xsd-schema"
+  uk: "skhema-xsd-fa3"
+related:
+  - "guides/walidacja-xml-fa3"
+  - "blog/fa2-vs-fa3-ksef"
+  - "blog/najczestsze-bledy-walidacji-fa3"
+sources:
+  - label: "Struktura logiczna FA(3) na crd.gov.pl (schemat.xsd)"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+  - label: "CIRFMF/ksef-api: schemat FA(3) v1-0E"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/schemy/FA/schemat_FA(3)_v1-0E.xsd"
+  - label: "CIRFMF/ksef-api: schematy bazowe (StrukturyDanych, ElementarneTypyDanych, KodyKrajow)"
+    url: "https://github.com/CIRFMF/ksef-api/tree/main/faktury/schemy/FA/bazowe"
+  - label: "CIRFMF/ksef-api: schemat FA(2) v1-0E (do porównania)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/schemy/FA/schemat_FA(2)_v1-0E.xsd"
+  - label: "Broszura informacyjna FA(3), pkt 1.2"
+    url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "MF / CIRF: Weryfikacja faktury (09.04.2026)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md"
+  - label: "Podręcznik KSeF 2.0 cz. II (06.08.2026), pkt 1.6.1"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+---
+
+FA(3) to struktura logiczna faktury ustrukturyzowanej, którą Ministerstwo Finansów publikuje jako schemat XSD: według niej budujesz każdy plik XML, który wysyłasz do KSeF. Schemat ma przestrzeń nazw `http://crd.gov.pl/wzor/2025/06/25/13775/`, a plik główny pobierzesz z adresu `https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd`. <Source href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd" label="crd.gov.pl, schemat.xsd" />
+
+Stan na 13 listopada 2026 r., wersja schematu `1-0E`.
+
+Przestrzeń nazw zaczyna się od `http://`, choć sam plik pobierasz przez `https://`. W atrybucie `xmlns` wpisujesz wersję z `http`: jeśli wpiszesz tam `https://`, plik nie przejdzie walidacji schematem. Jak to poprawić, opisujemy na stronie o [złej przestrzeni nazw (namespace) w FA(3)](/validator/zly-namespace-faktura-fa3).
+
+## Z jakich plików składa się schemat FA(3)?
+
+Schemat to cztery pliki. Faktury FA(3) dotyczy tylko `schemat.xsd`, a trzy pozostałe to wspólne schematy dziedzinowe MF z katalogu `http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2022/01/05/eD/DefinicjeTypy/`. Schemat FA(2) importuje ten sam plik `StrukturyDanych_v10-0E.xsd`.
+
+1. `schemat.xsd` **importuje** (`xsd:import`) `StrukturyDanych_v10-0E.xsd`, bo ten ma inną przestrzeń nazw.
+2. `StrukturyDanych_v10-0E.xsd` **włącza** (`xsd:include`) `ElementarneTypyDanych_v10-0E.xsd`.
+3. `ElementarneTypyDanych_v10-0E.xsd` włącza `KodyKrajow_v10-0E.xsd`, który niczego już nie dołącza.
+
+FA(3) bierze ze schematów wspólnych wyłącznie typy proste, np. `TNrNIP`, `TData`, `TKodKraju` i `TWybor1_2`. Żaden element faktury nie należy więc do przestrzeni nazw `DefinicjeTypy`, a wszystkie muszą należeć do przestrzeni FA(3). Wystarczy domyślne `xmlns` w elemencie `<Faktura>`. Plik, w którym prefiks ma tylko element główny (`<tns:Faktura>`), a elementy podrzędne są bez prefiksu, nie przejdzie walidacji.
+
+Część typów schemat główny definiuje po swojemu, pod tą samą nazwą. `TZnakowy` z FA(3) ma od 1 do 256 znaków, a `TZnakowy` z `ElementarneTypyDanych` od 1 do 240. `TAdres` z FA(3) (`KodKraju`, `AdresL1`, opcjonalnie `AdresL2` i `GLN`) to inny typ niż `TAdres` w `StrukturyDanych`. Czytając definicję typu, patrz na prefiks: `tns:` to FA(3), `etd:` to schematy wspólne.
+
+MF publikuje te same pliki w repozytorium `CIRFMF/ksef-api`, w katalogu `faktury/schemy/FA/`, a schematy wspólne w podkatalogu `bazowe/`. <Source href="https://github.com/CIRFMF/ksef-api/tree/main/faktury/schemy/FA/bazowe" label="CIRFMF/ksef-api, katalog bazowe" /> Pliki w `bazowe/` dołączają się nawzajem po ścieżkach względnych. Schemat główny importuje jednak `StrukturyDanych` z bezwzględnego adresu `http://crd.gov.pl/...`, więc do walidacji bez dostępu do sieci potrzebujesz lokalnych kopii i katalogu XML. Jak skonfigurować xmllint, pokazujemy w [poradniku o walidacji XML FA(3)](/guides/walidacja-xml-fa3).
+
+### Od kiedy obowiązuje FA(3) i czym różni się od FA(2)?
+
+Od 1 lutego 2026 r. obowiązującym wzorem faktury ustrukturyzowanej jest FA(3). Poprzednią strukturę, FA(2), stosowano od 1 września 2023 r. do 31 stycznia 2026 r. W FA(3) wystawiasz też korekty faktur, które przed 1 lutego 2026 r. powstały w FA(2) lub FA(1), oraz faktury rozliczające zaliczki, jeśli fakturę zaliczkową wystawiono przed tą datą w FA(2) lub FA(1). <Source href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf" label="Broszura informacyjna FA(3), pkt 1.2" />
+
+Porównaliśmy oba schematy z repozytorium MF. FA(2) ma przestrzeń nazw `http://crd.gov.pl/wzor/2023/06/29/12648/`, `kodSystemowy="FA (2)"` i `WariantFormularza` równy 2. **W obu atrybut `wersjaSchemy` ma wartość `1-0E`**, więc po nim wersji nie odróżnisz. FA(3) dodaje m.in. elementy `JST`, `GV`, `Zalacznik` i `IPKSeF`, a w `P_12` zamiast stawek `0` i `np` ma `0 KR`, `0 WDT`, `0 EX`, `np I` i `np II`. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/schemy/FA/schemat_FA(2)_v1-0E.xsd" label="CIRFMF/ksef-api, schemat_FA(2)_v1-0E.xsd" /> Co te zmiany znaczą dla wystawcy, opisujemy w [porównaniu FA(2) i FA(3)](/blog/fa2-vs-fa3-ksef).
+
+## Jak zbudowany jest element Faktura?
+
+`Faktura` to jedyny element globalny schematu. Jego elementy podrzędne tworzą jedną sekwencję (`xsd:sequence`), więc muszą stać dokładnie w kolejności z tabeli poniżej. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/schemy/FA/schemat_FA(3)_v1-0E.xsd" label="CIRFMF/ksef-api, schemat_FA(3)_v1-0E.xsd" /> Jak poprawić element, który stoi nie tam, gdzie trzeba, opisujemy na stronie o [elemencie w złym miejscu](/validator/element-w-zlym-miejscu-fa3).
+
+| Element              | Ile razy | Co zawiera                                                                          |
+| -------------------- | -------- | ----------------------------------------------------------------------------------- |
+| `Naglowek`           | 1        | `KodFormularza`, `WariantFormularza`, `DataWytworzeniaFa`, opcjonalnie `SystemInfo` |
+| `Podmiot1`           | 1        | sprzedawca: `DaneIdentyfikacyjne` (`NIP`, `Nazwa`) i obowiązkowy `Adres`            |
+| `Podmiot2`           | 1        | nabywca: `DaneIdentyfikacyjne`, opcjonalny `Adres`, obowiązkowe `JST` i `GV`        |
+| `Podmiot3`           | 0–100    | podmiot trzeci, np. odbiorca lub faktor, z `Rola` albo `RolaInna` i `OpisRoli`      |
+| `PodmiotUpowazniony` | 0–1      | podmiot upoważniony: `DaneIdentyfikacyjne`, `Adres`, `RolaPU`                       |
+| `Fa`                 | 1        | daty, numer, kwoty, adnotacje, pozycje i płatność                                   |
+| `Stopka`             | 0–1      | `Informacje` (do 3) i `Rejestry` (KRS, REGON, BDO; do 100)                          |
+| `Zalacznik`          | 0–1      | załącznik: `BlokDanych` (1–1000) z metadanymi, tekstem i tabelami                   |
+
+W `Naglowek` cztery wartości są stałe. `KodFormularza` ma treść `FA` i atrybuty `kodSystemowy="FA (3)"` oraz `wersjaSchemy="1-0E"`. **W `FA (3)` jest spacja**, a wartość `FA(3)` schemat odrzuca. `WariantFormularza` przyjmuje tylko `3`, a `DataWytworzeniaFa` to data z godziną nie wcześniejsza niż `2025-09-01T00:00:00Z`.
+
+`Podmiot2/DaneIdentyfikacyjne` zawiera dokładnie jedno z czterech: `NIP`, parę `KodUE` i `NrVatUE`, `NrID` (opcjonalnie z `KodKraju`) albo `BrakID` równe 1. Schemat nie sprawdzi, czy polski NIP nabywcy trafił do `NIP`, a nie do `NrVatUE`. `JST` i `GV` przyjmują 1 (tak) albo 2 (nie). Według dokumentacji schematu przy `JST` równym 1 trzeba dodać `Podmiot3` z rolą 8, żeby udostępnić fakturę jednostce podrzędnej JST. Sam XSD tej zależności jednak nie wymusza. Więcej piszemy na stronie o [brakującym JST i GV](/validator/brak-jst-gv-podmiot2).
+
+Schemat nie ma też ograniczeń `xsd:unique` ani `xsd:key`, więc nie sprawdzi np., czy numery pozycji `NrWierszaFa` się nie powtarzają.
+
+### Co jest w elemencie Fa?
+
+Najważniejsze elementy podrzędne `Fa` w kolejności ze schematu:
+
+| Element                        | Wymagany | Co zawiera                                                                                                   |
+| ------------------------------ | -------- | ------------------------------------------------------------------------------------------------------------ |
+| `KodWaluty`                    | tak      | kod waluty z listy 182 kodów, wielkimi literami (`PLN`, `EUR`)                                               |
+| `P_1`                          | tak      | data wystawienia                                                                                             |
+| `P_2`                          | tak      | numer faktury, od 1 do 256 znaków                                                                            |
+| `P_6` albo `OkresFa`           | nie      | wspólna data dostawy, wykonania usługi lub otrzymania zapłaty, gdy różni się od daty wystawienia, albo okres |
+| `P_13_1` i `P_14_1` … `P_13_5` | nie      | grupy podstawy i podatku dla kolejnych stawek; w użytej grupie obie kwoty są obowiązkowe (poza `P_14_5`)     |
+| `P_15`                         | tak      | kwota należności ogółem                                                                                      |
+| `Adnotacje`                    | tak      | `P_16`, `P_17`, `P_18`, `P_18A`, `Zwolnienie`, `NoweSrodkiTransportu`, `P_23`, `PMarzy`, wszystkie wymagane  |
+| `RodzajFaktury`                | tak      | `VAT`, `KOR`, `ZAL`, `ROZ`, `UPR`, `KOR_ZAL` albo `KOR_ROZ`                                                  |
+| `FaWiersz`                     | 0–10 000 | pozycje faktury; w środku wymagany jest tylko `NrWierszaFa`                                                  |
+| `Platnosc`                     | nie      | terminy i forma płatności, rachunki bankowe, skonto                                                          |
+
+Według dokumentacji schematu grupa `P_13_1` i `P_14_1` dotyczy stawki podstawowej (obecnie 23% albo 22%). Kolejne grupy obejmują stawki obniżone i inne przypadki, a `P_13_5` z opcjonalnym `P_14_5` służy procedurze OSS. Jeśli wpiszesz `P_13_1`, zaraz po nim musi stać `P_14_1`. Całą grupę możesz jednak pominąć, a schemat tego nie zauważy.
+
+W `Adnotacje` pola `P_16`, `P_17`, `P_18`, `P_18A` i `P_23` przyjmują 1 (tak) albo 2 (nie). `Zwolnienie`, `NoweSrodkiTransportu` i `PMarzy` to elementy wyboru: albo znacznik „tak” z dalszymi danymi (np. `P_19` i podstawa zwolnienia), albo znacznik „nie” (`P_19N`, `P_22N`, `P_PMarzyN`) równy 1. Między `RodzajFaktury` a `FaWiersz` znajdują się opcjonalne bloki korekty i zaliczek oraz kilka innych pól (np. `FP`, `TP`, `DodatkowyOpis`).
+
+### Jakie typy mają kwoty, daty i NIP?
+
+| Typ              | Przykładowe pola                   | Co dopuszcza                                                                              |
+| ---------------- | ---------------------------------- | ----------------------------------------------------------------------------------------- |
+| `TKwotowy`       | `P_11`, `P_13_1`, `P_14_1`, `P_15` | do 2 miejsc po kropce, do 16 cyfr przed nią                                               |
+| `TKwotowy2`      | `P_9A`, `P_9B`, `P_10`             | do 8 miejsc po kropce                                                                     |
+| `TIlosci`        | `P_8B`, `KursWaluty`               | do 6 miejsc po kropce                                                                     |
+| `TDataT`         | `P_1`, `P_6`, `P_6_Od`, `P_6_Do`   | data `RRRR-MM-DD` od 2006-01-01 do 2050-01-01, bez strefy czasowej                        |
+| `TNrNIP`         | `NIP`                              | 10 cyfr, pierwsza różna od 0, druga i trzecia nie mogą być jednocześnie zerami            |
+| `TStawkaPodatku` | `P_12`                             | `23`, `22`, `8`, `7`, `5`, `4`, `3`, `0 KR`, `0 WDT`, `0 EX`, `zw`, `oo`, `np I`, `np II` |
+
+Kwoty zapisujesz z kropką, bez separatorów tysięcy i bez zer wiodących; znak minus jest dozwolony. Wartości `1230,00` i `23%` schemat odrzuca. Typ `TNrNIP` sprawdza tylko wzorzec: **sumy kontrolnej NIP nie liczy**. Przy błędzie formatu kwoty zajrzyj na stronę o [kwotach bez separatorów tysięcy](/validator/kwoty-bez-separatorow-tysiecy).
+
+## Jak wygląda poprawna faktura FA(3) w XML?
+
+Poniższy plik to zwykła faktura `VAT` w złotych, z jedną pozycją ze stawką 23%. Dane są zmyślone. Plik sprawdziliśmy 13 listopada 2026 r. w xmllint (libxml 2.9.14, schematy z repozytorium MF) i w naszym walidatorze: przeszedł bez błędów i ostrzeżeń.
+
+<XmlExample copyable>
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<Faktura xmlns="http://crd.gov.pl/wzor/2025/06/25/13775/">
+  <Naglowek>
+    <KodFormularza kodSystemowy="FA (3)" wersjaSchemy="1-0E">FA</KodFormularza>
+    <WariantFormularza>3</WariantFormularza>
+    <DataWytworzeniaFa>2026-11-13T10:00:00Z</DataWytworzeniaFa>
+  </Naglowek>
+  <Podmiot1>
+    <DaneIdentyfikacyjne>
+      <NIP>1112223332</NIP>
+      <Nazwa>Jan Testowy Usługi IT</Nazwa>
+    </DaneIdentyfikacyjne>
+    <Adres>
+      <KodKraju>PL</KodKraju>
+      <AdresL1>ul. Przykładowa 1, 00-001 Warszawa</AdresL1>
+    </Adres>
+  </Podmiot1>
+  <Podmiot2>
+    <DaneIdentyfikacyjne>
+      <NIP>9876543210</NIP>
+      <Nazwa>Testowa Spółka z o.o.</Nazwa>
+    </DaneIdentyfikacyjne>
+    <Adres>
+      <KodKraju>PL</KodKraju>
+      <AdresL1>ul. Testowa 2, 30-001 Kraków</AdresL1>
+    </Adres>
+    <JST>2</JST>
+    <GV>2</GV>
+  </Podmiot2>
+  <Fa>
+    <KodWaluty>PLN</KodWaluty>
+    <P_1>2026-11-13</P_1>
+    <P_2>FV/1/11/2026</P_2>
+    <P_13_1>1000.00</P_13_1>
+    <P_14_1>230.00</P_14_1>
+    <P_15>1230.00</P_15>
+    <Adnotacje>
+      <P_16>2</P_16>
+      <P_17>2</P_17>
+      <P_18>2</P_18>
+      <P_18A>2</P_18A>
+      <Zwolnienie>
+        <P_19N>1</P_19N>
+      </Zwolnienie>
+      <NoweSrodkiTransportu>
+        <P_22N>1</P_22N>
+      </NoweSrodkiTransportu>
+      <P_23>2</P_23>
+      <PMarzy>
+        <P_PMarzyN>1</P_PMarzyN>
+      </PMarzy>
+    </Adnotacje>
+    <RodzajFaktury>VAT</RodzajFaktury>
+    <FaWiersz>
+      <NrWierszaFa>1</NrWierszaFa>
+      <P_7>Usługa programistyczna</P_7>
+      <P_8A>szt.</P_8A>
+      <P_8B>1</P_8B>
+      <P_9A>1000.00</P_9A>
+      <P_11>1000.00</P_11>
+      <P_12>23</P_12>
+    </FaWiersz>
+  </Fa>
+</Faktura>
+```
+</XmlExample>
+
+`P_6` pominęliśmy, bo data wykonania usługi jest tu taka sama jak data wystawienia. `P_18A` ma wartość 2, bo według dokumentacji schematu wartość 1 wpisuje się tylko wtedy, gdy kwota należności przekracza 15 000 zł, a faktura dotyczy towarów lub usług z załącznika nr 15 do ustawy o VAT. Tu chodzi o 1230 zł za usługę programistyczną. Adres nabywcy i pozycję zostawiliśmy, choć schemat ich nie wymaga. Faktura korygująca, zaliczkowa albo w walucie obcej wymaga dodatkowych elementów, których ten przykład nie pokazuje.
+
+## Czego schemat XSD nie sprawdza?
+
+Schemat pilnuje kolejności, obecności elementów, typów, wzorców i list dozwolonych wartości. Nie liczy natomiast sum kontrolnych ani kwot. Na wariantach powyższego pliku sprawdziliśmy 13 listopada 2026 r., co schemat przepuszcza:
+
+| Zmiana w pliku                             | xmllint (sam schemat) | Walidator ksefuj.to             |
+| ------------------------------------------ | --------------------- | ------------------------------- |
+| NIP ze złą cyfrą kontrolną (`1112223333`)  | przechodzi            | przechodzi                      |
+| brak `FaWiersz`                            | przechodzi            | przechodzi                      |
+| brak `P_13_1` i `P_14_1`, `P_15` bez zmian | przechodzi            | przechodzi                      |
+| `P_15` równe `-1230.00`                    | przechodzi            | błąd `TAX_CALCULATION_MISMATCH` |
+
+Sumę kontrolną NIP sprawdza dopiero KSeF, i to tylko w środowisku produkcyjnym. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md" label="CIRFMF/ksef-api, weryfikacja-faktury.md" /> `FaWiersz` jest w schemacie opcjonalny, bo dokumentacja schematu opisuje go jako „węzeł opcjonalny dla faktury zaliczkowej, faktury korygującej fakturę zaliczkową oraz faktur korygujących (…), o których mowa w art. 106j ust. 3”. Z tego opisu wynika, że zwykła faktura `VAT` powinna mieć pozycje, ale w dokumentacji KSeF (Podręcznik KSeF 2.0 cz. II, pkt 1.6.1, i dokument „Weryfikacja faktury”) nie znaleźliśmy informacji, czy KSeF odrzuci fakturę bez nich. Rachunków KSeF nie sprawdza: fakturę ze złą kwotą VAT przyjmie. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0 cz. II, pkt 1.6.1" />
+
+## Jak sprawdzić, czy plik jest zgodny ze schematem?
+
+Najprościej wrzucić plik do [walidatora](/validator) albo sprawdzić go w terminalu:
+
+```bash
+npx @ksefuj/validator faktura.xml
+```
+
+Pakiet ma wbudowane wszystkie cztery schematy, więc walidacja działa bez sieci, a plik nie opuszcza twojego komputera. Do xmllint potrzebujesz lokalnych kopii trzech schematów wspólnych i katalogu XML; konfigurację opisujemy w [poradniku o walidacji](/guides/walidacja-xml-fa3). KSeF może odrzucić także plik zgodny ze schematem. Komunikaty, które spotkasz najczęściej, zebraliśmy w tekście o [błędach walidacji FA(3)](/blog/najczestsze-bledy-walidacji-fa3).
+
+Gdy plik przechodzi walidację lokalnie, wyślij go do środowiska testowego KSeF: cały proces pokazujemy w poradniku o [pierwszej fakturze testowej](/guides/pierwsza-faktura-fa3).
