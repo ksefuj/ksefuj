@@ -5,6 +5,33 @@ effect. Record the date, the page, what changed (old -> new for titles and descr
 metric that motivated it. After 28 days, add a **Results** line comparing current CTR/position with
 the baseline.
 
+## 2026-11-13
+
+Digest: `gsc-data` 2026-11-12 (GSC 2026-10-13 to 2026-11-09: 152 clicks, 13,133 impressions, CTR
+1.16%, avg position 6.9). Weekly content plan asked for new EN titles and descriptions on three
+pages with impressions and no clicks. No title or description changes: all three are inside the
+28-day gate, and the queries they get are Polish fragments an English title cannot match.
+
+- **Pages:** `/en/blog/invoice-for-private-person-ksef`, `/en/blog/vat-exempt-ksef`,
+  `/en/blog/end-of-10000-pln-limit`
+  - **Change:** none.
+  - **Why not:** `/en/blog/invoice-for-private-person-ksef` (468 impr, 0 clicks, pos 5.9) and
+    `/en/blog/end-of-10000-pln-limit` (335 impr, 1 click, pos 6.2) had their titles rewritten on
+    2026-10-26; the end-of-limit description changed again on 2026-11-07. `/en/blog/vat-exempt-ksef`
+    (433 impr, 1 click, pos 6.2) keeps its 2026-10-08 title but has `updated: 2026-11-07`. Earliest
+    eligible dates: private person 2026-11-23, end of limit and VAT-exempt 2026-12-05.
+  - **Queries:** almost all impressions come from short Polish follow-up phrases, one or two
+    impressions each: private person „faktura dla osoby prywatnej”, „a dla osoby prywatnej?”, „nie
+    mam nip”, „a w 2027”; VAT-exempt „jestem zwolniony z vat”, „zwolniony z vat”, „art 113”, „nie
+    jestem vatowcem”, plus the English "not subject to vat - based on art. 100 sec. 1 item 4 of the
+    act" (3 impr, pos 9.3); end of limit „ksef 2027” (8 impr, pos 5.0), „limit vat 2027”, „1
+    stycznia 2027”. The PL versions rank for the same topics
+    (`/blog/faktura-dla-osoby-prywatnej-ksef` 301 impr, pos 7.4; `/blog/zwolniony-z-vat-ksef` 170,
+    pos 6.6; `/blog/koniec-limitu-10000-zl` 488, pos 7.7). Google showing the EN page for Polish
+    queries is a locale-targeting question, not a title one; the next eligible run should check
+    hreflang on these three pairs before retitling.
+  - **Baseline to compare:** the page figures above.
+
 ## 2026-11-12
 
 Digest: `gsc-data` 2026-11-11 (GSC 2026-10-12 to 2026-11-08: 158 clicks, 12,965 impressions, CTR
