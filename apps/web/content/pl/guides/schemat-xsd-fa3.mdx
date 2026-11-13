@@ -40,7 +40,7 @@ Przestrzeń nazw zaczyna się od `http://`, choć sam plik pobierasz przez `http
 
 ## Z jakich plików składa się schemat FA(3)?
 
-Schemat to cztery pliki. Faktury FA(3) dotyczy tylko `schemat.xsd`, a trzy pozostałe to wspólne schematy dziedzinowe MF z katalogu `http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2022/01/05/eD/DefinicjeTypy/`. Ten sam plik `StrukturyDanych_v10-0E.xsd` importuje również schemat FA(2).
+Schemat to cztery pliki. Faktury FA(3) dotyczy tylko `schemat.xsd`, a trzy pozostałe to wspólne schematy dziedzinowe MF z katalogu `http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2022/01/05/eD/DefinicjeTypy/`. Schemat FA(2) importuje ten sam plik `StrukturyDanych_v10-0E.xsd`.
 
 1. `schemat.xsd` **importuje** (`xsd:import`) `StrukturyDanych_v10-0E.xsd`, bo ten ma inną przestrzeń nazw.
 2. `StrukturyDanych_v10-0E.xsd` **włącza** (`xsd:include`) `ElementarneTypyDanych_v10-0E.xsd`.
