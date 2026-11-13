@@ -1,0 +1,147 @@
+---
+title: "KSeF invoice attachments can't be PDFs or scans"
+description: "You can't attach a file. The FA(3) Zalacznik element is only for tax data as text and tables, after you register in e-US, and only in a batch session."
+date: 2026-11-13
+section: blog
+locale: en
+slug: "ksef-invoice-attachments"
+topic: "invoicing"
+tags: ["KSeF", "FA(3)", "Invoice"]
+sources:
+  - label: "KSeF 2.0 Handbook, part II (06.08.2026), sections 1.1, 1.6.1, 1.6.5, 2 and 3.3"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "MF: FA(3) logical structure information sheet, description of the Zalacznik and Stopka elements"
+    url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "FA(3) schema, Zalacznik element"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+  - label: "CIRFMF: Invoice verification (size limits, batch session)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md"
+  - label: "CIRFMF: OpenAPI specification (status 415, /testdata/attachment)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
+  - label: "CIRFMF: Technical correction"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/offline/korekta-techniczna.md"
+translations:
+  pl: "zalaczniki-ksef"
+  en: "ksef-invoice-attachments"
+---
+
+You can't attach a PDF, a scan or any other file to an invoice in KSeF (Krajowy System e-Faktur, Poland's National e-Invoicing System), because according to the KSeF 2.0 Handbook unstructured attachments never reach the system at all. The only attachment KSeF accepts is the `Zalacznik` element inside the FA(3) invoice XML: data blocks (key-value pairs, text paragraphs, tables) for tax data, which you can use only after notifying e-Urząd Skarbowy and can send only in a batch session.
+
+As of 13 November 2026.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  label="KSeF 2.0 Handbook, part II, sections 1.1 and 2"
+/>
+
+## What can and can't go in an attachment?
+
+The `Zalacznik` element arrived with FA(3); FA(2) didn't have it ([other differences between the two versions](/en/blog/fa2-vs-fa3-ksef)). You can issue invoices with an attachment from 1 February 2026. The Ministry of Finance (MF) information sheet on the FA(3) structure intends it for invoices with complex data on units of measure, quantities or net unit prices. It may hold only data listed in art. 106e of the VAT Act, meaning data the invoice must contain anyway, or data closely related to it. <Source href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf" label="FA(3) information sheet, Zalacznik element" />
+
+The information sheet also lists what must not go in an attachment:
+
+- price lists, warranty terms and user manuals,
+- orders, contracts, annexes and acceptance reports,
+- promotions, advertising material, individual offers and newsletters.
+
+It also warns that **if you use the attachment for anything other than its purpose, you lose the right to issue invoices with attachments**. It doesn't say who decides, for how long, or whether you can appeal.
+
+Ania is a graphic designer and wants to attach a signed acceptance report and the contract, both as PDFs, to her invoice for a logo design. She can't send the files to KSeF, and she may not copy the report's contents into `Zalacznik` either. The attachment is more useful to a wholesaler that sells several hundred items in different units of measure and wants to show quantities and net prices in a table.
+
+## Where do you put what the attachment can't hold?
+
+For short notes to the customer, the information sheet provides the invoice footer, the `StopkaFaktury` field (up to 3,500 characters, at most three `Informacje` blocks). It lists thank-you notes, discount codes, opening hours, a helpline, links to return and complaint forms and marketing information, among others. The information sheet doesn't present the footer as a substitute for the attachment; that pairing is ours. <Source href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf" label="FA(3) information sheet, Stopka element" />
+
+You can't send a contract, acceptance report or price list in PDF through KSeF in any form. Neither the handbook nor the information sheet answers whether you may send such a document to the customer separately, for example by email together with the KSeF invoice, or what status it then has. The handbook does allow an invoice visualisation to carry extra data that means nothing to the system, such as a logo or customer service contact details. We explain how such a PDF differs from the XML invoice [in our post on PDF and XML mismatches](/en/blog/pdf-different-from-xml-ksef).
+
+## How do you enable attachments in e-Urząd Skarbowy?
+
+Before you send your first invoice with `Zalacznik`, you notify e-Urząd Skarbowy (the tax office's online portal) that you want to issue such invoices. The information sheet says the notification feature "will be available from 1 January 2026". We have no confirmation that it went live on exactly that day. <Source href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf" label="FA(3) information sheet, p. 149" />
+
+Without the notification, KSeF rejects an invoice with an attachment. A rejected invoice gets no KSeF number, and the handbook states plainly that in that case "the invoice has not been issued". <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Handbook, part II, section 1.6.1" />
+
+The ZAW-FA form is a different matter: according to the KSeF handbook (part I), it is used to grant and revoke KSeF permissions in specific situations, and MF materials don't connect it with the attachment notification.
+
+## What hasn't MF explained yet?
+
+The attachment is part of the same XML file as the invoice, and the information sheet calls it an integral part of the invoice. The rest of the practice is still open. We found no answer in MF materials to these questions:
+
+- what the notification in e-Urząd Skarbowy is called and where to find it,
+- who can submit it: only you, or also a proxy or an accounting firm,
+- from when the notification takes effect and whether you can withdraw it,
+- whether the Taxpayer Application (Aplikacja Podatnika) and the mobile app let you issue an invoice with an attachment,
+- how the buyer will see the attachment in the Taxpayer Application, in the mobile app and on the PDF visualisation,
+- whether the ban on price lists and contracts and the loss of the right follow directly from the act or only from MF guidance (the information sheet cites art. 106gba ust. 1 of the VAT Act).
+
+## For developers: how do you build and send `Zalacznik`?
+
+### Which session, and how large can the file be?
+
+You can send an invoice with an attachment only in a batch session; an interactive session won't accept it. The one exception is the technical correction of an offline invoice: resending, in an interactive session, an invoice issued offline that KSeF rejected for technical errors (for example a schema mismatch or an oversized file). You may not change the invoice content in that case. The documentation doesn't say whether a technical correction covers an invoice rejected because the e-US notification was missing. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/offline/korekta-techniczna.md" label="CIRFMF: Technical correction" />
+
+An invoice file without an attachment may be at most 1 MB, and with an attachment 3 MB. These are decimal megabytes: 3,000,000 bytes, not 3 MiB. Both limits carry an asterisk in the documentation: if they aren't enough for your scenarios, MF asks you to contact KSeF support. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/weryfikacja-faktury.md" label="CIRFMF: Invoice verification" />
+
+A batch session isn't all-or-nothing. KSeF rejects only the faulty XML files and gives a reason for each, so one rejected invoice with an attachment doesn't block the rest of the package. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Handbook, part II, section 3.3" />
+
+In the OpenAPI specification, invoice status `415` has the description "Brak możliwości wysyłania faktury z załącznikiem" (an invoice with an attachment can't be sent). The documentation doesn't say exactly when it appears, so don't assume it means only a missing e-US notification. It's also unknown which code you get for a file over 3 MB or for a schema error inside `Zalacznik`. We explain the other statuses [in our overview of KSeF error codes](/en/blog/ksef-error-codes). <Source href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json" label="CIRFMF: open-api.json" />
+
+### What does the element look like?
+
+`Zalacznik` is the last element of `Faktura`, after `Stopka`. It contains 1 to 1,000 `BlokDanych` elements, and each of them holds, in this order:
+
+- `ZNaglowek`: the block heading, optional, up to 512 characters,
+- `MetaDane`: 1 to 1,000 pairs of `ZKlucz` and `ZWartosc` (each up to 256 characters), **mandatory in every block**, even when the block carries only a table,
+- `Tekst`: optional, 1 to 10 `Akapit` elements of up to 512 characters each,
+- `Tabela`: 0 to 1,000 tables; each has optional `TMetaDane` and `Opis`, then `TNaglowek` with 1–20 `Kol` columns, 1 to 1,000 `Wiersz` elements with `WKom` cells and an optional `Suma` with `SKom` cells.
+
+Every `Kol` column has a required `Typ` attribute (`date`, `datetime`, `dec`, `int`, `time` or `txt`) and a name in `NKom`. `NKom`, `WKom` and `SKom` cells take up to 256 characters and may be empty. The number 20 is the limit on columns and on cells per row, not the cell length. The schema doesn't check that a `dec` column contains numbers, and the documentation doesn't say whether KSeF does. The schema has no field for a file (no binary type). Text fields accept any characters, but putting an encoded file in them would go against the attachment's purpose. <Source href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd" label="FA(3) schema, Zalacznik element" />
+
+<XmlExample copyable>
+  ```xml
+  <Zalacznik>
+    <BlokDanych>
+      <ZNaglowek>Specyfikacja dostawy</ZNaglowek>
+      <MetaDane>
+        <ZKlucz>Liczba pozycji</ZKlucz>
+        <ZWartosc>2</ZWartosc>
+      </MetaDane>
+      <Tabela>
+        <TNaglowek>
+          <Kol Typ="txt">
+            <NKom>Towar</NKom>
+          </Kol>
+          <Kol Typ="txt">
+            <NKom>J.m.</NKom>
+          </Kol>
+          <Kol Typ="dec">
+            <NKom>Ilość</NKom>
+          </Kol>
+          <Kol Typ="dec">
+            <NKom>Cena netto</NKom>
+          </Kol>
+        </TNaglowek>
+        <Wiersz>
+          <WKom>Śruba M8</WKom>
+          <WKom>szt.</WKom>
+          <WKom>1200</WKom>
+          <WKom>0.35</WKom>
+        </Wiersz>
+        <Wiersz>
+          <WKom>Pręt gwintowany M8</WKom>
+          <WKom>mb</WKom>
+          <WKom>42.5</WKom>
+          <WKom>6.80</WKom>
+        </Wiersz>
+      </Tabela>
+    </BlokDanych>
+  </Zalacznik>
+  ```
+</XmlExample>
+
+The [validator](/en/validator) checks `Zalacznik` against the FA(3) schema like the rest of the invoice. It doesn't check the file size or whether you have attachments enabled.
+
+### How do you test attachments without e-US?
+
+In the test environment, instead of the e-US notification you enable attachments with `POST /testdata/attachment` and disable them with `/testdata/attachment/revoke`. The `/testdata/*` endpoints are for preparing data in test environments. We don't give the request body because we haven't checked it. We also don't know whether the switch works in the DEMO environment. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json" label="CIRFMF: open-api.json, /testdata/attachment" />
+
+Before you send your first batch with attachments to production, rehearse it in TEST. We describe how to connect your software to the test environment API [in our KSeF test environment guide](/en/guides/ksef-test-environment).
