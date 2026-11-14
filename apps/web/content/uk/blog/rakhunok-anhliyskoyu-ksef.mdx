@@ -1,0 +1,78 @@
+---
+title: "Рахунок у KSeF може бути англійською"
+description: "Клієнт може отримати рахунок англійською або двомовний. Але рахунком є XML FA(3) у KSeF: поля мають польські назви, а переклад має з ним збігатися."
+date: 2026-11-14
+section: blog
+locale: uk
+slug: "rakhunok-anhliyskoyu-ksef"
+topic: "invoicing"
+translationOf: "faktura-po-angielsku-ksef"
+tags: ["KSeF", "JDG", "Рахунок"]
+sources:
+  - label: "Посібник KSeF 2.0 (Podręcznik KSeF 2.0), ч. II (06.08.2026), пп. 1.6.5, 1.6.6, 5.3, 5.4.1 і 5.5"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "МФ, питання й відповіді KSeF 2.0 (Pytania i odpowiedzi KSeF 2.0), «Виставлення й отримання рахунків»"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/"
+  - label: "Закон про ПДВ (ustawa o VAT), Dz.U. 2026 poz. 1263, ст. 2 pkt 32a, 106ga, 106gb ust. 4–5, 106j ust. 1, 145m"
+    url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
+  - label: "Посібник користувача Aplikacja Podatnika KSeF 2.0 (06.08.2026), с. 21"
+    url: "https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
+  - label: "Схема FA(3)"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+translations:
+  pl: "faktura-po-angielsku-ksef"
+  en: "ksef-invoice-in-english"
+  uk: "rakhunok-anhliyskoyu-ksef"
+---
+
+Так, рахунок, який ти передаєш клієнтові поза KSeF (Krajowy System e-Faktur, польська національна система електронних рахунків), можна підготувати англійською або двома мовами, а сам файл XML може містити англійські дані, наприклад назви послуг. Проте рахунком є файл XML FA(3) у KSeF: назви полів у ньому залишаються польськими, а англійська версія має збігатися з ним за змістом.
+
+Правовий стан на 14 листопада 2026 року.
+
+Виняток до кінця року: продавець, у якого продажі, задокументовані рахунками, не перевищують 10 000 PLN брутто на місяць, може до 31 грудня 2026 року виставляти рахунки поза KSeF (ст. 145m Закону про ПДВ). Тоді файлу XML немає, а про мову таких рахунків у матеріалах Міністерства фінансів (МФ) ми нічого не знайшли. <Source href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263" label="Закон про ПДВ, ст. 145m" />
+
+## Що МФ пише про рахунок іноземною мовою?
+
+За Посібником KSeF 2.0 (Podręcznik KSeF 2.0) файл XML може бути польською, а рахунок, переданий покупцеві поза KSeF, іноземною мовою або двомовним. МФ додає, що ніщо не заважає, щоб іншомовні дані містив і сам XML. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 1.6.5" />
+
+Умову називає FAQ міністерства: візуалізація іншою мовою «має бути узгоджена за змістом (після перекладу) з даними у файлі XML». <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/" label="МФ, питання й відповіді KSeF 2.0, «Виставлення й отримання рахунків»" />
+
+Причина в тому, що Закон про ПДВ (ustawa o VAT) вважає структурованим рахунком рахунок, виставлений у KSeF разом із номером, який йому присвоїла система (ст. 2 pkt 32a). **Тож англійський PDF є зображенням рахунку, а не окремим рахунком.** <Source href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263" label="Закон про ПДВ, ст. 2 pkt 32a" />
+
+## Хто отримає версію англійською?
+
+Це залежить від того, чи має покупець польський NIP (податковий номер).
+
+**Покупець із польським NIP** отримує рахунок у KSeF незалежно від того, якою мовою ти його виставиш. Якщо це, наприклад, англомовний клієнт із фірмою, зареєстрованою в Польщі, ти можеш додатково надіслати йому PDF англійською, але з QR-кодом. МФ наголошує, що інші канали передачі рахунку мають тоді «лише допоміжний і техніко-організаційний характер». <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 1.6.6" /> <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/" label="МФ, питання й відповіді KSeF 2.0, «Виставлення й отримання рахунків»" />
+
+**Іноземна фірма** теж отримує рахунок, виставлений у KSeF (якщо не діє один із винятків зі ст. 106ga ust. 2 Закону про ПДВ), тільки замість NIP ти вписуєш її номер VAT-UE або іноземний ідентифікатор ([як заповнити дані такого покупця](/uk/blog/rakhunok-inozemnomu-kontrahenty-ksef)). Такий рахунок ти передаєш клієнтові в погоджений із ним спосіб, а документ поза KSeF має містити QR-код (ст. 106gb ust. 4 і ust. 5 pkt 1 Закону про ПДВ). Саме сюди йде англійський або двомовний PDF. Для рахунку, виставленого онлайн, достатньо одного QR-коду з номером KSeF під ним. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, пп. 5.3.1 і 5.4.1" />
+
+Клієнт без доступу до KSeF може відсканувати QR-код, ввести дані рахунку (зокрема загальну суму до сплати) і завантажити його як XML або PDF без входу в систему. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, пп. 5.3.2 і 5.5" /> <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Посібник користувача Aplikacja Podatnika KSeF 2.0, с. 21" />
+
+**Іноземна приватна особа** — інший випадок: рахунок для споживача не обов'язково виставляти в KSeF (ст. 106ga ust. 2 pkt 4), хоча можна (ust. 4). Подробиці ми описуємо [у тексті про рахунки для приватних осіб](/uk/blog/rakhunok-dlya-pryvatnoyi-osoby-ksef). <Source href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263" label="Закон про ПДВ, ст. 106ga" />
+
+Мова не змінює правил перерахунку валюти. Курс NBP для рахунку в євро чи доларах знайдеш у [калькуляторі курсів валют](/uk/waluty).
+
+## Чи можуть у XML бути англійські назви послуг?
+
+Можуть. Назву товару чи послуги вписують у поле `P_7`, яке приймає будь-який текст від 1 до 512 символів без обмеження мови. Тож Аня, графічна дизайнерка, яка виставляє рахунки берлінській агенції, може вписати «Logo design» замість «Projekt logo». <Source href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd" label="Схема FA(3), елемент P_7" />
+
+**Назви самих полів залишаються польськими:** `Podmiot2`, `FaWiersz`, `P_7` визначає схема FA(3), і перекласти їх не можна. Зазвичай ти їх навіть не бачиш, бо ними займається програма для рахунків.
+
+Схема дозволяє й двомовний текст в одному полі, наприклад «Projekt logo / Logo design». У матеріалах МФ ми не знайшли оцінки, чи це вдала ідея.
+
+### Для програмістів: мову не позначиш атрибутом
+
+FA(3) оголошує атрибути лише в `KodFormularza` (`kodSystemowy`, `wersjaSchemy`) і `Typ` у колонках таблиць `Zalacznik`. Будь-який інший атрибут, зокрема `xml:lang="en"` у `P_7`, не пройде валідацію за схемою ([опис цієї помилки](/uk/validator/nedozvolenyy-atrybut-fa3)). Тому двомовний опис вписуєш у саме значення поля. <Source href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd" label="Схема FA(3), оголошення атрибутів" />
+
+## Чому термін оплати й номер рахунку варто вписати в XML?
+
+МФ не радить надсилати до KSeF файл XML лише з базовими даними, а термін оплати чи номер банківського рахунку дописувати **тільки на візуалізації**. Це рекомендація, а не заборона. Натомість на англійському PDF можна додати інформацію без значення для системи, наприклад логотип або контакт служби підтримки клієнтів. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 1.6.5" />
+
+## Чого МФ ще не вирішило?
+
+**Що буде, якщо переклад не збігається з XML.** МФ вимагає, щоб рахунок поза KSeF був узгоджений із файлом у системі й не суперечив йому, але в його матеріалах ми не знайшли, які наслідки має розбіжність і яка версія має перевагу. Помилку в самому XML виправляють коригувальним рахунком (ст. 106j ust. 1 Закону про ПДВ). <Source href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263" label="Закон про ПДВ, ст. 106j ust. 1" />
+
+**Чи перекладати обов'язкові позначки,** як-от «odwrotne obciążenie» (зворотне оподаткування) чи «metoda kasowa» (касовий метод). Посібник каже лише, що позначки, які є в XML, мають бути й на візуалізації. Ні в Посібнику, ні в FAQ ми не знайшли нічого про їхню мову, тож якщо виставляєш такі рахунки, погодь це з бухгалтером. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Посібник KSeF 2.0, ч. II, п. 1.6.5" />
+
+Що МФ пише про PDF, який відрізняється від XML, ми зібрали [у тексті про розбіжність PDF і XML](/uk/blog/pdf-ne-zbigayetsya-z-xml-ksef).
