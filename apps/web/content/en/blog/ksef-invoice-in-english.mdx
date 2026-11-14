@@ -1,0 +1,78 @@
+---
+title: "Your KSeF invoice can be in English"
+description: "Your client can get an English or bilingual invoice. The invoice itself is the FA(3) XML in KSeF: Polish field names, and the translation must match it."
+date: 2026-11-14
+section: blog
+locale: en
+slug: "ksef-invoice-in-english"
+topic: "invoicing"
+translationOf: "faktura-po-angielsku-ksef"
+tags: ["KSeF", "Freelancer", "Invoice"]
+sources:
+  - label: "KSeF 2.0 Manual (Podręcznik KSeF 2.0), Part II (06.08.2026), sections 1.6.5, 1.6.6, 5.3, 5.4.1 and 5.5"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "MF, KSeF 2.0 questions and answers (Pytania i odpowiedzi KSeF 2.0), “Issuing and receiving invoices”"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/"
+  - label: "Polish VAT Act (ustawa o VAT), Dz.U. 2026 poz. 1263, Art. 2 pkt 32a, 106ga, 106gb ust. 4–5, 106j ust. 1, 145m"
+    url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
+  - label: "Aplikacja Podatnika KSeF 2.0 user manual (06.08.2026), p. 21"
+    url: "https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
+  - label: "FA(3) schema"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+translations:
+  pl: "faktura-po-angielsku-ksef"
+  en: "ksef-invoice-in-english"
+  uk: "rakhunok-anhliyskoyu-ksef"
+---
+
+Yes. The invoice you hand to your client outside KSeF (Krajowy System e-Faktur, Poland's National e-Invoicing System) can be in English or in two languages, and the XML file itself can contain English data, such as the names of your services. The invoice in law, though, is the FA(3) XML file in KSeF: its field names stay Polish, and the English version must match it in substance.
+
+Legal status as of 14 November 2026.
+
+One exception until the end of the year: a seller whose sales documented by invoices do not exceed 10 000 PLN gross a month may issue invoices outside KSeF until 31 December 2026 (Art. 145m of the VAT Act). In that case there is no XML file, and we found nothing in the Ministry of Finance (MF) materials about the language of such invoices. <Source href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263" label="VAT Act, Art. 145m" />
+
+## What does MF say about invoices in a foreign language?
+
+According to the KSeF 2.0 Manual (Podręcznik KSeF 2.0), the XML file can be in Polish while the invoice made available to the buyer outside KSeF is in a foreign language or bilingual. MF adds that nothing prevents the XML itself from containing data in a foreign language. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, Part II, section 1.6.5" />
+
+The condition comes from the ministry's FAQ: a visualisation in another language "must be consistent in substance (once translated) with the data in the XML file". <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/" label="MF, KSeF 2.0 questions and answers, “Issuing and receiving invoices”" />
+
+The reason is in the VAT Act (ustawa o VAT), which defines a structured invoice as one issued in KSeF together with the number the system assigned to it (Art. 2 pkt 32a). **So the English PDF is a picture of the invoice, not a separate invoice.** <Source href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263" label="VAT Act, Art. 2 pkt 32a" />
+
+## Who gets the English version?
+
+That depends on whether the buyer has a Polish NIP (tax identification number).
+
+**A buyer with a Polish NIP** receives the invoice in KSeF, whatever language you issue it in. If that buyer is, say, an English-speaking client with a company registered in Poland, you can also send them an English PDF, but with a QR code. MF points out that other channels for delivering the invoice are then "only auxiliary, technical and organisational in nature". <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, Part II, section 1.6.6" /> <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20/" label="MF, KSeF 2.0 questions and answers, “Issuing and receiving invoices”" />
+
+**A foreign company** also gets an invoice issued in KSeF (unless one of the exclusions in Art. 106ga ust. 2 of the VAT Act applies); instead of a NIP you enter its EU VAT number or foreign identifier ([how to fill in a foreign buyer's details](/en/blog/foreign-invoice-ksef)). You deliver that invoice to the client in the way you agreed with them, and the document outside KSeF must carry a QR code (Art. 106gb ust. 4 and ust. 5 pkt 1 of the VAT Act). This is where the English or bilingual PDF goes. For an invoice issued online, one QR code with the KSeF number underneath is enough. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, Part II, sections 5.3.1 and 5.4.1" />
+
+If you are the client and have no access to KSeF, you can scan the QR code, enter the invoice details (including the total amount due) and download the invoice as XML or PDF without logging in. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, Part II, sections 5.3.2 and 5.5" /> <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Aplikacja Podatnika KSeF 2.0 user manual, p. 21" />
+
+**A foreign private individual** is a different case: you don't have to issue a consumer's invoice in KSeF (Art. 106ga ust. 2 pkt 4), although you may (ust. 4). We cover the details [in our post on invoices for private individuals](/en/blog/invoice-for-private-person-ksef). <Source href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263" label="VAT Act, Art. 106ga" />
+
+Language doesn't change the currency conversion rules. You'll find the NBP rate for an invoice in euros or dollars in our [exchange rate calculator](/en/waluty).
+
+## Can the XML contain English service names?
+
+Yes. The name of the goods or service goes in the `P_7` field, which accepts any text from 1 to 512 characters, with no language restriction. Ania, a graphic designer invoicing a Berlin agency, can enter "Logo design" instead of "Projekt logo". <Source href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd" label="FA(3) schema, element P_7" />
+
+**The field names themselves stay Polish:** `Podmiot2`, `FaWiersz` and `P_7` are fixed by the FA(3) schema and cannot be translated. You usually never see them, because your invoicing software handles them.
+
+The schema also allows bilingual text in a single field, e.g. "Projekt logo / Logo design". We found no assessment in the MF materials of whether that is a good idea.
+
+### For developers: you can't mark the language with an attribute
+
+FA(3) declares attributes only on `KodFormularza` (`kodSystemowy`, `wersjaSchemy`) and `Typ` in the table columns of `Zalacznik`. Any other attribute, including `xml:lang="en"` on `P_7`, fails schema validation ([about this error](/en/validator/attribute-not-allowed-fa3)). A bilingual description therefore goes into the field value itself. <Source href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd" label="FA(3) schema, attribute declarations" />
+
+## Why put the payment date and bank account in the XML?
+
+MF advises against sending KSeF an XML file with only the basic data and adding the payment due date or bank account number **only on the visualisation**. This is a recommendation, not a ban. What you can add to the English PDF is information with no meaning for the system, such as your logo or customer service contact details. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, Part II, section 1.6.5" />
+
+## What hasn't MF settled yet?
+
+**What happens when the translation doesn't match the XML.** MF requires the invoice outside KSeF to be consistent with the file in the system and not to contradict it, but we found nothing in its materials on the consequences of a mismatch or on which version prevails. An error in the XML itself is fixed with a corrective invoice (Art. 106j ust. 1 of the VAT Act). <Source href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263" label="VAT Act, Art. 106j ust. 1" />
+
+**Whether to translate statutory annotations** such as "odwrotne obciążenie" (reverse charge) or "metoda kasowa" (cash accounting). The Manual only says that annotations present in the XML must appear on the visualisation. We found nothing in the Manual or the FAQ about their language, so if you issue such invoices, agree on it with your accountant. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, Part II, section 1.6.5" />
+
+What MF says about a PDF that differs from the XML is collected [in our post on PDF and XML mismatches](/en/blog/pdf-different-from-xml-ksef).
