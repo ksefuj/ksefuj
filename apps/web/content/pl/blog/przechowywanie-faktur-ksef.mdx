@@ -1,0 +1,91 @@
+---
+title: "KSeF przechowuje faktury przez 10 lat"
+description: "KSeF przechowuje faktury 10 lat od końca roku wystawienia, więc przez ten czas nie trzymasz ich u siebie. Faktury spoza KSeF przechowujesz sam, jak dotąd."
+date: 2026-11-15
+section: blog
+locale: pl
+slug: "przechowywanie-faktur-ksef"
+topic: "invoicing"
+tags: ["KSeF", "Faktura", "JDG"]
+related:
+  - "guides/jak-odebrac-fakture-ksef"
+  - "blog/usuniecie-faktury-ksef"
+  - "blog/biuro-rachunkowe-ksef-kto-co-robi"
+sources:
+  - label: "Podręcznik KSeF 2.0, cz. II: wystawianie i otrzymywanie faktur (wyd. 6.08.2026), pkt 1.2, 1.6.3, 6.5 i 7"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "MF, Najczęstsze pytania o KSeF, pyt. 21"
+    url: "https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
+  - label: "MF, Podstawy prawne oraz kluczowe terminy"
+    url: "https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/podstawy-prawne-oraz-kluczowe-terminy/"
+  - label: "Podręcznik KSeF 2.0, cz. I: rozpoczęcie korzystania z KSeF (wyd. 6.08.2026), s. 55, 57 i 77–78"
+    url: "https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  - label: "Podręcznik użytkownika Aplikacji Podatnika KSeF 2.0 (wyd. 6.08.2026)"
+    url: "https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
+  - label: "KSeF API: changelog (wersja 2.4.0, retencja eksportu)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md"
+  - label: "Ustawa o VAT, tekst jednolity (Dz.U. 2026 poz. 1263), art. 106ga ust. 2, 106ng i 106nha"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+translations:
+  pl: "przechowywanie-faktur-ksef"
+  en: "how-long-ksef-stores-invoices"
+  uk: "zberigannya-rakhunkiv-ksef"
+---
+
+KSeF przechowuje faktury przez 10 lat od końca roku, w którym je wystawiono. Przez ten czas nie musisz trzymać ich u siebie ani dostarczać do urzędu skarbowego: według MF w tym okresie nie stosuje się art. 112 i 112a ustawy o VAT, a administracja skarbowa ma do faktur w KSeF dostęp. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 7 i 1.6.3" /> <Source href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/" label="MF, Najczęstsze pytania, pyt. 21" />
+
+Stan prawny na 15 listopada 2026 r.
+
+## Które faktury zostają w KSeF?
+
+KSeF przechowuje faktury ustrukturyzowane, czyli te, którym nadał numer KSeF. Dotyczy to także faktur wystawionych offline (w trybie offline24, w czasie niedostępności albo awarii KSeF), ale dopiero od chwili, gdy trafią do systemu. Faktury offline, która czeka na wysłanie, w KSeF jeszcze nie ma. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 7" />
+
+To samo dotyczy faktur VAT RR i VAT RR KOREKTA. Od 1 kwietnia 2026 r. można je wystawiać w KSeF dobrowolnie, więc system przechowuje tylko te, które faktycznie do niego wysłano. <Source href="https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/podstawy-prawne-oraz-kluczowe-terminy/" label="MF, Podstawy prawne oraz kluczowe terminy" /> <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 7" />
+
+Faktury, która raz dostała numer, nie usuniesz ani nie anulujesz, więc przez cały ten okres zostaje w KSeF. Korekta to osobna faktura z własnym numerem KSeF i własnym okresem przechowywania. Co zrobić z błędną fakturą, piszemy w poście o tym, [dlaczego nie usuniesz faktury z KSeF](/blog/usuniecie-faktury-ksef).
+
+## Kiedy musisz pobrać fakturę przed końcem 10 lat?
+
+Wtedy, gdy zobowiązanie podatkowe przedawnia się później. MF uzasadnia 10 lat tym, że w tym czasie przedawnia się **większość** zobowiązań, i wiąże ten okres z korektą podatku naliczonego przy nieruchomościach. Większość to jednak nie wszystkie. Jeśli 10 lat w KSeF minie przed przedawnieniem, fakturę przechowujesz dalej poza KSeF, aż zobowiązanie się przedawni, a MF wskazuje, że trzeba ją pobrać z wyprzedzeniem. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 7" />
+
+Przykład MF: faktura wysłana 5 lutego 2026 r. zostaje w KSeF do 31 grudnia 2036 r. Jeśli zobowiązanie, którego dotyczy, nie przedawni się do tego dnia, pobierasz ją najpóźniej 31 grudnia 2036 r. i od tej pory przechowujesz sam. Okres liczy się od końca roku wystawienia, a nie od dnia wystawienia, więc dla faktur wystawionych w 2026 r. kończy się, naszym zdaniem, 31 grudnia 2036 r.
+
+Kiedy przedawnienie trwa u ciebie dłużej niż 10 lat, zależy od twojej sytuacji podatkowej. To pytanie do doradcy podatkowego albo księgowej.
+
+## Faktury spoza KSeF przechowujesz jak dotąd
+
+KSeF przechowuje tylko to, co do niego trafiło. Faktura bez numeru KSeF nie korzysta z 10 lat w systemie, więc od początku przechowujesz ją na zwykłych zasadach z art. 112 i 112a ustawy o VAT. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 1.2 i 7" /> <Source href="https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/podstawy-prawne-oraz-kluczowe-terminy/" label="MF, Podstawy prawne oraz kluczowe terminy" /> <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="Ustawa o VAT, art. 106ga ust. 2, 106ng i 106nha" /> Dotyczy to m.in. faktur:
+
+- papierowych i PDF wystawionych w limicie 10 000 zł brutto miesięcznie (art. 145m), który obowiązuje do 31 grudnia 2026 r.; co zmienia się po tej dacie, piszemy w poście o [końcu limitu 10 000 zł](/blog/koniec-limitu-10000-zl),
+- z kasy rejestrującej (art. 145n), także do 31 grudnia 2026 r.,
+- dla osób prywatnych, jeśli wystawiłeś je poza KSeF,
+- od sprzedawców bez siedziby i stałego miejsca prowadzenia działalności w Polsce albo ze stałym miejscem, które nie uczestniczy w sprzedaży (art. 106ga ust. 2 pkt 1–2), jeśli nie wystawili ich w KSeF,
+- wystawionych w czasie awarii całkowitej (art. 106ng): takich faktur w ogóle nie przesyła się do KSeF, podobnie jak faktur offline24 wystawionych przed ogłoszeniem awarii całkowitej (art. 106nha),
+- wystawionych poza KSeF, zanim objął cię obowiązek, np. PDF sprzed 1 kwietnia 2026 r.
+
+Pani Krystyna, która prowadzi księgi kilkudziesięciu klientów, ma więc dwa archiwa: faktury z numerem KSeF zostają w systemie, a faktury papierowe, PDF i z kasy trzyma tak, jak trzymała przed KSeF.
+
+## Jak pobrać faktury z KSeF?
+
+W ciągu 10 lat pobierać nie musisz, ale możesz to zrobić dowolnie wiele razy, od chwili nadania numeru KSeF. Sprzedawca nie wie, czy ani ile razy pobrałeś jego fakturę. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 6.5" />
+
+W Aplikacji Podatnika zaznaczasz faktury na liście i klikasz „Pobierz”. Naraz pobierzesz od 1 do 10 faktur, a kilka przychodzi w jednym pliku ZIP. <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Podręcznik AP, s. 116–117" /> Przy setkach faktur wygodniej pobierać je programem połączonym z KSeF przez API. Status eksportu w API jest dostępny przez 7 dni (potem API zwraca 410 Gone), ale dotyczy to samej operacji eksportu: faktury zostają w KSeF. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md" label="KSeF API, changelog 2.4.0" />
+
+## Biuro rachunkowe traci dostęp razem z uprawnieniem
+
+Uprawnienie do faktur obejmuje wszystkie faktury klienta, sprzedażowe i zakupowe. Gdy klient odbierze je biuru rachunkowemu, nieaktywne stają się uprawnienia pracowników, którym biuro przekazało dostęp do faktur tego klienta. Podatnik dostępu nie traci, bo uprawnień właścicielskich, przypisanych do jego NIP, nie da się odebrać. <Source href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. I, s. 55, 57 i 77–78" /> Jak dzielą się obowiązki między firmą a biurem, opisujemy w poście o [biurze rachunkowym w KSeF](/blog/biuro-rachunkowe-ksef-kto-co-robi).
+
+<Tip>
+  To nasza rada, nie wymóg MF: jeśli kończysz współpracę z klientem, a potrzebujesz jego faktur do
+  własnej dokumentacji, pobierz je, zanim klient odbierze ci uprawnienie.
+</Tip>
+
+## Czego MF nie wyjaśniło
+
+W materiałach MF, które przeanalizowaliśmy, nie ma odpowiedzi na trzy pytania:
+
+- czy faktury wysłane do dobrowolnego KSeF 1.0 (do 31 stycznia 2026 r.) są dostępne w KSeF 2.0 i czy dotyczy ich ten sam 10-letni okres,
+- czy po zamknięciu JDG, wykreśleniu z CEIDG albo likwidacji spółki nadal zalogujesz się do swoich faktur; zanim zamkniesz firmę, pobierz je (to też nasza rada),
+- w jakiej formie przechowywać fakturę pobraną z KSeF: jako plik XML czy jego wizualizację w PDF.
+
+Jak znaleźć fakturę zakupową w KSeF i ją pobrać, pokazujemy krok po kroku w poradniku o [odbieraniu faktur w KSeF](/guides/jak-odebrac-fakture-ksef).
