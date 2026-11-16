@@ -1,0 +1,120 @@
+---
+title: "KSeF login context: which NIP to enter"
+description: "The context is the business you act for after logging in. A sole trader enters their own NIP; an accountant enters the NIP of the client who granted access."
+date: 2026-11-16
+section: blog
+locale: en
+slug: "ksef-login-context"
+topic: "access"
+tags: ["KSeF", "JDG"]
+sources:
+  - label: "Aplikacja Podatnika KSeF 2.0 user manual (06.08.2026)"
+    url: "https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
+  - label: "KSeF 2.0 Handbook, Part I (06.08.2026)"
+    url: "https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  - label: "MF FAQ: KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
+  - label: "CIRFMF ksef-api: authentication"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/uwierzytelnianie.md"
+  - label: "CIRFMF ksef-api: permissions"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/uprawnienia.md"
+  - label: "CIRFMF ksef-api: NIP-VAT UE context"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/auth/context-identifier-nip-vat-ue.md"
+  - label: "CIRFMF ksef-api: OpenAPI specification"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
+  - label: "Aplikacja Podatnika KSeF 2.0 authentication guide, test version"
+    url: "https://ksef.podatki.gov.pl/media/jxgjepcn/instrukcja-uwierzytelnienia-w-aplikacji-podatnika-ksef-20-wersja-testowa.pdf"
+translations:
+  pl: "kontekst-logowania-ksef"
+  en: "ksef-login-context"
+  uk: "kontekst-vkhodu-ksef"
+---
+
+The login context in KSeF (Krajowy System e-Faktur, Poland's National e-Invoicing System) identifies the business you want to act for once you are logged in, usually by its NIP (Polish tax ID). If you run a JDG (jednoosobowa działalność gospodarcza, a Polish sole trader business), you choose "NIP" and enter **your own NIP**; an accountant enters the NIP of the client in whose context they hold permissions.
+
+Legal status as of 16 November 2026.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
+  label="Aplikacja Podatnika KSeF 2.0 user manual, section 4.1"
+/>
+
+## Where does the context appear when you log in?
+
+In the Aplikacja Podatnika (the KSeF taxpayer web app, whose interface is in Polish) you first pick a login method: "Zaloguj przez login.gov.pl" (log in via login.gov.pl) or "Zaloguj certyfikatem" (log in with a certificate, meaning a qualified signature or seal). Then you choose the identifier type, enter the number and click "Przejdź dalej" (continue). With login.gov.pl, the app redirects you to that site. We cover the login methods themselves in the [KSeF login guide](/en/guides/ksef-login).
+
+You log in as a person, and the context says whose invoices you want to issue and view. That is why a PESEL (Polish personal ID number) is not a context: it only identifies the person logging in.
+
+Ania is a graphic designer running a JDG. KSeF granted her owner permissions for her NIP automatically; she didn't have to file anything. She enters her NIP and starts issuing invoices straight away.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  label="KSeF 2.0 Handbook, Part I, p. 57"
+/>
+
+## Which identifier type should you choose?
+
+The Aplikacja Podatnika offers three types:
+
+- **NIP** is what almost everyone picks: sole traders, companies, accounting offices and their clients.
+- **Internal identifier** is most likely the same identifier that the KSeF 2.0 Handbook (Part II) describes for a company's internal units, such as a branch: the NIP plus five digits. If you run a JDG without branches, you can ignore it. The MF documents we read don't explain how KSeF creates this identifier or who logs in with it.
+- **Composite identifier with an EU VAT number** combines the NIP of a Polish company with its counterparty's EU VAT number, e.g. `5265877635-ATU12345678`. It is used by representatives of a company from another EU country that issues invoices on behalf of the Polish company (self-billing). This context comes into being when the Polish company grants EU entity administrator permission.
+
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/auth/context-identifier-nip-vat-ue.md"
+  label="CIRFMF: NIP-VAT UE context"
+/>
+
+## What does an accountant or accounting office enter?
+
+Krystyna is an accountant and Ania is her client. Ania granted her KSeF permissions as an individual. To work on Ania's invoices, Krystyna logs in with **her own** Profil Zaufany (Poland's free trusted identity profile) or signature and enters Ania's NIP as the context. She doesn't need Ania's login details. Accounting office staff do the same: they log in in the context of the client's NIP.
+
+The office grants access to its staff in its own context, that is, after logging in with the office's NIP rather than the client's. It can only do this if the client granted the office permissions with the right to pass them on. When granting access, the office chooses whether an employee works for one client or for all of them (meaning all clients who gave that right). KSeF checks the whole chain (client, office, employee) every time a session opens. If the client withdraws the office's permissions, the employees' permissions still exist but stop working.
+
+The MF documentation we read doesn't settle whether an office holding a permission granted to the whole firm can handle a client's invoices from the context of its own NIP, or must enter the client's NIP.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  label="KSeF 2.0 Handbook, Part I, pp. 49, 74–78"
+/>
+
+## What happens if you have no permissions in that context?
+
+KSeF only lets you in where you hold at least one active permission. If you enter the NIP of a business that hasn't granted you anything, the login fails. Possible causes: a typo in the number, a client who hasn't granted access yet, or a client who has withdrawn it.
+
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/uwierzytelnianie.md"
+  label="CIRFMF: authentication"
+/>
+
+In the MF documents we read, we found nothing on which message the Aplikacja Podatnika shows in that case, or whether you can switch context in the app without logging out. Software connecting through the API receives status 415 (authentication failed) with the detail "Brak przypisanych uprawnień" (no permissions assigned).
+
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
+  label="CIRFMF: OpenAPI specification, authentication statuses"
+/>
+
+## A token works in one context, a KSeF certificate in many
+
+You can't log in to the Aplikacja Podatnika with a token or a KSeF certificate. Invoicing software uses them, and the context is what sets them apart:
+
+- **A token** works only in the context where it was generated, with the permissions chosen at generation. Only the individual who owns a personal token can use it, so an accounting office can't use a client's token. In any other context the API returns status 450 (invalid token) with the detail "Token nie może być użyty w kontekście…" (the token cannot be used in the context…) <Source href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json" label="CIRFMF: OpenAPI specification" />.
+- **A KSeF certificate** has no permissions of its own. It relies on the permissions of the person or business whose identifier it contains, and it works across contexts.
+
+Which method to choose for your software is covered in our post on [KSeF tokens and certificates](/en/blog/certificates-vs-tokens-ksef).
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  label="KSeF 2.0 Handbook, Part I, pp. 36–46"
+/>
+
+## How do you enter the context in the test environment?
+
+In the test environment you choose "Zaloguj uwierzytelnieniem testowym" (log in with test authentication), then enter the context (e.g. the company's NIP) and the NIP or PESEL of the person logging in. Profil Zaufany works only in DEMO and in production. Details are in the [test environment guide](/en/guides/ksef-test-environment).
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/jxgjepcn/instrukcja-uwierzytelnienia-w-aplikacji-podatnika-ksef-20-wersja-testowa.pdf"
+  label="Aplikacja Podatnika KSeF 2.0 authentication guide, test version"
+/>
+
+If you work with an accounting office and it can't get into your context, [grant it permissions in KSeF](/en/guides/ksef-accountant-access).

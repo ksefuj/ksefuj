@@ -19,6 +19,12 @@ what is not yet settled.
 
 ## Next up
 
+- [ ] **UPDATE** certyfikaty-vs-tokeny-ksef: the table row for an office serving many clients says
+      „certyfikat typ 1 (lub token)”; a token works only in the one context it was generated in and
+      the office cannot use a client's token, so „lub token” needs „jeden token na każdy kontekst
+      klienta” (PL, EN, UK) (source:
+      https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf,
+      s. 36–38)
 - [ ] **UPDATE** blog/tokeny-ksef-po-2026 (PL, EN): the API team published draft token rules on
       2026-11-06: from 2027-01-01 new `rev2` endpoints, default validity 90 days (max 365), approval
       step for tokens requested after a token login, 100 tokens per context, tokens from the old
@@ -110,7 +116,7 @@ matching queries.
       FAQ · Link `faktura-zagraniczna-ksef`.
 - [ ] `przechowywanie-faktur-ksef` — Jak długo KSeF przechowuje faktury · „jak długo faktury w KSeF"
       · K · FAQ
-- [ ] `kontekst-logowania-ksef` — Kontekst logowania w KSeF · „kontekst logowania KSeF" · A · FAQ
+- [x] `kontekst-logowania-ksef` — Kontekst logowania w KSeF · „kontekst logowania KSeF" · A · FAQ
 - [ ] `faktura-vat-rr-ksef` — Faktura VAT RR w KSeF · „VAT RR KSeF" · A · APP
 - [ ] `di-bfk-jpk-v7` — Oznaczenia DI i BFK w JPK_V7 · „JPK_V7 BFK DI" · K · FAQ
 - [ ] `kurs-waluty-faktura-ksef` — Kurs waluty na fakturze w KSeF · „faktura w walucie KSeF kurs" ·
