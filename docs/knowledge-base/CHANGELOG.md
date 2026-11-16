@@ -6,6 +6,33 @@ validator, none).
 
 ---
 
+## 2026-11-09 → 2026-11-16 (partial run, GitHub only; `Last checked` not updated)
+
+Official hosts were unreachable from the run environment for the fourth run in a row (proxy refused
+CONNECT with HTTP 403): ksef.podatki.gov.pl, api.sejm.gov.pl, legislacja.rcl.gov.pl,
+dziennikustaw.gov.pl, isap.sejm.gov.pl, www.sejm.gov.pl, www.gov.pl, www.podatki.gov.pl,
+eureka.mf.gov.pl, crd.gov.pl, api.nbp.pl. Law, MF guidance and schemas were not checked; this is not
+a "no changes" entry. The UD477 Senate stage and the token regulation draft (RCL 12416152) remain
+unverified. The GitHub REST API for CIRFMF repos was also refused this run (repos not attached to
+the session), so issues (#718, #885 comments to 2026-11-20) were not read; only git history was.
+Open issue: https://github.com/ksefuj/ksefuj/issues/127.
+
+### Technical (API/schemas/GitHub)
+
+- ksef-client-java 3.0.30 (2026-11-10, API 2.9.0): `CollectiveIdentifierManage` permission enum
+  value, `ownerPermissions` in personal-grants query, `ResponseHeaderObserver` for per-call
+  `X-System-Warning` capture: https://github.com/CIRFMF/ksef-client-java/blob/main/RELEASE_NOTES.md.
+  Impact: brief `api-ksef-zmiany-cirfmf.md`; posts none; validator none.
+- ksef-client-csharp 2.9.0.1 (2026-11-09): dependency and vulnerability updates only:
+  https://github.com/CIRFMF/ksef-client-csharp/blob/main/RELEASE_NOTES.md. Impact: brief only.
+- ksef-api / ksef-docs (HEAD `ce3670e`, 2.9.0 of 2026-10-14), ksef-pdf-generator (1.1.48),
+  ksef-schematy (`cd826b8`, 2026-05-11), ksef-latarnia (`b3d8196`, 2026-01-23): no commits since the
+  2026-11-09 run. Impact: none.
+- `pnpm update-schemas`: crd.gov.pl unreachable, every download `fetch failed`, script fell back to
+  bundled files (and still printed "All schemas are up to date"); schemas not verified.
+
+---
+
 ## 2026-10-19 → 2026-11-09 (partial run, GitHub only; `Last checked` not updated)
 
 Official hosts were unreachable from the run environment again (proxy refused CONNECT with HTTP
