@@ -1,0 +1,110 @@
+---
+title: "VAT RR invoices in KSeF need the farmer's consent"
+description: "The buyer issues the VAT RR invoice. Since 1 April 2026 it may do so in KSeF voluntarily, if the farmer files a statement there naming the buyer."
+date: 2026-11-20
+section: blog
+locale: en
+slug: "vat-rr-invoice-ksef"
+topic: "invoicing"
+translationOf: "faktura-vat-rr-ksef"
+tags: ["KSeF", "Invoice", "VAT"]
+sources:
+  - label: "Polish VAT Act, consolidated text (Dz.U. 2026 poz. 1263), Art. 116 ust. 1, Art. 117"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  - label: "MF: Legal basis and key dates (VAT RR invoices)"
+    url: "https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/podstawy-prawne-oraz-kluczowe-terminy/"
+  - label: "MF: KSeF 2.0 questions and answers (question 12)"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
+  - label: "MF: KSeF 2.0 Manual, Part II (6 August 2026): bills (point 1.3), invoice rejection reasons, invoice storage"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "FA_RR(1) 1-1E schema (MF, CIRFMF/ksef-api repository)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/schemy/RR/schemat_FA_RR(1)_v1-1E.xsd"
+  - label: "KSeF 2.0 API documentation: Permissions (RRInvoicing)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/uprawnienia.md"
+  - label: "KSeF 2.0 API documentation: Changelog (2.2.1, 2.4.0, 2.5.0)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md"
+translations:
+  pl: "faktura-vat-rr-ksef"
+  en: "vat-rr-invoice-ksef"
+---
+
+A VAT RR invoice is issued by the buyer of agricultural products: an active VAT payer buying them from a flat-rate farmer (rolnik ryczałtowy), under Art. 116 ust. 1 of the Polish VAT Act. Since 1 April 2026 the buyer may issue it in KSeF (Krajowy System e-Faktur, Poland's National e-Invoicing System) voluntarily, but only if the farmer files a statement in KSeF naming the buyer as authorised; without that, the VAT RR invoice is issued outside KSeF.
+
+Status as of 20 November 2026.
+
+## Who issues a VAT RR invoice, and who doesn't?
+
+The buyer does: a purchasing centre, processing plant, shop or restaurant that is an active VAT payer and buys agricultural products from a flat-rate farmer. The Act requires it to issue, „w dwóch egzemplarzach”, an invoice documenting the purchase, meaning in two copies. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="Polish VAT Act, Art. 116 ust. 1" />
+
+The flat-rate farmer does not issue an invoice. Art. 117 exempts the farmer from that obligation for farming activity, and the KSeF manual confirms the farmer may issue a bill (rachunek) instead. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="MF, KSeF 2.0 Manual, Part II, point 1.3" />
+
+Flat-rate farmer is a VAT status (Art. 115–117 of the VAT Act). It has nothing to do with the [flat-rate income tax (ryczałt ewidencjonowany) in PIT](/en/blog/flat-rate-tax-ksef).
+
+## Does a VAT RR invoice have to go through KSeF?
+
+No. MF says that issuing VAT RR and VAT RR KOREKTA (corrective) invoices in KSeF has been "optional" (fakultatywne) since 1 April 2026, and gives no date from which it would become mandatory. <Source href="https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/podstawy-prawne-oraz-kluczowe-terminy/" label="MF: Legal basis and key dates" /> Who KSeF covers for ordinary invoices, and from when, is in our [article on 1 April 2026](/en/blog/ksef-from-april-1-2026).
+
+The option comes with a condition. According to the MF FAQ, the buyer can issue a VAT RR invoice in KSeF "only if the flat-rate farmer files a statement in the system that they are a flat-rate farmer and names that buyer as authorised". **If the farmer files no statement, the VAT RR invoice is issued outside KSeF.** <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20" label="MF, KSeF 2.0 questions and answers, question 12" />
+
+Tomasz runs a fruit purchasing business and buys from five farmers. Two have named his company in KSeF, so he can issue their VAT RR invoices in KSeF. For the other three he issues them outside the system.
+
+## How does a farmer name a buyer in KSeF?
+
+The MF FAQ talks about the farmer's statement. The KSeF API documentation describes an entity permission, `RRInvoicing` ("samofakturowanie RR", RR self-billing), which lets another company issue VAT RR invoices on the farmer's behalf. It is granted by the owner or by an administrator holding the `CredentialsManage` permission, who identifies the buyer by its NIP. MF does not say outright that the FAQ statement and this permission are one and the same step. That is our reading of the two documents, since both describe how the farmer authorises the buyer. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/uprawnienia.md" label="MF, API documentation: Permissions" />
+
+The mechanism resembles [self-billing for ordinary invoices](/en/blog/self-billing-ksef). On submission, KSeF checks whether the buyer holds the permission: the documentation says it verifies the "relationship between the entity and the data on the invoices". <Source href="https://github.com/CIRFMF/ksef-api/blob/main/uprawnienia.md" label="MF, API documentation: Entity permissions" /> The manual lists missing permissions as one of the reasons an invoice is rejected. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="MF, KSeF 2.0 Manual, Part II: invoice rejection reasons" />
+
+The farmer can revoke the permission. Revocation "takes effect immediately": from that moment the buyer can no longer send a VAT RR invoice to KSeF on the farmer's behalf. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/uprawnienia.md" label="MF, API documentation: Permissions (revoking)" />
+
+## What does a VAT RR invoice file look like?
+
+This part is for accountants and developers. In KSeF a VAT RR invoice has its own structure, FA_RR(1), not FA(3). In production, schema version 1-1E has applied since 1 April 2026. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md" label="MF, API documentation: Changelog, 2.2.1" /> If you know FA(3), these are the places where mistakes come easiest:
+
+- `RodzajFaktury` takes two values: `VAT_RR` (original invoice) and `KOR_VAT_RR` (corrective invoice).
+- **The farmer goes in `Podmiot1` and the buyer in `Podmiot2`**, even though the buyer issues the invoice. Both need a NIP, because the schema provides no other identifier for them.
+- The flat-rate VAT refund rate (`P_9` in the `FakturaRRWiersz` line) accepts only `6.5` and `7` in the schema.
+- The summary is made up of `P_11_1` (value of the products purchased), `P_11_2` (flat-rate VAT refund amount), and `P_12_1` and `P_12_2` (total amount due including the refund, in figures and in words).
+
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/schemy/RR/schemat_FA_RR(1)_v1-1E.xsd"
+  label="FA_RR(1) 1-1E schema"
+/>
+
+<Info>
+  **For developers.** The form code is `FA_RR`, `kodSystemowy` = "FA_RR (1)", `wersjaSchemy` =
+  "1-1E", namespace `http://crd.gov.pl/wzor/2026/03/06/14189/`. In the API the `Value` field is
+  `FA_RR` instead of the former `RR`; when retrieving invoices, production accepts only `FA_RR` in
+  `formType`, and the RR values previously marked as deprecated (e.g. `InvoiceQueryFormType.RR`)
+  were removed in version 2.5.0. Grant the permission with `POST /permissions/authorizations/grants`
+  and revoke it with `DELETE /permissions/authorizations/grants/{permissionId}`.{" "}
+  <Source
+    href="https://github.com/CIRFMF/ksef-api/blob/main/uprawnienia.md"
+    label="MF, API documentation: Permissions"
+  />{" "}
+  <Source
+    href="https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md"
+    label="MF, API documentation: Changelog, 2.4.0 and 2.5.0"
+  />
+</Info>
+
+## How do you correct a VAT RR invoice?
+
+You issue the correction in the same structure, with `RodzajFaktury` = `KOR_VAT_RR`. The details of the invoice being corrected (`DaneFaKorygowanej`) are mandatory. The schema treats the reason (`PrzyczynaKorekty`) and the correction type (`TypKorekty`) as optional fields. If the corrected invoice is in KSeF, you enter its KSeF number. If it was issued outside KSeF, you mark that with the `NrKSeFN` flag. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/schemy/RR/schemat_FA_RR(1)_v1-1E.xsd" label="FA_RR(1) schema, DaneFaKorygowanej" />
+
+So the schema lets you correct a paper VAT RR invoice in KSeF, but MF does not explain whether that complies with the law. How corrections of ordinary invoices work is in our [article on corrective invoices](/en/blog/corrective-invoice-ksef).
+
+## How long does KSeF keep a VAT RR invoice?
+
+KSeF stores VAT RR and VAT RR KOREKTA invoices for 10 years, counted from the end of the year in which they were issued. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="MF, KSeF 2.0 Manual, Part II: storing invoices in KSeF" />
+
+## What is still unclear?
+
+**Whether VAT RR will become mandatory in KSeF.** MF only says it has been optional since 1 April 2026, with no end date and no announced change.
+
+**What happens with a farmer who has no NIP.** The schema requires the farmer's NIP in `Podmiot1`. No source says whether a farmer without a NIP can file the statement in KSeF or must obtain a NIP first. If the farmer cannot file it, then according to the FAQ the VAT RR invoice stays outside KSeF, but that is our conclusion, not MF's position.
+
+**Where in Aplikacja Podatnika (the KSeF taxpayer app) the farmer files the statement.** The MF documentation we read (the API docs) does not describe the path in Aplikacja Podatnika, so we don't give one.
+
+**How to meet the "two copies" requirement** of Art. 116 ust. 1 in KSeF, and how the farmer receives an invoice issued in KSeF. The MF sources we read don't describe this.
+
+If you buy from a farmer and want to issue VAT RR invoices in KSeF, first ask the farmer to name your company in KSeF. Until they do, issue the invoices outside KSeF.
