@@ -125,6 +125,17 @@ Dated chores, not for the daily routine's "first unchecked item" pick.
 - [ ] **2027-01-02:** remove `featured: true` from `koniec-limitu-10000-zl` and
       `kary-ksef-2027-2028` (pinned on the homepage for the run-up to 1 January 2027), and pin
       whatever matters most then.
+- [ ] **2026-12-01:** `wakacje-skladkowe-zus`: the description, opening paragraph and dates table
+      still lead with the December 2026 window (apply by 30 November). Once it has closed, lead with
+      January 2027 (apply 1 to 31 December 2026), drop the December 2026 row and refresh „Stan
+      prawny". Brief `wakacje-skladkowe.md`.
+- [ ] **2027-01-04:** `wakacje-skladkowe-zus`: recompute the PLN value of the EUR 2 mln revenue
+      threshold for applications filed in 2027 (NBP mid-rate from the last working day of 2026),
+      move the lead to „any month of 2027", and check whether ZUS has published the 2027
+      contribution amounts.
+- [ ] **2027-02-03:** `wakacje-skladkowe-zus`: replace the 2026 amounts table with the 2027 one from
+      the ZUS contributions page (the 2026 table is dated 2 February 2026). If ZUS has not published
+      it yet, move this date forward two weeks.
 
 ## Done
 
