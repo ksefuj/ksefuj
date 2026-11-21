@@ -30,7 +30,8 @@ technical announcements, not law.
 - Deployment of API 2.10.0 (the `rev2` token endpoints) on DEMO and PROD. As of 2026-11-21 the
   changelog shows TEST 16.11.2026 and „-" for DEMO and PROD (fact 16). Watch the changelog for the
   DEMO/PROD dates and for any change to the values (90/365 days, 24 h approval, 100 per context,
-  withdrawal 30.09.2027) after the issue 885 discussion closed on 2026-11-20 (facts 15-16).
+  withdrawal 30.09.2027) after the issue 885 discussion window ended on 2026-11-20 (the issue itself
+  is still open, fact 16(d)) (facts 15-16).
 - The validity of tokens generated via the old `POST /tokens`: the TEST OpenAPI says 90 days for
   tokens generated „od 07.11.2026", the issue 885 draft says from 2027-01-01 (fact 16). Which date
   applies on PROD is not stated.
