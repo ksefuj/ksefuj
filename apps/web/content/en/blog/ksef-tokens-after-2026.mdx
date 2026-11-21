@@ -2,7 +2,7 @@
 title: "KSeF tokens: how long do they work?"
 description: "The KSeF regulation allows tokens until 31 Dec 2026. A draft amendment of October 2026 extends existing tokens to 30 Nov 2027."
 date: 2026-10-07
-updated: 2026-11-11
+updated: 2026-11-21
 section: blog
 locale: en
 slug: "ksef-tokens-after-2026"
@@ -25,8 +25,10 @@ sources:
     url: "https://github.com/CIRFMF/ksef-api/issues/565"
   - label: "KSeF API team: proposed changes to token management, 6 Nov 2026 (CIRFMF/ksef-api, issue 885, Polish)"
     url: "https://github.com/CIRFMF/ksef-api/issues/885"
-  - label: "KSeF API 2.0 changelog (CIRFMF/ksef-api, Polish)"
+  - label: "KSeF API 2.0 changelog, version 2.10.0 (CIRFMF/ksef-api, Polish)"
     url: "https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md"
+  - label: "KSeF 2.0 OpenAPI specification, version deployed in the test environment (CIRFMF/ksef-api)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
   - label: "MF FAQ: KSeF 2.0"
     url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
   - label: "Draft regulation amending the regulation on using KSeF, no. 138/2026 (RCL, draft of 26.10.2026, Polish)"
@@ -40,8 +42,9 @@ translations:
 The regulation in force lets you log in to KSeF (Krajowy System e-Faktur, Poland's national e-invoicing system) with a token until 31 December 2026. On 27 October 2026 the Ministry of Finance (MF) put out for consultation a draft amendment that would extend tokens generated before 2027 until 30 November 2027. The draft is not law yet.
 
 <Info>
-  Status as of 11 November 2026. We checked the list of amendments to the regulation that day: the
-  only amendment is still Dz.U. 2026 item 169, which does not concern tokens.{" "}
+  Status as of 21 November 2026. We last checked the list of amendments to the regulation on 11
+  November, when the only amendment was Dz.U. 2026 item 169, which does not concern tokens. We have
+  not been able to check it again since.{" "}
   <Source href="https://api.sejm.gov.pl/eli/acts/DU/2025/1815" label="list of amendments, ELI" />
 </Info>
 
@@ -59,9 +62,13 @@ In the August edition of the KSeF 2.0 Handbook, part I (p. 26), MF went further:
 
 On 10 September 2026 the team responsible for the KSeF API specification wrote in the official API repository that it is technically preparing to issue tokens under new rules from 1 January 2027. Tokens issued up to 31 December 2026 will keep working, but their validity will be limited to 30 November 2027. The current token-creation endpoint is to run in "compatibility mode" and issue tokens with limited validity. A new version of it will appear alongside, and the token format stays the same. <Source href="https://github.com/CIRFMF/ksef-api/issues/834#issuecomment-5619765888" label="CIRFMF/ksef-api, issue 834" /> The same author added that the decision to retire tokens is written into the regulation, so changing it requires a change of the rules, and that formal communication belongs to MF. <Source href="https://github.com/CIRFMF/ksef-api/issues/834#issuecomment-5003022923" label="comment of 17 July" />
 
-On 23 September 2026 the same author closed another issue in the repository with: "tokens stay, but under new rules. We are refining the proposal." He did not say what those rules are. <Source href="https://github.com/CIRFMF/ksef-api/issues/565" label="CIRFMF/ksef-api, issue 565" /> The API changelog up to version 2.9.0 (in production since 15 October 2026) mentions neither a new version of the token-creation endpoint nor token validity. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md" label="API changelog" />
+On 23 September 2026 the same author closed another issue in the repository with: "tokens stay, but under new rules. We are refining the proposal." He did not say what those rules are. <Source href="https://github.com/CIRFMF/ksef-api/issues/565" label="CIRFMF/ksef-api, issue 565" />
 
-The API team published the details of the new rules on 6 November 2026 as a proposal for discussion, which it wants to close by 20 November. From 1 January 2027 new endpoint versions (`rev2`) are to go live, and in them a token will be valid for 90 days by default and 365 days at most. A token that a program requests after logging in with a token will have to be approved within 24 hours by logging in with the national node or an electronic signature (XAdES). Tokens generated before 1 January 2027 are to work until the end of 30 November 2027. <Source href="https://github.com/CIRFMF/ksef-api/issues/885" label="CIRFMF/ksef-api, issue 885" />
+The API team published the details of the new rules on 6 November 2026 as a proposal for discussion, which it planned to close on 20 November. From 1 January 2027 new endpoint versions (`rev2`) are to go live, and in them a token will be valid for 90 days by default and 365 days at most. A single context can hold at most 100 tokens. A token that a program requests after logging in with a token will have to be approved within 24 hours by logging in with the national node or an electronic signature (XAdES). Tokens generated before 1 January 2027 are to work until the end of 30 November 2027. <Source href="https://github.com/CIRFMF/ksef-api/issues/885" label="CIRFMF/ksef-api, issue 885" />
+
+On 16 November 2026 the API team deployed API version 2.10.0 to the test environment. It includes the `rev2` endpoints and a new endpoint for approving tokens. The existing endpoints are marked as deprecated and are to be removed on 30 September 2027. The changelog does not yet give a date for the demo environment or production. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md" label="API changelog, version 2.10.0" />
+
+As of 21 November the API team had not announced a change to any of the proposal's values, and the specification deployed in the test environment has the same limits on validity, number of tokens and approval time. It does not mention the 30 November 2027 date. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json" label="OpenAPI specification" /> Users in the discussion asked for more than 24 hours to approve a token, but got no visible reply. <Source href="https://github.com/CIRFMF/ksef-api/issues/885" label="CIRFMF/ksef-api, issue 885" />
 
 ### What does the draft amendment to the regulation say?
 
@@ -77,6 +84,7 @@ The 30 November 2027 date matches the API team's posts from September and Novemb
 **The draft is not law yet.** Until the amendment is published in the Dziennik Ustaw (Journal of Laws) and takes effect, § 13 ust. 1 pkt 1 applies as it stands, which means tokens only until 31 December 2026. We do not know:
 
 - whether the signed regulation will keep the draft's dates, and when it will be published,
+- when API version 2.10.0 will reach production, since for now it runs only in the test environment,
 - whether the rules will adopt the rest of the API team's proposal (90 days by default, approval within 24 hours). The draft is silent on this and leaves the token's technical details to the API specification (§ 6 ust. 3),
 - what the system will do on 1 January 2027 if the amendment is late. With § 13 as it stands, tokens are not permitted by the regulation from that date.
 
@@ -88,20 +96,23 @@ There is no reason to panic: under the current rules a token works until 31 Dece
 
 ### For integrators
 
-Marek, whose integration authenticates with a token, should not wait for the amendment. We suggest adding authentication with a type 1 KSeF certificate next to the token and hiding both behind one interface. Then the 1 January date does not force a rewrite. The API team's stated goal is to get through 2026/2027 "without touching the integrator's code". <Source href="https://github.com/CIRFMF/ksef-api/issues/834#issuecomment-5619765888" label="CIRFMF/ksef-api, issue 834" /> Under the 6 November proposal, though, a token generated through the old endpoint from 1 January 2027 will be valid for only 90 days, and the old endpoints are to be removed on 30 September 2027. So prepare token renewal, the move to `rev2` and handling of the new statuses (`NotYetActive`, `AwaitingApproval`, `ApprovalExpired`, `Expired`). <Source href="https://github.com/CIRFMF/ksef-api/issues/885" label="CIRFMF/ksef-api, issue 885" />
+Marek, whose integration authenticates with a token, should not wait for the amendment. We suggest adding authentication with a type 1 KSeF certificate next to the token and hiding both behind one interface. Then the 1 January date does not force a rewrite. The API team's stated goal is to get through 2026/2027 "without touching the integrator's code". <Source href="https://github.com/CIRFMF/ksef-api/issues/834#issuecomment-5619765888" label="CIRFMF/ksef-api, issue 834" /> Under the 6 November proposal, though, a token generated through the old endpoint from 1 January 2027 will be valid for only 90 days. So prepare token renewal, the move to `rev2` and handling of the new statuses (`NotYetActive`, `AwaitingApproval`, `ApprovalExpired`, `Expired`). <Source href="https://github.com/CIRFMF/ksef-api/issues/885" label="CIRFMF/ksef-api, issue 885" /> You can already try the `rev2` endpoints, token approval and the new statuses in the test environment.
 
-| Feature                       | Token                                                  | KSeF certificate (type 1)    |
-| ----------------------------- | ------------------------------------------------------ | ---------------------------- |
-| Permissions                   | stored in the token                                    | none, taken from the account |
-| Context                       | the one it was issued in                               | several                      |
-| Validity                      | until revoked (from 2027, per proposal: max. 365 days) | up to 2 years                |
-| Interactive and batch session | yes                                                    | yes                          |
+| Feature                       | Token                                                                                | KSeF certificate (type 1)    |
+| ----------------------------- | ------------------------------------------------------------------------------------ | ---------------------------- |
+| Permissions                   | stored in the token                                                                  | none, taken from the account |
+| Context                       | the one it was issued in                                                             | several                      |
+| Validity                      | until revoked (in `rev2`, in test since 16.11.2026: 90 days by default, 365 at most) | up to 2 years                |
+| Interactive and batch session | yes                                                                                  | yes                          |
 
 <Source
   href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
   label="KSeF 2.0 Handbook, part I, table 3 and ch. 2.5"
 />
-<Source href="https://github.com/CIRFMF/ksef-api/issues/885" label="365-day limit: issue 885" />
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
+  label="validity in rev2: OpenAPI specification in the test environment"
+/>
 
 Renew a certificate before it expires, and note that the number of active certificates per PESEL or NIP is limited. You request it in the API or the Taxpayer Application after logging in with the national node, a qualified signature or a qualified seal. A token login cannot generate a certificate (§ 13 ust. 2), so you need one of those three.
 
