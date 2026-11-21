@@ -2,7 +2,7 @@
 title: "Wyślij fakturę testową do KSeF, zanim wyślesz prawdziwą"
 description: "Fikcyjną fakturę wyślesz do środowiska testowego KSeF, odbierzesz UPO i sprawdzisz, czy dotarła do nabywcy. Bez skutków prawnych, w około 15 minut."
 date: 2026-04-02
-updated: 2026-10-07
+updated: 2026-11-12
 section: guides
 locale: pl
 slug: "pierwsza-faktura-fa3"
@@ -28,16 +28,15 @@ Wyślesz fakturę z fikcyjnymi danymi do środowiska testowego KSeF i odbierzesz
 Potrzebujesz:
 
 - **Programu do fakturowania z integracją KSeF 2.0** albo bezpłatnej [Aplikacji Podatnika](https://ap.ksef.mf.gov.pl/) od Ministerstwa Finansów (działa w przeglądarce, nie wymaga instalacji).
-- **Profilu Zaufanego, e-Dowodu lub certyfikatu kwalifikowanego** do zalogowania się w KSeF. Profil Zaufany to najprostsza opcja, a jeśli go nie masz, [załóż go przez bankowość elektroniczną](https://www.gov.pl/web/gov/zaloz-profil-zaufany).
-- **NIP-u swojej firmy.** Logujesz się na swój prawdziwy NIP, nawet w środowisku testowym.
+- **Dwóch wymyślonych NIP-ów**, jednego dla sprzedawcy i jednego dla nabywcy. MF każe używać w środowisku testowym losowych numerów NIP, a nie danych prawdziwych firm. Profil Zaufany ani certyfikat nie są do testu potrzebne: przydadzą się dopiero przy pierwszej prawdziwej fakturze.
 
 ## Krok 1: Zaloguj się do środowiska testowego KSeF
 
 Wejdź na [ap-test.ksef.mf.gov.pl](https://ap-test.ksef.mf.gov.pl/web/), oficjalne środowisko testowe KSeF 2.0.
 
 1. Kliknij „Zaloguj się”.
-2. Wybierz metodę uwierzytelnienia: Profil Zaufany, e-Dowód lub certyfikat kwalifikowany.
-3. Podaj NIP swojej firmy.
+2. Wybierz „Zaloguj uwierzytelnieniem testowym”. Profilem Zaufanym w środowisku testowym się nie zalogujesz.
+3. Jako kontekst podaj wymyślony NIP sprzedawcy i wpisz go też jako swój identyfikator.
 4. Po zalogowaniu zobaczysz panel z dwiema zakładkami: **skrzynka wychodząca** (faktury, które wysłałeś) i **skrzynka odbiorcza** (faktury wysłane do ciebie).
 
 Jeśli logujesz się po raz pierwszy, obie skrzynki będą puste. To normalne.
@@ -53,7 +52,7 @@ Jeśli logujesz się po raz pierwszy, obie skrzynki będą puste. To normalne.
 Otwórz swój program do fakturowania (lub Aplikację Podatnika) i utwórz nową fakturę. Nie musi być prawdziwa.
 
 1. **Wpisz fikcyjne dane:** dowolna nazwa usługi, kwota, data.
-2. **Jako NIP nabywcy wpisz NIP znajomego przedsiębiorcy**, który też chce przetestować KSeF. W kroku 5 sprawdzicie, czy faktura dotarła na jego konto. Jeśli testujesz solo, wpisz dowolny poprawny NIP (np. NIP Ministerstwa Finansów: `5260250274`).
+2. **Jako NIP nabywcy wpisz drugi wymyślony NIP.** Zapisz go, bo w kroku 5 zalogujesz się na niego i sprawdzisz, czy faktura dotarła.
 3. **Dodaj jedną pozycję:** wystarczy „Usługa testowa”, 100 zł netto, stawka 23%.
 4. **Sprawdź, czy program jest połączony ze środowiskiem testowym.** Większość programów pozwala przełączyć się między środowiskiem produkcyjnym a testowym w ustawieniach integracji KSeF.
 5. **Kliknij „Wyślij do KSeF”** (lub odpowiednik w twoim programie).
@@ -100,13 +99,13 @@ Sprawdź, czy jest widoczny:
 
 Zobaczysz, jak faktura wygląda u twojego klienta. KSeF dostarcza ją bezpośrednio na konto powiązane z NIP-em nabywcy, więc nie trzeba jej wysyłać mailem. Obie strony mają do niej dostęp w systemie.
 
-Jeśli w kroku 2 użyłeś NIP-u znajomego przedsiębiorcy:
+Wcielisz się teraz w nabywcę:
 
-1. Poproś go, żeby zalogował się do środowiska testowego na [ap-test.ksef.mf.gov.pl](https://ap-test.ksef.mf.gov.pl/web/), na swój NIP.
-2. Niech otworzy **skrzynkę odbiorczą**.
-3. Twoja testowa faktura powinna tam być, z numerem KSeF, kwotami i twoim NIP-em jako wystawcy.
+1. Wyloguj się i zaloguj ponownie na [ap-test.ksef.mf.gov.pl](https://ap-test.ksef.mf.gov.pl/web/) uwierzytelnieniem testowym, tym razem na NIP nabywcy z kroku 2.
+2. Otwórz **skrzynkę odbiorczą**.
+3. Twoja testowa faktura powinna tam być, z numerem KSeF, kwotami i NIP-em sprzedawcy jako wystawcy.
 
-Testujesz solo i nie masz drugiego NIP-u? UPO z kroku 3 wystarcza jako dowód, że KSeF przyjął fakturę. Odbiór po stronie nabywcy możesz sprawdzić przy okazji, np. z księgowym, który obsługuje twojego klienta.
+Jeśli faktury nie widzisz, a w kroku 3 dostałeś UPO, i tak masz dowód, że KSeF ją przyjął.
 
 ## Co zrobić, jeśli wysyłka się nie powiodła
 
@@ -124,7 +123,8 @@ Sesja w KSeF wygasa po określonym czasie. Jeśli program wyświetla błąd uwie
 
 KSeF sprawdza poprawność formatu NIP-u. Jeśli wpisałeś ciąg cyfr, który nie jest prawidłowym NIP-em:
 
-- Sprawdź NIP na [biznes.gov.pl](https://biznes.gov.pl).
+- W teście: NIP to 10 cyfr bez kresek i spacji, a pierwsza cyfra nie może być zerem. Sumy kontrolnej środowisko testowe domyślnie nie sprawdza.
+- Na produkcji: sprawdź NIP nabywcy na [biznes.gov.pl](https://biznes.gov.pl).
 - Popraw NIP w fakturze i wyślij ponownie.
 
 ### 3. Błąd w strukturze pliku

@@ -2,7 +2,7 @@
 title: "FA(3) XML: what changed from FA(2) in KSeF"
 description: "Since 1 February 2026 KSeF accepts only FA(3) structured invoices. Change the namespace, KodFormularza and WariantFormularza, and add JST and GV to Podmiot2."
 date: 2026-03-28
-updated: 2026-10-18
+updated: 2026-11-12
 section: blog
 locale: en
 slug: "fa2-vs-fa3-ksef"
@@ -181,7 +181,7 @@ If you are building from scratch, skip FA(2): old templates found online and cod
 
 ## Test environment
 
-The KSeF 2.0 test environment is at `https://ap-test.ksef.mf.gov.pl/web/`. Invoices with dummy data have no legal effect there, and it accepts only FA(3). The KSeF 1.0 application at `ksef.mf.gov.pl/web` was switched off on 1 February 2026. The production KSeF 2.0 Aplikacja Podatnika runs at `ap.ksef.mf.gov.pl`.
+The KSeF 2.0 test environment is at `https://ap-test.ksef.mf.gov.pl/web/`. Invoices with dummy data have no legal effect there, and, unlike DEMO and production, it still accepts the older FA(2) as well as FA(3). An FA(2) file that passes in TEST will be rejected in production. The KSeF 1.0 application at `ksef.mf.gov.pl/web` was switched off on 1 February 2026. The production KSeF 2.0 Aplikacja Podatnika runs at `ap.ksef.mf.gov.pl`.
 
 <Source
   href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
