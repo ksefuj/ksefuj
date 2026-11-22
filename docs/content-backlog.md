@@ -63,7 +63,9 @@ a Tier 1–3 source.
       passed, post now says the docs have not confirmed enforcement. Skip until 2026-11-07, then
       re-check the changelog and issue #718 before the present-tense switch. Re-checked 2026-11-08
       (`content/ksef-scisla-walidacja-xml-19-10`): changelog still 2.9.0, #718 no posts since 24.06;
-      post dated „stan na 8 listopada”. Skip until 2026-11-22, then re-check again.
+      post dated „stan na 8 listopada”. Re-checked 2026-11-22: changelog 2.10.0 (TEST 16.11, no XML
+      entry), #718 no posts since 24.06; post dated „stan na 22 listopada”. Skip until 2026-12-06,
+      then re-check again.
 - [x] **UPDATE** `najczestsze-bledy-walidacji-fa3` — open with a direct answer to „co znaczy błąd
       walidacji” in the first 100 words, then the list; mention the strict-XML rejections from 19.10
       and link that post · „błąd walidacji co to znaczy” · A · GSC ~74 impr at pos 7–14 · brief
