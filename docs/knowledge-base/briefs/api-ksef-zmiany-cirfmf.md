@@ -1,8 +1,8 @@
 # Research Brief: Zmiany w API KSeF 2.x (CIRFMF) istotne dla integratorów, kwiecień–wrzesień 2026
 
-**Requested by:** weekly knowledge refresh **Date:** 2026-10-07 **Freshness:** 2026-11-16 (CIRFMF
-GitHub git history only; issues not readable) **For content:** developer-facing posts; validator
-context. INTERNAL reference.
+**Requested by:** weekly knowledge refresh **Date:** 2026-10-07 **Freshness:** 2026-11-23 (CIRFMF
+GitHub git history only; issue comments not readable) **For content:** developer-facing posts;
+validator context. INTERNAL reference.
 
 **Target query:** "KSeF API zmiany 2026", "limity API KSeF", "KSeF walidacja XML 19 października"
 
@@ -56,7 +56,12 @@ dates below are PROD unless stated.
    (changelog 2.1.0). In issue #875 (closed 2026-10-05) the maintainer said it stays in current
    operations; removal comes with a **new operation revision** and a **12-month transition** from
    production availability of the new revisions; extensible enums (`FutureValue`) come to v2 in new
-   revisions. https://github.com/CIRFMF/ksef-api/issues/875 Confidence: HIGH
+   revisions. https://github.com/CIRFMF/ksef-api/issues/875 Confidence: HIGH. **Update 2.10.0 (TEST
+   16.11.2026):** the removal announced for 2026-11-16 „nie nastąpi". `authenticationMethod` stays
+   in GET `/auth/{referenceNumber}` and GET `/auth/sessions`, which stay supported until **15
+   czerwca 2027 r.**; the new revisions GET `/auth/rev2/{referenceNumber}` and GET
+   `/auth/sessions/rev2` drop it in favour of `authenticationMethodInfo`. Source: api-changelog.md.
+   Confidence: HIGH
 9. **Tokens (issue #834):** see `rozporzadzenie-ksef-i-tokeny.md` (tokens issued until 31.12.2026
    valid until 30.11.2027, new token endpoint). Confidence: MEDIUM
 10. **Environments (all return HTTP 200 on 2026-10-07):** AP prod https://ap.ksef.mf.gov.pl/, AP
@@ -89,6 +94,34 @@ dates below are PROD unless stated.
     attached; comments until 2026-11-20. No ksef-api commit or release since 2.9.0 (`ce3670e`,
     2026-10-14) as of 2026-11-16. https://github.com/CIRFMF/ksef-api/issues/885 Tier 3 Confidence:
     HIGH that it was published (proposal). Details: brief `tokeny-ksef-po-2026.md` fact 15.
+
+13. **API 2.10.0 (TEST 16.11.2026; DEMO and PROD dates blank in the changelog; commits
+    `05a9757`..`ccc26b0` of 2026-11-16, `d27fc89`/`d4460b6` of 2026-11-17, all by kw-cirf):**
+    - Tokens: `rev2` endpoints POST/GET `/tokens/rev2`, GET `/tokens/rev2/{referenceNumber}` (with
+      validity period), POST `/tokens/{referenceNumber}/approve`; old generate/list/status
+      operations deprecated, withdrawal **30.09.2027**; test-only POST
+      `/testdata/tokens/{referenceNumber}/expire-approval`; DELETE `/tokens/{referenceNumber}`
+      documents `21409` and new `26004` (status does not allow revocation); rev2 token limit in GET
+      `/limits/context`. OpenAPI: old POST `/tokens` says a token generated from 07.11.2026 is valid
+      90 days (see `rozporzadzenie-ksef-i-tokeny.md` fact 6a).
+    - Authentication: `rev2` of auth status and active sessions without `authenticationMethod` (fact
+      8); status `450` „Token poza okresem ważności" for rev2 tokens outside validity; examples
+      fixed to code `460` for certificate errors.
+    - Permissions: `CollectiveIdentifierManage` in EU-entity administrator/representative grants and
+      queries.
+    - Collective identifiers: GET `/collective-identifiers/ksef/{ksefNumber}` now rejects a bad
+      checksum with `400`, code `21405`.
+    - OpenAPI: `Deprecation` and `Sunset` headers on deprecated endpoints; after sunset they return
+      `410 Gone`.
+    - Test data: fixes to attachment-consent revocation and certificate limit requests. No change to
+      invoice XML validation or FA(3) handling. Source:
+      https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md Confidence: HIGH
+14. **ksef-client-csharp 2.10.0 (2026-11-18, CIRF-DEV3):** support for API 2.10.0 rev2 auth and
+    token operations, `ExtensibleEnumValue`/`FutureValue` mapping, CRC-8 validation of KSeF numbers
+    and collective identifiers, `[Obsolete]` on old auth (sunset 15.06.2027) and token (30.09.2027)
+    methods; breaking: `BlockContextAsync`/`UnblockContextAsync` signatures, `FormType.RR` renamed
+    `FormType.FA_RR`. https://github.com/CIRFMF/ksef-client-csharp/blob/main/RELEASE_NOTES.md
+    Confidence: HIGH
 
 ## Unsettled Questions
 

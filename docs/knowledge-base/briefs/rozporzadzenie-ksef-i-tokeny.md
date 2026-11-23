@@ -1,8 +1,9 @@
 # Research Brief: Rozporządzenie w sprawie KSeF (Dz.U. 2025 poz. 1815) i przyszłość tokenów
 
-**Requested by:** weekly knowledge refresh **Date:** 2026-10-07 **Freshness:** 2026-11-11 (fact 7
-draft text read on RCL; fact 6 GitHub only; ELI amendment list checked 2026-11-11) **For content:**
-updates of posts and briefs on tokens vs certificates
+**Requested by:** weekly knowledge refresh **Date:** 2026-10-07 **Freshness:** 2026-11-23 (fact 6a
+CIRFMF git history only; fact 7 draft text read on RCL 2026-11-11, stage not re-checked since: RCL
+and ELI unreachable from the run environment) **For content:** updates of posts and briefs on tokens
+vs certificates
 
 **Target query:** "tokeny KSeF po 2026", "czy tokeny KSeF będą działać w 2027"
 
@@ -48,7 +49,19 @@ until then the regulation text in force governs.
    days from 2027-01-01; tokens generated before 2027-01-01 valid until end of 2027-11-30; old
    endpoints withdrawn 2027-09-30. Open for comments until 2026-11-20.
    https://github.com/CIRFMF/ksef-api/issues/885 Tier 3 (a proposal, not law) Confidence: HIGH that
-   it was published. Details: brief `tokeny-ksef-po-2026.md` fact 15.
+   it was published. Details: brief `tokeny-ksef-po-2026.md` fact 15. 6a. **API 2.10.0 on TEST,
+   2026-11-16 (api-changelog.md, commit `7eac824`, kw-cirf):** the `rev2` token endpoints (POST/GET
+   `/tokens/rev2`, GET `/tokens/rev2/{referenceNumber}`) and POST
+   `/tokens/{referenceNumber}/approve` are deployed on the TEST environment; DEMO and PROD dates are
+   blank („-"). The old generate/list/status operations are deprecated, withdrawal 30.09.2027. The
+   OpenAPI values match the issue 885 draft (validFrom ≤ 60 days, validTo ≤ 365 days, default 90
+   days, 24 h approval, 100 tokens per context). The old POST `/tokens` description now reads:
+   „Token wygenerowany od 07.11.2026 jest ważny przez 90 dni od momentu wygenerowania" (the draft
+   said from 2027-01-01); the spec does not say whether this applies to PROD before 2.10.0 is
+   deployed there, and it does not mention 30.11.2027. Sources:
+   https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md,
+   https://github.com/CIRFMF/ksef-api/blob/main/open-api.json Tier 3 (technical spec, not law)
+   Confidence: HIGH for what the spec says; MEDIUM for how it applies on PROD.
 
 7. **Draft amending regulation, October 2026 (primary text read on RCL, 2026-11-11):**
    „Rozporządzenie Ministra Finansów i Gospodarki zmieniające rozporządzenie w sprawie korzystania z
@@ -83,6 +96,8 @@ until then the regulation text in force governs.
 - Whether the amending regulation takes over the issue 885 draft (90/365 days, approval step). The
   365-day maximum (fact 7) matches; the draft is silent on the 90-day default and approval step.
 - Final date of the amending regulation and whether 30.11.2027 is an MF decision or only a plan.
+- When API 2.10.0 (rev2 tokens) reaches PROD, and whether the 90-day validity of old-endpoint tokens
+  generated from 07.11.2026 (fact 6a) applies on PROD or only on TEST.
 - Whether "na czas nieokreślony" (cz. I) conflicts with the limited validity of old tokens.
 
 ## Suggested Sources Section

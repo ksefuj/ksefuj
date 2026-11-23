@@ -6,6 +6,47 @@ validator, none).
 
 ---
 
+## 2026-11-16 → 2026-11-23 (partial run, GitHub only; `Last checked` not updated)
+
+Official hosts were unreachable from the run environment for the fifth run in a row (proxy refused
+CONNECT with HTTP 403): ksef.podatki.gov.pl, api.sejm.gov.pl, legislacja.rcl.gov.pl,
+dziennikustaw.gov.pl, isap.sejm.gov.pl, www.sejm.gov.pl, www.senat.gov.pl, www.gov.pl,
+eureka.mf.gov.pl, crd.gov.pl. Law, MF guidance and schemas were not checked; this is not a "no
+changes" entry. Still unverified: the UD477 Senate/President stage and publication (art. 3 is due to
+enter into force 2026-12-31), the token regulation draft (RCL 12416152), and whether art. 145m/145n
+were extended. CIRFMF issue comments were not readable (GitHub REST API refused for unattached
+repos); git history and the issue search API were. Open issue:
+https://github.com/ksefuj/ksefuj/issues/127.
+
+### Technical (API/schemas/GitHub)
+
+- ksef-api 2.10.0 on TEST (2026-11-16; DEMO/PROD dates not set): `rev2` token endpoints with
+  validity period, token approval endpoint, old token generate/list/status deprecated (withdrawal
+  30.09.2027); OpenAPI says tokens from old POST `/tokens` generated from 07.11.2026 are valid 90
+  days: https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md,
+  https://github.com/CIRFMF/ksef-api/blob/main/open-api.json. Impact: briefs
+  `api-ksef-zmiany-cirfmf.md`, `rozporzadzenie-ksef-i-tokeny.md` (the brief and post
+  `tokeny-ksef-po-2026` are already updated for 2.10.0 in open PR #218); posts none beyond #218;
+  validator none.
+- ksef-api 2.10.0: the `authenticationMethod` removal announced for 2026-11-16 was cancelled; old
+  auth status/session endpoints supported until 15.06.2027, `rev2` replacements; `Deprecation`/
+  `Sunset` headers and `410 Gone` after sunset; `CollectiveIdentifierManage` for EU entities;
+  collective-identifier lookup rejects bad KSeF number checksums (`21405`):
+  https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md. Impact: brief
+  `api-ksef-zmiany-cirfmf.md`; posts none; validator none.
+- ksef-client-csharp 2.10.0 (2026-11-18): API 2.10.0 support, CRC-8 KSeF number validation, breaking
+  changes in test-data context blocking and `FormType.FA_RR`:
+  https://github.com/CIRFMF/ksef-client-csharp/blob/main/RELEASE_NOTES.md. Impact: brief only.
+- ksef-client-java (3.0.30), ksef-pdf-generator (1.1.48), ksef-schematy (`cd826b8`), ksef-latarnia
+  (`b3d8196`): no commits since the 2026-11-16 run. Impact: none.
+- Lead only (community question, no readable MF answer): CIRFMF/ksef-api#889/#890 ask whether and
+  when the per-IP `global` rate limit announced in 2.8.0 is switched on; #889 was closed 2026-11-17.
+  Not recorded as fact.
+- `pnpm update-schemas`: crd.gov.pl unreachable, every download `fetch failed`, script fell back to
+  bundled files (and still printed "All schemas are up to date"); schemas not verified.
+
+---
+
 ## 2026-11-09 → 2026-11-16 (partial run, GitHub only; `Last checked` not updated)
 
 Official hosts were unreachable from the run environment for the fourth run in a row (proxy refused
