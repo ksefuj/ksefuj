@@ -1,0 +1,120 @@
+---
+title: "Контекст входу в KSeF: який NIP вводити"
+description: "Контекст означає фірму, від імені якої ти дієш у KSeF. JDG вводить свій NIP, а бухгалтер вводить NIP клієнта, який надав йому повноваження."
+date: 2026-11-16
+section: blog
+locale: uk
+slug: "kontekst-vkhodu-ksef"
+topic: "access"
+tags: ["KSeF", "JDG"]
+sources:
+  - label: "Посібник користувача Aplikacja Podatnika KSeF 2.0 (06.08.2026)"
+    url: "https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
+  - label: "Підручник KSeF 2.0, ч. I (06.08.2026)"
+    url: "https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  - label: "FAQ МФ: KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
+  - label: "CIRFMF ksef-api: автентифікація"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/uwierzytelnianie.md"
+  - label: "CIRFMF ksef-api: повноваження"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/uprawnienia.md"
+  - label: "CIRFMF ksef-api: контекст NIP-VAT UE"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/auth/context-identifier-nip-vat-ue.md"
+  - label: "CIRFMF ksef-api: специфікація OpenAPI"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
+  - label: "Інструкція автентифікації в Aplikacja Podatnika KSeF 2.0, тестова версія"
+    url: "https://ksef.podatki.gov.pl/media/jxgjepcn/instrukcja-uwierzytelnienia-w-aplikacji-podatnika-ksef-20-wersja-testowa.pdf"
+translations:
+  pl: "kontekst-logowania-ksef"
+  en: "ksef-login-context"
+  uk: "kontekst-vkhodu-ksef"
+---
+
+Контекст входу в KSeF (Krajowy System e-Faktur, польська національна система е-рахунків) визначає фірму, від імені якої ти хочеш діяти після входу, найчастіше через її NIP (польський податковий номер). Якщо ти ведеш JDG (jednoosobowa działalność gospodarcza, польський аналог ФОП), обираєш «NIP» і вводиш **свій власний NIP**, а бухгалтер вводить NIP клієнта, у контексті якого має повноваження.
+
+Правовий стан на 16 листопада 2026 року.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
+  label="Посібник Aplikacja Podatnika KSeF 2.0, розд. 4.1"
+/>
+
+## Де під час входу з'являється контекст?
+
+В Aplikacja Podatnika (веб-застосунок KSeF для платника, інтерфейс польською) спочатку обираєш спосіб входу: «Zaloguj przez login.gov.pl» (увійти через login.gov.pl) або «Zaloguj certyfikatem» (увійти сертифікатом, тобто кваліфікованим підписом чи печаткою). Далі обираєш тип ідентифікатора, вводиш номер і натискаєш «Przejdź dalej» (далі). Якщо обрав login.gov.pl, застосунок перекине тебе на його сторінку. Самі способи входу ми описуємо в [посібнику про вхід до KSeF](/uk/guides/vkhid-do-ksef).
+
+Входиш ти як людина, а контекст каже, чиї рахунки ти хочеш виставляти й переглядати. Тому PESEL (польський особистий ідентифікаційний номер) не є контекстом: він лише вказує, хто входить.
+
+Аня працює графічною дизайнеркою на JDG. Повноваження власника для свого NIP вона отримала від KSeF автоматично, нічого не подаючи. Вводить свій NIP і одразу виставляє рахунки.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  label="Підручник KSeF 2.0, ч. I, с. 57"
+/>
+
+## Який тип ідентифікатора обрати?
+
+Aplikacja Podatnika пропонує три типи:
+
+- **NIP** обирають майже всі: JDG, компанія, бухгалтерське бюро та його клієнти.
+- **Внутрішній ідентифікатор** (IDWew) позначає філію або інший внутрішній підрозділ фірми: це NIP і п'ять цифр, наприклад `1111111111-33334`. Фірма генерує його в KSeF, а в його контексті входить, зокрема, адміністратор цього підрозділу. Якщо ведеш JDG без філій, можеш його пропустити. <Source href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf" label="Підручник KSeF 2.0, ч. I, с. 78–80" />
+- **Складений ідентифікатор із номером VAT UE** поєднує NIP польської фірми з номером VAT UE контрагента, наприклад `5265877635-ATU12345678`. Ним користуються представники фірми з іншої країни ЄС, яка виставляє рахунки за польську фірму (самовиставлення рахунків). Такий контекст з'являється, коли польська фірма надає повноваження адміністратора суб'єкта з ЄС.
+
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/auth/context-identifier-nip-vat-ue.md"
+  label="CIRFMF: контекст NIP-VAT UE"
+/>
+
+## Що вводить бухгалтер або бухгалтерське бюро?
+
+Пані Кристина працює бухгалтеркою, а Аня її клієнтка. Аня надала їй повноваження в KSeF як фізичній особі. До рахунків Ані пані Кристина входить **власним** Profil Zaufany (безкоштовний польський довірений профіль) або підписом і як контекст вводить NIP Ані. Дані для входу Ані їй не потрібні. Працівники бухгалтерського бюро роблять так само: входять у контексті NIP клієнта.
+
+Доступ працівникам бюро надає у власному контексті, тобто після входу з NIP бюро, а не клієнта. Зробити це воно може лише тоді, коли клієнт надав бюро повноваження з правом передавати їх далі. Під час надання бюро обирає, чи працівник працюватиме для одного клієнта, чи для всіх (тобто тих, хто дав таке право). KSeF перевіряє весь ланцюжок (клієнт, бюро, працівник) під час кожного відкриття сесії. Якщо клієнт відкличе повноваження бюро, повноваження працівників і далі існують, але перестають діяти.
+
+Прочитана нами документація МФ не вирішує, чи бюро з повноваженням, наданим усій фірмі, може обслуговувати рахунки клієнта з контексту власного NIP, чи мусить вводити NIP клієнта.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  label="Підручник KSeF 2.0, ч. I, с. 49, 74–78"
+/>
+
+## Що буде, якщо в цьому контексті ти не маєш повноважень?
+
+KSeF пустить тебе лише туди, де ти маєш хоча б одне активне повноваження. Якщо введеш NIP фірми, яка тобі нічого не надала, увійти не вдасться. Можливі причини: помилка в номері, клієнт ще не надав доступу або вже його відкликав.
+
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/uwierzytelnianie.md"
+  label="CIRFMF: автентифікація"
+/>
+
+У прочитаних нами документах МФ ми не знайшли, яке повідомлення тоді покаже Aplikacja Podatnika і чи можна змінити в ній контекст без виходу. Програма, яка під'єднується через API, отримує статус 415 (автентифікація завершилася невдало) з деталлю «Brak przypisanych uprawnień» (немає призначених повноважень).
+
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
+  label="CIRFMF: специфікація OpenAPI, статуси автентифікації"
+/>
+
+## Токен діє в одному контексті, сертифікат KSeF у багатьох
+
+Токеном чи сертифікатом KSeF в Aplikacja Podatnika не увійдеш. Їх використовують програми для рахунків, і відрізняє їх саме контекст:
+
+- **Токен** діє лише в тому контексті, де його згенерували, і має повноваження, вказані під час генерування. Особистим токеном фізичної особи може користуватися лише вона, тож бюро не скористається токеном клієнта. В іншому контексті API повертає статус 450 (неправильний токен) з деталлю «Token nie może być użyty w kontekście…» (токен не можна використати в контексті…) <Source href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json" label="CIRFMF: специфікація OpenAPI" />.
+- **Сертифікат KSeF** не має власних повноважень. Він спирається на повноваження людини чи фірми, чий ідентифікатор містить, і діє в різних контекстах.
+
+Який спосіб обрати для програми, пишемо в тексті про [токени й сертифікати KSeF](/uk/blog/sertyfikaty-proty-tokeniv-ksef).
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  label="Підручник KSeF 2.0, ч. I, с. 36–46"
+/>
+
+## Як ввести контекст у тестовому середовищі?
+
+У тестовому середовищі обираєш «Zaloguj uwierzytelnieniem testowym» (увійти через тестову автентифікацію), вводиш контекст (наприклад, NIP фірми), а також NIP або PESEL людини, яка входить. Profil Zaufany працює лише в DEMO і в продуктивному середовищі. Подробиці є в [посібнику про тестове середовище](/uk/guides/testove-seredovyshche-ksef).
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/jxgjepcn/instrukcja-uwierzytelnienia-w-aplikacji-podatnika-ksef-20-wersja-testowa.pdf"
+  label="Інструкція автентифікації в Aplikacja Podatnika KSeF 2.0, тестова версія"
+/>
+
+Якщо працюєш із бухгалтерським бюро, а воно не може увійти у твій контекст, [надай йому повноваження в KSeF](/uk/guides/dostup-do-ksef-dlya-bukhgaltera).

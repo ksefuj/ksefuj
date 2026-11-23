@@ -1,0 +1,87 @@
+---
+title: "KSeF keeps your invoices for 10 years"
+description: "KSeF stores invoices for 10 years from the end of the year of issue, so you don't keep them yourself. Invoices outside KSeF you store as before."
+date: 2026-11-15
+section: blog
+locale: en
+slug: "how-long-ksef-stores-invoices"
+topic: "invoicing"
+tags: ["KSeF", "Invoice", "JDG"]
+sources:
+  - label: "KSeF 2.0 Handbook, part II: issuing and receiving invoices (6 Aug 2026), sections 1.2, 1.6.3, 6.5 and 7"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "MF, frequently asked questions about KSeF, question 21"
+    url: "https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
+  - label: "MF, legal basis and key dates"
+    url: "https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/podstawy-prawne-oraz-kluczowe-terminy/"
+  - label: "KSeF 2.0 Handbook, part I: getting started with KSeF (6 Aug 2026), pp. 55, 57 and 77–78"
+    url: "https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  - label: "KSeF Taxpayer Application user manual (6 Aug 2026)"
+    url: "https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
+  - label: "KSeF API: changelog (version 2.4.0, export retention)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md"
+  - label: "VAT Act, consolidated text (Dz.U. 2026 poz. 1263), Art. 106ga(2), 106ng, 106nha and 112aa"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+translations:
+  pl: "przechowywanie-faktur-ksef"
+  en: "how-long-ksef-stores-invoices"
+  uk: "zberigannya-rakhunkiv-ksef"
+---
+
+KSeF (Krajowy System e-Faktur, Poland's National e-Invoicing System) stores invoices for 10 years from the end of the year in which they were issued. During that time you don't have to keep them yourself or hand them to the tax office: Art. 112 and 112a of the VAT Act (the invoice storage rules) don't apply for that period (Art. 112aa(1)), and according to the Ministry of Finance (MF) the tax administration has access to the invoices in KSeF. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="VAT Act, Art. 112aa" /> <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Handbook, part II, sections 7 and 1.6.3" /> <Source href="https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/" label="MF, frequently asked questions, question 21" />
+
+Legal position as of 15 November 2026.
+
+## Which invoices stay in KSeF?
+
+KSeF stores structured invoices, meaning the ones it has assigned a KSeF number. That includes invoices issued offline (in offline24 mode, during KSeF unavailability or a KSeF failure), but only once they reach the system. An offline invoice still waiting to be sent isn't in KSeF yet. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Handbook, part II, section 7" />
+
+The same goes for VAT RR invoices and VAT RR KOREKTA (the invoices and corrections used when buying from flat-rate farmers). Since 1 April 2026 you can issue them in KSeF voluntarily, so the system stores only those actually sent to it. <Source href="https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/podstawy-prawne-oraz-kluczowe-terminy/" label="MF, legal basis and key dates" /> <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Handbook, part II, section 7" />
+
+Once an invoice has a number, you can't delete or cancel it, so it stays in KSeF for the whole period. A corrective invoice is a separate invoice with its own KSeF number and its own storage period. What to do with a wrong invoice is covered in our post on [why you can't delete an invoice from KSeF](/en/blog/delete-invoice-ksef).
+
+## When do you need to download an invoice before the 10 years are up?
+
+When the tax liability becomes time-barred later. MF justifies the 10 years by saying that **most** tax liabilities become time-barred within that time, and links the period to adjusting input VAT on real estate. Most isn't all, though. If the 10 years in KSeF end before the limitation period does, you keep the invoice outside KSeF until the liability is time-barred (Art. 112aa(2) of the VAT Act), and MF says you need to download it in advance. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Handbook, part II, section 7" />
+
+MF's example: an invoice sent on 5 February 2026 stays in KSeF until 31 December 2036. If the liability it relates to isn't time-barred by then, you download it by 31 December 2036 at the latest and store it yourself from then on. The period runs from the end of the year of issue, not from the issue date, so in our reading it ends on 31 December 2036 for every invoice issued in 2026.
+
+Whether your limitation period runs longer than 10 years depends on your tax situation. That's a question for a tax adviser or your accountant.
+
+## You store invoices outside KSeF as before
+
+KSeF stores only what reached it. An invoice without a KSeF number doesn't get the 10 years in the system, so from day one you store it under the usual rules of Art. 112 and 112a of the VAT Act. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Handbook, part II, sections 1.2 and 7" /> <Source href="https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/podstawy-prawne-oraz-kluczowe-terminy/" label="MF, legal basis and key dates" /> <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="VAT Act, Art. 106ga(2), 106ng and 106nha" /> This covers, among others:
+
+- paper and PDF invoices issued under the limit of PLN 10,000 gross a month (Art. 145m), which applies until 31 December 2026; what changes after that date is in our post on the [end of the PLN 10,000 limit](/en/blog/end-of-10000-pln-limit),
+- invoices from a cash register (Art. 145n), also until 31 December 2026,
+- invoices for private individuals, if you issued them outside KSeF,
+- invoices from sellers with no seat and no fixed establishment in Poland, or with a fixed establishment that isn't involved in the sale (Art. 106ga(2) points 1–2), if they didn't issue them in KSeF,
+- invoices issued during a total failure (Art. 106ng): these are never sent to KSeF at all, and neither are offline24 invoices not yet sent to KSeF when a total failure was announced (Art. 106nha),
+- invoices issued outside KSeF before the obligation applied to you, for example a PDF from before 1 April 2026.
+
+So Pani Krystyna, who keeps the books for several dozen clients, has two archives: invoices with a KSeF number stay in the system, and paper, PDF and cash register invoices she keeps the way she did before KSeF.
+
+## How do you download invoices from KSeF?
+
+You don't have to download anything during the 10 years, but you can do it as many times as you like, from the moment the KSeF number is assigned. The seller can't see whether or how many times you downloaded their invoice. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Handbook, part II, section 6.5" />
+
+In the Taxpayer Application (Aplikacja Podatnika, MF's free web app) you select invoices in the list and click "Pobierz" (Download). You can download 1 to 10 invoices at once, and several arrive in a single ZIP file. <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="Taxpayer Application manual, pp. 116–117" /> With hundreds of invoices it's easier to download them with software connected to KSeF through the API. The export status in the API is available for 7 days (after that the API returns 410 Gone), but that applies only to the export operation itself: the invoices stay in KSeF. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md" label="KSeF API, changelog 2.4.0" />
+
+## An accounting office loses access along with the permission
+
+A permission to invoices covers all of the client's invoices, sales and purchases alike. When the client revokes it from the accounting office, the permissions of the office employees to whom the office passed access to that client's invoices become inactive. The taxpayer doesn't lose access, because owner permissions, tied to their NIP (tax identification number), can't be revoked. <Source href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf" label="KSeF 2.0 Handbook, part I, pp. 55, 57 and 77–78" /> How duties split between a business and its office is covered in our post on [the accounting office in KSeF](/en/blog/ksef-accounting-office-who-does-what).
+
+<Tip>
+  This is our advice, not an MF requirement: if you're ending work with a client and need their
+  invoices for your own records, download them before the client revokes your permission.
+</Tip>
+
+## What MF hasn't explained
+
+The MF materials we reviewed don't answer three questions:
+
+- whether invoices sent to the voluntary KSeF 1.0 (until 31 January 2026) are available in KSeF 2.0 and whether the same 10-year period applies to them,
+- whether you can still log in to your invoices after closing a JDG (sole proprietorship), being struck off CEIDG (the business register) or liquidating a company; download them before you close the business (again, our advice),
+- in what form to keep an invoice downloaded from KSeF: as the XML file or as its PDF visualisation.
+
+How to find a purchase invoice in KSeF and download it is shown step by step in our guide to [receiving invoices in KSeF](/en/guides/receiving-invoices-in-ksef).

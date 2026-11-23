@@ -5,6 +5,50 @@ effect. Record the date, the page, what changed (old -> new for titles and descr
 metric that motivated it. After 28 days, add a **Results** line comparing current CTR/position with
 the baseline.
 
+## 2026-11-14
+
+Digest: `gsc-data` 2026-11-13 (GSC 2026-10-14 to 2026-11-10: 159 clicks, 13,391 impressions, CTR
+1.19%, avg position 6.9; previous 28 days 91 clicks, CTR 1.06%). No crawl Problems: all 213 sitemap
+URLs 200, no redirects, noindex, canonical mismatches or broken internal links; sitemap still 0
+errors, 6 warnings. The 32 not-indexed URLs are posts and guides published in the last 1-3 weeks
+plus the `/uk/blog` and `/uk/faq` listings (Crawled - currently not indexed). No title or
+description changes: every page in the low-CTR list had its title or description changed on
+2026-10-26 or later, or has frontmatter `updated` within 28 days, and the FA(2) vs FA(3) and
+test-invoice pages are in open content PR #207. The earliest eligible title changes are
+`/en/blog/corrective-invoice-ksef`, `/blog/faktura-korygujaca-ksef`,
+`/blog/faktura-dla-osoby-prywatnej-ksef` and `/en/blog/invoice-for-private-person-ksef` from
+2026-11-23.
+
+- **Pages:** `/guides/logowanie-ksef`, `/en/guides/ksef-login`, `/uk/guides/vkhid-do-ksef`
+  - **Change:** body only (title and description unchanged). The opening sentence now names where
+    you log in, with a link: PL „Tak, do KSeF zalogujesz się Profilem Zaufanym: w Aplikacji
+    Podatnika KSeF 2.0 wybierasz…" -> „Do KSeF zalogujesz się w Aplikacji Podatnika KSeF 2.0 na
+    ap.ksef.mf.gov.pl: wybierasz…"; EN "in the KSeF 2.0 Taxpayer Application, choose…" -> "in the
+    KSeF 2.0 Taxpayer Application at ap.ksef.mf.gov.pl, choose…"; UK „До KSeF можна увійти через
+    Profil Zaufany: в Aplikacja Podatnika…" -> „До KSeF входиш в Aplikacja Podatnika … на
+    ap.ksef.mf.gov.pl: обираєш…". The address sentence at the start of „Jak wygląda logowanie" and
+    its EN and UK equivalents is removed, so the address appears once (STYLE.md section 3).
+  - **Motivation:** the PL opening answered a yes/no question („Tak, …") while the page ranks for
+    navigational queries that want the login page: „ksef logowanie" 256 impr, 0 clicks, pos 9.3;
+    „kse logowanie" 124, 0, pos 9.1; „logowanie kse" 19, pos 8.4; „ksef zaloguj" 25, pos 5.5; „ksef
+    logowanie przez profil zaufany" 167, 2 clicks, pos 4.9. EN: "ksef login" 308 impr, 1 click, pos
+    5.0; „ksef logowanie" 168, 1, pos 8.3; "ksef log in" 42, pos 5.2. Google often uses the opening
+    as the snippet, so it should hold the address.
+  - **Baseline to compare:** `/guides/logowanie-ksef` 1,018 impr, 4 clicks, CTR 0.39%, pos 7.9;
+    `/en/guides/ksef-login` 855 impr, 6 clicks, CTR 0.70%, pos 6.4; `/uk/guides/vkhid-do-ksef` 8
+    impr, pos 2.1; query positions above.
+
+### Results
+
+- **2026-10-17, FA(2) vs FA(3) posts -> JST/GV validator page:** baseline was
+  `/en/validator/missing-jst-gv-podmiot2` "Discovered - currently not indexed". Now "Submitted and
+  indexed", 39 impr, 1 click, pos 5.3 (first impression 2026-10-23).
+- **2026-10-17, PDF-vs-XML posts -> bank-account validator page:** baseline was
+  `/validator/bledny-numer-rachunku-bankowego` "Discovered - currently not indexed". Now "Submitted
+  and indexed", still no impressions; `/en/validator/invalid-bank-account-number-invoice` 116 impr,
+  0 clicks, pos 11.3; UK indexed, 3 impr, pos 4.3. Later runs (2026-10-28) added more links to the
+  same pages, so the effect is not this change's alone.
+
 ## 2026-11-13
 
 Digest: `gsc-data` 2026-11-12 (GSC 2026-10-13 to 2026-11-09: 152 clicks, 13,133 impressions, CTR
