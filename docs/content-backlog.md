@@ -117,7 +117,7 @@ matching queries.
 - [x] `przechowywanie-faktur-ksef` — Jak długo KSeF przechowuje faktury · „jak długo faktury w KSeF"
       · K · FAQ
 - [x] `kontekst-logowania-ksef` — Kontekst logowania w KSeF · „kontekst logowania KSeF" · A · FAQ
-- [ ] `faktura-vat-rr-ksef` — Faktura VAT RR w KSeF · „VAT RR KSeF" · A · APP
+- [x] `faktura-vat-rr-ksef` — Faktura VAT RR w KSeF · „VAT RR KSeF" · A · APP
 - [ ] `di-bfk-jpk-v7` — Oznaczenia DI i BFK w JPK_V7 · „JPK_V7 BFK DI" · K · FAQ
 - [ ] `kurs-waluty-faktura-ksef` — Kurs waluty na fakturze w KSeF · „faktura w walucie KSeF kurs" ·
       K · existing brief `docs/knowledge-base/briefs/kurs-waluty-art-31a.md` · The `/waluty` tool

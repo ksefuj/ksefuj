@@ -1,0 +1,117 @@
+---
+title: "VAT RR w KSeF wystawisz tylko za zgodą rolnika"
+description: "Fakturę VAT RR wystawia nabywca. Od 1 kwietnia 2026 r. robi to w KSeF, jeśli rolnik złoży tam oświadczenie i go wskaże. Bez tego wystawia ją poza KSeF."
+date: 2026-11-20
+section: blog
+locale: pl
+slug: "faktura-vat-rr-ksef"
+topic: "invoicing"
+tags: ["KSeF", "Faktura", "VAT"]
+sources:
+  - label: "Ustawa o VAT, tekst jednolity (Dz.U. 2026 poz. 1263), art. 116, art. 117"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf"
+  - label: "MF: Podstawy prawne oraz kluczowe terminy (Faktury VAT RR)"
+    url: "https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/podstawy-prawne-oraz-kluczowe-terminy/"
+  - label: "MF: Pytania i odpowiedzi KSeF 2.0 (pyt. 12)"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
+  - label: "MF: Podręcznik KSeF 2.0, cz. II (06.08.2026): rachunek (pkt 1.3), przyczyny odrzucenia faktury, przechowywanie faktur"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "MF: Podręcznik KSeF 2.0, cz. III (06.11.2026), pkt 9: faktury VAT RR w KSeF"
+    url: "https://ksef.podatki.gov.pl/media/pr2dfos2/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06112026.pdf"
+  - label: "MF: Podręcznik użytkownika Aplikacji Podatnika KSeF 2.0 (06.08.2026), pkt 5.5.2.6"
+    url: "https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
+  - label: "Schemat FA_RR(1) 1-1E (MF, repozytorium CIRFMF/ksef-api)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/faktury/schemy/RR/schemat_FA_RR(1)_v1-1E.xsd"
+  - label: "KSeF 2.0, dokumentacja API: Uprawnienia (RRInvoicing)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/uprawnienia.md"
+  - label: "KSeF 2.0, dokumentacja API: Historia zmian (2.2.1, 2.4.0, 2.5.0)"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md"
+translations:
+  pl: "faktura-vat-rr-ksef"
+  en: "vat-rr-invoice-ksef"
+related:
+  - "blog/samofakturowanie-ksef"
+  - "blog/ryczalt-ksef"
+  - "guides/uprawnienia-ksef-ksiegowa"
+---
+
+Fakturę VAT RR wystawia nabywca produktów rolnych, czyli czynny podatnik VAT, który kupuje je od rolnika ryczałtowego (art. 116 ust. 1 ustawy o VAT). Od 1 kwietnia 2026 r. może ją wystawić w KSeF, ale tylko wtedy, gdy rolnik złoży w KSeF oświadczenie i wskaże go jako uprawnionego. Od tej chwili musi ją tam wystawiać, dopóki rolnik nie odwoła wskazania; bez wskazania faktura VAT RR powstaje poza KSeF.
+
+Stan na 20 listopada 2026 r.
+
+## Kto wystawia fakturę VAT RR, a kto nie?
+
+Wystawia ją kupujący: skup, przetwórnia, sklep albo restauracja, które są czynnymi podatnikami VAT i kupują produkty rolne od rolnika ryczałtowego. Ustawa nakazuje im wystawić „w dwóch egzemplarzach fakturę dokumentującą nabycie tych produktów”. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2026/1263/text.pdf" label="Ustawa o VAT, art. 116 ust. 1" />
+
+Rolnik ryczałtowy faktury nie wystawia. Art. 117 zwalnia go z tego obowiązku w zakresie działalności rolniczej, a podręcznik KSeF potwierdza, że rolnik może zamiast faktury wystawić rachunek. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="MF, Podręcznik KSeF 2.0, cz. II, pkt 1.3" />
+
+Rolnik ryczałtowy to status w VAT (art. 115–117 ustawy o VAT). Nie ma związku z [ryczałtem ewidencjonowanym w PIT](/blog/ryczalt-ksef).
+
+## Czy faktura VAT RR musi trafić do KSeF?
+
+Nie musi, dopóki rolnik nie wskaże nabywcy. MF pisze, że wystawianie faktur VAT RR i VAT RR KOREKTA w KSeF jest od 1 kwietnia 2026 r. „fakultatywne”, i nie podaje daty, od której miałoby stać się obowiązkowe. <Source href="https://ksef.podatki.gov.pl/informacje-ogolne-ksef-20/podstawy-prawne-oraz-kluczowe-terminy/" label="MF: Podstawy prawne oraz kluczowe terminy" /> Kogo i od kiedy KSeF obejmuje przy zwykłych fakturach, opisujemy w [tekście o 1 kwietnia 2026 r.](/blog/ksef-od-1-kwietnia-2026)
+
+Ta dobrowolność ma warunek. Według FAQ MF nabywca wystawi fakturę VAT RR w KSeF „tylko wtedy, gdy rolnik ryczałtowy złoży w systemie oświadczenie, że jest rolnikiem ryczałtowym i wskaże tego nabywcę jako uprawnionego”. **Jeśli rolnik nie złoży oświadczenia, faktura VAT RR będzie wystawiona poza KSeF.** <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20" label="MF, Pytania i odpowiedzi KSeF 2.0, pyt. 12" />
+
+Dobrowolność dotyczy rolnika, nie nabywcy. Gdy rolnik wskaże nabywcę, ten do czasu odwołania wskazania jest obowiązany wystawiać faktury VAT RR i VAT RR KOREKTA w KSeF (art. 116 ust. 3i). Obowiązek nie działa tylko w czasie ogłoszonej awarii albo niedostępności KSeF (ust. 3j). <Source href="https://ksef.podatki.gov.pl/media/pr2dfos2/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06112026.pdf" label="MF, Podręcznik KSeF 2.0, cz. III, pkt 9.1 i 9.3.2" />
+
+Pan Tomasz prowadzi skup owoców i kupuje od pięciu rolników. Dwóch wskazało jego firmę w KSeF, więc ich faktury VAT RR musi wystawiać w KSeF. Dla pozostałych trzech wystawia je poza systemem.
+
+## Jak rolnik wskazuje nabywcę w KSeF?
+
+Oświadczenie i wskazanie nabywcy to jeden krok: rolnik składa oświadczenie z chwilą, gdy wskaże w KSeF nabywcę jako uprawnionego (art. 116 ust. 3h). W Aplikacji Podatnika służy do tego formularz „Nadaj uprawnienie – podmiotowi do wystawiania faktur VAT RR”: rolnik wpisuje NIP i nazwę nabywcy i zaznacza pole z treścią oświadczenia. Bez NIP-u rolnik nabywcy nie wskaże, bo MF nazywa NIP „warunkiem bezwzględnym”. <Source href="https://ksef.podatki.gov.pl/media/pr2dfos2/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06112026.pdf" label="MF, Podręcznik KSeF 2.0, cz. III, pkt 9.2.1" /> <Source href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf" label="MF, Podręcznik Aplikacji Podatnika KSeF 2.0, pkt 5.5.2.6" />
+
+W dokumentacji API to samo uprawnienie nazywa się `RRInvoicing` („samofakturowanie RR”). Nadaje je właściciel albo administrator z uprawnieniem `CredentialsManage`, a nabywcę wskazuje jego NIP-em. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/uprawnienia.md" label="MF, dokumentacja API: Uprawnienia" />
+
+Mechanizm przypomina [samofakturowanie przy zwykłych fakturach](/blog/samofakturowanie-ksef). Przy wysyłce KSeF sprawdza, czy nabywca ma uprawnienie: dokumentacja mówi, że weryfikowana jest „zależność pomiędzy podmiotem, a danymi na fakturach”. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/uprawnienia.md" label="MF, dokumentacja API: Uprawnienia podmiotowe" /> Brak uprawnień to w podręczniku jedna z przyczyn odrzucenia faktury. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="MF, Podręcznik KSeF 2.0, cz. II: przyczyny odrzucenia faktury" />
+
+Rolnik może uprawnienie odebrać. Odebranie „ma natychmiastowy skutek”: od tej chwili nabywca nie wyśle już do KSeF faktury VAT RR w jego imieniu. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/uprawnienia.md" label="MF, dokumentacja API: Uprawnienia (odbieranie)" />
+
+## Jak wygląda plik faktury VAT RR?
+
+Ta część jest dla księgowych i programistów. Faktura VAT RR ma w KSeF osobną strukturę FA_RR(1), nie FA(3). W środowisku produkcyjnym od 1 kwietnia 2026 r. obowiązuje wersja schematu 1-1E. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md" label="MF, dokumentacja API: Historia zmian, 2.2.1" /> Przy FA(3) najłatwiej pomylić się w tych miejscach:
+
+- `RodzajFaktury` ma dwie wartości: `VAT_RR` (faktura pierwotna) i `KOR_VAT_RR` (faktura korygująca).
+- **Rolnik jest w `Podmiot1`, nabywca w `Podmiot2`**, choć fakturę wystawia nabywca. Obaj muszą mieć NIP, bo schemat nie przewiduje dla nich innego identyfikatora.
+- Stawka zryczałtowanego zwrotu podatku (`P_9` w wierszu `FakturaRRWiersz`) przyjmuje w schemacie tylko wartości `6.5` i `7`.
+- Podsumowanie tworzą `P_11_1` (wartość nabytych produktów), `P_11_2` (kwota zryczałtowanego zwrotu podatku) oraz `P_12_1` i `P_12_2` (należność ogółem ze zwrotem, cyfrowo i słownie).
+
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/schemy/RR/schemat_FA_RR(1)_v1-1E.xsd"
+  label="Schemat FA_RR(1) 1-1E"
+/>
+
+<Info>
+  **Dla programistów.** Kod formularza to `FA_RR`, `kodSystemowy` = „FA_RR (1)”, `wersjaSchemy` =
+  „1-1E”, przestrzeń nazw `http://crd.gov.pl/wzor/2026/03/06/14189/`. W API pole `Value` ma wartość
+  `FA_RR` zamiast dawnego `RR`; przy pobieraniu faktur produkcja przyjmuje w `formType` wyłącznie
+  `FA_RR`, a wartości RR oznaczone wcześniej jako przestarzałe (np. `InvoiceQueryFormType.RR`)
+  usunięto w wersji 2.5.0. Uprawnienie nadaje się przez `POST /permissions/authorizations/grants`,
+  odbiera przez `DELETE /permissions/authorizations/grants/{permissionId}`.{" "}
+  <Source
+    href="https://github.com/CIRFMF/ksef-api/blob/main/uprawnienia.md"
+    label="MF, dokumentacja API: Uprawnienia"
+  />{" "}
+  <Source
+    href="https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md"
+    label="MF, dokumentacja API: Historia zmian, 2.4.0 i 2.5.0"
+  />
+</Info>
+
+## Jak skorygować fakturę VAT RR?
+
+Korektę wystawiasz w tej samej strukturze, z `RodzajFaktury` = `KOR_VAT_RR`. Obowiązkowo podajesz dane faktury korygowanej (`DaneFaKorygowanej`). Przyczynę (`PrzyczynaKorekty`) i typ korekty (`TypKorekty`) schemat przewiduje jako pola opcjonalne. Jeśli korygowana faktura jest w KSeF, wpisujesz jej numer KSeF. Jeśli powstała poza KSeF, zaznaczasz to znacznikiem `NrKSeFN`. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/faktury/schemy/RR/schemat_FA_RR(1)_v1-1E.xsd" label="Schemat FA_RR(1), DaneFaKorygowanej" />
+
+Schemat pozwala więc skorygować w KSeF papierową fakturę VAT RR, ale MF nie wyjaśnia, czy to zgodne z przepisami. Jak działają korekty zwykłych faktur, opisujemy w [tekście o fakturze korygującej](/blog/faktura-korygujaca-ksef).
+
+## Jak długo KSeF przechowuje fakturę VAT RR?
+
+Faktury VAT RR i VAT RR KOREKTA KSeF przechowuje przez 10 lat, licząc od końca roku, w którym je wystawiono. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="MF, Podręcznik KSeF 2.0, cz. II: przechowywanie faktur w KSeF" />
+
+## Czego jeszcze nie wiadomo?
+
+**Czy VAT RR stanie się obowiązkowa w KSeF.** MF pisze tylko o dobrowolności od 1 kwietnia 2026 r., bez daty końcowej i bez zapowiedzi zmiany.
+
+**Jak w KSeF spełnić wymóg „dwóch egzemplarzy”** z art. 116 ust. 1. Rolnik otrzymuje fakturę przez KSeF, ale przeczytane przez nas źródła MF nie mówią, co w KSeF oznacza drugi egzemplarz. <Source href="https://ksef.podatki.gov.pl/media/pr2dfos2/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06112026.pdf" label="MF, Podręcznik KSeF 2.0, cz. III, pkt 9.3.3" />
+
+Jeśli kupujesz od rolnika i chcesz wystawiać faktury VAT RR w KSeF, poproś go najpierw, żeby wskazał w KSeF twoją firmę. Dopóki tego nie zrobi, wystawiaj je poza KSeF.
