@@ -2,7 +2,7 @@
 title: "Do kiedy działają tokeny KSeF?"
 description: "Rozporządzenie dopuszcza tokeny KSeF do 31 grudnia 2026 r. Projekt nowelizacji z października 2026 r. przedłuża ważność obecnych do 30 listopada 2027 r."
 date: 2026-10-07
-updated: 2026-11-21
+updated: 2026-11-23
 section: blog
 locale: pl
 slug: "tokeny-ksef-po-2026"
@@ -42,10 +42,11 @@ translations:
 Obowiązujące rozporządzenie pozwala logować się do KSeF tokenem do 31 grudnia 2026 r. 27 października 2026 r. Ministerstwo Finansów skierowało do konsultacji projekt nowelizacji, który ma przedłużyć ważność tokenów wygenerowanych przed 2027 r. do 30 listopada 2027 r. Projekt nie jest jeszcze prawem.
 
 <Info>
-  Stan na 21 listopada 2026 r. Wykaz zmian rozporządzenia sprawdziliśmy ostatnio 11 listopada i
-  wtedy jedyną nowelizacją była Dz.U. 2026 poz. 169, która tokenów nie dotyczy. Później nie udało
-  nam się go ponownie sprawdzić.{" "}
-  <Source href="https://api.sejm.gov.pl/eli/acts/DU/2025/1815" label="wykaz zmian, ELI" />
+  Stan na 23 listopada 2026 r. Tego dnia jedyną nowelizacją rozporządzenia w wykazie zmian była
+  Dz.U. 2026 poz. 169, która tokenów nie dotyczy, a projekt nowelizacji na stronie RCL nie przeszedł
+  jeszcze dalej niż uzgodnienia, konsultacje i opiniowanie.{" "}
+  <Source href="https://api.sejm.gov.pl/eli/acts/DU/2025/1815" label="wykaz zmian, ELI" />{" "}
+  <Source href="https://legislacja.gov.pl/projekt/12416152" label="projekt na stronie RCL" />
 </Info>
 
 ## Co dokładnie wygasa 31 grudnia
@@ -68,7 +69,7 @@ Szczegóły nowych zasad zespół API opublikował 6 listopada 2026 r. jako prop
 
 16 listopada 2026 r. zespół API wdrożył w środowisku testowym wersję API 2.10.0. Są w niej endpointy `rev2` i nowy endpoint do zatwierdzania tokenów. Dotychczasowe endpointy generowania tokena, listy tokenów i statusu tokena oznaczono jako przestarzałe i mają zostać wycofane 30 września 2027 r. Terminu wdrożenia w środowisku demo i na produkcji changelog jeszcze nie podaje. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md" label="API changelog, wersja 2.10.0" />
 
-Do 21 listopada zespół API nie poinformował o zmianie żadnej z wartości z propozycji, a specyfikacja wdrożona w środowisku testowym ma te same limity ważności, liczby tokenów i czasu na zatwierdzenie. Daty 30 listopada 2027 r. specyfikacja nie wymienia. Jedna różnica: według specyfikacji token wygenerowany starym endpointem od 7 listopada 2026 r. jest ważny 90 dni, a propozycja mówiła o tokenach od 1 stycznia 2027 r. Zespół API nie wyjaśnił, czy dotyczy to tylko środowiska testowego. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json" label="specyfikacja OpenAPI" /> Użytkownicy prosili w dyskusji o wydłużenie 24 godzin na zatwierdzenie tokena, ale widocznej odpowiedzi nie dostali. <Source href="https://github.com/CIRFMF/ksef-api/issues/885" label="CIRFMF/ksef-api, issue 885" />
+Do 23 listopada zespół API nie poinformował o zmianie żadnej z wartości z propozycji, a specyfikacja wdrożona w środowisku testowym ma te same limity ważności, liczby tokenów i czasu na zatwierdzenie. Daty 30 listopada 2027 r. specyfikacja nie wymienia. Jedna różnica: według specyfikacji token wygenerowany starym endpointem od 7 listopada 2026 r. jest ważny 90 dni, a propozycja mówiła o tokenach od 1 stycznia 2027 r. Zespół API nie wyjaśnił, czy dotyczy to tylko środowiska testowego. <Source href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json" label="specyfikacja OpenAPI" /> Użytkownicy prosili w dyskusji o wydłużenie 24 godzin na zatwierdzenie tokena, ale widocznej odpowiedzi nie dostali. <Source href="https://github.com/CIRFMF/ksef-api/issues/885" label="CIRFMF/ksef-api, issue 885" />
 
 ### Co przewiduje projekt nowelizacji rozporządzenia?
 

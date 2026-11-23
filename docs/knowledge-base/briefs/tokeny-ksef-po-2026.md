@@ -285,6 +285,12 @@ Not re-fetched (2026-10-07 baseline):
 - Podręcznik KSeF 2.0 cz. I and Podręcznik Aplikacji Podatnika (ksef.podatki.gov.pl): facts 6-10
 - FAQ MF q. 35: fact 7(a)
 
+**Live re-check 2026-11-23 (local run):** ELI `DU/2025/1815` still lists only `DU/2026/169` as an
+amending act; RCL 12416152 page: „Status projektu: otwarty”, stages shown only up to 4. Opiniowanie,
+„Data ostatniej modyfikacji: 27-10-2026”, nothing past consultation; issue 885 still open, last
+comment 2026-11-16 (kw-cirf: „Wylądowało 2.10.0”); changelog 2.10.0 DEMO/PROD still „-”. Nothing in
+facts 13-16 changes.
+
 **Freshness:** 2026-11-21 (CIRFMF GitHub only: fact 16 added from the API changelog 2.10.0, the repo
 `open-api.json` and issue 885, all fetched 2026-11-21; official Polish hosts (legislacja.gov.pl,
 api.sejm.gov.pl, isap.sejm.gov.pl, ksef.podatki.gov.pl) unreachable on 2026-11-21, so the RCL draft
