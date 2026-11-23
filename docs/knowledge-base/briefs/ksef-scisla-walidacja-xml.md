@@ -215,7 +215,10 @@ od 10.04.2026.
   (`updated_at` z search API).
 - Nie znaleziono wzmianki o tych regułach w: Podręcznik KSeF 2.0 cz. I-IV (wydania 06.08.2026),
   broszura FA(3), FAQ KSeF 2.0, komunikaty techniczne na ksef.podatki.gov.pl (strona 1, stan
-  2026-10-07). Podręcznik cz. II (pkt 1.6.1) wymienia przesłanki odrzucenia bez tych reguł.
+  2026-10-07; ponownie 2026-11-23: najnowszy komunikat z 18.11.2026 „Prace serwisowe na środowiskach
+  testowych KSeF”, żaden nie dotyczy walidacji XML; issue #718 nadal bez komentarzy po 24.06.2026,
+  sprawdzone przez REST API). Podręcznik cz. II (pkt 1.6.1) wymienia przesłanki odrzucenia bez tych
+  reguł.
 
 ## Suggested Sources Section
 
