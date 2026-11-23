@@ -19,6 +19,12 @@ what is not yet settled.
 
 ## Next up
 
+- [ ] **UPDATE** certyfikaty-vs-tokeny-ksef: the table row for an office serving many clients says
+      „certyfikat typ 1 (lub token)”; a token works only in the one context it was generated in and
+      the office cannot use a client's token, so „lub token” needs „jeden token na każdy kontekst
+      klienta” (PL, EN, UK) (source:
+      https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf,
+      s. 36–38)
 - [x] **UPDATE** blog/tokeny-ksef-po-2026 (PL, EN): the API team published draft token rules on
       2026-11-06: from 2027-01-01 new `rev2` endpoints, default validity 90 days (max 365), approval
       step for tokens requested after a token login, 100 tokens per context, tokens from the old
@@ -63,7 +69,9 @@ a Tier 1–3 source.
       passed, post now says the docs have not confirmed enforcement. Skip until 2026-11-07, then
       re-check the changelog and issue #718 before the present-tense switch. Re-checked 2026-11-08
       (`content/ksef-scisla-walidacja-xml-19-10`): changelog still 2.9.0, #718 no posts since 24.06;
-      post dated „stan na 8 listopada”. Skip until 2026-11-22, then re-check again.
+      post dated „stan na 8 listopada”. Re-checked 2026-11-22: changelog 2.10.0 (TEST 16.11, no XML
+      entry), #718 no posts since 24.06; post dated „stan na 22 listopada”. Skip until 2026-12-06,
+      then re-check again.
 - [x] **UPDATE** `najczestsze-bledy-walidacji-fa3` — open with a direct answer to „co znaczy błąd
       walidacji” in the first 100 words, then the list; mention the strict-XML rejections from 19.10
       and link that post · „błąd walidacji co to znaczy” · A · GSC ~74 impr at pos 7–14 · brief
@@ -106,12 +114,12 @@ matching queries.
 - [x] `faktura-zaliczkowa-ksef` — Faktura zaliczkowa w KSeF · „faktura zaliczkowa KSeF" · K, M · P2
 - [x] `samofakturowanie-ksef` — Samofakturowanie w KSeF · „samofakturowanie KSeF" · K · FAQ, P3
 - [x] `zalaczniki-ksef` — Załączniki do faktury w KSeF · „załącznik do faktury KSeF" · M, A · FAQ
-- [ ] `faktura-po-angielsku-ksef` — Faktura KSeF po angielsku · „faktura KSeF po angielsku" · A ·
+- [x] `faktura-po-angielsku-ksef` — Faktura KSeF po angielsku · „faktura KSeF po angielsku" · A ·
       FAQ · Link `faktura-zagraniczna-ksef`.
-- [ ] `przechowywanie-faktur-ksef` — Jak długo KSeF przechowuje faktury · „jak długo faktury w KSeF"
+- [x] `przechowywanie-faktur-ksef` — Jak długo KSeF przechowuje faktury · „jak długo faktury w KSeF"
       · K · FAQ
-- [ ] `kontekst-logowania-ksef` — Kontekst logowania w KSeF · „kontekst logowania KSeF" · A · FAQ
-- [ ] `faktura-vat-rr-ksef` — Faktura VAT RR w KSeF · „VAT RR KSeF" · A · APP
+- [x] `kontekst-logowania-ksef` — Kontekst logowania w KSeF · „kontekst logowania KSeF" · A · FAQ
+- [x] `faktura-vat-rr-ksef` — Faktura VAT RR w KSeF · „VAT RR KSeF" · A · APP
 - [ ] `di-bfk-jpk-v7` — Oznaczenia DI i BFK w JPK_V7 · „JPK_V7 BFK DI" · K · FAQ
 - [ ] `kurs-waluty-faktura-ksef` — Kurs waluty na fakturze w KSeF · „faktura w walucie KSeF kurs" ·
       K · existing brief `docs/knowledge-base/briefs/kurs-waluty-art-31a.md` · The `/waluty` tool
@@ -125,6 +133,17 @@ Dated chores, not for the daily routine's "first unchecked item" pick.
 - [ ] **2027-01-02:** remove `featured: true` from `koniec-limitu-10000-zl` and
       `kary-ksef-2027-2028` (pinned on the homepage for the run-up to 1 January 2027), and pin
       whatever matters most then.
+- [ ] **2026-12-01:** `wakacje-skladkowe-zus`: the description, opening paragraph and dates table
+      still lead with the December 2026 window (apply by 30 November). Once it has closed, lead with
+      January 2027 (apply 1 to 31 December 2026), drop the December 2026 row and refresh „Stan
+      prawny". Brief `wakacje-skladkowe.md`.
+- [ ] **2027-01-04:** `wakacje-skladkowe-zus`: recompute the PLN value of the EUR 2 mln revenue
+      threshold for applications filed in 2027 (NBP mid-rate from the last working day of 2026),
+      move the lead to „any month of 2027", and check whether ZUS has published the 2027
+      contribution amounts.
+- [ ] **2027-02-03:** `wakacje-skladkowe-zus`: replace the 2026 amounts table with the 2027 one from
+      the ZUS contributions page (the 2026 table is dated 2 February 2026). If ZUS has not published
+      it yet, move this date forward two weeks.
 
 ## Done
 

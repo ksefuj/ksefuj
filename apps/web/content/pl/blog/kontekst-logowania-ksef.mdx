@@ -1,0 +1,124 @@
+---
+title: "Jaki NIP wpisać w kontekście logowania KSeF?"
+description: "Kontekst to identyfikator firmy, w imieniu której działasz. JDG wpisuje swój NIP, a księgowa NIP klienta, który nadał jej uprawnienia."
+date: 2026-11-16
+section: blog
+locale: pl
+slug: "kontekst-logowania-ksef"
+topic: "access"
+tags: ["KSeF", "JDG"]
+sources:
+  - label: "Podręcznik użytkownika Aplikacji Podatnika KSeF 2.0 (06.08.2026)"
+    url: "https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
+  - label: "Podręcznik KSeF 2.0, cz. I (06.08.2026)"
+    url: "https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  - label: "FAQ MF: KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
+  - label: "CIRFMF ksef-api: uwierzytelnianie"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/uwierzytelnianie.md"
+  - label: "CIRFMF ksef-api: uprawnienia"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/uprawnienia.md"
+  - label: "CIRFMF ksef-api: kontekst NIP-VAT UE"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/auth/context-identifier-nip-vat-ue.md"
+  - label: "CIRFMF ksef-api: specyfikacja OpenAPI"
+    url: "https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
+  - label: "Instrukcja uwierzytelnienia w Aplikacji Podatnika KSeF 2.0, wersja testowa"
+    url: "https://ksef.podatki.gov.pl/media/jxgjepcn/instrukcja-uwierzytelnienia-w-aplikacji-podatnika-ksef-20-wersja-testowa.pdf"
+translations:
+  pl: "kontekst-logowania-ksef"
+  en: "ksef-login-context"
+  uk: "kontekst-vkhodu-ksef"
+related:
+  - "guides/logowanie-ksef"
+  - "guides/uprawnienia-ksef-ksiegowa"
+  - "blog/certyfikaty-vs-tokeny-ksef"
+---
+
+Kontekst logowania w KSeF to identyfikator firmy, w imieniu której chcesz działać po zalogowaniu, najczęściej jej NIP. Jeśli prowadzisz JDG, wybierasz „NIP” i wpisujesz **swój własny NIP**, a księgowa wpisuje NIP klienta, w którego kontekście ma nadane uprawnienia.
+
+Stan prawny na 16 listopada 2026 r.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
+  label="Podręcznik Aplikacji Podatnika KSeF 2.0, rozdz. 4.1"
+/>
+
+## Gdzie w logowaniu pojawia się kontekst?
+
+W Aplikacji Podatnika najpierw wybierasz sposób logowania: „Zaloguj przez login.gov.pl” albo „Zaloguj certyfikatem” (kwalifikowany podpis lub pieczęć). Potem wybierasz typ identyfikatora, wpisujesz numer i klikasz „Przejdź dalej”. Przy login.gov.pl aplikacja przekieruje cię na jego stronę. Same sposoby logowania opisujemy w [poradniku o logowaniu do KSeF](/guides/logowanie-ksef).
+
+Logujesz się jako osoba, a kontekst mówi, czyje faktury chcesz wystawiać i oglądać. Dlatego PESEL nie jest kontekstem: służy tylko do wskazania osoby, która się loguje.
+
+Ania jest graficzką na JDG. Uprawnienia właścicielskie do swojego NIP dostała od KSeF automatycznie, nie musiała niczego zgłaszać. Wpisuje swój NIP i od razu wystawia faktury.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. I, s. 57"
+/>
+
+## Jaki typ identyfikatora wybrać?
+
+Aplikacja Podatnika daje trzy typy:
+
+- **NIP** wybiera prawie każdy: JDG, spółka, biuro rachunkowe i jego klienci.
+- **Identyfikator wewnętrzny** (IDWew) oznacza oddział albo inną jednostkę wewnętrzną firmy: to NIP i pięć cyfr, np. `1111111111-33334`. Firma generuje go w KSeF, a w jego kontekście loguje się m.in. administrator tej jednostki. Jeśli prowadzisz JDG bez oddziałów, możesz go pominąć. <Source href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. I, s. 78–80" />
+- **Identyfikator złożony z numerem VAT UE** łączy NIP polskiej firmy z numerem VAT UE kontrahenta, np. `5265877635-ATU12345678`. Korzystają z niego przedstawiciele firmy z innego kraju UE, która wystawia faktury za polską firmę (samofakturowanie). Taki kontekst powstaje, gdy polska firma nada uprawnienie administratora podmiotu unijnego.
+
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/auth/context-identifier-nip-vat-ue.md"
+  label="CIRFMF: kontekst NIP-VAT UE"
+/>
+
+## Co wpisuje księgowa albo biuro rachunkowe?
+
+Pani Krystyna jest księgową, a Ania jej klientką. Ania nadała jej uprawnienia w KSeF jako osobie fizycznej. Do faktur Ani pani Krystyna loguje się **własnym** Profilem Zaufanym albo podpisem i jako kontekst wpisuje NIP Ani. Nie potrzebuje danych logowania Ani. Pracownicy biura rachunkowego robią tak samo: logują się w kontekście NIP klienta.
+
+Dostęp pracownikom biuro nadaje we własnym kontekście, czyli po zalogowaniu na NIP biura, a nie klienta. Może to zrobić tylko wtedy, gdy klient nadał biuru uprawnienia z prawem do dalszego przekazywania. Przy nadawaniu biuro wybiera, czy pracownik ma pracować dla jednego klienta, czy dla wszystkich (czyli tych, którzy dali takie prawo). KSeF sprawdza cały łańcuch (klient, biuro, pracownik) przy każdym otwarciu sesji. Gdy klient odbierze uprawnienia biuru, uprawnienia pracowników nadal istnieją, ale przestają działać.
+
+Dokumentacja MF, którą przeczytaliśmy, nie przesądza, czy biuro z uprawnieniem nadanym całej firmie może obsługiwać faktury klienta z kontekstu własnego NIP, czy musi wpisać NIP klienta.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. I, s. 49, 74–78"
+/>
+
+## Co się stanie, gdy nie masz uprawnień w tym kontekście?
+
+KSeF wpuści cię tylko tam, gdzie masz co najmniej jedno aktywne uprawnienie. Jeśli wpiszesz NIP firmy, która nic ci nie nadała, logowanie się nie uda. Możliwe powody to literówka w numerze, klient, który jeszcze nie nadał dostępu, albo klient, który go odebrał.
+
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/uwierzytelnianie.md"
+  label="CIRFMF: uwierzytelnianie"
+/>
+
+W dokumentach MF, które przeczytaliśmy, nie znaleźliśmy, jaki komunikat pokaże wtedy Aplikacja Podatnika ani czy zmienisz w niej kontekst bez wylogowania. Program, który łączy się przez API, dostaje status 415 (uwierzytelnianie zakończone niepowodzeniem) ze szczegółem „Brak przypisanych uprawnień”.
+
+<Source
+  href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json"
+  label="CIRFMF: specyfikacja OpenAPI, statusy uwierzytelniania"
+/>
+
+## Token działa w jednym kontekście, certyfikat KSeF w wielu
+
+Tokenem ani certyfikatem KSeF nie zalogujesz się do Aplikacji Podatnika. Używają ich programy do fakturowania, ale kontekst je różni:
+
+- **Token** działa tylko w kontekście, w którym go wygenerowano, i ma uprawnienia wskazane przy generowaniu. Token osoby fizycznej może używać tylko ona, więc biuro nie skorzysta z tokenu klienta. W innym kontekście API zwraca status 450 (błędny token) ze szczegółem „Token nie może być użyty w kontekście…” <Source href="https://github.com/CIRFMF/ksef-api/blob/main/open-api.json" label="CIRFMF: specyfikacja OpenAPI" />.
+- **Certyfikat KSeF** nie ma własnych uprawnień. Korzysta z uprawnień osoby lub firmy, której identyfikator zawiera, i działa w różnych kontekstach.
+
+Którą metodę wybrać dla programu, piszemy w tekście o [tokenach i certyfikatach KSeF](/blog/certyfikaty-vs-tokeny-ksef).
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. I, s. 36–46"
+/>
+
+## Jak wpisać kontekst w środowisku testowym?
+
+W środowisku testowym wybierasz „Zaloguj uwierzytelnieniem testowym”, wpisujesz kontekst (np. NIP firmy) oraz NIP albo PESEL osoby, która się loguje. Profil Zaufany działa tylko w DEMO i w środowisku produkcyjnym. Szczegóły są w [poradniku o środowisku testowym](/guides/srodowisko-testowe-ksef).
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/jxgjepcn/instrukcja-uwierzytelnienia-w-aplikacji-podatnika-ksef-20-wersja-testowa.pdf"
+  label="Instrukcja uwierzytelnienia w AP KSeF 2.0, wersja testowa"
+/>
+
+Jeśli pracujesz z biurem rachunkowym, a ono nie może wejść w twój kontekst, [nadaj mu uprawnienia w KSeF](/guides/uprawnienia-ksef-ksiegowa).
