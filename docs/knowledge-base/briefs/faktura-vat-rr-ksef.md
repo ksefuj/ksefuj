@@ -174,6 +174,31 @@ docs; Tier 2). Ania-relevant: **A** yes, **(A)** accountant-level.
 
 ## UNVERIFIED / not settled (do not state as fact)
 
+> **Resolved by live check 2026-11-23** (Ustawa o VAT Dz.U. 2026 poz. 1263 art. 116; Podręcznik KSeF
+> 2.0 cz. III, 06.11.2026,
+> https://ksef.podatki.gov.pl/media/pr2dfos2/podrecznik-ksef-20-cz-iii-dodatkowe-funkcjonalnosci-ksef-06112026.pdf,
+> pkt 9; Podręcznik AP 06.08.2026 pkt 5.5.2.6). Takes precedence over the items below:
+>
+> - **Obligation once named.** Art. 116 ust. 3i: after the farmer names the buyer, „do czasu
+>   odwołania tego wskazania nabywca jest obowiązany do wystawiania faktur VAT RR i faktur VAT RR
+>   KOREKTA" in KSeF; ust. 3j: not during an announced outage/unavailability. cz. III pkt 9.1:
+>   „Fakultatywny charakter korzystania z funkcjonalności odnosi się do woli rolnika ryczałtowego".
+>   So „optional" is the farmer's choice, not the buyer's.
+> - **U8.** Art. 116 ust. 3h: the oświadczenie „jest składane z chwilą wskazania przez rolnika
+>   ryczałtowego w Krajowym Systemie e-Faktur nabywcy produktów rolnych jako uprawnionego". cz. III
+>   pkt 9.2.1 says the same. HIGH.
+> - **U2.** cz. III pkt 9.2.1: „Warunkiem bezwzględnym pozwalającym rolnikowi ryczałtowemu na
+>   uwierzytelnienie się w KSeF, a następnie wskazanie nabywcy (...) jest posiadanie przez niego
+>   identyfikatora podatkowego NIP". Art. 116 ust. 2 pkt 2: KSeF VAT RR carries the NIPs of both
+>   parties. HIGH.
+> - **U4.** AP manual pkt 5.5.2.6 „Nadaj uprawnienie – podmiotowi do wystawiania faktur VAT RR":
+>   fields NIP, Pełna nazwa, checkbox „Oświadczenie" with the art. 43 ust. 1 pkt 3 text. HIGH.
+> - **U7 (partly).** Receipt: art. 116 ust. 3b (art. 106na applies) and ust. 3d; cz. III pkt 9.3.1
+>   and 9.3.3: the farmer receives VAT RR „przy użyciu KSeF". The „dwa egzemplarze" question itself
+>   stays open (cz. III does not mention it).
+> - **U9.** cz. III pkt 9.3.1: VAT RR may be issued ONLINE or offline24; pkt 9.3.3: QR / anonymous
+>   access.
+
 - **U1. Does VAT RR ever become mandatory in KSeF?** The KB records only „optional from 2026-04-01"
   (fact 2) with no end date and no planned switch to mandatory. Write „dobrowolnie" without a time
   limit and without predicting change.
