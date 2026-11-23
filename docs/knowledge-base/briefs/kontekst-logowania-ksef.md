@@ -177,10 +177,14 @@ confidence. **KB** = brief the fact is taken from. Persona A / K.
     KB: `podrecznik-ksef-20-czesc-ii.md` §2.2.5. T2. C: HIGH. K.
     - XSD pattern `TNIPIdWew`: `[1-9]((\d[1-9])|([1-9]\d))\d{7}-\d{5}` (NIP, hyphen, 5 digits). KB:
       `schemat-xsd-fa3.md` (XSD l. 1299-1306). T2. HIGH.
-    - **That the AP „identyfikator wewnętrzny” context value equals this IDWew: MEDIUM** (same term;
-      the KB never states the equivalence verbatim). **How an internal identifier is created in KSeF
-      and who logs in with it: NOT IN KB** (owner permissions include „zarządzanie jednostkami
-      podrzędnymi”, fact 9, no procedure extracted).
+    - **AP „identyfikator wewnętrzny” = IDWew, how it is created and who logs in with it: HIGH**
+      (verified live 2026-11-23). Podręcznik cz. I (06.08.2026) pkt 3.3.2, s. 78–80: IDWew „składa
+      się z identyfikatora podatkowego (NIP) podatnika i ciągu znaków numerycznych, np.
+      1111111111-33334”; the taxpayer „generuje identyfikator wewnętrzny” per unit (Przykład 30);
+      the unit administrator „uwierzytelnia się w KSeF w kontekście identyfikatora wewnętrznego”
+      (Przykład 33). Podręcznik AP, Rys. 181: enter „5 cyfr identyfikatora wewnętrznego lub utworzyć
+      nowy identyfikator poprzez wprowadzenie 4 cyfr oraz naciśnięcie przycisku „Generuj
+      identyfikator”".
 20. **Podmiot3 widzi tylko faktury, w których występuje jako Podmiot3 (gdy wskazano jego NIP lub
     IDWew).** Source: cz. II pkt 5.2. KB: `jak-odebrac-fakture-ksef.md` fact 13. T2. C: HIGH. K.
 21. **JST: przy `JST` = 1 faktura trafia do jednostki podrzędnej, gdy w `Podmiot3` podano jej NIP
