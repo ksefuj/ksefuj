@@ -80,10 +80,13 @@ zwykłych zasadach (cz. II pkt 7; fakty 6, 9–12).
      KSeF będzie możliwe od 1 kwietnia 2026 r."), so only VAT RR actually sent to KSeF is stored
      there.
 
-3. **Podstawa prawna 10-letniego okresu: UNVERIFIED.** The KB does not cite the statutory article
-   that sets the KSeF storage period (`usuniecie-faktury-ksef.md` fakt 7: „Do not attribute it to a
-   specific article"). The requested candidate „art. 106gd" does not appear anywhere in the KB. **Do
-   not name an article in the post** until [VAT] is checked live. Cite [CZ2] pkt 7 / 1.6.3.
+3. **Podstawa prawna 10-letniego okresu: VERIFIED 2026-11-23** in [VAT] Dz.U. 2026 poz. 1263: art.
+   112aa ust. 1 (10 lat od końca roku wystawienia; „Przepisów art. 112 i art. 112a nie stosuje
+   się”), ust. 2 (przechowywanie poza KSeF do przedawnienia); VAT RR: art. 116 ust. 11–12.
+   Superseded note: The KB does not cite the statutory article that sets the KSeF storage period
+   (`usuniecie-faktury-ksef.md` fakt 7: „Do not attribute it to a specific article"). The requested
+   candidate „art. 106gd" does not appear anywhere in the KB. **Do not name an article in the post**
+   until [VAT] is checked live. Cite [CZ2] pkt 7 / 1.6.3.
 
 4. **W tym okresie nie stosuje się art. 112 i 112a ustawy o VAT (brak obowiązku przechowywania we
    własnym zakresie).**
