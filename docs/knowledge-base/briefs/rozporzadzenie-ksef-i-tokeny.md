@@ -1,9 +1,10 @@
 # Research Brief: Rozporządzenie w sprawie KSeF (Dz.U. 2025 poz. 1815) i przyszłość tokenów
 
 **Requested by:** weekly knowledge refresh **Date:** 2026-10-07 **Freshness:** 2026-11-23 (fact 6a
-CIRFMF git history only; fact 7 draft text read on RCL 2026-11-11, stage not re-checked since: RCL
-and ELI unreachable from the run environment) **For content:** updates of posts and briefs on tokens
-vs certificates
+CIRFMF git history; fact 7 draft text read on RCL 2026-11-11. Stage re-checked live in a local run
+on 2026-11-23: RCL 12416152 still „otwarty", last modification 27-10-2026, no stage past 4.
+Opiniowanie; ELI `DU/2025/1815` still lists only `DU/2026/169` as an amending act; issue 885 open,
+no comment after 2026-11-16) **For content:** updates of posts and briefs on tokens vs certificates
 
 **Target query:** "tokeny KSeF po 2026", "czy tokeny KSeF będą działać w 2027"
 
@@ -49,9 +50,10 @@ until then the regulation text in force governs.
    days from 2027-01-01; tokens generated before 2027-01-01 valid until end of 2027-11-30; old
    endpoints withdrawn 2027-09-30. Open for comments until 2026-11-20.
    https://github.com/CIRFMF/ksef-api/issues/885 Tier 3 (a proposal, not law) Confidence: HIGH that
-   it was published. Details: brief `tokeny-ksef-po-2026.md` fact 15. 6a. **API 2.10.0 on TEST,
-   2026-11-16 (api-changelog.md, commit `7eac824`, kw-cirf):** the `rev2` token endpoints (POST/GET
-   `/tokens/rev2`, GET `/tokens/rev2/{referenceNumber}`) and POST
+   it was published. Details: brief `tokeny-ksef-po-2026.md` fact 15.
+
+   6a. **API 2.10.0 on TEST, 2026-11-16 (api-changelog.md, commit `7eac824`, kw-cirf):** the `rev2`
+   token endpoints (POST/GET `/tokens/rev2`, GET `/tokens/rev2/{referenceNumber}`) and POST
    `/tokens/{referenceNumber}/approve` are deployed on the TEST environment; DEMO and PROD dates are
    blank („-"). The old generate/list/status operations are deprecated, withdrawal 30.09.2027. The
    OpenAPI values match the issue 885 draft (validFrom ≤ 60 days, validTo ≤ 365 days, default 90
