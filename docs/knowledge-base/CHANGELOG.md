@@ -6,6 +6,43 @@ validator, none).
 
 ---
 
+## 2026-11-23 (targeted update: KSeF API 2.10.0 tokens, UD477 status; `Last checked` not updated)
+
+Verified live from a local run on 2026-11-23: ksef-api `api-changelog.md` and `open-api.json`, issue
+#885, ksef-client-csharp `RELEASE_NOTES.md`, RCL 12416152, ELI `DU/2025/1815`, the Sejm API for druk
+3245 and senat.gov.pl. Not a full weekly run.
+
+### Technical (API/schemas/GitHub)
+
+- ksef-api **2.10.0** (TEST 16.11.2026, DEMO/PROD „-”): `POST`/`GET /tokens/rev2`,
+  `GET /tokens/rev2/{referenceNumber}` with validity period (default 90 days, max 365), approval
+  `POST /tokens/{referenceNumber}/approve` (24 h), 100 tokens per context; old token endpoints
+  deprecated, withdrawn 30.09.2027; `26004` on token revocation; TEST-only `expire-approval`; old
+  `GET /auth/{referenceNumber}` and `/auth/sessions` kept until 15.06.2027 with
+  `authenticationMethod` (the announced 2026-11-16 removal is cancelled), `rev2` versions use
+  `authenticationMethodInfo`; `Deprecation`/`Sunset` headers, `410 Gone` after withdrawal; `21405`
+  for an invalid KSeF number checksum in `GET /collective-identifiers/ksef/{ksefNumber}` (not a
+  token change). https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md. Issue #885 still
+  open, last maintainer comment 2026-11-16; a 2026-11-06 comment shows an `exp-YYYYMMDD` segment in
+  tokens created in 2027. Impact: brief `tokeny-ksef-po-2026.md` (fact 17 added, freshness),
+  `api-ksef-zmiany-cirfmf.md` (fact 8 `authenticationMethod`), WATCHLIST token row, root `CLAUDE.md`
+  token bullet. Posts: none (the token post was already updated to 2.10.0 on 2026-11-23 in all
+  locales; other token mentions are not made wrong by a TEST-only release). Validator: none.
+- ksef-client-csharp **2.10.0** (commit 2026-11-18): `rev2` token and auth methods, old ones
+  `[Obsolete]` (30.09.2027 / 15.06.2027):
+  https://github.com/CIRFMF/ksef-client-csharp/blob/main/RELEASE_NOTES.md. Impact: brief only.
+
+### Law
+
+- UD477 (Sejm druk 3245): passed by the Sejm 2026-11-06 without amendments (amendments 1-2 rejected,
+  final vote 437/1/1), https://api.sejm.gov.pl/sejm/term10/processes/3245. Senate druk 922, on the
+  agenda of the 69th Senate sitting (25–26.11.2026), not yet voted as of 2026-11-23,
+  https://www.senat.gov.pl/prace/posiedzenia/. Not law. Impact: WATCHLIST UD477 rows.
+- Token regulation draft RCL 12416152: still „otwarty”, last modified 27-10-2026, no stage past
+  consultation; ELI `DU/2025/1815` still lists only `DU/2026/169`. Impact: none.
+
+---
+
 ## 2026-11-09 → 2026-11-16 (partial run, GitHub only; `Last checked` not updated)
 
 Official hosts were unreachable from the run environment for the fourth run in a row (proxy refused

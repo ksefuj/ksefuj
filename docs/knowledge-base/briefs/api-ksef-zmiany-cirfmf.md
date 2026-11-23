@@ -56,7 +56,12 @@ dates below are PROD unless stated.
    (changelog 2.1.0). In issue #875 (closed 2026-10-05) the maintainer said it stays in current
    operations; removal comes with a **new operation revision** and a **12-month transition** from
    production availability of the new revisions; extensible enums (`FutureValue`) come to v2 in new
-   revisions. https://github.com/CIRFMF/ksef-api/issues/875 Confidence: HIGH
+   revisions. https://github.com/CIRFMF/ksef-api/issues/875 Confidence: HIGH. Update 2026-11-23: API
+   2.10.0 (TEST 16.11.2026) confirms it: „Zapowiedziane wcześniej usunięcie właściwości
+   `authenticationMethod` w dniu 16 listopada 2026 r. nie nastąpi." The field stays in GET
+   `/auth/{referenceNumber}` and GET `/auth/sessions`, supported until **15.06.2027**; new revisions
+   GET `/auth/rev2/{referenceNumber}` and GET `/auth/sessions/rev2` use `authenticationMethodInfo`
+   (api-changelog.md above).
 9. **Tokens (issue #834):** see `rozporzadzenie-ksef-i-tokeny.md` (tokens issued until 31.12.2026
    valid until 30.11.2027, new token endpoint). Confidence: MEDIUM
 10. **Environments (all return HTTP 200 on 2026-10-07):** AP prod https://ap.ksef.mf.gov.pl/, AP
@@ -88,9 +93,10 @@ dates below are PROD unless stated.
     `Active`/`Revoked` in old endpoints); old endpoints withdrawn 2027-09-30. Draft OpenAPI
     attached; comments until 2026-11-20. As of 2026-11-23 implemented on TEST in ksef-api 2.10.0
     (16.11.2026; DEMO/PROD not yet): old token endpoints withdrawn 30.09.2027, see
-    https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md (not yet processed in this brief).
-    https://github.com/CIRFMF/ksef-api/issues/885 Tier 3 Confidence: HIGH that it was published
-    (proposal). Details: brief `tokeny-ksef-po-2026.md` fact 15.
+    https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md (details: brief
+    `tokeny-ksef-po-2026.md` facts 16-17). https://github.com/CIRFMF/ksef-api/issues/885 Tier 3
+    Confidence: HIGH that it was published (proposal). Details: brief `tokeny-ksef-po-2026.md`
+    fact 15.
 
 ## Unsettled Questions
 

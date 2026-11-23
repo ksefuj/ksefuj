@@ -258,7 +258,8 @@ Follow official FA(3) specification (§2.6) decimal precision limits:
 - Official API spec and changelog: https://github.com/CIRFMF/ksef-api (docs merged from ksef-docs)
 - KSeF tokens: the regulation (Dz.U. 2025 poz. 1815 §13) ends them 2026-12-31, but MF decided to
   keep them; a draft amendment (RCL 12416152, 27 Oct 2026, not law) would keep pre-2027 tokens until
-  2027-11-30; see `docs/knowledge-base/briefs/rozporzadzenie-ksef-i-tokeny.md`
+  2027-11-30. API 2.10.0 put `rev2` tokens on TEST from 2026-11-16 (old token endpoints withdrawn
+  2027-09-30); see `docs/knowledge-base/briefs/rozporzadzenie-ksef-i-tokeny.md`
 - Documentation portal: https://ksef.podatki.gov.pl/
 - Schema namespace: `http://crd.gov.pl/wzor/2025/06/25/13775/`
 - XSD URL: `https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd`
