@@ -86,9 +86,11 @@ dates below are PROD unless stated.
     from 2027-01-01 (validity `validFrom`/`validTo`, default 90 days, max 365; approval flow with
     statuses `AwaitingApproval`/`ApprovalExpired`; 100 tokens per context; new statuses mapped to
     `Active`/`Revoked` in old endpoints); old endpoints withdrawn 2027-09-30. Draft OpenAPI
-    attached; comments until 2026-11-20. No ksef-api commit or release since 2.9.0 (`ce3670e`,
-    2026-10-14) as of 2026-11-16. https://github.com/CIRFMF/ksef-api/issues/885 Tier 3 Confidence:
-    HIGH that it was published (proposal). Details: brief `tokeny-ksef-po-2026.md` fact 15.
+    attached; comments until 2026-11-20. As of 2026-11-23 implemented on TEST in ksef-api 2.10.0
+    (16.11.2026; DEMO/PROD not yet): old token endpoints withdrawn 30.09.2027, see
+    https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md (not yet processed in this brief).
+    https://github.com/CIRFMF/ksef-api/issues/885 Tier 3 Confidence: HIGH that it was published
+    (proposal). Details: brief `tokeny-ksef-po-2026.md` fact 15.
 
 ## Unsettled Questions
 

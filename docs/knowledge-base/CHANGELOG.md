@@ -27,7 +27,15 @@ Open issue: https://github.com/ksefuj/ksefuj/issues/127.
   https://github.com/CIRFMF/ksef-client-csharp/blob/main/RELEASE_NOTES.md. Impact: brief only.
 - ksef-api / ksef-docs (HEAD `ce3670e`, 2.9.0 of 2026-10-14), ksef-pdf-generator (1.1.48),
   ksef-schematy (`cd826b8`, 2026-05-11), ksef-latarnia (`b3d8196`, 2026-01-23): no commits since the
-  2026-11-09 run. Impact: none.
+  2026-11-09 run at the time of this run. Impact: none.
+- **Added in local verification 2026-11-23, NOT yet processed:** later on 2026-11-16 (commits 16:15
+  UTC) ksef-api released **2.10.0** (TEST 16.11.2026, DEMO/PROD not yet): `rev2` token endpoints
+  with validity period and approval (`POST /tokens/{referenceNumber}/approve`), old token endpoints
+  deprecated and withdrawn 30.09.2027; `GET /auth/rev2/...` and `/auth/sessions/rev2`, old ones kept
+  until 15.06.2027 (the announced 2026-11-16 removal of `authenticationMethod` will not happen);
+  `Deprecation`/`Sunset` headers, `410 Gone` after withdrawal. ksef-client-csharp 2.10.0 followed on
+  2026-11-18. https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md. Next run: update this
+  brief and `tokeny-ksef-po-2026.md`.
 - `pnpm update-schemas`: crd.gov.pl unreachable, every download `fetch failed`, script fell back to
   bundled files (and still printed "All schemas are up to date"); schemas not verified.
 
