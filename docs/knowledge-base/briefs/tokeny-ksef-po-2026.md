@@ -1,8 +1,8 @@
 # Research Brief: Tokeny KSeF po 31 grudnia 2026
 
 **Requested by:** human (content backlog item `tokeny-ksef-po-2026`) **Date:** 2026-10-07, updated
-2026-10-25 and 2026-11-09 **For content:** blog post "Tokeny KSeF po 31 grudnia 2026" (PL) and "KSeF
-tokens after 2026" (EN)
+2026-10-25, 2026-11-09 and 2026-11-21 **For content:** blog post "Tokeny KSeF po 31 grudnia 2026"
+(PL) and "KSeF tokens after 2026" (EN)
 
 **Target query:** „token KSeF 2027"
 
@@ -10,24 +10,33 @@ tokens after 2026" (EN)
 31 December 2026 (Dz.U. 2025 poz. 1815, § 13 ust. 1 pkt 1; § 6 ust. 1, the list of permanent
 methods, does not include tokens). MF has said it will keep tokens (Podręcznik KSeF 2.0 cz. I, p.
 26: „na czas nieokreślony"; KSeF API team, 2026-09-23: „tokeny zostają ale na nowych zasadach"), but
-as of the last verified check (2026-10-07) no amending regulation had been published, and the new
-token-creation endpoint is not in the API changelog as of 2026-10-25. On 2026-11-06 the KSeF API
-team published a draft of the new token rules for discussion (fact 15: default 90 days, maximum 365,
-approval step, 100 tokens per context, from 2027-01-01); it is a proposal, not law.
+no amending regulation had been published as of the last ELI check (2026-11-11; only a draft on RCL
+since 2026-10-27, and official Polish hosts were unreachable on 2026-11-21, so not re-checked). On
+2026-11-06 the KSeF API team published a draft of the new token rules (fact 15: default 90 days,
+maximum 365, approval step, 100 tokens per context, from 2027-01-01), and on 2026-11-16 API 2.10.0
+put the `rev2` token endpoints on the TEST environment only, not DEMO or PROD (fact 16); these are
+technical announcements, not law.
 
 **What changes the answer:**
 
-- Publication of an amending regulation (watch Dziennik Ustaw / ISAP; as of the 2026-10-07 check the
-  ELI record listed only Dz.U. 2026 poz. 169 as an amending act; not re-checked live on 2026-10-25
-  because official hosts were unreachable).
+- Publication of an amending regulation (watch Dziennik Ustaw / ISAP; as of the last ELI check,
+  2026-11-11, the record listed only Dz.U. 2026 poz. 169 as an amending act; not re-checked on
+  2026-11-21 because official Polish hosts were unreachable).
 - Wording of that amendment: validity period (1-365 days) and the auto-renewal permission were
   proposals at the 2026-06-09 consultations, not law; the API team separately announced a 30 Nov
   2027 limit for tokens issued until 31 Dec 2026 (fact 11). MF has not reconciled the two.
 - Whether the amendment is published before 2027-01-01. If not, § 13 as written no longer covers
   tokens from that date; MF has not said what KSeF does technically in that case.
-- Publication of the new token-creation endpoint version in the API changelog (absent up to 2.9.0,
-  fact 14). Draft OpenAPI and rules posted 2026-11-06 in issue 885, discussion to 2026-11-20 (fact
-  15); watch for changes after that date and for the `rev2` endpoints in a release.
+- Deployment of API 2.10.0 (the `rev2` token endpoints) on DEMO and PROD. As of 2026-11-21 the
+  changelog shows TEST 16.11.2026 and „-" for DEMO and PROD (fact 16). Watch the changelog for the
+  DEMO/PROD dates and for any change to the values (90/365 days, 24 h approval, 100 per context,
+  withdrawal 30.09.2027) after the issue 885 discussion window ended on 2026-11-20 (the issue itself
+  is still open, fact 16(d)) (facts 15-16).
+- The validity of tokens generated via the old `POST /tokens`: the TEST OpenAPI says 90 days for
+  tokens generated „od 07.11.2026", the issue 885 draft says from 2027-01-01 (fact 16). Which date
+  applies on PROD is not stated.
+- Status of the RCL draft 12416152 (consultation of 14 days from 2026-10-27); not re-checked on
+  2026-11-21 because legislacja.gov.pl was unreachable.
 
 ## Key Facts (ready to use)
 
@@ -131,7 +140,8 @@ approval step, 100 tokens per context, from 2027-01-01); it is a proposal, not l
     release contains an entry on token validity/expiry or a new version of the token-creation
     endpoint. Source: https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md (fetched
     2026-10-25). Tier 2/3 (official MF repo). Confidence: HIGH. Implication: the endpoint announced
-    in fact 11 is not yet published.
+    in fact 11 is not yet published. Superseded: version 2.10.0 (TEST 16.11.2026) adds the `rev2`
+    token endpoints; see fact 16.
 
 15. **Draft of the new token rules, 2026-11-06 (Tier 3, CIRFMF/ksef-api issue 885 „Propozycja zmian
     w zarządzaniu tokenami KSeF", opened by collaborator `kw-cirf`):** „Planujemy rozszerzyć
@@ -165,14 +175,62 @@ approval step, 100 tokens per context, from 2027-01-01); it is a proposal, not l
       questions) were closed on 2026-11-06 minutes after 885 was opened; their closing comments
       could not be read (API access refused), so do not cite them for anything new.
 
+16. **API 2.10.0: the `rev2` token endpoints are on TEST only (Tier 2/3, official MF repo).** (a)
+    Changelog: version 2.10.0, deployment „**TEST** 16.11.2026", **DEMO** „-", **PROD** „-" (not
+    deployed). New: „Wygenerowanie nowego tokena (POST `/tokens/rev2`) z możliwością określenia
+    okresu ważności", GET `/tokens/rev2` (list), GET `/tokens/rev2/{referenceNumber}` (status), and
+    „zatwierdzenie tokena (POST `/tokens/{referenceNumber}/approve`)". „Dotychczasowe operacje
+    generowania tokena, pobierania listy i statusu oznaczono jako przestarzałe. Zostaną wycofane
+    **30.09.2027 r.**" New status `450` with „Token poza okresem ważności" for an attempt to
+    authenticate with a `rev2` token outside its validity; the context limits response gains the
+    `rev2` token limit; deprecated endpoints return `Deprecation` and `Sunset` headers and, after
+    withdrawal, `410 Gone`. Separately, GET `/auth/{referenceNumber}` and GET `/auth/sessions`
+    „pozostaną dostępne i wspierane do **15 czerwca 2027 r.**" (new `rev2` versions added). Source:
+    https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md (raw file fetched 2026-11-21). (b)
+    OpenAPI `POST /tokens/rev2`: „`validFrom` może przypadać najpóźniej 60 dni po zainicjowaniu
+    generowania tokena"; „`validTo` może przypadać najpóźniej 365 dni po `validFrom`. Jeśli nie
+    zostanie podana, okres ważności wynosi 90 dni od `validFrom`." „Pierwszy token można wygenerować
+    wyłącznie po uwierzytelnieniu za pomocą Węzła Krajowego lub podpisu w formacie XAdES". A token
+    generated in a token-authenticated session gets `AwaitingApproval`; „Na zatwierdzenie
+    przewidziano 24 h"; then `ApprovalExpired`. `POST /tokens/{referenceNumber}/approve`: approval
+    by `Owner`, `CredentialsManage`, or the token's owner „jeśli posiada wszystkie uprawnienia
+    przewidziane dla tego tokena"; „Zatwierdzenie wymaga uwierzytelnienia za pomocą Węzła Krajowego
+    lub podpisu w formacie XAdES". „Maksymalna liczba tokenów w kontekście to 100 [...] niezależnie
+    od autora i rewizji endpointu". Source:
+    https://github.com/CIRFMF/ksef-api/blob/main/open-api.json (raw file fetched 2026-11-21; this is
+    the spec deployed on TEST only). Consistent with the issue 885 draft (fact 15). (c) Discrepancy:
+    the deprecated `POST /tokens` description in the same spec says „Token wygenerowany od
+    07.11.2026 jest ważny przez 90 dni od momentu wygenerowania, o ile nie zostanie wcześniej
+    unieważniony." The issue 885 draft (fact 15) dates this rule from 2027-01-01. Neither source
+    explains the difference; it is likely TEST-only, but that is not stated. Do not present it as a
+    production rule. The spec does not mention the 30.11.2027 limit for pre-2027 tokens. (d) Issue
+    885 (read via web fetch 2026-11-21): still open, pinned by `kw-cirf` on 2026-11-12. `kw-cirf`
+    comments: 2026-11-07, expiry reminders belong in client applications, not in Aplikacja
+    Podatnika; `POST /auth/ksef-token` gets no new revision and accepts `rev2` tokens; an
+    `X-System-Warning` for upcoming expiry was rejected. 2026-11-12, TEST deployment of the new
+    token features announced for Friday 13 November, with changes possible until the discussion
+    closes on 20 November. 2026-11-16, version 2.10.0 released (link to changelog). No MF comment
+    reports a change to 90/365 days, 24 h, 100 tokens, 30.09.2027 or 30.11.2027. Community members
+    asked to extend the 24 h approval window (e.g. to 7 days); no MF reply visible. Source:
+    https://github.com/CIRFMF/ksef-api/issues/885. Confidence: HIGH that this is what the sources
+    say on 2026-11-21; it is a TEST deployment and technical documentation, not law, and the dates
+    for DEMO/PROD are not announced.
+
 ## Unsettled Questions
 
-- Whether the issue 885 draft (fact 15) changes after the discussion closes on 2026-11-20, and
-  whether MF or the amending regulation confirms the 90-day default, 365-day maximum and approval
-  step. Whether the auto-renewal permission (fact 5) was dropped.
-- Text, date of publication and entry into force of the amending regulation. No draft found as of
-  2026-10-26. legislacja.gov.pl/szukaj?title=e-Faktur works but does not list every MFiG project; a
-  manual check on the site is still advisable.
+- When API 2.10.0 (`rev2` token endpoints) reaches DEMO and PROD; not announced as of 2026-11-21
+  (fact 16). Whether the values in fact 16 change now that the issue 885 discussion closed on
+  2026-11-20 (e.g. the community request for a longer approval window than 24 h, no MF reply
+  visible), and whether MF or the amending regulation confirms the 90-day default, 365-day maximum
+  and approval step. Whether the auto-renewal permission (fact 5) was dropped; neither the draft nor
+  the 2.10.0 spec mentions it.
+- From which date tokens generated via the old `POST /tokens` are valid 90 days: „od 07.11.2026"
+  (TEST OpenAPI) or from 2027-01-01 (issue 885 draft). Unexplained discrepancy (fact 16 (c)).
+- Whether the 30.11.2027 limit for tokens generated before 2027-01-01 (facts 11, 15) still holds;
+  the 2.10.0 changelog and OpenAPI do not mention it.
+- Text, date of publication and entry into force of the amending regulation. The RCL draft 12416152
+  (published 2026-10-27, consultation of 14 days) was not re-checked on 2026-11-21
+  (legislacja.gov.pl unreachable); the last ELI check (2026-11-11) still listed only DU/2026/169.
 - What rules („nowe zasady", facts 11-12) will cover tokens issued from 1 Jan 2027. The 30 Nov 2027
   limit (fact 11) is a separate transition rule for tokens issued until 31 Dec 2026; MF has not said
   whether the 1-365 day proposal (fact 5) is what the new rules contain.
@@ -199,6 +257,8 @@ approval step, 100 tokens per context, from 2027-01-01); it is a proposal, not l
   https://github.com/CIRFMF/ksef-docs/blob/main/uwierzytelnianie.md
 - CIRFMF/ksef-api issues 834 and 565 (facts 11-12) and the API changelog:
   https://github.com/CIRFMF/ksef-api/blob/main/api-changelog.md
+- CIRFMF/ksef-api issue 885 and OpenAPI (facts 15-16): https://github.com/CIRFMF/ksef-api/issues/885
+  and https://github.com/CIRFMF/ksef-api/blob/main/open-api.json
 
 ## Warning: Common Misconceptions
 
@@ -225,7 +285,16 @@ Not re-fetched (2026-10-07 baseline):
 - Podręcznik KSeF 2.0 cz. I and Podręcznik Aplikacji Podatnika (ksef.podatki.gov.pl): facts 6-10
 - FAQ MF q. 35: fact 7(a)
 
-**Freshness:** 2026-11-09 (CIRFMF GitHub only: fact 15 added; official Polish hosts unreachable on
-2026-11-09, so facts 1-10 and 13 remain at the 2026-10-07 / 2026-10-26 checks). Re-check when Dz.U.
-publishes an amendment to poz. 1815, when the API changelog adds a token endpoint version, or before
-2026-12-31.
+**Live re-check 2026-11-23 (local run):** ELI `DU/2025/1815` still lists only `DU/2026/169` as an
+amending act; RCL 12416152 page: „Status projektu: otwarty”, stages shown only up to 4. Opiniowanie,
+„Data ostatniej modyfikacji: 27-10-2026”, nothing past consultation; issue 885 still open, last
+comment 2026-11-16 (kw-cirf: „Wylądowało 2.10.0”); changelog 2.10.0 DEMO/PROD still „-”. Nothing in
+facts 13-16 changes.
+
+**Freshness:** 2026-11-21 (CIRFMF GitHub only: fact 16 added from the API changelog 2.10.0, the repo
+`open-api.json` and issue 885, all fetched 2026-11-21; official Polish hosts (legislacja.gov.pl,
+api.sejm.gov.pl, isap.sejm.gov.pl, ksef.podatki.gov.pl) unreachable on 2026-11-21, so the RCL draft
+12416152 stage and the ELI amendments list were not re-checked; last ELI check 2026-11-11; facts
+1-10 remain at the 2026-10-07 baseline). Previous: 2026-11-09 (fact 15). Re-check when 2.10.0 gets
+DEMO/PROD dates in the changelog, when Dz.U. publishes an amendment to poz. 1815, when the RCL draft
+moves past consultation, or before 2026-12-31.

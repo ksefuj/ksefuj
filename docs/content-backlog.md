@@ -25,7 +25,7 @@ what is not yet settled.
       klienta” (PL, EN, UK) (source:
       https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf,
       s. 36–38)
-- [ ] **UPDATE** blog/tokeny-ksef-po-2026 (PL, EN): the API team published draft token rules on
+- [x] **UPDATE** blog/tokeny-ksef-po-2026 (PL, EN): the API team published draft token rules on
       2026-11-06: from 2027-01-01 new `rev2` endpoints, default validity 90 days (max 365), approval
       step for tokens requested after a token login, 100 tokens per context, tokens from the old
       endpoints valid 90 days, pre-2027 tokens valid to 2027-11-30, old endpoints withdrawn
