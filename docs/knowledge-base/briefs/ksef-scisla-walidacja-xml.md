@@ -1,11 +1,42 @@
 # Research Brief: Ścisła walidacja XML w KSeF od 19.10.2026
 
 **Requested by:** human (content backlog item `ksef-scisla-walidacja-xml-19-10`) **Date:**
-2026-10-07 (updated 2026-11-08) **Freshness:** 2026-11-08 (stan repo CIRFMF/ksef-api: HEAD
-`ce3670e`, 2026-10-14; metadane issues przez GitHub search API; strony MF nieodczytane na żywo, zob.
-„Update 2026-11-08") **For content:** „KSeF od 19.10.2026 odrzuci XML z instrukcjami" (PL), „Strict
-XML validation in KSeF from 19 Oct 2026" (EN); aktualizacja opublikowanego posta
+2026-10-07 (updated 2026-11-08, 2026-11-22) **Freshness:** 2026-11-22 (stan repo CIRFMF/ksef-api:
+HEAD `d4460b6`, 2026-11-17; metadane issues przez GitHub search API; strony MF nieodczytane na żywo,
+zob. „Update 2026-11-22") **For content:** „KSeF od 19.10.2026 odrzuci XML z instrukcjami" (PL),
+„Strict XML validation in KSeF from 19 Oct 2026" (EN); aktualizacja opublikowanego posta
 `apps/web/content/pl/blog/ksef-scisla-walidacja-xml.mdx`
+
+## Update 2026-11-22
+
+Ponowne sprawdzenie warunku z backlogu (termin re-checku 2026-11-22). Stan na 2026-11-22:
+
+- **Nowa wersja API bez zmian w walidacji XML.** Płytki klon CIRFMF/ksef-api: HEAD `d4460b6`
+  (2026-11-17), potwierdzony `git ls-remote`. `api-changelog.md` ma nową wersję 2.10.0 (TEST
+  16.11.2026, DEMO i PROD „-"): rewizje rev2 tokenów i uwierzytelniania, uprawnienia, identyfikatory
+  zbiorcze, nagłówki Deprecation/Sunset w OpenAPI, dane testowe. Nic o walidacji XML. Wpis 2.4.0
+  nadal „Zaostrzenie walidacji XML zacznie obowiązywać od **16.07.2026**". Ciąg „19.10.2026" nie
+  występuje w żadnym pliku `.md`.
+- **`faktury/weryfikacja-faktury.md` bez zmian.** Treść nadal z datą 09.04.2026, bez daty dla PROD;
+  `git diff fbeaf85 HEAD` dla pliku jest pusty. Uwaga metodyczna: `git log` w obecnym klonie (50
+  commitów) wskazuje `fbeaf85` (2026-06-10), ale to commit graniczny płytkiego klonu
+  (`.git/shallow`), w którym wszystkie pliki widnieją jako „new file". To nie jest realna zmiana
+  pliku; ustalenie z wcześniejszych sprawdzeń (ostatnia zmiana `f1f68ba`, 2026-04-21) pozostaje
+  niezaprzeczone.
+- **Issue #718 bez nowych komentarzy.** GitHub search API: `open`, 28 komentarzy, `updated_at`
+  2026-06-24T13:15:51Z, bez zmian od 8.11. Strona github.com (WebFetch 2026-11-22): ostatni widoczny
+  komentarz kw-cirf z 2026-06-24 o przesunięciu na 19.10.2026; status na tablicy projektu „Deployed
+  (DEMO)". Etykieta tablicy to sygnał, nie potwierdzenie stanu PROD.
+- **Brak nowych zgłoszeń o odrzucaniu na PROD.** Wyszukiwania (stylesheet, Unicode,
+  X-System-Warning, processing instruction, BOM) nie zwracają issues z tego zakresu zaktualizowanych
+  po 2026-10-19; najnowsze powiązane to #843 (zamknięte 2026-09-23, tekst ostrzeżenia `xml-002` z
+  datą 16.07.2026). Issues zaktualizowane od 2026-11-08 (#866, #882–#891 i inne, wg tytułów) dotyczą
+  limitów, tokenów, identyfikatorów zbiorczych i sesji, nie ścisłej walidacji XML.
+- **Nieodczytane na żywo:** komunikaty techniczne https://ksef.podatki.gov.pl/komunikaty-techniczne/
+  (proxy CONNECT 403), komentarze issues przez api.github.com (403).
+- **Wniosek:** warunek z backlogu nadal **nie jest spełniony**. W poście zmienić tylko datę stanu
+  (8.11 → 22.11) i odwołanie do najnowszej wersji changelogu (2.10.0, TEST 16.11.2026). Bez czasu
+  teraźniejszego „KSeF odrzuca".
 
 ## Update 2026-11-08
 
@@ -184,7 +215,10 @@ od 10.04.2026.
   (`updated_at` z search API).
 - Nie znaleziono wzmianki o tych regułach w: Podręcznik KSeF 2.0 cz. I-IV (wydania 06.08.2026),
   broszura FA(3), FAQ KSeF 2.0, komunikaty techniczne na ksef.podatki.gov.pl (strona 1, stan
-  2026-10-07). Podręcznik cz. II (pkt 1.6.1) wymienia przesłanki odrzucenia bez tych reguł.
+  2026-10-07; ponownie 2026-11-23: najnowszy komunikat z 18.11.2026 „Prace serwisowe na środowiskach
+  testowych KSeF”, żaden nie dotyczy walidacji XML; issue #718 nadal bez komentarzy po 24.06.2026,
+  sprawdzone przez REST API). Podręcznik cz. II (pkt 1.6.1) wymienia przesłanki odrzucenia bez tych
+  reguł.
 
 ## Suggested Sources Section
 
