@@ -2,7 +2,7 @@
 title: "Token i certyfikat KSeF są dla programów, nie dla ciebie"
 description: "Do ręcznego logowania wystarczy Profil Zaufany. Program do fakturowania łączy się z KSeF przez token lub certyfikat KSeF."
 date: 2026-03-29
-updated: 2026-10-26
+updated: 2026-11-24
 section: blog
 locale: pl
 slug: "certyfikaty-vs-tokeny-ksef"
@@ -112,14 +112,14 @@ Zakres ustawiasz sam: tylko odczyt, tylko wystawianie albo pełny dostęp. Ustal
 
 ## Co wybrać w twojej sytuacji
 
-| Twoja sytuacja                                        | Metoda                                                                                        |
-| ----------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| JDG, faktury ręcznie w Aplikacji Podatnika            | **Profil Zaufany**                                                                            |
-| Program do fakturowania (Fakturownia, inFakt, wFirma) | **Profil Zaufany** do logowania + **token** dla programu                                      |
-| Spółka z własnym ERP                                  | **Certyfikat typ 1** lub token                                                                |
-| Biuro rachunkowe obsługujące wielu klientów           | **Uprawnienia** nadane przez klienta w Aplikacji Podatnika + **certyfikat typ 1** (lub token) |
-| Developer integrujący KSeF                            | **Token** na start, **certyfikat typ 1** na produkcji (typ 2 dla trybu offline)               |
-| Masz podpis kwalifikowany z innych powodów            | Możesz go użyć zamiast Profilu Zaufanego                                                      |
+| Twoja sytuacja                                        | Metoda                                                                                                                                                                                                                                                               |
+| ----------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| JDG, faktury ręcznie w Aplikacji Podatnika            | **Profil Zaufany**                                                                                                                                                                                                                                                   |
+| Program do fakturowania (Fakturownia, inFakt, wFirma) | **Profil Zaufany** do logowania + **token** dla programu                                                                                                                                                                                                             |
+| Spółka z własnym ERP                                  | **Certyfikat typu 1** lub token                                                                                                                                                                                                                                      |
+| Biuro rachunkowe obsługujące wielu klientów           | **Uprawnienia** nadane przez klienta w Aplikacji Podatnika + **certyfikat typu 1**; token działa tylko w kontekście, w którym go wygenerowano, więc nie obsłuży kilku klientów naraz, a tokena klienta będącego osobą fizyczną (np. właściciela JDG) biuro nie użyje |
+| Developer integrujący KSeF                            | **Token** na start, **certyfikat typu 1** na produkcji (typ 2 dla trybu offline)                                                                                                                                                                                     |
+| Masz podpis kwalifikowany z innych powodów            | Możesz go użyć zamiast Profilu Zaufanego                                                                                                                                                                                                                             |
 
 Przy sporadycznym wystawianiu faktur możesz też sprawdzić e-mikrofirmę, bezpłatną aplikację MF dla najmniejszych firm. Obsługuje KSeF w ograniczonym zakresie, który się zmienia, więc zajrzyj na stronę MF przed wyborem.
 

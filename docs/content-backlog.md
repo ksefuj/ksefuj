@@ -19,7 +19,7 @@ what is not yet settled.
 
 ## Next up
 
-- [ ] **UPDATE** certyfikaty-vs-tokeny-ksef: the table row for an office serving many clients says
+- [x] **UPDATE** certyfikaty-vs-tokeny-ksef: the table row for an office serving many clients says
       „certyfikat typ 1 (lub token)”; a token works only in the one context it was generated in and
       the office cannot use a client's token, so „lub token” needs „jeden token na każdy kontekst
       klienta” (PL, EN, UK) (source:
