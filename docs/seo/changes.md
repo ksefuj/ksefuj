@@ -5,6 +5,66 @@ effect. Record the date, the page, what changed (old -> new for titles and descr
 metric that motivated it. After 28 days, add a **Results** line comparing current CTR/position with
 the baseline.
 
+## 2026-11-24
+
+Digest: `gsc-data` 2026-11-23 (GSC 2026-10-24 to 2026-11-20: 262 clicks, 19,848 impressions, CTR
+1.32%, avg position 6.5; previous 28 days 123 clicks, CTR 1.33%). No crawl Problems: all 225 sitemap
+URLs 200, no redirects, noindex, canonical or hreflang issues; sitemap still 0 errors, 6 warnings.
+The 34 not-indexed URLs are posts and guides published in the last 1-3 weeks, the `/uk/blog` and
+`/uk/faq` listings, and the three receiving-invoices guides (Discovered - currently not indexed
+since at least 2026-10-19 despite 15-18 internal links each; no code or content cause found). Of the
+low-CTR pages, only four are past the 28-day gate today; `/blog/fa2-vs-fa3-ksef` (EN),
+`/blog/koniec-limitu-10000-zl`, `/en/blog/vat-exempt-ksef` and `/en/blog/end-of-10000-pln-limit`
+have `updated` or a logged change within 28 days, the login guides and the FA(3) errors post were
+retitled on 2026-11-07, and the date and KSeF-number pages are under 28 days old.
+
+- **Page:** `/blog/faktura-korygujaca-ksef`
+  - **Change:** title „Korektę faktury w KSeF wystawisz w 6 krokach" -> „Wystaw fakturę korygującą w
+    KSeF w 6 krokach" (44 characters, keeps the brand suffix). Description unchanged.
+  - **Motivation:** 499 impr, 5 clicks, CTR 1.00%, pos 7.9. Visible queries are almost all „jak
+    wystawić / zrobić fakturę korygującą / korektę w ksef": „jak wystawić fakturę korygującą w ksef"
+    5 impr, pos 11.6; „faktura korygująca w ksef" 2, pos 11; „jak w ksef wystawić fakturę
+    korygującą" 1, pos 9. The old title had „korektę faktury" but not „fakturę korygującą", and its
+    verb came last.
+  - **Baseline to compare:** the page and query figures above.
+- **Page:** `/blog/faktura-dla-osoby-prywatnej-ksef`
+  - **Change:** description „Nie musi, także od 2027 r. Wystarczy PDF. Jeśli wystawisz ją w KSeF
+    dobrowolnie, klient pobierze ją przez kod QR, bez logowania." -> „Nie musi, także od 2027 r.:
+    wystarczy PDF. Gdy wystawisz ją w KSeF, osoba prywatna pobierze ją bez logowania, z kodu QR na
+    kopii, którą jej przekażesz." Body: the opening sentence now ends „…z kodem QR, a z tego kodu
+    pobierze ją z KSeF bez logowania." (sourced in the post's QR section, Podręcznik KSeF 2.0 cz. II
+    pkt 5.3–5.7). Title unchanged: it still answers the main question.
+  - **Motivation:** 282 impr, 0 clicks, pos 6.7. Every visible query asks whether and how a private
+    person downloads the invoice from KSeF: „czy osoba prywatna może pobrać fakturę z ksef" 6 impr,
+    pos 7.0; „czy osoba fizyczna może pobrać fakturę z ksef" 3, pos 9.0; „jak pobrać fakturę z ksef
+    dla osoby fizycznej" 3, pos 8.7; „jak pobrać fakturę z ksef bez logowania" 1, pos 11. The
+    opening said only that the client will not find it in KSeF by themselves.
+  - **Baseline to compare:** the page and query figures above.
+- **Pages:** `/en/blog/corrective-invoice-ksef`, `/en/blog/invoice-for-private-person-ksef`
+  - **Change:** none.
+  - **Why not:** eligible, but the visible queries are Polish fragments or noise („w ksef", „poszła
+    do ksef", „a dla osoby prywatnej?", "xxxxxxxxxxxxzz"); only 63 of 1,043 and 8 of 308 impressions
+    have a query. Hreflang checked as the 2026-11-13 entry asked: both pairs list pl, en, uk and
+    x-default (-> PL) correctly, so there is nothing to fix.
+
+### Results
+
+- **2026-10-18, 10,000 zł limit posts -> cash-register posts:** baseline was PL and EN "Discovered -
+  currently not indexed". Now all three "Submitted and indexed";
+  `/blog/faktura-z-kasy-fiskalnej-ksef-2027` 180 impr, 2 clicks, pos 6.7; EN 1 impr; UK none.
+- **2026-10-19, login guides -> receiving-invoices guides:** baseline was all three "Discovered -
+  currently not indexed". Unchanged: still Discovered, no impressions, now with 15-18 internal links
+  each. Needs a manual indexing request.
+- **2026-10-19, sole-trader posts -> accountant-access guides:** baseline was PL and EN
+  "Discovered - currently not indexed". Now all three indexed; `/guides/uprawnienia-ksef-ksiegowa`
+  45 impr, 2 clicks, pos 5.2; EN 30 impr, 1 click, pos 6.8; UK 1 impr.
+- **2026-10-21, FA(3) errors post definition paragraph:** baseline page 629 impr, CTR 1.27%, pos
+  7.1; „błędy walidacji co to znaczy" pos 10.4, „co oznacza błąd walidacji" pos 10.5, „co to jest
+  błąd walidacji" pos 6.7. Now 2,080 impr, 7 clicks, CTR 0.34%, pos 5.8; those queries at pos 6.3,
+  6.0 and 5.8 (23, 30, 27 impr), „błąd walidacji co to" 166 impr, pos 6.0, all 0 clicks. Positions
+  improved, clicks did not; the 2026-11-07 title change is the next thing to measure (eligible again
+  from 2026-12-05).
+
 ## 2026-11-14
 
 Digest: `gsc-data` 2026-11-13 (GSC 2026-10-14 to 2026-11-10: 159 clicks, 13,391 impressions, CTR
