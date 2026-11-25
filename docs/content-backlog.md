@@ -120,7 +120,11 @@ matching queries.
       · K · FAQ
 - [x] `kontekst-logowania-ksef` — Kontekst logowania w KSeF · „kontekst logowania KSeF" · A · FAQ
 - [x] `faktura-vat-rr-ksef` — Faktura VAT RR w KSeF · „VAT RR KSeF" · A · APP
-- [ ] `di-bfk-jpk-v7` — Oznaczenia DI i BFK w JPK_V7 · „JPK_V7 BFK DI" · K · FAQ
+- [ ] `di-bfk-jpk-v7` — Oznaczenia DI i BFK w JPK_V7 · „JPK_V7 BFK DI" · K · FAQ · Blocked
+      2026-11-25 (`content/di-bfk-jpk-v7`, draft PR): official hosts unreachable, KB has no MF
+      wording for DI/BFK/OFF and vendor leads contradict `awaria-ksef-offline` l. 88 (brief
+      `di-bfk-jpk-v7.md`, C1–C3). Fetch MF FAQ pyt. 8/9 and the JPK_VAT brochure s. 18 first;
+      re-check that guide (PL, EN, UK) against them.
 - [ ] `kurs-waluty-faktura-ksef` — Kurs waluty na fakturze w KSeF · „faktura w walucie KSeF kurs" ·
       K · existing brief `docs/knowledge-base/briefs/kurs-waluty-art-31a.md` · The `/waluty` tool
       already gets this intent.
