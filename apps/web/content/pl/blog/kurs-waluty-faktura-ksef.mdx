@@ -1,0 +1,132 @@
+---
+title: "Kurs waluty na fakturze w KSeF bierzesz z NBP"
+description: "VAT z faktury w euro czy dolarach przeliczasz po kursie średnim NBP z dnia roboczego przed obowiązkiem podatkowym. KSeF sprawdza tylko zapis kursu."
+date: 2026-11-26
+section: blog
+locale: pl
+slug: "kurs-waluty-faktura-ksef"
+topic: "invoicing"
+tags: ["KSeF", "Faktura", "VAT", "FA(3)"]
+sources:
+  - label: "Ustawa o VAT, t.j. Dz.U. 2026 poz. 1263, art. 19a, 20, 21, 31a, 31b, 106e, 106j, 106na"
+    url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
+  - label: "Ustawa z 5 sierpnia 2025 r. (Dz.U. 2025 poz. 1203), art. 106nda ust. 10"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2025/1203"
+  - label: "MF: Pytania i odpowiedzi KSeF 2.0, pyt. 18 i 19"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
+  - label: "Broszura informacyjna FA(3), pkt 2.5–2.6 i 9.1–9.5"
+    url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "Podręcznik KSeF 2.0, cz. II (06.08.2026), pkt 1.4, 1.6.1, 1.6.2, 2.5 i 2.13"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "Schemat FA(3)"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+translations:
+  pl: "kurs-waluty-faktura-ksef"
+  en: "exchange-rate-invoice-ksef"
+  uk: "kurs-valyuty-rakhunok-ksef"
+related:
+  - "blog/faktura-zagraniczna-ksef"
+  - "blog/faktura-zaliczkowa-ksef"
+  - "blog/terminy-ksef-data-wystawienia"
+---
+
+Do faktury w walucie obcej bierzesz kurs średni NBP z ostatniego dnia roboczego przed dniem, w którym powstał obowiązek podatkowy, a jeśli wystawiasz fakturę wcześniej, z ostatniego dnia roboczego przed datą wystawienia. KSeF przyjmie każdy kurs zapisany w poprawnym formacie, bo sprawdza zgodność pliku ze schematem FA(3), a nie wartość kursu, więc za nią odpowiadasz sam.
+
+Stan prawny na 26 listopada 2026 r.
+
+## Co przeliczasz na złote?
+
+Tylko podatek. Kwoty netto, brutto i ceny zostają w walucie faktury, a w złotych podajesz kwotę VAT dla stawek 23%, 8% i 5% (oraz ryczałtu dla taksówek). MF opisuje to w FAQ do KSeF 2.0: kwoty są „wyłącznie w walucie obcej i jedynie kwota podatku w polu P_14_xW przeliczona jest na złotówki”. <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20" label="MF: Pytania i odpowiedzi KSeF 2.0, pyt. 19" />
+
+Tomasz, tłumacz na JDG, wystawia polskiej agencji fakturę na 1 000 EUR netto ze stawką 23%. Netto, VAT 230 EUR i brutto 1 230 EUR wpisuje w euro. Osobno podaje VAT w złotych: 230 EUR razy kurs NBP. Kurs dla konkretnej daty sprawdzisz w [kalkulatorze kursów walut](/waluty).
+
+Przy stawkach 0% (WDT, eksport), „zw”, „np I”, „np II” i „oo” **na fakturze nie ma pola na podatek w złotych**. Tak jest u Ołeny, programistki z Ukrainy, która fakturuje firmę z Wiednia ze stawką „np II”: jej faktura w euro nie ma kwoty VAT w PLN. Jak przeliczyć podstawę takiej sprzedaży do ewidencji, ustal z księgową. <Source href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd" label="Schemat FA(3), pola P_14_1W–P_14_4W" />
+
+Co jeszcze wpisać na fakturze dla zagranicznego klienta, opisujemy [w tekście o fakturach dla firm spoza Polski](/blog/faktura-zagraniczna-ksef).
+
+## Z którego dnia jest kurs?
+
+Zasada z art. 31a ust. 1 ustawy o VAT: kurs średni NBP „na ostatni dzień roboczy poprzedzający dzień powstania obowiązku podatkowego”. Liczy się więc data obowiązku podatkowego. Zwykle nie jest nią dzień przelewu od klienta, z wyjątkami opisanymi niżej (zaliczka, metoda kasowa). <Source href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263" label="Ustawa o VAT, art. 31a ust. 1" />
+
+Przykład: Tomasz kończy tłumaczenie w środę 25 listopada 2026 r., a fakturę wystawia 2 grudnia. Obowiązek podatkowy powstał 25 listopada, więc bierze **kurs z wtorku 24 listopada**, a nie z dnia wystawienia faktury.
+
+### Faktura wystawiona z góry
+
+Jeśli wystawiasz fakturę przed powstaniem obowiązku podatkowego, stosujesz art. 31a ust. 2: kurs z ostatniego dnia roboczego przed dniem wystawienia faktury. Gdy Tomasz 2 grudnia (środa) wystawi fakturę za tłumaczenie, które odda 10 grudnia, bierze kurs z wtorku 1 grudnia. <Source href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263" label="Ustawa o VAT, art. 31a ust. 2" />
+
+Dniem wystawienia jest data z pola `P_1` na fakturze, także w trybie offline24, przy niedostępności i awarii KSeF (art. 106nda ust. 10, art. 106nh ust. 4 i art. 106nf ust. 9 ustawy o VAT), a nie dzień, w którym system nadał numer. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2025/1203" label="Dz.U. 2025 poz. 1203, art. 106nda ust. 10" /> <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 1.4" /> Jak ustala się tę datę w każdym trybie, piszemy [w tekście o dacie wystawienia faktury w KSeF](/blog/terminy-ksef-data-wystawienia).
+
+### Kiedy powstaje obowiązek podatkowy?
+
+Od tej daty zależy kurs. W tych przypadkach nie jest to dzień wykonania usługi ani dostawy:
+
+- **Usługi rozliczane okresami** (np. stała obsługa IT rozliczana co miesiąc): obowiązek powstaje z upływem każdego okresu rozliczeniowego (art. 19a ust. 3).
+- **Najem, dzierżawa, leasing, media, telekomunikacja, stała obsługa prawna i biurowa** (art. 19a ust. 5 pkt 4) oraz **usługi budowlane** (art. 19a ust. 5 pkt 3): obowiązek powstaje z wystawieniem faktury, a gdy faktura się spóźni, z upływem terminu na jej wystawienie (ust. 7). Przy WDT obowiązek też powstaje z wystawieniem faktury, ale najpóźniej 15. dnia miesiąca po miesiącu dostawy (art. 20 ust. 1).
+- **Metoda kasowa:** obowiązek powstaje z dniem zapłaty, a przy nabywcy, który nie jest czynnym podatnikiem VAT, najpóźniej 180. dnia od dostawy lub wykonania usługi (art. 21 ust. 1).
+
+Przy sprzedaży, w której obowiązek powstaje z wystawieniem faktury, art. 31a ust. 1a pozwala wziąć kurs z ostatniego dnia roboczego przed datą `P_1`, jeśli faktura ustrukturyzowana zostanie wystawiona najpóźniej następnego dnia po tej dacie. <Source href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263" label="Ustawa o VAT, art. 19a, 20, 21 i 31a ust. 1a" />
+
+## Czy musi to być kurs NBP?
+
+Nie. Ustawa daje dwie inne możliwości:
+
+- **Kurs Europejskiego Banku Centralnego** (art. 31a ust. 1 zd. 2): ostatni kurs opublikowany przez EBC na ostatni dzień przed powstaniem obowiązku podatkowego. Waluty inne niż euro przeliczasz wtedy przez ich kurs do euro. Przy fakturze wystawionej z góry tę możliwość daje art. 31a ust. 2 zd. 3.
+- **Zasady z podatku dochodowego** (art. 31a ust. 2a–2d): przeliczasz kwoty z faktury tak jak przychód w PIT lub CIT. Jeśli je wybierzesz, stosujesz je co najmniej przez 12 kolejnych miesięcy.
+
+Gdy dostajesz od kontrahenta fakturę, której kurs nie zgadza się z tabelą NBP, to nie musi być błąd: wystawca mógł wybrać jedną z tych metod. <Source href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263" label="Ustawa o VAT, art. 31a ust. 1, 2 i 2a–2d" />
+
+Pola `KursUmowny` i `WalutaUmowna` w FA(3) służą do czegoś innego: do faktury w złotych, w której strony chcą pokazać kurs umownego przeliczenia. Nie wpisujesz w nie kursu do VAT. <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20" label="MF: Pytania i odpowiedzi KSeF 2.0, pyt. 18" />
+
+## Jaki kurs na fakturze zaliczkowej?
+
+Reguła jest ta sama, zmienia się tylko data. Przy zaliczce obowiązek podatkowy powstaje w dniu jej otrzymania (art. 19a ust. 8; nie dotyczy to najmu, mediów i innych usług z art. 19a ust. 5 pkt 4), więc bierzesz kurs z ostatniego dnia roboczego przed wpływem pieniędzy. Jeśli fakturę zaliczkową wystawiasz przed wpłatą, stosujesz art. 31a ust. 2, czyli kurs sprzed daty wystawienia. Przy kilku wpłatach na jednej fakturze każda może mieć swój kurs. Resztę zasad opisujemy [w tekście o fakturze zaliczkowej](/blog/faktura-zaliczkowa-ksef). <Source href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263" label="Ustawa o VAT, art. 19a ust. 8" />
+
+## Jaki kurs na fakturze korygującej?
+
+Ten sam co na fakturze pierwotnej. Art. 31b ust. 1 każe przeliczać korektę po kursie przyjętym przed zmianą, a nie po kursie z dnia korekty. Wyjątek to zbiorcza korekta rabatu (art. 106j ust. 3): wtedy możesz wziąć kurs NBP z ostatniego dnia roboczego albo kurs EBC z ostatniego dnia przed wystawieniem korekty (art. 31b ust. 2). <Source href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263" label="Ustawa o VAT, art. 31b i 106j ust. 3" />
+
+## Dla programistów i księgowych: gdzie wpisać kurs w XML FA(3)?
+
+**Nie ma pola `Fa/KursWaluty` w nagłówku faktury.** Kurs wpisuje się w trzech miejscach:
+
+- `FaWiersz/KursWaluty`: w każdym wierszu faktury, więc wiersze z różnymi datami dostawy (`P_6A`) mogą mieć różne kursy;
+- `Fa/KursWalutyZ`: na fakturze zaliczkowej;
+- `Fa/ZaliczkaCzesciowa/KursWalutyZW`: osobno dla każdej wpłaty (razem z jej datą `P_6Z`).
+
+Na korekcie faktury zaliczkowej kurs sprzed korekty wpisuje się w `KursWalutyZK`. Waluta faktury to kod ISO 4217 w `KodWaluty`. Podatek w złotych trafia do `P_14_1W`–`P_14_4W`, a `P_15` zostaje w walucie faktury. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 2.5 i 2.13" />
+
+Fragment na podstawie przykładu MF nr 20 (faktura w EUR, trzy wiersze z kursem 4.5005, tu pokazany jeden):
+
+<XmlExample copyable>
+  ```xml
+  <KodWaluty>EUR</KodWaluty>
+  <P_1>2026-02-15</P_1>
+  <P_2>FV2026/02/150</P_2>
+  <P_13_1>13560</P_13_1>
+  <P_14_1>3118.80</P_14_1>
+  <P_14_1W>14036.16</P_14_1W>
+  <P_15>16678.80</P_15>
+  <!-- ... Adnotacje, RodzajFaktury ... -->
+  <FaWiersz>
+    <NrWierszaFa>1</NrWierszaFa>
+    <P_6A>2026-02-20</P_6A>
+    <P_7>lodówka Zimnotech mk1</P_7>
+    <P_8A>szt.</P_8A>
+    <P_8B>10</P_8B>
+    <P_9A>406</P_9A>
+    <P_11>4060</P_11>
+    <P_12>23</P_12>
+    <KursWaluty>4.5005</KursWaluty>
+  </FaWiersz>
+  ```
+</XmlExample>
+
+`P_14_1W` to 3118.80 EUR razy 4.5005, zaokrąglone do groszy. W przykładzie nr 21 MF pokazuje wiersze z trzema różnymi kursami, a `P_14_1W` jest sumą podatku z każdego wiersza przeliczonego po jego kursie. Kursów z przykładów MF nie porównywaliśmy z tabelą NBP.
+
+Kurs zapisujesz jako liczbę z kropką, bez separatora tysięcy, z najwyżej 6 cyframi po kropce (typ `TIlosci`). Schemat nie zawiera żadnego warunku, który porównywałby wartość z tabelą NBP. <Source href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf" label="Broszura informacyjna FA(3), pkt 2.5–2.6" /> KSeF sprawdza zgodność pliku ze schematem i uprawnienia wysyłającego, a według Podręcznika „nie dokonuje weryfikacji obliczeń matematycznych”, więc nie odrzuci faktury ze złym kursem ani błędną kwotą VAT w złotych. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 1.6.1" />
+
+Jeśli w twoim pliku faktury walutowej brakuje podatku w złotych, [opis tego ostrzeżenia w walidatorze](/validator/podatek-w-pln-faktura-walutowa) pokazuje, które pola dopisać.
+
+## Co zrobić, gdy kurs na wysłanej fakturze jest zły?
+
+Faktury wysłanej do KSeF nie zmienisz, więc błędny kurs albo podatek w złotych poprawiasz fakturą korygującą (art. 106j ust. 1 pkt 5 ustawy o VAT). Podręcznik KSeF zaleca, żeby przy zmianie kursu pokazać w korekcie także wiersze sprzed zmiany (`StanPrzed`). <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. II, pkt 1.6.2 i 2.13.4" /> Jak wystawić taką korektę w KSeF krok po kroku, opisujemy [w tekście o fakturze korygującej](/blog/faktura-korygujaca-ksef).
