@@ -19,6 +19,11 @@ what is not yet settled.
 
 ## Next up
 
+- [ ] **UPDATE** terminy-ksef-data-wystawienia: the „Kurs waluty” paragraph cites the ECB option for
+      invoices issued before the tax point as „art. 31a ust. 2 zd. 2 w zw. z ust. 1 zd. 2”; zd. 2 is
+      the option to use the rate from before `P_1`, the ECB reference is ust. 2 zd. 3. Check EN/UK
+      too (source: https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263, art. 31a ust.
+      2; brief `kurs-waluty-faktura-ksef.md`)
 - [ ] **UPDATE** certyfikaty-vs-tokeny-ksef: the table row for an office serving many clients says
       „certyfikat typ 1 (lub token)”; a token works only in the one context it was generated in and
       the office cannot use a client's token, so „lub token” needs „jeden token na każdy kontekst
@@ -121,7 +126,7 @@ matching queries.
 - [x] `kontekst-logowania-ksef` — Kontekst logowania w KSeF · „kontekst logowania KSeF" · A · FAQ
 - [x] `faktura-vat-rr-ksef` — Faktura VAT RR w KSeF · „VAT RR KSeF" · A · APP
 - [ ] `di-bfk-jpk-v7` — Oznaczenia DI i BFK w JPK_V7 · „JPK_V7 BFK DI" · K · FAQ
-- [ ] `kurs-waluty-faktura-ksef` — Kurs waluty na fakturze w KSeF · „faktura w walucie KSeF kurs" ·
+- [x] `kurs-waluty-faktura-ksef` — Kurs waluty na fakturze w KSeF · „faktura w walucie KSeF kurs" ·
       K · existing brief `docs/knowledge-base/briefs/kurs-waluty-art-31a.md` · The `/waluty` tool
       already gets this intent.
 - [ ] `zaw-fa-ksef` — ZAW-FA: kiedy jest potrzebny · „ZAW-FA KSeF" · A, K · P3

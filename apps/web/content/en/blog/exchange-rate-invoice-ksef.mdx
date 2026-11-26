@@ -1,0 +1,129 @@
+---
+title: "KSeF invoice exchange rates come from the NBP"
+description: "Convert VAT on a EUR or USD invoice at the NBP average rate from the business day before the tax point. KSeF only checks how the rate is written."
+date: 2026-11-26
+section: blog
+locale: en
+slug: "exchange-rate-invoice-ksef"
+topic: "invoicing"
+translationOf: "kurs-waluty-faktura-ksef"
+translations:
+  pl: "kurs-waluty-faktura-ksef"
+  en: "exchange-rate-invoice-ksef"
+  uk: "kurs-valyuty-rakhunok-ksef"
+tags: ["KSeF", "Invoice", "VAT", "FA(3)"]
+sources:
+  - label: "Polish VAT Act (ustawa o VAT), consolidated text Dz.U. 2026 poz. 1263, Art. 19a, 20, 21, 31a, 31b, 106e, 106j, 106na"
+    url: "https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263"
+  - label: "Act of 5 August 2025 (Dz.U. 2025 poz. 1203), Art. 106nda ust. 10"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2025/1203"
+  - label: "MF: KSeF 2.0 questions and answers, Q18 and Q19"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
+  - label: "FA(3) information brochure, sections 2.5–2.6 and 9.1–9.5"
+    url: "https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf"
+  - label: "KSeF 2.0 Manual (Podręcznik KSeF 2.0), Part II (06.08.2026), sections 1.4, 1.6.1, 1.6.2, 2.5 and 2.13"
+    url: "https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf"
+  - label: "FA(3) schema"
+    url: "https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd"
+---
+
+For an invoice in a foreign currency you use the NBP (Narodowy Bank Polski, Poland's central bank) average rate from the last business day before the tax point, or, if you issue the invoice earlier, from the last business day before the issue date. KSeF (Krajowy System e-Faktur, Poland's National e-Invoicing System) accepts any rate written in a valid format, because it checks the file against the FA(3) schema and not the value of the rate, so getting the value right is on you.
+
+Legal position as of 26 November 2026.
+
+## What gets converted to PLN?
+
+Only the tax. Net amounts, gross amounts and prices stay in the invoice currency; in PLN you give the VAT amount for the 23%, 8% and 5% rates (and the flat-rate tax for taxis). The Ministry of Finance (MF) says so in its KSeF 2.0 FAQ: amounts are "only in the foreign currency, and only the tax amount in field P_14_xW is converted to złoty". <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20" label="MF: KSeF 2.0 questions and answers, Q19" />
+
+Tomasz, a translator running a JDG (jednoosobowa działalność gospodarcza, a Polish sole trader business), invoices a Polish agency for EUR 1,000 net at 23%. He enters the net amount, the VAT of EUR 230 and the gross EUR 1,230 in euros. Separately, he gives the VAT in PLN: EUR 230 times the NBP rate. You can look up the rate for a specific date in our [exchange rate calculator](/en/waluty).
+
+At 0% (intra-EU supplies and exports), "zw", "np I", "np II" and "oo" **the invoice has no field for tax in PLN**. That is the case for Olena, a Ukrainian developer who invoices a Vienna company at "np II": her euro invoice carries no VAT amount in PLN. Agree with your accountant how to convert the base of such a sale for your VAT records. <Source href="https://crd.gov.pl/wzor/2025/06/25/13775/schemat.xsd" label="FA(3) schema, fields P_14_1W–P_14_4W" />
+
+What else goes on an invoice for a foreign client is covered [in our post on invoicing buyers outside Poland](/en/blog/foreign-invoice-ksef).
+
+## Which day's rate do you use?
+
+The rule in Art. 31a ust. 1 of the VAT Act: the NBP average rate "on the last business day preceding the day the tax obligation arises". What counts is the tax point (obowiązek podatkowy). Usually that is not the day your client pays, with the exceptions described below (advance payments, cash accounting). <Source href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263" label="VAT Act, Art. 31a ust. 1" />
+
+Example: Tomasz finishes a translation on Wednesday 25 November 2026 and issues the invoice on 2 December. The tax point was 25 November, so he uses **the rate from Tuesday 24 November**, not the one from the issue date.
+
+### Invoice issued in advance
+
+If you issue the invoice before the tax point, Art. 31a ust. 2 applies: the rate from the last business day before the issue date. If on Wednesday 2 December Tomasz invoices a translation he will deliver on 10 December, he uses the rate from Tuesday 1 December. <Source href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263" label="VAT Act, Art. 31a ust. 2" />
+
+The issue date is the date in the invoice's `P_1` field, also in offline24 mode, during KSeF unavailability and during a KSeF failure (Art. 106nda ust. 10, Art. 106nh ust. 4 and Art. 106nf ust. 9 of the VAT Act), not the day the system assigned the KSeF number. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2025/1203" label="Dz.U. 2025 poz. 1203, Art. 106nda ust. 10" /> <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, Part II, section 1.4" /> How that date is set in each mode is explained [in our post on the KSeF invoice issue date](/en/blog/ksef-invoice-issue-date).
+
+### When does the tax point arise?
+
+The rate depends on this date. In these cases it is not the day the service is performed or the goods delivered:
+
+- **Services billed by period** (e.g. ongoing IT support billed monthly): the tax point arises at the end of each billing period (Art. 19a ust. 3).
+- **Rental, lease, leasing, utilities, telecoms, ongoing legal and office services** (Art. 19a ust. 5 pkt 4) and **construction services** (Art. 19a ust. 5 pkt 3): the tax point arises when the invoice is issued, or, if the invoice is late, when the deadline for issuing it passes (ust. 7). For intra-EU supplies of goods (WDT) the tax point also arises when the invoice is issued, but no later than the 15th day of the month after the month of supply (Art. 20 ust. 1).
+- **Cash accounting:** the tax point arises on the day of payment, and for a buyer who is not an active VAT payer, no later than the 180th day after the supply or service (Art. 21 ust. 1).
+
+For sales where the tax point arises when the invoice is issued, Art. 31a ust. 1a lets you use the rate from the last business day before the `P_1` date, provided the structured invoice is issued no later than the day after that date. <Source href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263" label="VAT Act, Art. 19a, 20, 21 and 31a ust. 1a" />
+
+## Does it have to be the NBP rate?
+
+No. The Act gives two alternatives:
+
+- **The European Central Bank rate** (Art. 31a ust. 1, second sentence): the last rate published by the ECB for the last day before the tax point. Currencies other than the euro are then converted through their rate to the euro. For an invoice issued in advance, Art. 31a ust. 2, third sentence, gives the same option.
+- **Income tax rules** (Art. 31a ust. 2a–2d): you convert the invoice amounts the same way as revenue for PIT or CIT (Polish personal and corporate income tax). If you choose this method, you must apply it for at least 12 consecutive months.
+
+If you receive an invoice whose rate does not match the NBP table, it is not necessarily a mistake: the issuer may have chosen one of these methods. <Source href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263" label="VAT Act, Art. 31a ust. 1, 2 and 2a–2d" />
+
+The `KursUmowny` and `WalutaUmowna` fields in FA(3) serve a different purpose: they are for a PLN invoice where the parties want to show an agreed conversion rate. They are not where the VAT rate goes. <Source href="https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20" label="MF: KSeF 2.0 questions and answers, Q18" />
+
+## Which rate goes on an advance invoice?
+
+The rule is the same; only the date changes. For an advance payment the tax point arises on the day you receive it (Art. 19a ust. 8; this does not apply to rental, utilities and the other services in Art. 19a ust. 5 pkt 4), so you use the rate from the last business day before the money arrives. If you issue the advance invoice before the payment, Art. 31a ust. 2 applies, meaning the rate from before the issue date. With several payments on one invoice, each can have its own rate. The other rules are in [our post on advance invoices](/en/blog/advance-invoice-ksef). <Source href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263" label="VAT Act, Art. 19a ust. 8" />
+
+## Which rate goes on a corrective invoice?
+
+The same as on the original invoice. Art. 31b ust. 1 requires the correction to be converted at the rate used before the change, not at the rate on the day of the correction. The exception is a bulk discount correction (Art. 106j ust. 3): then you can use the NBP rate from the last business day, or the ECB rate from the last day, before the correction is issued (Art. 31b ust. 2). <Source href="https://isap.sejm.gov.pl/isap.nsf/DocDetails.xsp?id=WDU20260001263" label="VAT Act, Art. 31b and 106j ust. 3" />
+
+## For developers and accountants: where does the rate go in FA(3) XML?
+
+**There is no `Fa/KursWaluty` field in the invoice header.** The rate goes in three places:
+
+- `FaWiersz/KursWaluty`: on each invoice line, so lines with different delivery dates (`P_6A`) can have different rates;
+- `Fa/KursWalutyZ`: on an advance invoice;
+- `Fa/ZaliczkaCzesciowa/KursWalutyZW`: separately for each payment (together with its date, `P_6Z`).
+
+On a correction of an advance invoice, the pre-correction rate goes in `KursWalutyZK`. The invoice currency is an ISO 4217 code in `KodWaluty`. The tax in PLN goes in `P_14_1W`–`P_14_4W`, while `P_15` stays in the invoice currency. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, Part II, sections 2.5 and 2.13" />
+
+An excerpt based on MF example no. 20 (an invoice in EUR, three lines at a rate of 4.5005, one shown here):
+
+<XmlExample copyable>
+  ```xml
+  <KodWaluty>EUR</KodWaluty>
+  <P_1>2026-02-15</P_1>
+  <P_2>FV2026/02/150</P_2>
+  <P_13_1>13560</P_13_1>
+  <P_14_1>3118.80</P_14_1>
+  <P_14_1W>14036.16</P_14_1W>
+  <P_15>16678.80</P_15>
+  <!-- ... Adnotacje, RodzajFaktury ... -->
+  <FaWiersz>
+    <NrWierszaFa>1</NrWierszaFa>
+    <P_6A>2026-02-20</P_6A>
+    <P_7>lodówka Zimnotech mk1</P_7>
+    <P_8A>szt.</P_8A>
+    <P_8B>10</P_8B>
+    <P_9A>406</P_9A>
+    <P_11>4060</P_11>
+    <P_12>23</P_12>
+    <KursWaluty>4.5005</KursWaluty>
+  </FaWiersz>
+  ```
+</XmlExample>
+
+`P_14_1W` is EUR 3118.80 times 4.5005, rounded to the grosz. In example no. 21, MF shows lines with three different rates, and `P_14_1W` is the sum of the tax on each line converted at that line's rate. We have not compared the rates in the MF examples with the NBP table.
+
+You write the rate as a number with a dot, no thousands separator, and at most 6 digits after the dot (type `TIlosci`). The schema contains no condition that compares the value with the NBP table. <Source href="https://ksef.podatki.gov.pl/media/nuclnu0w/broszura-informacyjna-dotyczaca-struktury-logicznej-fa-3.pdf" label="FA(3) information brochure, sections 2.5–2.6" /> KSeF checks the file against the schema and the sender's permissions, and according to the Manual it "does not verify mathematical calculations", so it will not reject an invoice with a wrong rate or a wrong VAT amount in PLN. <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, Part II, section 1.6.1" />
+
+If your foreign-currency invoice file is missing the tax in PLN, [our explanation of that validator warning](/en/validator/foreign-currency-invoice-vat-in-pln) shows which fields to add.
+
+## What if the rate on a sent invoice is wrong?
+
+You cannot change an invoice once it is in KSeF, so a wrong rate or wrong tax in PLN is fixed with a corrective invoice (Art. 106j ust. 1 pkt 5 of the VAT Act). The KSeF Manual recommends that a correction changing the rate also shows the lines as they were before the change (`StanPrzed`). <Source href="https://ksef.podatki.gov.pl/media/rronoxyt/podrecznik-ksef-20-cz-ii-wystawianie-i-otrzymywanie-faktur-w-ksef-06082026.pdf" label="KSeF 2.0 Manual, Part II, sections 1.6.2 and 2.13.4" /> How to issue that correction in KSeF step by step is in [our post on corrective invoices](/en/blog/corrective-invoice-ksef).
