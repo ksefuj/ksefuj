@@ -1,0 +1,88 @@
+---
+title: "ZAW-FA in KSeF is for companies, not sole traders"
+description: "ZAW-FA is filed by a company that is not a natural person and has no qualified seal. Sole traders and their accountants usually get KSeF access without it."
+date: 2026-11-27
+updated: 2026-11-27
+section: blog
+locale: en
+slug: "ksef-zaw-fa-notification"
+topic: "access"
+tags: ["KSeF", "JDG"]
+sources:
+  - label: "KSeF 2.0 Manual, Part I: Getting started with KSeF (06.08.2026), pp. 33, 56–61, 66"
+    url: "https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  - label: "KSeF Regulation, Dz.U. 2025 poz. 1815, § 5 ust. 1"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2025/1815"
+  - label: "MF: the ZAW-FA(3) form is available in e-US"
+    url: "https://www.gov.pl/web/finanse/formularz-zaw-fa3-dostepny-w-e-us"
+  - label: "KSeF 2.0 Taxpayer Application user manual (06.08.2026), pp. 16–17, 137–139, 145"
+    url: "https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
+  - label: "MF FAQ: KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
+  - label: "MF FAQ: most common questions, Q17–19"
+    url: "https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
+translations:
+  pl: "zaw-fa-ksef"
+  en: "ksef-zaw-fa-notification"
+  uk: "zaw-fa-ksef"
+---
+
+ZAW-FA is the notification a company files when it is not a natural person and cannot log in to KSeF (Krajowy System e-Faktur, Poland's National e-Invoicing System) with a qualified seal: in it, the company names one person who gets KSeF access on its behalf. If you run a JDG (jednoosobowa działalność gospodarcza, a Polish sole trader business), you usually don't file it, and you grant your accountant access electronically, also without ZAW-FA.
+
+Legal state as of 27 November 2026. We rely on the KSeF regulation (Dz.U. 2025 poz. 1815) and the KSeF 2.0 manual of 6 August 2026. In it, the Ministry of Finance (MF) says the notification is used "only in specific situations", and permissions are, as a rule, granted in the KSeF 2.0 Taxpayer Application or in software connected to KSeF. The application and the official forms are in Polish, so labels below are given in Polish with a translation.
+
+## When does a company have to file ZAW-FA?
+
+A company that is not a natural person, such as a limited liability company (spółka z o.o.), has no owner to whom KSeF assigns permissions automatically, the way it does for a sole trader. It can log in with its own qualified seal. If it has none, it files ZAW-FA and names **exactly one natural person** in it. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2025/1815" label="Dz.U. 2025 poz. 1815, § 5 ust. 1" />
+
+That person does not have to be listed in the KRS (National Court Register). They get, among other things, permission management, invoice issuing and access to the company's invoices. They add further people, such as employees or an accounting office, themselves and electronically.
+
+Joanna runs an online shop as a spółka z o.o. that has no qualified seal. The company names Joanna in ZAW-FA. Once the permissions start working, Joanna logs in with her own method (via login.gov.pl or a qualified signature) and enters the company's NIP, which means choosing the [context she acts in](/en/blog/ksef-login-context). She then grants access herself to the accountant and to the warehouse worker who issues invoices.
+
+## Does a sole trader file ZAW-FA?
+
+No. Ania is a graphic designer with a JDG, and KSeF automatically assigns her owner permissions for her NIP: issuing invoices, access to invoices, managing permissions, managing subordinate entities, session history and viewing permissions, among others. They cannot be revoked, and Ania doesn't have to report anything. <Source href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf" label="KSeF 2.0 Manual, Part I, p. 57" />
+
+There is one exception: **your own qualified signature whose certificate contains neither a NIP nor a PESEL** (the Polish personal ID number). KSeF then can't tell whose signature it is, so you register its fingerprint (a SHA-256 hash, 64 characters from 0–9 and a–f) with a ZAW-FA notification. After such a signature is renewed or replaced, the permissions have to be reported again. If the new certificate already has a NIP or PESEL, you report nothing. If you log in via login.gov.pl, the exception doesn't apply to you. All the login methods are covered in our [guide to logging in to KSeF](/en/guides/ksef-login).
+
+## Does an accountant need ZAW-FA?
+
+No. Ania gives Krystyna's accounting office access in the Taxpayer Application: Uprawnienia (Permissions), Nadaj uprawnienie (Grant permission), and for an office the option "Podmiotowi do wystawiania i przeglądania faktur" (to an entity, for issuing and viewing invoices), where she enters the NIP, name and scope. She can also do it in invoicing software connected to KSeF, if the software supports it.
+
+Once the office has permissions by NIP, the office itself assigns them to its staff. Ania can also grant a permission directly to Krystyna, with the option "Osobie fizycznej do pracy w KSeF" (to a natural person, to work in KSeF). If Krystyna's qualified signature contains neither a NIP nor a PESEL, Ania enters its fingerprint in that form, with the identifier set to "Brak" (None), plus Krystyna's date of birth and identity document. Krystyna gets the fingerprint in the Taxpayer Application with the "Pobierz odcisk palca" (Get fingerprint) function. No ZAW-FA is needed for this. It's different when Krystyna uses such a signature to log in to her own JDG: then, like any sole trader, she reports it with the notification.
+
+Joanna's company does the same, just later: first ZAW-FA for Joanna, then electronic permissions for the office.
+
+## How do you file ZAW-FA?
+
+The current form is ZAW-FA(3). You file it with the tax office (urząd skarbowy) in one of three ways:
+
+- on paper;
+- through the interactive form in e-Urząd Skarbowy, the online tax office (Dokumenty → Złóż dokument, i.e. Documents → Submit document);
+- through e-Doręczenia, the Polish e-delivery service.
+
+<Source
+  href="https://www.gov.pl/web/finanse/formularz-zaw-fa3-dostepny-w-e-us"
+  label="MF: the ZAW-FA(3) form in e-US"
+/>
+
+**Since 1 January 2026, a ZAW-FA sent through ePUAP has no effect.** If the company doesn't have an e-Doręczenia address yet, see [how to set one up for free](/en/blog/e-delivery-address-sole-traders). In the form you choose the purpose (granting or revoking permissions) and give e-mail addresses for contact.
+
+You don't file ZAW-FA in the KSeF Taxpayer Application: that is where permissions are granted electronically, while the notification goes to the tax office.
+
+## When do ZAW-FA permissions start working?
+
+Only once the tax office enters the data into the system. Confirmation arrives by e-mail at the addresses given in the form.
+
+The MF materials we checked don't say how long this takes. We also found no fee, filing deadline or penalty for not filing ZAW-FA. Until the ZAW-FA permissions work, nobody can log in to KSeF on behalf of a company without a seal, so we suggest filing the notification well ahead, not on the day of a sale. The MF materials we checked also don't say whether a notification filed for KSeF 1.0 still works in KSeF 2.0.
+
+## How do you change the person named in ZAW-FA?
+
+You file two notifications: first a ZAW-FA with the purpose "odebranie uprawnień" (revoking permissions) for the current person, then one with the purpose "nadanie" (granting) for the new one. Permissions the current person granted to others stay in place. If Joanna leaves the company, the accounting office doesn't lose access because of it. Anyone whose access should end has it revoked electronically by a person with the permission to manage permissions, for example the new person named in ZAW-FA.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  label="KSeF 2.0 Manual, Part I, p. 60"
+/>
+
+If you run a JDG or the ZAW-FA permissions already work, log in to the Taxpayer Application and [give your accountant access](/en/guides/ksef-accountant-access), choosing the scope of permissions.
