@@ -19,6 +19,30 @@ what is not yet settled.
 
 ## Next up
 
+- [ ] **UPDATE** faq/dostep-i-uprawnienia (PL l. 27-29, EN `access-and-authorizations` l. 29):
+      ZAW-FA is said to be needed when „podpis lub pieczęć nie zawierają numeru NIP lub PESEL”; MF
+      sources describe only the taxpayer's own qualified signature with neither NIP nor PESEL, no
+      seal case (source:
+      https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf,
+      s. 33, 57, 66)
+- [ ] **UPDATE** certyfikaty-vs-tokeny-ksef (PL, EN l. 95-97): same unsupported seal case, and the
+      sentence does not say it is the taxpayer's own signature (the accountant's fingerprint is
+      entered electronically, AP s. 139); „tylko odczyt, tylko wystawianie albo pełny dostęp” is not
+      MF's scope model (wystawianie and/or przeglądanie, optionally with the right to pass on)
+      (source:
+      https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf,
+      s. 57; Podręcznik Aplikacji Podatnika s. 139, 145)
+- [ ] **UPDATE** ksef-checklist-przygotowanie (PL l. 123, EN `ksef-preparation-checklist` l. 119):
+      „lub twoja pieczęć nie zawiera NIP ani PESEL (pieczęć zawiera tylko NIP)” is unsupported; keep
+      only the own-signature case (source:
+      https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf,
+      s. 33, 57)
+- [ ] **UPDATE** guides/uprawnienia-ksef-ksiegowa (PL l. 106, EN/UK): „(albo jedynej osoby wskazanej
+      w zawiadomieniu)” is not in the KB; verify against cz. I s. 58-61 or drop the parenthesis
+      (source:
+      https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf,
+      s. 57-61)
+
 - [ ] **UPDATE** certyfikaty-vs-tokeny-ksef: the table row for an office serving many clients says
       „certyfikat typ 1 (lub token)”; a token works only in the one context it was generated in and
       the office cannot use a client's token, so „lub token” needs „jeden token na każdy kontekst
@@ -124,7 +148,7 @@ matching queries.
 - [ ] `kurs-waluty-faktura-ksef` — Kurs waluty na fakturze w KSeF · „faktura w walucie KSeF kurs" ·
       K · existing brief `docs/knowledge-base/briefs/kurs-waluty-art-31a.md` · The `/waluty` tool
       already gets this intent.
-- [ ] `zaw-fa-ksef` — ZAW-FA: kiedy jest potrzebny · „ZAW-FA KSeF" · A, K · P3
+- [x] `zaw-fa-ksef` — ZAW-FA: kiedy jest potrzebny · „ZAW-FA KSeF" · A, K · P3
 
 ## Scheduled maintenance
 
