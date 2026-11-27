@@ -1,0 +1,92 @@
+---
+title: "ZAW-FA w KSeF składa firma bez pieczęci, nie JDG"
+description: "ZAW-FA składa firma, która nie jest osobą fizyczną i nie ma pieczęci kwalifikowanej. JDG i jej księgowa dostają dostęp do KSeF bez zawiadomienia."
+date: 2026-11-27
+updated: 2026-11-27
+section: blog
+locale: pl
+slug: "zaw-fa-ksef"
+topic: "access"
+tags: ["KSeF", "JDG"]
+related:
+  - "guides/logowanie-ksef"
+  - "guides/uprawnienia-ksef-ksiegowa"
+  - "blog/e-doreczenia-jdg"
+sources:
+  - label: "Podręcznik KSeF 2.0, cz. I: Rozpoczęcie korzystania z KSeF (06.08.2026), s. 33, 56–61, 66"
+    url: "https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  - label: "Rozporządzenie w sprawie korzystania z KSeF, Dz.U. 2025 poz. 1815, § 5 ust. 1"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2025/1815"
+  - label: "Rozporządzenie zmieniające, Dz.U. 2026 poz. 169"
+    url: "https://api.sejm.gov.pl/eli/acts/DU/2026/169"
+  - label: "MF: formularz ZAW-FA(3) dostępny w e-US"
+    url: "https://www.gov.pl/web/finanse/formularz-zaw-fa3-dostepny-w-e-us"
+  - label: "Podręcznik użytkownika Aplikacji Podatnika KSeF 2.0 (06.08.2026), s. 16–17, 139, 145"
+    url: "https://ksef.podatki.gov.pl/media/qocjn3ai/podrecznik-uzytkownika-aplikacji-podatnika-ksef-20_06082026.pdf"
+  - label: "FAQ MF: KSeF 2.0"
+    url: "https://ksef.podatki.gov.pl/pytania-i-odpowiedzi-ksef-20"
+  - label: "FAQ MF: najczęstsze pytania, pyt. 17–19"
+    url: "https://ksef.podatki.gov.pl/ksef-news/najczestsze-pytania/"
+translations:
+  pl: "zaw-fa-ksef"
+---
+
+ZAW-FA składa firma, która nie jest osobą fizyczną i nie może zalogować się do KSeF pieczęcią kwalifikowaną: wskazuje w nim jedną osobę, która dostaje dostęp do KSeF w jej imieniu. Jeśli prowadzisz JDG, zawiadomienia zwykle nie składasz, a dostęp dla księgowej nadajesz elektronicznie, też bez ZAW-FA.
+
+Stan prawny na 27 listopada 2026 r. Opieramy się na rozporządzeniu w sprawie korzystania z KSeF (Dz.U. 2025 poz. 1815) i podręczniku KSeF 2.0 z 6 sierpnia 2026 r. MF pisze w nim, że zawiadomienia używa się „wyłącznie w określonych sytuacjach”, a uprawnienia co do zasady nadaje się w Aplikacji Podatnika KSeF 2.0 albo w programie połączonym z KSeF.
+
+## Kiedy firma musi złożyć ZAW-FA?
+
+Firma, która nie jest osobą fizyczną, na przykład spółka z o.o., nie dostaje uprawnień w KSeF automatycznie. Może logować się własną pieczęcią kwalifikowaną. Jeśli jej nie ma, składa ZAW-FA i wskazuje w nim **dokładnie jedną osobę fizyczną**. <Source href="https://api.sejm.gov.pl/eli/acts/DU/2025/1815" label="Dz.U. 2025 poz. 1815, § 5 ust. 1" />
+
+Ta osoba nie musi figurować w KRS. Dostaje m.in. zarządzanie uprawnieniami, wystawianie faktur i dostęp do faktur firmy. Kolejne osoby, np. pracowników czy biuro rachunkowe, dodaje już sama, elektronicznie.
+
+Joanna prowadzi sklep internetowy jako spółka z o.o., która nie ma pieczęci kwalifikowanej. Spółka wskazuje w ZAW-FA Joannę. Gdy uprawnienia zaczną działać, Joanna loguje się swoim sposobem (przez login.gov.pl albo podpisem kwalifikowanym) i wpisuje NIP spółki, czyli wybiera [kontekst, w którym działa](/blog/kontekst-logowania-ksef). Potem sama nadaje dostęp księgowej i magazynierowi, który wystawia faktury.
+
+## Czy JDG składa ZAW-FA?
+
+Nie. Ania jest graficzką na JDG i KSeF sam przypisuje jej uprawnienia właścicielskie do jej NIP: wystawianie faktur, dostęp do faktur, nadawanie uprawnień innym, historię sesji i podgląd uprawnień. Nie da się ich odebrać, a Ania nie musi nic zgłaszać. <Source href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf" label="Podręcznik KSeF 2.0, cz. I, s. 57" />
+
+Wyjątek jest jeden: **własny podpis kwalifikowany, którego certyfikat nie zawiera ani NIP, ani PESEL.** KSeF nie wie wtedy, czyj to podpis, więc jego odcisk palca (skrót SHA-256, 64 znaki od 0 do 9 i od a do f) rejestrujesz zawiadomieniem ZAW-FA. Po odnowieniu albo wymianie takiego podpisu trzeba go zarejestrować ponownie. Jeśli nowy certyfikat ma już NIP lub PESEL, nic nie zgłaszasz. Jeśli logujesz się przez login.gov.pl, ten wyjątek cię nie dotyczy. Wszystkie sposoby logowania opisujemy w [poradniku o logowaniu do KSeF](/guides/logowanie-ksef).
+
+## Czy księgowa potrzebuje ZAW-FA?
+
+Nie. Ania daje dostęp biuru pani Krystyny w Aplikacji Podatnika: Uprawnienia, Nadaj uprawnienie, a dla biura opcja „Podmiotowi do wystawiania i przeglądania faktur”, w której podaje NIP, nazwę i zakres. To samo zrobi w programie do fakturowania połączonym z KSeF, bez zakładania żadnego konta.
+
+Podpis kwalifikowany pani Krystyny bez NIP i PESEL też nie wymaga ZAW-FA. Ania wpisuje jego odcisk palca w formularzu nadawania uprawnień, z identyfikatorem „Brak”, datą urodzenia i dokumentem tożsamości pani Krystyny. Pani Krystyna pobierze odcisk w Aplikacji Podatnika funkcją „Pobierz odcisk palca”.
+
+Spółka Joanny robi tak samo, tylko później: najpierw ZAW-FA dla Joanny, potem elektroniczne uprawnienia dla biura.
+
+## Jak złożyć ZAW-FA?
+
+Aktualny formularz to ZAW-FA(3). Złożysz go w urzędzie skarbowym na jeden z trzech sposobów:
+
+- na papierze;
+- przez interaktywny formularz w e-Urzędzie Skarbowym (Dokumenty, Złóż dokument);
+- przez e-Doręczenia.
+
+<Source
+  href="https://www.gov.pl/web/finanse/formularz-zaw-fa3-dostepny-w-e-us"
+  label="MF: formularz ZAW-FA(3) w e-US"
+/>
+
+**Od 1 stycznia 2026 r. ZAW-FA wysłane przez ePUAP nie jest skuteczne.** Jeśli firma nie ma jeszcze adresu do e-Doręczeń, sprawdź, [jak założyć go bezpłatnie](/blog/e-doreczenia-jdg). W formularzu wybierasz cel (nadanie albo odebranie uprawnień) i podajesz adresy e-mail do kontaktu.
+
+ZAW-FA nie składasz w Aplikacji Podatnika KSeF: tam nadaje się uprawnienia elektroniczne, a zawiadomienie trafia do urzędu skarbowego.
+
+## Od kiedy działają uprawnienia z ZAW-FA?
+
+Dopiero gdy urząd skarbowy wprowadzi dane do systemu. Potwierdzenie przychodzi e-mailem na adresy z formularza.
+
+Ile to trwa, MF nie podaje. Nie znaleźliśmy też opłaty, terminu złożenia ani kary za brak ZAW-FA. Bez działających uprawnień firma nie wystawi jednak faktury w KSeF, więc złóż zawiadomienie z zapasem, a nie w dniu sprzedaży. Materiały MF, które sprawdziliśmy, nie mówią też, czy zawiadomienie złożone jeszcze dla KSeF 1.0 działa w KSeF 2.0.
+
+## Jak zmienić osobę wskazaną w ZAW-FA?
+
+Składasz dwa zawiadomienia: najpierw ZAW-FA z celem „odebranie uprawnień” dla dotychczasowej osoby, potem z celem „nadanie” dla nowej. Uprawnienia, które dotychczasowa osoba nadała innym, zostają. Jeśli Joanna odejdzie ze spółki, biuro rachunkowe nie straci przez to dostępu. Komu dostęp ma zniknąć, temu odbiera go elektronicznie osoba z uprawnieniem do zarządzania uprawnieniami, np. nowa osoba wskazana w ZAW-FA.
+
+<Source
+  href="https://ksef.podatki.gov.pl/media/dmrfdixs/podrecznik-ksef-20-cz-i-rozpoczecie-korzystania-z-ksef-06082026.pdf"
+  label="Podręcznik KSeF 2.0, cz. I, s. 60"
+/>
+
+Jeśli prowadzisz JDG albo uprawnienia z ZAW-FA już działają, zaloguj się do Aplikacji Podatnika i [nadaj dostęp swojej księgowej](/guides/uprawnienia-ksef-ksiegowa), wybierając zakres uprawnień.
